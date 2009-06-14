@@ -1,6 +1,6 @@
 /*
  * Item.hpp
- *     Generic item class.
+ *     Generic item class.  Also defines ItemSet.
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
@@ -10,12 +10,15 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <map>
+#include <set>
 #include <sstream>
+#include "Identifiable.hpp"
 #include "Vector.hpp"
 
 
 
-class Item {
+class Item : public Identifiable  {
 	
 	
 	public :
@@ -23,7 +26,7 @@ class Item {
 		Item();
 		
 		friend std::ostream& operator<<(std::ostream &stream,
-		                                const Item& item);
+		                                const Item &item);
 		
 		virtual std::string attributes() const;
 		virtual void draw() const = 0;
@@ -31,6 +34,7 @@ class Item {
 		int getID() const {return id;}
 		bool isSelected() const {return selected;}
 		bool isShown() const {return shown;}
+		void setID(int id) {this->id = id;}
 		void setPosition(float x, float y, float z) {position.set(x, y, z);}
 		void setSelected(bool selected) {this->selected = selected;}
 		void setShown(bool shown) {this->shown = shown;}
@@ -48,7 +52,8 @@ class Item {
 		Vector position;
 		int id;
 };
-
+typedef std::set<Item,Identifiable::Comparator> ItemSet;
+typedef std::set<Item*,Identifiable::Comparator> ItemPtrSet;
 
 
 #endif
