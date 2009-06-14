@@ -1,1 +1,4 @@
 gander.geany
+bin/
+doc/
+obj/
