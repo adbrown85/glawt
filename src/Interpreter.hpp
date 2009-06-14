@@ -1,17 +1,17 @@
 /*
  * Interpreter.hpp
- *     Interprets directives and issues commands for Gander.
+ *     Interprets commands and relegates them to delegates.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __INTERPRETER_HEADER__
-#define __INTERPRETER_HEADER__
+#ifndef __GANDER_INTERPRETER_HEADER__
+#define __GANDER_INTERPRETER_HEADER__
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
-#include "Commands.hpp"
+#include "Command.hpp"
 using std::map;
 using std::string;
 using std::cout;
