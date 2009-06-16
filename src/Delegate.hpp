@@ -5,9 +5,11 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __GANDER_DELEGATE_HEADER__
-#define __GANDER_DELEGATE_HEADER__
+#ifndef __DELEGATE_HEADER__
+#define __DELEGATE_HEADER__
 #include "Command.hpp"
+#include "Scene.hpp"
+#include "State.hpp"
 
 
 
@@ -17,6 +19,22 @@ class Delegate {
 	public :
 		
 		virtual void run(int command) = 0;
+		virtual void run(int command, float argument) = 0;
+		virtual void run(int command, float arg1, float arg2) = 0;
+		
+		virtual std::vector<int> getCommands() {return cmds;}
+		virtual std::string getType() {return type;}
+		
+		void setScene(Scene *scene) {this->scene = scene;}
+		void setState(State *state) {this->state = state;}
+	
+	
+	protected :
+		
+		Scene *scene;
+		State *state;
+		std::string type;
+		std::vector<int> cmds;
 };
 
 

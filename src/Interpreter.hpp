@@ -5,36 +5,54 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __GANDER_INTERPRETER_HEADER__
-#define __GANDER_INTERPRETER_HEADER__
+#ifndef __INTERPRETER_HEADER__
+#define __INTERPRETER_HEADER__
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
+#include <vector>
+#include "Cameraman.hpp"
 #include "Command.hpp"
-using std::map;
-using std::string;
-using std::cout;
-using std::cerr;
-using std::endl;
+#include "Compositor.hpp"
+#include "Delegate.hpp"
+#include "Director.hpp"
+#include "Grip.hpp"
+#include "Producer.hpp"
+#include "Scene.hpp"
+#include "State.hpp"
 
 
 
-class Interpreter {
+class Interpreter : public Delegate {
 	
 	
 	public :
 		
-		Interpreter();
+		Interpreter(Scene *scene, State *state);
+		~Interpreter();
 		
 		void print();
+		virtual void run(int command);
+		virtual void run(int command, float argument);
+		virtual void run(int command, float arg1, float arg2);
 	
 	
 	private:
 		
-		map<int, string> com, des;
+		Interpreter();
 		
-		void initialize();
+		std::map<int, Delegate*> hans;
+		std::vector<Delegate*> dels;
+		
+		void load() {
+			dels.push_back(new Cameraman());
+			dels.push_back(new Compositor());
+			dels.push_back(new Director());
+			dels.push_back(new Grip());
+			dels.push_back(new Producer());
+		}
 };
 
 

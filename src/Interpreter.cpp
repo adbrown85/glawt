@@ -9,53 +9,40 @@
 
 
 
-/**
- * Creates an Interpreter and initializes the commands.
- */
-Interpreter::Interpreter() {
+Interpreter::Interpreter(Scene *scene,
+                         State *state) {
 	
-	// Initialize
-	initialize();
+	std::vector<int> cmds;
+	std::vector<int>::iterator c;
+	std::vector<Delegate*>::iterator d;
+	
+	// Load delegates
+	load();
+	for (d=dels.begin(); d!=dels.end(); d++) {
+		(*d)->setScene(scene);
+		(*d)->setState(state);
+	}
+	
+	// Add commands from each delegate {
+	for (d=dels.begin(); d!=dels.end(); d++) {
+		cmds = (*d)->getCommands();
+		for (c=cmds.begin(); c!=cmds.end(); c++) {
+			this->cmds.push_back(*c);
+			this->hans[*c] = *d;
+		}
+	}
 }
 
 
 
 /**
- * Initializes the commands.
+ * Cleans up the delegates.
  */
-void Interpreter::initialize() {
+Interpreter::~Interpreter() {
 	
-	// Set descriptions
-	des[GANDER_BOB] = "Bob";
-	des[GANDER_CANCEL] = "Cancel";
-	des[GANDER_CIRCLE] = "Circle";
-	des[GANDER_CLOSE] = "Close";
-	des[GANDER_COPY] = "Copy";
-	des[GANDER_DELETE] = "Delete";
-	des[GANDER_DESELECT] = "Deselect";
-	des[GANDER_DESELECT_ALL] = "Deselect All";
-	des[GANDER_DUPLICATE] = "Duplicate";
-	des[GANDER_FIT] = "Fit";
-	des[GANDER_FIT_ALL] = "Fit All";
-	des[GANDER_GRAB] = "Grab";
-	des[GANDER_HIDE] = "Hide";
-	des[GANDER_INFORMATION] = "Information";
-	des[GANDER_NUDGE] = "Nudge";
-	des[GANDER_OVERLAY] = "Overlay";
-	des[GANDER_PASTE] = "Paste";
-	des[GANDER_PICK] = "Pick";
-	des[GANDER_ROTATE] = "Rotate";
-	des[GANDER_REVERT] = "Revert";
-	des[GANDER_SCALE] = "Scale";
-	des[GANDER_SAVE] = "Save";
-	des[GANDER_SELECT_ALL] = "Select All";
-	des[GANDER_TILT] = "Tilt";
-	des[GANDER_UNHIDE] = "Unhide";
-	des[GANDER_WEAVE] = "Weave";
-	des[GANDER_ZOOM] = "Zoom";
-	
-	// Set commands
-	
+	// Clean up
+	for (int i=0; i<dels.size(); i++)
+		delete dels[i];
 }
 
 
@@ -65,24 +52,77 @@ void Interpreter::initialize() {
  */
 void Interpreter::print() {
 	
-	map<int, string>::iterator it;
+	std::map<int,Delegate*>::iterator h;
 	
-	// Print
-	cout << "Commands:" << endl;
-	for (it=des.begin(); it!=des.end(); it++)
-		cout << "  " << it->first << " " << it->second << endl;
+	// Get commands
+	std::cout << "Interpreter handlers: " << std::endl;
+	for (h=hans.begin(); h!=hans.end(); h++) {
+		std::cout << "  "
+		          << setw(10) << h->second->getType() << " <- " 
+		          << Command::getName(h->first) << std::endl;
+		hans[h->first] = h->second;
+	}
 }
 
 
+
+/**
+ * Runs a command by handing it off to a delegate.
+ * 
+ * @param command
+ *     Enumerated type from 'Command.hpp'.
+ */
+void Interpreter::run(int command) {
+	
+	// Hand off to delegate
+	hans[command]->run(command);
+}
+
+
+
+/**
+ * Runs a command by handing it off to a delegate.
+ * 
+ * @param command
+ *     Enumerated type from 'Command.hpp'.
+ * @param argument
+ *     Argument to the command.
+ */
+void Interpreter::run(int command, float argument) {
+	
+	// Hand off to delegate
+	hans[command]->run(command, argument);
+}
+
+
+
+/**
+ * Runs a command by handing it off to a delegate.
+ * 
+ * @param command
+ *     Enumerated type from 'Command.hpp'.
+ * @param arg1
+ *     First argument to the command.
+ * @param arg2
+ *     Second argument to the command.
+ */
+void Interpreter::run(int command, float arg1, float arg2) {
+	
+	// Hand off to delegate
+	hans[command]->run(command, arg1, arg2);
+}
 
 
 
 /**
  * Simple test program.
  */
+/*
 int main(int argc, char *argv[]) {
 	
-	Interpreter inter;
+	Scene scene;
+	State state;
+	Interpreter inter(&scene, &state);
 	
 	// Start
 	cout << endl;
@@ -92,7 +132,11 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	inter.print();
+	inter.run(Command::COPY);
+	inter.run(Command::ZOOM_IN);
+	inter.run(Command::HIDE);
+	inter.run(Command::SELECT_ALL);
+	inter.run(Command::ROTATE_X_MINUS);
 	
 	// Finish
 	cout << endl;
@@ -102,3 +146,4 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	return 0;
 }
+*/

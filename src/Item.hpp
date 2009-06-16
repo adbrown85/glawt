@@ -29,6 +29,7 @@ class Item : public Identifiable  {
 		                                const Item &item);
 		
 		virtual std::string attributes() const;
+		virtual void copy(const Item &item);
 		virtual void draw() const = 0;
 		
 		int getID() const {return id;}
@@ -46,10 +47,11 @@ class Item : public Identifiable  {
 	protected : 
 		
 		bool selected, shown;
+		float size;
 		GLenum style;
 		static int count;
 		std::string type;
-		Vector position;
+		Vector position, rotation;
 		int id;
 };
 typedef std::set<Item,Identifiable::Comparator> ItemSet;

@@ -7,6 +7,10 @@
  */
 #include "Display.hpp"
 Scene *Display::scene=NULL;
+State *Display::state;
+Interpreter *Display::interp;
+Outline Display::outline(1.0);
+std::vector<Control*> Display::cons;
 
 
 
@@ -27,16 +31,35 @@ void Display::display(void) {
 	glTranslatef(0.0, 0.0, scene->position.z);
 	glRotatef(scene->rotation.x, 1.0, 0.0, 0.0);
 	glRotatef(scene->rotation.y, 0.0, 1.0, 0.0);
+	glTranslatef(scene->position.x, scene->position.y, 0.0);
 	count = scene->items.size();
 	for (int i=0; i<count; i++) {
 		item = scene->items[i];
-		item->draw();
+		if (item->isShown()) {
+			item->draw();
+			if (item->isSelected()) {
+				outline.copy(*item);
+				outline.draw();
+			}
+		}
 	}
 	
 	// Refresh
 	glutSwapBuffers();
 }
 
+
+
+/**
+ * Installs a control into the display.
+ * 
+ * @param control
+ *     Pointer to an object implementing the Control interface.
+ */
+void Display::install(Control *control) {
+	
+	cons.push_back(control);
+}
 
 
 
@@ -53,7 +76,7 @@ void Display::overlay() {
 
 
 /**
- * Starts the display.  Need to call initialize beforehand.
+ * Starts the display.
  * 
  * @param title
  *     Text to be shown on the window's title bar.
@@ -61,7 +84,8 @@ void Display::overlay() {
  *     Pointer to a Scene with items.  Needs to be constructed first.
  */
 void Display::start(std::string title,
-                    Scene *scene) {
+                    Scene *scene,
+                    State *state) {
 	
 	char **argv;
 	int argc=0, w, h, x=DISPLAY_DEFAULT_X, y=DISPLAY_DEFAULT_Y;
@@ -90,8 +114,8 @@ void Display::start(std::string title,
 	
 	// Register functions
 	glutDisplayFunc(Display::display);
-	Controls::install(scene);
-	Menu::install(scene);
+	for (int i=0; i<cons.size(); i++)
+		cons[i]->install();
 	
 	// Start
 	glutMainLoop();
@@ -103,13 +127,22 @@ void Display::start(std::string title,
  * Simple test program.
  */
 #include "Box.hpp"
+#include "Keyboard.hpp"
+#include "Menu.hpp"
+#include "Mouse.hpp"
+#include "Interpreter.hpp"
 int main(int argc, char *argv[]) {
 	
 	using namespace std;
 	const int count=2;
-	Box box[count];
+	Box b1(2.0), b2(3.0);
 	float x;
-	Scene *scene = new Scene(640, 480);
+	Keyboard keyboard;
+	Menu menu;
+	Mouse mouse;
+	Scene scene(640, 480);
+	State state;
+	Interpreter inter(&scene, &state);
 	
 	// Start
 	cout << endl;
@@ -119,12 +152,17 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	for (int i=0; i<count; i++) {
-		x = (box[i].getID() - 1) * count;
-		box[i].setPosition(x, 0.0, 0.0);
-		scene->add(&box[i]);
-	}
-	Display::start("Display Test Program", scene);
+	b1.setPosition(-1.0, 0.0, 0.0);
+	b2.setPosition( 2.0, 0.0, 0.0);
+	scene.add(&b1);
+	scene.add(&b2);
+	menu.initialize(&scene, &state, &inter);
+	keyboard.initialize(&scene, &state, &inter);
+	mouse.initialize(&scene, &state, &inter);
+	Display::install(&menu);
+	Display::install(&keyboard);
+	Display::install(&mouse);
+	Display::start("Display Test Program", &scene, &state);
 	
 	// Finish
 	cout << endl;

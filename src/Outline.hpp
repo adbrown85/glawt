@@ -1,11 +1,11 @@
 /*
- * Box.hpp
+ * Outline.hpp
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef BOX_HPP
-#define BOX_HPP
+#ifndef OUTLINE_HPP
+#define OUTLINE_HPP
 #include <iostream>
 #include <GL/glut.h>
 #include "Item.hpp"
@@ -13,29 +13,27 @@
 
 
 
-class Box : public Item {
+class Outline : public Item {
 	
 	
 	public : 
 		
-		Box();
-		Box(float size);
+		Outline(float size);
 		
 		virtual void draw() const;
 		
 		void setColor(float r, float g, float b);
+		void setSize(float size);
 	
 	
 	private:
 		
-		GLfloat colors[24][3];
+		float color[3];
 		static bool loaded;
-		static GLfloat coordinates[24][3], points[24][3];
+		static GLfloat points[24][3];
 		static GLubyte indices[24], map[8][3];
 		
 		void initialize();
-		void initializeColors();
-		void initializeCoordinates();
 		void initializeIndices();
 		void initializeMap();
 		void initializePoints();

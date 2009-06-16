@@ -46,6 +46,22 @@ std::string Item::attributes() const {
 
 
 /**
+ * Copies size, position, and rotation from another Item.
+ * 
+ * @param item
+ *     Another item.
+ */
+void Item::copy(const Item &item) {
+	
+	// Copy attributes
+	this->size = item.size;
+	this->position = item.position;
+	this->rotation = item.rotation;
+}
+
+
+
+/**
  * Prints the value of several attributes to the stream.
  */
 std::ostream& operator<<(std::ostream& stream,

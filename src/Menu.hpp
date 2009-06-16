@@ -9,44 +9,33 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
-#include <map>
 #include <string>
+#include <vector>
+#include "Command.hpp"
+#include "Control.hpp"
 #include "Scene.hpp"
-enum {
-	MENU_DELETE,
-	MENU_DESELECT,
-	MENU_DESELECT_ALL,
-	MENU_DUPLICATE,
-	MENU_HIDE,
-	MENU_RESET,
-	MENU_REVERT,
-	MENU_SAVE,
-	MENU_SELECT_ALL,
-	MENU_SHOW_ALL
-};
+#include "State.hpp"
 
 
 
-class Menu {
+class Menu : public Control {
 	
 	
 	public :
 		
+		Menu() {Menu::menu = this;}
+		
 		static void handler(GLint option);
-		static void initialize();
-		static void install(Scene *scene);
-		static void menuItem();
-		static void menuMain();
-		static void print();
+		void install();
+		void menuItem();
+		void menuMain();
+		void print();
 	
 	
 	private:
 		
-		static Scene *scene;
-		static std::map<int,std::string> map;
-		static std::map<int,std::string>::iterator mi;
-		
-		static int menuMainID, menuItemID;
+		static Menu *menu;
+		int menuMainID, menuItemID;
 };
 
 
