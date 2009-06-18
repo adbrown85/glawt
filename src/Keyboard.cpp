@@ -16,6 +16,7 @@ Keyboard *Keyboard::obj=NULL;
 void Keyboard::install() {
 	
 	// Set up bindings
+	className = "Keyboard";
 	bindings();
 	print();
 	
@@ -53,7 +54,7 @@ Binding* Keyboard::lookup(int key,
                           int mod) {
 	
 	Binding *bin=NULL;
-	std::multimap<int,Binding>::iterator bi;
+	multimap<int,Binding>::iterator bi;
 	pair<multimap<int,Binding>::iterator,
 	     multimap<int,Binding>::iterator> ran;
 	

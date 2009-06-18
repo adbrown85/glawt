@@ -10,7 +10,8 @@ Scene *Display::scene=NULL;
 State *Display::state;
 Interpreter *Display::interp;
 Outline Display::outline(1.0);
-std::vector<Control*> Display::cons;
+Translator Display::trn;
+vector<Control*> Display::cons;
 
 
 
@@ -28,10 +29,9 @@ void Display::display(void) {
 	glLoadIdentity();
 	
 	// Draw
-	glTranslatef(0.0, 0.0, scene->position.z);
+	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
 	glRotatef(scene->rotation.x, 1.0, 0.0, 0.0);
 	glRotatef(scene->rotation.y, 0.0, 1.0, 0.0);
-	glTranslatef(scene->position.x, scene->position.y, 0.0);
 	count = scene->items.size();
 	for (int i=0; i<count; i++) {
 		item = scene->items[i];
@@ -40,6 +40,8 @@ void Display::display(void) {
 			if (item->isSelected()) {
 				outline.copy(*item);
 				outline.draw();
+				trn.copy(*item);
+				trn.draw();
 			}
 		}
 	}
@@ -131,10 +133,10 @@ void Display::start(std::string title,
 #include "Menu.hpp"
 #include "Mouse.hpp"
 #include "Interpreter.hpp"
+#include "Translator.hpp"
 int main(int argc, char *argv[]) {
 	
 	using namespace std;
-	const int count=2;
 	Box b1(2.0), b2(3.0);
 	float x;
 	Keyboard keyboard;

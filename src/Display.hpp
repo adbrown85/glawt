@@ -18,6 +18,8 @@
 #include "Outline.hpp"
 #include "Scene.hpp"
 #include "State.hpp"
+#include "Translator.hpp"
+using std::vector;
 
 
 
@@ -35,11 +37,12 @@ class Display {
 	
 	private :
 		
+		static Interpreter *interp;
 		static Outline outline;
 		static Scene *scene;
 		static State *state;
-		static Interpreter *interp;
-		static std::vector<Control*> cons;
+		static Translator trn;
+		static vector<Control*> cons;
 		
 		static void overlay();
 };

@@ -44,10 +44,11 @@ Director::Director() {
 void Director::cmdGrab(int cmd, float x, float y) {
 	
 	const int pickBuffSize=32;
-	GLuint pickBuffer[pickBuffSize];
+	GLuint id, pickBuffer[pickBuffSize], pos, *ptr;
 	GLint nPicks, vpArray[4];
 	int count;
 	Item *item;
+	Translator trn;
 	
 	// Initialize pick buffer and names
 	glSelectBuffer(pickBuffSize, pickBuffer);
@@ -74,16 +75,20 @@ void Director::cmdGrab(int cmd, float x, float y) {
 	// Draw
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glTranslatef(0.0, 0.0, scene->position.z);
+	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
 	glRotatef(scene->rotation.x, 1.0, 0.0, 0.0);
 	glRotatef(scene->rotation.y, 0.0, 1.0, 0.0);
-	glTranslatef(scene->position.x, scene->position.y, 0.0);
 	count = scene->items.size();
 	for (int i=0; i<count; i++) {
 		item = scene->items[i];
 		if (item->isShown()) {
 			glPushName(item->getID());
 			item->draw();
+			if (item->isSelected()) {
+				glPushName(count+item->getID());
+				trn.copy(*item);
+				trn.draw();
+			}
 		}
 	}
 	
@@ -95,26 +100,38 @@ void Director::cmdGrab(int cmd, float x, float y) {
 	// Determine number of picked objects, return to normal rendering mode
 	nPicks = glRenderMode(GL_RENDER);
 	
-	GLuint position, id, *ptr;
-	
 	// Find ID of object picked
 	ptr = pickBuffer;
 	for (int i=0; i<nPicks; i++) {
-		position = *ptr;
+		pos = *ptr;
 		ptr += 3;
-		for (int j=0; j<position; j++) {
+		for (int j=0; j<pos; j++) {
 			id = *ptr;
 			ptr++;
 		}
 	}
 	
-	// Select the object
+	// Check for manipulator
 	count = scene->items.size();
 	for (int i=0; i<count; i++) {
 		item = scene->items[i];
-		if (item->getID() == id) {
-			item->toggleSelected();
+		if (count+item->getID() == id) {
+			std::cout << "Manipulator for item: " << item->getID() << std::endl;
+			state->manAct = true;
+			std::cout << "Manipulator active" << std::endl;
 			break;
+		}
+	}
+	
+	// Select the object
+	if (!state->manAct) {
+		count = scene->items.size();
+		for (int i=0; i<count; i++) {
+			item = scene->items[i];
+			if (item->getID() == id) {
+				item->toggleSelected();
+				break;
+			}
 		}
 	}
 }

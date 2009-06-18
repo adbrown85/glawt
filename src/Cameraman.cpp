@@ -26,14 +26,18 @@ Cameraman::Cameraman() {
 	hans0[Command::RESET] = &Cameraman::cmdReset;
 	
 	// Add one-argument handlers
+	hans1[Command::BOOM] = &Cameraman::cmdTrans;
 	hans1[Command::BOOM_DOWN] = &Cameraman::cmdTrans;
 	hans1[Command::BOOM_UP] = &Cameraman::cmdTrans;
+	hans1[Command::CIRCLE_X] = &Cameraman::cmdRotate;
+	hans1[Command::CIRCLE_Y] = &Cameraman::cmdRotate;
 	hans1[Command::CIRCLE_LEFT] = &Cameraman::cmdRotate;
 	hans1[Command::CIRCLE_RIGHT] = &Cameraman::cmdRotate;
 	hans1[Command::CIRCLE_DOWN] = &Cameraman::cmdRotate;
 	hans1[Command::CIRCLE_UP] = &Cameraman::cmdRotate;
 	hans1[Command::ZOOM_IN] = &Cameraman::cmdTrans;
 	hans1[Command::ZOOM_OUT] = &Cameraman::cmdTrans;
+	hans1[Command::TRACK] = &Cameraman::cmdTrans;
 	hans1[Command::TRACK_LEFT] = &Cameraman::cmdTrans;
 	hans1[Command::TRACK_RIGHT] = &Cameraman::cmdTrans;
 	
@@ -107,8 +111,12 @@ void Cameraman::cmdReset(int cmd) {
  */
 void Cameraman::cmdRotate(int cmd, float amt) {
 	
-	amt = abs(amt);
+	// amt = abs(amt);
 	switch (cmd) {
+		case Command::CIRCLE_X :
+			scene->rotation.x += amt; break;
+		case Command::CIRCLE_Y :
+			scene->rotation.y += amt; break;
 		case Command::CIRCLE_LEFT :
 			scene->rotation.y -= amt; break;
 		case Command::CIRCLE_RIGHT :
@@ -133,14 +141,18 @@ void Cameraman::cmdRotate(int cmd, float amt) {
 void Cameraman::cmdTrans(int cmd, float amt) {
 	
 	switch (cmd) {
+		case Command::BOOM :
+			scene->position.y += amt * 0.011; break;
 		case Command::BOOM_DOWN :
-			scene->position.y -= fabs(amt) * 0.01; break;
+			scene->position.y -= fabs(amt) * 0.011; break;
 		case Command::BOOM_UP :
-			scene->position.y += fabs(amt) * 0.01; break;
+			scene->position.y += fabs(amt) * 0.011; break;
+		case Command::TRACK :
+			scene->position.x += amt * 0.011; break;
 		case Command::TRACK_LEFT :
-			scene->position.x -= fabs(amt) * 0.01; break;
+			scene->position.x -= fabs(amt) * 0.011; break;
 		case Command::TRACK_RIGHT :
-			scene->position.x += fabs(amt) * 0.01; break;
+			scene->position.x += fabs(amt) * 0.011; break;
 		case Command::ZOOM_IN :
 			scene->position.z += amt; break;
 		case Command::ZOOM_OUT :

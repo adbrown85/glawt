@@ -22,14 +22,18 @@ class Command {
 		static std::string getName(int command);
 		
 		enum {
+			BOOM,
 			BOOM_DOWN,
 			BOOM_UP,
+			CIRCLE_X,
+			CIRCLE_Y,
 			CIRCLE_LEFT,
 			CIRCLE_RIGHT,
 			CIRCLE_DOWN,
 			CIRCLE_UP,
 			FIT_SELECTED,
 			FIT_ALL,
+			TRACK,
 			TRACK_LEFT,
 			TRACK_RIGHT,
 			ZOOM_IN,
@@ -79,14 +83,18 @@ class Command {
 		static std::map<int,std::string> names;
 		
 		static void setNames() {
+			names[BOOM] = "Boom";
 			names[BOOM_DOWN] = "Boom Down";
 			names[BOOM_UP] = "Boom Up";
+			names[CIRCLE_Y] = "Circle Y";
+			names[CIRCLE_X] = "Circle X";
 			names[CIRCLE_LEFT] = "Circle Left";
 			names[CIRCLE_RIGHT] = "Circle Right";
 			names[CIRCLE_DOWN] = "Circle Down";
 			names[CIRCLE_UP] = "Circle Up";
 			names[FIT_SELECTED] = "Fit Selected";
 			names[FIT_ALL] = "Fit All";
+			names[TRACK] = "Track";
 			names[TRACK_LEFT] = "Track Left";
 			names[TRACK_RIGHT] = "Track Right";
 			names[ZOOM_IN] = "Zoom In";

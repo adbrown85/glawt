@@ -8,65 +8,16 @@
 #include <iostream>
 #include "Binding.hpp"
 bool Binding::loaded=false;
-std::map<int,std::string> Binding::keys;
-
-
-
-/**
- * Initializes the required attributes for a binding.
- * 
- * @param trigger
- *     Button or key that triggers the command.
- * @param command
- *     Command to be issued.  From 'Command.h'.
- */
-void Binding::init(int trigger,
-                   int command) {
-	
-	// Set attributes
-	trg = isCha ? toupper(trigger) : trigger;
-	cmd = command;
-	mod = 0;
-	hasArg = false;
-	hasSte = false;
-	
-	// Load names
-	if (!loaded)
-		names();
-	loaded = true;
-}
-
-
-
-/**
- * Returns the name of a key or binding.
- */
-std::string Binding::getName() const {
-	
-	std::map<int,std::string>::const_iterator n;
-	std::string str;
-	
-	// Lookup and return name
-	if (isCha && isalpha((char)trg))
-		str = trg;
-	else {
-		n = keys.find(trg);
-		if (n != keys.end())
-			str = n->second;
-		else
-			str = "-";
-	}
-	return str;
-}
+map<int,string> Binding::nams;
 
 
 
 /**
  * 
  */
-std::string Binding::getModifierStr() const {
+string Binding::getModifierStr() const {
 	
-	std::string str="";
+	string str="";
 	
 	// Lookup and return name
 	switch (mod) {
@@ -81,17 +32,101 @@ std::string Binding::getModifierStr() const {
 
 
 /**
+ * Returns the name of a key or binding.
+ */
+string Binding::getTriggerStr() const {
+	
+	map<int,string>::const_iterator n;
+	string str;
+	
+	// Lookup and return name
+	if (isCharacter() && isalpha((char)trg))
+		str = trg;
+	else {
+		n = nams.find(trg);
+		if (n != nams.end())
+			str = n->second;
+		else
+			str = "-";
+	}
+	return str;
+}
+
+
+
+bool Binding::hasDrag() const {
+	
+	return (sta == DRAG_X || sta == DRAG_Y);
+}
+
+
+
+/**
+ * Initializes the required attributes for a binding.
+ */
+void Binding::init(int trg, int mod, int cmd, int sta) {
+	
+	// Load names
+	if (!loaded)
+		names();
+	loaded = true;
+	
+	// Set attributes
+	this->trg = isCharacter(trg) ? toupper(trg) : trg;
+	this->mod = mod;
+	this->cmd = cmd;
+	this->sta = sta;
+	hasArg = false;
+}
+
+
+
+/**
+ * Initializes the required attributes for a binding.
+ */
+void Binding::init(int trg, int mod, int cmd, int sta, float arg) {
+	
+	// Set attributes
+	init(trg, mod, cmd, sta);
+	this->arg = arg;
+	hasArg = true;
+}
+
+
+
+/**
+ * Trigger is a character if it's not listed in the 'nams' map.
+ */
+bool Binding::isCharacter(int trg) {
+	
+	map<int,string>::const_iterator ni;
+	
+	// Check exceptions
+	if (trg == '\t')
+		return true;
+	
+	// Check if in names
+	ni = nams.find(trg);
+	return ni == nams.end();
+}
+
+
+
+/**
  * Prints the binding.
  */
 std::ostream& operator<<(std::ostream& stream,
                          const Binding &b) {
 	
-	using namespace std;
+	string str;
+	
+	// Format
+	if (b.hasModifier())
+		str = b.getModifierStr() + "+";
+	str += b.getTriggerStr();
 	
 	// Print
-	if (b.hasModifier())
-		stream << b.getModifierStr() << "+";
-	stream << b.getName() << "\t\t";
+	stream << std::setw(15) << std::left << str;
 	stream << b.getCommandStr();
 	return stream;
 }
@@ -103,24 +138,16 @@ std::ostream& operator<<(std::ostream& stream,
  */
 /*
 #include <vector>
+using std::vector;
 int main(int argc, char *argv[]) {
 	
 	using namespace std;
-	Binding b1(GLUT_KEY_LEFT,
-	           Command::CIRCLE_LEFT);
-	Binding b2(GLUT_KEY_RIGHT,
-	           Command::CIRCLE_RIGHT,
-	           GLUT_ACTIVE_ALT);
-	Binding b3(GLUT_KEY_UP,
-	           Command::CIRCLE_UP,
-	           GLUT_ACTIVE_SHIFT,
-	           50.5);
-	Binding b4('d',
-	           Command::DESELECT);
-	Binding b5('c',
-	           Command::COPY,
-	           GLUT_ACTIVE_CTRL);
-	std::vector<Binding*> bins;
+	Binding b1(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT);
+	Binding b2(GLUT_KEY_RIGHT, GLUT_ACTIVE_ALT, Command::CIRCLE_RIGHT);
+	Binding b3(GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT, Command::CIRCLE_UP);
+	Binding b4('D', 0, Command::DESELECT, 5.0f);
+	Binding b5('C', GLUT_ACTIVE_CTRL, Command::COPY);
+	vector<Binding*> bins;
 	
 	// Start
 	cout << endl;
@@ -135,8 +162,12 @@ int main(int argc, char *argv[]) {
 	bins.push_back(&b3);
 	bins.push_back(&b4);
 	bins.push_back(&b5);
-	for (int i=0; i<bins.size(); i++)
+	for (int i=0; i<bins.size(); i++) {
 		cout << *bins[i] << endl;
+		// cout << bins[i]->getState() << endl;
+	}
+	cout << GLUT_DOWN << endl;
+	cout << GLUT_UP << endl;
 	
 	// Finish
 	cout << endl;

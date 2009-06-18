@@ -33,6 +33,8 @@ class Item : public Identifiable  {
 		virtual void draw() const = 0;
 		
 		int getID() const {return id;}
+		Vector getPosition() const {return position;}
+		float getSize() const {return size;}
 		bool isSelected() const {return selected;}
 		bool isShown() const {return shown;}
 		void setID(int id) {this->id = id;}

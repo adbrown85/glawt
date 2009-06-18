@@ -19,6 +19,7 @@
 #include "Delegate.hpp"
 #include "Scene.hpp"
 #include "State.hpp"
+using std::multimap;
 
 
 
@@ -27,34 +28,29 @@ class Keyboard : public Control {
 	
 	private :
 		
-		std::multimap<int,Binding> bins;
-		
 		static Keyboard *obj;
 		
-		void add(const Binding &bin) {
-			bins.insert(pair<int,Binding>(bin.getTrigger(), bin));
-		}
 		void bindings() {
-			add(Binding(GLUT_KEY_LEFT, Command::CIRCLE_LEFT, 5.0f));
-			add(Binding(GLUT_KEY_RIGHT, Command::CIRCLE_RIGHT, 5.0f));
-			add(Binding(GLUT_KEY_DOWN, Command::CIRCLE_DOWN, 5.0f));
-			add(Binding(GLUT_KEY_UP, Command::CIRCLE_UP, 5.0f));
-			add(Binding(GLUT_KEY_HOME, Command::RESET));
-			add(Binding('c', Command::COPY, GLUT_ACTIVE_ALT));
-			add(Binding('v', Command::PASTE, GLUT_ACTIVE_ALT));
-			add(Binding('x', Command::CUT, GLUT_ACTIVE_ALT));
-			add(Binding('s', Command::SAVE, GLUT_ACTIVE_ALT));
-			add(Binding('q', Command::EXIT, GLUT_ACTIVE_ALT));
-			add(Binding('w', Command::EXIT, GLUT_ACTIVE_ALT));
-			add(Binding('a', Command::SELECT_ALL, GLUT_ACTIVE_ALT));
-			add(Binding('d', Command::DESELECT));
-			add(Binding('d', Command::DUPLICATE, GLUT_ACTIVE_ALT));
-			add(Binding('f', Command::FIT_SELECTED));
-			add(Binding('a', Command::FIT_ALL));
-			add(Binding('\t', Command::NEXT));
-			add(Binding('i', Command::INFORMATION));
-			add(Binding('h', Command::HIDE));
-			add(Binding('u', Command::SHOW_ALL));
+			add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
+			add(Binding(GLUT_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));
+			add(Binding(GLUT_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
+			add(Binding(GLUT_KEY_UP, 0, Command::CIRCLE_UP, 5.0f));
+			add(Binding(GLUT_KEY_HOME, 0, Command::RESET));
+			add(Binding('C', GLUT_ACTIVE_ALT, Command::COPY));
+			add(Binding('V', GLUT_ACTIVE_ALT, Command::PASTE));
+			add(Binding('X', GLUT_ACTIVE_ALT, Command::CUT));
+			add(Binding('S', GLUT_ACTIVE_ALT, Command::SAVE));
+			add(Binding('Q', GLUT_ACTIVE_ALT, Command::EXIT));
+			add(Binding('W', GLUT_ACTIVE_ALT, Command::EXIT));
+			add(Binding('A', GLUT_ACTIVE_ALT, Command::SELECT_ALL));
+			add(Binding('D', 0, Command::DESELECT));
+			add(Binding('D', GLUT_ACTIVE_ALT, Command::DUPLICATE));
+			add(Binding('F', 0, Command::FIT_SELECTED));
+			add(Binding('A', 0, Command::FIT_ALL));
+			add(Binding('\t', 0, Command::NEXT));
+			add(Binding('I', 0, Command::INFORMATION));
+			add(Binding('H', 0, Command::HIDE));
+			add(Binding('U', 0, Command::SHOW_ALL));
 		}
 	
 	
@@ -68,12 +64,6 @@ class Keyboard : public Control {
 		
 		static void character(unsigned char key, int x, int y);
 		static void special(int key, int x, int y);
-		
-		void print() {
-			std::multimap<int,Binding>::iterator bi;
-			for (bi=bins.begin(); bi!=bins.end(); bi++)
-				std::cout << "  " << bi->second << std::endl;
-		}
 };
 
 

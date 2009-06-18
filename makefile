@@ -12,10 +12,12 @@ OBJECTS = Binding.o \
           Interpreter.o \
           Item.o \
           Keyboard.o \
+          Manipulator.o \
           Menu.o \
           Mouse.o \
           Outline.o \
           Producer.o \
+          Translator.o \
           Scene.o \
           Vector.o
 %.o : %.cpp %.hpp
@@ -36,7 +38,7 @@ Camerman.o : Command.o Delegate.hpp Scene.o State.hpp
 Command.o : 
 Compositor.o : Command.o Delegate.hpp Scene.o State.hpp
 Director.o : Command.o Delegate.hpp Scene.o State.hpp
-Display.o : Box.o Control.hpp Keyboard.o Interpreter.o Item.o Menu.o Mouse.o Outline.o Scene.o
+Display.o : Box.o Control.hpp Keyboard.o Interpreter.o Item.o Manipulator.o Menu.o Mouse.o Outline.o Scene.o Translator.o
 Grip.o : Command.o Delegate.hpp Scene.o State.hpp
 Interpreter.o : Cameraman.o \
                 Command.o \
@@ -48,9 +50,11 @@ Interpreter.o : Cameraman.o \
 Item.o : Identifiable.hpp Vector.o
 Keyboard.o : Binding.o Command.o Control.hpp Scene.o State.hpp
 Mouse.o : Command.o Control.hpp Scene.o State.hpp
+Manipulator.o : Identifiable.hpp Item.o Vector.o
 Menu.o : Command.o Control.hpp Scene.o State.hpp
 Outline.o : Item.o
 Producer.o : Command.o Delegate.hpp Scene.o State.hpp
+Translator.o : Manipulator.o
 Scene.o : Item.o Vector.o
 Vector.o :
 

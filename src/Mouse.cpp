@@ -6,7 +6,8 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Mouse.hpp"
-Mouse *Mouse::instance=NULL;
+Mouse *Mouse::obj=NULL;
+set<int> Mouse::spcs;
 
 
 
@@ -16,7 +17,11 @@ Mouse *Mouse::instance=NULL;
 void Mouse::install() {
 	
 	// Register functions
-	Mouse::instance = this;
+	Mouse::obj = this;
+	className = "Mouse";
+	bindings();
+	specials();
+	print();
 	glutMouseFunc(Mouse::mouse);
 	glutMotionFunc(Mouse::motion);
 }
@@ -29,40 +34,40 @@ void Mouse::install() {
 void Mouse::motion(int x,
                    int y) {
 	
-	Delegate *del=Mouse::instance->del;
-	int xDif, yDif;
+	int count, xDif, yDif;
+	Item *itm;
+	Vector pos;
 	
-	// Initialize
-	xDif = Mouse::instance->xLast - x;
-	yDif = Mouse::instance->yLast - y;
 	
-	// Rotate the scene
-	if (Mouse::instance->allowRotate) {
-		if (xDif < 0)
-			del->run(Command::CIRCLE_RIGHT, xDif);
-		else if (xDif > 0)
-			del->run(Command::CIRCLE_LEFT, xDif);
-		if (yDif < 0)
-			del->run(Command::CIRCLE_DOWN, yDif);
-		else if (yDif > 0)
-			del->run(Command::CIRCLE_UP, yDif);
-	}
-	else if (Mouse::instance->allowTrans) {
-		if (xDif < 0)
-			del->run(Command::TRACK_RIGHT, xDif);
-		else if (xDif > 0)
-			del->run(Command::TRACK_LEFT, xDif);
-		if (yDif < 0)
-			del->run(Command::BOOM_DOWN, yDif);
-		else if (yDif > 0)
-			del->run(Command::BOOM_UP, yDif);
+	xDif = obj->xLast - x;
+	yDif = obj->yLast - y;
+	
+	if (obj->state->manAct == true) {
+		count = obj->scene->items.size();
+		for (int i=0; i<count; i++) {
+			itm = obj->scene->items[i];
+			if (itm->isSelected()) {
+				pos = itm->getPosition();
+				itm->setPosition(pos.x, pos.y+yDif*0.01, pos.z);
+			}
+		}
 	}
 	
-	// Save for next time
-	Mouse::instance->xLast = x;
-	Mouse::instance->yLast = y;
+	else {
+		// Drag in X
+		if (obj->dragX) {
+			obj->del->run(obj->dragXCmd, obj->dragXArg * xDif);
+		}
+		
+		// Drag in Y
+		if (obj->dragY) {
+			obj->del->run(obj->dragYCmd, obj->dragYArg * yDif);
+		}
+	}
 	
 	// Refresh
+	obj->xLast = x;
+	obj->yLast = y;
 	glutPostRedisplay();
 }
 
@@ -72,49 +77,75 @@ void Mouse::motion(int x,
  * Handles mouse clicks.
  */
 void Mouse::mouse(int button,
-                  int action,
+                  int state,
                   int x,
                   int y) {
 	
-	Delegate *del=Mouse::instance->del;
-	State *state=Mouse::instance->state;
+	Binding *bin;
+	int mod;
+	pair<multimap<int,Binding>::iterator,
+	     multimap<int,Binding>::iterator> ran;
+	multimap<int,Binding>::iterator bi;
 	
-	// Run command
-	switch (button) {
-		case GLUT_MIDDLE_BUTTON :
-			if (action == GLUT_DOWN)
-				Mouse::instance->allowTrans = true;
-			else
-				Mouse::instance->allowTrans = false;
-			break;
-		case GLUT_LEFT_BUTTON :
-			if (action == GLUT_DOWN) {
-				if (glutGetModifiers() != GLUT_ACTIVE_ALT)
-					Mouse::instance->allowRotate = true;
-			}
-			else {
-				Mouse::instance->allowRotate = false;
-				if (glutGetModifiers() == GLUT_ACTIVE_ALT) {
-					del->run(Command::GRAB, x, y);
-					glutPostRedisplay();
+	// Lookup
+	mod = glutGetModifiers();
+	if (mod == 1 || mod == 5)
+		mod -= 1;
+	ran = obj->bins.equal_range(button);
+	for (bi=ran.first; bi!=ran.second; ++bi) {
+		bin = &bi->second;
+		if (bin->getModifier() == mod) {
+			if (bin->hasDrag()) {
+				if (bin->getState() == Binding::DRAG_X) {
+					if (state == GLUT_DOWN) {
+						obj->dragXCmd = bin->getCommand();
+						obj->dragXArg = bin->getArgument();
+						obj->xLast = x;
+						obj->dragX = true;
+					}
+					else {
+						obj->dragX = false;
+					}
+				}
+				else if (bin->getState() == Binding::DRAG_Y) {
+					if (state == GLUT_DOWN) {
+						obj->dragYCmd = bin->getCommand();
+						obj->dragYArg = bin->getArgument();
+						obj->yLast = y;
+						obj->dragY = true;
+					}
+					else {
+						obj->dragY = false;
+					}
 				}
 			}
-			break;
-		case GLUT_WHEEL_DOWN :
-			if (action == GLUT_DOWN)
-				del->run(Command::ZOOM_OUT, 1.0);
+			else if (state == bin->getState()) {
+				if (needsCoordinates(bin->getCommand()))
+					obj->del->run(bin->getCommand(), x, y);
+				else if (bin->hasArgument())
+					obj->del->run(bin->getCommand(), bin->getArgument());
+				else
+					obj->del->run(bin->getCommand());
 				glutPostRedisplay();
-			break;
-		case GLUT_WHEEL_UP :
-			if (action == GLUT_DOWN)
-				del->run(Command::ZOOM_IN, 1.0);
-				glutPostRedisplay();
-			break;
-		default :
-			break;
+			}
+		}
 	}
 	
-	// Save for next time
-	Mouse::instance->xLast = x;
-	Mouse::instance->yLast = y;
+	// Clear manipulator
+	if (state == GLUT_UP)
+		obj->state->setManipulator(false);
+}
+
+
+
+/**
+ * Checks if a command needs coordinates.
+ */
+bool Mouse::needsCoordinates(int cmd) {
+	
+	set<int>::iterator si;
+	
+	// Check if in vector
+	si = spcs.find(cmd);
+	return si != spcs.end();
 }

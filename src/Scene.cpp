@@ -133,7 +133,7 @@ void Scene::reset() {
 
 
 /**
- * Selects all items in the scene.
+ * Selects all items in the scene that are not hidden.
  */
 void Scene::selectAll() {
 	
@@ -142,7 +142,8 @@ void Scene::selectAll() {
 	// Set all items as selected
 	count = items.size();
 	for (int i=0; i<count; i++)
-		items[i]->setSelected(true);
+		if (items[i]->isShown())
+			items[i]->setSelected(true);
 }
 
 

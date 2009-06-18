@@ -13,6 +13,7 @@
 #include "Delegate.hpp"
 #include "Scene.hpp"
 #include "State.hpp"
+#include "Translator.hpp"
 
 
 

@@ -1,6 +1,8 @@
 /*
  * Binding.hpp
- *     Maps a combination of keys to a command.
+ *     Maps a combination of keys to a command.  Currently mouse bindings 
+ * should not be stored with keyboard bindings.  Also only F9 or tab can be 
+ * used because GLUT assigns them the same ASCII code.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -13,6 +15,10 @@
 #include <iostream>
 #include <map>
 #include "Command.hpp"
+#define GLUT_UP_BUTTON 3
+#define GLUT_DOWN_BUTTON 4
+using std::map;
+using std::string;
 
 
 
@@ -21,104 +27,76 @@ class Binding {
 	
 	private :
 		
-		bool hasArg, hasSte, isCha;
-		int trg, cmd, mod, ste;
+		
+		bool hasArg;
+		int cmd, mod, sta, trg;
 		float arg;
 		
-		void init(int trigger, int command);
+		void init(int trg, int mod, int cmd, int sta);
+		void init(int trg, int mod, int cmd, int sta, float arg);
 		
 		static bool loaded;
-		static std::map<int,std::string> keys;
+		static map<int,string> nams;
 		
+		static bool isCharacter(int trigger);
 		static void names() {
-			keys[GLUT_KEY_LEFT] = "Left";
-			keys[GLUT_KEY_RIGHT] = "Right";
-			keys[GLUT_KEY_UP] = "Up";
-			keys[GLUT_KEY_DOWN] = "Down";
-			keys[GLUT_KEY_F1] = "F1";
-			keys[GLUT_KEY_F2] = "F2";
-			keys[GLUT_KEY_F3] = "F3";
-			keys[GLUT_KEY_F4] = "F4";
-			keys[GLUT_KEY_F5] = "F5";
-			keys[GLUT_KEY_F6] = "F6";
-			keys[GLUT_KEY_F7] = "F7";
-			keys[GLUT_KEY_F8] = "F8";
-			keys['\t'] = "Tab";
-			keys[GLUT_KEY_F10] = "F10";
-			keys[GLUT_KEY_F11] = "F11";
-			keys[GLUT_KEY_F12] = "F12";
-			keys[GLUT_KEY_HOME] = "Home";
-			keys[GLUT_KEY_END] = "End";
-			keys[GLUT_KEY_INSERT] = "Insert";
+			nams[GLUT_KEY_LEFT] = "Left";
+			nams[GLUT_KEY_RIGHT] = "Right";
+			nams[GLUT_KEY_UP] = "Up";
+			nams[GLUT_KEY_DOWN] = "Down";
+			nams[GLUT_LEFT_BUTTON] = "LMB";
+			nams[GLUT_MIDDLE_BUTTON] = "MMB";
+			nams[GLUT_RIGHT_BUTTON] = "RMB";
+			nams[GLUT_UP_BUTTON] = "MWU";
+			nams[GLUT_DOWN_BUTTON] = "MWD";
+			nams['\t'] = "Tab";
+			nams[GLUT_KEY_HOME] = "Home";
+			nams[GLUT_KEY_END] = "End";
+			nams[GLUT_KEY_INSERT] = "Insert";
 		}
 	
 	
 	public :
 		
+		enum {DRAG_X=2, DRAG_Y=3};
+		
 		Binding(int trigger,
-		        int command) {
-			isCha = false;
-			init(trigger, command);
-		}
-		Binding(int trigger,
-		        int command,
-		        int modifier) {
-			isCha = false;
-			init(trigger, command);
-			mod = modifier;
-		}
-		Binding(int trigger,
-		        int command,
-		        float argument) {
-			isCha = false;
-			init(trigger, command);
-			arg = argument;
-			hasArg = true;
-		}
-		Binding(int trigger,
-		        int command,
 		        int modifier,
-		        float argument) {
-			isCha = false;
-			init(trigger, command);
-			mod = modifier;
-			hasArg = true;
-			arg = argument;
-		}
-		Binding(char key,
 		        int command) {
-			isCha = true;
-			init(key, command);
+			init(trigger, modifier, command, -1);
 		}
-		Binding(char key,
-		        int command,
-		        int modifier) {
-			isCha = true;
-			init(key, command);
-			mod = modifier;
-		}
-		Binding(char key,
-		        int command,
+		Binding(int trigger,
 		        int modifier,
+		        int command,
 		        float argument) {
-			isCha = true;
-			init(key, command);
-			mod = modifier;
-			hasArg = true;
-			arg = argument;
+			init(trigger, modifier, command, -1, argument);
+		}
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        int state) {
+			init(trigger, modifier, command, state);
+		}
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        float argument,
+		        int state) {
+			init(trigger, modifier, command, state, argument);
 		}
 		
 		float getArgument() const {return arg;}
 		int getCommand() const {return cmd;}
-		std::string getCommandStr() const {return Command::getName(cmd);}
+		string getCommandStr() const {return Command::getName(cmd);}
 		int getModifier() const {return mod;}
-		std::string getModifierStr() const;
-		std::string getName() const;
-		char getKey() const {return static_cast<char>(trg);}
+		string getModifierStr() const;
+		int getState() {return sta;}
 		int getTrigger() const {return trg;}
+		string getTriggerStr() const;
 		bool hasArgument() const {return hasArg;}
 		bool hasModifier() const {return mod != 0;}
-		bool isChar() const {return isCha;}
+		bool hasDrag() const;
+		bool isCharacter() const {return isCharacter(this->trg);}
 		
 		friend std::ostream& operator<<(std::ostream& stream,
                                         const Binding &b);
