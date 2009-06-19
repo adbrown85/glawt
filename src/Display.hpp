@@ -11,6 +11,7 @@
 #define DISPLAY_DEFAULT_Y 100
 #include <cstdlib>
 #include <GL/glut.h>
+#include <iomanip>
 #include <iostream>
 #include "Control.hpp"
 #include "Interpreter.hpp"
