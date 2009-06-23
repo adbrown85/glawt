@@ -71,7 +71,8 @@ class Command {
 			GRAB,
 			NEXT,
 			PREVIOUS,
-			SELECT_ALL
+			SELECT_ALL,
+			MANIPULATE
 		};
 	
 	
@@ -133,6 +134,7 @@ class Command {
 			names[NEXT] = "Next";
 			names[PREVIOUS] = "Previous";
 			names[SELECT_ALL] = "Select All";
+			names[MANIPULATE] = "Manipulate";
 		}
 };
 

@@ -1,16 +1,18 @@
 /*
  * Translator.hpp
- *     Visual tool for moving items.
+ *     Visual tool for moving shapes.
  *
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andy Brown <adb1413@rit.edu>
  */
 #ifndef __TRANSLATOR_HEADER__
 #define __TRANSLATOR_HEADER__
-#include <cstdlib>
+#include <cmath>
 #include <iostream>
 #include <GL/glut.h>
 #include "Manipulator.hpp"
+#include "Matrix.hpp"
+#include "Vector.hpp"
 
 
 
@@ -19,18 +21,17 @@ class Translator : public Manipulator {
 	
 	public :
 		
-		Translator() {
-			cyl = gluNewQuadric();
-			gluQuadricDrawStyle(cyl, GLU_FILL);
-			className = "Translator";
-		}
+		Translator(float x, float y, float z);
 		
-		virtual void draw() const;
+		void draw() const;
+		void use(Scene *scene, const Vector &difference);
 	
 	
 	private:
 		
-		GLUquadric *cyl;
+		Translator();
+		
+		GLUquadricObj *cyl;
 };
 
 

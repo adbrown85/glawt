@@ -65,6 +65,7 @@ void Grip::run(int command) {
  */
 void Grip::cmdRotate(int cmd) {
 	
+/*
 	switch (cmd) {
 		case Command::ROTATE_X_MINUS :
 			scene->rotation.x -= 2.0; break;
@@ -79,6 +80,7 @@ void Grip::cmdRotate(int cmd) {
 		case Command::ROTATE_Z_PLUS :
 			scene->rotation.z += 2.0; break;
 	}
+*/
 	glutPostRedisplay();
 }
 

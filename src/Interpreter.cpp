@@ -9,19 +9,19 @@
 
 
 
-Interpreter::Interpreter(Scene *scene,
-                         State *state) {
+Interpreter::Interpreter(Scene *scene) {
 	
 	std::vector<int> cmds;
 	std::vector<int>::iterator c;
 	std::vector<Delegate*>::iterator d;
 	
+	// Initialize
+	this->scene = scene;
+	
 	// Load delegates
 	load();
-	for (d=dels.begin(); d!=dels.end(); d++) {
+	for (d=dels.begin(); d!=dels.end(); d++)
 		(*d)->setScene(scene);
-		(*d)->setState(state);
-	}
 	
 	// Add commands from each delegate {
 	for (d=dels.begin(); d!=dels.end(); d++) {
@@ -58,7 +58,7 @@ void Interpreter::print() {
 	std::cout << "Interpreter handlers: " << std::endl;
 	for (h=hans.begin(); h!=hans.end(); h++) {
 		std::cout << "  "
-		          << setw(10) << h->second->getType() << " <- " 
+		          << std::setw(10) << h->second->getType() << " <- " 
 		          << Command::getName(h->first) << std::endl;
 		hans[h->first] = h->second;
 	}
@@ -74,8 +74,12 @@ void Interpreter::print() {
  */
 void Interpreter::run(int command) {
 	
+	map<int,Delegate*>::iterator hi;
+	
 	// Hand off to delegate
-	hans[command]->run(command);
+	hi = hans.find(command);
+	if (hi != hans.end())
+		hi->second->run(command);
 }
 
 
@@ -90,26 +94,12 @@ void Interpreter::run(int command) {
  */
 void Interpreter::run(int command, float argument) {
 	
-	// Hand off to delegate
-	hans[command]->run(command, argument);
-}
-
-
-
-/**
- * Runs a command by handing it off to a delegate.
- * 
- * @param command
- *     Enumerated type from 'Command.hpp'.
- * @param arg1
- *     First argument to the command.
- * @param arg2
- *     Second argument to the command.
- */
-void Interpreter::run(int command, float arg1, float arg2) {
+	map<int,Delegate*>::iterator hi;
 	
 	// Hand off to delegate
-	hans[command]->run(command, arg1, arg2);
+	hi = hans.find(command);
+	if (hi != hans.end())
+		hi->second->run(command, argument);
 }
 
 
@@ -133,10 +123,8 @@ int main(int argc, char *argv[]) {
 	
 	// Test
 	inter.run(Command::COPY);
-	inter.run(Command::ZOOM_IN);
 	inter.run(Command::HIDE);
 	inter.run(Command::SELECT_ALL);
-	inter.run(Command::ROTATE_X_MINUS);
 	
 	// Finish
 	cout << endl;

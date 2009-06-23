@@ -18,19 +18,33 @@
 #include "Control.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
 using std::multimap;
+using std::pair;
 
 
 
 class Keyboard : public Control {
 	
 	
+	public :
+		
+		Keyboard(Delegate *delegate) : Control(delegate) {
+			Keyboard::obj = this;
+		}
+		
+		vector<Manipulator*> install(Scene *scene);
+		Binding* lookup(int key, int mod);
+		void trigger(int key);
+		
+		static void character(unsigned char key, int x, int y);
+		static void special(int key, int x, int y);
+	
+	
 	private :
 		
 		static Keyboard *obj;
 		
-		void bindings() {
+		void installBindings() {
 			add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
 			add(Binding(GLUT_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));
 			add(Binding(GLUT_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
@@ -52,18 +66,6 @@ class Keyboard : public Control {
 			add(Binding('H', 0, Command::HIDE));
 			add(Binding('U', 0, Command::SHOW_ALL));
 		}
-	
-	
-	public :
-		
-		Keyboard() {Keyboard::obj = this;}
-		
-		void install();
-		Binding* lookup(int key, int mod);
-		void trigger(int key);
-		
-		static void character(unsigned char key, int x, int y);
-		static void special(int key, int x, int y);
 };
 
 

@@ -16,7 +16,7 @@ Menu *Menu::menu=NULL;
  */
 void Menu::handler(GLint option) {
 	
-	Menu::menu->del->run(option);
+	menu->delegate->run(option);
 	glutPostRedisplay();
 }
 
@@ -25,7 +25,11 @@ void Menu::handler(GLint option) {
 /**
  * Installs the Menu into the display.
  */
-void Menu::install() {
+vector<Manipulator*> Menu::install(Scene *scene) {
+	
+	// Initialize attributes
+	this->scene = scene;
+	type = "Menu";
 	
 	// Make menus
 	menuMain();
@@ -34,6 +38,9 @@ void Menu::install() {
 	// Attach
 	glutSetMenu(menuMainID);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	
+	// Finish
+	return manipulators;
 }
 
 

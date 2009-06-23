@@ -84,6 +84,20 @@ void Scene::deselectAll() {
 
 
 /**
+ * Looks up and returns an item by its ID.
+ */
+Item* Scene::getItem(int id) const {
+	
+	// Find item by ID
+	for (int i=0; i<items.size(); i++)
+		if (items[i]->getID() == id)
+			return items[i];
+	return NULL;
+}
+
+
+
+/**
  * Checks if any item in the scene is selected.
  * 
  * @return True if an item is selected.
@@ -127,7 +141,7 @@ void Scene::reset() {
 	
 	// Reset transformations
 	position.set(0.0, 0.0, SCENE_DEFAULT_ZOOM);
-	rotation.set(0.0, 0.0, 0.0);
+	rotation.set(0.0, 0.0, 0.0, 1.0);
 }
 
 

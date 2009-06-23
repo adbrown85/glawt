@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include "Vector.hpp"
 
 
 
@@ -33,17 +34,20 @@ class Matrix {
 		       float d0, float d1, float d2, float d3);
 		
 		float& operator()(int i, int j);
-		friend Matrix operator*(const Matrix & m1, const Matrix &m2);
+		friend Matrix operator*(const Matrix &A, const Matrix &B);
+		friend Vector operator*(const Matrix &A, const Vector &B);
 		
 		void print();
 		
 		float get(int i, int j) const {return arr[i][j];}
+		void getArray(float array[16]);
 		float getDeterminant() const;
 		int getColumns() const {return size;}
 		Matrix getInverse() const;
 		int getRows() const {return size;}
 		int getSize() const {return size;}
 		Matrix getSubmatrix(int i, int j) const;
+		void set(float array[16]);
 };
 
 #endif

@@ -15,8 +15,10 @@
 #include <string>
 #include <vector>
 #include "Item.hpp"
+#include "Quaternion.hpp"
 #include "Shader.hpp"
 #include "Uniform.hpp"
+using std::vector;
 
 
 
@@ -38,12 +40,13 @@ class Scene {
 		void print();
 		
 		int getHeight() const {return height;}
+		Item* getItem(int id) const;
 		int getWidth() const {return width;}
 		
-		std::vector<Item*> items;
-		std::vector<Shader*> shaders;
-		std::vector<Uniform*> uniforms;
 		Vector position, rotation;
+		vector<Item*> items;
+		vector<Shader*> shaders;
+		vector<Uniform*> uniforms;
 	
 	
 	private :

@@ -87,6 +87,18 @@ float Matrix::det(int n) const {
 
 
 /**
+ * Puts the matrix into a single-subscript array.  Column-major order.
+ */
+void Matrix::getArray(float array[16]) {
+	
+	for (int j=0; j<4; ++j)
+		for (int i=0; i<4; ++i)
+			array[j*4+i] = this->get(i,j);
+}
+
+
+
+/**
  * Calculate the determinant of the entire matrix.
  */
 float Matrix::getDeterminant() const {
@@ -171,6 +183,28 @@ Matrix operator*(const Matrix & a, const Matrix &b) {
 
 
 /**
+ * Multiplies a matrix with a vector.
+ * 
+ * Currently the Matrix class is fixed as a 4x4 matrix, but if it was not and 
+ * matrices could have variables sizes, Matrix a needs to have the same number 
+ * of columns as Matrix b has rows.
+ */
+Vector operator*(const Matrix & A, const Vector &B) {
+	
+	Vector C;
+	
+	// Multiply rows of A with columns in B
+	for (int i=0; i<C.size; ++i) {
+		C(i) = 0.0;
+		for (int k=0; k<C.size; k++)
+			C(i) += A.get(i,k) * B.get(k);
+	}
+	return C;
+}
+
+
+
+/**
  * Prints the matrix out.
  */
 void Matrix::print() {
@@ -178,7 +212,7 @@ void Matrix::print() {
 	using namespace std;
 	
 	// Print all entries
-	cout << fixed << setprecision(3);
+	cout << fixed << setprecision(3) << right;
 	for (int i=0; i<size; i++) {
 		int j=0;
 		cout << "[" << setw(7) << arr[i][j];
@@ -223,16 +257,37 @@ Matrix Matrix::getSubmatrix(int i, int j) const {
 
 
 /**
+ * Sets the Matrix from values in the array.
+ * 
+ * @param array
+ *     4x4 matrix stored in single-subscript array in column-major order.
+ */
+void Matrix::set(float array[16]) {
+	
+	for (int j=0; j<4; j++)
+		for (int i=0; i<4; i++)
+			arr[i][j] = array[j*4+i];
+}
+
+
+
+/**
  * Simple test program.
  */
-int main() {
+/*
+int main(int argc, char *argv[]) {
 	
 	using namespace std;
+	float arr[16] = { 1.0,  2.0,  3.0,  4.0,
+	                  5.0,  6.0,  7.0,  8.0,
+	                  9.0, 10.0, 11.0, 12.0,
+	                 13.0, 14.0, 15.0, 16.0};
 	Matrix m1( 4.0, 3.0, 8.0, 7.0,
 	           3.0, 2.0, 4.0, 6.0,
 	           1.0, 6.0, 4.0, 5.0,
 	           1.0, 2.0, 3.0, 4.0);
 	Matrix m2, m3;
+	Vector v1(1.0, 1.0, 1.0, 1.0), v2;
 	
 	// Start
 	cout << endl;
@@ -262,6 +317,18 @@ int main() {
 	m3 = m1 * m2;
 	m3.print();
 	
+	// Vector
+	cout << endl;
+	cout << "Vector: " << endl;
+	v2 = m2 * v1;
+	cout << v2 << endl;
+	
+	// Array
+	cout << endl;
+	cout << "Array: " << endl;
+	m2.set(arr);
+	m2.print();
+	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
@@ -269,3 +336,4 @@ int main() {
 	cout << "****************************************" << endl;
 	return 0;
 }
+*/

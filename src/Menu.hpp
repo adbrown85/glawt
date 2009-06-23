@@ -14,7 +14,8 @@
 #include "Command.hpp"
 #include "Control.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
+using std::string;
+using std::vector;
 
 
 
@@ -23,10 +24,12 @@ class Menu : public Control {
 	
 	public :
 		
-		Menu() {Menu::menu = this;}
+		Menu(Delegate *delegate) : Control(delegate) {
+			Menu::menu = this;
+		}
 		
 		static void handler(GLint option);
-		void install();
+		vector<Manipulator*> install(Scene *scene);
 		void menuItem();
 		void menuMain();
 		void print();

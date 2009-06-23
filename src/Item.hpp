@@ -13,8 +13,13 @@
 #include <map>
 #include <set>
 #include <sstream>
+#include <string>
+#include <utility>
 #include "Identifiable.hpp"
 #include "Vector.hpp"
+using std::map;
+using std::pair;
+using std::string;
 
 
 
@@ -28,17 +33,24 @@ class Item : public Identifiable  {
 		friend std::ostream& operator<<(std::ostream &stream,
 		                                const Item &item);
 		
-		virtual std::string attributes() const;
+		virtual string attributes() const;
 		virtual void copy(const Item &item);
 		virtual void draw() const = 0;
 		
+		static Item* find(int id);
+		
+		string getCategory() const {return cat;}
 		int getID() const {return id;}
 		Vector getPosition() const {return position;}
 		float getSize() const {return size;}
+		string getType() const {return type;}
 		bool isSelected() const {return selected;}
 		bool isShown() const {return shown;}
 		void setID(int id) {this->id = id;}
-		void setPosition(float x, float y, float z) {position.set(x, y, z);}
+		Item& setPosition(float x, float y, float z) {
+			position.set(x, y, z);
+			return *this;
+		}
 		void setSelected(bool selected) {this->selected = selected;}
 		void setShown(bool shown) {this->shown = shown;}
 		void setStyle(GLenum style) {this->style = style;}
@@ -51,10 +63,12 @@ class Item : public Identifiable  {
 		bool selected, shown;
 		float size;
 		GLenum style;
-		static int count;
-		std::string type;
-		Vector position, rotation;
 		int id;
+		string cat, type;
+		Vector position, rotation;
+		
+		static int count;
+		static map<int,Item*> ids;
 };
 typedef std::set<Item,Identifiable::Comparator> ItemSet;
 typedef std::set<Item*,Identifiable::Comparator> ItemPtrSet;

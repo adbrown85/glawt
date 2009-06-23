@@ -5,16 +5,32 @@
  * Author
  *     Andrew Brown
  */
-#include "Vector.hpp"
+#include "Matrix.hpp"
+
 
 
 Vector::Vector() {
 	
 	// Set components
-	x = 0;
-	y = 0;
-	z = 0;
+	x = 0.0;
+	y = 0.0;
+	z = 0.0;
+	w = 0.0;
+	size = 4;
 }
+
+
+
+Vector::Vector(float x, float y) {
+	
+	// Set components
+	this->x = x;
+	this->y = y;
+	this->z = 0.0;
+	this->w = 1.0;
+	size = 2;
+}
+
 
 
 Vector::Vector(float x, float y, float z) {
@@ -23,196 +39,251 @@ Vector::Vector(float x, float y, float z) {
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	this->w = 1.0;
+	size = 3;
 }
 
 
-Vector& Vector::operator=(const Vector& other) {
+
+Vector::Vector(float x, float y, float z, float w) {
+	
+	// Set components
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
+	size = 4;
+}
+
+
+
+Vector& Vector::operator=(const Vector& B) {
 	
 	// Check for self-assignment
-	if (this == &other)
+	if (this == &B)
 		return *this;
 	
 	// Set components
-	x = other.x;
-	y = other.y;
-	z = other.z;
+	x = B.x;
+	y = B.y;
+	z = B.z;
+	w = B.w;
+	size = B.size;
 	return *this;
 }
 
 
-Vector operator+(const Vector& left, const Vector& right) {
+
+Vector operator*(const Vector& A, float b) {
 	
-	Vector temp;
+	Vector C;
+	
+	// Multiply components
+	C.x = A.x * b;
+	C.y = A.y * b;
+	C.z = A.z * b;
+	C.w = A.w * b;
+	C.size = A.size;
+	return C;
+}
+
+
+
+Vector operator*(const Vector& A, const Vector& B) {
+	
+	Vector C;
+	
+	// Multiply components
+	C.x = A.x * B.x;
+	C.y = A.y * B.y;
+	C.z = A.z * B.z;
+	C.w = A.w * B.w;
+	C.size = A.size;
+	return C;
+}
+
+
+
+Vector operator/(const Vector& A, float b) {
+	
+	Vector C;
+	
+	// Divide components
+	if (b != 0) {
+		C.x = A.x / b;
+		C.y = A.y / b;
+		C.z = A.z / b;
+		C.w = A.w / b;
+	}
+	C.size = A.size;
+	return C;
+}
+
+
+
+Vector operator/(const Vector& A, const Vector& B) {
+	
+	Vector C;
+	
+	// Divide components
+	if (B.x != 0)
+		C.x = A.x / B.x;
+	if (B.y != 0)
+		C.y = A.y / B.y;
+	if (B.z != 0)
+		C.z = A.z / B.z;
+	if (B.w != 0)
+		C.w = A.w / B.w;
+	C.size = A.size;
+	return C;
+}
+
+
+
+Vector operator+(const Vector& A, const Vector& B) {
+	
+	Vector C;
 	
 	// Add components
-	temp.x = left.x + right.x;
-	temp.y = left.y + right.y;
-	temp.z = left.z + right.z;
-	return temp;
+	C.x = A.x + B.x;
+	C.y = A.y + B.y;
+	C.z = A.z + B.z;
+	C.w = A.w + B.w;
+	C.size = A.size;
+	return C;
 }
 
 
-Vector operator-(const Vector& left, const Vector& right) {
+
+Vector operator-(const Vector& A, const Vector& B) {
 	
-	Vector temp;
+	Vector C;
 	
 	// Subtract components
-	temp.x = left.x - right.x;
-	temp.y = left.y - right.y;
-	temp.z = left.z - right.z;
-	return temp;
+	C.x = A.x - B.x;
+	C.y = A.y - B.y;
+	C.z = A.z - B.z;
+	C.w = A.w - B.w;
+	C.size = A.size;
+	return C;
 }
 
 
-Vector operator*(const Vector& left, float right) {
-	
-	Vector temp;
-	
-	// Multiply components
-	temp.x = left.x * right;
-	temp.y = left.y * right;
-	temp.z = left.z * right;
-	return temp;
-}
 
-
-Vector operator*(const Vector& left, const Vector& right) {
+std::ostream& operator<<(std::ostream& out, const Vector& A) {
 	
-	Vector temp;
-	
-	// Multiply components
-	temp.x = left.x * right.x;
-	temp.y = left.y * right.y;
-	temp.z = left.z * right.z;
-	return temp;
-}
-
-
-Vector operator/(const Vector& left, float right) {
-	
-	Vector temp;
-	
-	// Divide components
-	if (right != 0) {
-		temp.x = left.x / right;
-		temp.y = left.y / right;
-		temp.z = left.z / right;
-	}
-	return temp;
-}
-
-
-Vector operator/(const Vector& left, const Vector& right) {
-	
-	Vector temp;
-	
-	// Divide components
-	if (right.x != 0)
-		temp.x = left.x / right.x;
-	if (right.y != 0)
-		temp.y = left.y / right.y;
-	if (right.z != 0)
-		temp.z = left.z / right.z;
-	return temp;
-}
-
-
-ostream& operator<<(ostream& out, const Vector& vect) {
+	float com[] = {A.x, A.y, A.z, A.w};
 	
 	// Add to stream
-	out << "[" 
-		<< vect.x << ", " 
-		<< vect.y << ", "
-		<< vect.z 
-		<< "]";
+	out << std::fixed << std::setprecision(2);
+	out << "[";
+	if (A.size != 0)
+		out << com[0];
+	for (int i=1; i<A.size; i++)
+		out << ", " << com[i];
+	out << "]";
+	out << std::resetiosflags(std::ios_base::floatfield);
+	out << std::setprecision(6);
 	return out;
 }
 
 
 
-void Vector::add(float x, float y) {
+float& Vector::operator()(int i) {
 	
-	// Add to components
-	this->x += x;
-	this->y += y;
+	// Check size
+	if (i < 0 || i >= size)
+		throw "Vector: Access out of bounds.";
+	
+	// Return correct component
+	switch (i) {
+		case 0 : return x;
+		case 1 : return y;
+		case 2 : return z;
+		case 3 : return w;
+	}
 }
 
 
 
-float Vector::dot(const Vector& other) {
+Vector Vector::crossProduct(const Vector &B) const {
 	
-	// Add products of like components
-	return x * other.x + y * other.y + z * other.z;
+	Vector C;
+	
+	// Calculate
+	C.x = (y * B.z) - (z * B.y);
+	C.y = (z * B.x) - (x * B.z);
+	C.z = (x * B.y) - (y * B.x);
+	C.w = 1.0;
+	
+	// Finish
+	return C;
 }
 
 
 
-void Vector::fill(float array[3],
-                  float x,
-                  float y,
-                  float z) {
+float Vector::dotProduct(const Vector &B) const {
 	
-	// Fill the array with values
-	array[0] = x;
-	array[1] = y;
-	array[2] = z;
+	// Calculate
+	if (size == 2)
+		return x*B.x + y*B.y;
+	else
+		return x*B.x + y*B.y + z*B.z;
 }
 
 
-float Vector::length() {
+
+float Vector::get(int i) const {
 	
-	// Return root of sum of squares
-	return sqrt(x*x + y*y + z*z);
+	// Check size
+	if (i < 0 || i >= size)
+		throw "Vector: Access out of bounds.";
+	
+	// Return correct component
+	switch (i) {
+		case 0 : return x;
+		case 1 : return y;
+		case 2 : return z;
+		case 3 : return w;
+	}
 }
 
 
-void Vector::normalize() {
+
+Vector Vector::getNormalized() const {
 	
-	float len = length();
+	float len;
+	Vector C;
 	
 	// Divide by length
-	if (len == 0) {
-		x = 0;
-		y = 0;
-		z = 0;
+	len = this->length();
+	if (len == 0.0) {
+		C.x = 0.0;
+		C.y = 0.0;
+		C.z = 0.0;
+		C.w = 1.0;
 	}
 	else {
-		x /= len;
-		y /= len;
-		z /= len;
+		C.x = x / len;
+		C.y = y / len;
+		C.z = z / len;
+		C.w = 1.0;
 	}
+	C.size = size;
+	return C;
 }
 
 
-Vector Vector::perpendicular() {
+
+float Vector::length() const {
 	
-	Vector temp;
-	
-	// Find unit vector
-	temp = this->unit();
-	
-	// Negate components
-	temp.x = - temp.x;
-	temp.y = - temp.y;
-	temp.z = - temp.z;
-	return temp;
+	// Return root of sum of squares
+	if (size == 2)
+		return sqrt(x*x + y*y);
+	else
+		return sqrt(x*x + y*y + z*z);
 }
 
-
-void Vector::print() {
-	
-	// Print values
-	cout << *this << endl;
-}
-
-
-void Vector::set(float val) {
-	
-	// Set components
-	this->x = val;
-	this->y = val;
-	this->z = val;
-}
 
 
 void Vector::set(float x, float y) {
@@ -220,7 +291,9 @@ void Vector::set(float x, float y) {
 	// Set components
 	this->x = x;
 	this->y = y;
+	size = 2;
 }
+
 
 
 void Vector::set(float x, float y, float z) {
@@ -229,23 +302,21 @@ void Vector::set(float x, float y, float z) {
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	size = 3;
 }
 
 
-void Vector::setAverage(float x, float y, float z) {
+
+void Vector::set(float x, float y, float z, float w) {
 	
 	// Set components
-	this->x = (x + this->x) / 2;
-	this->y = (y + this->y) / 2;
-	this->z = (z + this->z) / 2;
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
+	size = 4;
 }
 
-
-Vector Vector::unit() {
-	
-	// Return root of sum of squares
-	return *this / length();
-}
 
 
 

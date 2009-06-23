@@ -7,11 +7,9 @@
  */
 #include "Display.hpp"
 Scene *Display::scene=NULL;
-State *Display::state;
-Interpreter *Display::interp;
 Outline Display::outline(1.0);
-Translator Display::trn;
-vector<Control*> Display::cons;
+vector<Control*> Display::controls;
+vector<Manipulator*> Display::manipulators;
 
 
 
@@ -20,28 +18,40 @@ vector<Control*> Display::cons;
  */
 void Display::display(void) {
 	
+	float rotationMatrixArray[16];
 	int count=0;
 	Item *item;
+	vector<Manipulator*>::iterator mi;
+	Matrix rotationMatrix;
+	Quaternion combinedRotation, xRotation, yRotation;
 	
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	// Draw
+	// Transform
 	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	glRotatef(scene->rotation.x, 1.0, 0.0, 0.0);
-	glRotatef(scene->rotation.y, 0.0, 1.0, 0.0);
+	xRotation.set(scene->rotation.x, 1.0, 0.0, 0.0);
+	yRotation.set(scene->rotation.y, 0.0, 1.0, 0.0);
+	combinedRotation = yRotation * xRotation;
+	rotationMatrix = combinedRotation.getMatrix();
+	rotationMatrix.getArray(rotationMatrixArray);
+	glMultMatrixf(rotationMatrixArray);
+	
+	// Draw
 	count = scene->items.size();
-	for (int i=0; i<count; i++) {
+	for (int i=0; i<count; ++i) {
 		item = scene->items[i];
 		if (item->isShown()) {
 			item->draw();
 			if (item->isSelected()) {
 				outline.copy(*item);
 				outline.draw();
-				trn.copy(*item);
-				trn.draw();
+				for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
+					(*mi)->copy(*item);
+					(*mi)->draw();
+				}
 			}
 		}
 	}
@@ -60,7 +70,8 @@ void Display::display(void) {
  */
 void Display::install(Control *control) {
 	
-	cons.push_back(control);
+	// Add to vector
+	controls.push_back(control);
 }
 
 
@@ -85,39 +96,41 @@ void Display::overlay() {
  * @param scene
  *     Pointer to a Scene with items.  Needs to be constructed first.
  */
-void Display::start(std::string title,
-                    Scene *scene,
-                    State *state) {
+void Display::start(std::string title, Scene *scene) {
 	
 	char **argv;
-	int argc=0, w, h, x=DISPLAY_DEFAULT_X, y=DISPLAY_DEFAULT_Y;
+	int argc=0, width, height, x=DISPLAY_DEFAULT_X, y=DISPLAY_DEFAULT_Y;
+	vector<Manipulator*> manipulators;
 	
 	// Copy
 	if (scene == NULL)
 		std::cerr << "Warning: scene is NULL!" << std::endl;
-	h = scene->getHeight();
-	w = scene->getWidth();
+	height = scene->getHeight();
+	width = scene->getWidth();
 	Display::scene = scene;
 	
 	// Initialize window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(x, y);
-	glutInitWindowSize(w, h);
+	glutInitWindowSize(width, height);
 	glutCreateWindow(title.c_str());
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	
 	// Initialize view
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(30.0, static_cast<float>(w)/h, 0.1, 1000.0);
+	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 1000.0);
 	
 	// Register functions
 	glutDisplayFunc(Display::display);
-	for (int i=0; i<cons.size(); i++)
-		cons[i]->install();
+	for (int i=0; i<controls.size(); i++) {
+		manipulators = controls[i]->install(scene);
+		for (int j=0; j<manipulators.size(); j++)
+			Display::manipulators.push_back(manipulators[j]);
+	}
 	
 	// Start
 	glutMainLoop();
@@ -129,48 +142,35 @@ void Display::start(std::string title,
  * Simple test program.
  */
 #include "Box.hpp"
+#include "Interpreter.hpp"
 #include "Keyboard.hpp"
 #include "Menu.hpp"
 #include "Mouse.hpp"
-#include "Interpreter.hpp"
-#include "Translator.hpp"
 int main(int argc, char *argv[]) {
 	
 	using namespace std;
-	Box b1(2.0), b2(3.0);
-	float x;
-	Keyboard keyboard;
-	Menu menu;
-	Mouse mouse;
+	Box b1(1.0), b2(3.0);
 	Scene scene(640, 480);
-	State state;
-	Interpreter inter(&scene, &state);
+	Interpreter interpreter(&scene);
+	Keyboard keyboard(&interpreter);
+	Menu menu(&interpreter);
+	Mouse mouse(&interpreter);
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Display" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
 	
 	// Test
-	b1.setPosition(-1.0, 0.0, 0.0);
-	b2.setPosition( 2.0, 0.0, 0.0);
-	scene.add(&b1);
-	scene.add(&b2);
-	menu.initialize(&scene, &state, &inter);
-	keyboard.initialize(&scene, &state, &inter);
-	mouse.initialize(&scene, &state, &inter);
+	cout << endl;
+	scene.add(&b1.setPosition(-1.0, 0.0, 0.0));
+	scene.add(&b2.setPosition( 2.0, 0.0, 0.0));
 	Display::install(&menu);
 	Display::install(&keyboard);
 	Display::install(&mouse);
-	Display::start("Display Test Program", &scene, &state);
+	Display::start("Display Test Program", &scene);
 	
 	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Display" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
 	return 0;
 }

@@ -13,7 +13,6 @@
 #include "Delegate.hpp"
 #include "Scene.hpp"
 #include "State.hpp"
-#include "Translator.hpp"
 
 
 
@@ -25,18 +24,17 @@ class Director : public Delegate {
 		Director();
 		
 		virtual void run(int command);
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, float arg1, float arg2);
+		virtual void run(int command, float argument);
 	
 	
 	private :
 		
-		void cmdGrab(int cmd, float x, float y);
+		void cmdGrab(int cmd, float id);
 		void cmdIterate(int cmd);
 		void cmdSelect(int cmd);
 		
 		std::map<int,void(Director::*)(int)> hans0;
-		std::map<int,void(Director::*)(int,float,float)> hans2;
+		std::map<int,void(Director::*)(int,float)> hans1;
 };
 
 

@@ -6,6 +6,7 @@
  */
 #include "Item.hpp"
 int Item::count=0;
+map<int,Item*> Item::ids;
 
 
 
@@ -16,9 +17,12 @@ Item::Item() {
 	
 	// Initialize
 	selected = false;
+	shown = true;
 	style = GL_TEXTURE_2D;
+	cat = "Item";
 	type = "Item";
 	id = ++count;
+	ids[id] = this;
 }
 
 
@@ -28,14 +32,16 @@ Item::Item() {
 std::string Item::attributes() const {
 	
 	std::ostringstream stream(std::ostringstream::out);
-	std::string selected, style;
+	std::string selected, shown, style;
 	
 	// Format
+	shown = this->shown ? "V" : "H";
 	selected = this->selected ? "S" : "U";
 	style = this->style==GL_TEXTURE_2D ? "2D" : "3D";
 	
 	// Print
 	stream << id << ", "
+	       << shown << ", "
 	       << selected << ", "
 	       << style;
 	
@@ -59,6 +65,19 @@ void Item::copy(const Item &item) {
 	this->rotation = item.rotation;
 }
 
+
+
+Item* Item::find(int id) {
+	
+	map<int,Item*>::iterator ii;
+	
+	// Find
+	ii = ids.find(id);
+	if (ii != ids.end())
+		return ii->second;
+	else
+		return NULL;
+}
 
 
 /**

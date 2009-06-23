@@ -12,6 +12,16 @@ map<int,string> Binding::nams;
 
 
 
+float Binding::getArgument() const {
+	
+	if (argi != NULL)
+		return static_cast<float>(*argi);
+	else
+		return argf;
+}
+
+
+
 /**
  * 
  */
@@ -56,7 +66,7 @@ string Binding::getTriggerStr() const {
 
 bool Binding::hasDrag() const {
 	
-	return (sta == DRAG_X || sta == DRAG_Y);
+	return (sta == 'x' || sta == 'y');
 }
 
 
@@ -88,7 +98,22 @@ void Binding::init(int trg, int mod, int cmd, int sta, float arg) {
 	
 	// Set attributes
 	init(trg, mod, cmd, sta);
-	this->arg = arg;
+	this->argf = arg;
+	this->argi = NULL;
+	hasArg = true;
+}
+
+
+
+/**
+ * Initializes the required attributes for a binding.
+ */
+void Binding::init(int trg, int mod, int cmd, int sta, int *arg) {
+	
+	// Set attributes
+	init(trg, mod, cmd, sta);
+	this->argf = 0.0;
+	this->argi = arg;
 	hasArg = true;
 }
 

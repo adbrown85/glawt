@@ -111,20 +111,31 @@ void Cameraman::cmdReset(int cmd) {
  */
 void Cameraman::cmdRotate(int cmd, float amt) {
 	
-	// amt = abs(amt);
+	// 
 	switch (cmd) {
-		case Command::CIRCLE_X :
-			scene->rotation.x += amt; break;
+		case Command::CIRCLE_X : {
+			scene->rotation.x += amt;
+			break;
+		}
 		case Command::CIRCLE_Y :
-			scene->rotation.y += amt; break;
+			scene->rotation.y -= amt;
+			break;
 		case Command::CIRCLE_LEFT :
-			scene->rotation.y -= amt; break;
+			amt = fabs(amt);
+			scene->rotation.y -= amt;
+			break;
 		case Command::CIRCLE_RIGHT :
-			scene->rotation.y += amt; break;
+			amt = fabs(amt);
+			scene->rotation.y += amt;
+			break;
 		case Command::CIRCLE_UP :
-			scene->rotation.x -= amt; break;
+			amt = fabs(amt);
+			scene->rotation.x -= amt;
+			break;
 		case Command::CIRCLE_DOWN :
-			scene->rotation.x += amt; break;
+			amt = fabs(amt);
+			scene->rotation.x += amt;
+			break;
 	}
 }
 
@@ -148,11 +159,11 @@ void Cameraman::cmdTrans(int cmd, float amt) {
 		case Command::BOOM_UP :
 			scene->position.y += fabs(amt) * 0.011; break;
 		case Command::TRACK :
-			scene->position.x += amt * 0.011; break;
+			scene->position.x -= amt * 0.011; break;
 		case Command::TRACK_LEFT :
-			scene->position.x -= fabs(amt) * 0.011; break;
-		case Command::TRACK_RIGHT :
 			scene->position.x += fabs(amt) * 0.011; break;
+		case Command::TRACK_RIGHT :
+			scene->position.x -= fabs(amt) * 0.011; break;
 		case Command::ZOOM_IN :
 			scene->position.z += amt; break;
 		case Command::ZOOM_OUT :

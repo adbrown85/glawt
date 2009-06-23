@@ -26,7 +26,6 @@ class Cameraman : public Delegate {
 		
 		virtual void run(int command);
 		virtual void run(int command, float argument);
-		virtual void run(int command, float arg1, float arg2) {;}
 	
 	
 	private :

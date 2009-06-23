@@ -51,21 +51,21 @@ void Producer::run(int command) {
 
 void Producer::cmdCopy() {
 	
-	cout << "Producer::cmdCopy()" << endl;
+	std::cout << "Producer::cmdCopy()" << std::endl;
 }
 
 
 
 void Producer::cmdDuplicate() {
 	
-	cout << "Producer::cmdDuplicate()" << endl;
+	std::cout << "Producer::cmdDuplicate()" << std::endl;
 }
 
 
 
 void Producer::cmdCut() {
 	
-	cout << "Producer::cmdCut()" << endl;
+	std::cout << "Producer::cmdCut()" << std::endl;
 }
 
 
@@ -79,21 +79,21 @@ void Producer::cmdExit() {
 
 void Producer::cmdOpen() {
 	
-	cout << "Producer::cmdOpen()" << endl;
+	std::cout << "Producer::cmdOpen()" << std::endl;
 }
 
 
 
 void Producer::cmdPaste() {
 	
-	cout << "Producer::cmdPaste()" << endl;
+	std::cout << "Producer::cmdPaste()" << std::endl;
 }
 
 
 
 void Producer::cmdSave() {
 	
-	cout << "Producer::cmdSave()" << endl;
+	std::cout << "Producer::cmdSave()" << std::endl;
 }
 
 

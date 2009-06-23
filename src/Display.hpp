@@ -13,13 +13,14 @@
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 #include "Control.hpp"
-#include "Interpreter.hpp"
 #include "Item.hpp"
 #include "Outline.hpp"
+#include "Quaternion.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
 #include "Translator.hpp"
+#include "Vector.hpp"
 using std::vector;
 
 
@@ -31,19 +32,15 @@ class Display {
 		
 		static void display(void);
 		static void install(Control *control);
-		static void start(std::string title,
-		                  Scene *scene,
-		                  State *state);
+		static void start(std::string title, Scene *scene);
 	
 	
 	private :
 		
-		static Interpreter *interp;
 		static Outline outline;
 		static Scene *scene;
-		static State *state;
-		static Translator trn;
-		static vector<Control*> cons;
+		static vector<Control*> controls;
+		static vector<Manipulator*> manipulators;
 		
 		static void overlay();
 };

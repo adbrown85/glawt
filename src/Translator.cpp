@@ -1,56 +1,111 @@
 /*
  * Translator.cpp
- *     Visual tool for moving items.
+ *     Visual tool for moving shapes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#include <iostream>
 #include "Translator.hpp"
 
 
 
+/**
+ * Creates a new Translator using an axis.
+ */
+Translator::Translator(float x, float y, float z) {
+	
+	// Initialize attributes
+	axis.set(x, y, z, 1.0);
+	size = 1.0;
+	type = "Translator";
+	
+	// Initialize 
+	cyl = gluNewQuadric();
+	gluQuadricDrawStyle(cyl, GLU_FILL);
+}
+
+
+
+/**
+ * Draws the Translator.
+ */
 void Translator::draw() const {
 	
 	// Move into position
 	glPushMatrix();
 	glTranslatef(position.x, position.y, position.z);
-	
-		// Lines
+		
+		// Color
+		glColor3f(axis.x, axis.y, axis.z);
+		
+		// Line
 		glBegin(GL_LINES);
-			glColor3f(1.0, 0.0, 0.0);
 			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(1.0*size, 0.0, 0.0);
-			glColor3f(0.0, 0.0, 1.0);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(0.0, 0.0, 1.0*size);
-			glColor3f(0.0, 1.0, 0.0);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(0.0, 1.0*size, 0.0);
+			glVertex3f(axis.x*size, axis.y*size, axis.z*size);
 		glEnd();
 		
-		// X cone
+		// Cone
 		glPushMatrix();
-			glColor3f(1.0, 0.0, 0.0);
-			glTranslatef(1.0*size, 0.0, 0.0);
-			glRotatef(90.0, 0.0, 1.0, 0.0);
+			glTranslatef(axis.x*size, axis.y*size, axis.z*size);
+			if (axis.x >= 0.9)
+				glRotatef(90.0, 0.0, 1.0, 0.0);
+			else if (axis.y >= 0.9)
+				glRotatef(-90.0, 1.0, 0.0, 0.0);
 			gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
 		glPopMatrix();
 		
-		// Y cone
-		glPushMatrix();
-			glColor3f(0.0, 1.0, 0.0);
-			glTranslatef(0.0, 1.0*size, 0.0);
-			glRotatef(-90.0, 1.0, 0.0, 0.0);
-			gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
-		glPopMatrix();
-		
-		// Z cone
-		glPushMatrix();
-			glColor3f(0.0, 0.0, 1.0);
-			glTranslatef(0.0, 0.0, 1.0*size);
-			glRotatef(0.0, 0.0, 1.0, 0.0);
-			gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
 		glPopMatrix();
 	glPopMatrix();
+}
+
+
+
+/**
+ * Use the Translator.
+ * 
+ * @param movement
+ *     Difference between current and last cursor positions.
+ */
+void Translator::use(Scene *scene, const Vector &movement) {
+	
+	float dotProduct, projectionArray[16], translateAmount;
+	int numberOfItems;
+	Item *item;
+	Matrix rotationMatrix, projectionMatrix;
+	Quaternion combinedRotation, xRotation, yRotation;
+	Vector movementNorm, position, projectedAxis, projectedAxisNorm;
+	
+	// Convert manipulator to screen space
+	xRotation.set(scene->rotation.x, 1.0, 0.0, 0.0);
+	yRotation.set(scene->rotation.y, 0.0, 1.0, 0.0);
+	combinedRotation = yRotation * xRotation;
+	rotationMatrix = combinedRotation.getMatrix();
+	glGetFloatv(GL_PROJECTION_MATRIX, projectionArray);
+	projectionMatrix.set(projectionArray);
+	projectedAxis = (rotationMatrix * projectionMatrix) * axis;
+	projectedAxis.size = 2;
+	
+	// Calculate translate amount from movement and axis
+	movementNorm = movement.getNormalized();
+	projectedAxisNorm = projectedAxis.getNormalized();
+	dotProduct = movementNorm.dotProduct(projectedAxisNorm);
+	translateAmount = movement.length() * dotProduct * 0.012;
+	
+	// Add translate amount to position of each selected item
+	if (fabs(dotProduct) > 0.5) {
+		numberOfItems = scene->items.size();
+		for (int i=0; i<numberOfItems; i++) {
+			item = scene->items[i];
+			if (item->isSelected()) {
+				position = item->getPosition();
+				if (axis.x > 0.9)
+					position.x += translateAmount;
+				else if (axis.y > 0.9)
+					position.y += translateAmount;
+				else if (axis.z > 0.9)
+					position.z -= translateAmount;
+				item->setPosition(position.x, position.y, position.z);
+			}
+		}
+	}
 }

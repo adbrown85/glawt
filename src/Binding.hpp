@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <string>
 #include "Command.hpp"
 #define GLUT_UP_BUTTON 3
 #define GLUT_DOWN_BUTTON 4
@@ -29,11 +30,12 @@ class Binding {
 		
 		
 		bool hasArg;
-		int cmd, mod, sta, trg;
-		float arg;
+		int *argi, cmd, mod, sta, trg;
+		float argf;
 		
 		void init(int trg, int mod, int cmd, int sta);
 		void init(int trg, int mod, int cmd, int sta, float arg);
+		void init(int trg, int mod, int cmd, int sta, int *arg);
 		
 		static bool loaded;
 		static map<int,string> nams;
@@ -57,8 +59,6 @@ class Binding {
 	
 	
 	public :
-		
-		enum {DRAG_X=2, DRAG_Y=3};
 		
 		Binding(int trigger,
 		        int modifier,
@@ -84,8 +84,15 @@ class Binding {
 		        int state) {
 			init(trigger, modifier, command, state, argument);
 		}
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        int *argument,
+		        int state) {
+			init(trigger, modifier, command, state, argument);
+		}
 		
-		float getArgument() const {return arg;}
+		float getArgument() const;
 		int getCommand() const {return cmd;}
 		string getCommandStr() const {return Command::getName(cmd);}
 		int getModifier() const {return mod;}
@@ -94,8 +101,8 @@ class Binding {
 		int getTrigger() const {return trg;}
 		string getTriggerStr() const;
 		bool hasArgument() const {return hasArg;}
-		bool hasModifier() const {return mod != 0;}
 		bool hasDrag() const;
+		bool hasModifier() const {return mod != 0;}
 		bool isCharacter() const {return isCharacter(this->trg);}
 		
 		friend std::ostream& operator<<(std::ostream& stream,

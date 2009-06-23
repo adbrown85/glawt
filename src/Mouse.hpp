@@ -1,68 +1,79 @@
 /*
  * Mouse.hpp
- *     Mouse control for a 3D display.
+ *     Mouse control for a 3D display.  Need to deallocate manipulators!
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
 #ifndef __MOUSE_HEADER__
 #define __MOUSE_HEADER__
-#include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <map>
 #include <set>
+#include <typeinfo>
+#include "Binding.hpp"
 #include "Command.hpp"
 #include "Control.hpp"
 #include "Delegate.hpp"
+#include "Manipulator.hpp"
+#include "Picker.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
+#include "Translator.hpp"
+#include "Vector.hpp"
+using std::map;
 using std::multimap;
+using std::pair;
 using std::set;
+using std::vector;
 
 
 
 class Mouse : public Control {
 	
 	
-	private :
-		
-		bool dragX, dragY;
-		float dragXArg, dragYArg;
-		int dragXCmd, dragYCmd, xLast, yLast;
-		
-		static Mouse *obj;
-		static set<int> spcs;
-		
-		void specials() {
-			spcs.insert(Command::GRAB);
-		}
-		void bindings() {
-			add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_OUT, 1.0f, GLUT_DOWN));
-			add(Binding(GLUT_DOWN_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
-			add(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_ALT, Command::GRAB, GLUT_DOWN));
-			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_Y, -1.0f, Binding::DRAG_X));
-			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_X, -1.0f, Binding::DRAG_Y));
-			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::TRACK, -1.0f, Binding::DRAG_X));
-			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::BOOM, 1.0f, Binding::DRAG_Y));
-		}
-	
-	
 	public :
 		
-		Mouse() {
-			dragX = false;
-			dragY = false;
-		};
+		Mouse(Delegate *delegate) : Control(delegate) {}
 		
-		void install();
-		static void motion(int x,
-		                   int y);
-		static void mouse(int button,
-		                  int action,
-		                  int x,
-		                  int y);
-		static bool needsCoordinates(int cmd);
+		void handleDrag(int x, int y);
+		void handleClick(int button, int action, int x, int y);
+		vector<Manipulator*> install(Scene *scene);
+		
+		static void motion(int x, int y);
+		static void mouse(int button, int action, int x, int y);
+	
+	
+	private :
+		
+		Vector currentCursorPosition, lastCursorPosition;
+		map<char,Binding*> currentDragBindings;
+		int currentItemID;
+		Manipulator *currentManipulator;
+		
+		static Mouse *obj;
+		
+		void installBindings() {
+			add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
+			add(Binding(GLUT_DOWN_BUTTON, 0, Command::ZOOM_OUT, 1.0f, GLUT_DOWN));
+			add(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_ALT, Command::GRAB, &currentItemID, GLUT_DOWN));
+			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_Y, -1.0f, 'x'));
+			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_X, -1.0f, 'y'));
+			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::TRACK, -1.0f, 'x'));
+			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::BOOM, 1.0f, 'y'));
+			add(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_ALT, Command::MANIPULATE, GLUT_DOWN));
+		}
+		void installCallbacks() {
+			glutMouseFunc(Mouse::mouse);
+			glutMotionFunc(Mouse::motion);
+		}
+		void installManipulators() {
+			add(new Translator(1.0, 0.0, 0.0));
+			add(new Translator(0.0, 1.0, 0.0));
+			add(new Translator(0.0, 0.0, 1.0));
+		}
 };
 
 

@@ -1,15 +1,15 @@
 /*
- * Vector.h
- *		General three-dimensional vector.
+ * Vector.hpp
+ *     General four-dimensional vector.
  *
  * Author
- *		Andrew Brown
+ *     Andy Brown <andybrown85@gmail.com
  */
-#ifndef VECTOR_H
-#define VECTOR_H
+#ifndef __VECTOR_HEADER__
+#define __VECTOR_HEADER__
 #include <cmath>
+#include <iomanip>
 #include <iostream>
-using namespace std;
 
 
 
@@ -18,31 +18,32 @@ class Vector {
 	
 	public:
 		
-		float x, y, z;
+		int size;
+		float x, y, z, w;
 		
 		Vector();
+		Vector(float x, float y);
 		Vector(float x, float y, float z);
-		Vector& operator=(const Vector& other);
-		friend Vector operator+(const Vector& left, const Vector& right);
-		friend Vector operator-(const Vector& left, const Vector& right);
-		friend Vector operator*(const Vector& left, float right);
-		friend Vector operator*(const Vector& left, const Vector& right);
-		friend Vector operator/(const Vector& left, float right);
-		friend Vector operator/(const Vector& left, const Vector& right);
-		friend ostream& operator<<(ostream& out, const Vector& vect);
+		Vector(float x, float y, float z, float w);
+		Vector& operator=(const Vector &B);
+		friend Vector operator*(const Vector &A, float b);
+		friend Vector operator*(const Vector &A, const Vector &B);
+		friend Vector operator/(const Vector &A, float b);
+		friend Vector operator/(const Vector &A, const Vector &B);
+		friend Vector operator+(const Vector &A, const Vector &B);
+		friend Vector operator-(const Vector &A, const Vector &B);
+		friend std::ostream& operator<<(std::ostream& out, const Vector& A);
+		float& operator()(int i);
 		
-		void add(float x, float y);
-		float dot(const Vector& other);
-		static void fill(float array[3], float x, float y, float z);
-		float length();
-		void normalize();
-		Vector perpendicular();
-		void print();
-		void set(float val);
+		Vector crossProduct(const Vector& B) const;
+		float dotProduct(const Vector &B) const;
+		float length() const;
+		
+		float get(int i) const;
+		Vector getNormalized() const;
 		void set(float x, float y);
 		void set(float x, float y, float z);
-		void setAverage(float x, float y, float z);
-		Vector unit();
+		void set(float x, float y, float z, float w);
 };
 
 #endif

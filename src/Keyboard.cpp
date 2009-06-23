@@ -13,16 +13,21 @@ Keyboard *Keyboard::obj=NULL;
 /**
  * Installs the controls into the current context.
  */
-void Keyboard::install() {
+vector<Manipulator*> Keyboard::install(Scene *scene) {
 	
-	// Set up bindings
-	className = "Keyboard";
-	bindings();
-	print();
+	// Initialize attributes
+	type = "Keyboard";
+	this->scene = scene;
+	
+	// Install bindings
+	installBindings();
 	
 	// Register functions
 	glutKeyboardFunc(Keyboard::character);
 	glutSpecialFunc(Keyboard::special);
+	
+	// Finish
+	return manipulators;
 }
 
 
@@ -47,23 +52,23 @@ void Keyboard::character(unsigned char key,
  * 
  * @param key
  *     Keyboard key.
- * @param mod
+ * @param modifier
  *     Modifier.
  */
 Binding* Keyboard::lookup(int key,
-                          int mod) {
+                          int modifier) {
 	
-	Binding *bin=NULL;
+	Binding *binding=NULL;
 	multimap<int,Binding>::iterator bi;
 	pair<multimap<int,Binding>::iterator,
-	     multimap<int,Binding>::iterator> ran;
+	     multimap<int,Binding>::iterator> range;
 	
 	// Look through range
-	ran = bins.equal_range(key);
-	for (bi=ran.first; bi!=ran.second; ++bi) {
-		bin = &bi->second;
-		if (bin->getModifier() == mod)
-			return bin;
+	range = bindings.equal_range(key);
+	for (bi=range.first; bi!=range.second; ++bi) {
+		binding = &bi->second;
+		if (binding->getModifier() == modifier)
+			return binding;
 	}
 	return NULL;
 }
@@ -86,21 +91,21 @@ void Keyboard::special(int key,
  */
 void Keyboard::trigger(int key) {
 	
-	Binding *bin;
-	int mod;
+	Binding *binding;
+	int modifier;
 	
 	// Lookup command by key and modifier
-	mod = glutGetModifiers();
-	if (mod == 1 || mod == 5)
-		mod -= 1;
-	bin = lookup(key, mod);
-	if (bin == NULL)
+	modifier = glutGetModifiers();
+	if (modifier == 1 || modifier == 5)
+		modifier -= 1;
+	binding = lookup(key, modifier);
+	if (binding == NULL)
 		return;
 	
 	// Run command with argument if it has one
-	if (bin->hasArgument())
-		del->run(bin->getCommand(), bin->getArgument());
+	if (binding->hasArgument())
+		delegate->run(binding->getCommand(), binding->getArgument());
 	else
-		del->run(bin->getCommand());
+		delegate->run(binding->getCommand());
 	glutPostRedisplay();
 }

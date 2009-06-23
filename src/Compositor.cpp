@@ -48,7 +48,7 @@ void Compositor::cmdHide() {
 
 void Compositor::cmdInfo() {
 	
-	cout << "Compositor::cmdInfo()" << endl;
+	std::cout << "Compositor::cmdInfo()" << std::endl;
 }
 
 

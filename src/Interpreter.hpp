@@ -22,6 +22,8 @@
 #include "Producer.hpp"
 #include "Scene.hpp"
 #include "State.hpp"
+using std::map;
+using std::vector;
 
 
 
@@ -30,21 +32,20 @@ class Interpreter : public Delegate {
 	
 	public :
 		
-		Interpreter(Scene *scene, State *state);
+		Interpreter(Scene *scene);
 		~Interpreter();
 		
 		void print();
 		virtual void run(int command);
 		virtual void run(int command, float argument);
-		virtual void run(int command, float arg1, float arg2);
 	
 	
 	private:
 		
 		Interpreter();
 		
-		std::map<int, Delegate*> hans;
-		std::vector<Delegate*> dels;
+		map<int, Delegate*> hans;
+		vector<Delegate*> dels;
 		
 		void load() {
 			dels.push_back(new Cameraman());
