@@ -10,6 +10,10 @@
 
 
 
+/**
+ * @brief
+ *     Interface for an object that has unique ID numbers.
+ */
 class Identifiable {
 	
 	

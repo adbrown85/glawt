@@ -1,21 +1,23 @@
 /*
  * Director.hpp
- *     Responsible for creating and storing scenes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __DIRECTOR_HEADER__
-#define __DIRECTOR_HEADER__
+#ifndef _DIRECTOR_HPP_
+#define _DIRECTOR_HPP_
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
 
 
 
+/**
+ * @brief
+ *     Delegate responsible for selecting items in the Scene.
+ */
 class Director : public Delegate {
 	
 	
@@ -23,18 +25,13 @@ class Director : public Delegate {
 		
 		Director();
 		
-		virtual void run(int command);
-		virtual void run(int command, float argument);
-	
-	
-	private :
+		virtual void run(int command) {;}
+		virtual void run(int command, float argument) {;}
+		virtual void run(int command, string argument) {;}
 		
-		void cmdGrab(int cmd, float id);
-		void cmdIterate(int cmd);
-		void cmdSelect(int cmd);
-		
-		std::map<int,void(Director::*)(int)> hans0;
-		std::map<int,void(Director::*)(int,float)> hans1;
+		static void grab(Scene *scene, int cmd, float id);
+		static void iterate(Scene *scene, int cmd);
+		static void select(Scene *scene, int cmd);
 };
 
 

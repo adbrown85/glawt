@@ -1,6 +1,5 @@
 /*
- * Item.hpp
- *     Generic item class.  Also defines ItemSet.
+ * Manipulator.hpp
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
@@ -16,6 +15,10 @@
 
 
 
+/**
+ * @brief
+ *     Abstract base class for an item that manipulates other items.
+ */
 class Manipulator : public Item  {
 	
 	

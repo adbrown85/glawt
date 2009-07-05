@@ -14,6 +14,10 @@
 
 
 
+/**
+ * @brief
+ *     Four-by-four matrix with multiplication and inversion.
+ */
 class Matrix {
 	
 	

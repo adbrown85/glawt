@@ -21,6 +21,7 @@ vector<Manipulator*> Keyboard::install(Scene *scene) {
 	
 	// Install bindings
 	installBindings();
+	print();
 	
 	// Register functions
 	glutKeyboardFunc(Keyboard::character);

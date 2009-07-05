@@ -10,13 +10,18 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
+using std::map;
 
 
 
+/**
+ * @brief
+ *     Delegate responsible for moving or rotating the camera.
+ */
 class Cameraman : public Delegate {
 	
 	
@@ -24,19 +29,14 @@ class Cameraman : public Delegate {
 		
 		Cameraman();
 		
-		virtual void run(int command);
-		virtual void run(int command, float argument);
+		virtual void run(int command) {;}
+		virtual void run(int command, float argument) {;}
+		virtual void run(int command, string argument) {;}
 	
-	
-	private :
-		
-		void cmdFit(int cmd);
-		void cmdReset(int cmd);
-		void cmdRotate(int cmd, float amt);
-		void cmdTrans(int cmd, float amt);
-		
-		std::map<int,void(Cameraman::*)(int)> hans0;
-		std::map<int,void(Cameraman::*)(int,float)> hans1;
+		static void fit(Scene *scene, int command);
+		static void reset(Scene *scene, int command);
+		static void rotate(Scene *scene, int command, float amount);
+		static void translate(Scene *scene, int command, float amount);
 };
 
 

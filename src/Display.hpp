@@ -1,9 +1,8 @@
 /*
  * Display.hpp
- *     3D display for items.
  *
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andy Brown <andybrown85@gmail.com>
  */
 #ifndef __DISPLAY_HEADER__
 #define __DISPLAY_HEADER__
@@ -16,15 +15,20 @@
 #include <vector>
 #include "Control.hpp"
 #include "Item.hpp"
+#include "Matrix.hpp"
 #include "Outline.hpp"
 #include "Quaternion.hpp"
 #include "Scene.hpp"
-#include "Translator.hpp"
+#include "Manipulator.hpp"
 #include "Vector.hpp"
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     3D display for items in a scene.
+ */
 class Display {
 	
 	

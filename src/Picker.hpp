@@ -11,16 +11,23 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <set>
+#include <typeinfo>
 #include <vector>
 #include "Item.hpp"
 #include "Manipulator.hpp"
+#include "Matrix.hpp"
 #include "Scene.hpp"
+#include "Translator.hpp"
 #define PICK_BUFFER_SIZE 32
 using std::set;
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     Determines which item is under the mouse cursor.
+ */
 class Picker {
 	
 	
@@ -37,6 +44,7 @@ class Picker {
 		static GLuint buf[PICK_BUFFER_SIZE];
 		static set<GLuint> ids;
 		
+		static GLuint choose(Scene *scene);
 		static void draw(Scene *scene,
 		                 vector<Manipulator*> manipulators);
 		static void finish();

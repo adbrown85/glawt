@@ -11,7 +11,44 @@ set<GLuint> Picker::ids;
 
 
 /**
- * Draws the items.
+ * Choose the item to return.  Manipulators are returned before shapes, and if 
+ * more than one shape is picked, the closest one to the camera is chosen.
+ */
+GLuint Picker::choose(Scene *scene) {
+	
+	float closestDepth=-123456789.0;
+	GLuint closestID;
+	Item *item;
+	Matrix rotationMatrix;
+	set<GLuint>::iterator ii;
+	Vector viewPosition;
+	
+	// Check for manipulator
+	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
+		item = Item::find(*ii);
+		if (typeid(*item) == typeid(Translator))
+			return item->getID();
+	}
+	
+	// Otherwise find closest to screen
+	rotationMatrix = scene->getRotationMatrix();
+	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
+		item = Item::find(*ii);
+		viewPosition = rotationMatrix * item->getPosition();
+		if (viewPosition.z > closestDepth) {
+			closestDepth = viewPosition.z;
+			closestID = item->getID();
+		}
+	}
+	return closestID;
+}
+
+
+
+/**
+ * Draws the items.  Make sure this matches up with how Display draws the 
+ * items.  It may be a good idea to abstract this out to a Painter class, or
+ * something like that.
  */
 void Picker::draw(Scene *scene,
                   vector<Manipulator*> manipulators) {
@@ -20,7 +57,6 @@ void Picker::draw(Scene *scene,
 	int count;
 	Item *item;
 	Matrix rotationMatrix;
-	Quaternion combinedRotation, xRotation, yRotation;
 	
 	// Initialize
 	glMatrixMode(GL_MODELVIEW);
@@ -28,10 +64,7 @@ void Picker::draw(Scene *scene,
 	
 	// Transform
 	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	xRotation.set(scene->rotation.x, 1.0, 0.0, 0.0);
-	yRotation.set(scene->rotation.y, 0.0, 1.0, 0.0);
-	combinedRotation = yRotation * xRotation;
-	rotationMatrix = combinedRotation.getMatrix();
+	rotationMatrix = scene->getRotationMatrix();
 	rotationMatrix.getArray(rotationMatrixArray);
 	glMultMatrixf(rotationMatrixArray);
 	
@@ -113,10 +146,12 @@ GLuint Picker::pick(Scene *scene,
 	
 	// Return
 	finish();
-	if (!ids.empty())
+	if (ids.empty())
+		return 0;
+	else if (ids.size() == 1)
 		return *(ids.begin());
 	else
-		return 0;
+		return choose(scene);
 }
 
 
@@ -144,12 +179,4 @@ void Picker::store() {
 		}
 		ids.insert(id);
 	}
-	
-/*
-	// Print IDs
-	std::cout << "Picked: ";
-	for (ii=ids.begin(); ii!=ids.end(); ++ii)
-		std::cout << *ii << " ";
-	std::cout << std::endl;
-*/
 }

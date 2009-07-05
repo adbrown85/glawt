@@ -50,8 +50,8 @@ vector<Manipulator*> Menu::install(Scene *scene) {
  */
 void Menu::menuItem() {
 	
-	static std::vector<int> opts;
-	static std::vector<int>::iterator o;
+	vector<int> opts;
+	vector<int>::iterator o;
 	
 	// Add items to list
 	opts.push_back(Command::DESELECT);
@@ -71,15 +71,15 @@ void Menu::menuItem() {
  */
 void Menu::menuMain() {
 	
-	static std::vector<int> opts;
-	static std::vector<int>::iterator o;
+	vector<int> opts;
+	vector<int>::iterator o;
 	
 	// Add items to list
-	opts.push_back(Command::FIT_ALL);
-	opts.push_back(Command::DESELECT);
 	opts.push_back(Command::SELECT_ALL);
+	opts.push_back(Command::DESELECT);
+	opts.push_back(Command::HIDE);
 	opts.push_back(Command::SHOW_ALL);
-	opts.push_back(Command::SAVE);
+	opts.push_back(Command::RESET);
 	
 	// Make menu
 	menuMainID = glutCreateMenu(handler);

@@ -1,9 +1,8 @@
 /*
  * Shader.hpp
- *     Handles loading and installing GLSL shaders.
  * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andy Brown <andybrown85@gmail.com>
  */
 #ifndef SHADER_HPP
 #define SHADER_HPP
@@ -15,9 +14,19 @@
 #include <string>
 #include <vector>
 #include "Uniform.hpp"
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::string;
+using std::vector;
 
 
 
+/**
+ * @brief
+ *     GLSL shader with loading, compiling, and installing capabilities.
+ */
 class Shader {
 	
 	
@@ -28,11 +37,11 @@ class Shader {
 		
 		static void add(Uniform uniform);
 		void compile();
-		std::string getFilename();
+		string getFilename();
 		static void link();
-		void load(std::string filename);
+		void load(string filename);
 		void print() const;
-		static void setUniform(std::string name,
+		static void setUniform(string name,
 		                       int type,
 		                       GLfloat value);
 		static void setUniform(const Uniform& uniform);
@@ -45,9 +54,9 @@ class Shader {
 		GLuint name;
 		int count;
 		static GLuint program;
-		static std::vector<Uniform> uniforms;
-		std::string filename;
-		std::vector<std::string> lines;
+		static vector<Uniform> uniforms;
+		string filename;
+		vector<string> lines;
 		
 		static void log(GLuint name);
 };

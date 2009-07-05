@@ -1,8 +1,5 @@
 /*
  * Binding.hpp
- *     Maps a combination of keys to a command.  Currently mouse bindings 
- * should not be stored with keyboard bindings.  Also only F9 or tab can be 
- * used because GLUT assigns them the same ASCII code.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -23,19 +20,28 @@ using std::string;
 
 
 
+/**
+ * @brief
+ *     Maps a combination of keys or buttons to a command.
+ * 
+ * @bug
+ *     Currently mouse bindings should not be stored with keyboard bindings.
+ * @bug
+ *     Only F9 or tab can be used because GLUT assigns them the same code.
+ */
 class Binding {
 	
 	
 	private :
 		
 		
-		bool hasArg;
-		int *argi, cmd, mod, sta, trg;
+		bool hasArg, hasOpt;
+		int *argi, cmd, mod, sta, trg, opt;
 		float argf;
 		
-		void init(int trg, int mod, int cmd, int sta);
-		void init(int trg, int mod, int cmd, int sta, float arg);
-		void init(int trg, int mod, int cmd, int sta, int *arg);
+		void init(int trg, int mod, int cmd, int sta, int opt);
+		void init(int trg, int mod, int cmd, int sta, float arg, int opt);
+		void init(int trg, int mod, int cmd, int sta, int *arg, int opt);
 		
 		static bool loaded;
 		static map<int,string> nams;
@@ -46,11 +52,11 @@ class Binding {
 			nams[GLUT_KEY_RIGHT] = "Right";
 			nams[GLUT_KEY_UP] = "Up";
 			nams[GLUT_KEY_DOWN] = "Down";
-			nams[GLUT_LEFT_BUTTON] = "LMB";
-			nams[GLUT_MIDDLE_BUTTON] = "MMB";
-			nams[GLUT_RIGHT_BUTTON] = "RMB";
-			nams[GLUT_UP_BUTTON] = "MWU";
-			nams[GLUT_DOWN_BUTTON] = "MWD";
+			nams[GLUT_LEFT_BUTTON] = "Left";
+			nams[GLUT_MIDDLE_BUTTON] = "Middle";
+			nams[GLUT_RIGHT_BUTTON] = "Right";
+			nams[GLUT_UP_BUTTON] = "Wheel Up";
+			nams[GLUT_DOWN_BUTTON] = "Wheel Down";
 			nams['\t'] = "Tab";
 			nams[GLUT_KEY_HOME] = "Home";
 			nams[GLUT_KEY_END] = "End";
@@ -60,36 +66,46 @@ class Binding {
 	
 	public :
 		
+		enum {EXCLUSIVE};
+		
 		Binding(int trigger,
 		        int modifier,
 		        int command) {
-			init(trigger, modifier, command, -1);
+			init(trigger, modifier, command, -1, -1);
 		}
 		Binding(int trigger,
 		        int modifier,
 		        int command,
 		        float argument) {
-			init(trigger, modifier, command, -1, argument);
+			init(trigger, modifier, command, -1, argument, -1);
 		}
 		Binding(int trigger,
 		        int modifier,
 		        int command,
 		        int state) {
-			init(trigger, modifier, command, state);
+			init(trigger, modifier, command, state, -1);
 		}
 		Binding(int trigger,
 		        int modifier,
 		        int command,
 		        float argument,
 		        int state) {
-			init(trigger, modifier, command, state, argument);
+			init(trigger, modifier, command, state, argument, -1);
+		}
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        float argument,
+		        int state,
+		        int option) {
+			init(trigger, modifier, command, state, argument, option);
 		}
 		Binding(int trigger,
 		        int modifier,
 		        int command,
 		        int *argument,
 		        int state) {
-			init(trigger, modifier, command, state, argument);
+			init(trigger, modifier, command, state, argument, -1);
 		}
 		
 		float getArgument() const;
@@ -97,11 +113,13 @@ class Binding {
 		string getCommandStr() const {return Command::getName(cmd);}
 		int getModifier() const {return mod;}
 		string getModifierStr() const;
+		int getOption() {return opt;}
 		int getState() {return sta;}
 		int getTrigger() const {return trg;}
 		string getTriggerStr() const;
 		bool hasArgument() const {return hasArg;}
 		bool hasDrag() const;
+		bool hasOption() const {return opt != -1;}
 		bool hasModifier() const {return mod != 0;}
 		bool isCharacter() const {return isCharacter(this->trg);}
 		

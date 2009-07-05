@@ -23,7 +23,6 @@ void Display::display(void) {
 	Item *item;
 	vector<Manipulator*>::iterator mi;
 	Matrix rotationMatrix;
-	Quaternion combinedRotation, xRotation, yRotation;
 	
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -32,10 +31,7 @@ void Display::display(void) {
 	
 	// Transform
 	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	xRotation.set(scene->rotation.x, 1.0, 0.0, 0.0);
-	yRotation.set(scene->rotation.y, 0.0, 1.0, 0.0);
-	combinedRotation = yRotation * xRotation;
-	rotationMatrix = combinedRotation.getMatrix();
+	rotationMatrix = scene->getRotationMatrix();
 	rotationMatrix.getArray(rotationMatrixArray);
 	glMultMatrixf(rotationMatrixArray);
 	
@@ -141,6 +137,7 @@ void Display::start(std::string title, Scene *scene) {
 /**
  * Simple test program.
  */
+/*
 #include "Box.hpp"
 #include "Interpreter.hpp"
 #include "Keyboard.hpp"
@@ -174,3 +171,4 @@ int main(int argc, char *argv[]) {
 	// Finish
 	return 0;
 }
+*/

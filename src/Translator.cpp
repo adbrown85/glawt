@@ -68,31 +68,20 @@ void Translator::draw() const {
  */
 void Translator::use(Scene *scene, const Vector &movement) {
 	
-	float dotProduct, projectionArray[16], translateAmount;
+	float dotProduct, translateAmount;
 	int numberOfItems;
 	Item *item;
-	Matrix rotationMatrix, projectionMatrix;
-	Quaternion combinedRotation, xRotation, yRotation;
-	Vector movementNorm, position, projectedAxis, projectedAxisNorm;
+	Matrix rotationMatrix;
+	Vector position, viewAxis;
 	
-	// Convert manipulator to screen space
-	xRotation.set(scene->rotation.x, 1.0, 0.0, 0.0);
-	yRotation.set(scene->rotation.y, 0.0, 1.0, 0.0);
-	combinedRotation = yRotation * xRotation;
-	rotationMatrix = combinedRotation.getMatrix();
-	glGetFloatv(GL_PROJECTION_MATRIX, projectionArray);
-	projectionMatrix.set(projectionArray);
-	projectedAxis = (rotationMatrix * projectionMatrix) * axis;
-	projectedAxis.size = 2;
-	
-	// Calculate translate amount from movement and axis
-	movementNorm = movement.getNormalized();
-	projectedAxisNorm = projectedAxis.getNormalized();
-	dotProduct = movementNorm.dotProduct(projectedAxisNorm);
-	translateAmount = movement.length() * dotProduct * 0.012;
+	// Calculate translate amount from movement and view axis
+	rotationMatrix = scene->getRotationMatrix();
+	viewAxis = rotationMatrix * axis;
+	dotProduct = movement.getNormalized().dotProduct(viewAxis.getNormalized());
+	translateAmount = movement.length() * dotProduct * 0.0125;
 	
 	// Add translate amount to position of each selected item
-	if (fabs(dotProduct) > 0.5) {
+	if (fabs(dotProduct) > 0.75) {
 		numberOfItems = scene->items.size();
 		for (int i=0; i<numberOfItems; i++) {
 			item = scene->items[i];
@@ -103,7 +92,7 @@ void Translator::use(Scene *scene, const Vector &movement) {
 				else if (axis.y > 0.9)
 					position.y += translateAmount;
 				else if (axis.z > 0.9)
-					position.z -= translateAmount;
+					position.z += translateAmount;
 				item->setPosition(position.x, position.y, position.z);
 			}
 		}

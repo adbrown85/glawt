@@ -1,6 +1,5 @@
 /*
  * Grip.hpp
- *     Responsible for creating and storing scenes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -12,10 +11,13 @@
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
 
 
 
+/**
+ * @brief
+ *     Delegate responsible for moving individual items around the scene.
+ */
 class Grip : public Delegate {
 	
 	
@@ -23,18 +25,13 @@ class Grip : public Delegate {
 		
 		Grip();
 		
-		virtual void run(int command);
+		virtual void run(int command) {;}
 		virtual void run(int command, float argument) {;}
-		virtual void run(int command, float arg1, float arg2) {;}
-	
-	
-	private :
+		virtual void run(int command, string argument) {;}
 		
-		void cmdRotate(int cmd);
-		void cmdScale(int cmd);
-		void cmdTranslate(int cmd);
-		
-		std::map<int,void(Grip::*)(int)> hans;
+		static void rotate(Scene *scene, int cmd);
+		static void scale(Scene *scene, int cmd);
+		static void translate(Scene *scene, int cmd);
 };
 
 

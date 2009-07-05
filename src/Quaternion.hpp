@@ -1,6 +1,5 @@
 /*
  * Quaternion.hpp
- *     Encapsulation for angle/axis rotation.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -15,6 +14,10 @@
 
 
 
+/**
+ * @brief
+ *     Encapsulation of a rotation that avoids gimbal lock.
+ */
 class Quaternion {
 	
 	

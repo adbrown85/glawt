@@ -1,6 +1,5 @@
 /*
  * Control.hpp
- *     Interface for a display control.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -16,13 +15,19 @@
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
 #include "Scene.hpp"
+using std::cout;
+using std::endl;
 using std::multimap;
-using std::string;
 using std::pair;
+using std::string;
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     Interface installed into a Display that controls the scene.
+ */
 class Control {
 	
 	

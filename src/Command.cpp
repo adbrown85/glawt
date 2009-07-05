@@ -6,7 +6,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Command.hpp"
-std::map<int,std::string> Command::names;
+map<int,string> Command::names;
 bool Command::loaded=false;
 
 
@@ -30,7 +30,6 @@ void Command::initialize() {
  */
 void Command::print() {
 	
-	using namespace std;
 	map<int,string>::iterator it;
 	
 	// Check if names not generated
@@ -47,7 +46,7 @@ void Command::print() {
 /**
  * Returns the name of a command.
  */
-std::string Command::getName(int command) {
+string Command::getName(int command) {
 	
 	// Return name
 	if (!loaded)

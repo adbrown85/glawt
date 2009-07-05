@@ -1,6 +1,5 @@
 /*
  * Producer.hpp
- *     Responsible for creating and storing scenes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -9,13 +8,18 @@
 #define __PRODUCER_HEADER__
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
+using std::string;
 
 
 
+/**
+ * @brief
+ *     Delegate responsible for creating and storing scenes.
+ */
 class Producer : public Delegate {
 	
 	
@@ -23,21 +27,17 @@ class Producer : public Delegate {
 		
 		Producer();
 		
-		virtual void run(int command);
+		virtual void run(int command) {;}
 		virtual void run(int command, float argument) {;}
-	
-	
-	private :
+		virtual void run(int command, string argument) {;}
 		
-		void cmdCopy();
-		void cmdCut();
-		void cmdDuplicate();
-		void cmdExit();
-		void cmdOpen();
-		void cmdPaste();
-		void cmdSave();
-		
-		std::map<int,void(Producer::*)()> hans;
+		static void copy(Scene *scene, int command);
+		static void cut(Scene *scene, int command);
+		static void duplicate(Scene *scene, int command);
+		static void open(Scene *scene, int command, string filename);
+		static void paste(Scene *scene, int command);
+		static void quit(Scene *scene, int command);
+		static void save(Scene *scene, int command);
 };
 
 

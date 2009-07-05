@@ -1,6 +1,5 @@
 /*
  * Translator.hpp
- *     Visual tool for moving shapes.
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
@@ -10,12 +9,18 @@
 #include <cmath>
 #include <iostream>
 #include <GL/glut.h>
+#include "Item.hpp"
 #include "Manipulator.hpp"
 #include "Matrix.hpp"
+#include "Scene.hpp"
 #include "Vector.hpp"
 
 
 
+/**
+ * @brief
+ *     Tool for moving other items.
+ */
 class Translator : public Manipulator {
 	
 	

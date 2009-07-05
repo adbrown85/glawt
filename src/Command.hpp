@@ -1,6 +1,5 @@
 /*
  * Command.hpp
- *     Class containing commands and a list of their names.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -10,16 +9,24 @@
 #include <iostream>
 #include <map>
 #include <string>
+using std::cout;
+using std::endl;
+using std::map;
+using std::string;
 
 
 
+/**
+ * @brief
+ *     Commands passed to Delegates to change the Scene or Items.
+ */
 class Command {
 	
 	
 	public:
 		
 		static void print();
-		static std::string getName(int command);
+		static string getName(int command);
 		
 		enum {
 			BOOM,
@@ -81,26 +88,26 @@ class Command {
 		static void initialize();
 		
 		static bool loaded;
-		static std::map<int,std::string> names;
+		static map<int,string> names;
 		
 		static void setNames() {
-			names[BOOM] = "Boom";
-			names[BOOM_DOWN] = "Boom Down";
-			names[BOOM_UP] = "Boom Up";
-			names[CIRCLE_Y] = "Circle Y";
-			names[CIRCLE_X] = "Circle X";
-			names[CIRCLE_LEFT] = "Circle Left";
-			names[CIRCLE_RIGHT] = "Circle Right";
-			names[CIRCLE_DOWN] = "Circle Down";
-			names[CIRCLE_UP] = "Circle Up";
+			names[BOOM] = "Boom Camera";
+			names[BOOM_DOWN] = "Boom Camera";
+			names[BOOM_UP] = "Boom Camera";
+			names[CIRCLE_Y] = "Pan Camera";
+			names[CIRCLE_X] = "Tilt Camera";
+			names[CIRCLE_LEFT] = "Pan Camera";
+			names[CIRCLE_RIGHT] = "Pan Camera";
+			names[CIRCLE_DOWN] = "Tilt Camera";
+			names[CIRCLE_UP] = "Tilt Camera";
 			names[FIT_SELECTED] = "Fit Selected";
 			names[FIT_ALL] = "Fit All";
-			names[TRACK] = "Track";
-			names[TRACK_LEFT] = "Track Left";
-			names[TRACK_RIGHT] = "Track Right";
+			names[TRACK] = "Track Camera";
+			names[TRACK_LEFT] = "Track Camera";
+			names[TRACK_RIGHT] = "Track Camera";
 			names[ZOOM_IN] = "Zoom In";
 			names[ZOOM_OUT] = "Zoom Out";
-			names[RESET] = "Reset";
+			names[RESET] = "Reset Camera";
 			names[ROTATE_X_MINUS] = "Rotate X-";
 			names[ROTATE_X_PLUS] = "Rotate X+";
 			names[ROTATE_Y_MINUS] = "Rotate Y-";
@@ -123,18 +130,18 @@ class Command {
 			names[CUT] = "Cut";
 			names[PASTE] = "Paste";
 			names[DUPLICATE] = "Duplicate";
-			names[EXIT] = "Exit";
+			names[EXIT] = "Quit";
 			names[OPEN] = "Open";
 			names[SAVE] = "Save";
 			names[HIDE] = "Hide";
-			names[SHOW_ALL] = "Unhide";
+			names[SHOW_ALL] = "Show All";
 			names[INFORMATION] = "Information";
-			names[DESELECT] = "Deselect";
-			names[GRAB] = "Grab";
+			names[DESELECT] = "Deselect All";
+			names[GRAB] = "Select/Deselect Item";
 			names[NEXT] = "Next";
 			names[PREVIOUS] = "Previous";
 			names[SELECT_ALL] = "Select All";
-			names[MANIPULATE] = "Manipulate";
+			names[MANIPULATE] = "Use Manipulator";
 		}
 };
 

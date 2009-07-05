@@ -70,10 +70,10 @@ void Control::print() {
 	
 	// Add type of control
 	if (!type.empty())
-		std::cout << type << " ";
+		cout << type << " ";
 	
 	// Print each binding
-	std::cout << "Bindings:" << std::endl;
+	cout << "Bindings:" << endl;
 	for (bi=bindings.begin(); bi!=bindings.end(); bi++)
-		std::cout << "  " << bi->second << std::endl;
+		cout << "  " << bi->second << endl;
 }

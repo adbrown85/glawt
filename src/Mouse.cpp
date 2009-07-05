@@ -21,33 +21,73 @@ Mouse *Mouse::obj=NULL;
 void Mouse::handleDrag(int x, int y) {
 	
 	Binding *binding;
+	bool useExclusiveDrag=false;
 	char directions[] = {'x', 'y'};
-	Vector movement;
+	float dotProduct, dragAmount;
 	map<char,Binding*>::iterator bi;
+	Vector movement;
 	
 	// Update
-	currentCursorPosition.set(x, y);
 	movement.set((x-lastCursorPosition.x), -(y-lastCursorPosition.y));
 	
-	// Dragging manipulator
+	// Drag manipulator
 	if (currentManipulator != NULL)
 		currentManipulator->use(scene, movement);
-	
-	// Run normal drag commands for each direction
 	else {
+		
+		// Check for exclusive drag
 		for (int i=0; i<2; i++) {
-			bi = currentDragBindings.find(directions[i]);
-			if (bi != currentDragBindings.end()) {
+			bi = dragBindings.find(directions[i]);
+			if (bi != dragBindings.end()) {
 				binding = bi->second;
-				if (binding != NULL)
-					delegate->run(binding->getCommand(),
-					              binding->getArgument()*movement.get(i));
+				if (binding != NULL) {
+					if (binding->getOption() == Binding::EXCLUSIVE) {
+						useExclusiveDrag = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		// If exclusive, wait for a direction to set axis
+		if (useExclusiveDrag) {
+			if (dragCount == 0) {
+				dragAxis.set(0.0, 0.0);
+				dragDirection.set(0.0, 0.0);
+			}
+			dragDirection = dragDirection + movement;
+			if (dragCount < 10 && dragDirection.length() >= 3.0) {
+				if (dragAxis.x < 0.5 && dragAxis.y < 0.5) {
+					if (fabs(dragDirection.y) > fabs(dragDirection.x))
+						dragAxis.set(0.0, 1.0);
+					else
+						dragAxis.set(1.0, 0.0);
+				}
+			}
+		}
+		else
+			dragAxis.set(1.0, 1.0);
+		
+		// Perform dragging
+		for (int i=0; i<2; i++) {
+			bi = dragBindings.find(directions[i]);
+			if (bi != dragBindings.end()) {
+				binding = bi->second;
+				if (binding != NULL) {
+					if (fabs(movement.get(i)) > 0.5) {
+						dragAmount = movement.get(i) * dragAxis.get(i);
+						delegate->run(binding->getCommand(),
+						              binding->getArgument() *
+						              dragAmount);
+					}
+				}
 			}
 		}
 	}
 	
 	// Update
 	lastCursorPosition.set(x, y);
+	++dragCount;
 	glutPostRedisplay();
 }
 
@@ -76,19 +116,20 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 	pair<multimap<int,Binding>::iterator,
 	     multimap<int,Binding>::iterator> range;
 	
-	// Store current cursor position
-	currentCursorPosition.set(x, y);
-	
 	// Find the item under the cursor
 	currentManipulator = NULL;
 	itemIsManipulator = false;
+	currentItemID = Picker::pick(scene, manipulators, x, y);
+	item = Item::find(currentItemID);
+	if (item != NULL) {
+		if (typeid(*item) == typeid(Translator))
+			itemIsManipulator = true;
+	}
+	
+	// Reset
 	if (state == GLUT_DOWN) {
-		currentItemID = Picker::pick(scene, manipulators, x, y);
-		item = Item::find(currentItemID);
-		if (item != NULL) {
-			if (typeid(*item) == typeid(Translator))
-				itemIsManipulator = true;
-		}
+		dragBindings.clear();
+		dragCount = 0;
 	}
 	
 	// Lookup binding for this binding and state
@@ -102,9 +143,9 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 			if (binding->hasDrag()) {
 				direction = static_cast<char>(binding->getState());
 				if (state == GLUT_DOWN)
-					currentDragBindings[direction] = binding;
+					dragBindings[direction] = binding;
 				else
-					currentDragBindings[direction] = NULL;
+					dragBindings[direction] = NULL;
 			}
 			else if (state == binding->getState()) {
 				if (itemIsManipulator) {
@@ -146,6 +187,7 @@ vector<Manipulator*> Mouse::install(Scene *scene) {
 	installBindings();
 	installCallbacks();
 	installManipulators();
+	print();
 	
 	// Finish
 	return manipulators;

@@ -222,9 +222,7 @@ void Box::initializePoints() {
  * @param b
  *     Blue component.
  */
-void Box::setColor(float r,
-                   float g,
-                   float b) {
+void Box::setColor(float r, float g, float b) {
 	
 	// Set color
 	for (int i=0; i<24; i++) {

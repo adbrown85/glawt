@@ -13,6 +13,13 @@
 
 
 
+/**
+ * @brief
+ *     Bounding box made up of lines.
+ * 
+ * @todo
+ *     Move under a Shape interface.
+ */
 class Outline : public Item {
 	
 	

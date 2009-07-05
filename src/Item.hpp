@@ -1,6 +1,5 @@
 /*
  * Item.hpp
- *     Generic item class.  Also defines ItemSet.
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
@@ -23,6 +22,10 @@ using std::string;
 
 
 
+/**
+ * @brief
+ *     Abstract base class for an object in the scene.
+ */
 class Item : public Identifiable  {
 	
 	
@@ -48,7 +51,7 @@ class Item : public Identifiable  {
 		bool isShown() const {return shown;}
 		void setID(int id) {this->id = id;}
 		Item& setPosition(float x, float y, float z) {
-			position.set(x, y, z);
+			position.set(x, y, z, 1.0);
 			return *this;
 		}
 		void setSelected(bool selected) {this->selected = selected;}

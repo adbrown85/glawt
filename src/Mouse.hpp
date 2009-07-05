@@ -1,6 +1,5 @@
 /*
  * Mouse.hpp
- *     Mouse control for a 3D display.  Need to deallocate manipulators!
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -12,8 +11,8 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
-#include <set>
 #include <typeinfo>
+#include <utility>
 #include "Binding.hpp"
 #include "Command.hpp"
 #include "Control.hpp"
@@ -26,11 +25,17 @@
 using std::map;
 using std::multimap;
 using std::pair;
-using std::set;
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     %Mouse control for the Display.
+ * 
+ * @todo
+ *     Need to deallocate manipulators.
+ */
 class Mouse : public Control {
 	
 	
@@ -48,10 +53,10 @@ class Mouse : public Control {
 	
 	private :
 		
-		Vector currentCursorPosition, lastCursorPosition;
-		map<char,Binding*> currentDragBindings;
-		int currentItemID;
+		int currentItemID, dragCount;
 		Manipulator *currentManipulator;
+		map<char,Binding*> dragBindings;
+		Vector dragAxis, dragDirection, lastCursorPosition;
 		
 		static Mouse *obj;
 		
@@ -59,8 +64,8 @@ class Mouse : public Control {
 			add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
 			add(Binding(GLUT_DOWN_BUTTON, 0, Command::ZOOM_OUT, 1.0f, GLUT_DOWN));
 			add(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_ALT, Command::GRAB, &currentItemID, GLUT_DOWN));
-			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_Y, -1.0f, 'x'));
-			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_X, -1.0f, 'y'));
+			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_Y, -1.0f, 'x', Binding::EXCLUSIVE));
+			add(Binding(GLUT_LEFT_BUTTON, 0, Command::CIRCLE_X, -1.0f, 'y', Binding::EXCLUSIVE));
 			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::TRACK, -1.0f, 'x'));
 			add(Binding(GLUT_MIDDLE_BUTTON, 0, Command::BOOM, 1.0f, 'y'));
 			add(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_ALT, Command::MANIPULATE, GLUT_DOWN));

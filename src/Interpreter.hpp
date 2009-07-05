@@ -1,6 +1,5 @@
 /*
  * Interpreter.hpp
- *     Interprets commands and relegates them to delegates.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -21,12 +20,24 @@
 #include "Grip.hpp"
 #include "Producer.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
+using std::cout;
+using std::endl;
 using std::map;
+using std::string;
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     Interprets commands and passes them on to other Delegates.
+ * 
+ * @see Cameraman
+ * @see Compositor
+ * @see Director
+ * @see Grip
+ * @see Producer
+ */
 class Interpreter : public Delegate {
 	
 	
@@ -38,22 +49,14 @@ class Interpreter : public Delegate {
 		void print();
 		virtual void run(int command);
 		virtual void run(int command, float argument);
+		virtual void run(int command, string argument);
 	
 	
 	private:
 		
 		Interpreter();
 		
-		map<int, Delegate*> hans;
-		vector<Delegate*> dels;
-		
-		void load() {
-			dels.push_back(new Cameraman());
-			dels.push_back(new Compositor());
-			dels.push_back(new Director());
-			dels.push_back(new Grip());
-			dels.push_back(new Producer());
-		}
+		vector<Delegate*> delegates;
 };
 
 

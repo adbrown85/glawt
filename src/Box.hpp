@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef BOX_HPP
-#define BOX_HPP
+#ifndef __BOX_HEADER__
+#define __BOX_HEADER__
 #include <iostream>
 #include <GL/glut.h>
 #include "Item.hpp"
@@ -13,6 +13,13 @@
 
 
 
+/**
+ * @brief
+ *     Cube shape that can be drawn by Display.
+ * 
+ * @todo
+ *     Move under a Shape interface.
+ */
 class Box : public Item {
 	
 	

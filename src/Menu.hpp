@@ -9,16 +9,19 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
-#include <string>
 #include <vector>
 #include "Command.hpp"
 #include "Control.hpp"
+#include "Delegate.hpp"
 #include "Scene.hpp"
-using std::string;
 using std::vector;
 
 
 
+/**
+ * @brief
+ *     Right-click menu for the Display.
+ */
 class Menu : public Control {
 	
 	

@@ -1,6 +1,5 @@
 /*
  * Vector.hpp
- *     General four-dimensional vector.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com
@@ -13,6 +12,10 @@
 
 
 
+/**
+ * @brief
+ *     Four-component vector with dot and cross product capabilities.
+ */
 class Vector {
 	
 	

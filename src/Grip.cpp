@@ -10,52 +10,32 @@
 
 
 /**
- * Adds the commands this delegate supports and sets up handlers.
+ * Adds the handlers Grip supports.
  */
 Grip::Grip() {
-	
-	std::map<int,void(Grip::*)(int)>::iterator h;
 	
 	// Set type
 	type = "Grip";
 	
 	// Add handlers
-	hans[Command::ROTATE_X_MINUS] = &Grip::cmdRotate;
-	hans[Command::ROTATE_X_PLUS] = &Grip::cmdRotate;
-	hans[Command::ROTATE_Y_MINUS] = &Grip::cmdRotate;
-	hans[Command::ROTATE_Y_PLUS] = &Grip::cmdRotate;
-	hans[Command::ROTATE_Z_MINUS] = &Grip::cmdRotate;
-	hans[Command::ROTATE_Z_PLUS] = &Grip::cmdRotate;
-	hans[Command::SCALE_X_MINUS] = &Grip::cmdScale;
-	hans[Command::SCALE_X_PLUS] = &Grip::cmdScale;
-	hans[Command::SCALE_Y_MINUS] = &Grip::cmdScale;
-	hans[Command::SCALE_Y_PLUS] = &Grip::cmdScale;
-	hans[Command::SCALE_Z_MINUS] = &Grip::cmdScale;
-	hans[Command::SCALE_Z_PLUS] = &Grip::cmdScale;
-	hans[Command::TRANSLATE_X_MINUS] = &Grip::cmdTranslate;
-	hans[Command::TRANSLATE_X_PLUS] = &Grip::cmdTranslate;
-	hans[Command::TRANSLATE_Y_MINUS] = &Grip::cmdTranslate;
-	hans[Command::TRANSLATE_Y_PLUS] = &Grip::cmdTranslate;
-	hans[Command::TRANSLATE_Z_MINUS] = &Grip::cmdTranslate;
-	hans[Command::TRANSLATE_Z_PLUS] = &Grip::cmdTranslate;
-	
-	// Copy commands
-	for (h=hans.begin(); h!=hans.end(); h++)
-		cmds.push_back(h->first);
-}
-
-
-
-/**
- * Interprets a command.
- */
-void Grip::run(int command) {
-	
-	void (Grip::*method)(int);
-	
-	// Filter command to correct method
-	method = hans[command];
-	(this->*method)(command);
+	handlersZero[Command::ROTATE_X_MINUS] = &Grip::rotate;
+	handlersZero[Command::ROTATE_X_PLUS] = &Grip::rotate;
+	handlersZero[Command::ROTATE_Y_MINUS] = &Grip::rotate;
+	handlersZero[Command::ROTATE_Y_PLUS] = &Grip::rotate;
+	handlersZero[Command::ROTATE_Z_MINUS] = &Grip::rotate;
+	handlersZero[Command::ROTATE_Z_PLUS] = &Grip::rotate;
+	handlersZero[Command::SCALE_X_MINUS] = &Grip::scale;
+	handlersZero[Command::SCALE_X_PLUS] = &Grip::scale;
+	handlersZero[Command::SCALE_Y_MINUS] = &Grip::scale;
+	handlersZero[Command::SCALE_Y_PLUS] = &Grip::scale;
+	handlersZero[Command::SCALE_Z_MINUS] = &Grip::scale;
+	handlersZero[Command::SCALE_Z_PLUS] = &Grip::scale;
+	handlersZero[Command::TRANSLATE_X_MINUS] = &Grip::translate;
+	handlersZero[Command::TRANSLATE_X_PLUS] = &Grip::translate;
+	handlersZero[Command::TRANSLATE_Y_MINUS] = &Grip::translate;
+	handlersZero[Command::TRANSLATE_Y_PLUS] = &Grip::translate;
+	handlersZero[Command::TRANSLATE_Z_MINUS] = &Grip::translate;
+	handlersZero[Command::TRANSLATE_Z_PLUS] = &Grip::translate;
 }
 
 
@@ -63,25 +43,9 @@ void Grip::run(int command) {
 /**
  * Rotates the current selection.
  */
-void Grip::cmdRotate(int cmd) {
+void Grip::rotate(Scene *scene, int command) {
 	
-/*
-	switch (cmd) {
-		case Command::ROTATE_X_MINUS :
-			scene->rotation.x -= 2.0; break;
-		case Command::ROTATE_X_PLUS :
-			scene->rotation.x += 2.0; break;
-		case Command::ROTATE_Y_MINUS :
-			scene->rotation.y -= 2.0; break;
-		case Command::ROTATE_Y_PLUS :
-			scene->rotation.y += 2.0; break;
-		case Command::ROTATE_Z_MINUS :
-			scene->rotation.z -= 2.0; break;
-		case Command::ROTATE_Z_PLUS :
-			scene->rotation.z += 2.0; break;
-	}
-*/
-	glutPostRedisplay();
+	std::cout << "Grip::rotate(Scene*,int)" << std::endl;
 }
 
 
@@ -89,9 +53,9 @@ void Grip::cmdRotate(int cmd) {
 /**
  * Scales the current selection.
  */
-void Grip::cmdScale(int cmd) {
+void Grip::scale(Scene *scene, int command) {
 	
-	std::cout << "Grip::cmdScale(int)" << std::endl;
+	std::cout << "Grip::scale(Scene*,int)" << std::endl;
 }
 
 
@@ -99,21 +63,7 @@ void Grip::cmdScale(int cmd) {
 /**
  * Translates the current selection.
  */
-void Grip::cmdTranslate(int cmd) {
+void Grip::translate(Scene *scene, int command) {
 	
-	switch (cmd) {
-		case Command::TRANSLATE_X_MINUS :
-			scene->position.x -= 2.0; break;
-		case Command::TRANSLATE_X_PLUS :
-			scene->position.x += 2.0; break;
-		case Command::TRANSLATE_Y_MINUS :
-			scene->position.y -= 2.0; break;
-		case Command::TRANSLATE_Y_PLUS :
-			scene->position.y += 2.0; break;
-		case Command::TRANSLATE_Z_MINUS :
-			scene->position.z -= 2.0; break;
-		case Command::TRANSLATE_Z_PLUS :
-			scene->position.z += 2.0; break;
-	}
-	glutPostRedisplay();
+	std::cout << "Grip::translate(Scene*,int)" << std::endl;
 }

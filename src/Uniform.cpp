@@ -17,8 +17,7 @@
  * @param value
  *     Value to be stored.
  */
-Uniform::Uniform(std::string name,
-                 GLfloat value) {
+Uniform::Uniform(string name, GLfloat value) {
 	
 	// Initialize
 	this->name = name;
@@ -36,8 +35,7 @@ Uniform::Uniform(std::string name,
  * @param value
  *     Value to be stored.
  */
-Uniform::Uniform(std::string name,
-                 GLint value) {
+Uniform::Uniform(string name, GLint value) {
 	
 	// Initialize
 	this->name = name;
@@ -57,9 +55,7 @@ Uniform::Uniform(std::string name,
  * @param value
  *     Value to be stored.
  */
-Uniform::Uniform(std::string name,
-                 std::string type,
-                 GLfloat value) {
+Uniform::Uniform(string name, string type, GLfloat value) {
 	
 	// Initialize
 	this->name = name;
@@ -73,65 +69,6 @@ Uniform::Uniform(std::string name,
 
 
 /**
- * Returns a copy of the Uniform variable's name.
- */
-std::string Uniform::getName() const {
-	
-	// Return
-	return name;
-}
-
-
-
-/**
- * Sets value to be the Uniform's value.
- * 
- * @param value
- *     Float that will be modified.
- */
-void Uniform::getValue(GLfloat &value) const {
-	
-	// Copy
-	value = this->value;
-}
-
-
-/**
- * Returns a copy of the value.
- */
-GLfloat Uniform::getValue() const {
-	
-	// Copy
-	return value;
-}
-
-
-
-/**
- * Sets value to be the Uniform's value.
- * 
- * @param value
- *     Integer that will be modified.
- */
-void Uniform::getValue(GLint &value) const {
-	
-	// Copy
-	value = static_cast<GLint>(this->value);
-}
-
-
-
-/**
- * Returns the type of uniform variable.  Either UNIFORM_FLOAT or UNIFORM_INT.
- */
-int Uniform::getType() const {
-	
-	return type;
-}
-
-
-
-/**
  * Prints the uniform's attributes to a stream.
  * 
  * @param stream
@@ -139,10 +76,9 @@ int Uniform::getType() const {
  * @param uniform
  *     Uniform variable.
  */
-std::ostream& operator<<(std::ostream& stream,
-                         const Uniform &uniform) {
+ostream& operator<<(ostream& stream, const Uniform &uniform) {
 	
-	std::string type;
+	string type;
 	
 	// Format
 	type = uniform.type == UNIFORM_FLOAT ? "f" : "i";

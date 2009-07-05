@@ -44,9 +44,9 @@ Application::~Application() {
  * @param file
  *     Filename of the file with item descriptions.
  */
-void Application::handleItems(std::string filename) {
+void Application::handleItems(string filename) {
 	
-	std::ifstream file;
+	ifstream file;
 	
 	// Load items from the file
 	file.open(filename.c_str());
@@ -65,7 +65,7 @@ void Application::handleItems(std::string filename) {
  * @param type
  *     Type of shader.
  */
-void Application::handleShader(std::string filename,
+void Application::handleShader(string filename,
                                GLenum type) {
 	
 	Shader *shader;
@@ -84,9 +84,9 @@ void Application::handleShader(std::string filename,
  * @param file
  *     Filename of the file with uniform variable descriptions.
  */
-void Application::handleUniforms(std::string filename) {
+void Application::handleUniforms(string filename) {
 	
-	std::ifstream file;
+	ifstream file;
 	
 	// Load uniforms from the file
 	file.open(filename.c_str());
@@ -110,18 +110,18 @@ void Application::parse(int argc,
 	
 	// Handle arguments
 	if (argc == 1 || argc % 2 == 0) {
-		std::cerr << "Usage: " << argv[0]
-		                       << " {-{f|i|u|v} filename} ..." << std::endl;
-		std::cerr << "  f Fragment shader" << std::endl;
-		std::cerr << "  i Items in scene" << std::endl;
-		std::cerr << "  u Uniform variables" << std::endl;
-		std::cerr << "  v Vertex shader" << std::endl;
+		cerr << "Usage: " << argv[0]
+		                       << " {-{f|i|u|v} filename} ..." << endl;
+		cerr << "  f Fragment shader" << endl;
+		cerr << "  i Items in scene" << endl;
+		cerr << "  u Uniform variables" << endl;
+		cerr << "  v Vertex shader" << endl;
 		exit(1);
 	}
 	for (int i=1; i<argc; i++) {
 		if (strcmp(argv[i], "-i") == 0)
 			handleItems(argv[++i]);
-		if (strcmp(argv[i], "-u") == 0)
+		else if (strcmp(argv[i], "-u") == 0)
 			handleUniforms(argv[++i]);
 		else if (strcmp(argv[i], "-f") == 0)
 			handleShader(argv[++i], GL_FRAGMENT_SHADER);
@@ -138,15 +138,15 @@ void Application::parse(int argc,
 void Application::print() {
 	
 	// Print files loaded
-	std::cout << "Items: " << std::endl;
+	cout << "Items: " << endl;
 	for (int i=0; i<items.size(); i++)
-		std::cout << "  " << *items[i] << std::endl;
-	std::cout << "Shaders: " << std::endl;
+		cout << "  " << *items[i] << endl;
+	cout << "Shaders: " << endl;
 	for (int i=0; i<shaders.size(); i++)
-		std::cout << "  " << shaders[i]->getFilename() << std::endl;
-	std::cout << "Uniforms: " << std::endl;
+		cout << "  " << shaders[i]->getFilename() << endl;
+	cout << "Uniforms: " << endl;
 	for (int i=0; i<uniforms.size(); i++)
-		std::cout << "  " << *uniforms[i] << std::endl;
+		cout << "  " << *uniforms[i] << endl;
 }
 
 
@@ -157,12 +157,12 @@ void Application::print() {
  * @param file
  *     Input file stream to read from.
  */
-void Application::readItem(std::ifstream &file) {
+void Application::readItem(ifstream &file) {
 	
 	float size;
 	Item *item;
 	Vector position;
-	std::string style, type;
+	string style, type;
 	
 	// Read values
 	file >> type
@@ -190,10 +190,10 @@ void Application::readItem(std::ifstream &file) {
  * @param file
  *     Input file stream to read from.
  */
-void Application::readUniform(std::ifstream &file) {
+void Application::readUniform(ifstream &file) {
 	
 	float value;
-	std::string name, type;
+	string name, type;
 	Uniform *uniform;
 	
 	// Read, make, add
@@ -213,12 +213,15 @@ void Application::readUniform(std::ifstream &file) {
  */
 void Application::start() {
 	
-	Item *item;
-	
-	// Create scene
-	scene = new Scene("Application", 640, 480);
+	// Create scene and controls
+	scene = new Scene(640, 480);
+	Interpreter interpreter(scene);
+	Keyboard keyboard(&interpreter);
+	Menu menu(&interpreter);
+	Mouse mouse(&interpreter);
 	
 	// Add items and shaders
+	interpreter.run(Command::OPEN, "some-file.txt");
 	for (int i=0; i<items.size(); i++)
 		scene->add(items[i]);
 	for (int i=0; i<shaders.size(); i++)
@@ -226,8 +229,11 @@ void Application::start() {
 	for (int i=0; i<uniforms.size(); i++)
 		Shader::add(*uniforms[i]);
 	
-	// Start scene
-	scene->start();
+	// Install controls and start display
+	Display::install(&menu);
+	Display::install(&keyboard);
+	Display::install(&mouse);
+	Display::start("Display Test Program", scene);
 }
 
 

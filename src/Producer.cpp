@@ -14,86 +14,68 @@
  */
 Producer::Producer() {
 	
-	std::map<int,void(Producer::*)()>::iterator h;
-	
 	// Set type
 	type = "Producer";
 	
-	// Add handlers
-	hans[Command::COPY] = &Producer::cmdCopy;
-	hans[Command::CUT] = &Producer::cmdCut;
-	hans[Command::DUPLICATE] = &Producer::cmdDuplicate;
-	hans[Command::EXIT] = &Producer::cmdExit;
-	hans[Command::OPEN] = &Producer::cmdOpen;
-	hans[Command::PASTE] = &Producer::cmdPaste;
-	hans[Command::SAVE] = &Producer::cmdSave;
+	// Add zero-argument handlers
+	handlersZero[Command::COPY] = &Producer::copy;
+	handlersZero[Command::CUT] = &Producer::cut;
+	handlersZero[Command::DUPLICATE] = &Producer::duplicate;
+	handlersZero[Command::EXIT] = &Producer::quit;
+	handlersZero[Command::PASTE] = &Producer::paste;
+	handlersZero[Command::SAVE] = &Producer::save;
 	
-	// Copy commands
-	for (h=hans.begin(); h!=hans.end(); h++)
-		cmds.push_back(h->first);
+	// Add string-argument handlers
+	handlersString[Command::OPEN] = &Producer::open;
 }
 
 
 
-/**
- * Interprets a command.
- */
-void Producer::run(int command) {
+void Producer::copy(Scene *scene, int command) {
 	
-	void (Producer::*method)();
-	
-	// Filter command to correct method
-	method = hans[command];
-	(this->*method)();
+	std::cout << "Producer::cmdCopy(Scene*,int)" << std::endl;
 }
 
 
 
-void Producer::cmdCopy() {
+void Producer::duplicate(Scene *scene, int command) {
 	
-	std::cout << "Producer::cmdCopy()" << std::endl;
+	std::cout << "Producer::cmdDuplicate(Scene*,int)" << std::endl;
 }
 
 
 
-void Producer::cmdDuplicate() {
+void Producer::cut(Scene *scene, int command) {
 	
-	std::cout << "Producer::cmdDuplicate()" << std::endl;
+	std::cout << "Producer::cmdCut(Scene*,int)" << std::endl;
 }
 
 
 
-void Producer::cmdCut() {
+void Producer::open(Scene *scene, int command, string filename) {
 	
-	std::cout << "Producer::cmdCut()" << std::endl;
+	std::cout << "Opening " << filename << std::endl;
 }
 
 
 
-void Producer::cmdExit() {
+void Producer::paste(Scene *scene, int command) {
+	
+	std::cout << "Producer::cmdPaste(Scene*,int)" << std::endl;
+}
+
+
+
+void Producer::save(Scene *scene, int command) {
+	
+	std::cout << "Producer::cmdSave(Scene*,int)" << std::endl;
+}
+
+
+
+void Producer::quit(Scene *scene, int command) {
 	
 	exit(0);
-}
-
-
-
-void Producer::cmdOpen() {
-	
-	std::cout << "Producer::cmdOpen()" << std::endl;
-}
-
-
-
-void Producer::cmdPaste() {
-	
-	std::cout << "Producer::cmdPaste()" << std::endl;
-}
-
-
-
-void Producer::cmdSave() {
-	
-	std::cout << "Producer::cmdSave()" << std::endl;
 }
 
 

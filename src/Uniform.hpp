@@ -1,9 +1,8 @@
 /*
  * Uniform.hpp
- *     Container for GLSL uniform variables.
  *
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andy Brown <andybrown85@gmail.com>
  */
 #ifndef UNIFORM_HPP
 #define UNIFORM_HPP
@@ -12,37 +11,39 @@
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
+#include <string>
+using std::ostream;
+using std::string;
 
 
 
+/**
+ * @brief
+ *     Container for GLSL uniform variables.
+ */
 class Uniform {
 	
 	
 	public :
 		
-		Uniform(std::string name,
-		        std::string type,
-		        GLfloat value);
-		Uniform(std::string name,
-		        GLfloat value);
-		Uniform(std::string name,
-		        GLint value);
+		Uniform(string name, string type, GLfloat value);
+		Uniform(string name, GLfloat value);
+		Uniform(string name, GLint value);
 		
-		friend std::ostream& operator<<(std::ostream &stream,
-		                                const Uniform &uniform);
+		friend ostream& operator<<(ostream &stream, const Uniform &uniform);
 		
-		std::string getName() const;
-		int getType() const;
-		GLfloat getValue() const;
-		void getValue(GLfloat &value) const;
-		void getValue(GLint &value) const;
+		string getName() const {return name;}
+		int getType() const {return type;}
+		GLfloat getValue() const {return value;}
+		void getValue(GLfloat &value) const {value = this->value;}
+		void getValue(GLint &value) const {value = int(this->value);}
 	
 	
 	private :
 		
 		GLfloat value;
 		int type;
-		std::string name;
+		string name;
 };
 
 

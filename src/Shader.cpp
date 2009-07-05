@@ -6,7 +6,7 @@
  *     Andy Brown <adb1413@rit.edu>
  */
 #include "Shader.hpp"
-std::vector<Uniform> Shader::uniforms;
+vector<Uniform> Shader::uniforms;
 GLuint Shader::program=0;
 
 
@@ -82,7 +82,7 @@ void Shader::compile() {
 /**
  * Returns a copy of the source's filename.
  */
-std::string Shader::getFilename() {
+string Shader::getFilename() {
 	
 	return filename;
 }
@@ -122,10 +122,10 @@ void Shader::link() {
  * @param filename
  *     Path to the file.
  */
-void Shader::load(std::string filename) {
+void Shader::load(string filename) {
 	
-	std::ifstream inFile;
-	std::string line;
+	ifstream inFile;
+	string line;
 	
 	// Initialize
 	this->filename = filename;
@@ -174,7 +174,7 @@ void Shader::log(GLuint name) {
 		glGetShaderInfoLog(name, length, &returned, log);
 	log[returned] = '\0';
 	if (strlen(log) != 0)
-		std::cerr << log << std::endl;
+		cerr << log << endl;
 	
 	// Finish
 	delete[] log;
@@ -189,7 +189,7 @@ void Shader::print() const {
 	
 	// Print
 	for (int i=0; i<count; i++)
-		std::cout << source[i] << std::endl;
+		cout << source[i] << endl;
 }
 
 
@@ -203,7 +203,7 @@ void Shader::print() const {
  * @param value
  *     Value for the variable.
  */
-void Shader::setUniform(std::string name,
+void Shader::setUniform(string name,
                         int type,
                         GLfloat value) {
 	

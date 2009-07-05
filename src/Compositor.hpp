@@ -1,21 +1,23 @@
 /*
  * Compositor.hpp
- *     Responsible for creating and storing scenes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __COMPOSITOR_HEADER__
-#define __COMPOSITOR_HEADER__
+#ifndef _COMPOSITOR_HPP_
+#define _COMPOSITOR_HPP_
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-#include "State.hpp"
 
 
 
+/**
+ * @brief
+ *     Delegate responsible for altering the image, including hiding Items.
+ */
 class Compositor : public Delegate {
 	
 	
@@ -23,17 +25,13 @@ class Compositor : public Delegate {
 		
 		Compositor();
 		
-		virtual void run(int command);
+		virtual void run(int command) {;}
 		virtual void run(int command, float argument) {;}
-	
-	
-	private :
+		virtual void run(int command, string argument) {;}
 		
-		void cmdHide();
-		void cmdInfo();
-		void cmdShowAll();
-		
-		std::map<int,void(Compositor::*)()> hans;
+		static void hide(Scene *scene, int command);
+		static void info(Scene *scene, int command);
+		static void showAll(Scene *scene, int command);
 };
 
 

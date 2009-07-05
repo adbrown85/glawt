@@ -74,7 +74,7 @@ bool Binding::hasDrag() const {
 /**
  * Initializes the required attributes for a binding.
  */
-void Binding::init(int trg, int mod, int cmd, int sta) {
+void Binding::init(int trg, int mod, int cmd, int sta, int opt) {
 	
 	// Load names
 	if (!loaded)
@@ -87,6 +87,7 @@ void Binding::init(int trg, int mod, int cmd, int sta) {
 	this->cmd = cmd;
 	this->sta = sta;
 	hasArg = false;
+	this->opt = opt;
 }
 
 
@@ -94,10 +95,10 @@ void Binding::init(int trg, int mod, int cmd, int sta) {
 /**
  * Initializes the required attributes for a binding.
  */
-void Binding::init(int trg, int mod, int cmd, int sta, float arg) {
+void Binding::init(int trg, int mod, int cmd, int sta, float arg, int opt) {
 	
 	// Set attributes
-	init(trg, mod, cmd, sta);
+	init(trg, mod, cmd, sta, opt);
 	this->argf = arg;
 	this->argi = NULL;
 	hasArg = true;
@@ -108,10 +109,10 @@ void Binding::init(int trg, int mod, int cmd, int sta, float arg) {
 /**
  * Initializes the required attributes for a binding.
  */
-void Binding::init(int trg, int mod, int cmd, int sta, int *arg) {
+void Binding::init(int trg, int mod, int cmd, int sta, int *arg, int opt) {
 	
 	// Set attributes
-	init(trg, mod, cmd, sta);
+	init(trg, mod, cmd, sta, opt);
 	this->argf = 0.0;
 	this->argi = arg;
 	hasArg = true;

@@ -14,24 +14,18 @@
  */
 Compositor::Compositor() {
 	
-	std::map<int,void(Compositor::*)()>::iterator h;
-	
 	// Set type
 	type = "Compositor";
 	
 	// Add handlers
-	hans[Command::HIDE] = &Compositor::cmdHide;
-	hans[Command::INFORMATION] = &Compositor::cmdInfo;
-	hans[Command::SHOW_ALL] = &Compositor::cmdShowAll;
-	
-	// Copy commands
-	for (h=hans.begin(); h!=hans.end(); h++)
-		cmds.push_back(h->first);
+	handlersZero[Command::HIDE] = &Compositor::hide;
+	handlersZero[Command::INFORMATION] = &Compositor::info;
+	handlersZero[Command::SHOW_ALL] = &Compositor::showAll;
 }
 
 
 
-void Compositor::cmdHide() {
+void Compositor::hide(Scene *scene, int cmd) {
 	
 	int count;
 	
@@ -46,32 +40,18 @@ void Compositor::cmdHide() {
 
 
 
-void Compositor::cmdInfo() {
+void Compositor::info(Scene *scene, int cmd) {
 	
-	std::cout << "Compositor::cmdInfo()" << std::endl;
+	std::cout << "Compositor::info(Scene*,int)" << std::endl;
 }
 
 
 
-void Compositor::cmdShowAll() {
+void Compositor::showAll(Scene *scene, int cmd) {
 	
 	int count;
 	
 	count = scene->items.size();
 	for (int i=0; i<count; i++)
 		scene->items[i]->setShown(true);
-}
-
-
-
-/**
- * Interprets a command.
- */
-void Compositor::run(int command) {
-	
-	void (Compositor::*method)();
-	
-	// Filter command to correct method
-	method = hans[command];
-	(this->*method)();
 }

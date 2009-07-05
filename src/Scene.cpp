@@ -98,6 +98,17 @@ Item* Scene::getItem(int id) const {
 
 
 /**
+ * Returns a rotation matrix.
+ */
+Matrix Scene::getRotationMatrix() const {
+	
+	// Return matrix
+	return rotation.getMatrix();
+}
+
+
+
+/**
  * Checks if any item in the scene is selected.
  * 
  * @return True if an item is selected.
@@ -121,7 +132,6 @@ bool Scene::hasSelected() {
  */
 void Scene::print() {
 	
-	using namespace std;
 	int count;
 	
 	// Print
@@ -147,6 +157,20 @@ void Scene::reset() {
 
 
 /**
+ * Rotates the scene by axis/angle.
+ */
+void Scene::rotate(float angle, float x, float y, float z) {
+	
+	Quaternion rotation;
+	
+	// Combine quaternion with current rotation
+	rotation.set(angle, x, y, z);
+	this->rotation = rotation * this->rotation;
+}
+
+
+
+/**
  * Selects all items in the scene that are not hidden.
  */
 void Scene::selectAll() {
@@ -160,6 +184,16 @@ void Scene::selectAll() {
 			items[i]->setSelected(true);
 }
 
+
+
+/**
+ * Sets the rotation of the scene using axis/angle.
+ */
+void Scene::setRotation(float angle, float x, float y, float z) {
+	
+	// Set rotation
+	rotation.set(angle, x, y, z);
+}
 
 
 
