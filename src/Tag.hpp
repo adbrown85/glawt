@@ -4,6 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#ifndef _TAG_HPP_
+#define _TAG_HPP_
 #include <iostream>
 #include <map>
 #include <string>
@@ -42,3 +44,5 @@ class Tag {
 			return stream;
 		}
 };
+
+#endif

@@ -41,13 +41,14 @@ class Parser {
 		void parseTag(string tagString, Tag &tag);
 		void print();
 		void skipComment();
+		
+		vector<Tag> tags;
 	
 	
 	private :
 		
 		char buffer[8];
 		ifstream file;
-		vector<Tag> tags;
 };
 
 

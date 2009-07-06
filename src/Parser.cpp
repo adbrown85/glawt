@@ -162,8 +162,10 @@ void Parser::parseTag(string tagString,
 	
 	// Name
 	stream >> token;
-	if (token[0] == '/')
+	if (token[0] == '/') {
 		tag.name = token.substr(1, token.length()-1);
+		tag.closing = true;
+	}
 	else
 		tag.name = token;
 	
@@ -182,8 +184,9 @@ void Parser::parseTag(string tagString,
  */
 void Parser::print() {
 	
+	cout << "Tags: " << endl;
 	for (int i=0; i<tags.size(); ++i)
-		cout << tags[i] << endl;
+		cout << "  " << tags[i] << endl;
 }
 
 
@@ -192,6 +195,7 @@ void Parser::print() {
 /**
  * Simple test program.
  */
+/*
 int main(int argc, char **argv) {
 	
 	using namespace std;
@@ -216,3 +220,4 @@ int main(int argc, char **argv) {
 	cout << endl;
 	return 0;
 }
+*/

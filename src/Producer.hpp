@@ -8,11 +8,23 @@
 #define __PRODUCER_HEADER__
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <string>
+#include <vector>
+#include "Box.hpp"
 #include "Command.hpp"
 #include "Delegate.hpp"
+#include "Item.hpp"
+#include "Node.hpp"
+#include "Parser.hpp"
+#include "Tag.hpp"
 #include "Scene.hpp"
+#include "Translation.hpp"
+using std::cerr;
+using std::endl;
 using std::string;
+using std::map;
+using std::vector;
 
 
 
@@ -38,6 +50,12 @@ class Producer : public Delegate {
 		static void paste(Scene *scene, int command);
 		static void quit(Scene *scene, int command);
 		static void save(Scene *scene, int command);
+	
+	
+	private :
+		
+		static void openItem(Node *currentNode, Tag &tag);
+		static Node* openPosition(Node *currentNode, Tag &tag);
 };
 
 
