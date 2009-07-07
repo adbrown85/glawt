@@ -1,5 +1,7 @@
 gander.geany
 doc/
+app/bin
+app/obj
 core/bin
 core/lib
 core/obj
