@@ -80,8 +80,6 @@ void Producer::open(Scene *scene,
 		cerr << e << endl;
 		exit(1);
 	}
-	
-	scene->print();
 }
 
 
