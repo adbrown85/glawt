@@ -1,4 +1,11 @@
 gander.geany
-bin/
 doc/
-obj/
+core/bin
+core/lib
+core/obj
+backend/bin
+backend/lib
+backend/obj
+frontend/bin
+frontend/lib
+frontend/obj
