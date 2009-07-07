@@ -19,9 +19,6 @@ vector<Manipulator*> Display::manipulators;
 void Display::display(void) {
 	
 	float rotationMatrixArray[16];
-	int count=0;
-	Item *item;
-	vector<Manipulator*>::iterator mi;
 	Matrix rotationMatrix;
 	
 	// Initialize
@@ -36,9 +33,22 @@ void Display::display(void) {
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	count = scene->items.size();
-	for (int i=0; i<count; ++i) {
-		item = scene->items[i];
+	draw(&scene->rootNode);
+	
+	// Refresh
+	glutSwapBuffers();
+}
+
+
+
+void Display::draw(Node *node) {
+	
+	Item *item;
+	Translation *translation;
+	vector<Manipulator*>::iterator mi;
+	
+	// Item
+	if (item = dynamic_cast<Item*>(node)) {
 		if (item->isShown()) {
 			item->draw();
 			if (item->isSelected()) {
@@ -49,11 +59,35 @@ void Display::display(void) {
 					(*mi)->draw();
 				}
 			}
+			drawChildren(node);
 		}
 	}
 	
-	// Refresh
-	glutSwapBuffers();
+	// Translation
+	else if (translation = dynamic_cast<Translation*>(node)) {
+		translation->apply();
+		drawChildren(node);
+		translation->restore();
+	}
+	
+	// Node
+	else
+		drawChildren(node);
+}
+
+
+
+/**
+ * Draws the children of a node.
+ */
+void Display::drawChildren(Node *node) {
+	
+	int numberOfChildren;
+	
+	// Draw each child
+	numberOfChildren = node->children.size();
+	for (int i=0; i<numberOfChildren; ++i)
+		draw(node->children[i]);
 }
 
 

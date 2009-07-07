@@ -15,6 +15,7 @@
 #include <vector>
 #include "Item.hpp"
 #include "Matrix.hpp"
+#include "Node.hpp"
 #include "Quaternion.hpp"
 #include "Shader.hpp"
 #include "Uniform.hpp"
@@ -53,6 +54,7 @@ class Scene {
 		int getWidth() const {return width;}
 		void setRotation(float angle, float x, float y, float z);
 		
+		Node rootNode;
 		Vector position;
 		vector<Item*> items;
 		vector<Shader*> shaders;

@@ -15,6 +15,7 @@
 #include <string>
 #include <utility>
 #include "Identifiable.hpp"
+#include "Node.hpp"
 #include "Vector.hpp"
 using std::map;
 using std::pair;
@@ -24,9 +25,9 @@ using std::string;
 
 /**
  * @brief
- *     Abstract base class for an object in the scene.
+ *     Base class for an object in the scene.
  */
-class Item : public Identifiable  {
+class Item : public Identifiable, public Node  {
 	
 	
 	public :
@@ -38,7 +39,6 @@ class Item : public Identifiable  {
 		
 		virtual string attributes() const;
 		virtual void copy(const Item &item);
-		virtual void draw() const = 0;
 		
 		static Item* find(int id);
 		
@@ -67,7 +67,7 @@ class Item : public Identifiable  {
 		float size;
 		GLenum style;
 		int id;
-		string cat, type;
+		string cat;
 		Vector position, rotation;
 		
 		static int count;

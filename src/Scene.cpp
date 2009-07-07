@@ -135,11 +135,7 @@ void Scene::print() {
 	int count;
 	
 	// Print
-	count = items.size();
-	cout << "Items: " << endl;
-	for (int i=0; i<count; i++)
-		if (items[i] != NULL)
-			cout << "  " << *items[i] << endl;
+	rootNode.print(0);
 }
 
 

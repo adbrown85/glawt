@@ -8,28 +8,18 @@
 #ifndef __APPLICATION_HEADER__
 #define __APPLICATION_HEADER__
 #include <cstdlib>
-#include <fstream>
 #include <GL/glut.h>
 #include <iostream>
 #include <string>
-#include <vector>
-#include "Box.hpp"
 #include "Display.hpp"
 #include "Interpreter.hpp"
-#include "Item.hpp"
 #include "Keyboard.hpp"
 #include "Menu.hpp"
 #include "Mouse.hpp"
 #include "Scene.hpp"
-#include "Shader.hpp"
-#include "Uniform.hpp"
-#include "Vector.hpp"
 using std::cerr;
-using std::cout;
 using std::endl;
-using std::ifstream;
 using std::string;
-using std::vector;
 
 
 /**
@@ -80,15 +70,7 @@ class Application {
 	private :
 		
 		Scene *scene;
-		vector<Item*> items;
-		vector<Shader*> shaders;
-		vector<Uniform*> uniforms;
-		
-		void handleItems(string filename);
-		void handleShader(string filename, GLenum type);
-		void handleUniforms(string filename);
-		void readItem(ifstream &file);
-		void readUniform(ifstream &file);
+		string sceneFilename;
 };
 
 

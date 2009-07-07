@@ -16,10 +16,12 @@
 #include "Control.hpp"
 #include "Item.hpp"
 #include "Matrix.hpp"
+#include "Node.hpp"
 #include "Outline.hpp"
 #include "Quaternion.hpp"
 #include "Scene.hpp"
 #include "Manipulator.hpp"
+#include "Translation.hpp"
 #include "Vector.hpp"
 using std::vector;
 
@@ -35,6 +37,8 @@ class Display {
 	public :
 		
 		static void display(void);
+		static void draw(Node *node);
+		static void drawChildren(Node *node);
 		static void install(Control *control);
 		static void start(std::string title, Scene *scene);
 	
