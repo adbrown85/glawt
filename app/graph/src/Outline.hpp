@@ -1,11 +1,11 @@
 /*
- * Box.hpp
+ * Outline.hpp
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __BOX_HEADER__
-#define __BOX_HEADER__
+#ifndef OUTLINE_HPP
+#define OUTLINE_HPP
 #include <iostream>
 #include <GL/glut.h>
 #include "Item.hpp"
@@ -15,35 +15,33 @@
 
 /**
  * @brief
- *     Cube shape that can be drawn by %Display.
- * @ingroup core
+ *     Bounding box made up of lines.
+ * @ingroup graph
  * 
  * @todo
  *     Move under a Shape interface.
  */
-class Box : public Item {
+class Outline : public Item {
 	
 	
 	public : 
 		
-		Box();
-		Box(float size);
+		Outline(float size);
 		
 		virtual void draw() const;
 		
 		void setColor(float r, float g, float b);
+		void setSize(float size);
 	
 	
 	private:
 		
-		GLfloat colors[24][3];
+		float color[3];
 		static bool loaded;
-		static GLfloat coordinates[24][3], points[24][3];
+		static GLfloat points[24][3];
 		static GLubyte indices[24], map[8][3];
 		
 		void initialize();
-		void initializeColors();
-		void initializeCoordinates();
 		void initializeIndices();
 		void initializeMap();
 		void initializePoints();

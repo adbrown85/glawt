@@ -1,29 +1,17 @@
 #
 # makefile
-#     Builds Gander.
+#     Builds Gander from its modules, and copies to current directory.
 # 
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
 
 
-# Phony
+# Phony targets
 .PHONY : all clean
-all : 
-	@echo "Core"
-	@$(MAKE) --directory "core" --quiet
-	@echo "Backend"
-	@$(MAKE) --directory "backend" --quiet
-	@echo "Frontend"
-	@$(MAKE) --directory "frontend" --quiet
-	@echo "Application"
-	@$(MAKE) --directory "app" --quiet
+all :
+	@$(MAKE) --directory ./app --quiet
+	@echo "--> gander"
+	@cp ./app/client/bin/Client ./gander
 clean :
-	@echo "Core"
-	@$(MAKE) --directory "core" clean --quiet
-	@echo "Backend"
-	@$(MAKE) --directory "backend" clean --quiet
-	@echo "Frontend"
-	@$(MAKE) --directory "frontend" clean --quiet
-	@echo "Application"
-	@$(MAKE) --directory "app" clean --quiet
+	@$(MAKE) --directory ./app clean --quiet

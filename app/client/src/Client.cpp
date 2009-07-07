@@ -1,18 +1,15 @@
 /*
- * Application.cpp
- *     Application for visualizing volumes.
+ * Client.cpp
+ *     Client for visualizing volumes.
  * 
  * Author
  *     Andrew Brown
  */
-#include "Application.hpp"
+#include "Client.hpp"
 
 
 
-/**
- * Creates a new Application object.
- */
-Application::Application() {
+Client::Client() {
 	
 	// Initialize
 	scene = NULL;
@@ -20,10 +17,7 @@ Application::Application() {
 
 
 
-/**
- * Cleans up memory allocated by the Application.
- */
-Application::~Application() {
+Client::~Client() {
 	
 	// Deallocate
 	if (scene != NULL)
@@ -40,8 +34,8 @@ Application::~Application() {
  * @param argv
  *     Array of arguments as C-strings.
  */
-void Application::parse(int argc,
-                        char *argv[]) {
+void Client::parse(int argc,
+                   char *argv[]) {
 	
 	// Handle arguments
 	if (argc != 3) {
@@ -58,9 +52,33 @@ void Application::parse(int argc,
 
 
 /**
- * Starts the Application.
+ * Sets the name of the Client from a filename
+ * 
+ * @param filename
+ *     Path to the Client as specified on the command line.
  */
-void Application::start() {
+void Client::setName(string filename) {
+	
+	int index, length;
+	
+	// Remove directory part
+	index = filename.rfind('/');
+	if (index < filename.length())
+		name = filename.erase(0, index+1);
+	
+	// Fix case
+	length = name.length();
+	for (int i=0; i<length; ++i)
+		name[i] = tolower(name[i]);
+	name[0] = toupper(name[0]);
+}
+
+
+
+/**
+ * Starts the Client.
+ */
+void Client::start() {
 	
 	// Open scene
 	scene = new Scene(640, 480);
@@ -86,25 +104,26 @@ void Application::start() {
  */
 int main(int argc, char **argv) {
 	
-	Application application;
+	Client client;
 	
 	// Handle arguments
-	application.parse(argc, argv);
+	client.parse(argc, argv);
+	client.setName(argv[0]);
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Application" << endl;
+	cout << client.getName() << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
 	// Test
-	application.start();
+	client.start();
 	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Application" << endl;
+	cout << client.getName() << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;

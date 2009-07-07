@@ -1,28 +1,27 @@
-CPPFLAGS = -Isrc -I"../core/src" -I"../backend/src" -I"../frontend/src"
-LDFLAGS = -lglut -lIL -lILU -lILUT -lm
-VPATH = bin:obj:src
-LIBRARIES = ../frontend/lib/Frontend.a \
-            ../backend/lib/Backend.a \
-            ../core/lib/Core.a
-OBJECTS = Application.o
-%.o : %.cpp %.hpp
-	@echo "  $@"
-	@g++ -ggdb -c $(CPPFLAGS) -o obj/$@ $(filter-out %.hpp, $<)
+#
+# makefile
+#     Builds Gander from its modules.
+# 
+# Author
+#     Andy Brown <andybrown85@gmail.com>
+#
+MODULES = data graph backend frontend client
+OPTS = --quiet
+
+
+# Macros
+define make-module
+$(1) : 
+	@echo $(1)
+	@$(MAKE) --directory ./$(1) $(filter clean,$(MAKECMDGOALS)) $(OPTS)
+endef
 
 
 # Phony
-.PHONY: all clean
-all: Application
-clean:
-	rm obj/*.o
+.PHONY : all clean $(MODULES)
+all : $(MODULES)
+clean : $(MODULES)
 
 
-# Libraries
-Application : Application.o
-	@echo "  gander"
-	@g++ -ggdb $(LDFLAGS) -o bin/gander \
-	$(addprefix obj/, $(OBJECTS)) $(LIBRARIES)
-
-
-# Objects
-Application.o : 
+# Modules
+$(foreach M,$(MODULES),$(eval $(call make-module,$(M))))

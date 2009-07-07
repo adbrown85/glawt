@@ -1,12 +1,12 @@
 /*
- * Application.hpp
- *     Application for visualizing volumes.
+ * Client.hpp
+ *     Client for visualizing volumes.
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __APPLICATION_HEADER__
-#define __APPLICATION_HEADER__
+#ifndef __CLIENT_HPP__
+#define __CLIENT_HPP__
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
@@ -50,34 +50,38 @@ using std::string;
  * </table>
  */
 /**
- * @defgroup application Application
- * @defgroup backend Backend
- * @defgroup core Core
+ * @defgroup client Client
  * @defgroup frontend Frontend
+ * @defgroup backend Backend
+ * @defgroup graph Graph
+ * @defgroup data Data
  */
 /**
  * @brief
  *     Ties together a %Display with %Mouse, %Keyboard, and %Menu controls.
- * @ingroup application
+ * @ingroup client
  */
-class Application {
+class Client {
 	
 	
 	public :
 		
-		Application();
-		~Application();
 		
-		void parse(int argc,
-		           char *argv[]);
+		Client();
+		~Client();
+		
+		void parse(int argc, char *argv[]);
 		void print();
 		void start();
+		
+		string getName() {return name;}
+		void setName(string filename);
 	
 	
 	private :
 		
 		Scene *scene;
-		string sceneFilename;
+		string name, sceneFilename;
 };
 
 

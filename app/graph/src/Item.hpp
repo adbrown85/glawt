@@ -26,7 +26,7 @@ using std::string;
 /**
  * @brief
  *     Base class for an object in the scene.
- * @ingroup core
+ * @ingroup graph
  */
 class Item : public Identifiable, public Node  {
 	
