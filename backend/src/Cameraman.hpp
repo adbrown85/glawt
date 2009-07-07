@@ -20,7 +20,8 @@ using std::map;
 
 /**
  * @brief
- *     Delegate responsible for moving or rotating the camera.
+ *     %Delegate responsible for moving or rotating the camera.
+ * @ingroup backend
  */
 class Cameraman : public Delegate {
 	

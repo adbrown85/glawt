@@ -16,8 +16,10 @@ using std::string;
 
 
 /**
+ * @interface Delegate
  * @brief
- *     Interface for a worker that performs Commands on the Scene.
+ *     Interface for a worker that performs %Commands on the %Scene.
+ * @ingroup backend
  * 
  * @see Cameraman
  * @see Compositor

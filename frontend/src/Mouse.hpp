@@ -31,7 +31,8 @@ using std::vector;
 
 /**
  * @brief
- *     %Mouse control for the Display.
+ *     %Mouse control for the %Display.
+ * @ingroup frontend
  * 
  * @todo
  *     Need to deallocate manipulators.

@@ -14,6 +14,11 @@
 
 
 
+/**
+ * @brief
+ *     %Node that moves items in the scene.
+ * @ingroup core
+ */
 class Translation : public Node, public Vector {
 	
 	

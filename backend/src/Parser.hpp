@@ -28,6 +28,7 @@ using std::vector;
 /**
  * @brief
  *     Reads an XML file, breaking it up into tags and attributes.
+ * @ingroup backend
  */
 class Parser {
 	

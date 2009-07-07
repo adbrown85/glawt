@@ -15,6 +15,7 @@
 /**
  * @brief
  *     Four-component vector with dot and cross product capabilities.
+ * @ingroup core
  */
 class Vector {
 	

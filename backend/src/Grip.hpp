@@ -16,7 +16,8 @@
 
 /**
  * @brief
- *     Delegate responsible for moving individual items around the scene.
+ *     %Delegate responsible for moving individual items around the scene.
+ * @ingroup backend
  */
 class Grip : public Delegate {
 	

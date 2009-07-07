@@ -30,7 +30,8 @@ using std::vector;
 
 /**
  * @brief
- *     Interprets commands and passes them on to other Delegates.
+ *     Interprets commands and passes them on to other %Delegates.
+ * @ingroup backend
  * 
  * @see Cameraman
  * @see Compositor

@@ -18,7 +18,8 @@ using std::string;
 
 /**
  * @brief
- *     Commands passed to Delegates to change the Scene or Items.
+ *     %Commands passed to %Delegates to change the %Scene or %Items.
+ * @ingroup backend
  */
 class Command {
 	

@@ -26,6 +26,7 @@ using std::vector;
 /**
  * @brief
  *     GLSL shader with loading, compiling, and installing capabilities.
+ * @ingroup core
  */
 class Shader {
 	

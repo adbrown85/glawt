@@ -30,7 +30,8 @@ using std::vector;
 
 /**
  * @brief
- *     Delegate responsible for creating and storing scenes.
+ *     %Delegate responsible for creating and storing scenes.
+ * @ingroup backend
  */
 class Producer : public Delegate {
 	

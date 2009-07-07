@@ -29,6 +29,7 @@ using std::vector;
 /**
  * @brief
  *     Collection of items that also stores selection and camera information.
+ * @ingroup core
  */
 class Scene {
 	

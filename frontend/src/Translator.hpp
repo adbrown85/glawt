@@ -20,6 +20,7 @@
 /**
  * @brief
  *     Tool for moving other items.
+ * @ingroup frontend
  */
 class Translator : public Manipulator {
 	

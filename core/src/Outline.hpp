@@ -16,6 +16,7 @@
 /**
  * @brief
  *     Bounding box made up of lines.
+ * @ingroup core
  * 
  * @todo
  *     Move under a Shape interface.

@@ -20,6 +20,7 @@ using std::string;
 /**
  * @brief
  *     Container for GLSL uniform variables.
+ * @ingroup core
  */
 class Uniform {
 	

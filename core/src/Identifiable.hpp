@@ -11,8 +11,10 @@
 
 
 /**
+ * @interface Identifiable
  * @brief
  *     Interface for an object that has unique ID numbers.
+ * @ingroup core
  */
 class Identifiable {
 	

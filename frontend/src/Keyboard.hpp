@@ -26,7 +26,8 @@ using std::vector;
 
 /**
  * @brief
- *     %Keyboard control for the Display.
+ *     %Keyboard control for the %Display.
+ * @ingroup frontend
  */
 class Keyboard : public Control {
 	

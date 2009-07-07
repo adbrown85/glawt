@@ -16,6 +16,11 @@ using std::vector;
 
 
 
+/**
+ * @brief
+ *     Basic element of the scene graph.
+ * @ingroup core
+ */
 class Node {
 	
 	

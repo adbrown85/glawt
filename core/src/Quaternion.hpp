@@ -17,6 +17,7 @@
 /**
  * @brief
  *     Encapsulation of a rotation that avoids gimbal lock.
+ * @ingroup core
  */
 class Quaternion {
 	

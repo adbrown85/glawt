@@ -50,8 +50,15 @@ using std::string;
  * </table>
  */
 /**
+ * @defgroup application Application
+ * @defgroup backend Backend
+ * @defgroup core Core
+ * @defgroup frontend Frontend
+ */
+/**
  * @brief
- *     Ties together a Display with Mouse, Keyboard, and Menu controls.
+ *     Ties together a %Display with %Mouse, %Keyboard, and %Menu controls.
+ * @ingroup application
  */
 class Application {
 	

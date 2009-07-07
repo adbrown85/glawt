@@ -18,6 +18,7 @@
 /**
  * @brief
  *     Abstract base class for an item that manipulates other items.
+ * @ingroup frontend
  */
 class Manipulator : public Item  {
 	

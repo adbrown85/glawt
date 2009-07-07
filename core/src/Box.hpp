@@ -15,7 +15,8 @@
 
 /**
  * @brief
- *     Cube shape that can be drawn by Display.
+ *     Cube shape that can be drawn by %Display.
+ * @ingroup core
  * 
  * @todo
  *     Move under a Shape interface.

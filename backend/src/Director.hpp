@@ -16,7 +16,8 @@
 
 /**
  * @brief
- *     Delegate responsible for selecting items in the Scene.
+ *     %Delegate responsible for selecting items in the scene.
+ * @ingroup backend
  */
 class Director : public Delegate {
 	

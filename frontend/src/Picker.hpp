@@ -27,6 +27,7 @@ using std::vector;
 /**
  * @brief
  *     Determines which item is under the mouse cursor.
+ * @ingroup frontend
  */
 class Picker {
 	

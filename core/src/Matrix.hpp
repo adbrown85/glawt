@@ -17,6 +17,7 @@
 /**
  * @brief
  *     Four-by-four matrix with multiplication and inversion.
+ * @ingroup core
  */
 class Matrix {
 	

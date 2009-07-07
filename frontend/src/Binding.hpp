@@ -23,6 +23,7 @@ using std::string;
 /**
  * @brief
  *     Maps a combination of keys or buttons to a command.
+ * @ingroup frontend
  * 
  * @bug
  *     Currently mouse bindings should not be stored with keyboard bindings.

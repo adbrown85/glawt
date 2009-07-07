@@ -26,7 +26,8 @@ using std::vector;
 
 /**
  * @brief
- *     Interface installed into a Display that controls the scene.
+ *     Interface installed into a %Display that controls the scene.
+ * @ingroup frontend
  */
 class Control {
 	

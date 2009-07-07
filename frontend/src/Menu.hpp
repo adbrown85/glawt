@@ -20,7 +20,8 @@ using std::vector;
 
 /**
  * @brief
- *     Right-click menu for the Display.
+ *     Right-click menu for the %Display.
+ * @ingroup frontend
  */
 class Menu : public Control {
 	
