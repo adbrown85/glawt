@@ -5,7 +5,7 @@
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
-MODULES = data graph backend frontend client
+MODULES = data traits graph backend frontend client
 OPTS = --quiet
 
 
