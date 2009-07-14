@@ -96,6 +96,10 @@ void Mouse::handleDrag(int x, int y) {
 /**
  * Handles mouse clicks.
  * 
+ * Note that because of limitations with GLUT, we treat rotating the mouse 
+ * wheel as two separate buttons, defined in %Binding as <i>GLUT_UP_BUTTON</i> 
+ * and <i>GLUT_DOWN_BUTTON</i>.
+ * 
  * @param button
  *     Button that was clicked.
  * @param state
@@ -116,14 +120,16 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 	pair<multimap<int,Binding>::iterator,
 	     multimap<int,Binding>::iterator> range;
 	
-	// Find the item under the cursor
+	// Find the item under the cursor for normal clicks
 	currentManipulator = NULL;
 	itemIsManipulator = false;
-	currentItemID = Picker::pick(scene, manipulators, x, y);
-	item = Item::find(currentItemID);
-	if (item != NULL) {
-		if (typeid(*item) == typeid(Translator))
-			itemIsManipulator = true;
+	if (button != GLUT_UP_BUTTON && button != GLUT_DOWN_BUTTON) {
+		currentItemID = Picker::pick(scene, manipulators, x, y);
+		item = Item::find(currentItemID);
+		if (item != NULL) {
+			if (typeid(*item) == typeid(Translator))
+				itemIsManipulator = true;
+		}
 	}
 	
 	// Reset
@@ -132,10 +138,12 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 		dragCount = 0;
 	}
 	
-	// Lookup binding for this binding and state
+	// Store modifier (Ctrl, Alt, Shift)
 	modifier = glutGetModifiers();
 	if (modifier == 1 || modifier == 5)
 		modifier -= 1;
+	
+	// Lookup binding for this binding, modifier, and state
 	range = bindings.equal_range(button);
 	for (bi=range.first; bi!=range.second; ++bi) {
 		binding = &bi->second;

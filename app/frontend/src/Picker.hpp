@@ -5,19 +5,18 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __PICKER_HEADER__
-#define __PICKER_HEADER__
+#ifndef __PICKER_HPP__
+#define __PICKER_HPP__
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
 #include <set>
 #include <typeinfo>
 #include <vector>
-#include "Item.hpp"
-#include "Manipulator.hpp"
-#include "Matrix.hpp"
-#include "Scene.hpp"
-#include "Translator.hpp"
+#include "Item.hpp"                // Picking IDs
+#include "Manipulator.hpp"         // Pass to Painter, check if picked
+#include "Painter.hpp"             // Paints items into pick buffers
+#include "Scene.hpp"               // Pass root node to Painter
 #define PICK_BUFFER_SIZE 32
 using std::set;
 using std::vector;
@@ -35,7 +34,7 @@ class Picker {
 	public :
 		
 		static GLuint pick(Scene *scene,
-		                   vector<Manipulator*> manipulators,
+		                   vector<Manipulator*> &manipulators,
 		                   int x,
 		                   int y);
 	
@@ -45,12 +44,10 @@ class Picker {
 		static GLuint buf[PICK_BUFFER_SIZE];
 		static set<GLuint> ids;
 		
-		static GLuint choose(Scene *scene);
-		static void draw(Scene *scene,
-		                 vector<Manipulator*> manipulators);
+		static GLuint chooseItem(Scene *scene);
 		static void finish();
 		static void initialize(int x, int y);
-		static void store();
+		static void storeIDsOfItems();
 };
 
 

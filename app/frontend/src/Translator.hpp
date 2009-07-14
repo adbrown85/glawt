@@ -4,22 +4,26 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __TRANSLATOR_HEADER__
-#define __TRANSLATOR_HEADER__
+#ifndef __TRANSLATOR_HPP__
+#define __TRANSLATOR_HPP__
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <GL/glut.h>
-#include "Item.hpp"
+#include <vector>
 #include "Manipulator.hpp"
 #include "Matrix.hpp"
 #include "Scene.hpp"
+#include "Shape.hpp"
+#include "Translation.hpp"
 #include "Vector.hpp"
+using std::vector;
 
 
 
 /**
  * @brief
- *     Tool for moving other items.
+ *     Tool for moving shapes.
  * @ingroup frontend
  */
 class Translator : public Manipulator {

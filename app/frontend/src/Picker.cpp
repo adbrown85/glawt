@@ -11,10 +11,12 @@ set<GLuint> Picker::ids;
 
 
 /**
- * Choose the item to return.  Manipulators are returned before shapes, and if 
- * more than one shape is picked, the closest one to the camera is chosen.
+ * Choose the item to return.
+ * 
+ * Manipulators are returned before shapes, and if more than one shape is 
+ * picked, the closest one to the camera is chosen.
  */
-GLuint Picker::choose(Scene *scene) {
+GLuint Picker::chooseItem(Scene *scene) {
 	
 	float closestDepth=-123456789.0;
 	GLuint closestID;
@@ -26,7 +28,7 @@ GLuint Picker::choose(Scene *scene) {
 	// Check for manipulator
 	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
 		item = Item::find(*ii);
-		if (typeid(*item) == typeid(Translator))
+		if (dynamic_cast<Manipulator*>(item))
 			return item->getID();
 	}
 	
@@ -46,63 +48,22 @@ GLuint Picker::choose(Scene *scene) {
 
 
 /**
- * Draws the items.  Make sure this matches up with how Display draws the 
- * items.  It may be a good idea to abstract this out to a Painter class, or
- * something like that.
- */
-void Picker::draw(Scene *scene,
-                  vector<Manipulator*> manipulators) {
-	
-	float rotationMatrixArray[16];
-	int count;
-	Item *item;
-	Matrix rotationMatrix;
-	
-	// Initialize
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	// Transform
-	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	rotationMatrix = scene->getRotationMatrix();
-	rotationMatrix.getArray(rotationMatrixArray);
-	glMultMatrixf(rotationMatrixArray);
-	
-	// Draw each item that's not hidden
-	count = scene->items.size();
-	for (int i=0; i<count; i++) {
-		item = scene->items[i];
-		if (item->isShown()) {
-			glPushName(item->getID());
-			item->draw();
-			if (item->isSelected()) {
-				for (int i=0; i<manipulators.size(); i++) {
-					glPushName(manipulators[i]->getID());
-					manipulators[i]->copy(*item);
-					manipulators[i]->draw();
-				}
-			}
-		}
-	}
-}
-
-
-
-/**
  * Restores the original projection matrix.
+ * 
+ * @warning Not sure if glFlush is really needed here.
  */
 void Picker::finish() {
 	
 	// Restore
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
-	glFlush();
+	// glFlush();
 }
 
 
 
 /**
- * Initializes the pick buffer.
+ * Initializes the viewport, pick buffer, and projection matrix.
  */
 void Picker::initialize(int x, int y) {
 	
@@ -135,23 +96,23 @@ void Picker::initialize(int x, int y) {
  * Picks an item from a scene.
  */
 GLuint Picker::pick(Scene *scene,
-                    vector<Manipulator*> manipulators,
+                    vector<Manipulator*> &manipulators,
                     int x,
                     int y) {
 	
 	// Pick an item
 	initialize(x, y);
-	draw(scene, manipulators);
-	store();
+	Painter::paint(*scene, manipulators, GL_SELECT);
+	finish();
+	storeIDsOfItems();
 	
 	// Return
-	finish();
 	if (ids.empty())
 		return 0;
 	else if (ids.size() == 1)
 		return *(ids.begin());
 	else
-		return choose(scene);
+		return chooseItem(scene);
 }
 
 
@@ -159,7 +120,7 @@ GLuint Picker::pick(Scene *scene,
 /**
  * Stores the IDs of the items picked.
  */
-void Picker::store() {
+void Picker::storeIDsOfItems() {
 	
 	GLuint id, pos, *ptr;
 	GLint count;

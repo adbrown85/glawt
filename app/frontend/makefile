@@ -12,7 +12,7 @@ LIBS = $(addsuffix .a,$(MODS))
 LIBDIRS = $(foreach M,$(MODS),../$(M)/lib)
 VPATH = bin lib obj src $(LIBDIRS)
 OBJS = Binding.o Control.o Display.o Keyboard.o Menu.o \
-       Mouse.o Picker.o Translator.o
+       Mouse.o Painter.o Picker.o Translator.o
 OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
 
 
@@ -39,10 +39,11 @@ frontend.a : $(OBJS)
 # Objects
 Binding.o : 
 Control.o : Binding.o Manipulator.hpp
-Display.o : Control.o Manipulator.hpp
+Display.o : Control.o Manipulator.hpp Painter.o
 Keyboard.o : Binding.o Control.o
 Manipulator.hpp : 
 Menu.o : Control.o
 Mouse.o : Binding.o Control.o Picker.o Translator.o
-Picker.o : Translator.o
+Painter.o : Manipulator.hpp Translator.o
+Picker.o : Painter.o Manipulator.hpp
 Translator.o : Manipulator.hpp

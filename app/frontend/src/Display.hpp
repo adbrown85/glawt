@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __DISPLAY_HEADER__
-#define __DISPLAY_HEADER__
+#ifndef __DISPLAY_HPP__
+#define __DISPLAY_HPP__
 #define DISPLAY_DEFAULT_X 100
 #define DISPLAY_DEFAULT_Y 100
 #include <cstdlib>
@@ -13,16 +13,11 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
-#include "Control.hpp"
-#include "Item.hpp"
-#include "Matrix.hpp"
-#include "Node.hpp"
-#include "Outline.hpp"
-#include "Quaternion.hpp"
-#include "Scene.hpp"
-#include "Manipulator.hpp"
-#include "Translation.hpp"
-#include "Vector.hpp"
+#include "Control.hpp"             // Install controls before starting
+#include "Manipulator.hpp"         // Draw UI widgets for controls
+#include "Scene.hpp"               // Pass root node to Painter
+#include "Painter.hpp"             // Paints the screen with scene
+using std::string;
 using std::vector;
 
 
@@ -38,15 +33,13 @@ class Display {
 	public :
 		
 		static void display(void);
-		static void draw(Node *node);
-		static void drawChildren(Node *node);
 		static void install(Control *control);
-		static void start(std::string title, Scene *scene);
+		static void start(string title,
+		                  Scene *scene);
 	
 	
 	private :
 		
-		static Outline outline;
 		static Scene *scene;
 		static vector<Control*> controls;
 		static vector<Manipulator*> manipulators;

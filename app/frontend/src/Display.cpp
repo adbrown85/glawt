@@ -7,7 +7,6 @@
  */
 #include "Display.hpp"
 Scene *Display::scene=NULL;
-Outline Display::outline(1.0);
 vector<Control*> Display::controls;
 vector<Manipulator*> Display::manipulators;
 
@@ -18,76 +17,14 @@ vector<Manipulator*> Display::manipulators;
  */
 void Display::display(void) {
 	
-	float rotationMatrixArray[16];
-	Matrix rotationMatrix;
-	
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 	
-	// Transform
-	glTranslatef(scene->position.x, scene->position.y, scene->position.z);
-	rotationMatrix = scene->getRotationMatrix();
-	rotationMatrix.getArray(rotationMatrixArray);
-	glMultMatrixf(rotationMatrixArray);
-	
-	// Draw
-	draw(&scene->rootNode);
+	// Paint
+	Painter::paint(*scene, manipulators);
 	
 	// Refresh
 	glutSwapBuffers();
-}
-
-
-
-void Display::draw(Node *node) {
-	
-	Item *item;
-	Translation *translation;
-	vector<Manipulator*>::iterator mi;
-	
-	// Item
-	if (item = dynamic_cast<Item*>(node)) {
-		if (item->isShown()) {
-			item->draw();
-			if (item->isSelected()) {
-				outline.copy(*item);
-				outline.draw();
-				for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-					(*mi)->copy(*item);
-					(*mi)->draw();
-				}
-			}
-			drawChildren(node);
-		}
-	}
-	
-	// Translation
-	else if (translation = dynamic_cast<Translation*>(node)) {
-		translation->apply();
-		drawChildren(node);
-		translation->restore();
-	}
-	
-	// Node
-	else
-		drawChildren(node);
-}
-
-
-
-/**
- * Draws the children of a node.
- */
-void Display::drawChildren(Node *node) {
-	
-	int numberOfChildren;
-	
-	// Draw each child
-	numberOfChildren = node->children.size();
-	for (int i=0; i<numberOfChildren; ++i)
-		draw(node->children[i]);
 }
 
 

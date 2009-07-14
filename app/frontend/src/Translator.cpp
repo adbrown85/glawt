@@ -1,6 +1,5 @@
 /*
  * Translator.cpp
- *     Visual tool for moving shapes.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
@@ -17,7 +16,6 @@ Translator::Translator(float x, float y, float z) {
 	// Initialize attributes
 	axis.set(x, y, z, 1.0);
 	size = 1.0;
-	type = "Translator";
 	
 	// Initialize 
 	cyl = gluNewQuadric();
@@ -31,30 +29,23 @@ Translator::Translator(float x, float y, float z) {
  */
 void Translator::draw() const {
 	
-	// Move into position
+	// Set unique color for each translator based on axis
+	glColor3f(axis.x, axis.y, axis.z);
+	
+	// Line from origin
+	glBegin(GL_LINES);
+		glVertex3f(0.0, 0.0, 0.0);
+		glVertex3f(axis.x*size, axis.y*size, axis.z*size);
+	glEnd();
+	
+	// Cone at end of line
 	glPushMatrix();
-	glTranslatef(position.x, position.y, position.z);
-		
-		// Color
-		glColor3f(axis.x, axis.y, axis.z);
-		
-		// Line
-		glBegin(GL_LINES);
-			glVertex3f(0.0, 0.0, 0.0);
-			glVertex3f(axis.x*size, axis.y*size, axis.z*size);
-		glEnd();
-		
-		// Cone
-		glPushMatrix();
-			glTranslatef(axis.x*size, axis.y*size, axis.z*size);
-			if (axis.x >= 0.9)
-				glRotatef(90.0, 0.0, 1.0, 0.0);
-			else if (axis.y >= 0.9)
-				glRotatef(-90.0, 1.0, 0.0, 0.0);
-			gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
-		glPopMatrix();
-		
-		glPopMatrix();
+		glTranslatef(axis.x*size, axis.y*size, axis.z*size);
+		if (axis.x >= 0.9)
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+		else if (axis.y >= 0.9)
+			glRotatef(-90.0, 1.0, 0.0, 0.0);
+		gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
 	glPopMatrix();
 }
 
@@ -69,10 +60,10 @@ void Translator::draw() const {
 void Translator::use(Scene *scene, const Vector &movement) {
 	
 	float dotProduct, translateAmount;
-	int numberOfItems;
-	Item *item;
 	Matrix rotationMatrix;
-	Vector position, viewAxis;
+	ShapePtrSet::iterator si;
+	Translation *translation;
+	Vector viewAxis;
 	
 	// Calculate translate amount from movement and view axis
 	rotationMatrix = scene->getRotationMatrix();
@@ -80,20 +71,19 @@ void Translator::use(Scene *scene, const Vector &movement) {
 	dotProduct = movement.getNormalized().dotProduct(viewAxis.getNormalized());
 	translateAmount = movement.length() * dotProduct * 0.0125;
 	
-	// Add translate amount to position of each selected item
+	// Add translate amount to position of each selected shape
 	if (fabs(dotProduct) > 0.75) {
-		numberOfItems = scene->items.size();
-		for (int i=0; i<numberOfItems; i++) {
-			item = scene->items[i];
-			if (item->isSelected()) {
-				position = item->getPosition();
+		for (si=scene->selection.begin();
+		     si!=scene->selection.end();
+		     ++si) {
+			translation = (*si)->translation;
+			if (translation != NULL) {
 				if (axis.x > 0.9)
-					position.x += translateAmount;
+					translation->x += translateAmount;
 				else if (axis.y > 0.9)
-					position.y += translateAmount;
+					translation->y += translateAmount;
 				else if (axis.z > 0.9)
-					position.z += translateAmount;
-				item->setPosition(position.x, position.y, position.z);
+					translation->z += translateAmount;
 			}
 		}
 	}
