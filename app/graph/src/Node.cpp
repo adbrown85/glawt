@@ -8,6 +8,15 @@
 
 
 
+Node::Node() {
+	
+	// Initialize
+	parent = NULL;
+	type = "Node";
+}
+
+
+
 /**
  * Adds a child to this node.
  * 
@@ -19,21 +28,6 @@ void Node::add(Node *child) {
 	// Link nodes together
 	child->parent = this;
 	children.push_back(child);
-}
-
-
-
-/**
- * Draws each of the node's children.
- */
-void Node::draw() const {
-	
-	int count;
-	
-	// Draw each child
-	count = children.size();
-	for (int i=0; i<count; ++i)
-		children[i]->draw();
 }
 
 

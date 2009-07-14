@@ -4,11 +4,11 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef OUTLINE_HPP
-#define OUTLINE_HPP
+#ifndef __OUTLINE_HPP__
+#define __OUTLINE_HPP__
 #include <iostream>
 #include <GL/glut.h>
-#include "Item.hpp"
+#include "Shape.hpp"
 #include "Vector.hpp"
 
 
@@ -17,11 +17,8 @@
  * @brief
  *     Bounding box made up of lines.
  * @ingroup graph
- * 
- * @todo
- *     Move under a Shape interface.
  */
-class Outline : public Item {
+class Outline : public Shape {
 	
 	
 	public : 

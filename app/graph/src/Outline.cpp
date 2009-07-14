@@ -39,7 +39,6 @@ void Outline::draw() const {
 	// Draw vertices
 	glPushMatrix(); {
 		glColor3f(1.0, 1.0, 0.0);
-		glTranslatef(position.x, position.y, position.z);
 		glScalef(size*1.002, size*1.002, size*1.002);
 		glTranslatef(-0.5, -0.5, -0.5);
 		glDrawElements(GL_LINES, 24, GL_UNSIGNED_BYTE, indices);

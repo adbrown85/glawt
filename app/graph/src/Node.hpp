@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <typeinfo>
 #include <vector>
 using std::ostream;
 using std::string;
@@ -26,11 +27,10 @@ class Node {
 	
 	public :
 		
-		Node() {type = "Node";}
+		Node();
 		friend ostream& operator<<(ostream& stream, const Node& node);
 		
 		void add(Node *child);
-		virtual void draw() const;
 		void print(int level) const;
 		
 		Node *parent;

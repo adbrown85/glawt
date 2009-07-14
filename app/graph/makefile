@@ -5,13 +5,14 @@
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
-MODS = data
+MODULE = graph
+MODS = data traits
 CPPFLAGS = -I"./src" $(foreach M,$(MODS),-I"../$(M)/src")
 DEFS = -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
 LIBS = $(addsuffix .a,$(MODS))
 LIBDIRS = $(foreach M,$(MODS),../$(M)/lib)
 VPATH = bin lib obj src $(LIBDIRS)
-OBJS = Box.o Item.o Node.o Outline.o Scene.o Translation.o
+OBJS = Box.o Node.o Outline.o Scene.o Selection.o Shape.o Translation.o
 OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
 
 
@@ -26,19 +27,21 @@ OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
 
 # Phony targets
 .PHONY: all clean
-all: graph.a
+all: $(MODULE).a
 clean:
 	rm obj/*.o
 
 
 # Archives
-graph.a : $(OBJS) 
+$(MODULE).a : $(OBJS) 
 
 
 # Objects
-Box.o : Item.o
-Item.o : Identifiable.hpp Node.o
+Box.o : Shape.o
 Node.o : 
-Outline.o : Item.o
-Scene.o : Item.o Node.o
-Translation.o : Node.o
+Outline.o : Shape.o
+Scene.o : Node.o
+Selection.o :
+Shape.o : Node.o
+Transformation.hpp : Node.o
+Translation.o : Transformation.hpp

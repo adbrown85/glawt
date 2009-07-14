@@ -18,7 +18,7 @@ Box::Box() {
 	
 	// Initialize
 	initialize();
-	this->size = static_cast<float>(id);
+	this->size = static_cast<float>(this->getID());
 }
 
 
@@ -56,7 +56,6 @@ void Box::draw() const {
 	
 	// Draw vertices
 	glPushMatrix(); {
-		glTranslatef(position.x, position.y, position.z);
 		glScalef(size, size, size);
 		glTranslatef(-0.5, -0.5, -0.5);
 		glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, indices);

@@ -4,11 +4,11 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __BOX_HEADER__
-#define __BOX_HEADER__
+#ifndef __BOX_HPP__
+#define __BOX_HPP__
 #include <iostream>
 #include <GL/glut.h>
-#include "Item.hpp"
+#include "Shape.hpp"
 #include "Vector.hpp"
 
 
@@ -17,11 +17,8 @@
  * @brief
  *     Cube shape that can be drawn by %Display.
  * @ingroup graph
- * 
- * @todo
- *     Move under a Shape interface.
  */
-class Box : public Item {
+class Box : public Shape {
 	
 	
 	public : 

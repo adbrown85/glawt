@@ -46,11 +46,13 @@ Scene::Scene(int width,
  * @param item
  *     Pointer to the Item object that should be added.
  */
+/*
 void Scene::add(Item *item) {
 	
 	// Add pointer to list
 	items.push_back(item);
 }
+*/
 
 
 
@@ -60,17 +62,20 @@ void Scene::add(Item *item) {
  * @param shader
  *     Pointer to the Shader object that should be added.
  */
+/*
 void Scene::add(Shader *shader) {
 	
 	// Add pointer to list
 	shaders.push_back(shader);
 }
+*/
 
 
 
 /**
  * Deselects all items in the scene.
  */
+/*
 void Scene::deselectAll() {
 	
 	int count;
@@ -80,12 +85,14 @@ void Scene::deselectAll() {
 	for (int i=0; i<count; i++)
 		items[i]->setSelected(false);
 }
+*/
 
 
 
 /**
  * Looks up and returns an item by its ID.
  */
+/*
 Item* Scene::getItem(int id) const {
 	
 	// Find item by ID
@@ -94,6 +101,7 @@ Item* Scene::getItem(int id) const {
 			return items[i];
 	return NULL;
 }
+*/
 
 
 
@@ -113,6 +121,7 @@ Matrix Scene::getRotationMatrix() const {
  * 
  * @return True if an item is selected.
  */
+/*
 bool Scene::hasSelected() {
 	
 	int count;
@@ -124,6 +133,7 @@ bool Scene::hasSelected() {
 			return true;
 	return false;
 }
+*/
 
 
 
@@ -169,6 +179,7 @@ void Scene::rotate(float angle, float x, float y, float z) {
 /**
  * Selects all items in the scene that are not hidden.
  */
+/*
 void Scene::selectAll() {
 	
 	int count;
@@ -179,6 +190,7 @@ void Scene::selectAll() {
 		if (items[i]->isShown())
 			items[i]->setSelected(true);
 }
+*/
 
 
 

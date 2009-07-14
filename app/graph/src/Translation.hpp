@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
-#include "Node.hpp"
+#include "Transformation.hpp"
 #include "Vector.hpp"
 
 
@@ -19,7 +19,8 @@
  *     %Node that moves items in the scene.
  * @ingroup graph
  */
-class Translation : public Node, public Vector {
+class Translation : public Transformation,
+                    public Vector {
 	
 	
 	public :
@@ -28,7 +29,7 @@ class Translation : public Node, public Vector {
 		Translation(float x, float y, float z);
 		
 		void apply();
-		void restore();
+		void remove();
 };
 
 

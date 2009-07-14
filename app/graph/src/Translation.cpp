@@ -42,7 +42,7 @@ void Translation::apply() {
 /**
  * Restores transformation that was in effect before Translation was applied.
  */
-void Translation::restore() {
+void Translation::remove() {
 	
 	// Restore
 	glPopMatrix();

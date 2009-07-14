@@ -1,47 +1,41 @@
 /*
- * Item.cpp
+ * Shape.cpp
  *
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#include "Item.hpp"
-int Item::count=0;
-map<int,Item*> Item::ids;
+#include "Shape.hpp"
 
 
 
 /**
- * Creates and initializes the item.
+ * Creates and initializes the shape.
  */
-Item::Item() {
+Shape::Shape() {
 	
 	// Initialize
-	selected = false;
-	shown = true;
 	style = GL_TEXTURE_2D;
-	cat = "Item";
-	type = "Item";
-	id = ++count;
-	ids[id] = this;
+	type = "Shape";
 }
 
 
+
 /**
- * Formats the item's attributes into a string.
+ * Formats the shape's attributes into a string.
  */
-std::string Item::attributes() const {
+string Shape::attributes() const {
 	
-	std::ostringstream stream(std::ostringstream::out);
-	std::string selected, shown, style;
+	ostringstream stream(ostringstream::out);
+	string selected, style, visible;
 	
 	// Format
-	shown = this->shown ? "V" : "H";
-	selected = this->selected ? "S" : "U";
+	visible = this->isVisible() ? "V" : "H";
+	selected = this->isSelected() ? "S" : "U";
 	style = this->style==GL_TEXTURE_2D ? "2D" : "3D";
 	
 	// Print
-	stream << id << ", "
-	       << shown << ", "
+	stream << getID() << ", "
+	       << visible << ", "
 	       << selected << ", "
 	       << style;
 	
@@ -52,43 +46,14 @@ std::string Item::attributes() const {
 
 
 /**
- * Copies size, position, and rotation from another Item.
- * 
- * @param item
- *     Another item.
- */
-void Item::copy(const Item &item) {
-	
-	// Copy attributes
-	this->size = item.size;
-	this->position = item.position;
-	this->rotation = item.rotation;
-}
-
-
-
-Item* Item::find(int id) {
-	
-	map<int,Item*>::iterator ii;
-	
-	// Find
-	ii = ids.find(id);
-	if (ii != ids.end())
-		return ii->second;
-	else
-		return NULL;
-}
-
-
-/**
  * Prints the value of several attributes to the stream.
  */
-std::ostream& operator<<(std::ostream& stream,
-                         const Item& item) {
+ostream& operator<<(ostream& stream,
+                    const Shape& shape) {
 	
 	// Print
-	stream << item.type << "{"
-	       << item.attributes() << "}";
+	stream << shape.type << "{"
+	       << shape.attributes() << "}";
 	return stream;
 }
 
@@ -104,13 +69,13 @@ int main(int argc, char **argv) {
 	using namespace std;
 	const int count=3;
 	Box box[count];
-	ItemPtrSet selection;
-	ItemPtrSet::iterator it;
+	ShapePtrSet selection;
+	ShapePtrSet::iterator it;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Item" << endl;
+	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
@@ -146,7 +111,7 @@ int main(int argc, char **argv) {
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Item" << endl;
+	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;
