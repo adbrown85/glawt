@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef _COMPOSITOR_HPP_
-#define _COMPOSITOR_HPP_
+#ifndef __COMPOSITOR_HPP__
+#define __COMPOSITOR_HPP__
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"

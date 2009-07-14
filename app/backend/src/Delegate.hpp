@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef _DELEGATE_HPP_
-#define _DELEGATE_HPP_
+#ifndef __DELEGATE_HPP__
+#define __DELEGATE_HPP__
 #include <map>
 #include <string>
 #include "Command.hpp"

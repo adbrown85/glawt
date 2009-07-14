@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __INTERPRETER_HEADER__
-#define __INTERPRETER_HEADER__
+#ifndef __INTERPRETER_HPP__
+#define __INTERPRETER_HPP__
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>

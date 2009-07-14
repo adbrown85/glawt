@@ -55,12 +55,18 @@ void Producer::cut(Scene *scene,
 
 
 
+/**
+ * 
+ * @bug Translation 
+ */
 void Producer::open(Scene *scene,
                     int command,
                     string filename) {
 	
 	Node *currentNode;
 	Parser parser;
+	stack<Translation*> translations;
+	Translation *translation;
 	vector<Tag>::iterator ti;
 	
 	// Parse file into tags
@@ -70,10 +76,22 @@ void Producer::open(Scene *scene,
 	currentNode = &scene->rootNode;
 	try {
 		for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
-			if (ti->name.compare("item") == 0)
-				openItem(currentNode, *ti);
-			else if (ti->name.compare("position") == 0)
-				currentNode = openPosition(currentNode, *ti);
+			if (ti->name.compare("shape") == 0) {
+				openShape(*ti,
+				          currentNode,
+				          translations.top());
+			}
+			else if (ti->name.compare("translate") == 0) {
+				translation = openTranslation(*ti, currentNode);
+				if (translation != NULL) {
+					currentNode = translation;
+					translations.push(translation);
+				}
+				else {
+					currentNode = currentNode->parent;
+					translations.pop();
+				}
+			}
 		}
 	}
 	catch (char const *e) {
@@ -84,42 +102,44 @@ void Producer::open(Scene *scene,
 
 
 
-void Producer::openItem(Node *currentNode,
-                        Tag &tag) {
+void Producer::openShape(Tag &tag,
+                         Node *currentNode,
+                         Translation *translation) {
 	
 	float size;
-	Item *item;
+	Shape *shape;
 	map<string,string>::iterator ai;
 	string type;
 	
-	// Get size
+	// Get size attribute
 	ai = tag.attributes.find("size");
 	if (ai != tag.attributes.end())
 		size = atof(ai->second.c_str());
 	else
-		throw "Item does not have size.";
+		throw "Shape does not have size.";
 	
-	// Get type
+	// Get type attribute
 	ai = tag.attributes.find("type");
 	if (ai != tag.attributes.end())
 		type = ai->second;
 	else
-		throw "Item does not have type.";
+		throw "Shape does not have type.";
 	
-	// Make item
+	// Make shape
 	if (type.compare("Box") == 0)
-		item = new Box(size);
+		shape = new Box(size);
 	else
-		throw "Item type not supported.";
+		throw "Shape type not supported.";
 	
 	// Add to scene
-	currentNode->add(item);
+	currentNode->add(shape);
+	shape->translation = translation;
 }
 
 
 
-Node* Producer::openPosition(Node *currentNode,
-                             Tag &tag) {
+Translation* Producer::openTranslation(Tag &tag,
+                                       Node *currentNode) {
 	
 	float x, y, z;
 	map<string,string>::iterator ai;
@@ -127,28 +147,28 @@ Node* Producer::openPosition(Node *currentNode,
 	
 	// Check for closing
 	if (tag.closing)
-		return currentNode->parent;
+		return NULL;
 	
 	// Get x
 	ai = tag.attributes.find("x");
 	if (ai != tag.attributes.end())
 		x = atof(ai->second.c_str());
 	else
-		throw "Position does not have x coordinate.";
+		throw "Translate does not have x coordinate.";
 	
 	// Get y
 	ai = tag.attributes.find("y");
 	if (ai != tag.attributes.end())
 		y = atof(ai->second.c_str());
 	else
-		throw "Position does not have y coordinate.";
+		throw "Translate does not have y coordinate.";
 	
 	// Get z
 	ai = tag.attributes.find("z");
 	if (ai != tag.attributes.end())
 		z = atof(ai->second.c_str());
 	else
-		throw "Position does not have z coordinate.";
+		throw "Translate does not have z coordinate.";
 	
 	// Set position
 	translation = new Translation(x, y, z);
@@ -185,7 +205,6 @@ void Producer::quit(Scene *scene,
 /**
  * Simple test program.
  */
-/*
 int main(int argc, char *argv[]) {
 	
 	using namespace std;
@@ -211,4 +230,3 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	return 0;
 }
-*/

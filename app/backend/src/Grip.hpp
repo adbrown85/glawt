@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __GRIP_HEADER__
-#define __GRIP_HEADER__
+#ifndef __GRIP_HPP__
+#define __GRIP_HPP__
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"

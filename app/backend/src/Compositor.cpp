@@ -27,6 +27,9 @@ Compositor::Compositor() {
 
 void Compositor::hide(Scene *scene, int cmd) {
 	
+	std::cout << "Compositor::hide(Scene*,int)" << std::endl;
+	
+/*
 	int count;
 	
 	count = scene->items.size();
@@ -36,6 +39,7 @@ void Compositor::hide(Scene *scene, int cmd) {
 			scene->items[i]->setSelected(false);
 		}
 	}
+*/
 }
 
 
@@ -49,9 +53,13 @@ void Compositor::info(Scene *scene, int cmd) {
 
 void Compositor::showAll(Scene *scene, int cmd) {
 	
+	std::cout << "Compositor::showAll(Scene*,int)" << std::endl;
+	
+/*
 	int count;
 	
 	count = scene->items.size();
 	for (int i=0; i<count; i++)
 		scene->items[i]->setShown(true);
+*/
 }

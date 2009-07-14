@@ -4,26 +4,29 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __PRODUCER_HEADER__
-#define __PRODUCER_HEADER__
+#ifndef __PRODUCER_HPP__
+#define __PRODUCER_HPP__
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <stack>
 #include <string>
+#include <typeinfo>
 #include <vector>
 #include "Box.hpp"
 #include "Command.hpp"
 #include "Delegate.hpp"
-#include "Item.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"
-#include "Tag.hpp"
 #include "Scene.hpp"
+#include "Shape.hpp"
+#include "Tag.hpp"
 #include "Translation.hpp"
 using std::cerr;
 using std::endl;
-using std::string;
 using std::map;
+using std::stack;
+using std::string;
 using std::vector;
 
 
@@ -55,8 +58,11 @@ class Producer : public Delegate {
 	
 	private :
 		
-		static void openItem(Node *currentNode, Tag &tag);
-		static Node* openPosition(Node *currentNode, Tag &tag);
+		static void openShape(Tag &tag,
+		                      Node *currentNode,
+		                      Translation *currentTranslation);
+		static Translation* openTranslation(Tag &tag,
+		                                    Node *currentNode);
 };
 
 

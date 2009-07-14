@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __COMMAND_HEADER__
-#define __COMMAND_HEADER__
+#ifndef __COMMAND_HPP__
+#define __COMMAND_HPP__
 #include <iostream>
 #include <map>
 #include <string>

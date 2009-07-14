@@ -5,8 +5,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __CAMERAMAN_HEADER__
-#define __CAMERAMAN_HEADER__
+#ifndef __CAMERAMAN_HPP__
+#define __CAMERAMAN_HPP__
 #include <cmath>
 #include <cstdlib>
 #include <iostream>

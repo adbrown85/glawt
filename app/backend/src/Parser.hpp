@@ -5,8 +5,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef __PARSER_HPP__
+#define __PARSER_HPP__
 #include <fstream>
 #include <iostream>
 #include <map>
