@@ -26,25 +26,22 @@ using std::string;
  * @mainpage
  * <table align="center" border="0" width="70%">
  * <tr>
- *     <td><img src="gander.png"></td>
+ *     <td><img src="../gander-big.png"></td>
  * </tr>
  * <tr>
- *     <td><p>Take a gander with Gander!  Gander is a scene renderer 
- *         focusing on volume rendering.  It is currently being developed by 
- *         Andy Brown as part of his Computer Science Master's project at the 
- *         Rochester Institute of Technology.
- *         <p>This document describes the C++ classes that make up Gander.  We 
- *         suggest starting with the <i>Class List</i>, which gives brief 
- *         descriptions of all the classes in one spot.  After that, check out 
- *         the <i>Class Hierarchy</i> to get a better idea of how the classes 
- *         work together.  Finally, go ahead and dive in to the actual classes 
- *         themselves.
- *         <p>For source code, check out the <a 
- *         href="http://www.sourceforge.net/projects/gander/develop"
- *         target="_parent">SourceForge project page</a>.  To see the latest 
- *         updates, see the <a 
- *         href="http://sourceforge.net/apps/wordpress/gander" 
- *         target="_parent">Gander blog</a>.
+ *     <td><p>This document describes the C++ classes that make up 
+ *         <a href="../" target="_parent">Gander</a>.  We suggest starting 
+ *         with the <i>Modules</i> page, which gives a good overview of how the 
+ *         application is divided up into several different layers, starting 
+ *         at the bottom with <i>Data</i> and moving all the way up to 
+ *         <i>Graph</i>, <i>Backend</i>, <i>Frontend</i>, and finally 
+ *         <i>%Client</i>.
+ *         <p>After that, check out the <i>Class Hierarchy</i> to get a 
+ *         better idea of how the classes work together.  Finally, go ahead 
+ *         and dive in to the actual classes themselves.
+ *         <p>For source code, check out our <a 
+ *         href="http://gander.git.sourceforge.net"
+ *         target="_parent">Git repository</a>.
  * </td>
  * </tr>
  * </table>
