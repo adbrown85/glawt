@@ -1,51 +1,48 @@
 /*
- * Node.cxx
+ * Scene.cxx
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include <iostream>
+#include "Scene.hpp"
 #include "Node.hpp"
-#define NUMBER_OF_ITEMS 4
+#define NUMBER_OF_NODES 4
 using namespace std;
 
 
-
 /**
- * Unit test for Node.
+ * Unit test for Scene.
  */
 int main() {
 	
-	Node items[NUMBER_OF_ITEMS];
+	Node nodes[NUMBER_OF_NODES];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Node" << endl;
+	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
 	// Print
 	cout << "Nodes: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
+	for (int i=0; i<NUMBER_OF_NODES; ++i)
+		cout << "  " << nodes[i] << endl;
 	
 	// Children
-	cout << "Adding children..." << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
-		items[i].addChild(&items[i+1]);
-	cout << "Nodes: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
+	cout << "Adding nodes to scene..." << endl;
+	for (int i=0; i<NUMBER_OF_NODES; ++i)
+		scene.add(&nodes[i]);
 	
-	// Print root node
-	cout << "Root node:" << endl;
-	items[0].print();
+	// Print
+	cout << "Scene:" << endl;
+	scene.print();
 	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Node" << endl;
+	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 }

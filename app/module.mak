@@ -8,9 +8,8 @@
 #     '.cxx' suffix for test files.  Note that these should be different so 
 #     not to confuse make, plus it keeps things straight in your editor.
 #     
-#     After compiling a class into an object, the makefile creates an 
-#     archive for it.  The archive includes the object and the objects for
-#     all classes in this module that it depends on.  This way the tests are
+#     After compiling a class into an object, the makefile immediately 
+#     replaces that object in the archive.  This way the tests are
 #     very easy to link.
 #     
 #     See the makefiles in the module directories for examples, but basically
@@ -60,10 +59,12 @@ VPATH = bin lib obj src tests $(LIBRARIES_DIRS)
 
 
 # Phony targets for directing make
-.PHONY : all clean message tests testsMessage
-all : message $(MODULE).a
+.PHONY : all allMessage clean message tests testsMessage
+all : message allMessage $(MODULE).a
 allMessage :
-	@echo "  Using 'src/*.cpp' for sources."
+	@echo $(PWD)
+	@echo "  Using 'src/*.cpp' for sources..."
+	@echo $(OBJECTS)
 clean : message
 	@echo "  Removing objects, archives, and binaries..."
 	@rm --force obj/*.o
@@ -73,24 +74,22 @@ message :
 	@echo "$(MODULE)/"
 tests : message testsMessage $(TESTS)
 testsMessage :
-	@echo "  Using 'tests/*.cxx' for tests."
+	@echo "  Using 'tests/*.cxx' for tests..."
 
 
-# Rules for making an object from source, header, and prerequisite modules
+# Rule for archive from all the objects in this module
+$(MODULE).a : $(OBJECTS)
+	@echo "  --> lib/$@"
+
+
+# Rule for object from source, header, and prerequisite libraries
 %.o : %.cpp %.hpp $(LIBRARIES)
 	@echo "  $<"
 	@g++ -c $(CPPFLAGS) -o obj/$@ $<
-	@ar cr lib/$*.a ${addprefix obj/,${notdir ${filter %.o,$@ $^}}}
+	@ar cr lib/$(MODULE).a obj/$@
 
 
-# Rule for making tests from test, object, and prerequisite modules
+# Rule for binaries from test file, class object, and prerequisite libraries
 % : %.cxx %.o $(LIBRARIES)
-	@echo "  $<"
-	@g++ $(CPPFLAGS) $(LDFLAGS) -o bin/$@ $< lib/$*.a $(LIBRARIES_FULL)
-	@echo "  --> bin/$@"
-
-
-# Rule for making the archive from all the objects in this module
-$(MODULE).a : $(OBJECTS)
-	@ar cr "lib/$@" $(OBJECTS_FULL)
-	@echo "  --> lib/$@"
+	@echo "  $< --> bin/$@"
+	@g++ $(CPPFLAGS) $(LDFLAGS) -o bin/$@ $< lib/$(MODULE).a $(LIBRARIES_FULL)

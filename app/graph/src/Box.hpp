@@ -33,7 +33,7 @@ class Box : public Shape {
 		                           const Box& box);
 	
 	
-	// private: 
+	protected: 
 		
 		GLfloat colors[24][3];
 		static bool loaded;

@@ -4,11 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __SCENE_HPP__
-#define __SCENE_HPP__
-#define SCENE_DEFAULT_HEIGHT 480
-#define SCENE_DEFAULT_WIDTH 640
-#define SCENE_DEFAULT_ZOOM -10.0
+#ifndef SCENE_HPP
+#define SCENE_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
@@ -16,6 +13,7 @@
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Quaternion.hpp"
+#include "Selection.hpp"
 #include "Shape.hpp"
 #include "Vector.hpp"
 using std::cout;
@@ -25,18 +23,22 @@ using std::vector;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Collection of items that also stores selection and camera information.
- * @ingroup graph
  */
 class Scene {
 	
 	
 	public :
 		
+		Node rootNode;
+		Selection selection;
+		Vector position;
+		
 		Scene();
 		Scene(int width, int height);
-		
+		void add(Node *node);
 		void reset();
 		void rotate(float angle, float x, float y, float z);
 		void print();
@@ -45,9 +47,6 @@ class Scene {
 		Matrix getRotationMatrix() const;
 		int getWidth() const {return width;}
 		void setRotation(float angle, float x, float y, float z);
-		
-		Node rootNode;
-		Vector position;
 	
 	
 	private :

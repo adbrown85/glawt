@@ -12,7 +12,9 @@ GLubyte Box::indices[24], Box::map[8][3];
 
 
 /**
- * Creates a new box.
+ * Creates a new box and initializes it.
+ * 
+ * @see initialize
  */
 Box::Box() {
 	

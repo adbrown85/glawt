@@ -15,12 +15,12 @@ Node.o :
 
 # Shape nodes
 Shape.o : Node.o Translation.o
-Box.o : Shape.o Node.o Translation.o
-Outline.o : Shape.o Node.o Translation.o
+Box.o : Shape.o
+Outline.o : Shape.o
 
 # Transformation nodes
 Transformation.hpp : Node.o
-Translation.o : Transformation.hpp Node.o
+Translation.o : Transformation.hpp
 
 # Collections of nodes
 Selection.o :
