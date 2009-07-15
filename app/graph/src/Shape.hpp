@@ -4,46 +4,40 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __SHAPE_HPP__
-#define __SHAPE_HPP__
+#ifndef SHAPE_HPP
+#define SHAPE_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
 #include <set>
-#include <sstream>
 #include <string>
-#include "Drawable.hpp"
 #include "Node.hpp"
 #include "Selectable.hpp"
 #include "Translation.hpp"
-#include "Vector.hpp"
-using std::set;
 using std::string;
 using std::ostream;
-using std::ostringstream;
 
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Base class for a 3D object in the scene.
- * @ingroup graph
  */
-class Shape : public Drawable,
-              public Node,
+class Shape : public Node,
               public Selectable {
 	
 	
 	public :
 		
-		Shape();
+		Translation *translation;
 		
-		virtual string attributes() const;
-		friend ostream& operator<<(ostream &stream,
-		                           const Shape &item);
+		Shape();
+		GLenum getStyle() {return style;}
 		void setStyle(GLenum style) {this->style = style;}
 		
-		Translation *translation; 
+		friend ostream& operator<<(ostream &stream,
+		                           const Shape &item);
 	
 	
 	protected : 

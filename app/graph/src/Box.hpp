@@ -2,21 +2,22 @@
  * Box.hpp
  *
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __BOX_HPP__
-#define __BOX_HPP__
+#ifndef BOX_HPP
+#define BOX_HPP
 #include <iostream>
 #include <GL/glut.h>
 #include "Shape.hpp"
 #include "Vector.hpp"
+using std::ostream;
 
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Cube shape that can be drawn by %Display.
- * @ingroup graph
  */
 class Box : public Shape {
 	
@@ -25,13 +26,14 @@ class Box : public Shape {
 		
 		Box();
 		Box(float size);
-		
 		virtual void draw() const;
-		
 		void setColor(float r, float g, float b);
+		
+		friend ostream& operator<<(ostream& stream,
+		                           const Box& box);
 	
 	
-	private:
+	// private: 
 		
 		GLfloat colors[24][3];
 		static bool loaded;

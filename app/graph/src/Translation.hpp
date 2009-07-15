@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef _TRANSLATION_HPP_
-#define _TRANSLATION_HPP_
+#ifndef TRANSLATION_HPP
+#define TRANSLATION_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>

@@ -1,47 +1,27 @@
 #
 # makefile
-#     Builds the Graph module.
+#     Builds the Graph module.  Use 'tests/*.cxx' for tests.
 #
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = graph
-MODS = data traits
-CPPFLAGS = -I"./src" $(foreach M,$(MODS),-I"../$(M)/src")
-DEFS = -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
-LIBS = $(addsuffix .a,$(MODS))
-LIBDIRS = $(foreach M,$(MODS),../$(M)/lib)
-VPATH = bin lib obj src $(LIBDIRS)
-OBJS = Box.o Node.o Outline.o Scene.o Selection.o Shape.o Translation.o
-OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
+PREREQS = data traits
+include ../module.mak
 
 
-# Rules for making archives and objects
-%.o : %.cpp %.hpp $(LIBS)
-	@echo "  $@"
-	@g++ -ggdb -c $(CPPFLAGS) $(DEFS) -o obj/$@ $<
-%.a :
-	@echo "  --> $@"
-	@ar cr "lib/$@" $(OBJSWDIRS)
+# Basic node
+Node.o :
 
+# Shape nodes
+Shape.o : Node.o Translation.o
+Box.o : Shape.o Node.o Translation.o
+Outline.o : Shape.o Node.o Translation.o
 
-# Phony targets
-.PHONY: all clean
-all: $(MODULE).a
-clean:
-	rm obj/*.o
-
-
-# Archives
-$(MODULE).a : $(OBJS) 
-
-
-# Objects
-Box.o : Shape.o
-Node.o : 
-Outline.o : Shape.o
-Scene.o : Node.o
-Selection.o :
-Shape.o : Node.o
+# Transformation nodes
 Transformation.hpp : Node.o
-Translation.o : Transformation.hpp
+Translation.o : Transformation.hpp Node.o
+
+# Collections of nodes
+Selection.o :
+Scene.o : Node.o Selection.o

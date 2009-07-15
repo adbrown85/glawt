@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef _NODE_HPP_
-#define _NODE_HPP_
+#ifndef NODE_HPP
+#define NODE_HPP
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -18,24 +18,29 @@ using std::vector;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Basic element of the scene graph.
- * @ingroup graph
  */
 class Node {
 	
 	
 	public :
 		
-		Node();
-		friend ostream& operator<<(ostream& stream, const Node& node);
-		
-		void add(Node *child);
-		void print(int level) const;
-		
 		Node *parent;
-		string type;
 		vector<Node*> children;
+		
+		Node();
+		void addChild(Node *child);
+		void print() const;
+		
+		friend ostream& operator<<(ostream& stream,
+		                           const Node& node);
+	
+	
+	protected :
+		
+		void print(int level) const;
 };
 
 

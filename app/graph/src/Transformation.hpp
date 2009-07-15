@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __TRANSFORMATION_HPP__
-#define __TRANSFORMATION_HPP__
+#ifndef TRANSFORMATION_HPP
+#define TRANSFORMATION_HPP
 #include <cstdlib>
 #include <iostream>
 #include "Applicable.hpp"
@@ -19,8 +19,8 @@ class Transformation : public Applicable,
 	
 	public :
 		
-		void apply() = 0;
-		void remove() = 0;
+		virtual void apply() = 0;
+		virtual void remove() = 0;
 };
 
 

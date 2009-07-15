@@ -10,8 +10,6 @@
 
 Translation::Translation() {
 	
-	// Initialize
-	type = "Translation";
 }
 
 
@@ -21,8 +19,6 @@ Translation::Translation(float x,
                          float z) : 
                          Vector(x, y, z) {
 	
-	// Initialize
-	type = "Translation";
 }
 
 

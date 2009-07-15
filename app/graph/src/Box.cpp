@@ -12,13 +12,12 @@ GLubyte Box::indices[24], Box::map[8][3];
 
 
 /**
- * Creates a new box.  Sets the size to id.
+ * Creates a new box.
  */
 Box::Box() {
 	
 	// Initialize
 	initialize();
-	this->size = static_cast<float>(this->getID());
 }
 
 
@@ -85,9 +84,6 @@ void Box::initialize() {
 	
 	// Set default colors
 	initializeColors();
-	
-	// Store type
-	type = "Box";
 }
 
 
@@ -234,70 +230,9 @@ void Box::setColor(float r, float g, float b) {
 
 
 
-/**
- * Simple test program.
- */
-/*
-int main(int argc, char **argv) {
+ostream& operator<<(ostream& stream,
+                    const Box& box) {
 	
-	using namespace std;
-	Box boxA(3), boxB(8);
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Box" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	cout << "Map: " << endl;
-	for (int i=0; i<8; i++) {
-		for (int j=0; j<3; j++)
-			cout << (int)Box::map[i][j] << " ";
-		cout << endl;
-	}
-	cout << endl;
-	cout << "Points: " << endl;
-	for (int i=0; i<24; i++) {
-		cout << i << ": ";
-		for (int j=0; j<3; j++)
-			cout << Box::boxPoints[i][j] << " ";
-		cout << endl;
-	}
-	cout << endl;
-	cout << "Indices: " << endl;
-	for (int i=0; i<6; i++) {
-		for (int j=0; j<4; j++)
-			cout << (int)Box::indices[i*4+j] << " ";
-		cout << endl;
-	}
-	cout << endl;
-	cout << "Coordinates: " << endl;
-	for (int i=0; i<24; i++) {
-		cout << i << ": ";
-		for (int j=0; j<3; j++)
-			cout << Box::coordinates[i][j] << " ";
-		cout << endl;
-	}
-	
-	// Test objects
-	cout << endl;
-	cout << "Box " << boxA.getID() << ": " << boxA.size << endl;
-	cout << endl;
-	cout << "Colors: " << endl;
-	for (int i=0; i<24; i++) {
-		for (int j=0; j<3; j++)
-			cout << boxA.colors[i][j] << " ";
-		cout << endl;
-	}
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Box" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
+	stream << "Box: " << static_cast<Shape>(box);
+	return stream;
 }
-*/
