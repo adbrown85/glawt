@@ -45,7 +45,7 @@ Scene::Scene(int width,
  */
 void Scene::add(Node *node) {
 	
-	rootNode->addChild(node);
+	rootNode.addChild(node);
 }
 
 

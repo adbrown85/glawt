@@ -1,13 +1,3 @@
 gander
+lib
 gander.geany
-doc/
-app/backend/lib
-app/backend/obj
-app/client/bin
-app/client/obj
-app/data/lib
-app/data/obj
-app/frontend/lib
-app/frontend/obj
-app/graph/lib
-app/graph/obj

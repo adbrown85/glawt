@@ -1,12 +1,13 @@
 #
 # makefile
-#     Builds the Graph module.  Use 'tests/*.cxx' for tests.
+#     Builds the Graph module.
 #
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = graph
 PREREQS = data traits
+FILTER = Shader Uniform
 include ../module.mak
 
 

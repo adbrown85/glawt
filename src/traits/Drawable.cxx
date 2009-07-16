@@ -1,5 +1,5 @@
 /*
- * Drawable-test.cpp
+ * Drawable.cxx
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>

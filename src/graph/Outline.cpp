@@ -62,9 +62,6 @@ void Outline::initialize() {
 		initializeIndices();
 		loaded = true;
 	}
-	
-	// Store type
-	type = "Outline";
 }
 
 

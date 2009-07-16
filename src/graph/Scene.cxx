@@ -17,6 +17,7 @@ using namespace std;
 int main() {
 	
 	Node nodes[NUMBER_OF_NODES];
+	Scene scene;
 	
 	// Start
 	cout << endl;
