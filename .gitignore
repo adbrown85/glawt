@@ -1,3 +1,4 @@
 gander
 lib
 gander.geany
+*.o

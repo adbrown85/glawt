@@ -5,35 +5,12 @@
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
-MODS = data graph backend
-CPPFLAGS = -I"./src" $(foreach M,$(MODS),-I"../$(M)/src")
-DEFS = -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
-LIBS = $(addsuffix .a,$(MODS))
-LIBDIRS = $(foreach M,$(MODS),../$(M)/lib)
-VPATH = bin lib obj src $(LIBDIRS)
-OBJS = Binding.o Control.o Display.o Keyboard.o Menu.o \
-       Mouse.o Painter.o Picker.o Translator.o
-OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
-
-
-# Rules for making archives and objects
-%.o : %.cpp %.hpp $(LIBS)
-	@echo "  $@"
-	@g++ -ggdb -c $(CPPFLAGS) -o obj/$@ $<
-%.a :
-	@echo "  --> $@"
-	@ar cr lib/$@ $(OBJSWDIRS)
-
-
-# Phony
-.PHONY: all clean
-all: frontend.a
-clean:
-	rm obj/*.o
-
-
-# Libraries
-frontend.a : $(OBJS)
+MODULE = frontend
+NEEDS  = backend
+FILTER = Binding Control Display Keyboard Menu Mouse Painter Picker Translator
+GANDER = ../..
+include $(GANDER)/make-globals.mak
+include $(GANDER)/make-module.mak
 
 
 # Objects

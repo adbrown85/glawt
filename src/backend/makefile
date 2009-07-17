@@ -5,35 +5,12 @@
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
-MODS = data graph
-CPPFLAGS = -Isrc $(foreach M,$(MODS),"-I../$(M)/src")
-DEFS = -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
-LIBS = $(addsuffix .a,$(MODS))
-LIBDIRS = $(foreach M,$(MODS),../$(M)/lib)
-VPATH = bin lib obj src $(LIBDIRS)
-OBJS = Cameraman.o Command.o Compositor.o Director.o Grip.o \
-       Interpreter.o Parser.o Producer.o
-OBJSWDIRS = $(addprefix obj/, $(notdir $(OBJS)))
-
-
-# Rules for making archives and objects
-%.o : %.cpp %.hpp $(LIBS)
-	@echo "  $@"
-	@g++ -ggdb -c $(CPPFLAGS) $(DEFS) -o obj/$@ $<
-%.a :
-	@echo "  --> $@"
-	@ar cr "lib/$@" $(OBJSWDIRS)
-
-
-# Phony targets
-.PHONY : all clean
-all : backend.a
-clean :
-	rm obj/*.o
-
-
-# Archives
-backend.a : $(OBJS)
+MODULE = backend
+NEEDS  = graph
+FILTER = Cameraman Command Compositor Director Grip Interpreter Parser Producer
+GANDER = ../..
+include $(GANDER)/make-globals.mak
+include $(GANDER)/make-module.mak
 
 
 # Objects

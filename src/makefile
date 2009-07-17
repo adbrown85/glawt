@@ -5,22 +5,14 @@
 # Author
 #     Andy Brown <andybrown85@gmail.com>
 #
-MODULES = data traits graph
+GANDER = ..
+include $(GANDER)/make-globals.mak
 
 
 # Phony targets for directing make
-PHONIES = all check clean tests
-.PHONY : $(PHONIES) $(MODULES)
-$(PHONIES) : $(MODULES)
-
-
-# Rule for making a module
-$(MODULES) :
-	@$(MAKE) --directory $@ --quiet ${filter-out $(MODULES), $(MAKECMDGOALS)}
-
-
-# Module dependencies
-data : 
-traits : data
-graph : traits
-
+DIRECTIVES = all check clean tests
+.PHONY : $(DIRECTIVES)
+$(DIRECTIVES) : 
+	@$(MAKE) --directory ./graph --quiet $@
+check : checkGlobals
+clean : cleanGlobals

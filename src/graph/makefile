@@ -6,9 +6,11 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = graph
-PREREQS = data traits
+NEEDS  = traits
 FILTER = Shader Uniform
-include ../module.mak
+GANDER = ../..
+include $(GANDER)/make-globals.mak
+include $(GANDER)/make-module.mak
 
 
 # Basic node
