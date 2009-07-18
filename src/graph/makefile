@@ -6,11 +6,11 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = graph
-NEEDS  = traits
+CHILD  = traits
 FILTER = Shader Uniform
 GANDER = ../..
-include $(GANDER)/make-globals.mak
-include $(GANDER)/make-module.mak
+include $(GANDER)/src/globals.mak
+include $(GANDER)/src/module.mak
 
 
 # Basic node

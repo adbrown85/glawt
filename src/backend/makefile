@@ -6,22 +6,25 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = backend
-NEEDS  = graph
+CHILD  = graph
 FILTER = Cameraman Command Compositor Director Grip Interpreter Parser Producer
 GANDER = ../..
-include $(GANDER)/make-globals.mak
-include $(GANDER)/make-module.mak
+include $(GANDER)/src/globals.mak
+include $(GANDER)/src/module.mak
 
 
-# Objects
-Cameraman.o : Delegate.hpp
+# Utilities
 Command.o : 
-Compositor.o : Delegate.hpp
+Tag.hpp :
+Parser.o : Tag.hpp
+
+# Delegates
 Delegate.hpp : Command.o
+Cameraman.o : Delegate.hpp
+Compositor.o : Delegate.hpp
 Director.o :  Delegate.hpp
 Grip.o : Delegate.hpp
-Interpreter.o : Cameraman.o Compositor.o Director.o Grip.o Producer.o
-Parser.o : Tag.hpp
 Producer.o : Delegate.hpp Parser.o
-Tag.hpp :
 
+# Interpreting
+Interpreter.o : Cameraman.o Compositor.o Director.o Grip.o Producer.o

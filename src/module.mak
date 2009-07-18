@@ -28,17 +28,11 @@ TESTS = ${wildcard *.cxx}
 BINARIES = ${patsubst %.cxx,%,$(TESTS)}
 
 
-# Options for archiver, compiler, and linker
-ARFLAGS = cr
-CXXFLAGS = -ggdb ${addprefix -I../,$(MODULES)}
-LDFLAGS = -lm -lglut -lIL -lILU -lILUT
-
-
 # Phony targets for directing make
 DIRECTIVES = all check clean tests
-.PHONY : $(DIRECTIVES) message child
+.PHONY : $(DIRECTIVES)  child
 $(DIRECTIVES) : child message
-all : tests $(OBJECTS)
+all : $(OBJECTS) tests
 check : 
 	@echo "  FILTER  = $(FILTER)"
 	@echo "  SOURCES = $(SOURCES)"
@@ -46,14 +40,16 @@ check :
 	@echo "  CHILD   = $(CHILD)"
 child :
 ifdef CHILD
-	@$(MAKE) --directory "../$(CHILD)" $(MAKECMDGOALS) --quiet
+	@$(MAKE) -C "../$(CHILD)" $(MAKECMDGOALS)
 endif
 clean :
-	@echo "  Removing objects and binaries..."
-	@$(RM) --force $(OBJECTS) $(BINARIES)
+	@echo "  Removing $(OBJECTS)"
+	@$(RM) $(OBJECTS) 
+	@echo "  Removing $(BINARIES)"
+	@$(RM) $(BINARIES)
+message:
+	@echo "$(MODULE)"
 tests : $(OBJECTS) $(BINARIES)
-message : 
-	@echo $(MODULE)/
 
 
 
@@ -66,6 +62,6 @@ message :
 
 
 # Build an executable from a test and archive
-% : %.cxx %.o $(ARCHIVE)
+% : %.cxx %.o
 	@echo "  $< --> $@"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $^}
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVE)
