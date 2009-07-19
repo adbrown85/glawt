@@ -5,9 +5,10 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __CLIENT_HPP__
-#define __CLIENT_HPP__
+#ifndef CLIENT_HPP
+#define CLIENT_HPP
 #include <cstdlib>
+#include <cstring>
 #include <GL/glut.h>
 #include <iostream>
 #include <string>

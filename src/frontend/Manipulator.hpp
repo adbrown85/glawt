@@ -21,7 +21,7 @@
  *     Abstract base class for an item that manipulates other items.
  * @ingroup frontend
  */
-class Manipulator : public Drawable, public Identifiable  {
+class Manipulator : public Drawable  {
 	
 	
 	public :

@@ -17,7 +17,7 @@ map<int,Identifiable*> Identifiable::ids;
 Identifiable::Identifiable() {
 	
 	id = ++count;
-	ids[id] = this;
+	// ids[id] = this;
 }
 
 

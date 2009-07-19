@@ -52,30 +52,6 @@ void Client::parse(int argc,
 
 
 /**
- * Sets the name of the Client from a filename
- * 
- * @param filename
- *     Path to the Client as specified on the command line.
- */
-void Client::setName(string filename) {
-	
-	int index, length;
-	
-	// Remove directory part
-	index = filename.rfind('/');
-	if (index < filename.length())
-		name = filename.erase(0, index+1);
-	
-	// Fix case
-	length = name.length();
-	for (int i=0; i<length; ++i)
-		name[i] = tolower(name[i]);
-	name[0] = toupper(name[0]);
-}
-
-
-
-/**
  * Starts the Client.
  */
 void Client::start() {
@@ -108,12 +84,11 @@ int main(int argc, char **argv) {
 	
 	// Handle arguments
 	client.parse(argc, argv);
-	client.setName(argv[0]);
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << client.getName() << endl;
+	cout << "Gander" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
@@ -123,7 +98,7 @@ int main(int argc, char **argv) {
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << client.getName() << endl;
+	cout << "Gander" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;

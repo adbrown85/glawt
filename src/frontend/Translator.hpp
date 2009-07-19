@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __TRANSLATOR_HPP__
-#define __TRANSLATOR_HPP__
+#ifndef TRANSLATOR_HPP
+#define TRANSLATOR_HPP
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -14,6 +14,7 @@
 #include "Manipulator.hpp"
 #include "Matrix.hpp"
 #include "Scene.hpp"
+#include "Selection.hpp"
 #include "Shape.hpp"
 #include "Translation.hpp"
 #include "Vector.hpp"

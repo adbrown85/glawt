@@ -28,7 +28,6 @@ class Outline : public Shape {
 		virtual void draw() const;
 		
 		void setColor(float r, float g, float b);
-		void setSize(float size);
 	
 	
 	private:

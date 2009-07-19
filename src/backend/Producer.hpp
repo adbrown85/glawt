@@ -58,11 +58,10 @@ class Producer : public Delegate {
 	
 	private :
 		
-		static void openShape(Tag &tag,
-		                      Node *currentNode,
-		                      Translation *currentTranslation);
-		static Translation* openTranslation(Tag &tag,
-		                                    Node *currentNode);
+		static Node* openShape(Tag &tag,
+		                       Node *currentNode);
+		static Node* openTranslation(Tag &tag,
+		                             Node *currentNode);
 };
 
 

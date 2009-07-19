@@ -5,15 +5,15 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __PICKER_HPP__
-#define __PICKER_HPP__
+#ifndef PICKER_HPP
+#define PICKER_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
 #include <set>
 #include <typeinfo>
 #include <vector>
-#include "Item.hpp"                // Picking IDs
+#include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
 #include "Painter.hpp"             // Paints items into pick buffers
 #include "Scene.hpp"               // Pass root node to Painter

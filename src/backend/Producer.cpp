@@ -56,8 +56,11 @@ void Producer::cut(Scene *scene,
 
 
 /**
+ * Opens a scene from an XML file.
  * 
- * @bug Translation 
+ * @param scene
+ * @param command
+ * @param filename
  */
 void Producer::open(Scene *scene,
                     int command,
@@ -65,33 +68,20 @@ void Producer::open(Scene *scene,
 	
 	Node *currentNode;
 	Parser parser;
-	stack<Translation*> translations;
-	Translation *translation;
 	vector<Tag>::iterator ti;
 	
 	// Parse file into tags
+	std::cout << "Opening " << filename << endl;
 	parser.open(filename);
 	
 	// Process tags
 	currentNode = &scene->rootNode;
 	try {
 		for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
-			if (ti->name.compare("shape") == 0) {
-				openShape(*ti,
-				          currentNode,
-				          translations.top());
-			}
-			else if (ti->name.compare("translate") == 0) {
-				translation = openTranslation(*ti, currentNode);
-				if (translation != NULL) {
-					currentNode = translation;
-					translations.push(translation);
-				}
-				else {
-					currentNode = currentNode->parent;
-					translations.pop();
-				}
-			}
+			if (ti->name.compare("shape") == 0)
+				currentNode = openShape(*ti, currentNode);
+			else if (ti->name.compare("translate") == 0)
+				currentNode = openTranslation(*ti, currentNode);
 		}
 	}
 	catch (char const *e) {
@@ -102,9 +92,8 @@ void Producer::open(Scene *scene,
 
 
 
-void Producer::openShape(Tag &tag,
-                         Node *currentNode,
-                         Translation *translation) {
+Node* Producer::openShape(Tag &tag,
+                          Node *currentNode) {
 	
 	float size;
 	Shape *shape;
@@ -132,22 +121,22 @@ void Producer::openShape(Tag &tag,
 		throw "Shape type not supported.";
 	
 	// Add to scene
-	currentNode->add(shape);
-	shape->translation = translation;
+	currentNode->addChild(shape);
+	return currentNode;
 }
 
 
 
-Translation* Producer::openTranslation(Tag &tag,
-                                       Node *currentNode) {
+Node* Producer::openTranslation(Tag &tag,
+                                Node *currentNode) {
 	
 	float x, y, z;
 	map<string,string>::iterator ai;
 	Translation *translation;
 	
-	// Check for closing
+	// Ignore closing tags
 	if (tag.closing)
-		return NULL;
+		return currentNode->parent;
 	
 	// Get x
 	ai = tag.attributes.find("x");
@@ -172,7 +161,7 @@ Translation* Producer::openTranslation(Tag &tag,
 	
 	// Set position
 	translation = new Translation(x, y, z);
-	currentNode->add(translation);
+	currentNode->addChild(translation);
 	return translation;
 }
 
@@ -198,35 +187,4 @@ void Producer::quit(Scene *scene,
                     int command) {
 	
 	exit(0);
-}
-
-
-
-/**
- * Simple test program.
- */
-int main(int argc, char *argv[]) {
-	
-	using namespace std;
-	Scene scene;
-	Producer producer;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Producer" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	producer.open(&scene, Command::OPEN, "input/scene.xml");
-	scene.print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Producer" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
 }

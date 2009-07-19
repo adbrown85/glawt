@@ -188,36 +188,3 @@ void Parser::print() {
 	for (int i=0; i<tags.size(); ++i)
 		cout << "  " << tags[i] << endl;
 }
-
-
-
-
-/**
- * Simple test program.
- */
-/*
-int main(int argc, char **argv) {
-	
-	using namespace std;
-	Parser parser;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Parser" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	parser.open("input/scene.xml");
-	parser.print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Parser" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
-}
-*/

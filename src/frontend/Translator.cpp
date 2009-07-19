@@ -61,7 +61,7 @@ void Translator::use(Scene *scene, const Vector &movement) {
 	
 	float dotProduct, translateAmount;
 	Matrix rotationMatrix;
-	ShapePtrSet::iterator si;
+	Selection::iterator si;
 	Translation *translation;
 	Vector viewAxis;
 	
@@ -76,6 +76,8 @@ void Translator::use(Scene *scene, const Vector &movement) {
 		for (si=scene->selection.begin();
 		     si!=scene->selection.end();
 		     ++si) {
+			std::cout << (*si)->getID() << std::endl;
+/*
 			translation = (*si)->translation;
 			if (translation != NULL) {
 				if (axis.x > 0.9)
@@ -85,6 +87,7 @@ void Translator::use(Scene *scene, const Vector &movement) {
 				else if (axis.z > 0.9)
 					translation->z += translateAmount;
 			}
+*/
 		}
 	}
 }

@@ -14,6 +14,7 @@
 #include "Scene.hpp"
 #include "Shape.hpp"
 #include "Selectable.hpp"
+#include "Selection.hpp"
 
 
 

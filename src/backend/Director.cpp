@@ -42,11 +42,10 @@ void Director::grab(Scene *scene, int cmd, float id) {
 	if (identifiable != NULL) {
 		selectable = dynamic_cast<Selectable*>(identifiable);
 		if (selectable != NULL) {
-			selectable->toggleSelected();
 			if (selectable->isSelected())
-				scene->selection.insert();
+				scene->selection.remove(selectable);
 			else
-				scene->selection.remove();
+				scene->selection.add(selectable);
 		}
 	}
 }

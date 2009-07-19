@@ -1,10 +1,10 @@
 <!-- <texture> </texture>-->
 <texture type="2D" file="crate.jpg">
-	<position x="5.0" y="0.0" z="0.0">
-		<item type="Box" size="2.0" />
-	</position>
-	<position x="-5.0" y="0.0" z="-1.0">
-		<item type="Box" size="4.0" />
-	</position>
+	<translate x="5.0" y="0.0" z="0.0">
+		<shape type="Box" size="2.0" />
+	</translate>
+	<translate x="-5.0" y="0.0" z="-1.0">
+		<shape type="Box" size="4.0" />
+	</translate>
 </texture>
 

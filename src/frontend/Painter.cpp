@@ -55,35 +55,40 @@ void Painter::paintNode(Node *node,
                         vector<Manipulator*> &manipulators,
                         GLenum renderMode) {
 	
-	Item *item;
-	Translation *translation;
+	Applicable *applicable;
+	Drawable *drawable;
+	Selectable *selectable;
 	vector<Manipulator*>::iterator mi;
 	
-	// Node is an Item
-	if (item = dynamic_cast<Item*>(node)) {
-		if (item->isShown()) {
+	// Node is drawable
+	if (drawable = dynamic_cast<Drawable*>(node)) {
+		if (drawable->isVisible()) {
 			if (renderMode == GL_SELECT)
-				glPushName(item->getID());
-			item->draw();
-			if (item->isSelected()) {
-				outline.copy(*item);
-				outline.draw();
-				for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-					if (renderMode == GL_SELECT)
-						glPushName((*mi)->getID());
-					(*mi)->copy(*item);
-					(*mi)->draw();
+				glPushName(drawable->getID());
+			drawable->draw();
+			if (selectable = dynamic_cast<Selectable*>(node)) {
+				if (selectable->isSelected()) {
+					outline.copySizeOf(*selectable);
+					outline.draw();
+					for (mi=manipulators.begin(); 
+					     mi!=manipulators.end();
+					     ++mi) {
+						if (renderMode == GL_SELECT)
+							glPushName((*mi)->getID());
+						(*mi)->copySizeOf(*selectable);
+						(*mi)->draw();
+					}
 				}
+				paintChildren(node, manipulators, renderMode);
 			}
-			paintChildren(node, manipulators, renderMode);
 		}
 	}
 	
-	// Node is a Translation
-	else if (translation = dynamic_cast<Translation*>(node)) {
-		translation->apply();
+	// Node is applicable
+	else if (applicable = dynamic_cast<Applicable*>(node)) {
+		applicable->apply();
 		paintChildren(node, manipulators, renderMode);
-		translation->restore();
+		applicable->remove();
 	}
 	
 	// Node

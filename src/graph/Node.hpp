@@ -31,8 +31,8 @@ class Node {
 		vector<Node*> children;
 		
 		Node();
-		void addChild(Node *child);
-		void print() const;
+		virtual void addChild(Node *child);
+		virtual void print() const;
 		
 		friend ostream& operator<<(ostream& stream,
 		                           const Node& node);

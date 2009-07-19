@@ -13,7 +13,7 @@
  */
 Drawable::Drawable() {
 	
-	visible = false;
+	visible = true;
 	size = 1.0;
 }
 

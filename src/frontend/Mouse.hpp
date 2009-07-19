@@ -17,6 +17,7 @@
 #include "Command.hpp"
 #include "Control.hpp"
 #include "Delegate.hpp"
+#include "Identifiable.hpp"
 #include "Manipulator.hpp"
 #include "Picker.hpp"
 #include "Scene.hpp"
@@ -42,7 +43,9 @@ class Mouse : public Control {
 	
 	public :
 		
-		Mouse(Delegate *delegate) : Control(delegate) {}
+		Mouse(Delegate *delegate) : Control(delegate) {
+			Mouse::obj = this;
+		}
 		
 		void handleDrag(int x, int y);
 		void handleClick(int button, int action, int x, int y);

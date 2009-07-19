@@ -58,7 +58,7 @@ void Cameraman::reset(Scene *scene, int cmd) {
 	
 	// Resets rotation
 	scene->setRotation(0.0, 0.0, 1.0, 0.0);
-	scene->position.set(0.0, 0.0, SCENE_DEFAULT_ZOOM);
+	scene->position.set(0.0, 0.0, -10);
 }
 
 

@@ -7,7 +7,7 @@
 #
 MODULE = backend
 CHILD  = graph
-FILTER = Cameraman Command Compositor Director Grip Interpreter Parser Producer
+FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak
 include $(GANDER)/src/module.mak

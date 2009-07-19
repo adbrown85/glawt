@@ -13,7 +13,6 @@
 #include <string>
 #include "Node.hpp"
 #include "Selectable.hpp"
-#include "Translation.hpp"
 using std::string;
 using std::ostream;
 
@@ -29,8 +28,6 @@ class Shape : public Node,
 	
 	
 	public :
-		
-		Translation *translation;
 		
 		Shape();
 		GLenum getStyle() {return style;}

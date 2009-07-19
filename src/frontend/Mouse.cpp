@@ -111,28 +111,24 @@ void Mouse::handleDrag(int x, int y) {
  */
 void Mouse::handleClick(int button, int state, int x, int y) {
 	
-	bool itemIsManipulator=false;
 	Binding *binding;
 	char direction;
 	int modifier;
-	Item *item;
+	Identifiable *identifiable;
 	multimap<int,Binding>::iterator bi;
 	pair<multimap<int,Binding>::iterator,
 	     multimap<int,Binding>::iterator> range;
 	
 	// Find the item under the cursor for normal clicks
 	currentManipulator = NULL;
-	itemIsManipulator = false;
 	if (button != GLUT_UP_BUTTON && button != GLUT_DOWN_BUTTON) {
 		currentItemID = Picker::pick(scene, manipulators, x, y);
-		item = Item::find(currentItemID);
-		if (item != NULL) {
-			if (typeid(*item) == typeid(Translator))
-				itemIsManipulator = true;
-		}
+		identifiable = Identifiable::findByID(currentItemID);
+		if (identifiable != NULL)
+			currentManipulator = dynamic_cast<Manipulator*>(identifiable);
 	}
 	
-	// Reset
+	// Reset dragging
 	if (state == GLUT_DOWN) {
 		dragBindings.clear();
 		dragCount = 0;
@@ -156,11 +152,14 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 					dragBindings[direction] = NULL;
 			}
 			else if (state == binding->getState()) {
+/*
 				if (itemIsManipulator) {
 					if (binding->getCommand() == Command::MANIPULATE)
-						currentManipulator = dynamic_cast<Manipulator*>(item);
+						currentManipulator = 
+							dynamic_cast<Manipulator*>(identifiable);
 				}
-				else {
+*/
+				if (currentManipulator==NULL) {
 					if (binding->hasArgument())
 						delegate->run(binding->getCommand(),
 						              binding->getArgument());

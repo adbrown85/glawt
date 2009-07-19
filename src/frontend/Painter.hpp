@@ -10,15 +10,14 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-// #include "Applicable.hpp"
-// #include "Drawable.hpp"
-#include "Item.hpp"                // Cast to see if node is (Drawable)
+#include "Applicable.hpp"          // Cast to see if item should be applied
+#include "Drawable.hpp"            // Cast to see if item should be drawn
 #include "Manipulator.hpp"         // Draw for selected items
 #include "Matrix.hpp"              // Rotating the camera
 #include "Node.hpp"                // Traversing the scene graph
 #include "Outline.hpp"             // Outline selected items
+#include "Selectable.hpp"          // Cast to see if item could be in selection
 #include "Scene.hpp"               // Moving camera and accessing root node
-#include "Translation.hpp"         // Reposition other nodes (Applicable)
 using std::vector;
 
 

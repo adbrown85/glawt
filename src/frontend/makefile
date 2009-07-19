@@ -7,7 +7,7 @@
 #
 MODULE = frontend
 CHILD  = backend
-FILTER = Binding Control Display Keyboard Menu Mouse Painter Picker Translator
+FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak
 include $(GANDER)/src/module.mak

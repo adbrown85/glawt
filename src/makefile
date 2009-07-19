@@ -26,9 +26,10 @@ clean :
 	$(RM) $(ARCHIVE) 
 	$(RM) $(bindir)/gander
 depends :
-	@$(MAKE) --directory ./graph --quiet $(MAKECMDGOALS)
+	@$(MAKE) --directory ./frontend --quiet $(MAKECMDGOALS)
 
 
 # Gander executable
-gander : gander.cpp gander.hpp
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVE)
+gander : gander.cpp gander.hpp $(ARCHIVE)
+	@echo "$< --> gander"
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVE)
