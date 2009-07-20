@@ -6,7 +6,7 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = graph
-CHILD  = traits
+CHILDREN = traits data
 FILTER = Shader Uniform
 GANDER = ../..
 include $(GANDER)/src/globals.mak

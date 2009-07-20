@@ -26,42 +26,37 @@ SOURCES = ${filter-out ${addsuffix .cpp,$(FILTER)}, ${wildcard *.cpp}}
 OBJECTS = ${patsubst %.cpp,%.o,$(SOURCES)}
 TESTS = ${wildcard *.cxx}
 BINARIES = ${patsubst %.cxx,%,$(TESTS)}
+ARCHIVE = $(libdir)/$(MODULE).a
+CHILDREN_ARCHIVES = ${foreach C,$(CHILDREN),$(libdir)/$(C).a}
 
 
 # Phony targets for directing make
-DIRECTIVES = all check clean tests
-.PHONY : $(DIRECTIVES)  child
-$(DIRECTIVES) : child message
-all : $(OBJECTS) tests
-check : 
+.PHONY: all check clean tests
+all: $(OBJECTS)
+check: 
 	@echo "  FILTER  = $(FILTER)"
 	@echo "  SOURCES = $(SOURCES)"
 	@echo "  TESTS   = $(TESTS)"
-	@echo "  CHILD   = $(CHILD)"
-child :
-ifdef CHILD
-	@$(MAKE) -C "../$(CHILD)" $(MAKECMDGOALS)
-endif
-clean :
+	@echo "  ARCHIVE = $(ARCHIVE)"
+clean: 
 	@echo "  Removing $(OBJECTS)"
 	@$(RM) $(OBJECTS) 
+	@echo "  Removing $(ARCHIVE)"
+	@$(RM) $(ARCHIVE)
 	@echo "  Removing $(BINARIES)"
 	@$(RM) $(BINARIES)
-message:
-	@echo "$(MODULE)"
-tests : $(OBJECTS) $(BINARIES)
+tests: $(OBJECTS) $(BINARIES)
 
 
-
-# Build a class from its source files, copy to archive
-%.o : %.cpp %.hpp
+# Build an object from its source files, copy to archive
+%.o: %.cpp %.hpp $(CHILDREN_ARCHIVES)
 	@echo "  $<"
 	@$(CXX) -c $(CXXFLAGS) ${abspath $<}
 	@$(AR) -$(ARFLAGS) $(ARCHIVE) $@
 	@ranlib $(ARCHIVE)
 
 
-# Build an executable from a test and archive
-% : %.cxx %.o
-	@echo "  $< --> $@"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVE)
+# Build an executable from a test and its object
+%: %.cxx %.o $(CHILDREN_ARCHIVES)
+	@echo "  $< --> $@"$
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(ARCHIVE) $(CHILDREN_ARCHIVES)

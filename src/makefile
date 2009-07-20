@@ -11,25 +11,17 @@ include $(GANDER)/src/globals.mak
 
 # Phony targets for directing make
 DIRECTIVES = all check clean tests
-.PHONY : $(DIRECTIVES) depends
-$(DIRECTIVES) : depends
-all : gander
-check : 
-	@echo
-	@echo "bindir  = $(bindir)"
-	@echo "libdir  = $(libdir)"
-	@echo "srcdir  = $(srcdir)"
-	@echo "ARCHIVE = $(ARCHIVE)"
-	@echo "MODULES = $(MODULES)"
-	@echo
-clean :
-	$(RM) $(ARCHIVE) 
+.PHONY : $(DIRECTIVES) $(MODULES)
+$(DIRECTIVES): $(MODULES)
+clean:
 	$(RM) $(bindir)/gander
-depends :
-	@$(MAKE) --directory ./frontend --quiet $(MAKECMDGOALS)
+
+# Compile all the objects
+$(MODULES):
+	@$(MAKE) -C ./$@ $(MAKECMDGOALS)
 
 
 # Gander executable
-gander : gander.cpp gander.hpp $(ARCHIVE)
+gander : gander.cpp gander.hpp
 	@echo "$< --> gander"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVE)
+#	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ ${abspath $<} $(ARCHIVES)

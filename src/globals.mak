@@ -8,20 +8,20 @@
 
 
 # Resolve directories
-bindir = ${abspath $(GANDER)/bin}
-libdir = ${abspath $(GANDER)/lib}
-srcdir = ${abspath $(GANDER)/src}
+bindir = $(GANDER)/bin
+libdir = $(GANDER)/lib
+srcdir = $(GANDER)/src
 VPATH = $(bindir) $(libdir) $(srcdir)
 
 
-# Resolve modules and archive
-MODULES = ${notdir ${abspath ${shell ls -d $(srcdir)/*/}}}
-ARCHIVE = $(libdir)/gander.a
+# Resolve modules and archives
+MODULES = data traits graph backend frontend
+ARCHIVES = ${addsuffix .a,$(MODULES)}
 
 
 # Options for archiver, compiler, and linker
 ARFLAGS = cr
-CXXFLAGS = -ggdb ${addprefix -I$(GANDER)/src/,$(MODULES)}
+CXXFLAGS = -ggdb ${addprefix -I$(srcdir)/,$(MODULES)}
 LDFLAGS = -lm -lglut -lIL -lILU -lILUT
 
 

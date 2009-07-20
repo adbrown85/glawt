@@ -6,7 +6,7 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = data
-CHILD  = 
+CHILDREN = 
 FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak

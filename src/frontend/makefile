@@ -6,7 +6,7 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = frontend
-CHILD  = backend
+CHILDREN = backend graph traits data
 FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak

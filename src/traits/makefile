@@ -6,7 +6,7 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 MODULE = traits
-CHILD  = data
+CHILDREN = data
 FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak
