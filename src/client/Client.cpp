@@ -5,24 +5,7 @@
  * Author
  *     Andrew Brown
  */
-#include "gander.hpp"
-
-
-
-Client::Client() {
-	
-	// Initialize
-	scene = NULL;
-}
-
-
-
-Client::~Client() {
-	
-	// Deallocate
-	if (scene != NULL)
-		delete scene;
-}
+#include "Client.hpp"
 
 
 
@@ -38,15 +21,13 @@ void Client::parse(int argc,
                    char *argv[]) {
 	
 	// Handle arguments
-	if (argc != 3) {
+	if (argc != 2) {
 		cerr << "Usage: " << argv[0]
-		                  << " -f <filename>" << endl;
-		cerr << "  f XML scene file" << endl;
+		                  << " <filename>" << endl;
+		cerr << "  filename: XML scene file" << endl;
 		exit(1);
 	}
-	for (int i=1; i<argc; i++)
-		if (strcmp(argv[i], "-f") == 0)
-			sceneFilename = argv[++i];
+	filename = argv[1];
 }
 
 
@@ -56,21 +37,21 @@ void Client::parse(int argc,
  */
 void Client::start() {
 	
-	// Open scene
-	scene = new Scene(640, 480);
-	Interpreter interpreter(scene);
-	interpreter.run(Command::OPEN, sceneFilename);
-	
-	// Install controls
+	Interpreter interpreter(&scene);
 	Keyboard keyboard(&interpreter);
 	Menu menu(&interpreter);
 	Mouse mouse(&interpreter);
+	
+	// Open scene
+	interpreter.run(Command::OPEN, filename);
+	
+	// Install controls
 	Display::install(&keyboard);
 	Display::install(&menu);
 	Display::install(&mouse);
 	
 	// Start display
-	Display::start("Gander", scene);
+	Display::start("Gander", &scene);
 }
 
 

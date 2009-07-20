@@ -15,8 +15,9 @@ VPATH = $(bindir) $(libdir) $(srcdir)
 
 
 # Resolve modules and archives
-MODULES = data traits graph backend frontend
-ARCHIVES = ${addsuffix .a,$(MODULES)}
+MODULES = data traits graph backend frontend client
+ARCHIVES = frontend.a backend.a graph.a traits.a data.a
+ARCHIVES_FULL = ${addprefix $(libdir)/,$(ARCHIVES)}
 
 
 # Options for archiver, compiler, and linker

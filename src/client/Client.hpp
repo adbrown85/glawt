@@ -23,6 +23,7 @@ using std::endl;
 using std::string;
 
 
+
 /**
  * @mainpage
  * <table align="center" border="0" width="70%">
@@ -46,12 +47,11 @@ using std::string;
  * </td>
  * </tr>
  * </table>
- */
-/**
  * @defgroup client Client
  * @defgroup frontend Frontend
  * @defgroup backend Backend
  * @defgroup graph Graph
+ * @defgroup traits Traits
  * @defgroup data Data
  */
 /**
@@ -64,22 +64,14 @@ class Client {
 	
 	public :
 		
-		
-		Client();
-		~Client();
-		
 		void parse(int argc, char *argv[]);
-		void print();
 		void start();
-		
-		string getName() {return name;}
-		void setName(string filename);
 	
 	
 	private :
 		
-		Scene *scene;
-		string name, sceneFilename;
+		Scene scene;
+		string filename;
 };
 
 
