@@ -7,6 +7,7 @@
  */
 #ifndef PICKER_HPP
 #define PICKER_HPP
+#include <climits>
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>

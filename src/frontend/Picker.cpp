@@ -97,7 +97,9 @@ void Picker::initialize(int x, int y) {
 
 
 /**
- * Picks an item from a scene.
+ * Picks an item from a scene
+ * 
+ * @return ID number of the item picked.  UINT_MAX if nothing.
  */
 GLuint Picker::pick(Scene *scene,
                     vector<Manipulator*> &manipulators,
@@ -112,7 +114,7 @@ GLuint Picker::pick(Scene *scene,
 	
 	// Return
 	if (ids.empty())
-		return 0;
+		return UINT_MAX;
 	else if (ids.size() == 1)
 		return *(ids.begin());
 	else
