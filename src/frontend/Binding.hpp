@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __BINDING_HEADER__
-#define __BINDING_HEADER__
+#ifndef BINDING_HPP
+#define BINDING_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iomanip>
@@ -28,104 +28,80 @@ using std::string;
  * @bug
  *     Currently mouse bindings should not be stored with keyboard bindings.
  * @bug
- *     Only F9 or tab can be used because GLUT assigns them the same code.
+ *     F9 and tab should not both be used because their GLUT codes are the same.
  */
 class Binding {
+	
+	
+	public :
+		
+		Binding(int trigger,
+		        int modifier,
+		        int command);
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        float argument);
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        int state);
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        float argument,
+		        int state);
+		Binding(int trigger,
+		        int modifier,
+		        int command,
+		        unsigned int *argument,
+		        int state);
+		
+		float getArgument() const;
+		int getCommand() const {return command;}
+		string getCommandStr() const {return Command::getName(command);}
+		int getModifier() const {return modifier;}
+		string getModifierStr() const;
+		int getState() {return state;}
+		int getTrigger() const {return trigger;}
+		string getTriggerStr() const;
+		bool hasArgument() const {return hasArg;}
+		bool hasDrag() const;
+		bool hasModifier() const {return modifier != 0;}
+		bool isCharacter() const {return isCharacter(this->trigger);}
+		
+		friend std::ostream& operator<<(std::ostream& stream,
+		                                const Binding &b);
 	
 	
 	private :
 		
 		
-		bool hasArg, hasOpt;
-		int *argi, cmd, mod, sta, trg, opt;
+		bool hasArg;
+		int command, modifier, state, trigger;
+		unsigned int *argi;
 		float argf;
 		
-		void init(int trg, int mod, int cmd, int sta, int opt);
-		void init(int trg, int mod, int cmd, int sta, float arg, int opt);
-		void init(int trg, int mod, int cmd, int sta, int *arg, int opt);
+		void init(int trigger,
+		          int modifier,
+		          int command,
+		          int state);
+		void init(int trigger,
+		          int modifier,
+		          int command,
+		          int state,
+		          float arg);
+		void init(int trigger,
+		          int modifier,
+		          int command,
+		          int state,
+		          unsigned int *arg);
 		
 		static bool loaded;
-		static map<int,string> nams;
+		static map<int,string> triggerNames;
 		
 		static bool isCharacter(int trigger);
-		static void names() {
-			nams[GLUT_KEY_LEFT] = "Left";
-			nams[GLUT_KEY_RIGHT] = "Right";
-			nams[GLUT_KEY_UP] = "Up";
-			nams[GLUT_KEY_DOWN] = "Down";
-			nams[GLUT_LEFT_BUTTON] = "Left";
-			nams[GLUT_MIDDLE_BUTTON] = "Middle";
-			nams[GLUT_RIGHT_BUTTON] = "Right";
-			nams[GLUT_UP_BUTTON] = "Wheel Up";
-			nams[GLUT_DOWN_BUTTON] = "Wheel Down";
-			nams['\t'] = "Tab";
-			nams[GLUT_KEY_HOME] = "Home";
-			nams[GLUT_KEY_END] = "End";
-			nams[GLUT_KEY_INSERT] = "Insert";
-		}
-	
-	
-	public :
-		
-		enum {EXCLUSIVE};
-		
-		Binding(int trigger,
-		        int modifier,
-		        int command) {
-			init(trigger, modifier, command, -1, -1);
-		}
-		Binding(int trigger,
-		        int modifier,
-		        int command,
-		        float argument) {
-			init(trigger, modifier, command, -1, argument, -1);
-		}
-		Binding(int trigger,
-		        int modifier,
-		        int command,
-		        int state) {
-			init(trigger, modifier, command, state, -1);
-		}
-		Binding(int trigger,
-		        int modifier,
-		        int command,
-		        float argument,
-		        int state) {
-			init(trigger, modifier, command, state, argument, -1);
-		}
-		Binding(int trigger,
-		        int modifier,
-		        int command,
-		        float argument,
-		        int state,
-		        int option) {
-			init(trigger, modifier, command, state, argument, option);
-		}
-		Binding(int trigger,
-		        int modifier,
-		        int command,
-		        int *argument,
-		        int state) {
-			init(trigger, modifier, command, state, argument, -1);
-		}
-		
-		float getArgument() const;
-		int getCommand() const {return cmd;}
-		string getCommandStr() const {return Command::getName(cmd);}
-		int getModifier() const {return mod;}
-		string getModifierStr() const;
-		int getOption() {return opt;}
-		int getState() {return sta;}
-		int getTrigger() const {return trg;}
-		string getTriggerStr() const;
-		bool hasArgument() const {return hasArg;}
-		bool hasDrag() const;
-		bool hasOption() const {return opt != -1;}
-		bool hasModifier() const {return mod != 0;}
-		bool isCharacter() const {return isCharacter(this->trg);}
-		
-		friend std::ostream& operator<<(std::ostream& stream,
-                                        const Binding &b);
+		static void initTriggerNames();
 };
 
 

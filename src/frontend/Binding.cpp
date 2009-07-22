@@ -8,12 +8,136 @@
 #include <iostream>
 #include "Binding.hpp"
 bool Binding::loaded=false;
-map<int,string> Binding::nams;
+map<int,string> Binding::triggerNames;
 
 
 
+
+/**
+ * Creates a keyboard binding for a command with no argument.
+ * 
+ * @param trigger
+ *     Key pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ */
+Binding::Binding(int trigger,
+                 int modifier,
+                 int command) {
+	
+	// Initialize using no state and no argument
+	init(trigger, modifier, command, -1);
+}
+
+
+
+/**
+ * Creates a keyboard binding for a command with an argument.
+ * 
+ * @param trigger
+ *     Key pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param argument
+ *     Floating-point number to pass to the command as an argument.
+ */
+Binding::Binding(int trigger,
+                 int modifier,
+                 int command,
+                 float argument) {
+	
+	// Initialize using no state and an argument
+	init(trigger, modifier, command, -1, argument);
+}
+
+
+
+/**
+ * Creates a mouse binding for a command with no argument.
+ * 
+ * @param trigger
+ *     Button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param state
+ *     State of the button pressed.  -1 if none.
+ */
+Binding::Binding(int trigger,
+                 int modifier,
+                 int command,
+                 int state) {
+	
+	// Initialize using a state and no argument
+	init(trigger, modifier, command, state);
+}
+
+
+
+/**
+ * Creates a mouse binding for a command with a floating-point argument.
+ * 
+ * @param trigger
+ *     Button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param argument
+ *     Floating-point number to pass to the command as an argument.
+ * @param state
+ *     State of the button pressed.  -1 if none.
+ */
+Binding::Binding(int trigger,
+                 int modifier,
+                 int command,
+                 float argument,
+                 int state) {
+	
+	// Initialize using a state and an argument
+	init(trigger, modifier, command, state, argument);
+}
+
+
+
+/**
+ * Creates a mouse binding for a command with an unsigned integer argument.
+ * 
+ * @param trigger
+ *     Button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param argument
+ *     Pointer to an unsigned integer to pass to the command as an argument.
+ * @param state
+ *     State of the button pressed.  -1 if none.
+ */
+Binding::Binding(int trigger,
+                 int modifier,
+                 int command,
+                 unsigned int *argument,
+                 int state) {
+	
+	// Initialize using a state and an argument
+	init(trigger, modifier, command, state, argument);
+}
+
+
+
+/**
+ * Returns the value of the binding's argument.  If the argument holds a 
+ * pointer to a variable, the pointer is first dereferenced.
+ */
 float Binding::getArgument() const {
 	
+	// Return value of argument
 	if (argi != NULL)
 		return static_cast<float>(*argi);
 	else
@@ -23,14 +147,14 @@ float Binding::getArgument() const {
 
 
 /**
- * 
+ * Returns a printable version of the modifier.
  */
 string Binding::getModifierStr() const {
 	
 	string str="";
 	
 	// Lookup and return name
-	switch (mod) {
+	switch (modifier) {
 		case 0                 : str = "None"; break;
 		case GLUT_ACTIVE_CTRL  : str = "Ctrl"; break;
 		case GLUT_ACTIVE_ALT   : str = "Alt"; break;
@@ -50,11 +174,11 @@ string Binding::getTriggerStr() const {
 	string str;
 	
 	// Lookup and return name
-	if (isCharacter() && isalpha((char)trg))
-		str = trg;
+	if (isCharacter() && isalpha((char)trigger))
+		str = trigger;
 	else {
-		n = nams.find(trg);
-		if (n != nams.end())
+		n = triggerNames.find(trigger);
+		if (n != triggerNames.end())
 			str = n->second;
 		else
 			str = "-";
@@ -64,42 +188,74 @@ string Binding::getTriggerStr() const {
 
 
 
+/**
+ * Determines if this Binding should be used for when the mouse is dragged.  
+ * Does so by checking if state is equal to 'x' or 'y'.
+ */
 bool Binding::hasDrag() const {
 	
-	return (sta == 'x' || sta == 'y');
+	return (state == 'x' || state == 'y');
 }
 
 
 
 /**
  * Initializes the required attributes for a binding.
+ * 
+ * @param trigger
+ *     Key or button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param state
+ *     State of the button pressed.  -1 if none.
  */
-void Binding::init(int trg, int mod, int cmd, int sta, int opt) {
+void Binding::init(int trigger,
+                   int modifier,
+                   int command,
+                   int state) {
 	
-	// Load names
+	// Load names if this is the first call
 	if (!loaded)
-		names();
+		initTriggerNames();
 	loaded = true;
 	
-	// Set attributes
-	this->trg = isCharacter(trg) ? toupper(trg) : trg;
-	this->mod = mod;
-	this->cmd = cmd;
-	this->sta = sta;
+	// Set standard attributes
+	this->trigger = isCharacter(trigger) ? toupper(trigger) : trigger;
+	this->modifier = modifier;
+	this->command = command;
+	this->state = state;
 	hasArg = false;
-	this->opt = opt;
 }
 
 
 
 /**
  * Initializes the required attributes for a binding.
+ * 
+ * @param trigger
+ *     Key or button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param state
+ *     State of the button pressed.  -1 if none.
+ * @param argument
+ *     Floating-point number to pass to the command as an argument.
  */
-void Binding::init(int trg, int mod, int cmd, int sta, float arg, int opt) {
+void Binding::init(int trigger,
+                   int modifier,
+                   int command,
+                   int state,
+                   float argument) {
 	
-	// Set attributes
-	init(trg, mod, cmd, sta, opt);
-	this->argf = arg;
+	// Set standard attributes
+	init(trigger, modifier, command, state);
+	
+	// Set argument
+	this->argf = argument;
 	this->argi = NULL;
 	hasArg = true;
 }
@@ -108,32 +264,71 @@ void Binding::init(int trg, int mod, int cmd, int sta, float arg, int opt) {
 
 /**
  * Initializes the required attributes for a binding.
+ * 
+ * @param trigger
+ *     Key or button pressed by user.
+ * @param modifier
+ *     Modifier key held while pressing trigger.  0 if none.
+ * @param command
+ *     Enumeration of a command.
+ * @param state
+ *     State of the button pressed.  -1 if none.
+ * @param argument
+ *     Pointer to an unsigned integer to pass to the command as an argument.
  */
-void Binding::init(int trg, int mod, int cmd, int sta, int *arg, int opt) {
+void Binding::init(int trigger,
+                   int modifier,
+                   int command,
+                   int state,
+                   unsigned int *argument) {
 	
-	// Set attributes
-	init(trg, mod, cmd, sta, opt);
+	// Set standard attributes
+	init(trigger, modifier, command, state);
+	
+	// Set argument
 	this->argf = 0.0;
-	this->argi = arg;
+	this->argi = argument;
 	hasArg = true;
 }
 
 
 
 /**
- * Trigger is a character if it's not listed in the 'nams' map.
+ * Initializes the formatted names of triggers.
  */
-bool Binding::isCharacter(int trg) {
+void Binding::initTriggerNames() {
+	
+	triggerNames[GLUT_KEY_LEFT] = "Left";
+	triggerNames[GLUT_KEY_RIGHT] = "Right";
+	triggerNames[GLUT_KEY_UP] = "Up";
+	triggerNames[GLUT_KEY_DOWN] = "Down";
+	triggerNames[GLUT_LEFT_BUTTON] = "Left";
+	triggerNames[GLUT_MIDDLE_BUTTON] = "Middle";
+	triggerNames[GLUT_RIGHT_BUTTON] = "Right";
+	triggerNames[GLUT_UP_BUTTON] = "Wheel Up";
+	triggerNames[GLUT_DOWN_BUTTON] = "Wheel Down";
+	triggerNames['\t'] = "Tab";
+	triggerNames[GLUT_KEY_HOME] = "Home";
+	triggerNames[GLUT_KEY_END] = "End";
+	triggerNames[GLUT_KEY_INSERT] = "Insert";
+}
+
+
+
+/**
+ * Determines if the trigger should be printed as is as a character, or should 
+ * be replaced with a formatted name.
+ * 
+ * @return
+ *     True if trigger is not in the 'triggerNames' map.
+ */
+bool Binding::isCharacter(int trigger) {
 	
 	map<int,string>::const_iterator ni;
 	
-	// Check exceptions
-	if (trg == '\t')
-		return true;
-	
-	// Check if in names
-	ni = nams.find(trg);
-	return ni == nams.end();
+	// Check if in trigger names
+	ni = triggerNames.find(trigger);
+	return ni == triggerNames.end();
 }
 
 
@@ -146,61 +341,13 @@ std::ostream& operator<<(std::ostream& stream,
 	
 	string str;
 	
-	// Format
+	// Get formatted modifier and trigger
 	if (b.hasModifier())
 		str = b.getModifierStr() + "+";
 	str += b.getTriggerStr();
 	
-	// Print
+	// Print with formatted command
 	stream << std::setw(15) << std::left << str;
 	stream << b.getCommandStr();
 	return stream;
 }
-
-
-
-/**
- * Simple test program.
- */
-/*
-#include <vector>
-using std::vector;
-int main(int argc, char *argv[]) {
-	
-	using namespace std;
-	Binding b1(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT);
-	Binding b2(GLUT_KEY_RIGHT, GLUT_ACTIVE_ALT, Command::CIRCLE_RIGHT);
-	Binding b3(GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT, Command::CIRCLE_UP);
-	Binding b4('D', 0, Command::DESELECT, 5.0f);
-	Binding b5('C', GLUT_ACTIVE_CTRL, Command::COPY);
-	vector<Binding*> bins;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Binding" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	bins.push_back(&b1);
-	bins.push_back(&b2);
-	bins.push_back(&b3);
-	bins.push_back(&b4);
-	bins.push_back(&b5);
-	for (int i=0; i<bins.size(); i++) {
-		cout << *bins[i] << endl;
-		// cout << bins[i]->getState() << endl;
-	}
-	cout << GLUT_DOWN << endl;
-	cout << GLUT_UP << endl;
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Binding" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
-}
-*/

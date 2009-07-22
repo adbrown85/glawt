@@ -11,84 +11,14 @@ Mouse *Mouse::obj=NULL;
 
 
 /**
- * Manipulates the scene when the mouse is dragged.
- * 
- * @param x
- *     Current horizontal coordinate of the mouse while it's being dragged.
- * @param y
- *     Current vertical coordinate of the mouse while it's being dragged.
+ * GLUT callback for mouse clicks.
  */
-void Mouse::handleDrag(int x, int y) {
+void Mouse::clickCallback(int button,
+                          int state,
+                          int x,
+                          int y) {
 	
-	Binding *binding;
-	bool useExclusiveDrag=false;
-	char directions[] = {'x', 'y'};
-	float dotProduct, dragAmount;
-	map<char,Binding*>::iterator bi;
-	Vector movement;
-	
-	// Update
-	movement.set((x-lastCursorPosition.x), -(y-lastCursorPosition.y));
-	
-	// Drag manipulator
-	if (currentManipulator != NULL)
-		currentManipulator->use(scene, movement);
-	else {
-		
-		// Check for exclusive drag
-		for (int i=0; i<2; i++) {
-			bi = dragBindings.find(directions[i]);
-			if (bi != dragBindings.end()) {
-				binding = bi->second;
-				if (binding != NULL) {
-					if (binding->getOption() == Binding::EXCLUSIVE) {
-						useExclusiveDrag = true;
-						break;
-					}
-				}
-			}
-		}
-		
-		// If exclusive, wait for a direction to set axis
-		if (useExclusiveDrag) {
-			if (dragCount == 0) {
-				dragAxis.set(0.0, 0.0);
-				dragDirection.set(0.0, 0.0);
-			}
-			dragDirection = dragDirection + movement;
-			if (dragCount < 10 && dragDirection.length() >= 3.0) {
-				if (dragAxis.x < 0.5 && dragAxis.y < 0.5) {
-					if (fabs(dragDirection.y) > fabs(dragDirection.x))
-						dragAxis.set(0.0, 1.0);
-					else
-						dragAxis.set(1.0, 0.0);
-				}
-			}
-		}
-		else
-			dragAxis.set(1.0, 1.0);
-		
-		// Perform dragging
-		for (int i=0; i<2; i++) {
-			bi = dragBindings.find(directions[i]);
-			if (bi != dragBindings.end()) {
-				binding = bi->second;
-				if (binding != NULL) {
-					if (fabs(movement.get(i)) > 0.5) {
-						dragAmount = movement.get(i) * dragAxis.get(i);
-						delegate->run(binding->getCommand(),
-						              binding->getArgument() *
-						              dragAmount);
-					}
-				}
-			}
-		}
-	}
-	
-	// Update
-	lastCursorPosition.set(x, y);
-	++dragCount;
-	glutPostRedisplay();
+	obj->clickHandler(button, state, x, y);
 }
 
 
@@ -109,24 +39,19 @@ void Mouse::handleDrag(int x, int y) {
  * @param y
  *     Current vertical coordinate of the mouse when it was clicked.
  */
-void Mouse::handleClick(int button, int state, int x, int y) {
+void Mouse::clickHandler(int button,
+                         int state,
+                         int x,
+                         int y) {
 	
-	Binding *binding;
 	char direction;
 	int modifier;
-	Identifiable *identifiable;
 	multimap<int,Binding>::iterator bi;
 	pair<multimap<int,Binding>::iterator,
 	     multimap<int,Binding>::iterator> range;
 	
-	// Find the item under the cursor for normal clicks
-	currentManipulator = NULL;
-	if (button != GLUT_UP_BUTTON && button != GLUT_DOWN_BUTTON) {
-		currentItemID = Picker::pick(scene, manipulators, x, y);
-		identifiable = Identifiable::findByID(currentItemID);
-		if (identifiable != NULL)
-			currentManipulator = dynamic_cast<Manipulator*>(identifiable);
-	}
+	// Pick the item under the cursor
+	pickItem(button, x, y);
 	
 	// Reset dragging
 	if (state == GLUT_DOWN) {
@@ -134,42 +59,10 @@ void Mouse::handleClick(int button, int state, int x, int y) {
 		dragCount = 0;
 	}
 	
-	// Store modifier (Ctrl, Alt, Shift)
-	modifier = glutGetModifiers();
-	if (modifier == 1 || modifier == 5)
-		modifier -= 1;
-	
-	// Lookup binding for this binding, modifier, and state
+	// Try bindings for this button
 	range = bindings.equal_range(button);
-	for (bi=range.first; bi!=range.second; ++bi) {
-		binding = &bi->second;
-		if (binding->getModifier() == modifier) {
-			if (binding->hasDrag()) {
-				direction = static_cast<char>(binding->getState());
-				if (state == GLUT_DOWN)
-					dragBindings[direction] = binding;
-				else
-					dragBindings[direction] = NULL;
-			}
-			else if (state == binding->getState()) {
-/*
-				if (itemIsManipulator) {
-					if (binding->getCommand() == Command::MANIPULATE)
-						currentManipulator = 
-							dynamic_cast<Manipulator*>(identifiable);
-				}
-*/
-				if (currentManipulator==NULL) {
-					if (binding->hasArgument())
-						delegate->run(binding->getCommand(),
-						              binding->getArgument());
-					else
-						delegate->run(binding->getCommand());
-					glutPostRedisplay();
-				}
-			}
-		}
-	}
+	for (bi=range.first; bi!=range.second; ++bi)
+		tryBinding(&(bi->second), state);
 	
 	// Store cursor position for next time
 	lastCursorPosition.set(x, y);
@@ -203,55 +96,296 @@ vector<Manipulator*> Mouse::install(Scene *scene) {
 
 
 /**
+ * Installs the bindings for the mouse.
+ * 
+ * @see Binding
+ */
+void Mouse::installBindings() {
+	
+	// Add bindings for mouse wheel
+	add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
+	add(Binding(GLUT_DOWN_BUTTON, 0, Command::ZOOM_OUT, 1.0f, GLUT_DOWN));
+	
+	// Add bindings for left button
+	add(Binding(GLUT_LEFT_BUTTON,
+	            GLUT_ACTIVE_ALT,
+	            Command::GRAB,
+	            &currentItemID,
+	            GLUT_DOWN));
+	add(Binding(GLUT_LEFT_BUTTON,
+	            GLUT_ACTIVE_ALT,
+	            Command::MANIPULATE,
+	            GLUT_DOWN));
+	add(Binding(GLUT_LEFT_BUTTON,
+	            0,
+	            Command::CIRCLE_Y,
+	            -1.0f,
+	            'x'));
+	add(Binding(GLUT_LEFT_BUTTON,
+	            0,
+	            Command::CIRCLE_X,
+	            -1.0f,
+	            'y'));
+	
+	// Add bindings for middle button
+	add(Binding(GLUT_MIDDLE_BUTTON,
+	            0,
+	            Command::TRACK,
+	            -1.0f,
+	            'x'));
+	add(Binding(GLUT_MIDDLE_BUTTON,
+	            0,
+	            Command::BOOM,
+	            1.0f,
+	            'y'));
+}
+
+
+
+/**
+ * Installs the GLUT callbacks for the mouse.  Will register the callback 
+ * functions for both clicks and drags with GLUT.
+ */
+void Mouse::installCallbacks() {
+	
+	// Register clicks and drags
+	glutMouseFunc(Mouse::clickCallback);
+	glutMotionFunc(Mouse::dragCallback);
+}
+
+
+
+/**
+ * Installs the manipulators to show for selected items.  A class that uses 
+ * the control should draw these manipulators for selected items.
+ */
+void Mouse::installManipulators() {
+	
+	// Add translators
+	add(new Translator(1.0, 0.0, 0.0));
+	add(new Translator(0.0, 1.0, 0.0));
+	add(new Translator(0.0, 0.0, 1.0));
+}
+
+
+
+/**
  * GLUT callback for when the mouse is dragged.
  */
-void Mouse::motion(int x, int y) {
+void Mouse::dragCallback(int x,
+                         int y) {
 	
-	obj->handleDrag(x, y);
+	obj->dragHandler(x, y);
 }
 
 
 
 /**
- * GLUT callback for mouse clicks.
+ * Decides which axis the user should be allowed to drag in.  Waits a few 
+ * screen coordinates before deciding to make sure it matches the direction 
+ * the user is dragging in.
  */
-void Mouse::mouse(int button, int state, int x, int y) {
+void Mouse::dragDecideAxis(const Vector &movement) {
 	
-	obj->handleClick(button, state, x, y);
+	// Dragging should be constrained
+	if (dragUseConstrained()) {
+		
+		// Reset axis and direction on first call
+		if (dragCount == 0) {
+			dragAxis.set(0.0, 0.0);
+			dragDirection.set(0.0, 0.0);
+		}
+		
+		// Always update direction
+		dragDirection = dragDirection + movement;
+		
+		// Wait for direction to increase before deciding on axis
+		if (dragCount < 10 && dragDirection.length() >= 3.0) {
+			if (dragAxis.x < 0.5 && dragAxis.y < 0.5) {
+				if (fabs(dragDirection.y) > fabs(dragDirection.x))
+					dragAxis.set(0.0, 1.0);
+				else
+					dragAxis.set(1.0, 0.0);
+			}
+		}
+	}
+	
+	// Allow both directions
+	else
+		dragAxis.set(1.0, 1.0);
 }
 
 
 
 /**
- * Simple test program.
+ * Manipulates the scene when the mouse is dragged.
+ * 
+ * @param x
+ *     Current horizontal coordinate of the mouse while it's being dragged.
+ * @param y
+ *     Current vertical coordinate of the mouse while it's being dragged.
  */
-/*
-#include "Interpreter.hpp"
-int main() {
+void Mouse::dragHandler(int x,
+                        int y) {
 	
-	using namespace std;
-	Scene scene;
-	Interpreter interpreter(&scene);
-	Mouse mouse(&interpreter);
-	vector<Manipulator*> manipulators;
+	Binding *binding;
+	char directions[] = {'x', 'y'};
+	float dragAmount;
+	map<char,Binding*>::iterator bi;
+	Vector movement;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Mouse" << endl;
-	cout << "****************************************" << endl;
+	// Determine movement from last update
+	movement.set((x-lastCursorPosition.x), -(y-lastCursorPosition.y));
 	
-	// Test
-	cout << endl;
-	manipulators = mouse.install(&scene);
-	for (int i=0; i<manipulators.size(); ++i)
-		cout << manipulators[i]->getAxis() << endl;
+	// Dragging a manipulator
+	if (currentManipulator != NULL)
+		currentManipulator->use(scene, movement);
 	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Mouse" << endl;
-	cout << "****************************************" << endl;
-	return 0;
+	// Dragging on the screen
+	else {
+		
+		// Decide axis for dragging
+		dragDecideAxis(movement);
+		
+		// Check drag bindings in both directions
+		for (int i=0; i<2; i++) {
+			bi = dragBindings.find(directions[i]);
+			if (bi != dragBindings.end()) {
+				binding = bi->second;
+				if (binding != NULL) {
+					if (fabs(movement.get(i)) > 0.99) {
+						
+						// Determine amount to drag
+						dragAmount = movement.get(i) * 
+						             dragAxis.get(i) *
+						             binding->getArgument();
+						
+						// Run the command
+						if (dragAmount != 0.0)
+							delegate->run(binding->getCommand(), dragAmount);
+					}
+				}
+			}
+		}
+	}
+	
+	// Update
+	lastCursorPosition.set(x, y);
+	++dragCount;
+	glutPostRedisplay();
 }
-*/
+
+
+
+/**
+ * Checks if the dragging motion should be constrained to one direction.
+ * 
+ * @return
+ *     True if it should be constrained.
+ */
+bool Mouse::dragUseConstrained() {
+	
+	Binding *binding;
+	char directions[] = {'x', 'y'};
+	map<char,Binding*>::iterator bi;
+	
+	// Check both 'x' and 'y' directions
+	for (int i=0; i<2; ++i) {
+		
+		// Temporarily store binding for this direction
+		bi = dragBindings.find(directions[i]);
+		if (bi != dragBindings.end()) {
+			binding = bi->second;
+			if (binding != NULL) {
+				
+				// Check if command should be constrained
+				if (binding->getCommand() == Command::CIRCLE_X ||
+				    binding->getCommand() == Command::CIRCLE_Y)
+					return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+
+/**
+ * Stores the ID of the item under the cursor as 'currentItemID'.  Also sets 
+ * 'currentManipulator' to the item's memory address if it is a manipulator.
+ * If nothing is picked, 'UINT_MAX' is used for the former, and 'NULL' for the 
+ * latter.
+ * 
+ * @param button
+ *     Mouse button clicked.
+ */
+void Mouse::pickItem(int button,
+                     int x,
+                     int y) {
+	
+	Identifiable *identifiable;
+	
+	// Initialize
+	currentManipulator = NULL;
+	
+	// For normal clicks
+	if (button == GLUT_LEFT_BUTTON ||
+	    button == GLUT_MIDDLE_BUTTON ||
+	    button == GLUT_RIGHT_BUTTON) {
+		
+		// Pick the item
+		currentItemID = Picker::pick(scene, manipulators, x, y);
+		
+		// Check if a manipulator
+		identifiable = Identifiable::findByID(currentItemID);
+		if (identifiable != NULL)
+			currentManipulator = dynamic_cast<Manipulator*>(identifiable);
+	}
+}
+
+
+
+/**
+ * Issue the command for a binding if it matches the current conditions.
+ * 
+ * @param binding
+ *     Pointer to a %Binding.
+ * @param state
+ *     State of the button clicked.
+ */
+void Mouse::tryBinding(Binding *binding,
+                       int state) {
+	
+	char direction;
+	int modifier;
+	
+	// Ignore bindings that don't match the current modifier
+	modifier = glutGetModifiers();
+	if (modifier == 1 || modifier == 5)
+		modifier -= 1;
+	if (binding->getModifier() != modifier)
+		return;
+	
+	// Store the binding if it's meant for dragging
+	if (binding->hasDrag()) {
+		direction = static_cast<char>(binding->getState());
+		if (state == GLUT_DOWN)
+			dragBindings[direction] = binding;
+		else
+			dragBindings[direction] = NULL;
+		return;
+	}
+	
+	// Issue the command if the state matches
+	if (state == binding->getState()) {
+		if (currentManipulator==NULL) {
+			if (binding->hasArgument())
+				delegate->run(binding->getCommand(),
+				              binding->getArgument());
+			else
+				delegate->run(binding->getCommand());
+			glutPostRedisplay();
+		}
+	}
+}
+
