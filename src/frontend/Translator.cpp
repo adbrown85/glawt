@@ -54,10 +54,13 @@ void Translator::draw() const {
 /**
  * Use the Translator.
  * 
+ * @param scene
+ *     Graph of nodes.
  * @param movement
  *     Difference between current and last cursor positions.
  */
-void Translator::use(Scene *scene, const Vector &movement) {
+void Translator::use(Scene *scene,
+                     const Vector &movement) {
 	
 	float dotProduct, translateAmount;
 	Matrix rotationMatrix;
@@ -69,25 +72,15 @@ void Translator::use(Scene *scene, const Vector &movement) {
 	rotationMatrix = scene->getRotationMatrix();
 	viewAxis = rotationMatrix * axis;
 	dotProduct = movement.getNormalized().dotProduct(viewAxis.getNormalized());
-	translateAmount = movement.length() * dotProduct * 0.0125;
+	translateAmount = movement.length() * dotProduct * 0.02;
 	
-	// Add translate amount to position of each selected shape
+	// Translate selection
 	if (fabs(dotProduct) > 0.75) {
-		for (si=scene->selection.begin();
-		     si!=scene->selection.end();
-		     ++si) {
-			std::cout << (*si)->getID() << std::endl;
-/*
-			translation = (*si)->translation;
-			if (translation != NULL) {
-				if (axis.x > 0.9)
-					translation->x += translateAmount;
-				else if (axis.y > 0.9)
-					translation->y += translateAmount;
-				else if (axis.z > 0.9)
-					translation->z += translateAmount;
-			}
-*/
-		}
+		if (axis.x > 0.9)
+			delegate->run(Command::TRANSLATE_X, translateAmount);
+		else if (axis.y > 0.9)
+			delegate->run(Command::TRANSLATE_Y, translateAmount);
+		else
+			delegate->run(Command::TRANSLATE_Z, translateAmount);
 	}
 }

@@ -28,6 +28,7 @@ class Translation : public Transformation,
 		Translation();
 		Translation(float x, float y, float z);
 		
+		void add(const Vector &B);
 		void apply();
 		void remove();
 };

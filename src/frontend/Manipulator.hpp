@@ -4,11 +4,12 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __MANIPULATOR_HPP__
-#define __MANIPULATOR_HPP__
+#ifndef MANIPULATOR_HPP
+#define MANIPULATOR_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include "Delegate.hpp"
 #include "Drawable.hpp"
 #include "Identifiable.hpp"
 #include "Scene.hpp"
@@ -26,13 +27,16 @@ class Manipulator : public Drawable  {
 	
 	public :
 		
-		virtual void use(Scene *scene, const Vector &difference) = 0;
+		Manipulator() {this->delegate = NULL;}
 		
+		virtual void use(Scene *scene, const Vector &difference) = 0;
 		Vector getAxis() {return axis;}
+		void setDelegate(Delegate *delegate) {this->delegate = delegate;}
 	
 	
 	protected :
 		
+		Delegate *delegate;
 		Vector axis;
 };
 

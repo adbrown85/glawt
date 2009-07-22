@@ -4,13 +4,19 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __GRIP_HPP__
-#define __GRIP_HPP__
+#ifndef GRIP_HPP
+#define GRIP_HPP
 #include <cstdlib>
 #include <iostream>
+#include <typeinfo>
 #include "Command.hpp"
 #include "Delegate.hpp"
+#include "Node.hpp"
+#include "Selectable.hpp"
+#include "Selection.hpp"
 #include "Scene.hpp"
+#include "Translation.hpp"
+#include "Vector.hpp"
 
 
 
@@ -30,9 +36,16 @@ class Grip : public Delegate {
 		virtual void run(int command, float argument) {;}
 		virtual void run(int command, string argument) {;}
 		
-		static void rotate(Scene *scene, int cmd);
-		static void scale(Scene *scene, int cmd);
-		static void translate(Scene *scene, int cmd);
+		static Translation* findTranslation(Node *node);
+		static void rotate(Scene *scene,
+		                   int cmd,
+		                   float argument);
+		static void scale(Scene *scene,
+		                  int cmd,
+		                  float argument);
+		static void translate(Scene *scene,
+		                      int cmd,
+		                      float argument);
 };
 
 

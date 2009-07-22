@@ -17,25 +17,16 @@ Grip::Grip() {
 	// Set type
 	type = "Grip";
 	
-	// Add handlers
-	handlersZero[Command::ROTATE_X_MINUS] = &Grip::rotate;
-	handlersZero[Command::ROTATE_X_PLUS] = &Grip::rotate;
-	handlersZero[Command::ROTATE_Y_MINUS] = &Grip::rotate;
-	handlersZero[Command::ROTATE_Y_PLUS] = &Grip::rotate;
-	handlersZero[Command::ROTATE_Z_MINUS] = &Grip::rotate;
-	handlersZero[Command::ROTATE_Z_PLUS] = &Grip::rotate;
-	handlersZero[Command::SCALE_X_MINUS] = &Grip::scale;
-	handlersZero[Command::SCALE_X_PLUS] = &Grip::scale;
-	handlersZero[Command::SCALE_Y_MINUS] = &Grip::scale;
-	handlersZero[Command::SCALE_Y_PLUS] = &Grip::scale;
-	handlersZero[Command::SCALE_Z_MINUS] = &Grip::scale;
-	handlersZero[Command::SCALE_Z_PLUS] = &Grip::scale;
-	handlersZero[Command::TRANSLATE_X_MINUS] = &Grip::translate;
-	handlersZero[Command::TRANSLATE_X_PLUS] = &Grip::translate;
-	handlersZero[Command::TRANSLATE_Y_MINUS] = &Grip::translate;
-	handlersZero[Command::TRANSLATE_Y_PLUS] = &Grip::translate;
-	handlersZero[Command::TRANSLATE_Z_MINUS] = &Grip::translate;
-	handlersZero[Command::TRANSLATE_Z_PLUS] = &Grip::translate;
+	// Add float handlers
+	handlersFloat[Command::ROTATE_X] = &Grip::rotate;
+	handlersFloat[Command::ROTATE_Y] = &Grip::rotate;
+	handlersFloat[Command::ROTATE_Z] = &Grip::rotate;
+	handlersFloat[Command::SCALE_X] = &Grip::scale;
+	handlersFloat[Command::SCALE_Y] = &Grip::scale;
+	handlersFloat[Command::SCALE_Z] = &Grip::scale;
+	handlersFloat[Command::TRANSLATE_X] = &Grip::translate;
+	handlersFloat[Command::TRANSLATE_Y] = &Grip::translate;
+	handlersFloat[Command::TRANSLATE_Z] = &Grip::translate;
 }
 
 
@@ -43,7 +34,9 @@ Grip::Grip() {
 /**
  * Rotates the current selection.
  */
-void Grip::rotate(Scene *scene, int command) {
+void Grip::rotate(Scene *scene,
+                  int command,
+                  float argument) {
 	
 	std::cout << "Grip::rotate(Scene*,int)" << std::endl;
 }
@@ -53,9 +46,27 @@ void Grip::rotate(Scene *scene, int command) {
 /**
  * Scales the current selection.
  */
-void Grip::scale(Scene *scene, int command) {
+void Grip::scale(Scene *scene,
+                 int command,
+                 float argument) {
 	
 	std::cout << "Grip::scale(Scene*,int)" << std::endl;
+}
+
+
+
+Translation* Grip::findTranslation(Node *node) {
+	
+	Node *currentNode=NULL;
+	
+	// Look for a Translation ancestor
+	currentNode = node->parent;
+	while (currentNode != NULL) {
+		if (typeid(*currentNode) == typeid(Translation))
+			break;
+		currentNode = currentNode->parent;
+	}
+	return static_cast<Translation*>(currentNode);
 }
 
 
@@ -63,7 +74,37 @@ void Grip::scale(Scene *scene, int command) {
 /**
  * Translates the current selection.
  */
-void Grip::translate(Scene *scene, int command) {
+void Grip::translate(Scene *scene,
+                     int command,
+                     float argument) {
 	
-	std::cout << "Grip::translate(Scene*,int)" << std::endl;
+	Node *node;
+	Selection *selection;
+	Selection::iterator si;
+	Translation *translation;
+	Vector change;
+	
+	// Determine change
+	switch(command) {
+		case Command::TRANSLATE_X :
+			change.x = argument;
+			break;
+		case Command::TRANSLATE_Y :
+			change.y = argument;
+			break;
+		case Command::TRANSLATE_Z :
+			change.z = argument;
+			break;
+	}
+	
+	// Apply change
+	selection = &(scene->selection);
+	for (si=selection->begin(); si!=selection->end(); ++si) {
+		node = dynamic_cast<Node*>(*si);
+		if (node != NULL) {
+			translation = findTranslation(node);
+			if (translation != NULL)
+				translation->add(change);
+		}
+	}
 }

@@ -47,24 +47,15 @@ class Command {
 			ZOOM_IN,
 			ZOOM_OUT,
 			RESET,
-			ROTATE_X_MINUS,
-			ROTATE_X_PLUS,
-			ROTATE_Y_MINUS,
-			ROTATE_Y_PLUS,
-			ROTATE_Z_MINUS,
-			ROTATE_Z_PLUS,
-			SCALE_X_MINUS,
-			SCALE_X_PLUS,
-			SCALE_Y_MINUS,
-			SCALE_Y_PLUS,
-			SCALE_Z_MINUS,
-			SCALE_Z_PLUS,
-			TRANSLATE_X_MINUS,
-			TRANSLATE_X_PLUS,
-			TRANSLATE_Y_MINUS,
-			TRANSLATE_Y_PLUS,
-			TRANSLATE_Z_MINUS,
-			TRANSLATE_Z_PLUS,
+			ROTATE_X,
+			ROTATE_Y,
+			ROTATE_Z,
+			SCALE_X,
+			SCALE_Y,
+			SCALE_Z,
+			TRANSLATE_X,
+			TRANSLATE_Y,
+			TRANSLATE_Z,
 			COPY,
 			CUT,
 			PASTE,
@@ -109,24 +100,15 @@ class Command {
 			names[ZOOM_IN] = "Zoom In";
 			names[ZOOM_OUT] = "Zoom Out";
 			names[RESET] = "Reset Camera";
-			names[ROTATE_X_MINUS] = "Rotate X-";
-			names[ROTATE_X_PLUS] = "Rotate X+";
-			names[ROTATE_Y_MINUS] = "Rotate Y-";
-			names[ROTATE_Y_PLUS] = "Rotate Y+";
-			names[ROTATE_Z_MINUS] = "Rotate Z-";
-			names[ROTATE_Z_PLUS] = "Rotate Z+";
-			names[SCALE_X_MINUS] = "Scale X-";
-			names[SCALE_X_PLUS] = "Scale X+";
-			names[SCALE_Y_MINUS] = "Scale Y-";
-			names[SCALE_Y_PLUS] = "Scale Y+";
-			names[SCALE_Z_MINUS] = "Scale Z-";
-			names[SCALE_Z_PLUS] = "Scale Z+";
-			names[TRANSLATE_X_MINUS] = "Translate X-";
-			names[TRANSLATE_X_PLUS] = "Translate X+";
-			names[TRANSLATE_Y_MINUS] = "Translate Y-";
-			names[TRANSLATE_Y_PLUS] = "Translate Y+";
-			names[TRANSLATE_Z_MINUS] = "Translate Z-";
-			names[TRANSLATE_Z_PLUS] = "Translate Z+";
+			names[ROTATE_X] = "Rotate X";
+			names[ROTATE_Y] = "Rotate Y";
+			names[ROTATE_Z] = "Rotate Z";
+			names[SCALE_X] = "Scale X";
+			names[SCALE_Y] = "Scale Y";
+			names[SCALE_Z] = "Scale Z";
+			names[TRANSLATE_X] = "Translate X";
+			names[TRANSLATE_Y] = "Translate Y";
+			names[TRANSLATE_Z] = "Translate Z";
 			names[COPY] = "Copy";
 			names[CUT] = "Cut";
 			names[PASTE] = "Paste";

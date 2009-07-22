@@ -23,6 +23,16 @@ Translation::Translation(float x,
 
 
 
+void Translation::add(const Vector &B) {
+	
+	// Add components
+	x += B.x;
+	y += B.y;
+	z += B.z;
+}
+
+
+
 /**
  * Performs the translation.
  */
