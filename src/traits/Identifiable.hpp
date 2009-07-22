@@ -8,9 +8,9 @@
 #ifndef __IDENTIFIABLE_HPP__
 #define __IDENTIFIABLE_HPP__
 #include <iostream>
-#include <map>
-using std::map;
+#include <vector>
 using std::ostream;
+using std::vector;
 
 
 
@@ -26,9 +26,8 @@ class Identifiable {
 	public :
 		
 		Identifiable();
-		static Identifiable* findByID(int id);
-		virtual int getID() const;
-		
+		static Identifiable* findByID(unsigned int id);
+		virtual unsigned int getID() const;
 		friend ostream& operator<<(ostream& stream,
 		                           const Identifiable& item);
 		
@@ -47,10 +46,9 @@ class Identifiable {
 	
 	private :
 		
-		int id;
-		
-		static map<int,Identifiable*> ids;
-		static int count;
+		unsigned int id;
+		static unsigned int count;
+		static vector<Identifiable*> ids;
 };
 
 

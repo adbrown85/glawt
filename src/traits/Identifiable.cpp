@@ -5,8 +5,8 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Identifiable.hpp"
-int Identifiable::count=0;
-map<int,Identifiable*> Identifiable::ids;
+unsigned int Identifiable::count=0;
+vector<Identifiable*> Identifiable::ids;
 
 
 
@@ -16,8 +16,8 @@ map<int,Identifiable*> Identifiable::ids;
  */
 Identifiable::Identifiable() {
 	
-	id = ++count;
-	// ids[id] = this;
+	id = count++;
+	ids.push_back(this);
 }
 
 
@@ -28,14 +28,11 @@ Identifiable::Identifiable() {
  * @return
  *     Pointer to the object.
  */
-Identifiable* Identifiable::findByID(int id) {
-	
-	map<int,Identifiable*>::iterator ii;
+Identifiable* Identifiable::findByID(unsigned int id) {
 	
 	// Find
-	ii = ids.find(id);
-	if (ii != ids.end())
-		return ii->second;
+	if (id < ids.size())
+		return ids[id];
 	else
 		return NULL;
 }
@@ -45,7 +42,7 @@ Identifiable* Identifiable::findByID(int id) {
 /**
  * Returns a unique identifier to the object.
  */
-int Identifiable::getID() const {
+unsigned int Identifiable::getID() const {
 	
 	return id;
 }

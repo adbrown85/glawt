@@ -4,6 +4,7 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <cassert>
 #include <iostream>
 #include "Identifiable.hpp"
 #define NUMBER_OF_ITEMS 4
@@ -13,7 +14,7 @@ using namespace std;
 
 int main() {
 	
-	Identifiable items[NUMBER_OF_ITEMS];
+	Identifiable *identifiable, items[NUMBER_OF_ITEMS];
 	
 	// Start
 	cout << endl;
@@ -22,10 +23,18 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Initialize
-	cout << "Original: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
+	// Check assignment of IDs
+	cout << "Asserting assignment of IDs: " << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		cout << "  " << items[i] << endl;
+		assert(items[i].getID() == i);
+	}
+	
+	// Check find by ID
+	cout << "Asserting find by ID: " << endl;
+	identifiable = Identifiable::findByID(2);
+	cout << "  " << identifiable->getID() << endl;
+	assert(identifiable->getID() == 2);
 	
 	// Finish
 	cout << endl;
