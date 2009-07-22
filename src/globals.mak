@@ -1,5 +1,5 @@
 #
-# make-globals.mak
+# globals.mak
 #     Common variables and rules needed by all the other makefiles.
 # 
 # Author

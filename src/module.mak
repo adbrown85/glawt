@@ -1,5 +1,5 @@
 #
-# make-module.mak
+# module.mak
 #     Common actions and settings in building most modules.
 #     
 #     Automatically pulls in all the source files for a module from 

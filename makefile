@@ -6,11 +6,11 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 GANDER = .
-include $(GANDER)/globals.mak
+include $(GANDER)/src/globals.mak
 
 
 # Phony targets for directing make
 PHONIES = all clean check tests
 .PHONY : $(PHONIES)
 $(PHONIES) :
-	@$(MAKE) --directory ./src $@ --quiet
+	@$(MAKE) --directory ./src $@
