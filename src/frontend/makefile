@@ -14,8 +14,8 @@ include $(GANDER)/src/module.mak
 
 
 # Utilities
-Binding.o : 
-Picker.o : Painter.o Manipulator.hpp
+Binding.o: 
+Picker.o: Painter.o Manipulator.hpp
 
 # Manipulators
 Manipulator.hpp : 
@@ -25,8 +25,14 @@ Translator.o : Manipulator.hpp
 Control.o : Binding.o Manipulator.hpp
 Keyboard.o : Binding.o Control.o
 Menu.o : Control.o
-Mouse.o : Binding.o Control.o Picker.o Translator.o
+
+# Mouse controls
+MouseData.hpp: Manipulator.hpp
+MouseHelper.o: Control.o MouseData.hpp
+MouseClickHelper.o: MouseHelper.o Picker.o
+MouseDragHelper.o: MouseHelper.o Translator.o
+Mouse.o: Control.o MouseClickHelper.o MouseData.hpp MouseDragHelper.o
 
 # Display
-Painter.o : Manipulator.hpp Translator.o
 Display.o : Control.o Manipulator.hpp Painter.o
+Painter.o : Manipulator.hpp Translator.o

@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __MOUSE_HEADER__
-#define __MOUSE_HEADER__
+#ifndef MOUSE_HPP
+#define MOUSE_HPP
 #include <cmath>
 #include <cstdlib>
 #include <GL/glut.h>
@@ -17,12 +17,13 @@
 #include "Command.hpp"
 #include "Control.hpp"
 #include "Delegate.hpp"
-#include "Identifiable.hpp"
 #include "Manipulator.hpp"
-#include "Picker.hpp"
+#include "MouseClickHelper.hpp"
+#include "MouseData.hpp"
+#include "MouseHelper.hpp"
+#include "MouseDragHelper.hpp"
 #include "Scene.hpp"
 #include "Translator.hpp"
-#include "Vector.hpp"
 using std::map;
 using std::multimap;
 using std::pair;
@@ -43,42 +44,30 @@ class Mouse : public Control {
 	
 	public :
 		
-		Mouse(Delegate *delegate) : Control(delegate) {}
-		void dragHandler(int x,
-		                 int y);
-		void clickHandler(int button,
-		                  int action,
-		                  int x,
-		                  int y);
+		Mouse(Delegate *delegate) :
+		      Control(delegate),
+		      clickHelper(delegate),
+		      dragHelper(delegate) {}
 		vector<Manipulator*> install(Scene *scene);
 		
-		static void dragCallback(int x,
-		                         int y);
-		static void clickCallback(int button,
-		                          int action,
-		                          int x,
-		                          int y);
+		static void onClick(int button,
+		                    int action,
+		                    int x,
+		                    int y);
+		static void onDrag(int x,
+		                   int y);
 	
 	
 	private :
 		
-		unsigned int currentItemID, dragCount;
-		Manipulator *currentManipulator;
-		map<char,Binding*> dragBindings;
-		Vector dragAxis, dragDirection, lastCursorPosition;
-		
+		MouseClickHelper clickHelper;
+		MouseData data;
+		MouseDragHelper dragHelper;
 		static Mouse *obj;
 		
-		void dragDecideAxis(const Vector &movement);
-		bool dragUseConstrained();
 		void installBindings();
 		void installCallbacks();
 		void installManipulators();
-		void pickItem(int button,
-		              int x,
-		              int y);
-		void tryBinding(Binding *binding,
-		                int state);
 };
 
 
