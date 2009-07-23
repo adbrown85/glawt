@@ -13,7 +13,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Uniform.hpp"
+#include "Applicable.hpp"
+#include "Node.hpp"
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -25,41 +26,40 @@ using std::vector;
 
 /**
  * @brief
- *     GLSL shader with loading, compiling, and installing capabilities.
+ *     GLSL shader with loading and compiling capabilities.
  * @ingroup graph
  */
-class Shader {
+class Shader : public Node,
+               public Applicable {
 	
 	
 	public :
 		
-		Shader(GLenum type);
+		Shader();
 		~Shader();
-		
-		static void add(Uniform uniform);
 		void compile();
-		string getFilename();
-		static void link();
-		void load(string filename);
+		void load(char type,
+		          string filename);
+		void log() const;
 		void print() const;
-		static void setUniform(string name,
-		                       int type,
-		                       GLfloat value);
-		static void setUniform(const Uniform& uniform);
+		
+		GLuint getName() const {return name;}
+		string getFilename() const {return filename;}
+		char getType() const {return type;}
 	
 	
 	private :
 		
+		char type;
 		const char **source;
-		GLenum type;
 		GLuint name;
-		int count;
-		static GLuint program;
-		static vector<Uniform> uniforms;
+		int length;
 		string filename;
 		vector<string> lines;
 		
-		static void log(GLuint name);
+		void clear();
+		void create();
+		void open();
 };
 
 
