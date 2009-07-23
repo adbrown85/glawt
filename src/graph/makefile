@@ -7,24 +7,27 @@
 #
 MODULE = graph
 CHILDREN = traits data
-FILTER = Shader Uniform
+FILTER = 
 GANDER = ../..
 include $(GANDER)/src/globals.mak
 include $(GANDER)/src/module.mak
 
 
 # Basic node
-Node.o :
+Node.o:
 
-# Shape nodes
-Shape.o : Node.o Translation.o
-Box.o : Shape.o
-Outline.o : Shape.o
+# Drawable nodes
+Shape.o: Node.o Translation.o
+Box.o: Shape.o
+Outline.o: Shape.o
 
-# Transformation nodes
-Transformation.hpp : Node.o
-Translation.o : Transformation.hpp
+# Applicable nodes
+Transformation.hpp: Node.o
+Translation.o: Transformation.hpp
+Shader.o:
+Program.o: Shader.o 
+Uniform.o: Program.o
 
 # Collections of nodes
-Selection.o :
-Scene.o : Node.o Selection.o
+Selection.o:
+Scene.o: Node.o Selection.o

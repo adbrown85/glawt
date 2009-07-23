@@ -27,17 +27,20 @@ OBJECTS = ${patsubst %.cpp,%.o,$(SOURCES)}
 TESTS = ${wildcard *.cxx}
 BINARIES = ${patsubst %.cxx,%,$(TESTS)}
 ARCHIVE = $(libdir)/$(MODULE).a
-CHILDREN_ARCHIVES = ${foreach C,$(CHILDREN),$(libdir)/$(C).a}
+ARCHIVES = ${foreach C,$(CHILDREN),$(libdir)/$(C).a}
 
 
 # Phony targets for directing make
 .PHONY: all check clean tests
 all: $(OBJECTS)
 check: 
-	@echo "  FILTER  = $(FILTER)"
-	@echo "  SOURCES = $(SOURCES)"
-	@echo "  TESTS   = $(TESTS)"
-	@echo "  ARCHIVE = $(ARCHIVE)"
+	@echo "  FILTER   = $(FILTER)"
+	@echo "  SOURCES  = $(SOURCES)"
+	@echo "  OBJECTS  = $(OBJECTS)"
+	@echo "  TESTS    = $(TESTS)"
+	@echo "  BINARIES = $(BINARIES)"
+	@echo "  ARCHIVE  = $(ARCHIVE)"
+	@echo "  ARCHIVES = $(ARCHIVES)"
 clean: 
 	@echo "  Removing $(OBJECTS)"
 	@$(RM) $(OBJECTS) 
@@ -48,15 +51,17 @@ clean:
 tests: $(OBJECTS) $(BINARIES)
 
 
-# Build an object from its source files, copy to archive
-%.o: %.cpp %.hpp $(CHILDREN_ARCHIVES)
+# Build objects from their source files, copy to archive
+$(OBJECTS):
+%.o : %.cpp %.hpp $(addsuffix .a,$(CHILDREN))
 	@echo "  $<"
-	@$(CXX) -c $(CXXFLAGS) ${abspath $<}
+	@$(CXX) -c $(CXXFLAGS) $<
 	@$(AR) -$(ARFLAGS) $(ARCHIVE) $@
 	@ranlib $(ARCHIVE)
 
 
-# Build an executable from a test and its object
-%: %.cxx %.o $(CHILDREN_ARCHIVES)
-	@echo "  $< --> $@"$
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(ARCHIVE) $(CHILDREN_ARCHIVES)
+# Build executables from their tests and objects
+$(BINARIES): 
+%: %.cxx %.o $(addsuffix .a,$(CHILDREN))
+	@echo "  $< --> $@"
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(ARCHIVE) $(ARCHIVES)

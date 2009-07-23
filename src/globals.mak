@@ -22,7 +22,8 @@ ARCHIVES_FULL = ${addprefix $(libdir)/,$(ARCHIVES)}
 
 # Options for archiver, compiler, and linker
 ARFLAGS = cr
-CXXFLAGS = -ggdb ${addprefix -I$(srcdir)/,$(MODULES)}
+DEFINES = GL_GLEXT_PROTOTYPES ILUT_USE_OPENGL
+CXXFLAGS = -ggdb ${addprefix -I$(srcdir)/,$(MODULES)} ${addprefix -D,$(DEFINES)}
 LDFLAGS = -lm -lglut -lIL -lILU -lILUT
 
 
