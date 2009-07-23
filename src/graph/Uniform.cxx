@@ -39,11 +39,11 @@ int main(int argc,
 	glViewport(0, 0, 640, 480);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(30.0, 1.33, 0.1, 100.0);
+	gluPerspective(30.0, 1.33, 1.0, 100.0);
 	
 	// Create objects
 	shader.load('f', "Uniform.glsl");
-	uniform = new Uniform("brightness", 0.2, 'f');
+	uniform = new Uniform("brightness", 0.6, 'f');
 	
 	// Put objects in graph
 	program.addChild(&shader);
@@ -72,7 +72,7 @@ void display(void) {
 	
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT);
-	glTranslatef(0.0, 0.0, -2);
+	glTranslatef(0.0, 0.0, -2.0);
 	
 	// Draw
 	glBegin(GL_QUADS); {
