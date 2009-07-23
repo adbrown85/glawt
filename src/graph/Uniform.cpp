@@ -60,14 +60,15 @@ void Uniform::associate() {
  */
 void Uniform::finalize() {
 	
-	GLint location;
+	GLint programName, location;
 	
 	// Check for no program
 	if (program == NULL)
 		return;
 	
 	// Look up location
-	location = glGetUniformLocation(program->getName(), name.c_str());
+	programName = program->getName();
+	location = glGetUniformLocation(programName, name.c_str());
 	if (location == -1)
 		return;
 	

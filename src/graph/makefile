@@ -26,7 +26,7 @@ Transformation.hpp: Node.o
 Translation.o: Transformation.hpp
 Program.o:
 Shader.o: Program.o 
-Uniform.o: Program.o
+Uniform.o: Shader.o Program.o
 
 # Collections of nodes
 Selection.o:

@@ -42,7 +42,7 @@ int main(int argc,
 	gluPerspective(30.0, 1.33, 0.1, 100.0);
 	
 	// Create objects
-	shader.load('f', "Shader.glsl");
+	shader.load('f', "Uniform.glsl");
 	uniform = new Uniform("brightness", 0.2, 'f');
 	
 	// Put objects in graph

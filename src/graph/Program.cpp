@@ -52,7 +52,9 @@ void Program::finalize() {
 	
 	// Use if successful
 	glGetProgramiv(name, GL_LINK_STATUS, &linked);
-	if (!linked) {
+	if (linked)
+		glUseProgram(name);
+	else {
 		cerr << "Program: Could not link the shader program.";
 		exit(1);
 	}
