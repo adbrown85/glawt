@@ -33,6 +33,30 @@ Shader::~Shader() {
 
 
 /**
+ * Associates the shader with a program.
+ */
+void Shader::associate() {
+	
+	Node *current;
+	Program *program;
+	
+	// Look for parent program
+	current = parent;
+	while (current != NULL) {
+		program = dynamic_cast<Program*>(current);
+		if (program != NULL)
+			break;
+		current = current->parent;
+	}
+	
+	// Attach shader if found
+	if (program != NULL)
+		glAttachShader(program->getName(), name);
+}
+
+
+
+/**
  * Clears out the source and all other attributes.
  */
 void Shader::clear() {
@@ -117,9 +141,12 @@ void Shader::load(char type,
 	this->filename = filename;
 	create();
 	
-	// Load source
+	// Open source and pass to OpenGL
 	open();
 	glShaderSource(name, length, source, NULL);
+	
+	// Compile
+	compile();
 }
 
 

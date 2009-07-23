@@ -21,7 +21,6 @@ int main(int argc,
 	
 	Program program;
 	Shader shader;
-	string filename="Uniform.glsl";
 	Uniform *uniform;
 	
 	// Start
@@ -42,17 +41,24 @@ int main(int argc,
 	glLoadIdentity();
 	gluPerspective(30.0, 1.33, 0.1, 100.0);
 	
-	// Install program
-	shader.load('f', filename);
-	program.add(&shader);
-	program.install();
+	// Create objects
+	shader.load('f', "Shader.glsl");
+	uniform = new Uniform("brightness", 0.2, 'f');
 	
-	// Add uniforms
-	uniform = new Uniform("brightness", 0.4f);
-	uniform->install(program);
-	delete uniform;
+	// Put objects in graph
+	program.addChild(&shader);
+	shader.addChild(uniform);
+	
+	// Associate and finalize graph
+	program.associate();
+	shader.associate();
+	uniform->associate();
+	program.finalize();
+	shader.finalize();
+	uniform->finalize();
 	
 	// Start display
+	program.apply();
 	glutDisplayFunc(display);
 	glutMainLoop();
 }

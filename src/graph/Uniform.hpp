@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include "Node.hpp"
 #include "Program.hpp"
 using std::ostream;
 using std::string;
@@ -21,26 +22,30 @@ using std::string;
  *     Container for GLSL uniform variables.
  * @ingroup graph
  */
-class Uniform {
+class Uniform : public Node {
 	
 	
 	public :
 		
-		GLfloat value;
-		char type;
-		string name;
-		
-		Uniform(string name,
-		        GLfloat value);
-		Uniform(string name,
-		        GLint value);
 		Uniform(string name,
 		        GLfloat value,
 		        char type);
-		void install(const Program &program);
+		void associate();
+		void finalize();
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Uniform &uniform);
+	
+	
+	private :
+		
+		char type;
+		GLfloat value;
+		Program *program;
+		string name;
+		
+		Uniform();
+		void install();
 };
 
 

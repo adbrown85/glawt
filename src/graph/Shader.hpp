@@ -13,8 +13,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Applicable.hpp"
 #include "Node.hpp"
+#include "Program.hpp"
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -29,15 +29,16 @@ using std::vector;
  *     GLSL shader with loading and compiling capabilities.
  * @ingroup graph
  */
-class Shader : public Node,
-               public Applicable {
+class Shader : public Node {
 	
 	
 	public :
 		
 		Shader();
 		~Shader();
+		void associate();
 		void compile();
+		void finalize() {}
 		void load(char type,
 		          string filename);
 		void log() const;

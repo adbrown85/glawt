@@ -10,29 +10,31 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-#include "Shader.hpp"
+#include "Applicable.hpp"
+#include "Node.hpp"
+using std::cerr;
+using std::endl;
 using std::vector;
 
 
 
-class Program {
+class Program : public Node,
+                public Applicable {
 	
 	
 	public :
 		
 		Program();
-		void add(Shader *shader);
+		void apply();
+		void associate();
+		void finalize();
 		GLuint getName() const {return name;}
-		void install();
+		void remove();
 	
 	
 	private:
 		
 		GLuint name;
-		vector<Shader*> shaders;
-		
-		void compile();
-		void link();
 };
 
 

@@ -10,44 +10,6 @@
 
 
 /**
- * Initializes a new uniform variable with a float value.
- * 
- * @param name
- *     Name of the uniform variable.
- * @param value
- *     Float value to be stored.
- */
-Uniform::Uniform(string name,
-                 GLfloat value) {
-	
-	// Initialize
-	this->name = name;
-	this->value = value;
-	type = 'f';
-}
-
-
-
-/**
- * Initializes a new uniform variable with an integer value.
- * 
- * @param name
- *     Name of the uniform variable.
- * @param value
- *     Integer value to be stored.
- */
-Uniform::Uniform(string name,
-                 GLint value) {
-	
-	// Initialize
-	this->name = name;
-	this->value = value;
-	type = 'i';
-}
-
-
-
-/**
  * Initializes a new uniform variable with a value and type.
  * 
  * @param name
@@ -62,40 +24,55 @@ Uniform::Uniform(string name,
                  char type) {
 	
 	// Initialize
+	this->program = NULL;
 	this->name = name;
 	this->value = value;
-	switch (tolower(type)) {
-		case 'f':
-			type = 'f';
+	this->type = tolower(type);
+	
+	// Verify
+	if (this->type != 'f' && this->type != 'i')
+		throw "Uniform: Type not supported.";
+}
+
+
+
+/**
+ * Finds a Program node that is an ancestor of this node.
+ */
+void Uniform::associate() {
+	
+	Node *current;
+	
+	// Look for a Program ancestor
+	current = parent;
+	while (current != NULL) {
+		program = dynamic_cast<Program*>(current);
+		if (program != NULL)
 			break;
-		case 'i':
-			type = 'i';
-			break;
-		default:
-			throw "Uniform: Type not supported.";
+		current = current->parent;
 	}
 }
 
 
 
 /**
- * Installs the variable into a shader program.
- * 
- * @param program
- *     Reference to a Program object.
+ * Installs the variable into the program.
  */
-void Uniform::install(const Program& program) {
+void Uniform::finalize() {
 	
 	GLint location;
 	
+	// Check for no program
+	if (program == NULL)
+		return;
+	
 	// Look up location
-	location = glGetUniformLocation(program.getName(), 
-	                                name.c_str());
+	location = glGetUniformLocation(program->getName(), name.c_str());
 	if (location == -1)
 		return;
 	
 	// Set value
-	switch (type) {
+	switch (tolower(type)) {
 		case 'f' :
 			glUniform1f(location, value);
 			break;
@@ -104,7 +81,6 @@ void Uniform::install(const Program& program) {
 			break;
 	}
 }
-
 
 
 ostream& operator<<(ostream& stream,

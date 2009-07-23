@@ -9,7 +9,7 @@
 
 
 /**
- * Creates a new shader program.
+ * Initializes the program's attributes.
  */
 Program::Program() {
 	
@@ -20,52 +20,30 @@ Program::Program() {
 
 
 /**
- * Adds a shader to the program.
- * 
- * @param shader
- *     Pointer to a %Shader object.
+ * Installs the program into the current context.
  */
-void Program::add(Shader *shader) {
+void Program::apply() {
 	
-	// Add
-	shaders.push_back(shader);
+	glUseProgram(name);
 }
 
 
 
 /**
- * Compiles all the shaders in the program.
+ * Creates the program so other nodes can use it.
  */
-void Program::compile() {
+void Program::associate() {
 	
-	// Compile each shader
-	for (int i=0; i<shaders.size(); ++i) {
-		shaders[i]->compile();
-		glAttachShader(name, shaders[i]->getName());
-	}
-}
-
-
-
-/**
- * Compiles and links the program.
- */
-void Program::install() {
-	
-	// Create the program
+	// Create program
 	name = glCreateProgram();
-	
-	// Compile and link
-	compile();
-	link();
 }
 
 
 
 /**
- * Links and uses the program.
+ * Links the program once other nodes have associated with it.
  */
-void Program::link() {
+void Program::finalize() {
 	
 	GLint linked=0;
 	
@@ -74,11 +52,19 @@ void Program::link() {
 	
 	// Use if successful
 	glGetProgramiv(name, GL_LINK_STATUS, &linked);
-	if (linked)
-		glUseProgram(name);
-	else {
+	if (!linked) {
 		cerr << "Program: Could not link the shader program.";
 		exit(1);
 	}
 }
 
+
+
+/**
+ * Stops using the program.
+ */
+void Program::remove() {
+	
+	// Restore fixed functionality
+	glUseProgram(0);
+}
