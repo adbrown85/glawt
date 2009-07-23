@@ -62,7 +62,9 @@ void display(void) {
 	
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT);
-	glTranslatef(0.0, 0.0, -2.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0.0, 0.0, -4.0);
 	
 	// Draw
 	glBegin(GL_QUADS); {
