@@ -10,117 +10,118 @@
 
 
 /**
- * Initializes a new Uniform variable with a float value.
+ * Initializes a new uniform variable with a float value.
  * 
  * @param name
  *     Name of the uniform variable.
  * @param value
- *     Value to be stored.
+ *     Float value to be stored.
  */
-Uniform::Uniform(string name, GLfloat value) {
+Uniform::Uniform(string name,
+                 GLfloat value) {
 	
 	// Initialize
 	this->name = name;
 	this->value = value;
-	type = UNIFORM_FLOAT;
+	type = 'f';
 }
 
 
 
 /**
- * Initializes a new Uniform variable with an integer value.
+ * Initializes a new uniform variable with an integer value.
  * 
  * @param name
  *     Name of the uniform variable.
  * @param value
- *     Value to be stored.
+ *     Integer value to be stored.
  */
-Uniform::Uniform(string name, GLint value) {
+Uniform::Uniform(string name,
+                 GLint value) {
 	
 	// Initialize
 	this->name = name;
 	this->value = value;
-	type = UNIFORM_INT;
+	type = 'i';
 }
 
 
 
 /**
- * Initializes a new Uniform variable with a float value.
+ * Initializes a new uniform variable with a value and type.
  * 
  * @param name
- *     Name of the uniform variable.
+ *     Name of the variable.
+ * @param value
+ *     Value to be stored.
  * @param type
- *     Type of the uniform variable.  Should be "int" or "float".
- * @param value
- *     Value to be stored.
+ *     Type of the variable.  Should be 'i' for int or 'f' for float.
  */
-Uniform::Uniform(string name, string type, GLfloat value) {
+Uniform::Uniform(string name,
+                 GLfloat value,
+                 char type) {
 	
 	// Initialize
 	this->name = name;
 	this->value = value;
-	if (type.compare("float") == 0 || type.compare("GLfloat") == 0)
-		type = UNIFORM_FLOAT;
-	else if (type.compare("int") == 0 || type.compare("GLint") == 0)
-		type = UNIFORM_INT;
+	switch (tolower(type)) {
+		case 'f':
+			type = 'f';
+			break;
+		case 'i':
+			type = 'i';
+			break;
+		default:
+			throw "Uniform: Type not supported.";
+	}
 }
 
 
 
 /**
- * Prints the uniform's attributes to a stream.
+ * Installs the variable into a shader program.
  * 
- * @param stream
- *     Output stream.
- * @param uniform
- *     Uniform variable.
+ * @param program
+ *     Reference to a Program object.
  */
-ostream& operator<<(ostream& stream, const Uniform &uniform) {
+void Uniform::install(const Program& program) {
 	
-	string type;
+	GLint location;
 	
-	// Format
-	type = uniform.type == UNIFORM_FLOAT ? "f" : "i";
+	// Look up location
+	location = glGetUniformLocation(program.getName(), 
+	                                name.c_str());
+	if (location == -1)
+		return;
+	
+	// Set value
+	switch (type) {
+		case 'f' :
+			glUniform1f(location, value);
+			break;
+		case 'i' :
+			glUniform1i(location, static_cast<int>(value));
+			break;
+	}
+}
+
+
+
+ostream& operator<<(ostream& stream,
+                    const Uniform &uniform) {
+	
+	using namespace std;
 	
 	// Print
-	stream << "["
-	       << uniform.name << ", "
-	       << type << ", ";
-	if (uniform.type == UNIFORM_FLOAT)
-		stream << std::fixed << std::setprecision(2);
-	stream << uniform.value << "]";
+	stream << uniform.name << ", "
+	       << uniform.type << ", ";
+	if (uniform.type == 'f')
+		stream << fixed << setprecision(2);
+	stream << uniform.value;
+	
+	// Finish
+	stream << resetiosflags(ios_base::floatfield)
+	       << setprecision(6);
 	return stream;
 }
 
-
-
-/**
- * Simple test program.
- */
-/*
-int main(int argc, char **argv) {
-	
-	using namespace std;
-	Uniform u1("u1", 1), u2("u2", 1.0f);
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Uniform" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	cout << u1 << endl;
-	cout << u2 << endl;
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Uniform" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
-}
-*/
