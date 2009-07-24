@@ -7,6 +7,7 @@
  */
 #include "Display.hpp"
 Scene *Display::scene=NULL;
+Delegate *Display::delegate=NULL;
 vector<Control*> Display::controls;
 vector<Manipulator*> Display::manipulators;
 
@@ -63,18 +64,19 @@ void Display::overlay() {
  * @param scene
  *     Pointer to a Scene with items.  Needs to be constructed first.
  */
-void Display::start(std::string title, Scene *scene) {
+void Display::start(std::string title,
+                    Scene *scene,
+                    Delegate *delegate) {
 	
 	char **argv;
-	int argc=0, width, height, x=DISPLAY_DEFAULT_X, y=DISPLAY_DEFAULT_Y;
+	int argc=0, width, height, x=100, y=100;
 	vector<Manipulator*> manipulators;
 	
 	// Copy
-	if (scene == NULL)
-		std::cerr << "Warning: scene is NULL!" << std::endl;
 	height = scene->getHeight();
 	width = scene->getWidth();
 	Display::scene = scene;
+	Display::delegate = delegate;
 	
 	// Initialize window
 	glutInit(&argc, argv);
@@ -90,6 +92,10 @@ void Display::start(std::string title, Scene *scene) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 1000.0);
+	
+	// Open and prepare scene
+	delegate->run(Command::OPEN, scene->getFilename());
+	scene->prepare();
 	
 	// Register functions
 	glutDisplayFunc(Display::display);

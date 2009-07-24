@@ -82,12 +82,63 @@ void Producer::open(Scene *scene,
 				currentNode = openShape(*ti, currentNode);
 			else if (ti->name.compare("translate") == 0)
 				currentNode = openTranslation(*ti, currentNode);
+			else if (ti->name.compare("program") == 0)
+				currentNode = openProgram(*ti, currentNode);
+			else if (ti->name.compare("shader") == 0)
+				currentNode = openShader(*ti, currentNode);
 		}
 	}
 	catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
 	}
+}
+
+
+
+Node* Producer::openProgram(Tag &tag,
+                            Node *currentNode) {
+	
+	Program *program;
+	
+	// Ignore closing tags
+	if (tag.closing)
+		return currentNode->getParent();
+	
+	// Create program and add to scene
+	program = new Program();
+	currentNode->addChild(program);
+	return program;
+}
+
+
+
+Node* Producer::openShader(Tag &tag,
+                           Node *currentNode) {
+	
+	map<string,string>::iterator ai;
+	Shader *shader;
+	string filename, type;
+	
+	// Get type
+	ai = tag.attributes.find("type");
+	if (ai != tag.attributes.end())
+		type = ai->second;
+	else
+		throw "Shader does not have type.";
+	
+	// Get filename
+	ai = tag.attributes.find("filename");
+	if (ai != tag.attributes.end())
+		filename = ai->second;
+	else
+		throw "Shader does not have filename.";
+	
+	// Create
+	shader = new Shader();
+	shader->load(type[0], filename);
+	currentNode->addChild(shader);
+	return currentNode;
 }
 
 
@@ -136,7 +187,7 @@ Node* Producer::openTranslation(Tag &tag,
 	
 	// Ignore closing tags
 	if (tag.closing)
-		return currentNode->parent;
+		return currentNode->getParent();
 	
 	// Get x
 	ai = tag.attributes.find("x");

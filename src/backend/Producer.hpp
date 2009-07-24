@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __PRODUCER_HPP__
-#define __PRODUCER_HPP__
+#ifndef PRODUCER_HPP
+#define PRODUCER_HPP
 #include <cstdlib>
 #include <iostream>
 #include <map>
@@ -18,7 +18,9 @@
 #include "Delegate.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"
+#include "Program.hpp"
 #include "Scene.hpp"
+#include "Shader.hpp"
 #include "Shape.hpp"
 #include "Tag.hpp"
 #include "Translation.hpp"
@@ -58,6 +60,10 @@ class Producer : public Delegate {
 	
 	private :
 		
+		static Node* openProgram(Tag &tag,
+		                         Node *currentNode);
+		static Node* openShader(Tag &tag,
+		                        Node *currentNode);
 		static Node* openShape(Tag &tag,
 		                       Node *currentNode);
 		static Node* openTranslation(Tag &tag,

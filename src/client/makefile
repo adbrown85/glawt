@@ -22,4 +22,4 @@ all: gander
 # Executables
 gander: Client.o ${addsuffix .a,$(CHILDREN)}
 	@echo "  $(bindir)/$@"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(bindir)/$@ $< $(CHILDREN_ARCHIVES)
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(bindir)/$@ $^

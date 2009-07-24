@@ -42,16 +42,14 @@ void Client::start() {
 	Menu menu(&interpreter);
 	Mouse mouse(&interpreter);
 	
-	// Open scene
-	interpreter.run(Command::OPEN, filename);
-	
 	// Install controls
 	Display::install(&keyboard);
 	Display::install(&menu);
 	Display::install(&mouse);
 	
 	// Start display
-	Display::start("Gander", &scene);
+	scene.setFilename(filename);
+	Display::start("Gander", &scene, &interpreter);
 }
 
 

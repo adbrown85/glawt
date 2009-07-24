@@ -4,16 +4,16 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __DISPLAY_HPP__
-#define __DISPLAY_HPP__
-#define DISPLAY_DEFAULT_X 100
-#define DISPLAY_DEFAULT_Y 100
+#ifndef DISPLAY_HPP
+#define DISPLAY_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
+#include "Delegate.hpp"            // Open the scene
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
@@ -35,12 +35,14 @@ class Display {
 		static void display(void);
 		static void install(Control *control);
 		static void start(string title,
-		                  Scene *scene);
+		                  Scene *scene,
+		                  Delegate *delegate);
 	
 	
 	private :
 		
 		static Scene *scene;
+		static Delegate *delegate;
 		static vector<Control*> controls;
 		static vector<Manipulator*> manipulators;
 		

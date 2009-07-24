@@ -1,4 +1,7 @@
-uniform sampler2D unit0, unit1;
+/*
+ * outline.glsl
+ *     Colors the edges of an object yellow.
+ */
 
 
 void main() {
@@ -9,11 +12,11 @@ void main() {
 	int count = 0;
 	
 	/* Determine if near edge */
-	if (s < 0.1 || s > 0.9)
+	if (s < 0.05 || s > 0.95)
 		count++;
-	if (t < 0.1 || t > 0.9)
+	if (t < 0.05 || t > 0.95)
 		count++;
-	if (p < 0.1 || p > 0.9)
+	if (p < 0.05 || p > 0.95)
 		count++;
 	
 	/* Use different color if near edge */

@@ -23,10 +23,10 @@ Outline.o: Shape.o
 
 # Applicable nodes
 Transformation.hpp: Node.o
-Translation.o: Transformation.hpp
-Program.o:
-Shader.o: Program.o 
-Uniform.o: Shader.o Program.o
+Translation.o: Node.o Transformation.hpp
+Program.o: Node.o
+Shader.o: Node.o Program.o 
+Uniform.o: Node.o Program.o Shader.o
 
 # Collections of nodes
 Selection.o:

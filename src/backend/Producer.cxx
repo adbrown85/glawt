@@ -16,8 +16,8 @@ using namespace std;
  */
 int main(int argc, char *argv[]) {
 	
-	Scene scene;
 	Producer producer;
+	Scene scene;
 	
 	// Start
 	cout << endl;
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	producer.open(&scene, Command::OPEN, "../../input/scene.xml");
+	producer.open(&scene, Command::OPEN, "Producer.xml");
 	scene.print();
 	
 	// Finish

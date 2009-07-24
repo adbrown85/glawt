@@ -47,7 +47,6 @@ void MouseHelper::initialize(MouseData *data) {
 vector<Manipulator*> MouseHelper::install(Scene *scene) {
 	
 	this->scene = scene;
-	print();
 	return manipulators;
 }
 
