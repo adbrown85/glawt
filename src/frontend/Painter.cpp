@@ -15,7 +15,7 @@ Outline Painter::outline(1.0);
  * @param scene
  *     Collection of items and camera information.
  * @param manipulators
- *     User interface widgets used to manipulate selected items.
+ *     UI elements used to manipulate selected items.
  */
 void Painter::paint(Scene &scene,
                     vector<Manipulator*> &manipulators,
@@ -37,63 +37,8 @@ void Painter::paint(Scene &scene,
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	paintNode(&scene.rootNode, manipulators, renderMode);
-}
-
-
-
-/**
- * Recursively paints a node.  Automatically takes care of performing 
- * different actions depending on what type of interfaces the node supports.
- * 
- * @param node
- *     Pointer to the Node to paint.  Generally should be a scene's root node.
- * @param manipulators
- *     User interface widgets used to manipulate selected items.
- */
-void Painter::paintNode(Node *node,
-                        vector<Manipulator*> &manipulators,
-                        GLenum renderMode) {
-	
-	Applicable *applicable;
-	Drawable *drawable;
-	Selectable *selectable;
-	vector<Manipulator*>::iterator mi;
-	
-	// Node is drawable
-	if (drawable = dynamic_cast<Drawable*>(node)) {
-		if (drawable->isVisible()) {
-			if (renderMode == GL_SELECT)
-				glPushName(drawable->getID());
-			drawable->draw();
-			if (selectable = dynamic_cast<Selectable*>(node)) {
-				if (selectable->isSelected()) {
-					outline.copySizeOf(*selectable);
-					outline.draw();
-					for (mi=manipulators.begin(); 
-					     mi!=manipulators.end();
-					     ++mi) {
-						if (renderMode == GL_SELECT)
-							glPushName((*mi)->getID());
-						(*mi)->copySizeOf(*selectable);
-						(*mi)->draw();
-					}
-				}
-				paintChildren(node, manipulators, renderMode);
-			}
-		}
-	}
-	
-	// Node is applicable
-	else if (applicable = dynamic_cast<Applicable*>(node)) {
-		applicable->apply();
-		paintChildren(node, manipulators, renderMode);
-		applicable->remove();
-	}
-	
-	// Node
-	else
-		paintChildren(node, manipulators, renderMode);
+	paintNode(&scene.rootNode, renderMode);
+	paintNodeUI(&scene.rootNode, renderMode, manipulators);
 }
 
 
@@ -102,23 +47,142 @@ void Painter::paintNode(Node *node,
  * Recursively paints the children of a node.
  * 
  * This functionality is implemented as a separate function, as opposed to 
- * incorporating it directly into <i>paint</i>, because some nodes, mainly 
- * those that implement <i>%Applicable</i>, need to do something, have their 
- * children painted, and then do something else.
+ * incorporating it directly into <i>paint</i>, because some nodes need to 
+ * paint their children at different times.
  * 
  * @param node
- *     Parent node to paint children for.
- * @param manipulators
- *     User interface widgets used to manipulate selected items.
+ *     Pointer to the parent node.
+ * @param renderMode
+ *     If GL_SELECT, will push IDs of items into pick buffer.
  */
 void Painter::paintChildren(Node *node,
-                            vector<Manipulator*> &manipulators,
                             GLenum renderMode) {
 	
 	int numberOfChildren;
+	vector<Node*> children;
 	
 	// Paint each child
-	numberOfChildren = node->children.size();
+	children = node->getChildren();
+	numberOfChildren = children.size();
 	for (int i=0; i<numberOfChildren; ++i)
-		paintNode(node->children[i], manipulators, renderMode);
+		paintNode(children[i], renderMode);
+}
+
+
+
+/**
+ * Recursively paints the children of a node for UI elements.
+ * 
+ * This functionality is implemented as a separate function, as opposed to 
+ * incorporating it directly into <i>paint</i>, because some nodes need to 
+ * paint their children at different times.
+ * 
+ * @param node
+ *     Pointer to the parent node.
+ * @param renderMode
+ *     If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators
+ *     UI elements used to manipulate selected items.
+ */
+void Painter::paintChildrenUI(Node *node,
+                              GLenum renderMode,
+                              vector<Manipulator*> &manipulators) {
+	
+	int numberOfChildren;
+	vector<Node*> children;
+	
+	// Paint each child
+	children = node->getChildren();
+	numberOfChildren = children.size();
+	for (int i=0; i<numberOfChildren; ++i)
+		paintNodeUI(children[i], renderMode, manipulators);
+}
+
+
+
+/**
+ * Recursively paints a node.
+ * 
+ * Automatically takes care of performing different actions depending on what 
+ * type of interfaces the node supports.
+ * 
+ * @param node
+ *     Pointer to the Node to paint.
+ * @param renderMode
+ *     If GL_SELECT, will push IDs of items into pick buffer.
+ */
+void Painter::paintNode(Node *node,
+                        GLenum renderMode) {
+	
+	Applicable *applicable;
+	Drawable *drawable;
+	
+	// Node is drawable
+	if (drawable = dynamic_cast<Drawable*>(node)) {
+		if (drawable->isVisible()) {
+			if (renderMode == GL_SELECT)
+				glPushName(drawable->getID());
+			drawable->draw();
+			paintChildren(node, renderMode);
+		}
+	}
+	
+	// Node is applicable
+	else if (applicable = dynamic_cast<Applicable*>(node)) {
+		applicable->apply();
+		paintChildren(node, renderMode);
+		applicable->remove();
+	}
+	
+	// Node
+	else
+		paintChildren(node, renderMode);
+}
+
+
+
+
+/**
+ * Recursively paints a node for UI elements.
+ * 
+ * @param node
+ *     Pointer to the Node to paint.
+ * @param renderMode
+ *     If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators
+ *     UI elements used to manipulate selected items.
+ */
+void Painter::paintNodeUI(Node *node,
+                          GLenum renderMode,
+                          vector<Manipulator*> &manipulators) {
+	
+	Selectable *selectable;
+	Transformation *transformation;
+	vector<Manipulator*>::iterator mi;
+	
+	// Node is selectable
+	if (selectable = dynamic_cast<Selectable*>(node)) {
+		if (selectable->isSelected()) {
+			outline.copySizeOf(*selectable);
+			outline.draw();
+			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
+				if (renderMode == GL_SELECT)
+					glPushName((*mi)->getID());
+				(*mi)->copySizeOf(*selectable);
+				(*mi)->draw();
+			}
+		}
+		paintChildrenUI(node, renderMode, manipulators);
+	}
+	
+	// Node is transformation
+	else if (transformation = dynamic_cast<Transformation*>(node)) {
+		transformation->apply();
+		paintChildrenUI(node, renderMode, manipulators);
+		transformation->remove();
+	}
+	
+	// Other
+	else
+		paintChildrenUI(node, renderMode, manipulators);
 }

@@ -10,15 +10,16 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-#include "Applicable.hpp"          // Cast to see if item should be applied
-#include "Drawable.hpp"            // Cast to see if item should be drawn
-#include "Manipulator.hpp"         // Draw for selected items
-#include "Matrix.hpp"              // Rotating the camera
+#include "Applicable.hpp"          // Apply modifications to scene
+#include "Drawable.hpp"            // Drawing items in scene
+#include "Manipulator.hpp"         // Drawing manipulators for selection
+#include "Matrix.hpp"              // Rotating camera
 #include "Node.hpp"                // Traversing the scene graph
 #include "Outline.hpp"             // Outline selected items
-#include "Selectable.hpp"          // Cast to see if item could be in selection
-#include "Scene.hpp"               // Moving camera and accessing root node
-using std::vector;
+#include "Selectable.hpp"          // Drawing manipulators for selection
+#include "Transformation.hpp"      // Drawing manipulators for selection
+#include "Scene.hpp"               // Rotating camera and accessing root node
+using namespace std;
 
 
 
@@ -41,12 +42,16 @@ class Painter {
 		
 		static Outline outline;
 		
-		static void paintNode(Node *node,
-		                      vector<Manipulator*> &manipulators,
-		                      GLenum renderMode);
 		static void paintChildren(Node *node,
-		                          vector<Manipulator*> &manipulators,
 		                          GLenum renderMode);
+		static void paintChildrenUI(Node *node,
+		                            GLenum renderMode,
+		                            vector<Manipulator*> &manipulators);
+		static void paintNode(Node *node,
+		                      GLenum renderMode);
+		static void paintNodeUI(Node *node,
+		                        GLenum renderMode,
+		                        vector<Manipulator*> &manipulators);
 };
 
 
