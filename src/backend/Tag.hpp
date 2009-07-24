@@ -4,14 +4,13 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef _TAG_HPP_
-#define _TAG_HPP_
+#ifndef TAG_HPP
+#define TAG_HPP
+#include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
-using std::map;
-using std::ostream;
-using std::string;
+using namespace std;
 
 
 
@@ -29,21 +28,19 @@ class Tag {
 		map<string,string> attributes;
 		string name;
 		
-		Tag() {
-			closing = false;
-		}
+		Tag();
+		void error(string key) const;
+		void get(const string &key,
+		         char &value) const;
+		void get(const string &key,
+		         float &value) const;
+		void get(const string &key,
+		         int &value) const;
+		void get(const string &key,
+		         string &value) const;
 		
-		friend ostream& operator<<(ostream &stream, const Tag &tag) {
-			
-			map<string,string>::const_iterator ai;
-			
-			stream << tag.name;
-			for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai)
-				stream << " [" << ai->first
-				       << "," << ai->second 
-					   << "]";
-			return stream;
-		}
+		friend ostream& operator<<(ostream &stream,
+		                           const Tag &tag);
 };
 
 #endif

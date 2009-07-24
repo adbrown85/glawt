@@ -13,23 +13,13 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include "Box.hpp"
 #include "Command.hpp"
 #include "Delegate.hpp"
-#include "Node.hpp"
+#include "Factory.hpp"
 #include "Parser.hpp"
-#include "Program.hpp"
 #include "Scene.hpp"
-#include "Shader.hpp"
-#include "Shape.hpp"
 #include "Tag.hpp"
-#include "Translation.hpp"
-using std::cerr;
-using std::endl;
-using std::map;
-using std::stack;
-using std::string;
-using std::vector;
+using namespace std;
 
 
 
@@ -56,18 +46,6 @@ class Producer : public Delegate {
 		static void paste(Scene *scene, int command);
 		static void quit(Scene *scene, int command);
 		static void save(Scene *scene, int command);
-	
-	
-	private :
-		
-		static Node* openProgram(Tag &tag,
-		                         Node *currentNode);
-		static Node* openShader(Tag &tag,
-		                        Node *currentNode);
-		static Node* openShape(Tag &tag,
-		                       Node *currentNode);
-		static Node* openTranslation(Tag &tag,
-		                             Node *currentNode);
 };
 
 

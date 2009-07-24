@@ -1,15 +1,19 @@
-<!-- <texture> </texture>-->
-<texture type="2D" file="crate.jpg">
-	<program>
-		<shader type="fragment" filename="glsl/outline.glsl" />
+<!-- scene.xml -->
+
+
+<program>
+	<shader type="fragment" filename="glsl/halfmoon-vars.glsl" />
+	<uniform type="float" name="brightness" value="0.75">
 		<translate x="5.0" y="0.0" z="0.0">
 			<shape type="Box" size="2.0" />
 		</translate>
-	</program>
-	<program>
-		<shader type="fragment" filename="glsl/halfmoon.glsl" />
+	</uniform>
+</program>
+<program>
+	<shader type="fragment" filename="glsl/halfmoon-vars.glsl" />
+	<uniform type="float" name="brightness" value="0.25">
 		<translate x="-5.0" y="0.0" z="-1.0">
 			<shape type="Box" size="4.0" />
 		</translate>
-	</program>
-</texture>
+	</uniform>
+</program>

@@ -85,14 +85,23 @@ void Uniform::finalize() {
 }
 
 
+
+void Uniform::print() const {
+	
+	cout << "  " << *this << endl;
+}
+
+
+
 ostream& operator<<(ostream& stream,
                     const Uniform &uniform) {
 	
 	using namespace std;
 	
 	// Print
-	stream << uniform.name << ", "
-	       << uniform.type << ", ";
+	stream << static_cast<Node>(uniform) << " "
+	       << "nam=" << uniform.name << ", "
+	       << "typ=" << uniform.type << ", ";
 	if (uniform.type == 'f')
 		stream << fixed << setprecision(2);
 	stream << uniform.value;

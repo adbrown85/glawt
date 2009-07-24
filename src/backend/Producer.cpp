@@ -66,154 +66,21 @@ void Producer::open(Scene *scene,
                     int command,
                     string filename) {
 	
-	Node *currentNode;
+	Factory factory(scene);
 	Parser parser;
-	vector<Tag>::iterator ti;
 	
 	// Parse file into tags
-	std::cout << "Opening " << filename << endl;
+	cout << "Producer: Opening '" << filename << "'..." << endl;
 	parser.open(filename);
 	
 	// Process tags
-	currentNode = &scene->rootNode;
 	try {
-		for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
-			if (ti->name.compare("shape") == 0)
-				currentNode = openShape(*ti, currentNode);
-			else if (ti->name.compare("translate") == 0)
-				currentNode = openTranslation(*ti, currentNode);
-			else if (ti->name.compare("program") == 0)
-				currentNode = openProgram(*ti, currentNode);
-			else if (ti->name.compare("shader") == 0)
-				currentNode = openShader(*ti, currentNode);
-		}
+		factory.process(parser.tags);
 	}
 	catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
 	}
-}
-
-
-
-Node* Producer::openProgram(Tag &tag,
-                            Node *currentNode) {
-	
-	Program *program;
-	
-	// Ignore closing tags
-	if (tag.closing)
-		return currentNode->getParent();
-	
-	// Create program and add to scene
-	program = new Program();
-	currentNode->addChild(program);
-	return program;
-}
-
-
-
-Node* Producer::openShader(Tag &tag,
-                           Node *currentNode) {
-	
-	map<string,string>::iterator ai;
-	Shader *shader;
-	string filename, type;
-	
-	// Get type
-	ai = tag.attributes.find("type");
-	if (ai != tag.attributes.end())
-		type = ai->second;
-	else
-		throw "Shader does not have type.";
-	
-	// Get filename
-	ai = tag.attributes.find("filename");
-	if (ai != tag.attributes.end())
-		filename = ai->second;
-	else
-		throw "Shader does not have filename.";
-	
-	// Create
-	shader = new Shader();
-	shader->load(type[0], filename);
-	currentNode->addChild(shader);
-	return currentNode;
-}
-
-
-
-Node* Producer::openShape(Tag &tag,
-                          Node *currentNode) {
-	
-	float size;
-	Shape *shape;
-	map<string,string>::iterator ai;
-	string type;
-	
-	// Get size attribute
-	ai = tag.attributes.find("size");
-	if (ai != tag.attributes.end())
-		size = atof(ai->second.c_str());
-	else
-		throw "Shape does not have size.";
-	
-	// Get type attribute
-	ai = tag.attributes.find("type");
-	if (ai != tag.attributes.end())
-		type = ai->second;
-	else
-		throw "Shape does not have type.";
-	
-	// Make shape
-	if (type.compare("Box") == 0)
-		shape = new Box(size);
-	else
-		throw "Shape type not supported.";
-	
-	// Add to scene
-	currentNode->addChild(shape);
-	return currentNode;
-}
-
-
-
-Node* Producer::openTranslation(Tag &tag,
-                                Node *currentNode) {
-	
-	float x, y, z;
-	map<string,string>::iterator ai;
-	Translation *translation;
-	
-	// Ignore closing tags
-	if (tag.closing)
-		return currentNode->getParent();
-	
-	// Get x
-	ai = tag.attributes.find("x");
-	if (ai != tag.attributes.end())
-		x = atof(ai->second.c_str());
-	else
-		throw "Translate does not have x coordinate.";
-	
-	// Get y
-	ai = tag.attributes.find("y");
-	if (ai != tag.attributes.end())
-		y = atof(ai->second.c_str());
-	else
-		throw "Translate does not have y coordinate.";
-	
-	// Get z
-	ai = tag.attributes.find("z");
-	if (ai != tag.attributes.end())
-		z = atof(ai->second.c_str());
-	else
-		throw "Translate does not have z coordinate.";
-	
-	// Set position
-	translation = new Translation(x, y, z);
-	currentNode->addChild(translation);
-	return translation;
 }
 
 

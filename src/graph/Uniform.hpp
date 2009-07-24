@@ -32,6 +32,7 @@ class Uniform : public Node {
 		        char type);
 		void associate();
 		void finalize();
+		void print() const;
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Uniform &uniform);
