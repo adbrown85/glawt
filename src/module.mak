@@ -31,8 +31,8 @@ ARCHIVES = ${foreach C,$(CHILDREN),$(libdir)/$(C).a}
 
 
 # Phony targets for directing make
-.PHONY: all check clean tests
-all: $(OBJECTS)
+.PHONY: all check clean mostlyclean tests
+all: $(OBJECTS) $(BINARIES)
 check: 
 	@echo "  FILTER   = $(FILTER)"
 	@echo "  SOURCES  = $(SOURCES)"
@@ -41,6 +41,9 @@ check:
 	@echo "  BINARIES = $(BINARIES)"
 	@echo "  ARCHIVE  = $(ARCHIVE)"
 	@echo "  ARCHIVES = $(ARCHIVES)"
+mostlyclean: 
+	@echo "  Removing $(OBJECTS)"
+	@$(RM) $(OBJECTS)
 clean: 
 	@echo "  Removing $(OBJECTS)"
 	@$(RM) $(OBJECTS) 

@@ -10,10 +10,18 @@ include $(GANDER)/src/globals.mak
 
 
 # Phony targets for directing make
-DIRECTIVES = all check clean tests
+DIRECTIVES = all check clean mostlyclean tests
 .PHONY : $(DIRECTIVES) $(MODULES)
 $(DIRECTIVES): $(MODULES)
 
-# Compile all the objects
+# Rules for making modules
 $(MODULES):
-	@$(MAKE) -C ./$@ $(MAKECMDGOALS)
+	@$(MAKE) -C ./$@ ${filter-out $(MODULES),$(MAKECMDGOALS)}
+
+# Dependencies
+client: frontend
+frontend: backend
+backend: graph
+graph: traits
+traits: data
+data:
