@@ -55,6 +55,9 @@ void Outline::draw() const {
  */
 void Outline::initialize() {
 	
+	// Class name
+	className = "Outline";
+	
 	// Initialize vertices of class
 	if (!loaded) {
 		initializeMap();

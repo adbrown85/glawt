@@ -60,11 +60,11 @@ Translation* Grip::findTranslation(Node *node) {
 	Node *currentNode=NULL;
 	
 	// Look for a Translation ancestor
-	currentNode = node->parent;
+	currentNode = node->getParent();
 	while (currentNode != NULL) {
 		if (typeid(*currentNode) == typeid(Translation))
 			break;
-		currentNode = currentNode->parent;
+		currentNode = currentNode->getParent();
 	}
 	return static_cast<Translation*>(currentNode);
 }

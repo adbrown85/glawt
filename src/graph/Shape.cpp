@@ -14,6 +14,7 @@
 Shape::Shape() {
 	
 	// Initialize
+	className = "Shape";
 	style = GL_TEXTURE_2D;
 }
 
@@ -26,7 +27,7 @@ ostream& operator<<(ostream& stream,
 	
 	// Format and print
 	style = shape.style==GL_TEXTURE_2D ? "2D" : "3D";
-	stream << static_cast<Node>(shape) << ", "
+	stream << static_cast<Node>(shape) << " "
 	       << static_cast<Selectable>(shape) << ", "
 	       << "sty=" << style;
 	return stream;

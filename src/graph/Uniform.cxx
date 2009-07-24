@@ -50,12 +50,8 @@ int main(int argc,
 	shader.addChild(uniform);
 	
 	// Associate and finalize graph
-	program.associate();
-	shader.associate();
-	uniform->associate();
-	program.finalize();
-	shader.finalize();
-	uniform->finalize();
+	program.associateTree();
+	program.finalizeTree();
 	
 	// Start display
 	program.apply();

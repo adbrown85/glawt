@@ -13,8 +13,7 @@
 #include <string>
 #include "Node.hpp"
 #include "Selectable.hpp"
-using std::string;
-using std::ostream;
+using namespace std;
 
 
 

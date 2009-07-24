@@ -10,7 +10,7 @@
 #include <GL/glut.h>
 #include "Shape.hpp"
 #include "Vector.hpp"
-using std::ostream;
+using namespace std;
 
 
 
@@ -27,10 +27,8 @@ class Box : public Shape {
 		Box();
 		Box(float size);
 		virtual void draw() const;
+		virtual void print() const;
 		void setColor(float r, float g, float b);
-		
-		friend ostream& operator<<(ostream& stream,
-		                           const Box& box);
 	
 	
 	protected: 

@@ -14,6 +14,7 @@
 Program::Program() {
 	
 	// Initialize
+	className = "Program";
 	name = 0;
 }
 
@@ -37,7 +38,6 @@ void Program::associate() {
 	// Create program
 	name = glCreateProgram();
 }
-
 
 
 /**

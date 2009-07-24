@@ -11,9 +11,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
-using std::ostream;
-using std::string;
-using std::vector;
+using namespace std;
 
 
 
@@ -27,20 +25,32 @@ class Node {
 	
 	public :
 		
-		Node *parent;
-		vector<Node*> children;
-		
 		Node();
-		virtual void addChild(Node *child);
+		void addChild(Node *child);
+		virtual void associateTree();
+		virtual void dump() const;
+		virtual void dumpTree() const;
+		virtual void dumpTree(int level) const;
+		virtual void finalizeTree();
 		virtual void print() const;
+		virtual void printTree() const;
+		virtual void printTree(ostream &stream,
+		                       int level) const;
 		
-		friend ostream& operator<<(ostream& stream,
-		                           const Node& node);
+		vector<Node*> getChildren() const {return children;}
+		Node* getParent() const {return parent;}
+		friend ostream& operator<<(ostream &stream,
+		                           const Node &node);
 	
 	
 	protected :
 		
-		void print(int level) const;
+		Node *parent;
+		string className;
+		vector<Node*> children;
+		
+		virtual void associate() {}
+		virtual void finalize() {}
 };
 
 

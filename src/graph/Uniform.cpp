@@ -24,6 +24,7 @@ Uniform::Uniform(string name,
                  char type) {
 	
 	// Initialize
+	className = "Uniform";
 	this->program = NULL;
 	this->name = name;
 	this->value = value;
@@ -49,7 +50,7 @@ void Uniform::associate() {
 		program = dynamic_cast<Program*>(current);
 		if (program != NULL)
 			break;
-		current = current->parent;
+		current = current->getParent();
 	}
 }
 

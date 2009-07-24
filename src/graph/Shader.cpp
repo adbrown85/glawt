@@ -9,11 +9,12 @@
 
 
 /**
- * Creates a shader with an empty source array.
+ * Initializes an empty %Shader object.
  */
 Shader::Shader() {
 	
 	// Initialize
+	className = "Shader";
 	source = NULL;
 	clear();
 }
@@ -33,7 +34,7 @@ Shader::~Shader() {
 
 
 /**
- * Associates the shader with a program.
+ * Attaches the shader to a program and compiles the shader.
  */
 void Shader::associate() {
 	
@@ -46,18 +47,21 @@ void Shader::associate() {
 		program = dynamic_cast<Program*>(current);
 		if (program != NULL)
 			break;
-		current = current->parent;
+		current = current->getParent();
 	}
 	
-	// Attach shader if found
-	if (program != NULL)
+	// Attach and compile shader if found
+	if (program != NULL) {
+		create();
 		glAttachShader(program->getName(), name);
+		compile();
+	}
 }
 
 
 
 /**
- * Clears out the source and all other attributes.
+ * Empties out the source and resets all other attributes.
  */
 void Shader::clear() {
 	
@@ -85,12 +89,13 @@ void Shader::compile() {
 	GLint compiled=0;
 	
 	// Compile shader
+	glShaderSource(name, length, source, NULL);
 	glCompileShader(name);
 	
 	// Attach shader to program if successful
-	log();
 	glGetShaderiv(name, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
+		log();
 		cerr << "  Shader: Did not compile." << endl;
 		exit(1);
 	}
@@ -99,7 +104,7 @@ void Shader::compile() {
 
 
 /**
- * Creates the shader.
+ * Creates an OpenGL shader if it has not been created already.
  * 
  * @param type
  *     Either 'f' for a fragment shader or 'v' for a vertex shader.
@@ -107,6 +112,10 @@ void Shader::compile() {
 void Shader::create() {
 	
 	GLenum typeEnum;
+	
+	// Check if already created
+	if (name != 0)
+		return;
 	
 	// Convert type to enumeration
 	switch (tolower(type)) {
@@ -120,6 +129,18 @@ void Shader::create() {
 	
 	// Create the shader
 	name = glCreateShader(typeEnum);
+}
+
+
+
+/**
+ * Prints the file stored in the source array.
+ */
+void Shader::list() const {
+	
+	// Print
+	for (int i=0; i<length; i++)
+		cout << source[i] << endl;
 }
 
 
@@ -139,14 +160,9 @@ void Shader::load(char type,
 	clear();
 	this->type = type;
 	this->filename = filename;
-	create();
 	
-	// Open source and pass to OpenGL
+	// Open source
 	open();
-	glShaderSource(name, length, source, NULL);
-	
-	// Compile
-	compile();
 }
 
 
@@ -201,12 +217,20 @@ void Shader::open() {
 
 
 /**
- * Prints the file stored in the source array.
+ * Prints the shader with a small indent.
  */
 void Shader::print() const {
 	
-	// Print
-	for (int i=0; i<length; i++)
-		cout << source[i] << endl;
+	cout << "  " << *this << endl;
 }
 
+
+ostream& operator<<(ostream& stream,
+                    const Shader& shader) {
+	
+	stream << static_cast<Node>(shader) << " "
+	       << "typ=" << shader.type << ", "
+	       << "fil=" << shader.filename << ", "
+	       << "nam=" << shader.name;
+	return stream;
+}

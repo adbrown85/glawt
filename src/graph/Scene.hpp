@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <string>
 #include <vector>
 #include "Matrix.hpp"
 #include "Node.hpp"
@@ -16,9 +17,7 @@
 #include "Selection.hpp"
 #include "Shape.hpp"
 #include "Vector.hpp"
-using std::cout;
-using std::endl;
-using std::vector;
+using namespace std;
 
 
 
@@ -39,19 +38,24 @@ class Scene {
 		Scene();
 		Scene(int width, int height);
 		void add(Node *node);
+		void dump();
 		void reset();
 		void rotate(float angle, float x, float y, float z);
+		void prepare();
 		void print();
 		
+		string getFilename() const {return filename;}
 		int getHeight() const {return height;}
 		Matrix getRotationMatrix() const;
 		int getWidth() const {return width;}
+		void setFilename(string filename) {this->filename = filename;}
 		void setRotation(float angle, float x, float y, float z);
 	
 	
 	private :
 		
 		int height, width;
+		string filename;
 		Quaternion rotation;
 };
 

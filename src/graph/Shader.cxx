@@ -38,17 +38,21 @@ int main(int argc,
 	glLoadIdentity();
 	gluPerspective(30.0, 1.33, 1.0, 100.0);
 	
-	// Install shader into program
+	// Load source code into shader
 	shader.load('f', filename);
+	shader.print();
+	cout << endl;
+	shader.list();
+	
+	// Make graph
 	program.addChild(&shader);
 	
 	// Associate and finalize graph
-	program.associate();
-	shader.associate();
-	program.finalize();
-	program.apply();
+	program.associateTree();
+	program.finalizeTree();
 	
 	// Start display
+	program.apply();
 	glutDisplayFunc(display);
 	glutMainLoop();
 }

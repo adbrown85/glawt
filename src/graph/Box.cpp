@@ -75,6 +75,9 @@ void Box::draw() const {
  */
 void Box::initialize() {
 	
+	// Class name
+	className = "Box";
+	
 	// Initialize vertices of class
 	if (!loaded) {
 		initializeMap();
@@ -209,6 +212,13 @@ void Box::initializePoints() {
 
 
 
+void Box::print() const {
+	
+	cout << "  " << *this << endl;
+}
+
+
+
 /**
  * Sets the color of the entire box.
  * 
@@ -227,14 +237,4 @@ void Box::setColor(float r, float g, float b) {
 		colors[i][1] = g;
 		colors[i][2] = b;
 	}
-}
-
-
-
-
-ostream& operator<<(ostream& stream,
-                    const Box& box) {
-	
-	stream << "Box: " << static_cast<Shape>(box);
-	return stream;
 }

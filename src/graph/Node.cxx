@@ -25,22 +25,21 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Print
-	cout << "Nodes: " << endl;
+	// Dump
+	cout << "Dumping each node: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
+		items[i].dump();
 	
-	// Children
-	cout << "Adding children..." << endl;
+	// Build tree
+	cout << "Building tree..." << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
 		items[i].addChild(&items[i+1]);
-	cout << "Nodes: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
 	
-	// Print root node
-	cout << "Root node:" << endl;
-	items[0].print();
+	// Dump and print tree
+	cout << "Dumping tree:" << endl;
+	items[0].dumpTree();
+	cout << "Printing tree:" << endl;
+	items[0].printTree();
 	
 	// Finish
 	cout << endl;

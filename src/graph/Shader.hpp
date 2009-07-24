@@ -15,12 +15,7 @@
 #include <vector>
 #include "Node.hpp"
 #include "Program.hpp"
-using std::cerr;
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::string;
-using std::vector;
+using namespace std;
 
 
 
@@ -39,6 +34,7 @@ class Shader : public Node {
 		void associate();
 		void compile();
 		void finalize() {}
+		void list() const;
 		void load(char type,
 		          string filename);
 		void log() const;
@@ -47,6 +43,9 @@ class Shader : public Node {
 		GLuint getName() const {return name;}
 		string getFilename() const {return filename;}
 		char getType() const {return type;}
+		
+		friend ostream& operator<<(ostream& stream,
+		                           const Shader& shader);
 	
 	
 	private :
