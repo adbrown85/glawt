@@ -14,7 +14,20 @@
 Tag::Tag() {
 	
 	// Initialze
+	clear();
+}
+
+
+
+/**
+ * Resets the tag to an empty state.
+ */
+void Tag::clear() {
+	
+	// Reset attributes
 	closing = false;
+	name = "";
+	attributes.clear();
 }
 
 

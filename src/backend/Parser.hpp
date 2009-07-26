@@ -5,8 +5,8 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __PARSER_HPP__
-#define __PARSER_HPP__
+#ifndef PARSER_HPP
+#define PARSER_HPP
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -14,14 +14,7 @@
 #include <string>
 #include <vector>
 #include "Tag.hpp"
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::ios_base;
-using std::map;
-using std::string;
-using std::stringstream;
-using std::vector;
+using namespace std;
 
 
 

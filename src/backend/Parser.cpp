@@ -10,6 +10,28 @@
 
 
 /**
+ * Finds the next tag in the file.
+ * 
+ * @return
+ *     %Tag string without '<' and '>'.
+ */
+string Parser::findTagString() {
+	
+	char character;
+	string tagString;
+	
+	// Read until end of tag
+	character = file.get();
+	while (character != '>') {
+		tagString += character;
+		character = file.get();
+	}
+	return tagString;
+}
+
+
+
+/**
  * Checks if the next few characters indicate a comment.
  * 
  * @param comment
@@ -44,10 +66,16 @@ void Parser::open(string filename) {
 	
 	char character;
 	string line, tagString;
-	Tag *tag;
+	Tag tag;
 	
 	// Open file
 	file.open(filename.c_str(), ios_base::binary);
+	if (!file) {
+		cerr << "Gander,Parser: Could not open file." << endl;
+		exit(1);
+	}
+	
+	// Read and process tags
 	character = file.get();
 	while (file) {
 		if (character == '<') {
@@ -55,56 +83,13 @@ void Parser::open(string filename) {
 				skipComment();
 			else {
 				tagString = findTagString();
-				tag = new Tag;
-				parseTag(tagString, *tag);
-				tags.push_back(*tag);
-				delete tag;
+				tag.clear();
+				parseTag(tagString, tag);
+				tags.push_back(tag);
 			}
 		}
 		character = file.get();
 	}
-}
-
-
-
-/**
- * Skips a comment.
- */
-void Parser::skipComment() {
-	
-	bool found=false;
-	char character;
-	
-	while (!found) {
-		character = file.get();
-		if (character == '-' && isComment("->")) {
-			for (int i=0; i<2; ++i)
-				file.get();
-			found = true;
-		}
-	}
-}
-
-
-
-/**
- * Finds the next tag in the file.
- * 
- * @return
- *     %Tag string without '<' and '>'.
- */
-string Parser::findTagString() {
-	
-	char character;
-	string tagString;
-	
-	// Read until end of tag
-	character = file.get();
-	while (character != '>') {
-		tagString += character;
-		character = file.get();
-	}
-	return tagString;
 }
 
 
@@ -187,4 +172,24 @@ void Parser::print() {
 	cout << "Tags: " << endl;
 	for (int i=0; i<tags.size(); ++i)
 		cout << "  " << tags[i] << endl;
+}
+
+
+
+/**
+ * Skips a comment.
+ */
+void Parser::skipComment() {
+	
+	bool found=false;
+	char character;
+	
+	while (!found) {
+		character = file.get();
+		if (character == '-' && isComment("->")) {
+			for (int i=0; i<2; ++i)
+				file.get();
+			found = true;
+		}
+	}
 }

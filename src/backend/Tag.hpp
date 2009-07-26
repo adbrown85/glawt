@@ -22,14 +22,14 @@ using namespace std;
 class Tag {
 	
 	
-	public :
+	public:
 		
 		bool closing;
 		map<string,string> attributes;
 		string name;
 		
 		Tag();
-		void error(string key) const;
+		void clear();
 		void get(const string &key,
 		         char &value) const;
 		void get(const string &key,
@@ -41,6 +41,11 @@ class Tag {
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Tag &tag);
+	
+	
+	private:
+		
+		void error(string key) const;
 };
 
 #endif
