@@ -70,7 +70,7 @@ void Producer::open(Scene *scene,
 	Parser parser;
 	
 	// Parse file into tags
-	cout << "Producer: Opening '" << filename << "'..." << endl;
+	cerr << "Gander,Producer: Opening '" << filename << "'..." << endl;
 	parser.open(filename);
 	
 	// Process tags

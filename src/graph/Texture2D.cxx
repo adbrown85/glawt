@@ -1,10 +1,10 @@
 /*
- * Texture.cxx
+ * Texture2D.cxx
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#include "Texture.hpp"
+#include "Texture2D.hpp"
 using namespace std;
 void display(void);
 
@@ -16,12 +16,12 @@ void display(void);
 int main(int argc,
          char *argv[]) {
 	
-	Texture *textures[4];
+	Texture2D *textures[4];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Texture" << endl;
+	cout << "Texture2D" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
@@ -30,7 +30,7 @@ int main(int argc,
 	glutInitDisplayMode(GLUT_SINGLE);
 	glutInitWindowPosition(50, 300);
 	glutInitWindowSize(640, 480);
-	glutCreateWindow("Texture");
+	glutCreateWindow("Texture2D");
 	glViewport(0, 0, 640, 480);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -38,7 +38,7 @@ int main(int argc,
 	
 	// Create textures
 	for (int i=0; i<4; ++i)
-		textures[i] = new Texture("Texture.jpg");
+		textures[i] = new Texture2D("Texture2D.jpg");
 	for (int i=0; i<3; ++i)
 		textures[i]->addChild(textures[i+1]);
 	
@@ -48,8 +48,7 @@ int main(int argc,
 	textures[0]->printTree();
 	
 	// Simulate traversing graph
-	for (int i=0; i<4; ++i)
-		textures[i]->apply();
+	textures[0]->apply();
 	
 	// Start display
 	glutDisplayFunc(display);

@@ -8,7 +8,6 @@
 #define TEXTURE_HPP
 #include <cstdlib>
 #include <GL/glut.h>
-#include <IL/ilut.h>
 #include <iostream>
 #include <string>
 #include <typeinfo>
@@ -25,24 +24,25 @@ class Texture : public Node,
 	public:
 		
 		Texture(string filename);
-		void apply();
-		void associate();
+		virtual void apply() = 0;
+		virtual void associate();
+		virtual void print() const;
+		virtual void remove() = 0;
+		
+		string getFilename() const {return filename;}
+		string getType() const {return type;}
 		int getUnit() const {return unit;}
-		void print() const;
-		void remove();
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Texture &texture);
 	
 	
-	private:
+	protected:
 		
-		ILuint image;
 		int unit;
-		string filename;
+		string filename, type;
 		
 		Texture();
-		void load();
 };
 
 

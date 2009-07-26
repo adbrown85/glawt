@@ -88,12 +88,16 @@ void Factory::createShape(Tag &tag) {
  */
 void Factory::createTexture(Tag &tag) {
 	
-	string filename;
+	string filename, type;
 	Texture *texture;
 	
 	// Create
 	tag.get("file", filename);
-	texture = new Texture(filename);
+	tag.get("type", type);
+	if (type[0] == '2')
+		texture = new Texture2D(filename);
+	else
+		throw "Gander,Factory: Texture type not supported.";
 	
 	// Add to scene
 	current->addChild(texture);

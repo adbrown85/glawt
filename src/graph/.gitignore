@@ -5,6 +5,6 @@ Scene
 Selection
 Shader
 Shape
-Texture
+Texture2D
 Uniform
 

@@ -1,11 +1,11 @@
 <!-- texture.xml -->
 
-<texture file="input/crate.jpg">
+<texture type="2D" file="input/crate.jpg">
 	<translate x="5.0" y="0.0" z="0.0">
 		<shape type="Box" size="2.0" />
 	</translate>
 </texture>
-<texture file="input/stone.jpg">
+<texture type="2D" file="input/stone.jpg">
 	<translate x="-5.0" y="0.0" z="-1.0">
 		<shape type="Box" size="4.0" />
 	</translate>
