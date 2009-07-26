@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+# Set variables
+export LD_LIBRARY_PATH=/usr/local/lib
+echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+
+# Launch
+if [[ `dirname $0` == '.' ]]; then
+	gander $@
+elif [[ `dirname $0` == 'bin' ]]; then
+	bin/gander $@
+fi
