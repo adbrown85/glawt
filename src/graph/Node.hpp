@@ -38,6 +38,7 @@ class Node {
 		                       int level) const;
 		
 		vector<Node*> getChildren() const {return children;}
+		string getClassName() const {return className;}
 		Node* getParent() const {return parent;}
 		friend ostream& operator<<(ostream &stream,
 		                           const Node &node);

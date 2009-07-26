@@ -84,6 +84,25 @@ void Factory::createShape(Tag &tag) {
 
 
 /**
+ * Creates a Texture and adds it to the scene.
+ */
+void Factory::createTexture(Tag &tag) {
+	
+	string filename;
+	Texture *texture;
+	
+	// Create
+	tag.get("file", filename);
+	texture = new Texture(filename);
+	
+	// Add to scene
+	current->addChild(texture);
+	current = texture;
+}
+
+
+
+/**
  * Creates a Translation and adds it to the scene.
  */
 void Factory::createTranslation(Tag &tag) {
@@ -152,6 +171,8 @@ void Factory::process(vector<Tag> &tags) {
 			createTranslation(*ti);
 		else if (ti->name.compare("shape") == 0)
 			createShape(*ti);
+		else if (ti->name.compare("texture") == 0)
+			createTexture(*ti);
 		else if (ti->name.compare("program") == 0)
 			createProgram(*ti);
 		else if (ti->name.compare("shader") == 0)
@@ -170,6 +191,7 @@ void Factory::initContainers() {
 	
 	// Add each to set
 	containers.insert("program");
+	containers.insert("texture");
 	containers.insert("translate");
 	containers.insert("uniform");
 }

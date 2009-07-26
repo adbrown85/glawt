@@ -15,6 +15,7 @@
 #include "Scene.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
+#include "Texture.hpp"
 #include "Translation.hpp"
 #include "Tag.hpp"
 #include "Uniform.hpp"
@@ -40,6 +41,7 @@ class Factory {
 		void createProgram(Tag &tag);
 		void createShader(Tag &tag);
 		void createShape(Tag &tag);
+		void createTexture(Tag &tag);
 		void createTranslation(Tag &tag);
 		void createUniform(Tag &tag);
 		
