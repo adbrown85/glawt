@@ -42,7 +42,6 @@ void Texture::associate() {
 	// Change unit
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
-	cerr << "Gander,Texture: Using unit " << unit << "." << endl;
 }
 
 

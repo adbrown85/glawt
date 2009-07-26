@@ -44,7 +44,7 @@ void Texture2D::apply() {
  */
 void Texture2D::associate() {
 	
-	// Find out which texture to use
+	// Find out which texture unit to use
 	Texture::associate();
 	
 	// Activate textures
