@@ -4,12 +4,17 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <string>
 #include <vector>
+#include "Node.hpp"
 #include "Program.hpp"
+#include "Scene.hpp"
 #include "Shader.hpp"
+#include "Texture2D.hpp"
 #include "Uniform.hpp"
 using namespace std;
 void display(void);
+void init(string);
 
 
 
@@ -20,41 +25,41 @@ int main(int argc,
          char *argv[]) {
 	
 	Program program;
-	Shader shader;
+	Scene scene;
+	Shader *shader;
+	Texture *textures[2];
 	Uniform *uniform;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Uniform" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Initialize display
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE);
-	glutInitWindowPosition(50, 300);
-	glutInitWindowSize(640, 480);
-	glutCreateWindow("Uniform");
-	glViewport(0, 0, 640, 480);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, 1.33, 1.0, 100.0);
+	// Initialize
+	init("Uniform");
 	
 	// Create objects
-	shader.load('f', "Uniform.glsl");
-	uniform = new Uniform("brightness", 0.6, 'f');
+	try {
+		textures[0] = new Texture2D("input/crate.jpg", "secondary");
+		textures[1] = new Texture2D("input/stone.jpg", "primary");
+		shader = new Shader("fragment", "glsl/texture.glsl");
+		uniform = new Uniform("sampler2D", "secondary", 0);
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+		exit(1);
+	}
 	
 	// Put objects in graph
-	program.addChild(&shader);
-	shader.addChild(uniform);
+	scene.rootNode.addChild(textures[0]);
+	textures[0]->addChild(textures[1]);
+	textures[1]->addChild(&program);
+	program.addChild(shader);
+	program.addChild(uniform);
 	
 	// Associate and finalize graph
-	program.associateTree();
-	program.finalizeTree();
+	scene.prepare();
+	scene.print();
 	
 	// Start display
 	program.apply();
+	textures[0]->apply();
+	textures[1]->apply();
 	glutDisplayFunc(display);
 	glutMainLoop();
 }
@@ -62,7 +67,37 @@ int main(int argc,
 
 
 /**
- * GLUT callback.
+ * Initializes the GLUT display.
+ */
+void init(string title) {
+	
+	char **argv;
+	int argc=0;
+	
+	// Print
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << title << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+	// Create window
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE);
+	glutInitWindowPosition(50, 300);
+	glutInitWindowSize(640, 480);
+	glutCreateWindow(title.c_str());
+	
+	// Set up viewport
+	glViewport(0, 0, 640, 480);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(30.0, 1.33, 1.0, 100.0);
+}
+
+
+/**
+ * GLUT display callback.
  */
 void display(void) {
 	

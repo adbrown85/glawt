@@ -19,8 +19,28 @@ Texture2D::Texture2D(string filename) :
 	
 	// Initialize
 	className = "Texture2D";
-	type = "2D";
-	image = 0;
+	this->type = "2D";
+	this->image = 0;
+}
+
+
+
+/**
+ * Creates a new 2D texture from a file that can be referenced by name.
+ * 
+ * @param filename
+ *     Path to the file.
+ * @param name
+ *     Name another node can reference.
+ */
+Texture2D::Texture2D(string filename,
+                     string name) :
+                     Texture(filename,name) {
+	
+	// Initialize
+	className = "Texture2D";
+	this->type = "2D";
+	this->image = 0;
 }
 
 

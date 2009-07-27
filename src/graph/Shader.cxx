@@ -7,6 +7,7 @@
 #include "Shader.hpp"
 using namespace std;
 void display(void);
+void init(string);
 
 
 
@@ -17,35 +18,19 @@ int main(int argc,
          char *argv[]) {
 	
 	Program program;
-	Shader shader;
-	string filename="Shader.glsl";
+	Shader *shader;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Shader, Program" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Initialize display
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE);
-	glutInitWindowPosition(50, 300);
-	glutInitWindowSize(640, 480);
-	glutCreateWindow("Uniform");
-	glViewport(0, 0, 640, 480);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, 1.33, 1.0, 100.0);
+	// Initialize
+	init("Shader");
 	
 	// Load source code into shader
-	shader.load('f', filename);
-	shader.print();
+	shader = new Shader("fragment", "glsl/coordinates.glsl");
+	shader->print();
 	cout << endl;
-	shader.list();
+	shader->list();
 	
 	// Make graph
-	program.addChild(&shader);
+	program.addChild(shader);
 	
 	// Associate and finalize graph
 	program.associateTree();
@@ -55,6 +40,37 @@ int main(int argc,
 	program.apply();
 	glutDisplayFunc(display);
 	glutMainLoop();
+}
+
+
+
+/**
+ * Initializes the GLUT display.
+ */
+void init(string title) {
+	
+	char **argv;
+	int argc=0;
+	
+	// Print
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << title << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+	// Create window
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE);
+	glutInitWindowPosition(50, 300);
+	glutInitWindowSize(640, 480);
+	glutCreateWindow(title.c_str());
+	
+	// Set up viewport
+	glViewport(0, 0, 640, 480);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(30.0, 1.33, 1.0, 100.0);
 }
 
 

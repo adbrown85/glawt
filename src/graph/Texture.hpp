@@ -24,12 +24,15 @@ class Texture : public Node,
 	public:
 		
 		Texture(string filename);
+		Texture(string filename,
+		        string name);
 		virtual void apply() = 0;
 		virtual void associate();
 		virtual void print() const;
 		virtual void remove() = 0;
 		
 		string getFilename() const {return filename;}
+		string getName() const {return name;}
 		string getType() const {return type;}
 		int getUnit() const {return unit;}
 		
@@ -40,7 +43,7 @@ class Texture : public Node,
 	protected:
 		
 		int unit;
-		string filename, type;
+		string filename, name, type;
 		
 		Texture();
 };

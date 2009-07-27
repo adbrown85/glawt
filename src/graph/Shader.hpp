@@ -29,20 +29,18 @@ class Shader : public Node {
 	
 	public :
 		
-		Shader();
+		Shader(string type,
+		       string filename);
 		~Shader();
 		void associate();
-		void compile();
 		void finalize() {}
 		void list() const;
-		void load(char type,
-		          string filename);
 		void log() const;
 		void print() const;
 		
 		GLuint getName() const {return name;}
 		string getFilename() const {return filename;}
-		char getType() const {return type;}
+		string getType() const {return type;}
 		
 		friend ostream& operator<<(ostream& stream,
 		                           const Shader& shader);
@@ -50,16 +48,16 @@ class Shader : public Node {
 	
 	private :
 		
-		char type;
 		const char **source;
 		GLuint name;
 		int length;
-		string filename;
+		string filename, type;
 		vector<string> lines;
 		
-		void clear();
+		Shader();
+		void compile();
 		void create();
-		void open();
+		void load();
 };
 
 

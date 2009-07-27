@@ -6,6 +6,7 @@
  *     Andy Brown <adb1413@rit.edu>
  */
 #include "Uniform.hpp"
+set<string> Uniform::types;
 
 
 
@@ -19,20 +20,21 @@
  * @param type
  *     Type of the variable.  Should be 'i' for int or 'f' for float.
  */
-Uniform::Uniform(string name,
-                 GLfloat value,
-                 char type) {
+Uniform::Uniform(string type,
+                 string name,
+                 GLfloat value) {
 	
 	// Initialize
 	className = "Uniform";
 	this->program = NULL;
+	this->type = type;
 	this->name = name;
 	this->value = value;
-	this->type = tolower(type);
 	
 	// Verify
-	if (this->type != 'f' && this->type != 'i')
-		throw "Uniform: Type not supported.";
+	initTypes();
+	if (!isSupported(this->type))
+		throw "Gander,Uniform: Type not supported.";
 }
 
 
@@ -43,6 +45,7 @@ Uniform::Uniform(string name,
 void Uniform::associate() {
 	
 	Node *current;
+	Texture *texture;
 	
 	// Look for a Program ancestor
 	current = parent;
@@ -51,6 +54,25 @@ void Uniform::associate() {
 		if (program != NULL)
 			break;
 		current = current->getParent();
+	}
+	
+	// If a sampler
+	if (type.compare("sampler2D") == 0 ||
+	    type.compare("sampler3D") == 0) {
+		
+		// Look for a texture ancestor
+		current = parent;
+		while (current != NULL) {
+			texture = dynamic_cast<Texture*>(current);
+			if (texture != NULL &&
+			    texture->getName().compare(name) == 0)
+				break;
+			current = current->getParent();
+		}
+		
+		// Assign unit as value if found
+		if (texture != NULL)
+			value = texture->getUnit();
 	}
 }
 
@@ -61,27 +83,55 @@ void Uniform::associate() {
  */
 void Uniform::finalize() {
 	
-	GLint programName, location;
+	GLint location;
 	
 	// Check for no program
 	if (program == NULL)
 		return;
 	
 	// Look up location
-	programName = program->getName();
-	location = glGetUniformLocation(programName, name.c_str());
+	location = glGetUniformLocation(program->getName(),
+	                                name.c_str());
 	if (location == -1)
 		return;
 	
 	// Set value
-	switch (tolower(type)) {
-		case 'f' :
-			glUniform1f(location, value);
-			break;
-		case 'i' :
-			glUniform1i(location, static_cast<int>(value));
-			break;
-	}
+	if (type.compare("float") == 0)
+		glUniform1f(location, value);
+	else
+		glUniform1i(location, static_cast<int>(value));
+}
+
+
+
+/**
+ * Initializes the supported types.
+ */
+void Uniform::initTypes() {
+	
+	// Only insert once
+	if (types.size() > 0)
+		return;
+	
+	// Add to set
+	types.insert("float");
+	types.insert("int");
+	types.insert("sampler2D");
+	types.insert("sampler3D");
+}
+
+
+
+/**
+ * Determines if the type is supported.
+ */
+bool Uniform::isSupported(string type) {
+	
+	set<string>::const_iterator si;
+	
+	// Look for type
+	si = types.find(type);
+	return si != types.end();
 }
 
 
@@ -100,15 +150,9 @@ ostream& operator<<(ostream& stream,
 	
 	// Print
 	stream << static_cast<Node>(uniform) << " "
-	       << "nam=" << uniform.name << ", "
-	       << "typ=" << uniform.type << ", ";
-	if (uniform.type == 'f')
-		stream << fixed << setprecision(2);
-	stream << uniform.value;
-	
-	// Finish
-	stream << resetiosflags(ios_base::floatfield)
-	       << setprecision(6);
+	       << "type='" << uniform.type << "' "
+	       << "name='" << uniform.name << "' "
+	       << "value='" << uniform.value << "'";
 	return stream;
 }
 

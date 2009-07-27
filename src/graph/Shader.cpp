@@ -11,12 +11,16 @@
 /**
  * Initializes an empty %Shader object.
  */
-Shader::Shader() {
+Shader::Shader(string type,
+               string filename) {
 	
 	// Initialize
 	className = "Shader";
-	source = NULL;
-	clear();
+	this->filename = filename;
+	this->length = 0;
+	this->name = 0;
+	this->source = NULL;
+	this->type = type;
 }
 
 
@@ -53,30 +57,10 @@ void Shader::associate() {
 	// Attach and compile shader if found
 	if (program != NULL) {
 		create();
+		load();
 		glAttachShader(program->getName(), name);
 		compile();
 	}
-}
-
-
-
-/**
- * Empties out the source and resets all other attributes.
- */
-void Shader::clear() {
-	
-	// Clear source
-	if (source != NULL) {
-		delete[] source;
-		source = NULL;
-	}
-	lines.clear();
-	filename = "";
-	length = 0;
-	
-	// Clear others
-	name = 0;
-	type = 'f';
 }
 
 
@@ -89,14 +73,16 @@ void Shader::compile() {
 	GLint compiled=0;
 	
 	// Compile shader
-	glShaderSource(name, length, source, NULL);
 	glCompileShader(name);
 	
 	// Attach shader to program if successful
 	glGetShaderiv(name, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
+		cerr << "Gander,Shader: '"
+		     << filename 
+		     << "' did not compile." << endl;
+		cerr << "Gander,Shader: Printing log..." << endl;
 		log();
-		cerr << "  Shader: Did not compile." << endl;
 		exit(1);
 	}
 }
@@ -104,31 +90,21 @@ void Shader::compile() {
 
 
 /**
- * Creates an OpenGL shader if it has not been created already.
- * 
- * @param type
- *     Either 'f' for a fragment shader or 'v' for a vertex shader.
+ * Creates a GLSL shader.
  */
 void Shader::create() {
-	
-	GLenum typeEnum;
 	
 	// Check if already created
 	if (name != 0)
 		return;
 	
-	// Convert type to enumeration
-	switch (tolower(type)) {
-		case 'f':
-			typeEnum = GL_FRAGMENT_SHADER; break;
-		case 'v':
-			typeEnum = GL_VERTEX_SHADER; break;
-		default:
-			throw "Type not supported.";
-	}
-	
-	// Create the shader
-	name = glCreateShader(typeEnum);
+	// Create shader of correct type
+	if (type.compare("fragment") == 0)
+		name = glCreateShader(GL_FRAGMENT_SHADER);
+	else if (type.compare("vertex") == 0)
+		name = glCreateShader(GL_VERTEX_SHADER);
+	else
+		throw "Gander,Shader: Type not supported.";
 }
 
 
@@ -146,23 +122,37 @@ void Shader::list() const {
 
 
 /**
- * Loads a file into the Shader's source array.
- * 
- * @param type
- *     Either 'f' for a fragment shader or 'v' for a vertex shader.
- * @param filename
- *     Path to the file.
+ * Loads a file into the Shader's source array and passes it to OpenGL.
  */
-void Shader::load(char type,
-                  string filename) {
+void Shader::load() {
 	
-	// Initialize attributes
-	clear();
-	this->type = type;
-	this->filename = filename;
+	ifstream file;
+	string line, message;
 	
-	// Open source
-	open();
+	// Open file
+	file.open(filename.c_str());
+	if (!file) {
+		message = "Gander,Shader: Could not open '";
+		message += filename;
+		message += "'.";
+		throw message.c_str();
+	}
+	
+	// Load into vector
+	getline(file, line);
+	while (file) {
+		lines.push_back(line);
+		getline(file, line);
+	}
+	
+	// Copy to source array
+	length = lines.size();
+	source = new const char*[length];
+	for (int i=0; i<length; ++i)
+		source[i] = lines[i].c_str();
+	
+	// Pass to OpenGL
+	glShaderSource(name, length, source, NULL);
 }
 
 
@@ -192,32 +182,7 @@ void Shader::log() const {
 
 
 /**
- * Opens the file and copies it into the object.
- */
-void Shader::open() {
-	
-	ifstream inFile;
-	string line;
-	
-	// Load file into vector
-	inFile.open(filename.c_str());
-	getline(inFile, line);
-	while (inFile) {
-		lines.push_back(line);
-		getline(inFile, line);
-	}
-	
-	// Copy to source array
-	length = lines.size();
-	source = new const char*[length];
-	for (int i=0; i<length; ++i)
-		source[i] = lines[i].c_str();
-}
-
-
-
-/**
- * Prints the shader with a small indent.
+ * Prints the shader's attributes with a small indent.
  */
 void Shader::print() const {
 	
@@ -225,12 +190,13 @@ void Shader::print() const {
 }
 
 
+
 ostream& operator<<(ostream& stream,
                     const Shader& shader) {
 	
 	stream << static_cast<Node>(shader) << " "
-	       << "typ=" << shader.type << ", "
-	       << "fil=" << shader.filename << ", "
-	       << "nam=" << shader.name;
+	       << "type='" << shader.type << "' "
+	       << "file='" << shader.filename << "' "
+	       << "name='" << shader.name << "'";
 	return stream;
 }

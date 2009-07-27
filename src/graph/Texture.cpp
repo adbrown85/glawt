@@ -16,7 +16,24 @@ Texture::Texture(string filename) {
 	// Initialize
 	className = "Texture";
 	this->filename = filename;
-	unit = 0;
+	this->unit = 0;
+	this->name = "";
+}
+
+
+
+/**
+ * Initializes a texture that will be bound to the first texture unit and can 
+ * be referenced by a name.
+ */
+Texture::Texture(string filename,
+                 string name) {
+	
+	// Initialize
+	className = "Texture";
+	this->filename = filename;
+	this->unit = 0;
+	this->name = name;
 }
 
 
@@ -58,6 +75,7 @@ ostream& operator<<(ostream& stream,
 	
 	stream << static_cast<Node>(texture) << " "
 	       << "filename='" << texture.filename << "' "
-	       << "unit='" << texture.unit << "'";
+	       << "unit='" << texture.unit << "' "
+	       << "name='" << texture.name << "'";
 	return stream;
 }

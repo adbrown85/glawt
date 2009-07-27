@@ -9,11 +9,12 @@
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
+#include <set>
 #include <string>
 #include "Node.hpp"
 #include "Program.hpp"
-using std::ostream;
-using std::string;
+#include "Texture.hpp"
+using namespace std;
 
 
 
@@ -27,9 +28,9 @@ class Uniform : public Node {
 	
 	public :
 		
-		Uniform(string name,
-		        GLfloat value,
-		        char type);
+		Uniform(string type,
+		        string name,
+		        GLfloat value);
 		void associate();
 		void finalize();
 		void print() const;
@@ -40,13 +41,18 @@ class Uniform : public Node {
 	
 	private :
 		
-		char type;
 		GLfloat value;
 		Program *program;
-		string name;
+		string name, type;
+		
+		static set<string> types;
 		
 		Uniform();
+		void initSupportedTypes();
 		void install();
+		
+		static void initTypes();
+		static bool isSupported(string type);
 };
 
 

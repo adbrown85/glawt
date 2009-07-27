@@ -7,6 +7,7 @@
 #include "Texture2D.hpp"
 using namespace std;
 void display(void);
+void init(string);
 
 
 
@@ -18,27 +19,12 @@ int main(int argc,
 	
 	Texture2D *textures[4];
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Texture2D" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Initialize display
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE);
-	glutInitWindowPosition(50, 300);
-	glutInitWindowSize(640, 480);
-	glutCreateWindow("Texture2D");
-	glViewport(0, 0, 640, 480);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, 1.33, 1.0, 100.0);
+	// Initialize
+	init("Texture2D");
 	
 	// Create textures
 	for (int i=0; i<4; ++i)
-		textures[i] = new Texture2D("Texture2D.jpg");
+		textures[i] = new Texture2D("input/crate.jpg", "crate");
 	for (int i=0; i<3; ++i)
 		textures[i]->addChild(textures[i+1]);
 	
@@ -53,6 +39,37 @@ int main(int argc,
 	// Start display
 	glutDisplayFunc(display);
 	glutMainLoop();
+}
+
+
+
+/**
+ * Initializes the GLUT display.
+ */
+void init(string title) {
+	
+	char **argv;
+	int argc=0;
+	
+	// Print
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << title << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+	// Create window
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE);
+	glutInitWindowPosition(50, 300);
+	glutInitWindowSize(640, 480);
+	glutCreateWindow(title.c_str());
+	
+	// Set up viewport
+	glViewport(0, 0, 640, 480);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(30.0, 1.33, 1.0, 100.0);
 }
 
 
