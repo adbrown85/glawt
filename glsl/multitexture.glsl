@@ -1,12 +1,10 @@
-uniform sampler2D unit0, unit1;
+uniform sampler2D left, right;
 
 
 void main() {
 	
-	float s = gl_TexCoord[0].s;
-	
-	if (s < 0.5)
-		gl_FragColor = texture2D(unit0, gl_TexCoord[0].st);
+	if (gl_TexCoord[0].s < 0.5)
+		gl_FragColor = texture2D(left, gl_TexCoord[0].st);
 	else
-		gl_FragColor = texture2D(unit1, gl_TexCoord[0].st);
+		gl_FragColor = texture2D(right, gl_TexCoord[0].st);
 }

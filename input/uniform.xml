@@ -1,16 +1,13 @@
-<!-- scene.xml -->
+<!-- uniform.xml -->
 
 
 <program>
-	<shader type="fragment" filename="glsl/halfmoon-vars.glsl" />
-	<uniform type="float" name="brightness" value="0.75">
+	<shader type="fragment" file="glsl/brightness.glsl" />
+	<uniform type="float" name="brightness" value="0.90">
 		<translate x="5.0" y="0.0" z="0.0">
 			<shape type="Box" size="2.0" />
 		</translate>
 	</uniform>
-</program>
-<program>
-	<shader type="fragment" filename="glsl/halfmoon-vars.glsl" />
 	<uniform type="float" name="brightness" value="0.25">
 		<translate x="-5.0" y="0.0" z="-1.0">
 			<shape type="Box" size="4.0" />

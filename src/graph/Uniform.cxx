@@ -35,10 +35,10 @@ int main(int argc,
 	
 	// Create objects
 	try {
-		textures[0] = new Texture2D("input/crate.jpg", "secondary");
-		textures[1] = new Texture2D("input/stone.jpg", "primary");
+		textures[0] = new Texture2D("input/crate.jpg", "crate");
+		textures[1] = new Texture2D("input/stone.jpg", "stone");
 		shader = new Shader("fragment", "glsl/texture.glsl");
-		uniform = new Uniform("sampler2D", "secondary", 0);
+		uniform = new Uniform("sampler2D", "primary", 0, "stone");
 	}
 	catch (const char *e) {
 		cerr << e << endl;
@@ -58,6 +58,7 @@ int main(int argc,
 	
 	// Start display
 	program.apply();
+	uniform->apply();
 	textures[0]->apply();
 	textures[1]->apply();
 	glutDisplayFunc(display);

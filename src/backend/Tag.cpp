@@ -61,7 +61,8 @@ void Tag::error(string key) const {
  *     Character to store the value in.
  */
 void Tag::get(const string &key,
-              char &value) const {
+              char &value,
+              bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -69,6 +70,8 @@ void Tag::get(const string &key,
 	ai = attributes.find(key);
 	if (ai != attributes.end())
 		value = ai->second[0];
+	else if (!required)
+		value = '0';
 	else
 		error(key);
 }
@@ -84,7 +87,8 @@ void Tag::get(const string &key,
  *     Float to store the value in.
  */
 void Tag::get(const string &key,
-              float &value) const {
+              float &value,
+              bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -92,6 +96,8 @@ void Tag::get(const string &key,
 	ai = attributes.find(key);
 	if (ai != attributes.end())
 		value = atof(ai->second.c_str());
+	else if (!required)
+		value = 0.0f;
 	else
 		error(key);
 }
@@ -107,7 +113,8 @@ void Tag::get(const string &key,
  *     Integer to store the value in.
  */
 void Tag::get(const string &key,
-              int &value) const {
+              int &value,
+              bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -115,6 +122,8 @@ void Tag::get(const string &key,
 	ai = attributes.find(key);
 	if (ai != attributes.end())
 		value = atoi(ai->second.c_str());
+	else if (!required)
+		value = 0;
 	else
 		error(key);
 }
@@ -130,7 +139,8 @@ void Tag::get(const string &key,
  *     String to store the value in.
  */
 void Tag::get(const string &key,
-              string &value) const {
+              string &value,
+              bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -138,6 +148,8 @@ void Tag::get(const string &key,
 	ai = attributes.find(key);
 	if (ai != attributes.end())
 		value = ai->second;
+	else if (!required)
+		value = "";
 	else
 		error(key);
 }

@@ -9,23 +9,6 @@
 
 
 /**
- * Creates a new 2D texture from a file.
- * 
- * @param filename
- *     Path to the file.
- */
-Texture2D::Texture2D(string filename) :
-                     Texture(filename) {
-	
-	// Initialize
-	className = "Texture2D";
-	this->type = "2D";
-	this->image = 0;
-}
-
-
-
-/**
  * Creates a new 2D texture from a file that can be referenced by name.
  * 
  * @param filename
@@ -51,8 +34,8 @@ Texture2D::Texture2D(string filename,
 void Texture2D::apply() {
 	
 	// Bind texture
-	glEnable(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(GL_TEXTURE_2D);
 	ilBindImage(image);
 	ilutGLBindTexImage();
 }
@@ -145,5 +128,6 @@ void Texture2D::load() {
 void Texture2D::remove() {
 	
 	// Disable texturing
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glDisable(GL_TEXTURE_2D);
 }

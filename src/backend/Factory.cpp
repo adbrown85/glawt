@@ -50,9 +50,8 @@ void Factory::createShader(Tag &tag) {
 	
 	// Create
 	tag.get("type", type);
-	tag.get("filename", filename);
-	shader = new Shader();
-	shader->load(type[0], filename);
+	tag.get("file", filename);
+	shader = new Shader(type, filename);
 	
 	// Add to scene
 	current->addChild(shader);
@@ -88,14 +87,17 @@ void Factory::createShape(Tag &tag) {
  */
 void Factory::createTexture(Tag &tag) {
 	
-	string filename, type;
+	string filename, name, type;
 	Texture *texture;
 	
 	// Create
 	tag.get("file", filename);
 	tag.get("type", type);
+	tag.get("name", name, false);
 	if (type[0] == '2')
-		texture = new Texture2D(filename);
+		texture = new Texture2D(filename, name);
+	else if (type[0] == '3')
+		texture = new Texture2D(filename, name);
 	else
 		throw "Gander,Factory: Texture type not supported.";
 	
@@ -132,16 +134,16 @@ void Factory::createTranslation(Tag &tag) {
  */
 void Factory::createUniform(Tag &tag) {
 	
-	char type;
 	float value;
-	string name;
+	string link, name, type;
 	Uniform *uniform;
 	
 	// Create
-	tag.get("name", name);
 	tag.get("type", type);
-	tag.get("value", value);
-	uniform = new Uniform(name, value, type);
+	tag.get("name", name);
+	tag.get("value", value, false);
+	tag.get("link", link, false);
+	uniform = new Uniform(type, name, value, link);
 	
 	// Add to scene
 	current->addChild(uniform);

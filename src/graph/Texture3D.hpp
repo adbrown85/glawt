@@ -22,9 +22,8 @@ class Texture3D : public Texture {
 	
 	public :
 		
-		Texture3D(string filename);
 		Texture3D(string filename,
-		          string name);
+		          string name="");
 		~Texture3D();
 		virtual void associate();
 		virtual void apply();

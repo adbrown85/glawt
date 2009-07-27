@@ -31,13 +31,17 @@ class Tag {
 		Tag();
 		void clear();
 		void get(const string &key,
-		         char &value) const;
+		         char &value,
+		         bool required=true) const;
 		void get(const string &key,
-		         float &value) const;
+		         float &value,
+		         bool required=true) const;
 		void get(const string &key,
-		         int &value) const;
+		         int &value,
+		         bool required=true) const;
 		void get(const string &key,
-		         string &value) const;
+		         string &value,
+		         bool required=true) const;
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Tag &tag);

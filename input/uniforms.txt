@@ -1,2 +1,0 @@
-unit0 int 0
-unit1 int 1

@@ -13,25 +13,6 @@
  * 
  * @param filename
  *     Path to the file.
- */
-Texture3D::Texture3D(string filename) :
-                     Texture(filename) {
-	
-	// Initialize
-	className = "Texture3D";
-	type = "3D";
-	pitch = 0;
-	width = 0;
-	data = NULL;
-}
-
-
-
-/**
- * Creates a new, empty 3D texture that can be referenced by name.
- * 
- * @param filename
- *     Path to the file.
  * @param name
  *     Name another node can reference.
  */

@@ -1,0 +1,20 @@
+<!-- sampler.xml -->
+
+
+<texture type="2D" file="input/crate.jpg" name="crate">
+<texture type="2D" file="input/stone.jpg" name="stone">
+	<program>
+		<shader type="fragment" file="glsl/sampler.glsl" />
+		<uniform type="sampler2D" name="primary" link="crate">
+			<translate x="-2.0" y="0.0" z="0.0">
+				<shape type="Box" size="2.0" />
+			</translate>
+		</uniform>
+		<uniform type="sampler2D" name="primary" link="stone">
+			<translate x="2.0" y="0.0" z="0.0">
+				<shape type="Box" size="2.0" />
+			</translate>
+		</uniform>
+	</program>
+</texture>
+</texture>

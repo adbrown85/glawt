@@ -1,0 +1,21 @@
+<!-- Producer.xml -->
+
+
+<texture type="2D" file="input/crate.jpg" name="crate">
+<texture type="2D" file="input/stone.jpg" name="stone">
+	<program>
+		<shader type="fragment" file="glsl/sampler.glsl" />
+		<uniform type="sampler2D" name="primary" value="1.0" link="crate">
+			<translate x="5.0" y="0.0" z="0.0">
+				<shape type="Box" size="2.0" />
+			</translate>
+		</uniform>
+		<uniform type="sampler2D" name="primary" value="0.5" link="stone">
+			<translate x="-5.0" y="0.0" z="-1.0">
+				<shape type="Box" size="4.0" />
+			</translate>
+		</uniform>
+	</program>
+</texture>
+</texture>
+

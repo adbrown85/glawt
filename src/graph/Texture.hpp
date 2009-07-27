@@ -6,6 +6,7 @@
  */
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
+#include <cassert>
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
@@ -23,9 +24,8 @@ class Texture : public Node,
 	
 	public:
 		
-		Texture(string filename);
 		Texture(string filename,
-		        string name);
+		        string name="");
 		virtual void apply() = 0;
 		virtual void associate();
 		virtual void print() const;
@@ -42,10 +42,12 @@ class Texture : public Node,
 	
 	protected:
 		
+		static bool asserted;
 		int unit;
 		string filename, name, type;
 		
 		Texture();
+		void assertions();
 };
 
 

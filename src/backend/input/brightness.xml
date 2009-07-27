@@ -3,7 +3,7 @@
 
 <texture type="2D" file="crate.jpg">
 	<program>
-		<shader type="fragment" filename="../graph/Uniform.glsl" />
+		<shader type="fragment" file="glsl/brightness.glsl" />
 		<uniform type="float" name="brightness" value="1.0">
 			<translate x="5.0" y="0.0" z="0.0">
 				<shape type="Box" size="2.0" />

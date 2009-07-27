@@ -22,7 +22,8 @@ set<string> Uniform::types;
  */
 Uniform::Uniform(string type,
                  string name,
-                 GLfloat value) {
+                 GLfloat value,
+                 string link) {
 	
 	// Initialize
 	className = "Uniform";
@@ -30,11 +31,12 @@ Uniform::Uniform(string type,
 	this->type = type;
 	this->name = name;
 	this->value = value;
-	
-	// Verify
-	initTypes();
-	if (!isSupported(this->type))
-		throw "Gander,Uniform: Type not supported.";
+	this->link = link;
+	if (type.compare("float") == 0)
+		this->valueType = GL_FLOAT;
+	else
+		this->valueType = GL_INT;
+	verify();
 }
 
 
@@ -56,50 +58,50 @@ void Uniform::associate() {
 		current = current->getParent();
 	}
 	
-	// If a sampler
-	if (type.compare("sampler2D") == 0 ||
-	    type.compare("sampler3D") == 0) {
-		
-		// Look for a texture ancestor
+	// Get unit of linked texture if a sampler
+	if (isSampler()) {
 		current = parent;
 		while (current != NULL) {
 			texture = dynamic_cast<Texture*>(current);
-			if (texture != NULL &&
-			    texture->getName().compare(name) == 0)
+			if (texture != NULL && texture->getName().compare(link) == 0)
 				break;
 			current = current->getParent();
 		}
-		
-		// Assign unit as value if found
-		if (texture != NULL)
-			value = texture->getUnit();
+		if (texture == NULL)
+			throw "Gander,Uniform: Could not find texture linked to.";
+		value = texture->getUnit();
 	}
 }
 
 
 
 /**
- * Installs the variable into the program.
+ * Sets the value of the variable in the program.
+ */
+void Uniform::apply() {
+	
+	// Set value
+	if (valueType == GL_FLOAT)
+		glUniform1f(location, value);
+	else
+		glUniform1i(location, static_cast<int>(value));
+}
+
+
+
+/**
+ * Finds the variable's location in the program.
  */
 void Uniform::finalize() {
-	
-	GLint location;
 	
 	// Check for no program
 	if (program == NULL)
 		return;
 	
 	// Look up location
-	location = glGetUniformLocation(program->getName(),
-	                                name.c_str());
+	location = glGetUniformLocation(program->getName(), name.c_str());
 	if (location == -1)
 		return;
-	
-	// Set value
-	if (type.compare("float") == 0)
-		glUniform1f(location, value);
-	else
-		glUniform1i(location, static_cast<int>(value));
 }
 
 
@@ -118,6 +120,18 @@ void Uniform::initTypes() {
 	types.insert("int");
 	types.insert("sampler2D");
 	types.insert("sampler3D");
+}
+
+
+
+/**
+ * Checks if the uniform is a sampler type.
+ */
+bool Uniform::isSampler() {
+	
+	// Compare strings
+	return (type.compare("sampler2D") == 0 ||
+	        type.compare("sampler3D") == 0);
 }
 
 
@@ -143,16 +157,46 @@ void Uniform::print() const {
 
 
 
+/**
+ * Resets the uniform variable in the program to 0.
+ */
+void Uniform::remove() {
+	
+	// Set value
+	if (valueType == GL_FLOAT)
+		glUniform1f(location, 0.0f);
+	else
+		glUniform1i(location, 0);
+}
+
+
+
+/**
+ * Checks that the Uniform's attributes are acceptable.
+ */
+void Uniform::verify() {
+	
+	// Check if type is supported
+	initTypes();
+	if (!isSupported(this->type))
+		throw "Gander,Uniform: Type not supported.";
+	
+	// Check if sampler type has link
+	if (isSampler() && link.empty())
+		throw "Gander,Uniform: Sampler types require link.";
+}
+
+
+
 ostream& operator<<(ostream& stream,
                     const Uniform &uniform) {
-	
-	using namespace std;
 	
 	// Print
 	stream << static_cast<Node>(uniform) << " "
 	       << "type='" << uniform.type << "' "
 	       << "name='" << uniform.name << "' "
-	       << "value='" << uniform.value << "'";
+	       << "value='" << uniform.value << "' "
+	       << "link='" << uniform.link << "'";
 	return stream;
 }
 

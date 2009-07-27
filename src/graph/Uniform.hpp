@@ -23,17 +23,21 @@ using namespace std;
  *     Container for GLSL uniform variables.
  * @ingroup graph
  */
-class Uniform : public Node {
+class Uniform : public Node,
+                public Applicable {
 	
 	
 	public :
 		
 		Uniform(string type,
 		        string name,
-		        GLfloat value);
+		        GLfloat value,
+		        string link="");
 		void associate();
+		void apply();
 		void finalize();
 		void print() const;
+		void remove();
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Uniform &uniform);
@@ -41,18 +45,18 @@ class Uniform : public Node {
 	
 	private :
 		
+		GLenum valueType;
 		GLfloat value;
+		GLint location;
 		Program *program;
-		string name, type;
-		
 		static set<string> types;
+		string link, name, type;
 		
 		Uniform();
-		void initSupportedTypes();
-		void install();
-		
 		static void initTypes();
+		bool isSampler();
 		static bool isSupported(string type);
+		void verify();
 };
 
 

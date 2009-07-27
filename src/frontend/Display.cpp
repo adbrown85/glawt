@@ -94,8 +94,15 @@ void Display::start(std::string title,
 	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 1000.0);
 	
 	// Open and prepare scene
-	delegate->run(Command::OPEN, scene->getFilename());
-	scene->prepare();
+	try {
+		delegate->run(Command::OPEN, scene->getFilename());
+		scene->prepare();
+		scene->print();
+	}
+	catch (char const *e) {
+		cerr << e << endl;
+		exit(1);
+	}
 	
 	// Register functions
 	glutDisplayFunc(Display::display);
