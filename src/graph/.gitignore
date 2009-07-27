@@ -6,5 +6,6 @@ Selection
 Shader
 Shape
 Texture2D
+Texture3D
 Uniform
 

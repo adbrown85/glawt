@@ -29,7 +29,7 @@ Shader.o: Node.o Program.o
 Texture.o : Node.o
 Texture2D.o : Node.o Texture.o
 Texture3D.o : Node.o Texture.o
-Uniform.o: Node.o Program.o Shader.o
+Uniform.o: Node.o Program.o Shader.o Texture2D.o Texture3D.o
 
 # Collections of nodes
 Selection.o:
