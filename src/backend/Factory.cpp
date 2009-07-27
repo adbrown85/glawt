@@ -66,13 +66,17 @@ void Factory::createShape(Tag &tag) {
 	
 	float size;
 	Shape *shape;
-	string type;
+	string style, type;
 	
 	// Create
 	tag.get("size", size);
 	tag.get("type", type);
-	if (type.compare("Box") == 0)
+	tag.get("style", style, false);
+	if (type.compare("Box") == 0) {
 		shape = new Box(size);
+		if (style.compare("3D") == 0)
+			shape->setStyle(GL_TEXTURE_3D);
+	}
 	else
 		throw "Shape type not supported.";
 	
@@ -97,7 +101,7 @@ void Factory::createTexture(Tag &tag) {
 	if (type[0] == '2')
 		texture = new Texture2D(filename, name);
 	else if (type[0] == '3')
-		texture = new Texture2D(filename, name);
+		texture = new Texture3D(filename, name);
 	else
 		throw "Gander,Factory: Texture type not supported.";
 	

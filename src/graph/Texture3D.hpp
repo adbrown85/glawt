@@ -36,8 +36,9 @@ class Texture3D : public Texture {
 	
 	private:
 		
+		GLuint id;
 		int pitch, width;
-		byte ***data;
+		byte *data;
 		
 		Texture3D();
 		void allocate();

@@ -17,6 +17,7 @@
 #include "Shape.hpp"
 #include "Texture.hpp"
 #include "Texture2D.hpp"
+#include "Texture3D.hpp"
 #include "Translation.hpp"
 #include "Tag.hpp"
 #include "Uniform.hpp"

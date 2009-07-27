@@ -42,20 +42,14 @@ Texture3D::~Texture3D() {
 
 
 /**
- * Creates a 3D array in dynamic memory for the texture according to 'width'.
+ * Creates an array in dynamic memory for the texture according to 'width'.
  */
 void Texture3D::allocate() {
 	
 	// Allocate array
 	if (data != NULL)
 		throw "Data already allocated for Texture3D.  Must deallocate first.";
-	data = new byte**[width];
-	for (int i=0; i<width; i++) {
-		data[i] = new byte*[width];
-		for (int j=0; j<width; j++) {
-			data[i][j] = new byte[width];
-		}
-	}
+	data = new byte[width*width*width];
 }
 
 
@@ -65,9 +59,9 @@ void Texture3D::allocate() {
  */
 void Texture3D::apply() {
 	
-	// Bind the 
-	glEnable(GL_TEXTURE_3D);
+	// Enable texturing
 	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(GL_TEXTURE_3D);
 }
 
 
@@ -80,27 +74,20 @@ void Texture3D::associate() {
 	// Find out which texture unit to use
 	Texture::associate();
 	
-	// Activate textures
-	glEnable(GL_TEXTURE_3D);
+	// Load the texture
 	load();
 }
 
 
 
 /**
- * Removes the 3D array created for the texture.
+ * Removes the array created for the texture.
  */
 void Texture3D::deallocate() {
 	
 	// Deallocate array
-	if (data != NULL) {
-		for (int i=0; i<width; i++) {
-			for (int j=0; j<width; j++)
-				delete[] data[i][j];
-			delete[] data[i];
-		}
+	if (data != NULL)
 		delete[] data;
-	}
 	data = NULL;
 }
 
@@ -112,7 +99,8 @@ void Texture3D::deallocate() {
 void Texture3D::load() {
 	
 	ifstream file;
-	int token;
+	int token, width2;
+	unsigned int index;
 	
 	// Read width and pitch, allocate data
 	file.open(filename.c_str());
@@ -121,15 +109,44 @@ void Texture3D::load() {
 	allocate();
 	
 	// Read slices
-	for (int i=0; i<width && file; i++) {
-		for (int j=0; j<width && file; j++) {
-			for (int k=0; k<width && file; k++) {
+	width2 = width * width;
+	for (int k=0; k<width; ++k) {
+		for (int i=0; i<width; ++i) {
+			for (int j=0; j<width && file; ++j) {
 				file >> token;
-				data[i][j][k] = (byte)token;
+				index = (k*width2) + (i*width) + j;
+				data[index] = (byte)token;
 			}
 		}
 	}
 	file.close();
+	
+	// Bind the texture to the right unit
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(GL_TEXTURE_3D);
+	glGenTextures(1, &id);
+	cerr << "Texture: " << id << endl;
+	glBindTexture(GL_TEXTURE_3D, id);
+	
+	// Pass the texture to OpenGL
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+	glTexImage3D(GL_TEXTURE_3D,
+	             0,
+	             1,
+	             width,
+	             width,
+	             width,
+	             0,
+	             GL_RED,
+	             GL_UNSIGNED_BYTE,
+	             data);
+	
+	for (int i=0; i<width; ++i)
+		printSlice(i);
 }
 
 
@@ -137,20 +154,25 @@ void Texture3D::load() {
 /**
  * Prints each cell in a slice to standard error.
  * 
- * @param index
+ * @param slice
  *     Index of the slice to print.
  */
-void Texture3D::printSlice(int index) {
+void Texture3D::printSlice(int slice) {
+	
+	int index, k;
 	
 	// Check for data
 	if (data == NULL)
 		cerr << "Gander,Texture3D: Data not loaded." << endl;
 	
 	// Print each cell
-	for (int j=0; j<width; j++) {
+	k = width * width * slice;
+	for (int i=0; i<width; ++i) {
 		cerr << "  ";
-		for (int k=0; k<width; k++)
-			cerr << setw(3) << (int)data[index][j][k] << " ";
+		for (int j=0; j<width; j++) {
+			index = k + (i*width) + j;
+			cerr << setw(3) << (int)data[index] << " ";
+		}
 		cerr << endl;
 	}
 }
@@ -158,11 +180,12 @@ void Texture3D::printSlice(int index) {
 
 
 /**
- * Disables 3D texturing so other objects will not be textured.
+ * Disables 3D texturing on the unit so other objects will not be textured.
  */
 void Texture3D::remove() {
 	
 	// Disable texturing
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glDisable(GL_TEXTURE_3D);
 }
 

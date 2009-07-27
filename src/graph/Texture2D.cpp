@@ -51,6 +51,7 @@ void Texture2D::associate() {
 	Texture::associate();
 	
 	// Activate textures
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(GL_TEXTURE_2D);
 	load();
 }
