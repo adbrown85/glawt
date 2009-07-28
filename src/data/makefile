@@ -13,7 +13,11 @@ include $(GANDER)/src/globals.mak
 include $(GANDER)/src/module.mak
 
 
-# Dependencies
-Vector.o :
-Matrix.o : Vector.o
-Quaternion.o : Matrix.o Vector.o
+# General
+Vector.o:
+Matrix.o: Vector.o
+Quaternion.o: Matrix.o Vector.o
+
+# Volume
+Sequence.o:
+Slice.o: Sequence.o
