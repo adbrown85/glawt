@@ -28,14 +28,15 @@ class Dataset {
 		~Dataset();
 		void print() const;
 		
-		unsigned char* getUByteData() const {return ubyteData;}
+		void* getData() const;
 		int getDepth() const {return depth;}
 		float* getFloatData() const {return floatData;}
 		int getHeight() const {return height;}
 		short* getShortData() const {return shortData;}
-		unsigned short* getUShortData() const {return ushortData;}
 		GLenum getTypeEnum() const {return typeEnum;}
 		string getTypeString() const {return typeString;}
+		unsigned char* getUByteData() const {return ubyteData;}
+		unsigned short* getUShortData() const {return ushortData;}
 		int getWidth() const {return width;}
 	
 	

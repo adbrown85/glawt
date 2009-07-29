@@ -17,27 +17,33 @@ void init(string);
 int main(int argc,
          char *argv[]) {
 	
-	Texture3D *texture;
-	
-	// Test
-	init("Texture3D");
-	
-	// Create texture
-	texture = new Texture3D("input/alpha4x4.dat");
-	texture->associate();
-	
-	// Attributes
-	cerr << "Attributes:" << endl;
-	texture->print();
-	
-	// Slices
-	cerr << "\nSlices:" << endl;
-	for (int i=0; i<texture->getWidth(); ++i) {
-		texture->printSlice(i);
-		cerr << endl;
+	// Handle arguments
+	if (argc != 2) {
+		cerr << "Usage: " << argv[0]
+		     << " <filename> " << endl;
+		exit(1);
 	}
 	
-	// Start display
+	// Initialize OpenGL
+	init("Texture3D");
+	
+	try {
+		
+		// Create texture
+		Texture3D texture(argv[1]);
+		texture.associate();
+		
+		// Print
+		cout << "Attributes:" << endl;
+		texture.print();
+		cout << "Showing cross-section at p=0.5:" << endl;
+	}
+	catch (char const *e) {
+		cerr << e << endl;
+		exit(1);
+	}
+	
+	// Start OpenGL
 	glutDisplayFunc(display);
 	glutMainLoop();
 }
@@ -90,16 +96,16 @@ void display(void) {
 	// Draw
 	glBegin(GL_QUADS); {
 		glColor4f(1.0, 1.0, 1.0, 1.0);
-		glTexCoord2f(1.0, 1.0);
+		glTexCoord3f(1.0, 1.0, 0.5);
 		glVertex3f( 1.0,  1.0, 0.0);
 		glColor4f(1.0, 1.0, 1.0, 1.0);
-		glTexCoord2f(0.0, 1.0);
+		glTexCoord3f(0.0, 1.0, 0.5);
 		glVertex3f(-1.0,  1.0, 0.0);
 		glColor4f(1.0, 1.0, 1.0, 1.0);
-		glTexCoord2f(0.0, 0.0);
+		glTexCoord3f(0.0, 0.0, 0.5);
 		glVertex3f(-1.0, -1.0, 0.0);
 		glColor4f(1.0, 1.0, 1.0, 1.0);
-		glTexCoord2f(1.0, 0.0);
+		glTexCoord3f(1.0, 0.0, 0.5);
 		glVertex3f( 1.0, -1.0, 0.0);
 	} glEnd();
 	

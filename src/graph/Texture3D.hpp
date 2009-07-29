@@ -8,12 +8,11 @@
 #define TEXTURE3D_HPP
 #include <cstdlib>
 #include <iomanip>
-#include <fstream>
 #include <iostream>
 #include <string>
+#include "Dataset.hpp"
 #include "Texture.hpp"
 using namespace std;
-typedef unsigned char byte;
 
 
 
@@ -24,25 +23,21 @@ class Texture3D : public Texture {
 		
 		Texture3D(string filename,
 		          string name="");
-		~Texture3D();
-		virtual void associate();
 		virtual void apply();
-		void printSlice(int slice);
+		virtual void associate();
 		virtual void remove();
 		
-		int getPitch() {return pitch;}
-		int getWidth() {return width;}
+		int getDepth() {return dataset.getDepth();}
+		int getHeight() {return dataset.getHeight();}
+		int getWidth() {return dataset.getWidth();}
 	
 	
 	private:
 		
-		GLuint id;
-		int pitch, width;
-		byte *data;
+		Dataset dataset;
+		GLuint handle;
 		
 		Texture3D();
-		void allocate();
-		void deallocate();
 		void load();
 };
 

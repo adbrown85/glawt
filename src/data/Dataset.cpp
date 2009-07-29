@@ -81,6 +81,25 @@ void Dataset::checkHeader() {
 
 
 /**
+ * Returns the data as a generic void pointer.
+ */
+void* Dataset::getData() const {
+	
+	switch (typeEnum) {
+		case GL_FLOAT :
+			return static_cast<void*>(floatData);
+		case GL_SHORT :
+			return static_cast<void*>(shortData);
+		case GL_UNSIGNED_BYTE :
+			return static_cast<void*>(ubyteData);
+		case GL_UNSIGNED_SHORT :
+			return static_cast<void*>(ushortData);
+	}
+}
+
+
+
+/**
  * Sets 'count' and allocates one of the data arrays.
  */
 void Dataset::initData() {
