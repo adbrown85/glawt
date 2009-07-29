@@ -8,10 +8,10 @@
 #define SLICE_HPP
 #include <cstdlib>
 #include <fstream>
+#include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
-#include "Sequence.hpp"
-typedef unsigned char byte;
+#include "Dataset.hpp"
 
 
 
@@ -20,25 +20,27 @@ class Slice {
 	
 	public :
 		
-		Slice(Sequence *sequence,
-		      int width,
-		      int number);
-		~Slice();
-		void printData();
-		unsigned short readShort(ifstream &file);
+		Slice(Dataset *dataset,
+		      int index);
+		void draw();
+		void next();
+		void previous();
 		
-		unsigned short* getData() {return data;}
-		int getWidth() {return width;}
+		int getIndex() {return index;}
 	
 	
 	private:
 		
-		unsigned short *data;
-		int number, size, width;
-		Sequence *sequence;
+		GLenum type;
+		int height, index, length, total, width;
+		Dataset *dataset;
 		
 		Slice();
-		void load();
+		void drawAsFloat(int offset);
+		void drawAsShort(int offset);
+		void drawAsUByte(int offset);
+		void drawAsUShort(int offset);
+		void initType();
 };
 
 

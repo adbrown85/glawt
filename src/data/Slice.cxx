@@ -4,14 +4,15 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <cstring>
 #include <GL/glut.h>
 #include "Slice.hpp"
 void display(void);
 void init(string);
-void newSlice(int offset);
 void special(int,int,int);
-int number=0, width=512;
-Sequence *sequence;
+Dataset *dataset=NULL;
+float xText, yText;
+int height, width;
 Slice *slice=NULL;
 
 
@@ -19,13 +20,25 @@ Slice *slice=NULL;
 int main(int argc,
          char *argv[]) {
 	
-	// Initialize
-	init("Slice");
+	// Handle arguments
+	if (argc != 2) {
+		cerr << "Usage: " << argv[0] << " <filename>" << endl;
+		exit(1);
+	}
 	
-	// Create sequence and slice
 	try {
-		sequence = new Sequence("/home/andy/Desktop/bunny");
-		newSlice(+1);
+		
+		// Create sequence and slice
+		dataset = new Dataset(argv[1]);
+		dataset->print();
+		slice = new Slice(dataset, 0);
+		
+		// Initialize display
+		width = dataset->getWidth();
+		height = dataset->getHeight();
+		xText = ((float)width - 15) / width;
+		yText = ((float)height - 30) / height;
+		init("Slice");
 	}
 	catch (char const *e) {
 		cerr << e << endl;
@@ -40,43 +53,23 @@ int main(int argc,
 
 
 
-void newSlice(int direction) {
-	
-	// Delete old slice
-	if (slice != NULL)
-		delete slice;
-	
-	// Find new number based on direction
-	if (direction < 0) {
-		if (number == 1)
-			number = sequence->getSize();
-		else
-			--number;
-	}
-	else {
-		if (number == sequence->getSize())
-			number = 1;
-		else
-			++number;
-	}
-	
-	// Make new slice
-	slice = new Slice(sequence, width, number);
-}
-
-
-
 /**
  * GLUT display callback.
  */
 void display(void) {
 	
-	// Draw
-	glDrawPixels(slice->getWidth(),
-	             slice->getWidth(),
-	             GL_LUMINANCE,
-	             GL_UNSIGNED_SHORT,
-	             slice->getData());
+	char buffer[4];
+	
+	// Draw slice
+	glRasterPos2f(-1.00, -1.00);
+	slice->draw();
+	
+	// Add index
+	glRasterPos2f(-xText, +yText);
+	sprintf(buffer, "%d", slice->getIndex());
+	for (int i=0; i<strlen(buffer); ++i)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,
+		                    buffer[i]);
 	
 	// Finish
 	glutSwapBuffers();
@@ -103,11 +96,9 @@ void init(string title) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_LUMINANCE);
 	glutInitWindowPosition(50, 300);
-	glutInitWindowSize(width, width);
+	glutInitWindowSize(width, height);
 	glutCreateWindow(title.c_str());
-	
-	// Set up viewport
-	glViewport(0, 0, width, width);
+	glViewport(0, 0, width, height);
 }
 
 
@@ -122,12 +113,12 @@ void special(int key,
 	switch(key) {
 		case GLUT_KEY_UP:
 		case GLUT_KEY_RIGHT:
-			newSlice(+1);
+			slice->next();
 			glutPostRedisplay();
 			break;
 		case GLUT_KEY_DOWN:
 		case GLUT_KEY_LEFT:
-			newSlice(-1);
+			slice->previous();
 			glutPostRedisplay();
 			break;
 	}

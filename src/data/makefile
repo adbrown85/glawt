@@ -19,5 +19,5 @@ Matrix.o: Vector.o
 Quaternion.o: Matrix.o Vector.o
 
 # Volume
-Sequence.o:
-Slice.o: Sequence.o
+Dataset.o:
+Slice.o: Dataset.o

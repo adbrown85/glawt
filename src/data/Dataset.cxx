@@ -13,6 +13,16 @@
 int main(int argc,
          char *argv[]) {
 	
+	string filename;
+	
+	// Handle arguments
+	if (argc != 2) {
+		cerr << "Usage " << argv[0]
+		     << " <filename>" << endl;
+		exit(1);
+	}
+	filename = argv[1];
+	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
@@ -23,7 +33,7 @@ int main(int argc,
 	try {
 		
 		// Create
-		Dataset dataset("input/king.vlb");
+		Dataset dataset(filename);
 		dataset.print();
 	}
 	catch (char const *e) {

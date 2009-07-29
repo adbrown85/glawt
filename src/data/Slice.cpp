@@ -8,81 +8,136 @@
 
 
 
-Slice::Slice(Sequence *sequence,
-             int width,
-             int number) {
+/**
+ * Creates a new 
+ * 
+ * @param dataset
+ *     Pointer to the volume data.
+ * @param index
+ *     Index into the %Dataset.
+ */
+Slice::Slice(Dataset *dataset,
+             int index) {
 	
-	// Initialize attributes
-	this->sequence = sequence;
-	this->width = width;
-	this->number = number;
+	// Basics
+	this->dataset = dataset;
+	this->index = index;
+	this->type = dataset->getTypeEnum();
 	
-	// Create and load array
-	size = width * width;
-	data = new unsigned short[size];
-	load();
+	// Dimensions
+	total = dataset->getDepth();
+	width = dataset->getWidth();
+	height = dataset->getHeight();
+	length = width * height;
 }
 
 
 
 /**
- * Deallocates the data array for this slice.
+ * Draws a slice to the screen.
  */
-Slice::~Slice() {
+void Slice::draw() {
 	
-	// Delete
-	if (data != NULL)
-		delete[] data;
-}
-
-
-
-/**
- * Loads the data from a file into the data array.
- */
-void Slice::load() {
+	int offset;
 	
-	ifstream file;
-	string filename;
+	// Calculate position for slice
+	offset = index * length;
 	
-	// Get the filename
-	filename = sequence->getFilename(number);
-	cerr << filename << endl;
-	file.open(filename.c_str(), ios_base::binary);
-	if (!file)
-		throw "Gander,Slice: Could not open file.";
-	
-	// Read data
-	for (int i=size-1; i>=0; --i)
-		data[i] = readShort(file);
-}
-
-
-
-unsigned short Slice::readShort(ifstream &file) {
-	
-	unsigned short bytes[2];
-	
-	// Read two bytes
-	for (int i=0; i<2; ++i)
-		bytes[i] = file.get();
-	
-	// Make short
-	return (bytes[1] << 8) | bytes[0];
-}
-
-
-
-/**
- * Prints the slice's data array to standard error as a matrix.
- */
-void Slice::printData() {
-	
-	for (int i=0; i<width; ++i) {
-		cerr << "  ";
-		for (int j=0; j<width; ++j)
-			cerr << setw(4) << (int)data[i*width+j];
-		cerr << endl;
+	// Draw pixels according to type
+	switch (type) {
+		case GL_FLOAT :
+			drawAsFloat(offset);
+			break;
+		case GL_SHORT :
+			drawAsShort(offset);
+			break;
+		case GL_UNSIGNED_BYTE : 
+			drawAsUByte(offset);
+			break;
+		case GL_UNSIGNED_SHORT : 
+			drawAsUShort(offset);
+			break;
 	}
 }
 
+
+
+/**
+ * Draws the pixels as 32-bit, floating-point numbers.
+ */
+void Slice::drawAsFloat(int offset) {
+	
+	float *data;
+	
+	// Get data and draw 
+	data = dataset->getFloatData() + offset;
+	glDrawPixels(width, height, GL_LUMINANCE, GL_FLOAT, data);
+}
+
+
+
+/**
+ * Draws the pixels as signed, 16-bit integers.
+ */
+void Slice::drawAsShort(int offset) {
+	
+	short *data;
+	
+	// Get data and draw 
+	data = dataset->getShortData() + offset;
+	glDrawPixels(width, height, GL_LUMINANCE, GL_SHORT, data);
+}
+
+
+
+/**
+ * Draws the pixels as unsigned, 8-bit integers.
+ */
+void Slice::drawAsUByte(int offset) {
+	
+	unsigned char *data;
+	
+	// Get data and draw
+	data = dataset->getUByteData() + offset;
+	glDrawPixels(width, height, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+}
+
+
+
+/**
+ * Draws the slice as unsigned, 16-bit integers.
+ */
+void Slice::drawAsUShort(int offset) {
+	
+	unsigned short *data;
+	
+	// Draw data
+	data = dataset->getUShortData() + offset;
+	glDrawPixels(width, height, GL_LUMINANCE, GL_UNSIGNED_SHORT, data);
+}
+
+
+
+/**
+ * Updates the slice as the next one in the %Dataset.
+ */
+void Slice::next() {
+	
+	// Update index
+	if (index == total-1)
+		index = -1;
+	++index;
+}
+
+
+
+/**
+ * Updates the slice as the previous one in the %Dataset.
+ */
+void Slice::previous() {
+	
+	// Update index
+	if (index == 0)
+		index = total;
+	--index;
+}
