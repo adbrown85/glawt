@@ -1,0 +1,20 @@
+<!--
+ * raydirection.xml 
+ *     Visualizes ray direction.
+ * 
+ * Author
+ *     Andy Brown <andybrown85@gmail.com>
+-->
+
+
+<program>
+	<shader type="fragment" file="glsl/raydirection.frag" />
+	<shader type="vertex" file="glsl/world.vert" />
+	<uniform type="int" name="width" value="640">
+	<uniform type="int" name="height" value="480">
+		<translate x="0.0" y="0.0" z="0.0">
+			<shape type="Box" size="2.0" style="3D" />
+		</translate>
+	</uniform>
+	</uniform>
+</program>

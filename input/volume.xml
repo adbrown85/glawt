@@ -1,7 +1,7 @@
 <!-- sampler.xml -->
 
 
-<texture type="3D" file="input/alpha4x4.dat" name="texture">
+<texture type="3D" file="input/bear.vlb" name="texture">
 	<program>
 		<shader type="fragment" file="glsl/volume.glsl" />
 		<uniform type="sampler3D" name="volume" link="texture">
