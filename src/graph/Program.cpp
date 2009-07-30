@@ -40,6 +40,7 @@ void Program::associate() {
 }
 
 
+
 /**
  * Links the program once other nodes have associated with it.
  */
@@ -55,9 +56,35 @@ void Program::finalize() {
 	if (linked)
 		glUseProgram(name);
 	else {
-		cerr << "Program: Could not link the shader program.";
+		cerr << "Gander,Program: Could not link the shader program." << endl;
+		cerr << "Gander,Program: Printing log..." << endl;
+		log();
 		exit(1);
 	}
+}
+
+
+
+/**
+ * Prints the log for this program.
+ */
+void Program::log() const {
+	
+	GLchar *log;
+	GLint count=0, returned=0;
+	
+	// Get length
+	glGetProgramiv(name, GL_INFO_LOG_LENGTH, &count);
+	
+	// Print the log
+	log = new GLchar[count+1];
+	glGetProgramInfoLog(name, count, &returned, log);
+	log[returned] = '\0';
+	if (strlen(log) != 0)
+		cerr << log << endl;
+	
+	// Finish
+	delete[] log;
 }
 
 

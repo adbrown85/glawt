@@ -7,6 +7,7 @@
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
 #include <cstdlib>
+#include <cstring>
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
@@ -35,6 +36,8 @@ class Program : public Node,
 	private:
 		
 		GLuint name;
+		
+		void log() const;
 };
 
 
