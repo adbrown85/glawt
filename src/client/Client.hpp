@@ -18,9 +18,7 @@
 #include "Menu.hpp"
 #include "Mouse.hpp"
 #include "Scene.hpp"
-using std::cerr;
-using std::endl;
-using std::string;
+using namespace std;
 
 
 
@@ -71,7 +69,7 @@ class Client {
 	private :
 		
 		Scene scene;
-		string filename;
+		string filename, title;
 };
 
 

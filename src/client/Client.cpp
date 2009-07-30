@@ -49,7 +49,9 @@ void Client::start() {
 	
 	// Start display
 	scene.setFilename(filename);
-	Display::start("Gander", &scene, &interpreter);
+	title = "Gander [";
+	title += filename + "]";
+	Display::start(title, &scene, &interpreter);
 }
 
 
