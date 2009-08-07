@@ -15,6 +15,7 @@
 #include "Scene.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
+#include "Square.hpp"
 #include "Texture.hpp"
 #include "Texture2D.hpp"
 #include "Texture3D.hpp"
@@ -25,6 +26,11 @@ using namespace std;
 
 
 
+/**
+ * @brief
+ *     Creates items from XML tags and adds them to the scene.
+ * @ingroup backend
+ */
 class Factory {
 	
 	
@@ -49,6 +55,7 @@ class Factory {
 		
 		void initContainers();
 		bool isContainer(string name);
+		string tolower(string str);
 };
 
 

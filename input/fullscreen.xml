@@ -1,0 +1,10 @@
+<!-- fullscreen.xml -->
+
+
+<texture type="2D" file="input/crate.jpg" name="crate">
+	<program>
+		<shader type="fragment" file="glsl/coordinates.glsl"/>
+		<shape type="square" fullscreen="true"/>
+	</program>
+</texture>
+

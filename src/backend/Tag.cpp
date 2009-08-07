@@ -53,6 +53,60 @@ void Tag::error(string key) const {
 
 
 /**
+ * Throw an exception if an attribute can't be converted to a type.
+ * 
+ * @param key
+ *     Name of the attribute.
+ */
+void Tag::error(string key,
+                string type) const {
+	
+	string msg="  In tag named '";
+	
+	// Build and throw message
+	msg += name
+	     + "', attribute '"
+	     + key
+	     + "' cannot be parsed as '"
+	     + type;
+	     + "'!";
+	throw msg.c_str();
+}
+
+
+/**
+ * Gets the value of an attribute as a boolean.
+ * 
+ * @param key
+ *     Name of the attribute.
+ * @param value
+ *     Boolean to store the value in.
+ */
+void Tag::get(const string &key,
+              bool &value,
+              bool required) const {
+	
+	map<string,string>::const_iterator ai;
+	
+	// Find and convert
+	ai = attributes.find(key);
+	if (ai != attributes.end()) {
+		if (ai->second.compare("true") == 0)
+			value = true;
+		else if (ai->second.compare("false") == 0)
+			value = false;
+		else
+			error(key, "bool");
+	}
+	else if (!required)
+		value = false;
+	else
+		error(key);
+}
+
+
+
+/**
  * Gets the value of an attribute as a character.
  * 
  * @param key

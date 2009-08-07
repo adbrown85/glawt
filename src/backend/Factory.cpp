@@ -64,18 +64,29 @@ void Factory::createShader(Tag &tag) {
  */
 void Factory::createShape(Tag &tag) {
 	
+	bool fullscreen;
 	float size;
 	Shape *shape;
 	string style, type;
 	
 	// Create
-	tag.get("size", size);
 	tag.get("type", type);
+	tag.get("size", size, false);
 	tag.get("style", style, false);
-	if (type.compare("Box") == 0) {
+	tag.get("fullscreen", fullscreen, false);
+	type = tolower(type);
+	if (type.compare("box") == 0) {
 		shape = new Box(size);
 		if (style.compare("3D") == 0)
 			shape->setStyle(GL_TEXTURE_3D);
+	}
+	else if (type.compare("square") == 0) {
+		if (fullscreen)
+			shape = new Square(2.0, true);
+		else if (size != 0.0)
+			shape = new Square(size);
+		else
+			shape = new Square(1.0);
 	}
 	else
 		throw "Shape type not supported.";
@@ -220,3 +231,18 @@ bool Factory::isContainer(string name) {
 	return si != containers.end();
 }
 
+
+
+/**
+ * Converts each character of a string to lowercase.
+ */
+string Factory::tolower(string str) {
+	
+	int length;
+	
+	// Convert each character
+	length = str.length();
+	for (int i=0; i<length; ++i)
+		str[i] = std::tolower(str[i]);
+	return str;
+}

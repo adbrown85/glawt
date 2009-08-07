@@ -31,6 +31,9 @@ class Tag {
 		Tag();
 		void clear();
 		void get(const string &key,
+		         bool &value,
+		         bool required=true) const;
+		void get(const string &key,
 		         char &value,
 		         bool required=true) const;
 		void get(const string &key,
@@ -50,6 +53,8 @@ class Tag {
 	private:
 		
 		void error(string key) const;
+		void error(string key,
+		           string type) const;
 };
 
 #endif

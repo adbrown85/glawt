@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	producer.open(&scene, Command::OPEN, "input/sampler.xml");
+	producer.open(&scene, Command::OPEN, "input/fullscreen.xml");
 	scene.print();
 	
 	// Finish
