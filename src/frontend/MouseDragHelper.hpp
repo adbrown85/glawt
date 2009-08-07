@@ -22,6 +22,11 @@ using std::vector;
 
 
 
+/**
+ * @brief
+ *     Handles mouse dragging actions for %Mouse.
+ * @ingroup frontend
+ */
 class MouseDragHelper : public MouseHelper {
 	
 	

@@ -22,6 +22,11 @@ using std::pair;
 
 
 
+/**
+ * @brief
+ *     Handles mouse clicking actions for %Mouse.
+ * @ingroup frontend
+ */
 class MouseClickHelper : public MouseHelper {
 	
 	

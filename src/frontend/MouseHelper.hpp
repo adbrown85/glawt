@@ -19,6 +19,11 @@ using std::multimap;
 
 
 
+/**
+ * @brief
+ *     Generic handler for a mouse action.
+ * @ingroup frontend
+ */
 class MouseHelper : public Control {
 	
 	

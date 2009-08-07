@@ -24,7 +24,8 @@ using namespace std;
 
 
 /**
- * Paints all the items to the screen or pick buffer.
+ * @brief
+ *     Paints all the items to the screen or pick buffer.
  * 
  * @ingroup frontend
  * @warning Does not flush to the buffer.
