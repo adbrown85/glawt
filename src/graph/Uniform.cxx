@@ -35,10 +35,12 @@ int main(int argc,
 	
 	// Create objects
 	try {
+		cout << "Creating objects..." << endl;
 		textures[0] = new Texture2D("input/crate.jpg", "crate");
 		textures[1] = new Texture2D("input/stone.jpg", "stone");
 		shader = new Shader("fragment", "glsl/texture.glsl");
 		uniform = new Uniform("sampler2D", "primary", 0, "stone");
+		uniform->print();
 	}
 	catch (const char *e) {
 		cerr << e << endl;

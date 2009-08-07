@@ -28,20 +28,17 @@ class Node {
 		Node();
 		void addChild(Node *child);
 		virtual void associateTree();
-		virtual void dump() const;
-		virtual void dumpTree() const;
-		virtual void dumpTree(int level) const;
 		virtual void finalizeTree();
 		virtual void print() const;
 		virtual void printTree() const;
-		virtual void printTree(ostream &stream,
-		                       int level) const;
+		virtual void printTree(int level) const;
+		virtual string toString() const;
+		
+		static void print(const Node *node);
 		
 		vector<Node*> getChildren() const {return children;}
 		string getClassName() const {return className;}
 		Node* getParent() const {return parent;}
-		friend ostream& operator<<(ostream &stream,
-		                           const Node &node);
 	
 	
 	protected :

@@ -16,10 +16,11 @@ include $(GANDER)/src/module.mak
 # Basic node
 Node.o:
 
-# Drawable nodes
-Shape.o: Node.o Translation.o
+# Drawable/Selectable nodes
+Shape.o: Node.o
 Box.o: Shape.o
 Outline.o: Shape.o
+Square.o: Shape.o
 
 # Applicable nodes
 Transformation.hpp: Node.o

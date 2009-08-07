@@ -11,6 +11,7 @@
 #include <fstream>
 #include <GL/glut.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "Node.hpp"
@@ -36,14 +37,11 @@ class Shader : public Node {
 		void finalize() {}
 		void list() const;
 		void log() const;
-		void print() const;
+		string toString() const;
 		
 		GLuint getName() const {return name;}
 		string getFilename() const {return filename;}
 		string getType() const {return type;}
-		
-		friend ostream& operator<<(ostream& stream,
-		                           const Shader& shader);
 	
 	
 	private :

@@ -10,8 +10,11 @@
 
 /**
  * Creates a shape with a 2D texture.
+ * 
+ * @param size
+ *     Size of the shape.
  */
-Shape::Shape() {
+Shape::Shape(float size) : Selectable(size) {
 	
 	// Initialize
 	className = "Shape";
@@ -20,15 +23,17 @@ Shape::Shape() {
 
 
 
-ostream& operator<<(ostream& stream,
-                    const Shape& shape) {
+string Shape::toString() const {
 	
-	string style;
+	string styleStr;
+	stringstream stream;
 	
-	// Format and print
-	style = shape.style==GL_TEXTURE_2D ? "2D" : "3D";
-	stream << static_cast<Node>(shape) << " "
-	       << static_cast<Selectable>(shape) << ", "
-	       << "sty=" << style;
-	return stream;
+	// Format
+	styleStr = style==GL_TEXTURE_2D ? "2D" : "3D";
+	
+	// Make stream
+	stream << Node::toString();
+	stream << " " << Selectable::toString();
+	stream << " sty='" << styleStr << "'";
+	return stream.str();
 }

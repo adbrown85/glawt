@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <typeinfo>
 #include "Applicable.hpp"
@@ -18,6 +19,11 @@ using namespace std;
 
 
 
+/**
+ * @brief
+ *     OpenGL texture node.
+ * @ingroup graph
+ */
 class Texture : public Node,
                 public Applicable {
 	
@@ -30,14 +36,12 @@ class Texture : public Node,
 		virtual void associate();
 		virtual void print() const;
 		virtual void remove() = 0;
+		virtual string toString() const;
 		
 		string getFilename() const {return filename;}
 		string getName() const {return name;}
 		string getType() const {return type;}
 		int getUnit() const {return unit;}
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Texture &texture);
 	
 	
 	protected:

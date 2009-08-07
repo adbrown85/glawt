@@ -52,58 +52,6 @@ void Node::associateTree() {
 
 
 /**
- * Dumps the Node's attributes to standard error.
- */
-void Node::dump() const {
-	
-	// Add to stream
-	cerr << "  "
-	     << "cn=" << className << ", "
-	     << "add=" << this << ", "
-	     << "par=" << parent << ", "
-	     << "chi=" << children.size()
-	     << endl;
-}
-
-
-
-/**
- * Recursively dumps attributes to standard error.
- */
-void Node::dumpTree() const {
-	
-	// Dump with some indent
-	dumpTree(0);
-}
-
-
-
-/**
- * Recursively dumps attributes to standard error.
- * 
- * @param level
- *     Level of recursion used for indenting.
- */
-void Node::dumpTree(int level) const {
-	
-	int numberOfChildren;
-	string indent;
-	
-	// Dump self
-	for (int i=0; i<level; ++i)
-		indent += "  ";
-	cerr << indent;
-	dump();
-	
-	// Dump each child
-	numberOfChildren = children.size();
-	for (int i=0; i<numberOfChildren; ++i)
-		children[i]->dumpTree(level+1);
-}
-
-
-
-/**
  * Allow nodes to finish preparing themselves after associating with others.
  */
 void Node::finalizeTree() {
@@ -125,7 +73,18 @@ void Node::finalizeTree() {
 void Node::print() const {
 	
 	// Print with indent
-	cout << "  " << *this << endl;
+	print(this);
+}
+
+
+
+/**
+ * Prints important attributes to standard out with a small indent.
+ */
+void Node::print(const Node *node) {
+	
+	// Print with indent
+	cout << "  " << node->toString() << endl;
 }
 
 
@@ -136,21 +95,18 @@ void Node::print() const {
 void Node::printTree() const {
 	
 	// Print with indent
-	printTree(cout, 0);
+	printTree(0);
 }
 
 
 
 /**
- * Recursively prints important attributes to a stream.
+ * Recursively prints important attributes.
  * 
- * @param stream
- *     Output stream to print to.
  * @param level
  *     Level of recursion used for indenting.
  */
-void Node::printTree(ostream &stream,
-                     int level) const {
+void Node::printTree(int level) const {
 	
 	int count;
 	string indent;
@@ -158,20 +114,19 @@ void Node::printTree(ostream &stream,
 	// Print self
 	for (int i=0; i<level; ++i)
 		indent += "  ";
-	stream << indent;
-	print();
+	cout << indent;
+	print(this);
 	
 	// Print each child
 	count = children.size();
 	for (int i=0; i<count; ++i)
-		children[i]->printTree(stream, level+1);
+		children[i]->printTree(level+1);
 }
 
 
 
-ostream& operator<<(ostream &stream,
-                    const Node &node) {
+string Node::toString() const {
 	
-	stream << node.className;
-	return stream;
+	// Make string
+	return className;
 }

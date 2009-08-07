@@ -10,9 +10,26 @@ using namespace std;
 
 
 
+/**
+ * Fake class providing stubs for abstract methods.
+ */
+class FakeSelectable : public Selectable {
+	public:
+		void draw() const {}
+};
+
+
+
+void print(const FakeSelectable &item) {
+	
+	cout << "  " << item.toString() << endl;
+}
+
+
+
 int main() {
 	
-	Selectable item;
+	FakeSelectable item;
 	
 	// Start
 	cout << endl;
@@ -24,21 +41,21 @@ int main() {
 	// Initialize
 	cout << boolalpha;
 	cout << "Original: " << endl;
-	cout << "  " << item << endl;
+	print(item);
 	
 	// Select, deselect
 	cout << "Select: " << endl;
 	item.select();
-	cout << "  " << item << endl;
+	print(item);
 	cout << "Deselect: " << endl;
 	item.deselect();
-	cout << "  " << item << endl;
+	print(item);
 	
 	// Toggle
 	cout << "Toggle: " << endl;
 	for (int i=0; i<5; ++i) {
 		item.toggleSelected();
-		cout << "  " << item << endl;
+		print(item);
 	}
 	
 	// Finish

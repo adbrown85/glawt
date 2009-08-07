@@ -4,15 +4,15 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __DRAWABLE_HPP__
-#define __DRAWABLE_HPP__
+#ifndef DRAWABLE_HPP
+#define DRAWABLE_HPP
 #include <cstdlib>
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include <string>
 #include "Identifiable.hpp"
-using std::ostream;
-using std::string;
+using namespace std;
 
 
 
@@ -27,19 +27,17 @@ class Drawable : public Identifiable {
 	
 	public :
 		
-		Drawable();
+		Drawable(float size=1.0);
 		virtual void copySizeOf(const Drawable &other);
-		virtual void draw() const /* = 0 */ {;}
+		virtual void draw() const = 0;
 		virtual void hide();
 		virtual bool isVisible() const;
 		virtual void show();
 		virtual void toggleVisibility();
+		virtual string toString() const;
 		
 		virtual float getSize() {return size;}
 		virtual void setSize(float size) {this->size = size;}
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Drawable &item);
 	
 	
 	protected:

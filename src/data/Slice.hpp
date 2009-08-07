@@ -15,6 +15,11 @@
 
 
 
+/**
+ * @brief
+ *     Utility for accessing and drawing a slice of a volume.
+ * @ingroup data
+ */
 class Slice {
 	
 	

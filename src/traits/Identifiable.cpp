@@ -49,9 +49,11 @@ unsigned int Identifiable::getID() const {
 
 
 
-ostream& operator<<(ostream& stream,
-                    const Identifiable& item) {
+string Identifiable::toString() const {
 	
-	stream << "id=" << item.id;
-	return stream;
+	stringstream stream;
+	
+	// Make string
+	stream << "id='" << id << "'";
+	return stream.str();
 }

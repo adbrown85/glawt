@@ -10,8 +10,11 @@
 
 /**
  * Initializes the items as deselected.
+ * 
+ * @param size
+ *     Size of the object.
  */
-Selectable::Selectable() {
+Selectable::Selectable(float size) : Drawable(size) {
 	
 	selected = false;
 }
@@ -60,16 +63,16 @@ void Selectable::toggleSelected() {
 
 
 
-ostream& operator<<(ostream &stream,
-                    const Selectable &item) {
+string Selectable::toString() const {
 	
-	string selected;
+	char selectedChar;
+	stringstream stream;
 	
 	// Format
-	selected = item.selected ? "T" : "F";
+	selectedChar = selected ? 'T' : 'F';
 	
-	// Print
-	stream << static_cast<Drawable>(item) << ", "
-	       << "sel=" << selected;
-	return stream;
+	// Make string
+	stream << Drawable::toString();
+	stream << " sel='" << selectedChar << "'";
+	return stream.str();
 }

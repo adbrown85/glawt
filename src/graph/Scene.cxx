@@ -29,7 +29,7 @@ int main() {
 	// Print
 	cout << "Nodes: " << endl;
 	for (int i=0; i<NUMBER_OF_NODES; ++i)
-		cout << "  " << nodes[i] << endl;
+		nodes[i].print();
 	
 	// Children
 	cout << "Adding nodes to scene..." << endl;

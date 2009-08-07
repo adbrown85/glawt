@@ -5,7 +5,9 @@ Scene
 Selection
 Shader
 Shape
+Texture
 Texture2D
 Texture3D
+Translation
 Uniform
 

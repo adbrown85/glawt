@@ -181,22 +181,13 @@ void Shader::log() const {
 
 
 
-/**
- * Prints the shader's attributes with a small indent.
- */
-void Shader::print() const {
+string Shader::toString() const {
 	
-	cout << "  " << *this << endl;
-}
-
-
-
-ostream& operator<<(ostream& stream,
-                    const Shader& shader) {
+	stringstream stream;
 	
-	stream << static_cast<Node>(shader) << " "
-	       << "type='" << shader.type << "' "
-	       << "file='" << shader.filename << "' "
-	       << "name='" << shader.name << "'";
-	return stream;
+	stream << Node::toString();
+	stream << " type='" << type << "'"
+	       << " file='" << filename << "'"
+	       << " name='" << name << "'";
+	return stream.str();
 }

@@ -4,14 +4,14 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __SELECTABLE_HPP__
-#define __SELECTABLE_HPP__
+#ifndef SELECTABLE_HPP
+#define SELECTABLE_HPP
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "Drawable.hpp"
-using std::ostream;
-using std::string;
+using namespace std;
 
 
 
@@ -26,14 +26,12 @@ class Selectable : public Drawable {
 	
 	public :
 		
-		Selectable();
-		friend ostream& operator<<(ostream &stream,
-		                           const Selectable &item);
-		
+		Selectable(float size=1.0);
 		virtual void deselect();
 		virtual bool isSelected() const;
 		virtual void select();
 		virtual void toggleSelected();
+		virtual string toString() const;
 	
 	
 	protected:

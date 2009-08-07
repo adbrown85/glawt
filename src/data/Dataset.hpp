@@ -19,6 +19,11 @@ using namespace std;
 
 
 
+/**
+ * @brief
+ *     Loads and holds volumetric data.
+ * @ingroup data
+ */
 class Dataset {
 	
 	

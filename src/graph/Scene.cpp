@@ -62,16 +62,6 @@ Matrix Scene::getRotationMatrix() const {
 
 
 /**
- * Prints basic information about all nodes to standard error.
- */
-void Scene::dump() {
-	
-	rootNode.dumpTree();
-}
-
-
-
-/**
  * Allows nodes in graph to associate and finalize themselves.
  */
 void Scene::prepare() {

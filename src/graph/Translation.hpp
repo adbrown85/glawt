@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include "Transformation.hpp"
 #include "Vector.hpp"
 using namespace std;
@@ -26,18 +28,15 @@ class Translation : public Transformation,
 	
 	public :
 		
-		Translation();
-		Translation(float x,
-		            float y,
-		            float z);
+		Translation(float x=0.0,
+		            float y=0.0,
+		            float z=0.0);
 		
 		void add(const Vector &B);
 		void apply();
 		virtual void print() const;
 		void remove();
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Translation &translation);
+		string toString() const;
 };
 
 

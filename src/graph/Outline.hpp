@@ -4,8 +4,8 @@
  * Author
  *     Andy Brown <adb1413@rit.edu>
  */
-#ifndef __OUTLINE_HPP__
-#define __OUTLINE_HPP__
+#ifndef OUTLINE_HPP
+#define OUTLINE_HPP
 #include <iostream>
 #include <GL/glut.h>
 #include "Shape.hpp"

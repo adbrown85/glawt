@@ -9,12 +9,15 @@
 
 
 /**
- * Initializes the item as hidden and sets the size to 1.0.
+ * Initializes the item as hidden and sets the size.
+ * 
+ * @param size
+ *     Size of the object.
  */
-Drawable::Drawable() {
+Drawable::Drawable(float size) {
 	
-	visible = true;
-	size = 1.0;
+	this->visible = true;
+	this->size = size;
 }
 
 
@@ -72,22 +75,17 @@ void Drawable::toggleVisibility() {
 
 
 
-ostream& operator<<(ostream &stream,
-                    const Drawable &item) {
+string Drawable::toString() const {
 	
-	using namespace std;
-	string visibility;
+	char visibleChar;
+	stringstream stream;
 	
 	// Format
-	visibility = item.visible ? "T" : "F";
+	visibleChar = visible ? 'T' : 'F';
 	
-	// Print
-	stream << fixed << setprecision(2);
-	stream << static_cast<Identifiable>(item) << ", "
-	       << "vis=" << visibility << ", "
-	       << "siz=" << item.size;
-	
-	// Finish
-	stream << resetiosflags(ios_base::floatfield) << setprecision(6);
-	return stream;
+	// Make string
+	stream << Identifiable::toString();
+	stream << " vis='" << visibleChar << "'"
+	       << " siz='" << size << "'";
+	return stream.str();
 }

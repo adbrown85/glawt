@@ -152,7 +152,7 @@ bool Uniform::isSupported(string type) {
 
 void Uniform::print() const {
 	
-	cout << "  " << *this << endl;
+	cout << "  " << toString() << endl;
 }
 
 
@@ -188,15 +188,16 @@ void Uniform::verify() {
 
 
 
-ostream& operator<<(ostream& stream,
-                    const Uniform &uniform) {
+string Uniform::toString() const {
+	
+	stringstream stream;
 	
 	// Print
-	stream << static_cast<Node>(uniform) << " "
-	       << "type='" << uniform.type << "' "
-	       << "name='" << uniform.name << "' "
-	       << "value='" << uniform.value << "' "
-	       << "link='" << uniform.link << "'";
-	return stream;
+	stream << Node::toString();
+	stream << " type='" << type << "'"
+	       << " name='" << name << "'"
+	       << " value='" << value << "'"
+	       << " link='" << link << "'";
+	return stream.str();
 }
 

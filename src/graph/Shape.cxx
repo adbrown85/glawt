@@ -12,11 +12,21 @@ using namespace std;
 
 
 /**
+ * Fake class for testing Shape.
+ */
+class FakeShape : public Shape {
+	public:
+		void draw() const {};
+};
+
+
+
+/**
  * Unit test for Shape.
  */
 int main() {
 	
-	Shape items[NUMBER_OF_ITEMS];
+	FakeShape items[NUMBER_OF_ITEMS];
 	
 	// Start
 	cout << endl;
@@ -28,14 +38,14 @@ int main() {
 	// Print
 	cout << "Shapes: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
+		items[i].print();
 	
 	// Style
 	cout << "Setting style of 1..." << endl;
 	items[0].setStyle(GL_TEXTURE_3D);
 	cout << "Shapes: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		cout << "  " << items[i] << endl;
+		items[i].print();
 	
 	// Finish
 	cout << endl;

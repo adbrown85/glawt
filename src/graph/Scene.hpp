@@ -38,7 +38,6 @@ class Scene {
 		Scene();
 		Scene(int width, int height);
 		void add(Node *node);
-		void dump();
 		void reset();
 		void rotate(float angle, float x, float y, float z);
 		void prepare();

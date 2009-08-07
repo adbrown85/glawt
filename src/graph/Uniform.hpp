@@ -38,6 +38,7 @@ class Uniform : public Node,
 		void finalize();
 		void print() const;
 		void remove();
+		string toString() const;
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Uniform &uniform);

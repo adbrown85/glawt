@@ -19,22 +19,12 @@ struct BoxTester : public Box {
 	
 	BoxTester(float size) : Box(size) {}
 	
-	void testColors() {
-		cout << "Colors: " << endl;
+	static void testCoords() {
+		cout << "Coords: " << endl;
 		for (int i=0; i<24; i++) {
 			cout << "  " << setw(2) << i << ":";
 			for (int j=0; j<3; j++)
-				cout << setw(2) << colors[i][j];
-			cout << endl;
-		}
-	}
-	
-	static void testCoordinates() {
-		cout << "Coordinates: " << endl;
-		for (int i=0; i<24; i++) {
-			cout << "  " << setw(2) << i << ":";
-			for (int j=0; j<3; j++)
-				cout << setw(2) << coordinates[i][j];
+				cout << setw(2) << coords[i][j];
 			cout << endl;
 		}
 	}
@@ -87,17 +77,19 @@ int main() {
 	cout << endl;
 	
 	// Create items
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
+	cout << "Creating boxes:" << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		items[i] = new BoxTester(i+1);
+		items[i]->print();
+	}
 	
 	// Static data
-	BoxTester::testCoordinates();
+	BoxTester::testCoords();
 	BoxTester::testIndices();
 	BoxTester::testMap();
 	BoxTester::testPoints();
 	
 	// Object data
-	items[0]->testColors();
 	cout << "Sizes: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
 		cout << "  " << items[i]->getSize() << endl;

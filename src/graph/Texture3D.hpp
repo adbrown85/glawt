@@ -16,6 +16,11 @@ using namespace std;
 
 
 
+/**
+ * @brief
+ *     %Texture nodes for volumes.
+ * @ingroup graph
+ */
 class Texture3D : public Texture {
 	
 	

@@ -12,6 +12,13 @@ using namespace std;
 
 
 
+void print(const Identifiable item) {
+	
+	cout << "  " << item.toString() << endl;
+}
+
+
+
 int main() {
 	
 	Identifiable *identifiable, items[NUMBER_OF_ITEMS];
@@ -26,7 +33,7 @@ int main() {
 	// Check assignment of IDs
 	cout << "Asserting assignment of IDs: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		cout << "  " << items[i] << endl;
+		print(items[i]);
 		assert(items[i].getID() == i);
 	}
 	

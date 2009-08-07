@@ -13,12 +13,15 @@
 #include <vector>
 #include "Applicable.hpp"
 #include "Node.hpp"
-using std::cerr;
-using std::endl;
-using std::vector;
+using namespace std;
 
 
 
+/**
+ * @brief
+ *     GLSL program that %Shaders and %Uniform variables are connected to.
+ * @ingroup graph
+ */
 class Program : public Node,
                 public Applicable {
 	
@@ -29,8 +32,9 @@ class Program : public Node,
 		void apply();
 		void associate();
 		void finalize();
-		GLuint getName() const {return name;}
 		void remove();
+		
+		GLuint getName() const {return name;}
 	
 	
 	private:

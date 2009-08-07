@@ -6,21 +6,8 @@
  */
 #include "Box.hpp"
 bool Box::loaded = false;
-GLfloat Box::coordinates[24][3], Box::points[24][3];
+GLfloat Box::coords[24][3], Box::points[24][3];
 GLubyte Box::indices[24], Box::map[8][3];
-
-
-
-/**
- * Creates a new box and initializes it.
- * 
- * @see initialize
- */
-Box::Box() {
-	
-	// Initialize
-	initialize();
-}
 
 
 
@@ -30,30 +17,36 @@ Box::Box() {
  * @param size
  *     Length of the box's sides.
  */
-Box::Box(float size) {
+Box::Box(float size) : Shape(size) {
 	
-	// Initialize
-	initialize();
-	this->size = size;
+	// Class name
+	className = "Box";
+	
+	// Initialize vertices of class
+	if (!loaded) {
+		initMap();
+		initPoints();
+		initCoords();
+		initIndices();
+		loaded = true;
+	}
 }
 
 
 
 /**
- * Draws the box.
+ * Draws the %Box.
  */
 void Box::draw() const {
 	
 	// Enable arrays
 	glVertexPointer(3, GL_FLOAT, 0, points);
 	if (style == GL_TEXTURE_2D)
-		glTexCoordPointer(3, GL_FLOAT, 0, coordinates);
+		glTexCoordPointer(3, GL_FLOAT, 0, coords);
 	else
 		glTexCoordPointer(3, GL_FLOAT, 0, points);
-	glColorPointer(3, GL_FLOAT, 0, colors);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
 	
 	// Draw vertices
 	glPushMatrix(); {
@@ -65,43 +58,24 @@ void Box::draw() const {
 	// Disable arrays
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
 }
 
 
 
 /**
- * Initializes the Box.
+ * Initializes the %Box classes's static coordinates array.
+ * 
+ * Note two-dimensional coordinates for each face are always created here so 
+ * that if an image is specified as a texture it will appear correctly on each 
+ * face.  When a box is drawn however, if the box's style is GL_TEXTURE_3D the 
+ * box's points will be used instead.
  */
-void Box::initialize() {
+void Box::initCoords() {
 	
-	// Class name
-	className = "Box";
-	
-	// Initialize vertices of class
-	if (!loaded) {
-		initializeMap();
-		initializePoints();
-		initializeCoordinates();
-		initializeIndices();
-		loaded = true;
-	}
-	
-	// Set default colors
-	initializeColors();
-}
-
-
-
-/**
- * Initializes an object's color array.
- */
-void Box::initializeCoordinates() {
-	
-	GLfloat coordinates[4][3] = {{0.0, 0.0, 0.0},
-	                             {0.0, 1.0, 0.0},
-	                             {1.0, 0.0, 0.0},
-	                             {1.0, 1.0, 0.0}};
+	GLfloat coords[4][3] = {{0.0, 0.0, 0.0},
+	                        {0.0, 1.0, 0.0},
+	                        {1.0, 0.0, 0.0},
+	                        {1.0, 1.0, 0.0}};
 	GLubyte map[4][6] = {{ 1,  5,  9, 13, 17, 21},
 	                     { 2,  6, 10, 14, 18, 22},
 	                     { 0,  4,  8, 12, 16, 20},
@@ -113,34 +87,7 @@ void Box::initializeCoordinates() {
 		for (int v=0; v<6; v++) {
 			m = map[i][v];
 			for (int c=0; c<3; c++)
-				this->coordinates[m][c] = coordinates[i][c];
-		}
-	}
-}
-
-
-
-/**
- * Initializes an object's color array.
- */
-void Box::initializeColors() {
-	
-	GLfloat colors[8][3] = {{0.0, 1.0, 1.0},
-	                        {1.0, 1.0, 1.0},
-	                        {0.0, 0.0, 1.0},
-	                        {1.0, 0.0, 1.0},
-	                        {0.0, 1.0, 0.0},
-	                        {1.0, 1.0, 0.0},
-	                        {0.0, 0.0, 0.0},
-	                        {1.0, 0.0, 0.0}};
-	int m;
-	
-	// Copy to class
-	for (int i=0; i<8; i++) {
-		for (int v=0; v<3; v++) {
-			m = map[i][v];
-			for (int c=0; c<3; c++)
-				this->colors[m][c] = colors[i][c];
+				this->coords[m][c] = coords[i][c];
 		}
 	}
 }
@@ -150,23 +97,20 @@ void Box::initializeColors() {
 /**
  * Initializes the indices used to draw the box's faces.
  */
-void Box::initializeIndices() {
-	
-	GLubyte indices[] = { 0,  1,  2,  3,
-	                      4,  5,  6,  7,
-	                      8,  9, 10, 11,
-	                     12, 13, 14, 15,
-	                     16, 17, 18, 19,
-	                     20, 21, 22, 23};
+void Box::initIndices() {
 	
 	// Copy to class
-	for (int i=0; i<24; i++)
-		this->indices[i] = indices[i];
+	for (int i=0; i<24; ++i)
+		this->indices[i] = i;
 }
 
 
 
-void Box::initializeMap() {
+/**
+ * Initializes the %Box class's static map that determines which points used in 
+ * glDrawElements correspond to the standard eight points of a cube.
+ */
+void Box::initMap() {
 	
 	GLubyte map[8][3] = {{1,  8, 18},
 	                     {0, 13, 19},
@@ -186,9 +130,9 @@ void Box::initializeMap() {
 
 
 /**
- * Initializes the static points array of the class.
+ * Initializes the %Box class's static points array.
  */
-void Box::initializePoints() {
+void Box::initPoints() {
 	
 	GLfloat points[8][3] = {{0.0, 1.0, 1.0},
 	                        {1.0, 1.0, 1.0},
@@ -210,31 +154,3 @@ void Box::initializePoints() {
 	}
 }
 
-
-
-void Box::print() const {
-	
-	cout << "  " << *this << endl;
-}
-
-
-
-/**
- * Sets the color of the entire box.
- * 
- * @param r
- *     Red component.
- * @param g
- *     Green component.
- * @param b
- *     Blue component.
- */
-void Box::setColor(float r, float g, float b) {
-	
-	// Set color
-	for (int i=0; i<24; i++) {
-		colors[i][0] = r;
-		colors[i][1] = g;
-		colors[i][2] = b;
-	}
-}

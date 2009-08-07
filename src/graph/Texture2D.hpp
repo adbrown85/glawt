@@ -14,6 +14,11 @@
 
 
 
+/**
+ * @brief
+ *     %Texture node for images.
+ * @ingroup graph
+ */
 class Texture2D : public Texture {
 	
 	

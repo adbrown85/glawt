@@ -9,6 +9,14 @@
 
 
 
+class SelectableTester : public Selectable {
+	public:
+		void draw() const {};
+};
+
+
+
+
 /**
  * Unit test for Selection.
  */
@@ -16,7 +24,7 @@ int main() {
 	
 	using namespace std;
 	int id;
-	Selectable *item, items[4];
+	SelectableTester *item, items[4];
 	Selection selection;
 	Selection::iterator si;
 	

@@ -5,12 +5,12 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __IDENTIFIABLE_HPP__
-#define __IDENTIFIABLE_HPP__
+#ifndef IDENTIFIABLE_HPP
+#define IDENTIFIABLE_HPP
 #include <iostream>
+#include <sstream>
 #include <vector>
-using std::ostream;
-using std::vector;
+using namespace std;
 
 
 
@@ -26,10 +26,10 @@ class Identifiable {
 	public :
 		
 		Identifiable();
-		static Identifiable* findByID(unsigned int id);
 		virtual unsigned int getID() const;
-		friend ostream& operator<<(ostream& stream,
-		                           const Identifiable& item);
+		string toString() const;
+		
+		static Identifiable* findByID(unsigned int id);
 		
 		class Comparator {
 			public :
@@ -47,6 +47,7 @@ class Identifiable {
 	private :
 		
 		unsigned int id;
+		
 		static unsigned int count;
 		static vector<Identifiable*> ids;
 };

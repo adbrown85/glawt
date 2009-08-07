@@ -16,6 +16,11 @@ using namespace std;
 
 
 
+/**
+ * @brief
+ *     Accesses volumetric data stored in multiple files [deprecated].
+ * @ingroup data
+ */
 class Sequence {
 	
 	

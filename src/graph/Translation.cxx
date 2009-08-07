@@ -1,43 +1,41 @@
 /*
- * Node.cxx
+ * Translation.cxx
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#include <iostream>
-#include "Node.hpp"
+#include "Translation.hpp"
 #define NUMBER_OF_ITEMS 4
-using namespace std;
 
 
 
-/**
- * Unit test for Node.
- */
 int main() {
 	
-	Node items[NUMBER_OF_ITEMS];
+	Translation items[4];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Node" << endl;
+	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Build tree
-	cout << "Building tree..." << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
-		items[i].addChild(&items[i+1]);
+	// Print
+	cout << "Printing items: " << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
+		items[i].print();
 	
-	// Print tree
-	cout << "Printing tree:" << endl;
-	items[0].printTree();
+	// Print
+	cout << "Changing: " << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		items[i].set(i, i, i);
+		items[i].print();
+	}
 	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Node" << endl;
+	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 }

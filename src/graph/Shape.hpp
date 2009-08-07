@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <set>
+#include <sstream>
 #include <string>
 #include "Node.hpp"
 #include "Selectable.hpp"
@@ -28,12 +29,11 @@ class Shape : public Node,
 	
 	public :
 		
-		Shape();
+		Shape(float size=1.0);
+		string toString() const;
+		
 		GLenum getStyle() {return style;}
 		void setStyle(GLenum style) {this->style = style;}
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Shape &item);
 	
 	
 	protected : 

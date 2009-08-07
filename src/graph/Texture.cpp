@@ -90,17 +90,18 @@ void Texture::associate() {
 
 void Texture::print() const {
 	
-	cout << "  " << *this << endl;
+	cout << "  " << toString() << endl;
 }
 
 
 
-ostream& operator<<(ostream& stream,
-                    const Texture &texture) {
+string Texture::toString() const {
 	
-	stream << static_cast<Node>(texture) << " "
-	       << "filename='" << texture.filename << "' "
-	       << "unit='" << texture.unit << "' "
-	       << "name='" << texture.name << "'";
-	return stream;
+	stringstream stream;
+	
+	stream << Node::toString();
+	stream << " file='" << filename << "'"
+	       << " unit='" << unit << "'"
+	       << " name='" << name << "'";
+	return stream.str();
 }

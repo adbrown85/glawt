@@ -24,26 +24,20 @@ class Box : public Shape {
 	
 	public : 
 		
-		Box();
-		Box(float size);
+		Box(float size=1.0);
 		virtual void draw() const;
-		virtual void print() const;
-		void setColor(float r, float g, float b);
 	
 	
 	protected: 
 		
-		GLfloat colors[24][3];
 		static bool loaded;
-		static GLfloat coordinates[24][3], points[24][3];
+		static GLfloat coords[24][3], points[24][3];
 		static GLubyte indices[24], map[8][3];
 		
-		void initialize();
-		void initializeColors();
-		void initializeCoordinates();
-		void initializeIndices();
-		void initializeMap();
-		void initializePoints();
+		void initCoords();
+		void initIndices();
+		void initMap();
+		void initPoints();
 };
 
 

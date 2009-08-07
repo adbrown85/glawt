@@ -8,20 +8,9 @@
 
 
 
-
-Translation::Translation() :
-                         Vector(x,y,z) {
-	
-	// Initialize
-	className = "Translation";
-}
-
-
-
 Translation::Translation(float x,
                          float y,
-                         float z) :
-                         Vector(x,y,z) {
+                         float z) : Vector(x,y,z) {
 	
 	// Initialize
 	className = "Translation";
@@ -60,7 +49,7 @@ void Translation::apply() {
  */
 void Translation::print() const {
 	
-	cout << "  " << *this << endl;
+	cout << "  " << toString() << endl;
 }
 
 
@@ -76,12 +65,13 @@ void Translation::remove() {
 
 
 
-ostream& operator<<(ostream &stream,
-                    const Translation &translation) {
+string Translation::toString() const {
 	
-	stream << static_cast<Node>(translation) << " "
-	       << "x=" << translation.x << ", "
-	       << "y=" << translation.y << ", "
-	       << "z=" << translation.z;
-	return stream;
+	stringstream stream;
+	
+	stream << Node::toString();
+	stream << " x='" << x << "'"
+	       << " y='" << y << "'"
+	       << " z='" << z << "'";
+	return stream.str();
 }
