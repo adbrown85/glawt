@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "Matrix.hpp"
 #include "Transformation.hpp"
 #include "Vector.hpp"
 using namespace std;
@@ -26,17 +27,23 @@ class Translation : public Transformation,
                     public Vector {
 	
 	
-	public :
+	public:
 		
 		Translation(float x=0.0,
 		            float y=0.0,
 		            float z=0.0);
 		
 		void add(const Vector &B);
-		void apply();
+		virtual void apply();
 		virtual void print() const;
-		void remove();
-		string toString() const;
+		virtual void remove();
+		virtual string toString() const;
+	
+	
+	protected:
+		
+		virtual void sortByDepthBeg(Matrix &matrix);
+		virtual void sortByDepthEnd(Matrix &matrix);
 };
 
 

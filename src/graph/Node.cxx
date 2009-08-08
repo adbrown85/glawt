@@ -16,7 +16,8 @@ using namespace std;
  */
 int main() {
 	
-	Node items[NUMBER_OF_ITEMS];
+	Node nodes[NUMBER_OF_ITEMS], root;
+	Matrix rotMatrix;
 	
 	// Start
 	cout << endl;
@@ -27,12 +28,17 @@ int main() {
 	
 	// Build tree
 	cout << "Building tree..." << endl;
+	root.addChild(&nodes[0]);
 	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
-		items[i].addChild(&items[i+1]);
+		nodes[i].addChild(&nodes[i+1]);
+	
+	// Sort by depth
+	cout << "Sorting by depth..." << endl;
+	root.sortByDepth(rotMatrix);
 	
 	// Print tree
 	cout << "Printing tree:" << endl;
-	items[0].printTree();
+	root.printTree();
 	
 	// Finish
 	cout << endl;

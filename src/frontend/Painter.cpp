@@ -27,6 +27,7 @@ void Painter::paint(Scene &scene,
 	// Initialize
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	scene.sortByDepth();
 	
 	// Transform
 	glTranslatef(scene.position.x,

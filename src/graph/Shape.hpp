@@ -12,6 +12,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include "Matrix.hpp"
 #include "Node.hpp"
 #include "Selectable.hpp"
 using namespace std;
@@ -30,7 +31,7 @@ class Shape : public Node,
 	public :
 		
 		Shape(float size=1.0);
-		string toString() const;
+		virtual string toString() const;
 		
 		GLenum getStyle() {return style;}
 		void setStyle(GLenum style) {this->style = style;}
@@ -39,6 +40,8 @@ class Shape : public Node,
 	protected : 
 		
 		GLenum style;
+		
+		virtual void computeDepth(Matrix &matrx);
 };
 
 

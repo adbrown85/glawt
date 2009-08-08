@@ -116,3 +116,17 @@ void Scene::setRotation(float angle, float x, float y, float z) {
 	// Set rotation
 	rotation.set(angle, x, y, z);
 }
+
+
+
+/**
+ * Sorts the scene by depth using the rotation matrix.
+ */
+void Scene::sortByDepth() {
+	
+	Matrix rotMatrix;
+	
+	// Sort by depth using rotation matrix
+	rotMatrix = getRotationMatrix();
+	rootNode.sortByDepth(rotMatrix);
+}

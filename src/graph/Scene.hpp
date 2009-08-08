@@ -15,7 +15,6 @@
 #include "Node.hpp"
 #include "Quaternion.hpp"
 #include "Selection.hpp"
-#include "Shape.hpp"
 #include "Vector.hpp"
 using namespace std;
 
@@ -38,10 +37,11 @@ class Scene {
 		Scene();
 		Scene(int width, int height);
 		void add(Node *node);
-		void reset();
-		void rotate(float angle, float x, float y, float z);
 		void prepare();
 		void print();
+		void reset();
+		void rotate(float angle, float x, float y, float z);
+		void sortByDepth();
 		
 		string getFilename() const {return filename;}
 		int getHeight() const {return height;}

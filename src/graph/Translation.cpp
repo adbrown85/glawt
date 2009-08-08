@@ -45,6 +45,38 @@ void Translation::apply() {
 
 
 /**
+ * Add the translation to the matrix before sorting.
+ */
+void Translation::sortByDepthBeg(Matrix &matrix) {
+	
+	Matrix transMatrix(1.0, 0.0, 0.0,  +x,
+	                   0.0, 1.0, 0.0,  +y,
+	                   0.0, 0.0, 1.0,  +z,
+	                   0.0, 0.0, 0.0, 1.0);
+	
+	// Add in translation
+	matrix = matrix * transMatrix;
+}
+
+
+
+/**
+ * Remove the translation from the matrix after sorting.
+ */
+void Translation::sortByDepthEnd(Matrix &matrix) {
+	
+	Matrix transMatrix(1.0, 0.0, 0.0,  -x,
+	                   0.0, 1.0, 0.0,  -y,
+	                   0.0, 0.0, 1.0,  -z,
+	                   0.0, 0.0, 0.0, 1.0);
+	
+	// Remove translation
+	matrix = matrix * transMatrix;
+}
+
+
+
+/**
  * Prints the Translation with a small indent.
  */
 void Translation::print() const {

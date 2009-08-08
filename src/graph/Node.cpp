@@ -15,6 +15,7 @@ Node::Node() {
 	
 	// Initialize
 	className = "Node";
+	depth = 0.0;
 	parent = NULL;
 }
 
@@ -47,6 +48,38 @@ void Node::associateTree() {
 	numberOfChildren = children.size();
 	for (int i=0; i<numberOfChildren; ++i)
 		children[i]->associateTree();
+}
+
+
+
+/**
+ * Compares two Node pointers by depth.
+ */
+bool compare(Node *A,
+             Node *B) {
+	
+	return A->depth < B->depth;
+}
+
+
+
+/**
+ * Computes the node's depth by averaging its children's depths.
+ */
+void Node::computeDepth(Matrix &matrix) {
+	
+	float avg=0.0, tot=0.0;
+	int numOfChildren;
+	
+	// Sum depths of children
+	numOfChildren = children.size();
+	for (int i=0; i<numOfChildren; ++i)
+		tot += children[i]->depth;
+	
+	// Average total
+	if (numOfChildren > 0)
+		avg = tot / numOfChildren;
+	depth = avg;
 }
 
 
@@ -125,8 +158,35 @@ void Node::printTree(int level) const {
 
 
 
+void Node::sortByDepth(Matrix &matrix) {
+	
+	int numOfChildren;
+	
+	// Start
+	sortByDepthBeg(matrix);
+	
+	// Sort children
+	numOfChildren = children.size();
+	for (int i=0; i<numOfChildren; ++i)
+		children[i]->sortByDepth(matrix);
+	if (numOfChildren > 1)
+		sort(children.begin(), children.end(), compare);
+	
+	// Compute own depth
+	computeDepth(matrix);
+	
+	// Finish
+	sortByDepthEnd(matrix);
+}
+
+
+
 string Node::toString() const {
 	
+	stringstream stream;
+	
 	// Make string
-	return className;
+	stream << className
+	       << " dep='" << depth << "'";
+	return stream.str();
 }

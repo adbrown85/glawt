@@ -4,8 +4,10 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <ctime>
 #include <iostream>
 #include "Shape.hpp"
+#include "Translation.hpp"
 #define NUMBER_OF_ITEMS 4
 using namespace std;
 
@@ -26,7 +28,11 @@ class FakeShape : public Shape {
  */
 int main() {
 	
-	FakeShape items[NUMBER_OF_ITEMS];
+	FakeShape shapes[NUMBER_OF_ITEMS];
+	int randomNum;
+	Matrix rotMatrix;
+	Translation trans[NUMBER_OF_ITEMS];
+	Node root;
 	
 	// Start
 	cout << endl;
@@ -36,16 +42,30 @@ int main() {
 	cout << endl;
 	
 	// Print
-	cout << "Shapes: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		items[i].print();
+	cout << "Building tree... " << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		root.addChild(&trans[i]);
+		trans[i].addChild(&shapes[i]);
+	}
+	root.printTree();
 	
 	// Style
-	cout << "Setting style of 1..." << endl;
-	items[0].setStyle(GL_TEXTURE_3D);
-	cout << "Shapes: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		items[i].print();
+	cout << "Setting style of first shape..." << endl;
+	shapes[0].setStyle(GL_TEXTURE_3D);
+	root.printTree();
+	
+	// Randomize
+	cout << "Randomizing..." << endl;
+	srand(time(NULL));
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		randomNum = rand() % 10;
+		trans[i].set(randomNum, randomNum, randomNum);
+	}
+	
+	// Sort by depth
+	cout << "Sorting by depth..." << endl;
+	root.sortByDepth(rotMatrix);
+	root.printTree();
 	
 	// Finish
 	cout << endl;

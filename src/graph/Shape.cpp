@@ -23,6 +23,20 @@ Shape::Shape(float size) : Selectable(size) {
 
 
 
+/**
+ * Computes the shape's depth using the matrix.
+ */
+void Shape::computeDepth(Matrix &matrix) {
+	
+	Vector pos(0,0,0,1);
+	
+	// Multiply position by matrix
+	pos = matrix * pos;
+	depth = pos.z;
+}
+
+
+
 string Shape::toString() const {
 	
 	string styleStr;

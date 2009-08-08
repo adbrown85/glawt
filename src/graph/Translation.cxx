@@ -4,38 +4,66 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <ctime>
 #include "Translation.hpp"
-#define NUMBER_OF_ITEMS 4
 
 
 
+/**
+ * Fake leaf node that computes its depth from the matrix.
+ */
+class FakeLeaf : public Node {
+	public :
+		virtual void computeDepth(Matrix &matrix) {
+			depth = matrix(2,3);
+		}
+};
+
+
+
+
+/**
+ * Unit test for Translation.
+ */
 int main() {
 	
-	Translation items[4];
+	FakeLeaf leafs[4];
+	float randomNum;
+	Matrix rotMatrix;
+	Node root;
+	Translation trans[4];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
 	
-	// Print
-	cout << "Printing items: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
-		items[i].print();
-	
-	// Print
-	cout << "Changing: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		items[i].set(i, i, i);
-		items[i].print();
+	// Build tree
+	cout << "\nBuilding tree..." << endl;
+	for (int i=0; i<4; ++i) {
+		root.addChild(&trans[i]);
+		trans[i].addChild(&leafs[i]);
 	}
+	root.printTree();
+	
+	// Randomize
+	cout << "\nRandomizing translations..." << endl;
+	srand(time(NULL));
+	for (int i=0; i<4; ++i) {
+		randomNum = rand() % 10;
+		trans[i].set(randomNum, randomNum, randomNum);
+	}
+	root.printTree();
+	
+	// Sort by depth
+	cout << "\nSorting by depth..." << endl;
+	root.sortByDepth(rotMatrix);
+	root.printTree();
 	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
 }
