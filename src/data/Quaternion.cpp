@@ -6,7 +6,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Quaternion.hpp"
-float Quaternion::pi=355.0/133.0;
+float Quaternion::PI=355.0/113.0;
 
 
 
@@ -19,42 +19,9 @@ Quaternion::Quaternion() {
 
 
 
-Quaternion operator*(const Quaternion& A, const Quaternion& B) {
-	
-	float dotProduct;
-	Quaternion C;
-	Vector crossProduct;
-	
-	// Calculate scalar
-	dotProduct = A.v.dotProduct(B.v);
-	C.s = A.s * B.s - dotProduct;
-	
-	// Calculate vector
-	crossProduct = A.v.crossProduct(B.v);
-	C.v = (B.v * A.s) + (A.v * B.s) + crossProduct;
-	
-	// Finish
-	return C;
-}
-
-
-
-std::ostream& operator<<(std::ostream& out, const Quaternion& A) {
-	
-	// Print
-	out << std::fixed << std::setprecision(1);
-	out << "[" 
-		<< std::setw(4) << std::right << A.s << ", "
-		<< std::setw(4) << std::right << A.v.x << ", "
-		<< std::setw(4) << std::right << A.v.y << ", "
-		<< std::setw(4) << std::right << A.v.z << "]";
-	
-	// Finish
-	return out;
-}
-
-
-
+/**
+ * Returns a matrix representing the rotation.
+ */
 Matrix Quaternion::getMatrix() const {
 	
 	float xx2, yy2, zz2, xy2, xz2, yz2, sx2, sy2, sz2;
@@ -73,19 +40,12 @@ Matrix Quaternion::getMatrix() const {
 	C(0,0) = 1.0 - yy2 - zz2;
 	C(0,1) = xy2 - sz2;
 	C(0,2) = xz2 + sy2;
-	C(0,3) = 0.0;
 	C(1,0) = xy2 + sz2;
 	C(1,1) = 1.0 - xx2 - zz2;
 	C(1,2) = yz2 - sx2;
-	C(1,3) = 0.0;
 	C(2,0) = xz2 - sy2;
 	C(2,1) = yz2 + sx2;
 	C(2,2) = 1.0 - xx2 - yy2;
-	C(2,3) = 0.0;
-	C(3,0) = 0.0;
-	C(3,1) = 0.0;
-	C(3,2) = 0.0;
-	C(3,3) = 1.0;
 	
 	// Finish
 	return C;
@@ -110,14 +70,47 @@ void Quaternion::normalize() {
 float Quaternion::radians(float degrees) {
 	
 	// Convert
-	return degrees * pi / 180;
+	return degrees * PI / 180;
 }
 
 
 
-void Quaternion::set(float theta, float x, float y, float z) {
+Quaternion Quaternion::operator*(const Quaternion& B) {
 	
-	float cosThetaHalved, sinThetaHalved, thetaHalved, thetaHalvedInRadians;
+	float dotProduct;
+	Quaternion C;
+	Vector crossProduct;
+	
+	// Calculate scalar
+	dotProduct = v.dotProduct(B.v);
+	C.s = s * B.s - dotProduct;
+	
+	// Calculate vector
+	crossProduct = v.crossProduct(B.v);
+	C.v = (B.v * s) + (v * B.s) + crossProduct;
+	
+	// Finish
+	return C;
+}
+
+
+
+void Quaternion::print() {
+	
+	cout << "  " << toString() << endl;
+}
+
+
+
+void Quaternion::set(float theta,
+                     float x,
+                     float y,
+                     float z) {
+	
+	float cosThetaHalved,
+	      sinThetaHalved,
+	      thetaHalved,
+	      thetaHalvedInRadians;
 	
 	// Initialize
 	thetaHalved = theta / 2;
@@ -134,3 +127,19 @@ void Quaternion::set(float theta, float x, float y, float z) {
 	// Normalize
 	normalize();
 }
+
+
+
+string Quaternion::toString() {
+	
+	stringstream stream;
+	
+	// Make string
+	stream << "Quaternion"
+	       << " s='" << s << "'"
+	       << " x='" << v.x << "'"
+	       << " y='" << v.y << "'"
+	       << " z='" << v.z << "'";
+	return stream.str();
+}
+

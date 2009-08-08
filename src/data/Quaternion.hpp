@@ -4,13 +4,15 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __QUATERNION_HEADER__
-#define __QUATERNION_HEADER__
+#ifndef QUATERNION_HPP
+#define QUATERNION_HPP
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include "Matrix.hpp"
 #include "Vector.hpp"
+using namespace std;
 
 
 
@@ -25,16 +27,14 @@ class Quaternion {
 	public:
 		
 		Quaternion();
-		
 		Matrix getMatrix() const;
-		void normalize();
-		static float radians(float degrees);
-		void set(float angle, float x, float y, float z);
-		
-		friend Quaternion operator*(const Quaternion &A,
-		                            const Quaternion &B);
-		friend std::ostream& operator<<(std::ostream &out,
-		                                const Quaternion &A);
+		Quaternion operator*(const Quaternion &B);
+		void print();
+		void set(float angle,
+		         float x,
+		         float y,
+		         float z);
+		string toString();
 	
 	
 	private :
@@ -42,7 +42,10 @@ class Quaternion {
 		float s;
 		Vector v;
 		
-		static float pi;
+		static float PI;
+		
+		void normalize();
+		static float radians(float degrees);
 };
 
 #endif

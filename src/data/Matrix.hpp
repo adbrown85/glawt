@@ -5,12 +5,13 @@
  * Author
  *    Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __MATRIX_HEADER__
-#define __MATRIX_HEADER__
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 #include <cmath>
 #include <iomanip>
 #include <iostream>
 #include "Vector.hpp"
+using namespace std;
 
 
 
