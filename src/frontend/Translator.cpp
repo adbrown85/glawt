@@ -17,9 +17,11 @@ Translator::Translator(float x, float y, float z) {
 	axis.set(x, y, z, 1.0);
 	size = 1.0;
 	
-	// Initialize 
-	cyl = gluNewQuadric();
-	gluQuadricDrawStyle(cyl, GLU_FILL);
+	// Initialize GLU shapes
+	cone = gluNewQuadric();
+	gluQuadricDrawStyle(cone, GLU_FILL);
+	disk = gluNewQuadric();
+	gluQuadricDrawStyle(disk, GLU_FILL);
 }
 
 
@@ -29,12 +31,15 @@ Translator::Translator(float x, float y, float z) {
  */
 void Translator::draw() const {
 	
+	float half;
+	
 	// Set unique color for each translator based on axis
 	glColor3f(axis.x, axis.y, axis.z);
 	
 	// Line from origin
+	half = size / 2;
 	glBegin(GL_LINES);
-		glVertex3f(0.0, 0.0, 0.0);
+		glVertex3f(axis.x*half, axis.y*half, axis.z*half);
 		glVertex3f(axis.x*size, axis.y*size, axis.z*size);
 	glEnd();
 	
@@ -45,7 +50,11 @@ void Translator::draw() const {
 			glRotatef(90.0, 0.0, 1.0, 0.0);
 		else if (axis.y >= 0.9)
 			glRotatef(-90.0, 1.0, 0.0, 0.0);
-		gluCylinder(cyl, 0.1, 0, 0.25, 12, 1);
+		glPushMatrix();
+			glRotatef(180.0, 0.0, 1.0, 0.0);
+			gluDisk(disk, 0.0, 0.1, 12, 1);
+		glPopMatrix();
+		gluCylinder(cone, 0.1, 0, 0.25, 12, 1);
 	glPopMatrix();
 }
 

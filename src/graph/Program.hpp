@@ -35,11 +35,14 @@ class Program : public Node,
 		void remove();
 		
 		GLuint getName() const {return name;}
+		static Program* getCurrent() {return current;}
 	
 	
 	private:
 		
 		GLuint name;
+		
+		static Program *current;
 		
 		void log() const;
 };

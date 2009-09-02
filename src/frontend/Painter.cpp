@@ -5,7 +5,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Painter.hpp"
-Outline Painter::outline(1.0);
+Box Painter::outline(1.0);
 
 
 
@@ -38,8 +38,7 @@ void Painter::paint(Scene &scene,
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	paintNode(&scene.rootNode, renderMode);
-	paintNodeUI(&scene.rootNode, renderMode, manipulators);
+	paintNode(&scene.rootNode, renderMode, manipulators);
 }
 
 
@@ -57,7 +56,8 @@ void Painter::paint(Scene &scene,
  *     If GL_SELECT, will push IDs of items into pick buffer.
  */
 void Painter::paintChildren(Node *node,
-                            GLenum renderMode) {
+                            GLenum renderMode,
+                            vector<Manipulator*> &manipulators) {
 	
 	int numberOfChildren;
 	vector<Node*> children;
@@ -66,37 +66,7 @@ void Painter::paintChildren(Node *node,
 	children = node->getChildren();
 	numberOfChildren = children.size();
 	for (int i=0; i<numberOfChildren; ++i)
-		paintNode(children[i], renderMode);
-}
-
-
-
-/**
- * Recursively paints the children of a node for UI elements.
- * 
- * This functionality is implemented as a separate function, as opposed to 
- * incorporating it directly into <i>paint</i>, because some nodes need to 
- * paint their children at different times.
- * 
- * @param node
- *     Pointer to the parent node.
- * @param renderMode
- *     If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators
- *     UI elements used to manipulate selected items.
- */
-void Painter::paintChildrenUI(Node *node,
-                              GLenum renderMode,
-                              vector<Manipulator*> &manipulators) {
-	
-	int numberOfChildren;
-	vector<Node*> children;
-	
-	// Paint each child
-	children = node->getChildren();
-	numberOfChildren = children.size();
-	for (int i=0; i<numberOfChildren; ++i)
-		paintNodeUI(children[i], renderMode, manipulators);
+		paintNode(children[i], renderMode, manipulators);
 }
 
 
@@ -113,10 +83,14 @@ void Painter::paintChildrenUI(Node *node,
  *     If GL_SELECT, will push IDs of items into pick buffer.
  */
 void Painter::paintNode(Node *node,
-                        GLenum renderMode) {
+                        GLenum renderMode,
+                        vector<Manipulator*> &manipulators) {
 	
 	Applicable *applicable;
 	Drawable *drawable;
+	Selectable *selectable;
+	Program *program;
+	vector<Manipulator*>::iterator mi;
 	
 	// Node is drawable
 	if (drawable = dynamic_cast<Drawable*>(node)) {
@@ -124,66 +98,51 @@ void Painter::paintNode(Node *node,
 			if (renderMode == GL_SELECT)
 				glPushName(drawable->getID());
 			drawable->draw();
-			paintChildren(node, renderMode);
+			
+			// Node is selectable
+			if (selectable = dynamic_cast<Selectable*>(node)) {
+				if (selectable->isSelected()) {
+					
+					// Disable shading
+					program = Program::getCurrent();
+					program->remove();
+					glColor3f(1.0, 1.0, 0.0);
+					glPolygonMode(GL_FRONT, GL_LINE);
+					
+					// Draw outline
+					outline.copySizeOf(*selectable);
+					outline.draw();
+					
+					// Draw manipulators
+					glDepthFunc(GL_LESS);
+					glPolygonMode(GL_FRONT, GL_FILL);
+					for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
+						if (renderMode == GL_SELECT)
+							glPushName((*mi)->getID());
+						(*mi)->copySizeOf(*selectable);
+						(*mi)->draw();
+					}
+					glDepthFunc(GL_ALWAYS);
+					
+					// Restore shading
+					glColor3f(1.0, 1.0, 1.0);
+					program->apply();
+				}
+			}
+			
+			paintChildren(node, renderMode, manipulators);
 		}
 	}
 	
 	// Node is applicable
 	else if (applicable = dynamic_cast<Applicable*>(node)) {
 		applicable->apply();
-		paintChildren(node, renderMode);
+		paintChildren(node, renderMode, manipulators);
 		applicable->remove();
 	}
 	
 	// Node
 	else
-		paintChildren(node, renderMode);
+		paintChildren(node, renderMode, manipulators);
 }
 
-
-
-
-/**
- * Recursively paints a node for UI elements.
- * 
- * @param node
- *     Pointer to the Node to paint.
- * @param renderMode
- *     If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators
- *     UI elements used to manipulate selected items.
- */
-void Painter::paintNodeUI(Node *node,
-                          GLenum renderMode,
-                          vector<Manipulator*> &manipulators) {
-	
-	Selectable *selectable;
-	Transformation *transformation;
-	vector<Manipulator*>::iterator mi;
-	
-	// Node is selectable
-	if (selectable = dynamic_cast<Selectable*>(node)) {
-		if (selectable->isSelected()) {
-			outline.copySizeOf(*selectable);
-			outline.draw();
-			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-				if (renderMode == GL_SELECT)
-					glPushName((*mi)->getID());
-				(*mi)->copySizeOf(*selectable);
-				(*mi)->draw();
-			}
-		}
-		paintChildrenUI(node, renderMode, manipulators);
-	}
-	
-	// Node is transformation
-	else if (transformation = dynamic_cast<Transformation*>(node)) {
-		transformation->apply();
-		paintChildrenUI(node, renderMode, manipulators);
-		transformation->remove();
-	}
-	
-	// Other
-	else
-		paintChildrenUI(node, renderMode, manipulators);
-}

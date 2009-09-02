@@ -5,6 +5,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Program.hpp"
+Program *Program::current=NULL;
 
 
 
@@ -26,6 +27,7 @@ Program::Program() {
 void Program::apply() {
 	
 	glUseProgram(name);
+	current = this;
 }
 
 
@@ -96,4 +98,5 @@ void Program::remove() {
 	
 	// Restore fixed functionality
 	glUseProgram(0);
+	current = NULL;
 }

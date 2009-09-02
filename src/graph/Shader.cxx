@@ -17,27 +17,30 @@ void init(string);
 int main(int argc,
          char *argv[]) {
 	
-	Program program;
-	Shader *shader;
+	Program *current=NULL, program;
+	Shader *shader=NULL;
 	
 	// Initialize
 	init("Shader");
 	
-	// Load source code into shader
+	// Initialize shader
 	shader = new Shader("fragment", "glsl/coordinates.glsl");
 	shader->print();
-	cout << endl;
-	shader->list();
 	
 	// Make graph
 	program.addChild(shader);
-	
-	// Associate and finalize graph
 	program.associateTree();
 	program.finalizeTree();
 	
-	// Start display
+	// Apply and check
 	program.apply();
+	shader->list();
+	current = Program::getCurrent();
+	cout << "Program: " << program.getName() << endl;
+	if (current != NULL)
+		cout << "Current program: " << current->getName() << endl;
+	
+	// Start display
 	glutDisplayFunc(display);
 	glutMainLoop();
 }

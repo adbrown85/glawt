@@ -42,7 +42,7 @@ class Translator : public Manipulator {
 		
 		Translator();
 		
-		GLUquadricObj *cyl;
+		GLUquadricObj *cone, *disk;
 };
 
 
