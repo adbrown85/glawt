@@ -18,12 +18,11 @@ set<GLuint> Picker::ids;
  */
 GLuint Picker::chooseItem(Scene *scene) {
 	
-	float closestDepth=-123456789.0;
+	float depth, closestDepth;
 	GLuint closestID;
 	Identifiable *identifiable;
-	Matrix rotationMatrix;
+	Node *node;
 	set<GLuint>::iterator ii;
-	Vector viewPosition;
 	
 	// Check for manipulator
 	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
@@ -33,18 +32,17 @@ GLuint Picker::chooseItem(Scene *scene) {
 	}
 	
 	// Otherwise find closest to screen
-	rotationMatrix = scene->getRotationMatrix();
+	closestDepth = FLT_MIN;
 	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
-/*
-		identifiable = Item::find(*ii);
-		viewPosition = rotationMatrix * identifiable->getPosition();
-		if (viewPosition.z > closestDepth) {
-			closestDepth = viewPosition.z;
-			closestID = identifiable->getID();
+		identifiable = Identifiable::findByID(*ii);
+		node = dynamic_cast<Node*>(identifiable);
+		if (node == NULL)
+			break;
+		depth = node->getDepth();
+		if (depth > closestDepth) {
+			closestDepth = depth;
+			closestID = (*ii);
 		}
-		closestID = identifiable->getID();
-*/
-		closestID = (*ii);
 	}
 	return closestID;
 }

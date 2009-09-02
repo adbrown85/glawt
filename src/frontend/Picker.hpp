@@ -7,6 +7,7 @@
  */
 #ifndef PICKER_HPP
 #define PICKER_HPP
+#include <cfloat>
 #include <climits>
 #include <cstdlib>
 #include <GL/glut.h>
@@ -16,6 +17,7 @@
 #include <vector>
 #include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
+#include "Node.hpp"                // Checking depth
 #include "Painter.hpp"             // Paints items into pick buffers
 #include "Scene.hpp"               // Pass root node to Painter
 #define PICK_BUFFER_SIZE 32
