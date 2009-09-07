@@ -1,0 +1,24 @@
+<!--
+ * raycasternew.xml
+ *     Casts rays through a volume.
+ * 
+ * Author
+ *     Andy Brown <andybrown85@gmail.com>
+-->
+
+
+
+<program>
+	<shader type="fragment" file="glsl/raycasternew.frag" />
+	<uniform type="int" name="samples" value="100">
+	<uniform type="float" name="brightness" value="10.0">
+		<texture type="3D" file="input/skull.vlb" name="skull">
+		<uniform type="sampler3D" name="volume" link="skull">
+			<translate x="0.0" y="0.0" z="0.0">
+				<shape type="Box" size="1.0" style="3D" />
+			</translate>
+		</uniform>
+		</texture>
+	</uniform>
+	</uniform>
+</program>

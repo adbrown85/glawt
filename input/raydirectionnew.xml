@@ -1,0 +1,20 @@
+<!--
+ * raydirectionnew.xml 
+ *     Visualizes ray direction using the new calculation.
+ * 
+ * Author
+ *     Andy Brown <andybrown85@gmail.com>
+-->
+
+
+<program>
+	<shader type="vertex" file="glsl/world.vert" />
+	<shader type="fragment" file="glsl/raydirectionnew.frag" />
+	<!--
+	-->
+		<translate x="0.0" y="0.0" z="0.0">
+			<shape type="Box" size="1.0" style="3D" />
+		</translate>
+	<!--
+	-->
+</program>
