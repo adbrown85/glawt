@@ -53,7 +53,7 @@ void main() {
 		samples = 50;
 	weight = 1.0 / samples;
 	rayPos = gl_TexCoord[0];
-	rayInc = findRayDirection() * weight;
+	rayInc = findRayDirection() * (1.732 / samples);
 	
 	/* Accumulate color through volume */
 	for (int i=0; i<samples; ++i) {

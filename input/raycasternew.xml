@@ -10,7 +10,7 @@
 
 <program>
 	<shader type="fragment" file="glsl/raycasternew.frag" />
-	<uniform type="int" name="samples" value="100">
+	<uniform type="int" name="samples" value="150">
 	<uniform type="float" name="brightness" value="10.0">
 		<texture type="3D" file="input/skull.vlb" name="skull">
 		<uniform type="sampler3D" name="volume" link="skull">
