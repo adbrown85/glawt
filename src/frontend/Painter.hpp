@@ -20,6 +20,7 @@
 #include "Selectable.hpp"          // Drawing manipulators for selection
 #include "Transformation.hpp"      // Drawing manipulators for selection
 #include "Scene.hpp"               // Rotating camera and accessing root node
+#include "Vector.hpp"
 using namespace std;
 
 
@@ -36,6 +37,8 @@ class Painter {
 	
 	public :
 		
+		
+		static void findRayDirection(Matrix &rotationMatrix);
 		static void paint(Scene &scene,
 		                  vector<Manipulator*> &manipulators,
 		                  GLenum renderMode=GL_RENDER);
@@ -49,7 +52,10 @@ class Painter {
 		                          vector<Manipulator*> &manipulators);
 		static void paintNode(Node *node,
 		                      GLenum renderMode,
-                              vector<Manipulator*> &manipulators);
+		                      vector<Manipulator*> &manipulators);
+		static void paintUIElements(Selectable *selectable,
+                                    GLenum renderMode,
+                                    vector<Manipulator*> &manipulators);
 };
 
 
