@@ -19,7 +19,7 @@ struct MouseData {
 	float z;
 	unsigned int itemID, iteration, shapeID;
 	Manipulator *manipulator;
-	Vector lastPosition, globalPosition, lastGlobalPosition;
+	Vector lastPosition;
 };
 
 

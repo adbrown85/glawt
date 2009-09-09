@@ -57,7 +57,6 @@ void MouseHelper::updateCurrentData(int x, int y) {
 	data->x = x;
 	data->y = y;
 	glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &(data->z));
-	findGlobalPosition();
 }
 
 
@@ -65,5 +64,4 @@ void MouseHelper::updateCurrentData(int x, int y) {
 void MouseHelper::updateLastData() {
 	
 	data->lastPosition.set(data->x, data->y, data->z);
-	data->lastGlobalPosition = data->globalPosition;
 }

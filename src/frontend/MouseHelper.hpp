@@ -30,7 +30,6 @@ class MouseHelper : public Control {
 	public:
 		
 		MouseHelper(Delegate *delegate);
-		virtual void findGlobalPosition();
 		virtual int getModifier();
 		virtual void initialize(MouseData *data);
 		virtual void initialize(multimap<int,Binding> bindings) = 0;
