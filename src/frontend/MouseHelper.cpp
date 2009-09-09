@@ -57,7 +57,6 @@ void MouseHelper::updateCurrentData(int x, int y) {
 	data->x = x;
 	data->y = y;
 	glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &(data->z));
-	findGlobalPosition();
 }
 
 
