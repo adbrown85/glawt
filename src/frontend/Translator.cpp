@@ -34,6 +34,7 @@ void Translator::draw() const {
 	float half;
 	
 	// Set unique color for each translator based on axis
+	glPushAttrib(GL_CURRENT_BIT);
 	glColor3f(axis.x, axis.y, axis.z);
 	
 	// Line from origin
@@ -56,6 +57,9 @@ void Translator::draw() const {
 		glPopMatrix();
 		gluCylinder(cone, 0.1, 0, 0.25, 12, 1);
 	glPopMatrix();
+	
+	// Restore color
+	glPopAttrib();
 }
 
 
