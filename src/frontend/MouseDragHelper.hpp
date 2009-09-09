@@ -17,8 +17,7 @@
 #include "MouseData.hpp"
 #include "MouseHelper.hpp"
 #include "Vector.hpp"
-using std::multimap;
-using std::vector;
+using namespace std;
 
 
 

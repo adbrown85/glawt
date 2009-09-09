@@ -13,15 +13,13 @@
 
 
 
-class MouseData {
+struct MouseData {
 	
-	
-	public :
-		
-		int button, modifier, state, x, y;
-		unsigned int itemID, iteration;
-		Manipulator *manipulator;
-		Vector lastPosition;
+	int button, modifier, state, x, y;
+	float z;
+	unsigned int itemID, iteration, shapeID;
+	Manipulator *manipulator;
+	Vector lastPosition, globalPosition, lastGlobalPosition;
 };
 
 

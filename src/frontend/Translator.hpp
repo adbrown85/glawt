@@ -11,8 +11,10 @@
 #include <iostream>
 #include <GL/glut.h>
 #include <vector>
+#include "Identifiable.hpp"
 #include "Manipulator.hpp"
 #include "Matrix.hpp"
+#include "Node.hpp"
 #include "Scene.hpp"
 #include "Selection.hpp"
 #include "Shape.hpp"
@@ -35,7 +37,11 @@ class Translator : public Manipulator {
 		Translator(float x, float y, float z);
 		
 		void draw() const;
-		void use(Scene *scene, const Vector &difference);
+		float findPixelFactor(Scene *scene,
+		                      GLuint shapeID);
+		void use(Scene *scene,
+		         const Vector &movement,
+		         GLuint shapeID);
 	
 	
 	private:

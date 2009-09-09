@@ -6,7 +6,7 @@
  */
 #include "Picker.hpp"
 GLuint Picker::buf[PICK_BUFFER_SIZE];
-set<GLuint> Picker::ids;
+map<GLuint,GLuint> Picker::ids;
 
 
 
@@ -16,50 +16,47 @@ set<GLuint> Picker::ids;
  * Manipulators are returned before shapes, and if more than one shape is 
  * picked, the closest one to the camera is chosen.
  */
-GLuint Picker::chooseItem(Scene *scene) {
+pair<GLuint,GLuint> Picker::chooseItem(Scene *scene) {
 	
 	float depth, closestDepth;
-	GLuint closestID;
 	Identifiable *identifiable;
 	Node *node;
-	set<GLuint>::iterator ii;
+	map<GLuint,GLuint>::iterator pi;
+	pair<GLuint,GLuint> closestPair;
 	
 	// Check for manipulator
-	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
-		identifiable = Identifiable::findByID(*ii);
+	for (pi=ids.begin(); pi!=ids.end(); ++pi) {
+		identifiable = Identifiable::findByID(pi->first);
 		if (dynamic_cast<Manipulator*>(identifiable))
-			return identifiable->getID();
+			return *pi;
 	}
 	
 	// Otherwise find closest to screen
 	closestDepth = FLT_MIN;
-	for (ii=ids.begin(); ii!=ids.end(); ++ii) {
-		identifiable = Identifiable::findByID(*ii);
+	for (pi=ids.begin(); pi!=ids.end(); ++pi) {
+		identifiable = Identifiable::findByID(pi->first);
 		node = dynamic_cast<Node*>(identifiable);
 		if (node == NULL)
 			break;
 		depth = node->getDepth();
 		if (depth > closestDepth) {
 			closestDepth = depth;
-			closestID = (*ii);
+			closestPair = *pi;
 		}
 	}
-	return closestID;
+	return closestPair;
 }
 
 
 
 /**
  * Restores the original projection matrix.
- * 
- * @warning Not sure if glFlush is really needed here.
  */
 void Picker::finish() {
 	
 	// Restore
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
-	// glFlush();
 }
 
 
@@ -80,6 +77,7 @@ void Picker::initialize(int x, int y) {
 	glSelectBuffer(PICK_BUFFER_SIZE, buf);
 	glRenderMode(GL_SELECT);
 	glInitNames();
+	glPushName(0);
 	ids.clear();
 	
 	// Save render projection matrix
@@ -99,10 +97,10 @@ void Picker::initialize(int x, int y) {
  * 
  * @return ID number of the item picked.  UINT_MAX if nothing.
  */
-GLuint Picker::pick(Scene *scene,
-                    vector<Manipulator*> &manipulators,
-                    int x,
-                    int y) {
+pair<GLuint,GLuint> Picker::pick(Scene *scene,
+                                 vector<Manipulator*> &manipulators,
+                                 int x,
+                                 int y) {
 	
 	// Pick an item
 	initialize(x, y);
@@ -112,7 +110,7 @@ GLuint Picker::pick(Scene *scene,
 	
 	// Return
 	if (ids.empty())
-		return UINT_MAX;
+		return pair<GLuint,GLuint>(UINT_MAX, UINT_MAX);
 	else if (ids.size() == 1)
 		return *(ids.begin());
 	else
@@ -123,25 +121,52 @@ GLuint Picker::pick(Scene *scene,
 
 /**
  * Stores the IDs of the items picked.
+ * 
+ * A hit record is made up of at least four unsigned integers in the 
+ * selection buffer, as shown below.  There will be one hit record for each 
+ * item under the mouse cursor.  The exact number is returned by glRenderMode 
+ * when switching back to GL_RENDER.
+ * 
+ * The first integer in a hit record is the number of IDs that were on the name 
+ * stack when the item was drawn, which should always be one.  The second and 
+ * third values are the minimum and maximum depth values at the time.  Finally, 
+ * the IDs that were present on the name stack when the item was drawn are 
+ * listed from bottom to top.  In other words, the item under the cursor will 
+ * be the nth item in the list, where n is equal to the number of IDs.
+ *   -------------
+ *   | numOfIDs  |
+ *   | minDepth  |
+ *   | maxDepth  |
+ *   | ids       |
+ *   |    ...    |
+ *   -------------
  */
 void Picker::storeIDsOfItems() {
 	
-	GLuint id, pos, *ptr;
-	GLint count;
-	set<GLuint>::iterator ii;
+	GLuint id, numOfIDs, *ptr, shapeID;
+	GLint numOfHitRecords;
 	
 	// Get number of items picked
-	count = glRenderMode(GL_RENDER);
+	numOfHitRecords = glRenderMode(GL_RENDER);
 	
-	// Get ID of each item from its position in stack
+	// For each hit record
 	ptr = buf;
-	for (int i=0; i<count; i++) {
-		pos = *ptr;
+	for (int i=0; i<numOfHitRecords; ++i) {
+		
+		// Get number of IDs in name stack
+		numOfIDs = *ptr;
+		if (numOfIDs == 0)
+			throw "Picker: Hit record with 0 item IDs detected!";
+		
+		// Find ID of shape that was drawn
 		ptr += 3;
-		for (int j=0; j<pos; j++) {
+		shapeID = *ptr;
+		
+		// Record item picked with shape it was attached to
+		for (int j=0; j<numOfIDs; ++j) {
 			id = *ptr;
 			ptr++;
 		}
-		ids.insert(id);
+		ids.insert(pair<GLuint,GLuint>(id, shapeID));
 	}
 }

@@ -12,8 +12,9 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
-#include <set>
+#include <map>
 #include <typeinfo>
+#include <utility>
 #include <vector>
 #include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
@@ -21,8 +22,7 @@
 #include "Painter.hpp"             // Paints items into pick buffers
 #include "Scene.hpp"               // Pass root node to Painter
 #define PICK_BUFFER_SIZE 32
-using std::set;
-using std::vector;
+using namespace std;
 
 
 
@@ -36,18 +36,18 @@ class Picker {
 	
 	public :
 		
-		static GLuint pick(Scene *scene,
-		                   vector<Manipulator*> &manipulators,
-		                   int x,
-		                   int y);
+		static pair<GLuint,GLuint> pick(Scene *scene,
+		                           vector<Manipulator*> &manipulators,
+		                           int x,
+		                           int y);
 	
 	
 	private:
 		
 		static GLuint buf[PICK_BUFFER_SIZE];
-		static set<GLuint> ids;
+		static map<GLuint,GLuint> ids;
 		
-		static GLuint chooseItem(Scene *scene);
+		static pair<GLuint,GLuint> chooseItem(Scene *scene);
 		static void finish();
 		static void initialize(int x, int y);
 		static void storeIDsOfItems();

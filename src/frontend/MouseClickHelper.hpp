@@ -17,8 +17,7 @@
 #include "MouseHelper.hpp"
 #include "Picker.hpp"
 #include "Vector.hpp"
-using std::multimap;
-using std::pair;
+using namespace std;
 
 
 

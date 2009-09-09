@@ -29,7 +29,9 @@ class Manipulator : public Drawable  {
 		
 		Manipulator() {this->delegate = NULL;}
 		
-		virtual void use(Scene *scene, const Vector &difference) = 0;
+		virtual void use(Scene *scene,
+		                 const Vector &movement,
+		                 GLuint shapeID) = 0;
 		Vector getAxis() {return axis;}
 		void setDelegate(Delegate *delegate) {this->delegate = delegate;}
 	

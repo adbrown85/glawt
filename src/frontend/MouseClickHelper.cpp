@@ -8,6 +8,12 @@
 
 
 
+/**
+ * Creates a new MouseClickHelper control.
+ * 
+ * @param delegate
+ *     Delegate to send commands to.
+ */
 MouseClickHelper::MouseClickHelper(Delegate *delegate) :
                                    MouseHelper(delegate) {
 	type = "MouseClickHelper";
@@ -15,6 +21,12 @@ MouseClickHelper::MouseClickHelper(Delegate *delegate) :
 
 
 
+/**
+ * Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
+ * 
+ * @param bindings
+ *     Bindings from %Mouse.
+ */
 void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
 	
 	Binding *binding;
@@ -55,9 +67,8 @@ void MouseClickHelper::onClick(int button,
 	data->modifier = getModifier();
 	data->button = button;
 	data->state = state;
-	data->x = x;
-	data->y = y;
 	data->iteration = 0;
+	updateCurrentData(x, y);
 	
 	// Pick the item under the cursor
 	pickItem();
@@ -65,23 +76,24 @@ void MouseClickHelper::onClick(int button,
 	// Try bindings for this button
 	tryBindings();
 	
-	// Store cursor position for next time
-	data->lastPosition.set(x, y);
+	// Store positions for next time
+	updateLastData();
 }
 
 
 
 /**
- * Finds the ID of the item under the cursor.
+ * Finds the ID of the item under the cursor and the item it was attached to.
  * 
- * Stores the ID of the item under the cursor as 'currentItemID'.  Also sets 
- * 'currentManipulator' to the item's memory address if it is a manipulator.
- * If nothing is picked, 'UINT_MAX' is used for the former, and 'NULL' for the 
- * latter.
+ * Stores the ID of the item under the cursor as 'data->itemID' and the item 
+ * it's attached to as 'data->shapeID'.  Also sets 'data->manipulator' to the 
+ * item's memory address if it is a manipulator.  If nothing is picked, 
+ * 'UINT_MAX' is used for the former, and 'NULL' for the latter.
  */
 void MouseClickHelper::pickItem() {
 	
 	Identifiable *identifiable;
+	pair<GLuint,GLuint> pickResult;
 	
 	// Initialize
 	data->manipulator = NULL;
@@ -92,10 +104,12 @@ void MouseClickHelper::pickItem() {
 	    data->button == GLUT_RIGHT_BUTTON) {
 		
 		// Pick the item
-		data->itemID = Picker::pick(scene,
-		                            manipulators,
-		                            data->x,
-		                            data->y);
+		pickResult = Picker::pick(scene,
+		                          manipulators,
+		                          data->x,
+		                          data->y);
+		data->itemID = pickResult.first;
+		data->shapeID = pickResult.second;
 		
 		// Check if a manipulator
 		identifiable = Identifiable::findByID(data->itemID);
@@ -151,3 +165,4 @@ void MouseClickHelper::tryBinding(Binding *binding) {
 		delegate->run(binding->getCommand());
 	glutPostRedisplay();
 }
+

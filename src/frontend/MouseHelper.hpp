@@ -30,11 +30,14 @@ class MouseHelper : public Control {
 	public:
 		
 		MouseHelper(Delegate *delegate);
-		int getModifier();
-		void initialize(MouseData *data);
+		virtual void findGlobalPosition();
+		virtual int getModifier();
+		virtual void initialize(MouseData *data);
 		virtual void initialize(multimap<int,Binding> bindings) = 0;
-		void initialize(vector<Manipulator*> manipulators);
-		vector<Manipulator*> install(Scene *scene);
+		virtual void initialize(vector<Manipulator*> manipulators);
+		virtual vector<Manipulator*> install(Scene *scene);
+		virtual void updateCurrentData(int x, int y);
+		virtual void updateLastData();
 	
 	
 	protected:

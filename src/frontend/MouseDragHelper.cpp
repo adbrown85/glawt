@@ -9,6 +9,9 @@ char MouseDragHelper::directions[2] = {'x', 'y'};
 
 
 
+/**
+ * Creates a new MouseDragHelper control.
+ */
 MouseDragHelper::MouseDragHelper(Delegate *delegate) :
                                  MouseHelper(delegate) {
 	type = "MouseDragHelper";
@@ -52,12 +55,15 @@ void MouseDragHelper::decideAxis() {
 
 
 
+/**
+ * Copies bindings from %Mouse that use drag into %MouseDragHelper.
+ */
 void MouseDragHelper::initialize(multimap<int,Binding> bindings) {
 	
 	Binding *binding;
 	multimap<int,Binding>::iterator pi;
 	
-	// Add bindings with drag
+	// Copy bindings with drag
 	for (pi=bindings.begin(); pi!=bindings.end(); ++pi) {
 		binding = &(pi->second);
 		if (binding->hasDrag())
@@ -79,15 +85,14 @@ void MouseDragHelper::onDrag(int x,
                              int y) {
 	
 	// Update current mouse data
-	data->x = x;
-	data->y = y;
+	updateCurrentData(x, y);
 	++(data->iteration);
 	movement.set( (x - data->lastPosition.x),
 	             -(y - data->lastPosition.y));
 	
 	// Dragging a manipulator
 	if (data->manipulator != NULL)
-		data->manipulator->use(scene, movement);
+		data->manipulator->use(scene, movement, data->shapeID);
 	
 	// Dragging on the screen
 	else {
@@ -96,7 +101,7 @@ void MouseDragHelper::onDrag(int x,
 	}
 	
 	// Finish
-	data->lastPosition.set(x, y);
+	updateLastData();
 	glutPostRedisplay();
 }
 
@@ -120,6 +125,7 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 		// Determine amount to drag
 		amount = movement.get(i) * 
 		         axis.get(i) *
+		         (fabs(scene->position.z) / 45 * 1.75 + 1.0) *
 		         binding->getArgument();
 		
 		// Run the command

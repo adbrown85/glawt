@@ -37,8 +37,6 @@ class Painter {
 	
 	public :
 		
-		
-		static void findRayDirection(Matrix &rotationMatrix);
 		static void paint(Scene &scene,
 		                  vector<Manipulator*> &manipulators,
 		                  GLenum renderMode=GL_RENDER);

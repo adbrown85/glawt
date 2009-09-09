@@ -9,64 +9,6 @@ Box Painter::outline(1.0);
 
 
 
-void Painter::findRayDirection(Matrix &rotationMatrix) {
-	
-	float f, n,
-	      projectionMatrixArray[16],
-	      viewMatrixArray[16],
-	      zFar, zNear;
-	Matrix projectionMatrix, viewMatrix;
-	Vector cFrag, direction, gFrag, gPoint, pFrag, pPoint, vFrag, vPoint;
-	
-	// Check matrices
-	cout << "Checking matrices..." << endl;
-	rotationMatrix.print();
-	cout << "--------------------" << endl;
-	glGetFloatv(GL_MODELVIEW_MATRIX, viewMatrixArray);
-	viewMatrix.set(viewMatrixArray);
-	viewMatrix.print();
-	cout << "--------------------" << endl;
-	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrixArray);
-	projectionMatrix.set(projectionMatrixArray);
-	projectionMatrix.print();
-	
-	// Transform global fragment to view space
-	gFrag.set(-1.0, 0.0, 1.0, 1.0);
-	vFrag = viewMatrix * gFrag;
-	cout << "vFrag = " << vFrag << endl;
-	
-	// Transform global fragment to projection space
-	pFrag = projectionMatrix * vFrag;
-	cout << "pFrag = " << pFrag << endl;
-	
-	// Convert fragment to clip space
-	cFrag = pFrag / pFrag.w;
-	cout << "cFrag = " << cFrag << endl;
-	
-	// Find point behind fragment in projection space
-	zFar = -1000.0;
-	zNear = -0.1;
-	f = -(zFar);
-	n = -(zNear);
-	pPoint.w = f;
-	pPoint.x = cFrag.x * pPoint.w;
-	pPoint.y = cFrag.y * pPoint.w;
-	pPoint.z = f * (f+n)/(f-n) - (2*f*n)/(f-n);
-	cout << "pPoint = " << pPoint << endl;
-	
-	// Transform back to global space
-	vPoint = projectionMatrix.getInverse() * pPoint;
-	gPoint = viewMatrix.getInverse() * vPoint;
-	cout << "gPoint = " << gPoint << endl;
-	
-	// Return direction
-	direction = gPoint - gFrag;
-	direction = direction.getNormalized();
-	cout << "direction = " << direction << endl;
-}
-
-
-
 /**
  * Paints all the items in a scene.
  * 
@@ -95,12 +37,6 @@ void Painter::paint(Scene &scene,
 	rotationMatrix = scene.getRotationMatrix();
 	rotationMatrix.getArray(rotationMatrixArray);
 	glMultMatrixf(rotationMatrixArray);
-	
-	// Check matrices and points
-	/*
-	if (renderMode != GL_SELECT)
-		findRayDirection(rotationMatrix);
-	*/
 	
 	// Draw
 	paintNode(&scene.rootNode, renderMode, manipulators);
@@ -161,7 +97,7 @@ void Painter::paintNode(Node *node,
 		
 		// Draw the node
 		if (renderMode == GL_SELECT)
-			glPushName(drawable->getID());
+			glLoadName(drawable->getID());
 		drawable->draw();
 		
 		// Paint UI elements for selected nodes
