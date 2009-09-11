@@ -31,12 +31,13 @@ class Box : public Shape {
 	protected: 
 		
 		static bool loaded;
-		static GLfloat coords[24][3], points[24][3];
+		static GLfloat coords[24][3], points[24][3], normals[24][3];
 		static GLubyte indices[24], map[8][3];
 		
 		void initCoords();
 		void initIndices();
 		void initMap();
+		void initNormals();
 		void initPoints();
 };
 

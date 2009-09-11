@@ -6,7 +6,7 @@
  */
 #include "Box.hpp"
 bool Box::loaded = false;
-GLfloat Box::coords[24][3], Box::points[24][3];
+GLfloat Box::coords[24][3], Box::points[24][3], Box::normals[24][3];
 GLubyte Box::indices[24], Box::map[8][3];
 
 
@@ -27,6 +27,7 @@ Box::Box(float size) : Shape(size) {
 		initMap();
 		initPoints();
 		initCoords();
+		initNormals();
 		initIndices();
 		loaded = true;
 	}
@@ -45,8 +46,10 @@ void Box::draw() const {
 		glTexCoordPointer(3, GL_FLOAT, 0, coords);
 	else
 		glTexCoordPointer(3, GL_FLOAT, 0, points);
+	glNormalPointer(GL_FLOAT, 0, normals);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
 	
 	// Draw vertices
 	glPushMatrix(); {
@@ -58,6 +61,7 @@ void Box::draw() const {
 	// Disable arrays
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 
@@ -125,6 +129,27 @@ void Box::initMap() {
 	for (int i=0; i<8; i++)
 		for (int j=0; j<3; j++)
 			this->map[i][j] = map[i][j];
+}
+
+
+
+void Box::initNormals() {
+	
+	GLfloat normals[6][3] = {{ 0.0,  0.0, +1.0},     // front
+	                         { 0.0,  0.0, -1.0},     // back
+	                         {-1.0,  0.0,  0.0},     // left
+	                         {+1.0,  0.0,  0.0},     // right
+	                         { 0.0, +1.0,  0.0},     // top
+	                         { 0.0, -1.0,  0.0}};    // bottom
+	int m;
+	
+	// Copy to class
+	for (int f=0; f<6; ++f) {
+		for (int v=0; v<4; ++v) {
+			for (int c=0; c<3; c++)
+				this->normals[f*4+v][c] = normals[f][c];
+		}
+	}
 }
 
 

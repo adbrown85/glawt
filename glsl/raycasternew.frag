@@ -16,8 +16,7 @@ uniform sampler3D volume;
  */
 vec4 findRayDirection() {
 	
-	float zFar=-1000, zNear=-0.1;
-	float f, n;
+	float f=50, n=0.1;
 	vec4 cFrag, pFrag;
 	vec4 lBack, pBack;
 	
@@ -26,8 +25,6 @@ vec4 findRayDirection() {
 	cFrag = pFrag / pFrag.w;
 	
 	/* Find point behind fragment in clip space */
-	f = -(zFar);
-	n = -(zNear);
 	pBack.w = f;
 	pBack.x = cFrag.x * pBack.w;
 	pBack.y = cFrag.y * pBack.w;
@@ -46,18 +43,20 @@ vec4 findRayDirection() {
 void main() {
 	
 	float weight;
-	vec4 rayInc, rayPos;
+	vec4 rayDir, rayInc, rayPos, sample;
 	
 	/* Initialize */
 	if (samples == 0)
-		samples = 50;
+		samples  = 50;
 	weight = 1.0 / samples;
 	rayPos = gl_TexCoord[0];
-	rayInc = findRayDirection() * (1.732 / samples);
+	rayDir = findRayDirection();
+	rayInc = rayDir * (1.732 / samples);
 	
 	/* Accumulate color through volume */
 	for (int i=0; i<samples; ++i) {
-		gl_FragColor += texture3D(volume, rayPos.stp) * weight;
+		sample = texture3D(volume, rayPos.stp) * weight;
+		gl_FragColor += sample;
 		rayPos += rayInc;
 	}
 	

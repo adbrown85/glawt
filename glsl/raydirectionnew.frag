@@ -5,25 +5,20 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-varying vec4 lFrag;
 
 
 
 void main() {
 	
-	float zFar=-1000, zNear=-0.1;
+	float zFar=-50.0, zNear=-1.0;
 	float f, n;
 	vec4 direction;
-	vec4 cFrag, pFrag;
-	vec4 lBack, eBack, pBack;
-	
-	/* Define colors */
-	vec4 red=vec4(1.0, 0.0, 0.0, 1.0),
-	     green=vec4(0.0, 1.0, 0.0, 1.0),
-	     blue=vec4(0.0, 0.0, 1.0, 1.0),
-	     yellow=vec4(1.0, 1.0, 0.0, 1.0);
+	vec4 cFrag, eFrag, lFrag, pFrag;
+	vec4 cBack, eBack, lBack, pBack;
 	
 	/* Transform fragment to clip space */
+	lFrag = gl_TexCoord[0];
+	eFrag = gl_ModelViewMatrix * lFrag;
 	pFrag = gl_ModelViewProjectionMatrix * lFrag;
 	cFrag = pFrag / pFrag.w;
 	
@@ -40,8 +35,7 @@ void main() {
 	direction = normalize(lBack - lFrag);
 	
 	/* Visualize direction */
-	if (direction.x < 0)
-		gl_FragColor = red;
-	else
-		gl_FragColor = green;
+	gl_FragColor.rg = (direction.xy + 1) * 0.5;
+	gl_FragColor.b = direction.z;
+	gl_FragColor.a = 1.0;
 }
