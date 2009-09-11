@@ -59,7 +59,7 @@ void Director::grab(Scene *scene, int cmd, float id) {
  */
 void Director::iterate(Scene *scene, int cmd) {
 	
-	std::cout << "Director::cmdIterate(Scene*,int)" << std::endl;
+	cout << "Director::cmdIterate(Scene*,int)" << endl;
 }
 
 
@@ -73,10 +73,10 @@ void Director::select(Scene *scene, int cmd) {
 	
 	switch (cmd) {
 		case Command::SELECT_ALL :
-			std::cout << "Select All" << std::endl;
+			scene->selection.addAll(&(scene->rootNode));
 			break;
 		case Command::DESELECT :
-			std::cout << "Deselect All" << std::endl;
+			scene->selection.clear();
 			break;
 		default :
 			break;

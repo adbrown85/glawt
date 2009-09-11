@@ -4,13 +4,17 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __COMPOSITOR_HPP__
-#define __COMPOSITOR_HPP__
+#ifndef COMPOSITOR_HPP
+#define COMPOSITOR_HPP
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
 #include "Delegate.hpp"
+#include "Drawable.hpp"
+#include "Node.hpp"
 #include "Scene.hpp"
+#include "Selection.hpp"
+using namespace std;
 
 
 
@@ -33,6 +37,7 @@ class Compositor : public Delegate {
 		static void hide(Scene *scene, int command);
 		static void info(Scene *scene, int command);
 		static void showAll(Scene *scene, int command);
+		static void showAll(Node *node);
 };
 
 

@@ -25,41 +25,77 @@ Compositor::Compositor() {
 
 
 
-void Compositor::hide(Scene *scene, int cmd) {
+/**
+ * Hides the items currently selected.
+ * 
+ * @param scene
+ *     Pointer to a collection of nodes.
+ * @param cmd
+ *     Specific command that was issued.
+ */
+void Compositor::hide(Scene *scene,
+                      int cmd) {
 	
-	std::cout << "Compositor::hide(Scene*,int)" << std::endl;
+	Selection::iterator si;
 	
-/*
-	int count;
-	
-	count = scene->items.size();
-	for (int i=0; i<count; i++) {
-		if (scene->items[i]->isSelected()) {
-			scene->items[i]->setShown(false);
-			scene->items[i]->setSelected(false);
-		}
-	}
-*/
+	// Hide and clear the selection
+	for (si=scene->selection.begin(); si!=scene->selection.end(); ++si)
+		(*si)->hide();
+	scene->selection.clear();
 }
 
 
 
-void Compositor::info(Scene *scene, int cmd) {
+/**
+ * Displays info about the scene on the screen.
+ * 
+ * @param scene
+ *     Pointer to a collection of nodes.
+ * @param cmd
+ *     Specific command that was issued.
+ */
+void Compositor::info(Scene *scene,
+                      int cmd) {
 	
-	std::cout << "Compositor::info(Scene*,int)" << std::endl;
+	cout << "Compositor::info(Scene*,int)" << endl;
 }
 
 
 
-void Compositor::showAll(Scene *scene, int cmd) {
+/**
+ * Shows all the %Drawable nodes in the scene.
+ * 
+ * @param scene
+ *     Pointer to a collection of nodes.
+ * @param cmd
+ *     Specific command that was issued.
+ */
+void Compositor::showAll(Scene *scene,
+                         int cmd) {
 	
-	std::cout << "Compositor::showAll(Scene*,int)" << std::endl;
+	showAll(&(scene->rootNode));
+}
+
+
+
+/**
+ * Recursively shows a node and its children.
+ * 
+ * @param node
+ *     Pointer to a node.
+ */
+void Compositor::showAll(Node *node) {
 	
-/*
-	int count;
+	Drawable *drawable;
+	vector<Node*> children;
 	
-	count = scene->items.size();
-	for (int i=0; i<count; i++)
-		scene->items[i]->setShown(true);
-*/
+	// Show node
+	drawable = dynamic_cast<Drawable*>(node);
+	if (drawable != NULL)
+		drawable->show();
+	
+	// Show children
+	children = node->getChildren();
+	for (int i=0; i<children.size(); ++i)
+		showAll(children[i]);
 }

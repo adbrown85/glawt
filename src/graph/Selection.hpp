@@ -10,6 +10,7 @@
 #include <iostream>
 #include <set>
 #include "Identifiable.hpp"
+#include "Node.hpp"
 #include "Selectable.hpp"
 using std::set;
 
@@ -28,7 +29,9 @@ class Selection {
 		typedef set<Selectable*,Identifiable::Comparator>::iterator iterator;
 		
 		void add(Selectable *item);
+		void addAll(Node *node);
 		iterator begin();
+		void clear();
 		iterator end();
 		void remove(Selectable *item);
 		

@@ -33,7 +33,7 @@ Outline.o: Shape.o
 Square.o: Shape.o
 
 # Collections of nodes
-Selection.o:
+Selection.o: Node.o
 Scene.o: Node.o Selection.o
 
 # Tests

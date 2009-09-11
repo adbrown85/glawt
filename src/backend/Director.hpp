@@ -4,17 +4,19 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __DIRECTOR_HPP__
-#define __DIRECTOR_HPP__
+#ifndef DIRECTOR_HPP
+#define DIRECTOR_HPP
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Identifiable.hpp"
+#include "Node.hpp"
 #include "Scene.hpp"
 #include "Shape.hpp"
 #include "Selectable.hpp"
 #include "Selection.hpp"
+using namespace std;
 
 
 
