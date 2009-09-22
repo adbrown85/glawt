@@ -6,23 +6,9 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 uniform int samples, size;
+uniform float pitch;
 uniform sampler3D volume;
-
-
-
-/**
- * Composites a sample into the fragment color.
- * 
- * @param sample
- *     New color that will be mixed in.
- * @return
- *     True if the base color has not been completely saturated.
- */
-void composite(in vec4 sample) {
-	
-	/* Mix in colors */
-	gl_FragColor = mix(gl_FragColor, sample, sample.a);
-}
+varying vec4 ecPosition, ecRayIncrement, lcRayIncrement;
 
 
 
@@ -37,8 +23,7 @@ void composite(in vec4 sample) {
  *     Distance between 
  */
 void findNormal(out vec3 normal,
-                in vec4 lcPosition,
-                in float pitch) {
+                in vec4 lcPosition) {
 	
 	float x, y, z;
 	vec3 gradient;
@@ -64,74 +49,26 @@ void findNormal(out vec3 normal,
 
 
 /**
- * Calculates the ray direction for this fragment.
- */
-vec4 findRayDirection() {
-	
-	float f=50, n=0.1;
-	vec4 cFrag, pFrag;
-	vec4 lBack, pBack;
-	
-	/* Transform fragment to clip space */
-	pFrag = gl_ModelViewProjectionMatrix * gl_TexCoord[0];
-	cFrag = pFrag / pFrag.w;
-	
-	/* Find point behind fragment in clip space */
-	pBack.w = f;
-	pBack.x = cFrag.x * pBack.w;
-	pBack.y = cFrag.y * pBack.w;
-	pBack.z = f * (f+n)/(f-n) - (2*f*n)/(f-n);
-	
-	/* Find direction as difference in local space */
-	lBack = gl_ModelViewProjectionMatrixInverse * pBack;
-	return normalize(lBack - gl_TexCoord[0]);
-}
-
-
-
-/**
  * Computes the diffuse light for the sample.
  */
 void shade(inout vec4 sample,
-           in vec4 lcPosition,
            in vec3 normal) {
 	
 	float nDotL;
-	vec4 ecPosition, L, lightPosition;
+	vec3 L, lightPosition;
+	vec4 ambient, diffuse;
 	
 	/* Set up light */
-	lightPosition = vec4(15.0, 15.0, 5.0, 1.0);
+	lightPosition = vec3(15.0, 15.0, 5.0);
+	L = normalize(lightPosition);
 	
-	/* Compute vector from surface to light position */
-	ecPosition = gl_ModelViewMatrix * lcPosition;
-	L = lightPosition - ecPosition;
-	L = normalize(L);
+	/* Compute ambient and diffuse light */
+	ambient = vec4(0.8, 0.8, 0.8, 1.0);
+	nDotL = max(0.0, dot(normal, L));
+	diffuse = vec4(nDotL, nDotL, nDotL, 1.0);
 	
-	/* Compute dot product between normal and L */
-	nDotL = max(0.0, dot(vec4(normal, 1.0), L));
-	
-	/* Compute intensity */
-	sample *= nDotL;
-}
-
-
-
-/**
- * Samples from the volume.
- * 
- * @param position
- *     Position in the volume.
- * @param sample
- *     Color or value returned.
- * @return
- *     False if the position is outside of the volume.
- */
-void takeSample(in vec4 position,
-                out vec4 sample) {
-	
-	/* Get the sample */
-	sample = texture3D(volume, position.stp);
-	sample.a = sample.x;
+	/* Mix in with sample */
+	sample.rgb = (sample.rgb * ambient) + (sample.rgb * diffuse);
 }
 
 
@@ -141,27 +78,36 @@ void takeSample(in vec4 position,
  */
 void main() {
 	
-	float pitch;
+	float distance;
 	vec3 normal;
-	vec4 rayInc, rayPos, sample;
-	
-	/* Validate input */
-	if (samples == 0)
-		samples = 50;
-	
-	/* Compute constants */
-	pitch = 1.0 / size;
+	vec4 ecRayPosition, lcRayPosition, sample;
 	
 	/* Form ray */
-	rayPos = gl_TexCoord[0];
-	rayInc = findRayDirection() * (1.732 / samples);
+	lcRayPosition = gl_TexCoord[0];
+	ecRayPosition = ecPosition;
 	
-	/* Accumulate color through volume */
+	/* For each sample */
 	for (int i=0; i<samples; ++i) {
-		takeSample(rayPos, sample);
-		findNormal(normal, rayPos, pitch);
-		shade(sample, rayPos, normal);
-		composite(sample);
-		rayPos += rayInc;
+		
+		/* Move to next position */
+		lcRayPosition += lcRayIncrement;
+		ecRayPosition += ecRayIncrement;
+		
+		/* Take sample */
+		sample = texture3D(volume, lcRayPosition.stp);
+		sample.a = sample.x;
+		if (sample.a < 0.01)
+			continue;
+		
+		/* Shade using attenuation */
+		distance = length(ecRayPosition);
+		sample.rgb /= distance;
+		findNormal(normal, lcRayPosition);
+		shade(sample, normal);
+		
+		/* Composite, check for opacity */
+		gl_FragColor = mix(gl_FragColor, sample, sample.a);
+		if (gl_FragColor.a > 0.9)
+			break;
 	}
 }
