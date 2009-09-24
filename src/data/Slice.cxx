@@ -9,6 +9,7 @@
 #include "Slice.hpp"
 void display(void);
 void init(string);
+void keyboard(unsigned char,int,int);
 void special(int,int,int);
 Dataset *dataset=NULL;
 float xText, yText;
@@ -20,17 +21,23 @@ Slice *slice=NULL;
 int main(int argc,
          char *argv[]) {
 	
+	string filename;
+	
 	// Handle arguments
-	if (argc != 2) {
-		cerr << "Usage: " << argv[0] << " <filename>" << endl;
+	if (argc == 1)
+		filename = "input/bear.vlb";
+	else if (argc == 2)
+		filename = argv[1];
+	else {
+		cerr << "Usage: " << argv[0] 
+		     << " [<filename>]" << endl;
 		exit(1);
 	}
 	
 	try {
 		
 		// Create sequence and slice
-		dataset = new Dataset(argv[1]);
-		dataset->print();
+		dataset = new Dataset(filename);
 		slice = new Slice(dataset, 0);
 		
 		// Initialize display
@@ -39,6 +46,7 @@ int main(int argc,
 		xText = ((float)width - 15) / width;
 		yText = ((float)height - 30) / height;
 		init("Slice");
+		dataset->print();
 	}
 	catch (char const *e) {
 		cerr << e << endl;
@@ -47,6 +55,7 @@ int main(int argc,
 	
 	// Start display
 	glutDisplayFunc(display);
+	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(special);
 	glutMainLoop();
 }
@@ -118,6 +127,29 @@ void special(int key,
 			break;
 		case GLUT_KEY_DOWN:
 		case GLUT_KEY_LEFT:
+			slice->previous();
+			glutPostRedisplay();
+			break;
+	}
+}
+
+
+
+/**
+ * GLUT keyboard callback.
+ */
+void keyboard(unsigned char key,
+              int x,
+              int y) {
+	
+	switch(key) {
+		case 'f':
+		case 'n':
+			slice->next();
+			glutPostRedisplay();
+			break;
+		case 'b':
+		case 'p':
 			slice->previous();
 			glutPostRedisplay();
 			break;

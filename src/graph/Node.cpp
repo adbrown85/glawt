@@ -186,7 +186,6 @@ string Node::toString() const {
 	stringstream stream;
 	
 	// Make string
-	stream << className
-	       << " dep='" << depth << "'";
+	stream << className;
 	return stream.str();
 }

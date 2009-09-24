@@ -32,6 +32,7 @@ class Texture3D : public Texture {
 		virtual void associate();
 		virtual void remove();
 		
+		/* Dataset* getDataset() {return &dataset;} */
 		int getDepth() {return dataset.getDepth();}
 		int getHeight() {return dataset.getHeight();}
 		int getWidth() {return dataset.getWidth();}
@@ -43,6 +44,7 @@ class Texture3D : public Texture {
 		GLuint handle;
 		
 		Texture3D();
+		Texture3D* find(string name);
 		void load();
 };
 

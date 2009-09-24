@@ -317,30 +317,3 @@ void Vector::set(float x, float y, float z, float w) {
 	size = 4;
 }
 
-
-
-
-
-
-
-/*
-void main() {
-	
-	Vector vA = Vector(2, 2, 2);
-	Vector vB = Vector(3, 4, 5);
-	
-	// TEST PRINT
-	cout << "Printing vectors:" << endl;
-	cout << vA << endl;
-	cout << vB << endl;
-	
-	// TEST OPERATORS
-	cout << "Testing operators:" << endl;
-	cout << vA + vB << endl;
-	cout << vA - vB << endl;
-	cout << vA * vB << endl;
-	cout << vA / vB << endl;
-	cout << vA / 2 << endl;
-	cout << vA * 2 << endl;
-}
-*/

@@ -37,14 +37,13 @@ class Slice {
 	private:
 		
 		GLenum type;
-		int height, index, length, total, width;
+		int block, height, index, length, total, width;
 		Dataset *dataset;
 		
 		Slice();
 		void drawAsFloat(int offset);
 		void drawAsShort(int offset);
-		void drawAsUByte(int offset);
-		void drawAsUShort(int offset);
+		void drawAsByte(int offset);
 		void initType();
 };
 

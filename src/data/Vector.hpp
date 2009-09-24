@@ -4,11 +4,12 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com
  */
-#ifndef __VECTOR_HEADER__
-#define __VECTOR_HEADER__
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+using namespace std;
 
 
 

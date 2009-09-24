@@ -7,6 +7,7 @@
 #ifndef DATASET_HPP
 #define DATASET_HPP
 #include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <GL/glut.h>
 #include <iomanip>
@@ -15,6 +16,8 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include "DatasetHeader.hpp"
+#include "Index.hpp"
 using namespace std;
 
 
@@ -29,48 +32,39 @@ class Dataset {
 	
 	public :
 		
-		Dataset(const string &filename);
-		~Dataset();
-		void print() const;
+		Dataset(string filename);
+		Dataset(const Dataset &original);
+		virtual ~Dataset();
+		void print() const {header.print();}
+		void print(Index I);
 		
-		void* getData() const;
+		void get(const Index &I,
+		         void *&value,
+		         GLenum &type) const;
+		int getBlock() const {return block;}
+		void* getData() const {return data;}
 		int getDepth() const {return depth;}
-		float* getFloatData() const {return floatData;}
 		int getHeight() const {return height;}
-		short* getShortData() const {return shortData;}
-		GLenum getTypeEnum() const {return typeEnum;}
-		string getTypeString() const {return typeString;}
-		unsigned char* getUByteData() const {return ubyteData;}
-		unsigned short* getUShortData() const {return ushortData;}
+		GLenum getType() const {return type;}
 		int getWidth() const {return width;}
+		void set(const Index &I,
+		         const void *value,
+		         GLenum type);
 	
 	
 	private:
 		
-		unsigned char *ubyteData;
-		float *floatData, pitch[3];
-		GLenum typeEnum;
-		int count, dataOffset, headerOffset;
-		int max, min, range[2], size[3];
-		int width, height, depth;
-		short *shortData;
-		unsigned short *ushortData;
-		string endian, filename, typeString;
+		DatasetHeader header;
+		GLenum type;
+		int block, length;
+		int width, height, depth, widthTimesHeight;
+		void *data;
 		
-		Dataset();
-		void checkHeader();
-		void initData();
+		char* findPosition(const Index &I) const;
 		void initDimensions();
-		void initTypeEnum();
+		void initTypeBlock();
 		void readData();
-		void readDataAsFloat(ifstream &file);
-		void readDataAsShort(ifstream &file);
-		void readDataAsUByte(ifstream &file);
-		void readDataAsUShort(ifstream &file);
-		void readHeader();
-		void setDimensions(int width,
-		                   int height,
-		                   int depth);
+		void checkIndex(const Index &I) const;
 };
 
 

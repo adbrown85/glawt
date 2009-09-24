@@ -9,7 +9,7 @@
 
 
 /**
- * Creates a new 
+ * Creates a new %Slice.
  * 
  * @param dataset
  *     Pointer to the volume data.
@@ -22,13 +22,16 @@ Slice::Slice(Dataset *dataset,
 	// Basics
 	this->dataset = dataset;
 	this->index = index;
-	this->type = dataset->getTypeEnum();
+	this->type = dataset->getType();
 	
 	// Dimensions
 	total = dataset->getDepth();
 	width = dataset->getWidth();
 	height = dataset->getHeight();
+	
+	// Memory sizes
 	length = width * height;
+	block = dataset->getBlock();
 }
 
 
@@ -38,82 +41,12 @@ Slice::Slice(Dataset *dataset,
  */
 void Slice::draw() {
 	
-	int offset;
+	char *data;
 	
 	// Calculate position for slice
-	offset = index * length;
-	
-	// Draw pixels according to type
-	switch (type) {
-		case GL_FLOAT :
-			drawAsFloat(offset);
-			break;
-		case GL_SHORT :
-			drawAsShort(offset);
-			break;
-		case GL_UNSIGNED_BYTE : 
-			drawAsUByte(offset);
-			break;
-		case GL_UNSIGNED_SHORT : 
-			drawAsUShort(offset);
-			break;
-	}
-}
-
-
-
-/**
- * Draws the pixels as 32-bit, floating-point numbers.
- */
-void Slice::drawAsFloat(int offset) {
-	
-	float *data;
-	
-	// Get data and draw 
-	data = dataset->getFloatData() + offset;
-	glDrawPixels(width, height, GL_LUMINANCE, GL_FLOAT, data);
-}
-
-
-
-/**
- * Draws the pixels as signed, 16-bit integers.
- */
-void Slice::drawAsShort(int offset) {
-	
-	short *data;
-	
-	// Get data and draw 
-	data = dataset->getShortData() + offset;
-	glDrawPixels(width, height, GL_LUMINANCE, GL_SHORT, data);
-}
-
-
-
-/**
- * Draws the pixels as unsigned, 8-bit integers.
- */
-void Slice::drawAsUByte(int offset) {
-	
-	unsigned char *data;
-	
-	// Get data and draw
-	data = dataset->getUByteData() + offset;
-	glDrawPixels(width, height, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
-}
-
-
-
-/**
- * Draws the slice as unsigned, 16-bit integers.
- */
-void Slice::drawAsUShort(int offset) {
-	
-	unsigned short *data;
-	
-	// Draw data
-	data = dataset->getUShortData() + offset;
-	glDrawPixels(width, height, GL_LUMINANCE, GL_UNSIGNED_SHORT, data);
+	data = reinterpret_cast<char*>(dataset->getData());
+	data += index * length * block;
+	glDrawPixels(width, height, GL_LUMINANCE, type, data);
 }
 
 
@@ -141,3 +74,4 @@ void Slice::previous() {
 		index = total;
 	--index;
 }
+

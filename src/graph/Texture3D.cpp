@@ -28,6 +28,32 @@ Texture3D::Texture3D(string filename,
 
 
 /**
+ * Creates a new texture by processing another texture.
+ * 
+ * @param effect
+ *     Indicates which effect to use.
+ * @param name
+ *     Indicates which dataset to use.
+ */
+/*
+Texture3D::Texture3D(string effect,
+                     string name) {
+	
+	Dataset *dataset;
+	Texture3D *texture3d;
+	
+	// Find dataset
+	texture3d = find(name);
+	dataset = texture3d->getDataset();
+	
+	// 
+	Effect::apply(effect, *dataset, this->dataset);
+}
+*/
+
+
+
+/**
  * Enables 3D texturing, activates a texture unit, and binds the texture to it.
  */
 void Texture3D::apply() {
@@ -47,6 +73,48 @@ void Texture3D::associate() {
 	// Load the texture
 	Texture::associate();
 	load();
+}
+
+
+
+/**
+ * Finds another Texture3D by name.
+ * 
+ * @return
+ *     Pointer to the Texture3D.
+ */
+Texture3D* Texture3D::find(string name) {
+	
+	bool found;
+	Node *node;
+	Texture3D *texture3d;
+	string message;
+	
+	// Initialize
+	found = false;
+	node = parent;
+	
+	// Look for matching node up the tree
+	while (node != NULL) {
+		texture3d = dynamic_cast<Texture3D*>(node);
+		if (texture3d == NULL) {
+			node = node->getParent();
+			continue;
+		}
+		if (name.compare(texture3d->getName()) == 0) {
+			found = true;
+			break;
+		}
+	}
+	
+	// Finish
+	if (!found) {
+		message = "Texture3D: Could not find Texture3D with name '";
+		message += name;
+		message += "'!";
+		throw message.c_str();
+	}
+	return texture3d;
 }
 
 
@@ -76,7 +144,7 @@ void Texture3D::load() {
 	             dataset.getDepth(),      // Depth
 	             0,                       // Border
 	             GL_LUMINANCE,            // Format
-	             dataset.getTypeEnum(),   // Type
+	             dataset.getType(),       // Type
 	             dataset.getData());      // Data
 }
 

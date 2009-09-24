@@ -19,5 +19,6 @@ Matrix.o: Vector.o
 Quaternion.o: Matrix.o Vector.o
 
 # Volume
-Dataset.o:
+DatasetHeader.o:
+Dataset.o: DatasetHeader.o
 Slice.o: Dataset.o
