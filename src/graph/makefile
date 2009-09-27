@@ -17,10 +17,12 @@ include $(GANDER)/src/module.mak
 Node.o:
 
 # Applicable nodes
+Framebuffer.o: Node.o
 Transformation.hpp: Node.o
 Translation.o: Node.o Transformation.hpp
 Program.o: Node.o
-Shader.o: Node.o Program.o 
+Shader.o: Node.o Program.o
+Target.o: Framebuffer.o Node.o Texture2D.o
 Texture.o : Node.o
 Texture2D.o : Node.o Texture.o
 Texture3D.o : Node.o Texture.o
@@ -37,5 +39,6 @@ Selection.o: Node.o
 Scene.o: Node.o Selection.o
 
 # Tests
+Framebuffer: Scene.o
 Scene: Shape.o Translation.o
-Shape: Translation.o 
+Shape: Translation.o

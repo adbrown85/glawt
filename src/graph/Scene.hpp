@@ -37,6 +37,8 @@ class Scene {
 		Scene();
 		Scene(int width, int height);
 		void add(Node *node);
+		void associate() {rootNode.associateTree();}
+		void finalize() {rootNode.finalizeTree();}
 		void prepare();
 		void print();
 		void reset();

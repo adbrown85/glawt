@@ -30,11 +30,10 @@ class Texture : public Node,
 	
 	public:
 		
-		Texture(string filename,
+		Texture(string filename="",
 		        string name="");
 		virtual void apply() = 0;
 		virtual void associate();
-		virtual void print() const;
 		virtual void remove() = 0;
 		virtual string toString() const;
 		
@@ -46,12 +45,10 @@ class Texture : public Node,
 	
 	protected:
 		
-		static bool asserted;
 		int unit;
 		string filename, name, type;
 		
 		Texture();
-		void assertions();
 };
 
 

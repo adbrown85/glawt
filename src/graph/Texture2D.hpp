@@ -24,17 +24,25 @@ class Texture2D : public Texture {
 	
 	public :
 		
+		Texture2D(string name);
 		Texture2D(string filename,
 		          string name="");
 		virtual void apply();
-		virtual void associate();
+		virtual void finalize();
 		virtual void remove();
+		
+		static void find(Node *node,
+		                 Texture2D *&pointer,
+		                 string name);
 	
 	
 	private:
 		
+		bool blank;
+		GLuint handle;
 		ILuint image;
 		
+		void generate();
 		void initLibraries();
 		void load();
 };
