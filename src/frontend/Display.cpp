@@ -6,8 +6,10 @@
  *     Andy Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-Scene *Display::scene=NULL;
 Delegate *Display::delegate=NULL;
+unsigned long Display::timeStarted=0;
+int Display::frames=0, Display::framesPerSecond=0;
+Scene *Display::scene=NULL;
 vector<Control*> Display::controls;
 vector<Manipulator*> Display::manipulators;
 
@@ -21,11 +23,22 @@ void Display::display(void) {
 	// Initialize
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	// Paint
+	// Paint scene and overlay
 	Painter::paint(*scene, manipulators);
+	overlay();
 	
 	// Refresh
 	glutSwapBuffers();
+}
+
+
+
+/**
+ * Refreshes the display.
+ */
+void Display::idle(void) {
+	
+	glutPostRedisplay();
 }
 
 
@@ -49,9 +62,40 @@ void Display::install(Control *control) {
  */
 void Display::overlay() {
 	
-	std::cerr << "Display::overlay()" << std::endl;
+	char buffer[32];
+	float x, y;
+	int time, viewport[4];
 	
-	// Draw overlay
+	// Update values
+	++frames;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	if (time - timeStarted > 1000) {
+		framesPerSecond = frames;
+		frames = 0;
+		timeStarted = time;
+	}
+	
+	// Calculate position
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	x = ((float)viewport[2] - 15) / viewport[2];
+	y = ((float)viewport[3] - 30) / viewport[3];
+	
+	// Set position
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+			glLoadIdentity();
+			glRasterPos2f(-x, y);
+		glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	
+	// Draw text
+	sprintf(buffer, "fps: %d", framesPerSecond);
+	for (int i=0; i<strlen(buffer); ++i)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, buffer[i]);
 }
 
 
@@ -63,6 +107,8 @@ void Display::overlay() {
  *     Text to be shown on the window's title bar.
  * @param scene
  *     Pointer to a Scene with items.  Needs to be constructed first.
+ * @param delegate
+ *     Delegate that opens scene.
  */
 void Display::start(std::string title,
                     Scene *scene,
@@ -109,6 +155,7 @@ void Display::start(std::string title,
 	
 	// Register functions
 	glutDisplayFunc(Display::display);
+	glutVisibilityFunc(Display::visibility);
 	for (int i=0; i<controls.size(); i++) {
 		manipulators = controls[i]->install(scene);
 		for (int j=0; j<manipulators.size(); j++)
@@ -121,41 +168,11 @@ void Display::start(std::string title,
 
 
 
-/**
- * Simple test program.
- */
-/*
-#include "Box.hpp"
-#include "Interpreter.hpp"
-#include "Keyboard.hpp"
-#include "Menu.hpp"
-#include "Mouse.hpp"
-int main(int argc, char *argv[]) {
+void Display::visibility(int visible) {
 	
-	using namespace std;
-	Box b1(1.0), b2(3.0);
-	Scene scene(640, 480);
-	Interpreter interpreter(&scene);
-	Keyboard keyboard(&interpreter);
-	Menu menu(&interpreter);
-	Mouse mouse(&interpreter);
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Display" << endl;
-	cout << "****************************************" << endl;
-	
-	// Test
-	cout << endl;
-	scene.add(&b1.setPosition(-1.0, 0.0, 0.0));
-	scene.add(&b2.setPosition( 2.0, 0.0, 0.0));
-	Display::install(&menu);
-	Display::install(&keyboard);
-	Display::install(&mouse);
-	Display::start("Display Test Program", &scene);
-	
-	// Finish
-	return 0;
+	if (visible)
+		glutIdleFunc(Display::idle);
+	else
+		glutIdleFunc(NULL);
 }
-*/
+

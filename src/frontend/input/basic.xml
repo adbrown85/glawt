@@ -1,0 +1,12 @@
+<!--
+ * basic.xml
+ *     Basic scene.
+ *
+ * Author
+ *     Andy Brown
+-->
+
+
+<translate x="3.0" y="0.0" z="0.0">
+	<shape type="box" size="1.0"/>
+</translate>

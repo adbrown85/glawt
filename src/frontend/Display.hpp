@@ -17,8 +17,7 @@
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
-using std::string;
-using std::vector;
+using namespace std;
 
 
 
@@ -33,16 +32,20 @@ class Display {
 	public :
 		
 		static void display(void);
+		static void idle(void);
 		static void install(Control *control);
 		static void start(string title,
 		                  Scene *scene,
 		                  Delegate *delegate);
+		static void visibility(int visible);
 	
 	
 	private :
 		
-		static Scene *scene;
 		static Delegate *delegate;
+		static unsigned long timeStarted;
+		static int frames, framesPerSecond;
+		static Scene *scene;
 		static vector<Control*> controls;
 		static vector<Manipulator*> manipulators;
 		
