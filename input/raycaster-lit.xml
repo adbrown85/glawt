@@ -13,7 +13,7 @@
 	<shader type="fragment" file="glsl/raycaster-lit.frag" />
 	<uniform type="int" name="samples" value="256">
 	<uniform type="float" name="pitch" value="0.00390625">
-		<texture type="3D" file="input/skull.vlb" name="volume">
+		<texture type="3D" file="input/bear.vlb" name="volume">
 		<uniform type="sampler3D" name="volume" link="volume">
 			<translate x="0.0" y="0.0" z="0.0">
 				<shape type="Box" size="1.0" style="3D" />
