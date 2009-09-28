@@ -8,11 +8,25 @@
 
 
 
+/**
+ * Creates a new %Framebuffer.
+ */
 Framebuffer::Framebuffer() {
 	
 	// Initialize
 	className = "Framebuffer";
 	this->handle = 0;
+}
+
+
+
+/**
+ * Deletes the %Framebuffer.
+ */
+Framebuffer::~Framebuffer() {
+	
+	// Delete the framebuffer
+	glDeleteFramebuffers(1, &handle);
 }
 
 
@@ -24,14 +38,18 @@ void Framebuffer::apply() {
 	
 	// Bind
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
+	
+	// Clear
+	glClearColor(0.8, 0.8, 0.8, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
 
 /**
- * Generates the %Framebuffer.
+ * Generates the %Framebuffer in OpenGL and binds it.
  */
-void Framebuffer::finalize() {
+void Framebuffer::associate() {
 	
 	// Generate and bind
 	glGenFramebuffers(1, &handle);
@@ -70,6 +88,8 @@ void Framebuffer::remove() {
 	
 	// Unbind
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -81,8 +101,9 @@ string Framebuffer::toString() const {
 	
 	stringstream stream;
 	
+	// Insert attributes
 	stream << Node::toString()
-	       << " han='" << handle << "'";
+	       << " handle='" << handle << "'";
 	return stream.str();
 }
 

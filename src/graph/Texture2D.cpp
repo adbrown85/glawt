@@ -24,8 +24,7 @@ Texture2D::Texture2D(string name,
 	className = "Texture2D";
 	this->type = "2D";
 	this->image = 0;
-	this->width = 0;
-	this->height = 0;
+	this->size = 0;
 }
 
 
@@ -35,22 +34,18 @@ Texture2D::Texture2D(string name,
  * 
  * @param name
  *     Name another node can reference.
- * @param width
- *     Width of the texture in pixels.
- * @param height
- *     Height of the texture in pixels.
+ * @param size
+ *     Size of the texture's width or height in pixels.
  */
 Texture2D::Texture2D(string name,
-                     int width,
-                     int height) :
+                     int size) :
                      Texture(name) {
 	
 	// Initialize
 	className = "Texture2D";
 	this->type = "2D";
 	this->image = 0;
-	this->width = width;
-	this->height = height;
+	this->size = size;
 }
 
 
@@ -79,6 +74,9 @@ void Texture2D::apply() {
 
 /**
  * Generates or loads the texture.
+ * 
+ * Is done in "associate" rather than "finalize" because other nodes might 
+ * need to get the texture's handle.
  */
 void Texture2D::associate() {
 	
@@ -139,8 +137,8 @@ void Texture2D::generate() {
 	glTexImage2D(GL_TEXTURE_2D,
 	             0,
 	             GL_RGBA8,
-	             width,
-	             height,
+	             size,
+	             size,
 	             0,
 	             GL_RGBA,
 	             GL_UNSIGNED_BYTE,

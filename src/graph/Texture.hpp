@@ -37,14 +37,16 @@ class Texture : public Node,
 		virtual void remove() = 0;
 		virtual string toString() const;
 		
-		string getFilename() const {return filename;}
-		string getName() const {return name;}
-		string getType() const {return type;}
-		int getUnit() const {return unit;}
+		virtual string getFilename() const {return filename;}
+		virtual GLuint getHandle() {return handle;}
+		virtual string getName() const {return name;}
+		virtual string getType() const {return type;}
+		virtual int getUnit() const {return unit;}
 	
 	
 	protected:
 		
+		GLuint handle;
 		int unit;
 		string filename, name, type;
 		

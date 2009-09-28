@@ -41,9 +41,8 @@ void Target::associate() {
 	Texture2D::find(this, texture, link);
 	if (texture == NULL)
 		throw "[Gander,Target] Could not find texture with correct name.";
-	textureHandle = texture->getUnit();
-	width = texture->getWidth();
-	height = texture->getHeight();
+	textureHandle = texture->getHandle();
+	size = texture->getSize();
 }
 
 
@@ -78,9 +77,10 @@ string Target::toString() const {
 	stringstream stream;
 	
 	stream << Node::toString()
-	       << " wid='" << width << "'"
-	       << " hei='" << height << "'"
-	       << " lin='" << link << "'";
+	       << " size='" << size << "'"
+	       << " link='" << link << "'"
+	       << " text='" << textureHandle << "'"
+	       << " fram='" << framebufferHandle << "'";
 	return stream.str();
 }
 

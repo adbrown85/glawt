@@ -35,7 +35,7 @@ class Target : public Node {
 	private:
 		
 		GLuint framebufferHandle, textureHandle;
-		int width, height;
+		int size;
 		string link;
 };
 

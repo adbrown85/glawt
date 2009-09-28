@@ -1,5 +1,5 @@
 /*
- * coordinates.glsl
+ * coordinates.frag
  *     Sets a fragment's color as its texture coordinates.
  */
 

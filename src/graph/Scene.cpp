@@ -57,6 +57,18 @@ void Scene::addToRoot(Node *node) {
 
 
 /**
+ * Changes the last node to its parent.
+ */
+void Scene::backup() {
+	
+	if (last == &root)
+		return;
+	last = last->getParent();
+}
+
+
+
+/**
  * Returns the scene's rotation as a matrix.
  */
 Matrix Scene::getRotationMatrix() const {

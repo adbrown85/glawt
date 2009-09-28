@@ -45,7 +45,9 @@ int main() {
 	srand(time(NULL));
 	for (int i=0; i<NUM_OF_ITEMS; ++i) {
 		scene.addToRoot(new Translation(0, 0, rand()%10));
-		scene.addToLast(new FakeShape());
+		scene.addToLast(new FakeShape(1.0));
+		scene.backup();
+		scene.addToLast(new FakeShape(2.0));
 	}
 	scene.print();
 	

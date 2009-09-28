@@ -24,6 +24,7 @@ Texture::Texture(string name,
 	this->name = name;
 	this->filename = filename;
 	this->unit = 0;
+	this->handle = 0;
 }
 
 
@@ -61,6 +62,7 @@ string Texture::toString() const {
 	
 	stream << Node::toString();
 	stream << " name='" << name << "'"
+	       << " hand='" << handle << "'"
 	       << " unit='" << unit << "'"
 	       << " file='" << filename << "'";
 	return stream.str();

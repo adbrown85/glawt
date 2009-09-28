@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <IL/ilut.h>
 #include <iostream>
+#include <sstream>
 #include "Texture.hpp"
 
 
@@ -27,14 +28,12 @@ class Texture2D : public Texture {
 		Texture2D(string name,
 		          string filename);
 		Texture2D(string name,
-		          int width,
-		          int height);
+		          int size);
 		virtual void apply();
 		virtual void associate();
 		virtual void remove();
 		
-		virtual int getHeight() {return height;}
-		virtual int getWidth() {return width;}
+		virtual int getSize() {return size;}
 		
 		static void find(Node *node,
 		                 Texture2D *&pointer,
@@ -43,9 +42,8 @@ class Texture2D : public Texture {
 	
 	private:
 		
-		GLuint handle;
 		ILuint image;
-		int width, height;
+		int size;
 		
 		void generate();
 		void initLibraries();

@@ -23,6 +23,7 @@ class Framebuffer : public Node,
 	public :
 		
 		Framebuffer();
+		~Framebuffer();
 		virtual void apply();
 		virtual void remove();
 		virtual string toString() const;
@@ -35,12 +36,12 @@ class Framebuffer : public Node,
 	
 	protected:
 		
-		virtual void finalize();
+		virtual void associate();
 	
 	
 	private:
 		
-		GLuint handle;
+		GLuint depthBuffer, handle;
 };
 
 

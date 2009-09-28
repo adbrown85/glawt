@@ -44,4 +44,5 @@ Scene: Shape.o Translation.o
 Shape: Translation.o
 Texture: Scene.o
 Texture2D: Scene.o
-Uniform.o: Scene.o
+Uniform: Scene.o
+Target: Box.o Program.o Scene.o Shader.o Uniform.o

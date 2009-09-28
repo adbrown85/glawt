@@ -38,6 +38,7 @@ class Scene {
 		      int height=480);
 		void addToLast(Node *node);
 		void addToRoot(Node *node);
+		void backup();
 		void prepare();
 		void print();
 		void reset();
@@ -63,6 +64,8 @@ class Scene {
 		int height, width;
 		string filename;
 		Quaternion rotation;
+		
+		void destroy(Node *node);
 };
 
 
