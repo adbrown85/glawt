@@ -2,3 +2,5 @@ gander
 lib
 gander.geany
 *.o
+ignore
+
