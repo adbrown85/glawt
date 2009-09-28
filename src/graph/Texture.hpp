@@ -30,8 +30,8 @@ class Texture : public Node,
 	
 	public:
 		
-		Texture(string filename="",
-		        string name="");
+		Texture(string name,
+		        string filename="");
 		virtual void apply() = 0;
 		virtual void associate();
 		virtual void remove() = 0;

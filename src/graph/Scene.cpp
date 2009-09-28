@@ -10,19 +10,6 @@
 
 /**
  * Creates and initializes a new scene.
- */
-Scene::Scene() {
-	
-	// Initialize
-	this->width = 640;
-	this->height = 480;
-	reset();
-}
-
-
-
-/**
- * Creates and initializes a new scene.
  * 
  * @param width
  *     Width of the window for the scene.
@@ -36,16 +23,35 @@ Scene::Scene(int width,
 	this->width = width;
 	this->height = height;
 	reset();
+	last = &root;
 }
 
 
 
 /**
- * Adds the node as a child of the scene's root.
+ * Adds a node as a child of the scene's last node.
+ * 
+ * @param node
+ *     Node to add.
  */
-void Scene::add(Node *node) {
+void Scene::addToLast(Node *node) {
 	
-	rootNode.addChild(node);
+	last->addChild(node);
+	last = node;
+}
+
+
+
+/**
+ * Adds a node as a child of the scene's root.
+ * 
+ * @param node
+ *     Node to add.
+ */
+void Scene::addToRoot(Node *node) {
+	
+	root.addChild(node);
+	last = node;
 }
 
 
@@ -66,8 +72,8 @@ Matrix Scene::getRotationMatrix() const {
  */
 void Scene::prepare() {
 	
-	rootNode.associateTree();
-	rootNode.finalizeTree();
+	root.associateTree();
+	root.finalizeTree();
 }
 
 
@@ -77,7 +83,7 @@ void Scene::prepare() {
  */
 void Scene::print() {
 	
-	rootNode.printTree();
+	root.printTree();
 }
 
 
@@ -97,7 +103,10 @@ void Scene::reset() {
 /**
  * Rotates the scene by axis/angle.
  */
-void Scene::rotate(float angle, float x, float y, float z) {
+void Scene::rotate(float angle,
+                   float x,
+                   float y,
+                   float z) {
 	
 	Quaternion rotation;
 	
@@ -111,7 +120,10 @@ void Scene::rotate(float angle, float x, float y, float z) {
 /**
  * Sets the rotation of the scene using axis/angle.
  */
-void Scene::setRotation(float angle, float x, float y, float z) {
+void Scene::setRotation(float angle,
+                        float x,
+                        float y,
+                        float z) {
 	
 	// Set rotation
 	rotation.set(angle, x, y, z);
@@ -128,5 +140,6 @@ void Scene::sortByDepth() {
 	
 	// Sort by depth using rotation matrix
 	rotMatrix = getRotationMatrix();
-	rootNode.sortByDepth(rotMatrix);
+	root.sortByDepth(rotMatrix);
 }
+

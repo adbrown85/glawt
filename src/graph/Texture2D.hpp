@@ -24,12 +24,17 @@ class Texture2D : public Texture {
 	
 	public :
 		
-		Texture2D(string name);
-		Texture2D(string filename,
-		          string name="");
+		Texture2D(string name,
+		          string filename);
+		Texture2D(string name,
+		          int width,
+		          int height);
 		virtual void apply();
-		virtual void finalize();
+		virtual void associate();
 		virtual void remove();
+		
+		virtual int getHeight() {return height;}
+		virtual int getWidth() {return width;}
 		
 		static void find(Node *node,
 		                 Texture2D *&pointer,
@@ -38,9 +43,9 @@ class Texture2D : public Texture {
 	
 	private:
 		
-		bool blank;
 		GLuint handle;
 		ILuint image;
+		int width, height;
 		
 		void generate();
 		void initLibraries();

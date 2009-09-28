@@ -9,42 +9,48 @@
 
 
 /**
- * Creates a new 2D texture that can be referenced by name.
+ * Creates a new 2D texture from a file that can be referenced by name.
  * 
- * @param filename
- *     Path to the file.
  * @param name
  *     Name another node can reference.
+ * @param filename
+ *     Path to a file containing the texture.
  */
-Texture2D::Texture2D(string name) :
+Texture2D::Texture2D(string name,
+                     string filename) :
+                     Texture(name, filename) {
+	
+	// Initialize
+	className = "Texture2D";
+	this->type = "2D";
+	this->image = 0;
+	this->width = 0;
+	this->height = 0;
+}
+
+
+
+/**
+ * Creates a new 2D texture that can be referenced by name.
+ * 
+ * @param name
+ *     Name another node can reference.
+ * @param width
+ *     Width of the texture in pixels.
+ * @param height
+ *     Height of the texture in pixels.
+ */
+Texture2D::Texture2D(string name,
+                     int width,
+                     int height) :
                      Texture(name) {
 	
 	// Initialize
 	className = "Texture2D";
 	this->type = "2D";
 	this->image = 0;
-	this->blank = true;
-}
-
-
-
-/**
- * Creates a new 2D texture from a file that can be referenced by name.
- * 
- * @param filename
- *     Path to the file.
- * @param name
- *     Name another node can reference.
- */
-Texture2D::Texture2D(string filename,
-                     string name) :
-                     Texture(filename,name) {
-	
-	// Initialize
-	className = "Texture2D";
-	this->type = "2D";
-	this->image = 0;
-	this->blank = false;
+	this->width = width;
+	this->height = height;
 }
 
 
@@ -54,10 +60,16 @@ Texture2D::Texture2D(string filename,
  */
 void Texture2D::apply() {
 	
-	// Bind texture
+	// Enable texturing
 	glActiveTexture(GL_TEXTURE0 + unit);
+	glClientActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(GL_TEXTURE_2D);
-	if (!blank) {
+	
+	// Bind texture
+	if (filename.empty()) {
+		glBindTexture(GL_TEXTURE_2D, handle);
+	}
+	else {
 		ilBindImage(image);
 		ilutGLBindTexImage();
 	}
@@ -66,16 +78,19 @@ void Texture2D::apply() {
 
 
 /**
- * Activates the texture on the unit.
+ * Generates or loads the texture.
  */
-void Texture2D::finalize() {
+void Texture2D::associate() {
+	
+	Texture::associate();
 	
 	// Activate texture unit
 	glActiveTexture(GL_TEXTURE0 + unit);
+	glClientActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(GL_TEXTURE_2D);
 	
 	// Generate or load
-	if (blank)
+	if (filename.empty())
 		generate();
 	else
 		load();
@@ -98,7 +113,7 @@ void Texture2D::find(Node *node,
                      string name) {
 	
 	// Search
-	node = node->parent;
+	node = node->getParent();
 	while (node != NULL) {
 		pointer = dynamic_cast<Texture2D*>(node);
 		if (pointer != NULL) {
@@ -107,7 +122,7 @@ void Texture2D::find(Node *node,
 			else
 				pointer = NULL;
 		}
-		node = node->parent;
+		node = node->getParent();
 	}
 }
 
@@ -154,21 +169,21 @@ void Texture2D::initLibraries() {
 	// Check DevIL components
 	ilVersion = ilGetInteger(IL_VERSION_NUM);
 	if (ilVersion < IL_VERSION)
-		cerr << "Gander,Texture2D: DevIL (IL) compiled with "
+		cerr << "[Gander,Texture2D] DevIL (IL) compiled with "
 		     << IL_VERSION
 		     << " but running "
 		     << ilVersion
 		     << "." << endl;
 	iluVersion = iluGetInteger(ILU_VERSION_NUM);
 	if (iluVersion < ILU_VERSION)
-		cerr << "Gander,Texture2D: DevIL (ILU) compiled with "
+		cerr << "[Gander,Texture2D] DevIL (ILU) compiled with "
 		     << ILU_VERSION
 		     << " but running "
 		     << iluVersion
 		     << "." << endl;
 	ilutVersion = ilutGetInteger(ILUT_VERSION_NUM);
 	if (ilutVersion < ILUT_VERSION)
-		cerr << "Gander,Texture2D: DevIL (ILUT) compiled with "
+		cerr << "[Gander,Texture2D] DevIL (ILUT) compiled with "
 		     << ILUT_VERSION
 		     << " but running "
 		     << ilutVersion
@@ -192,11 +207,11 @@ void Texture2D::load() {
 	ilGenImages(1, &image);
 	ilBindImage(image);
 	if (ilLoadImage(filename.c_str()))
-		cerr << "Gander,Texture2D: DevIL loaded '" 
+		cerr << "[Gander,Texture2D] DevIL loaded '" 
 		     << filename
 		     << "'." << endl;
 	else {
-		cerr << "Gander,Texture2D: DevIL could not load '" 
+		cerr << "[Gander,Texture2D] DevIL could not load '" 
 		     << filename 
 		     << "'." << endl;
 		exit(1);
@@ -214,3 +229,4 @@ void Texture2D::remove() {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glDisable(GL_TEXTURE_2D);
 }
+

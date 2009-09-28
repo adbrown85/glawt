@@ -42,3 +42,6 @@ Scene.o: Node.o Selection.o
 Framebuffer: Scene.o
 Scene: Shape.o Translation.o
 Shape: Translation.o
+Texture: Scene.o
+Texture2D: Scene.o
+Uniform.o: Scene.o

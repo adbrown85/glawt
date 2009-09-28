@@ -5,9 +5,14 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Texture2D.hpp"
+#include "Scene.hpp"
+#define NUMBER_OF_TEXTURES 2
 using namespace std;
+void apply(Node*);
 void display(void);
 void init(string);
+void setTextureCoordinates(float,float);
+
 
 
 
@@ -17,28 +22,72 @@ void init(string);
 int main(int argc,
          char *argv[]) {
 	
-	Texture2D *textures[4];
+	Node *node;
+	Scene scene;
 	
 	// Initialize
 	init("Texture2D");
-	
-	// Create textures
-	for (int i=0; i<4; ++i)
-		textures[i] = new Texture2D("input/crate.jpg", "crate");
-	for (int i=0; i<3; ++i)
-		textures[i]->addChild(textures[i+1]);
-	
-	// Prepare scene
-	for (int i=0; i<4; ++i)
-		textures[i]->associate();
-	textures[0]->printTree();
-	
-	// Simulate traversing graph
-	textures[0]->apply();
+	scene.addToLast(new Texture2D("crate", "input/crate.jpg"));
+	scene.addToLast(new Texture2D("stone", "input/stone.jpg"));
+	scene.prepare();
+	scene.print();
 	
 	// Start display
+	apply(&scene.root);
 	glutDisplayFunc(display);
 	glutMainLoop();
+}
+
+
+
+/**
+ * Utility for applying Nodes.
+ */
+void apply(Node *node) {
+	
+	Applicable *applicable;
+	int count;
+	vector<Node*> children;
+	
+	// Apply node
+	applicable = dynamic_cast<Applicable*>(node);
+	if (applicable != NULL)
+		applicable->apply();
+	
+	// Apply children
+	children = node->getChildren();
+	count = children.size();
+	for (int i=0; i<count; ++i)
+		apply(children[i]);
+}
+
+
+
+/**
+ * GLUT display callback.
+ */
+void display(void) {
+	
+	// Initialize
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0.0, 0.0, -4.0);
+	
+	// Draw
+	glBegin(GL_QUADS); {
+		setTextureCoordinates(1.0, 1.0);
+		glVertex3f( 1.0,  1.0, 0.0);
+		setTextureCoordinates(0.0, 1.0);
+		glVertex3f(-1.0,  1.0, 0.0);
+		setTextureCoordinates(0.0, 0.0);
+		glVertex3f(-1.0, -1.0, 0.0);
+		setTextureCoordinates(1.0, 0.0);
+		glVertex3f( 1.0, -1.0, 0.0);
+	} glEnd();
+	
+	// Finish
+	glFlush();
 }
 
 
@@ -75,28 +124,12 @@ void init(string title) {
 
 
 /**
- * GLUT display callback.
+ * Sets texture coordinates on each texture unit.
  */
-void display(void) {
+void setTextureCoordinates(float s,
+                           float t) {
 	
-	// Initialize
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0.0, 0.0, -4.0);
-	
-	// Draw
-	glBegin(GL_QUADS); {
-		glTexCoord2f(1.0, 1.0);
-		glVertex3f( 1.0,  1.0, 0.0);
-		glTexCoord2f(0.0, 1.0);
-		glVertex3f(-1.0,  1.0, 0.0);
-		glTexCoord2f(0.0, 0.0);
-		glVertex3f(-1.0, -1.0, 0.0);
-		glTexCoord2f(1.0, 0.0);
-		glVertex3f( 1.0, -1.0, 0.0);
-	} glEnd();
-	
-	// Finish
-	glFlush();
+	for (int i=0; i<NUMBER_OF_TEXTURES; ++i)
+		glMultiTexCoord2f(GL_TEXTURE0 + i, s, t);
 }
+

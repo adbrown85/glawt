@@ -5,6 +5,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Texture.hpp"
+#include "Scene.hpp"
 
 
 
@@ -26,7 +27,7 @@ class FakeTexture : public Texture {
  */
 int main() {
 	
-	Texture *textures[4];
+	Scene scene;
 	
 	// Start
 	cout << endl;
@@ -38,15 +39,12 @@ int main() {
 	// Create textures
 	cout << "Creating textures..." << endl;
 	for (int i=0; i<4; ++i)
-		textures[i] = new FakeTexture("input/crate.jpg", "crate");
-	for (int i=0; i<3; ++i)
-		textures[i]->addChild(textures[i+1]);
+		scene.addToLast(new FakeTexture("crate", "input/crate.jpg"));
 	
 	// Prepare nodes
 	cout << "Preparing nodes..." << endl;
-	for (int i=0; i<4; ++i)
-		textures[i]->associate();
-	textures[0]->printTree();
+	scene.prepare();
+	scene.print();
 	
 	// Finish
 	cout << endl;
@@ -55,3 +53,4 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

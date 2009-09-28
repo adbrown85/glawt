@@ -19,6 +19,7 @@ using namespace std;
  */
 class FakeShape : public Shape {
 	public:
+		FakeShape(float size=1.0) : Shape(size) {}
 		void draw() const {};
 };
 
@@ -30,42 +31,35 @@ class FakeShape : public Shape {
 int main() {
 	
 	float rotation;
-	int randomNum;
-	FakeShape shapes[NUM_OF_ITEMS];
 	Scene scene;
-	Translation trans[NUM_OF_ITEMS];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Build scene
-	cout << "\nBuilding scene..." << endl;
-	for (int i=0; i<NUM_OF_ITEMS; ++i) {
-		scene.add(&trans[i]);
-		trans[i].addChild(&shapes[i]);
-	}
-	
-	// Randomize translations
-	cout << "\nRandomizing translations..." << endl;
+	cout << "Building scene..." << endl;
 	srand(time(NULL));
 	for (int i=0; i<NUM_OF_ITEMS; ++i) {
-		randomNum = rand() % 10;
-		trans[i].set(0, 0, randomNum);
+		scene.addToRoot(new Translation(0, 0, rand()%10));
+		scene.addToLast(new FakeShape());
 	}
 	scene.print();
 	
 	// Sort by depth
-	cout << "\nEnter rotation:  ";
+	cout << endl;
+	cout << "Enter rotation:  ";
 	cin >> rotation;
 	while (cin) {
 		scene.setRotation(rotation, 0, 1, 0);
 		cout << "Sorting by depth..." << endl;
 		scene.sortByDepth();
 		scene.print();
-		cout << "\nEnter rotation:  ";
+		cout << endl;
+		cout << "Enter rotation:  ";
 		cin >> rotation;
 	}
 	cout << endl;
@@ -75,4 +69,6 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 }
+

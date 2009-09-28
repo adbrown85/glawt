@@ -5,26 +5,25 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Texture.hpp"
-bool Texture::asserted=false;
 
 
 
 /**
  * Initializes a texture.
  * 
- * @param filename
- *     Path to the file containing the texture.
  * @param name
  *     Name of the texture.
+ * @param filename
+ *     Path to a file containing the texture.
  */
-Texture::Texture(string filename,
-                 string name) {
+Texture::Texture(string name,
+                 string filename) {
 	
 	// Initialize
 	className = "Texture";
+	this->name = name;
 	this->filename = filename;
 	this->unit = 0;
-	this->name = name;
 }
 
 
@@ -36,7 +35,6 @@ void Texture::associate() {
 	
 	Node *current;
 	Texture *texture=NULL;
-	string className;
 	
 	// Find the closest Texture ancestor
 	current = this->parent;
@@ -62,9 +60,9 @@ string Texture::toString() const {
 	stringstream stream;
 	
 	stream << Node::toString();
-	stream << " file='" << filename << "'"
+	stream << " name='" << name << "'"
 	       << " unit='" << unit << "'"
-	       << " name='" << name << "'";
+	       << " file='" << filename << "'";
 	return stream.str();
 }
 

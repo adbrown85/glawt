@@ -13,6 +13,7 @@
 #include "Texture2D.hpp"
 #include "Uniform.hpp"
 using namespace std;
+void apply(Node*);
 void display(void);
 void init(string);
 
@@ -33,38 +34,77 @@ int main(int argc,
 	// Initialize
 	init("Uniform");
 	
-	// Create objects
+	// Create scene
 	try {
-		cout << "Creating objects..." << endl;
-		textures[0] = new Texture2D("input/crate.jpg", "crate");
-		textures[1] = new Texture2D("input/stone.jpg", "stone");
-		shader = new Shader("fragment", "glsl/texture.glsl");
-		uniform = new Uniform("sampler2D", "primary", 0, "stone");
-		uniform->print();
+		scene.addToLast(new Texture2D("crate", "input/crate.jpg"));
+		scene.addToLast(new Texture2D("stone", "input/stone.jpg"));
+		scene.addToLast(new Program());
+		scene.addToLast(new Shader("fragment", "glsl/texture.glsl"));
+		scene.addToLast(new Uniform("sampler2D", "primary", 0, "stone"));
 	}
 	catch (const char *e) {
 		cerr << e << endl;
 		exit(1);
 	}
-	
-	// Put objects in graph
-	scene.rootNode.addChild(textures[0]);
-	textures[0]->addChild(textures[1]);
-	textures[1]->addChild(&program);
-	program.addChild(shader);
-	program.addChild(uniform);
-	
-	// Associate and finalize graph
 	scene.prepare();
 	scene.print();
 	
 	// Start display
-	program.apply();
-	uniform->apply();
-	textures[0]->apply();
-	textures[1]->apply();
+	apply(&scene.root);
 	glutDisplayFunc(display);
 	glutMainLoop();
+}
+
+
+
+/**
+ * Utility for applying Nodes.
+ */
+void apply(Node *node) {
+	
+	Applicable *applicable;
+	int count;
+	vector<Node*> children;
+	
+	// Apply node
+	applicable = dynamic_cast<Applicable*>(node);
+	if (applicable != NULL)
+		applicable->apply();
+	
+	// Apply children
+	children = node->getChildren();
+	count = children.size();
+	for (int i=0; i<count; ++i)
+		apply(children[i]);
+}
+
+
+
+/**
+ * GLUT display callback.
+ */
+void display(void) {
+	
+	// Initialize
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslatef(0.0, 0.0, -4.0);
+	
+	// Draw
+	glBegin(GL_QUADS); {
+		glTexCoord2f(1.0, 1.0);
+		glVertex3f( 1.0,  1.0, 0.0);
+		glTexCoord2f(0.0, 1.0);
+		glVertex3f(-1.0,  1.0, 0.0);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3f(-1.0, -1.0, 0.0);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3f( 1.0, -1.0, 0.0);
+	} glEnd();
+	
+	// Finish
+	glFlush();
 }
 
 
@@ -98,30 +138,3 @@ void init(string title) {
 	gluPerspective(30.0, 1.33, 1.0, 100.0);
 }
 
-
-/**
- * GLUT display callback.
- */
-void display(void) {
-	
-	// Initialize
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0.0, 0.0, -4.0);
-	
-	// Draw
-	glBegin(GL_QUADS); {
-		glTexCoord2f(1.0, 1.0);
-		glVertex3f( 1.0,  1.0, 0.0);
-		glTexCoord2f(0.0, 1.0);
-		glVertex3f(-1.0,  1.0, 0.0);
-		glTexCoord2f(0.0, 0.0);
-		glVertex3f(-1.0, -1.0, 0.0);
-		glTexCoord2f(1.0, 0.0);
-		glVertex3f( 1.0, -1.0, 0.0);
-	} glEnd();
-	
-	// Finish
-	glFlush();
-}

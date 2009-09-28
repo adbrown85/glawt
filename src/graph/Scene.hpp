@@ -30,19 +30,21 @@ class Scene {
 	
 	public :
 		
-		Node rootNode;
+		Node *last, root;
 		Selection selection;
 		Vector position;
 		
-		Scene();
-		Scene(int width, int height);
-		void add(Node *node);
-		void associate() {rootNode.associateTree();}
-		void finalize() {rootNode.finalizeTree();}
+		Scene(int width=640,
+		      int height=480);
+		void addToLast(Node *node);
+		void addToRoot(Node *node);
 		void prepare();
 		void print();
 		void reset();
-		void rotate(float angle, float x, float y, float z);
+		void rotate(float angle,
+		            float x,
+		            float y,
+		            float z);
 		void sortByDepth();
 		
 		string getFilename() const {return filename;}
@@ -50,7 +52,10 @@ class Scene {
 		Matrix getRotationMatrix() const;
 		int getWidth() const {return width;}
 		void setFilename(string filename) {this->filename = filename;}
-		void setRotation(float angle, float x, float y, float z);
+		void setRotation(float angle,
+		                 float x,
+		                 float y,
+		                 float z);
 	
 	
 	private :
