@@ -52,12 +52,12 @@ void Framebuffer::find(Node *node,
                        Framebuffer *&pointer) {
 	
 	// Search
-	node = node->parent;
+	node = node->getParent();
 	while (node != NULL) {
-		pointer = dynamic_cast<Texture2D*>(node);
+		pointer = dynamic_cast<Framebuffer*>(node);
 		if (pointer != NULL)
 			break;
-		node = node->parent;
+		node = node->getParent();
 	}
 }
 

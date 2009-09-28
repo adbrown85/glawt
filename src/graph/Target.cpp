@@ -9,6 +9,21 @@
 
 
 /**
+ * Creates a new Target linked to a %Texture2D.
+ * 
+ * @param link
+ *     Name of the %Texture2D object.
+ */
+Target::Target(string link) {
+	
+	// Initialize
+	className = "Target";
+	this->link = link;
+}
+
+
+
+/**
  * Finds the texture to use for the color buffer.
  */
 void Target::associate() {
@@ -27,6 +42,8 @@ void Target::associate() {
 	if (texture == NULL)
 		throw "[Gander,Target] Could not find texture with correct name.";
 	textureHandle = texture->getUnit();
+	width = texture->getWidth();
+	height = texture->getHeight();
 }
 
 
@@ -49,5 +66,21 @@ void Target::finalize() {
 	// Check status
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		throw "[Gander,Target] Framebuffer is not complete!";
+}
+
+
+
+/**
+ * Forms a string from the Target's attributes.
+ */
+string Target::toString() const {
+	
+	stringstream stream;
+	
+	stream << Node::toString()
+	       << " wid='" << width << "'"
+	       << " hei='" << height << "'"
+	       << " lin='" << link << "'";
+	return stream.str();
 }
 

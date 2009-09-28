@@ -8,6 +8,7 @@
 #define TARGET_HPP
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "Node.hpp"
 #include "Framebuffer.hpp"
@@ -19,9 +20,10 @@ using namespace std;
 class Target : public Node {
 	
 	
-	public :
+	public:
 		
-		Target();
+		Target(string link);
+		string toString() const;
 	
 	
 	protected:
@@ -32,7 +34,7 @@ class Target : public Node {
 	
 	private:
 		
-		GLuint framebufferHandle, textureHandle, unit;
+		GLuint framebufferHandle, textureHandle;
 		int width, height;
 		string link;
 };
