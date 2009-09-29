@@ -4,6 +4,7 @@
  */
 
 
+
 void main() {
 	
 	float s = gl_TexCoord[0].s;
@@ -25,3 +26,4 @@ void main() {
 	else
 		gl_FragColor = gl_TexCoord[0];
 }
+

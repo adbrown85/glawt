@@ -17,3 +17,4 @@ void main() {
 	worldPosition = normalize(vertexPosition * gl_ModelViewMatrix);
 	gl_FragColor = worldPosition;
 }
+

@@ -93,3 +93,4 @@ void main() {
 	/* Set final color */
 	gl_FragColor = rayColor;
 }
+

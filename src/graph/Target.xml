@@ -1,9 +1,9 @@
 <!--
- Target.xml
-     Scene description for Target unit test.
- 
- Author
-     Andrew Brown <adb1413@rit.edu>
+ * Target.xml
+ *     Test for Target.
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
 -->
 
 
@@ -11,12 +11,12 @@
 	<framebuffer>
 		<target link="mytexture" />
 		<program>
-			<shader type="fragment" file="glsl/coordinates.frag" />
+			<shader type="fragment" file="../../glsl/coordinates.frag" />
 			<box style="2d"/>
 		</program>
 	</framebuffer>
 	<program>
-		<shader type="fragment" file="glsl/texture.frag" />
+		<shader type="fragment" file="../../glsl/texture.frag" />
 		<uniform type="int" name="texture" link="mytexture">
 			<box />
 		</uniform>

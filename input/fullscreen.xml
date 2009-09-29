@@ -1,4 +1,11 @@
-<!-- fullscreen.xml -->
+<!--
+ * fullscreen.xml
+ *     Draws a fullscreen quad.
+ * 
+ * Author
+ *     Andy Brown
+-->
+
 
 
 <texture2d file="input/crate.jpg" name="crate">
@@ -7,4 +14,3 @@
 		<square fullscreen="true"/>
 	</program>
 </texture2d>
-

@@ -1,5 +1,5 @@
 /*
- * raycaster.frag
+ * raycasternew.frag
  *     Casts rays through a volume.
  * 
  * Author
@@ -64,3 +64,4 @@ void main() {
 	if (brightness != 0)
 		gl_FragColor *= brightness;
 }
+

@@ -39,3 +39,4 @@ void main() {
 	gl_FragColor.b = direction.z;
 	gl_FragColor.a = 1.0;
 }
+

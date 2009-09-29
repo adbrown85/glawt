@@ -1,0 +1,19 @@
+<!-- 
+ * halfmoon.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+
+<program>
+	<shader type="fragment" file="glsl/halfmoon.frag" />
+		<translate x="+5.0">
+			<box size="2.0" />
+		</translate>
+		<translate x="-5.0">
+			<box size="2.0" />
+		</translate>
+	</uniform>
+</program>

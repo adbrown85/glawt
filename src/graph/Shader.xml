@@ -1,12 +1,13 @@
 <!--
- Shader.xml
-     Test for Shader.
- 
- Author
-     Andrew Brown <adb1413@rit.edu></adb1413>
+ * Shader.xml
+ *     Test for Shader.
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu></adb1413>
 -->
 
+
 <program>
-	<shader type="fragment" file="glsl/coordinates.frag" />
+	<shader type="fragment" file="../../glsl/coordinates.frag" />
 	<square />
 </program>

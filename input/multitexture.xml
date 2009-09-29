@@ -1,10 +1,17 @@
-<!-- multitexture.xml -->
+<!--
+ * multitexture.xml
+ *     Uses different textures on the left and right.
+ *
+ * Author
+ *     Andy Brown
+-->
+
 
 
 <texture2d file="input/crate.jpg" name="crate">
 <texture2d file="input/stone.jpg" name="stone">
 	<program>
-		<shader type="fragment" file="glsl/multitexture.glsl" />
+		<shader type="fragment" file="glsl/multitexture.frag" />
 		<uniform type="sampler2D" name="left" link="crate">
 		<uniform type="sampler2D" name="right" link="stone">
 			<translate x="-2.0">
