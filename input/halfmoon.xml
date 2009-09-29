@@ -9,11 +9,11 @@
 
 <program>
 	<shader type="fragment" file="glsl/halfmoon.frag" />
-		<translate x="+5.0">
-			<box size="2.0" />
+		<translate x="+4.0">
+			<box size="2.0" style="2d" />
 		</translate>
-		<translate x="-5.0">
-			<box size="2.0" />
+		<translate x="-4.0">
+			<box size="2.0" style="2d" />
 		</translate>
 	</uniform>
 </program>

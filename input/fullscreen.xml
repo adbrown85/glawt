@@ -9,8 +9,12 @@
 
 
 <texture2d file="input/crate.jpg" name="crate">
+<!--
 	<program>
-		<shader type="fragment" file="glsl/coordinates.glsl"/>
-		<square fullscreen="true"/>
+		<shader type="fragment" file="glsl/coordinates.frag"/>
+-->
+		<fullscreen/>
+<!--
 	</program>
+-->
 </texture2d>

@@ -71,13 +71,7 @@ void Texture2D::apply() {
 	glEnable(GL_TEXTURE_2D);
 	
 	// Bind texture
-	if (filename.empty()) {
-		glBindTexture(GL_TEXTURE_2D, handle);
-	}
-	else {
-		ilBindImage(image);
-		ilutGLBindTexImage();
-	}
+	glBindTexture(GL_TEXTURE_2D, handle);
 }
 
 
@@ -224,7 +218,7 @@ void Texture2D::load() {
 	// Initialize DevIL
 	initLibraries();
 	
-	// Load image as texture
+	// Load image
 	ilGenImages(1, &image);
 	ilBindImage(image);
 	if (ilLoadImage(filename.c_str()))
@@ -237,6 +231,12 @@ void Texture2D::load() {
 		     << "'." << endl;
 		exit(1);
 	}
+	
+	// Load into texture
+	ilBindImage(image);
+	handle = ilutGLBindTexImage();
+	if (handle == 0)
+		throw "[Gander,Texture2D] DevIL did not bind image to texture.";
 }
 
 
