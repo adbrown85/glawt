@@ -11,14 +11,18 @@
 #include <set>
 #include <vector>
 #include "Box.hpp"
+#include "Framebuffer.hpp"
+#include "Fullscreen.hpp"
 #include "Node.hpp"
 #include "Program.hpp"
 #include "Scene.hpp"
 #include "Shader.hpp"
+#include "Square.hpp"
 #include "Texture2D.hpp"
 #include "Texture3D.hpp"
 #include "Translation.hpp"
 #include "Tag.hpp"
+#include "Target.hpp"
 #include "Uniform.hpp"
 using namespace std;
 

@@ -26,31 +26,31 @@ Factory::Factory(Node *root) {
  * Creates a %Node based on the tag's name.
  * 
  * @param tag
- *     XML tag.
+ *     XML tag with name and attributes.
  */
 Node* Factory::create(const Tag &tag) {
 	
-	// Box
+	// Supported nodes
 	if (tag.name.compare("box") == 0)
 		return new Box(tag);
-	
-	// Program
+	else if (tag.name.compare("framebuffer") == 0)
+		return new Framebuffer(tag);
+	else if (tag.name.compare("fullscreen") == 0)
+		return new Fullscreen(tag);
 	else if (tag.name.compare("program") == 0)
 		return new Program(tag);
-	
-	// Shader
 	else if (tag.name.compare("shader") == 0)
 		return new Shader(tag);
-	
-	// Texture
-	else if (tag.name.compare("texture") == 0)
-		return createTexture(tag);
-	
-	// Translation
+	else if (tag.name.compare("square") == 0)
+		return new Square(tag);
+	else if (tag.name.compare("target") == 0)
+		return new Target(tag);
+	else if (tag.name.compare("texture2d") == 0)
+		return new Texture2D(tag);
+	else if (tag.name.compare("texture3d") == 0)
+		return new Texture3D(tag);
 	else if (tag.name.compare("translate") == 0)
 		return new Translation(tag);
-	
-	// Uniform
 	else if (tag.name.compare("uniform") == 0)
 		return new Uniform(tag);
 	
@@ -60,30 +60,6 @@ Node* Factory::create(const Tag &tag) {
 		message += tag.name + "' not supported.";
 		throw message.c_str();
 	}
-}
-
-
-
-/**
- * Creates a texture based on its type.
- * 
- * @param tag
- *     XML tag.
- */
-Node* Factory::createTexture(const Tag &tag) {
-	
-	string type;
-	
-	// 2D or 3D
-	tag.get("type", type);
-	if (type.compare("2d") == 0)
-		return new Texture2D(tag);
-	else if (type.compare("3d") == 0)
-		return new Texture3D(tag);
-	
-	// Unsupported
-	else
-		throw "[Gander,Factory] Texture type not supported.";
 }
 
 

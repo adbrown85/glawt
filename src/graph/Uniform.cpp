@@ -115,7 +115,7 @@ void Uniform::finalize() {
 		return;
 	
 	// Look up location
-	location = glGetUniformLocation(program->getName(), name.c_str());
+	location = glGetUniformLocation(program->getHandle(), name.c_str());
 	if (location == -1)
 		return;
 }
@@ -139,6 +139,7 @@ void Uniform::init() {
 }
 
 
+
 /**
  * Initializes the supported types.
  */
@@ -151,8 +152,8 @@ void Uniform::initTypes() {
 	// Add to set
 	types.insert("float");
 	types.insert("int");
-	types.insert("sampler2D");
-	types.insert("sampler3D");
+	types.insert("sampler2d");
+	types.insert("sampler3d");
 }
 
 
@@ -163,8 +164,7 @@ void Uniform::initTypes() {
 bool Uniform::isSampler() {
 	
 	// Compare strings
-	return (type.compare("sampler2D") == 0 ||
-	        type.compare("sampler3D") == 0);
+	return (type.compare("sampler2d") == 0 || type.compare("sampler3d") == 0);
 }
 
 

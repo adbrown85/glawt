@@ -1,12 +1,12 @@
 <!-- texture.xml -->
 
-<texture type="2D" file="input/crate.jpg">
+<texture2d file="input/crate.jpg">
 	<translate x="+5.0">
 		<box size="2.0" style="2d" />
 	</translate>
-</texture>
-<texture type="2D" file="input/stone.jpg">
+</texture2d>
+<texture2d file="input/stone.jpg">
 	<translate x="-5.0">
 		<box size="4.0" style="2d" />
 	</translate>
-</texture>
+</texture2d>

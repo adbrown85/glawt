@@ -19,20 +19,26 @@ GLubyte Square::indices[4];
  * @param inClipSpace
  *     Draw the square in clip space.
  */
-Square::Square(float size,
-               bool inClipSpace) : Shape() {
+Square::Square(float size) : 
+               Shape(size) {
 	
-	// Class name
-	className = "Square";
-	this->size = size;
-	this->inClipSpace = inClipSpace;
+	// Initialize
+	Square::init();
+}
+
+
+
+/**
+ * Creates a new %Square from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Square::Square(const Tag &tag) :
+               Shape(tag) {
 	
-	// Initialize vertices
-	if (!loaded) {
-		initPoints();
-		initIndices();
-		loaded = true;
-	}
+	// Initialize
+	Square::init();
 }
 
 
@@ -43,40 +49,47 @@ Square::Square(float size,
 void Square::draw() const {
 	
 	// Enable arrays
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glTexCoordPointer(3, GL_FLOAT, 0, points);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, points);
+	glClientActiveTexture(GL_TEXTURE0);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(3, GL_FLOAT, 0, points);
+	glClientActiveTexture(GL_TEXTURE1);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(3, GL_FLOAT, 0, points);
 	
-	// Draw after loading identity matrices
-	if (inClipSpace) {
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix(); {
-			glLoadIdentity();
-			glMatrixMode(GL_PROJECTION);
-			glPushMatrix(); {
-				glLoadIdentity();
-				glScalef(size, size, size);
-				glTranslatef(-0.5, -0.5, -0.5);
-				glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
-			} glPopMatrix();
-			glMatrixMode(GL_MODELVIEW);
-		} glPopMatrix();
-	}
-	
-	// Draw as normal
-	else {
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix(); {
-			glScalef(size, size, size);
-			glTranslatef(-0.5, -0.5, -0.5);
-			glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
-		} glPopMatrix();
-	}
+	// Draw
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix(); {
+		glScalef(size, size, size);
+		glTranslatef(-0.5, -0.5, -0.5);
+		glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
+	} glPopMatrix();
 	
 	// Disable arrays
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glClientActiveTexture(GL_TEXTURE0);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glClientActiveTexture(GL_TEXTURE1);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+
+
+/**
+ * Initializes attributes common to all constructors.
+ */
+void Square::init() {
+	
+	// Name
+	className = "Square";
+	
+	// Initialize vertices
+	if (!loaded) {
+		initPoints();
+		initIndices();
+		loaded = true;
+	}
 }
 
 
@@ -109,18 +122,3 @@ void Square::initPoints() {
 			this->points[i][j] = points[i][j];
 }
 
-
-
-string Square::toString() const {
-	
-	char inClipSpaceChar;
-	stringstream stream;
-	
-	// Format
-	inClipSpaceChar = inClipSpace ? 'T' : 'F';
-	
-	// Make string
-	stream << Shape::toString();
-	stream << " ics='" << inClipSpaceChar << "'";
-	return stream.str();
-}

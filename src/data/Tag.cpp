@@ -20,6 +20,22 @@ Tag::Tag() {
 
 
 /**
+ * Adds an attribute to the tag.
+ * 
+ * @param key
+ *     Reference to the name of the attribute.
+ * @param value
+ *     Reference to the value of the attribute.
+ */
+void Tag::add(const string &key,
+              const string &value) {
+	
+	attributes[tolower(key)] = value;
+}
+
+
+
+/**
  * Resets the tag to an empty state.
  */
 void Tag::clear() {
@@ -73,6 +89,7 @@ void Tag::error(string key,
 	     + "'!";
 	throw msg.c_str();
 }
+
 
 
 /**
@@ -226,17 +243,28 @@ bool Tag::get(const string &key,
 
 
 /**
+ * Sets the name of this tag.
+ */
+void Tag::setName(const string &name) {
+	
+	this->name = tolower(name);
+}
+
+
+
+/**
  * Converts each character of a string to lowercase.
  */
-string Tag::tolower(string str) {
+string Tag::tolower(const string &original) {
 	
 	int length;
+	string temp(original);
 	
 	// Convert each character
-	length = str.length();
+	length = temp.length();
 	for (int i=0; i<length; ++i)
-		str[i] = std::tolower(str[i]);
-	return str;
+		temp[i] = std::tolower(temp[i]);
+	return temp;
 }
 
 

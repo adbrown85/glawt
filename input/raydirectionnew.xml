@@ -10,11 +10,5 @@
 <program>
 	<shader type="vertex" file="glsl/world.vert" />
 	<shader type="fragment" file="glsl/raydirectionnew.frag" />
-	<!--
-	-->
-		<translate x="0.0" y="0.0" z="0.0">
-			<box size="1.0" style="3D" />
-		</translate>
-	<!--
-	-->
+		<box />
 </program>

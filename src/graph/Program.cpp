@@ -16,7 +16,7 @@ Program::Program() {
 	
 	// Initialize
 	className = "Program";
-	name = 0;
+	handle = 0;
 }
 
 
@@ -31,7 +31,7 @@ Program::Program(const Tag &tag) {
 	
 	// Initialize
 	className = "Program";
-	name = 0;
+	handle = 0;
 }
 
 
@@ -41,7 +41,7 @@ Program::Program(const Tag &tag) {
  */
 void Program::apply() {
 	
-	glUseProgram(name);
+	glUseProgram(handle);
 	current = this;
 }
 
@@ -53,7 +53,7 @@ void Program::apply() {
 void Program::associate() {
 	
 	// Create program
-	name = glCreateProgram();
+	handle = glCreateProgram();
 }
 
 
@@ -66,12 +66,12 @@ void Program::finalize() {
 	GLint linked=0;
 	
 	// Link
-	glLinkProgram(name);
+	glLinkProgram(handle);
 	
 	// Use if successful
-	glGetProgramiv(name, GL_LINK_STATUS, &linked);
+	glGetProgramiv(handle, GL_LINK_STATUS, &linked);
 	if (linked)
-		glUseProgram(name);
+		glUseProgram(handle);
 	else {
 		cerr << "Gander,Program: Could not link the shader program." << endl;
 		cerr << "Gander,Program: Printing log..." << endl;
@@ -91,11 +91,11 @@ void Program::log() const {
 	GLint count=0, returned=0;
 	
 	// Get length
-	glGetProgramiv(name, GL_INFO_LOG_LENGTH, &count);
+	glGetProgramiv(handle, GL_INFO_LOG_LENGTH, &count);
 	
 	// Print the log
 	log = new GLchar[count+1];
-	glGetProgramInfoLog(name, count, &returned, log);
+	glGetProgramInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
 	if (strlen(log) != 0)
 		cerr << log << endl;
@@ -115,3 +115,19 @@ void Program::remove() {
 	glUseProgram(0);
 	current = NULL;
 }
+
+
+
+/**
+ * Forms a string from the object's attributes.
+ */
+string Program::toString() const {
+	
+	stringstream stream;
+	
+	// Build string
+	stream << Node::toString();
+	stream << " handle='" << handle << "'";
+	return stream.str();
+}
+

@@ -29,6 +29,8 @@ class Tag {
 		string name;
 		
 		Tag();
+		void add(const string &key,
+		         const string &value);
 		void clear();
 		bool get(const string &key,
 		         bool &value,
@@ -45,11 +47,12 @@ class Tag {
 		bool get(const string &key,
 		         string &value,
 		         bool required=true) const;
+		void setName(const string &name);
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Tag &tag);
 		                           
-		static string tolower(string str);
+		static string tolower(const string &original);
 	
 	
 	private:

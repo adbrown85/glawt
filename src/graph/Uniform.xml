@@ -1,0 +1,22 @@
+<!--
+ * Uniform.xml
+ *     Test for Uniform.
+ *
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+
+<texture2d name="crate" file="input/crate.jpg">
+<texture2d name="stone" file="input/stone.jpg">
+	<program>
+		<shader type="fragment" file="glsl/texture.frag" />
+		<uniform type="sampler2D" name="tex" link="crate">
+			<translate z="2.0">
+				<square />
+			</translate>
+		</uniform>
+	</program>
+</texture2d>
+</texture2d>

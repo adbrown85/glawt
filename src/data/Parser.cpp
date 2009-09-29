@@ -97,29 +97,29 @@ void Parser::open(string filename) {
 /**
  * Parses an attribute into a key and value, and then stores it.
  * 
- * @param attributeString
+ * @param attribute
  *     Attribute as a raw string from the file.
  * @param tag
  *     Tag object to store the attribute in.
  */
-void Parser::parseAttribute(string attributeString,
+void Parser::parseAttribute(string attribute,
                             Tag &tag) {
 	
 	int equalsIndex, length;
 	string key, value;
 	
 	// Find equals sign
-	length = attributeString.length();
+	length = attribute.length();
 	for (int i=0; i<length; ++i) {
-		if (attributeString[i] == '=') {
+		if (attribute[i] == '=') {
 			equalsIndex = i;
 			break;
 		}
 	}
 	
 	// Store key and value
-	key = attributeString.substr(0, equalsIndex);
-	value = attributeString.substr(equalsIndex+2, length-equalsIndex-3);
+	key = attribute.substr(0, equalsIndex);
+	value = attribute.substr(equalsIndex+2, length-equalsIndex-3);
 	tag.attributes[key] = value;
 }
 
@@ -150,11 +150,11 @@ void Parser::parseTag(string tagString,
 	// Name
 	stream >> token;
 	if (token[0] == '/') {
-		tag.name = token.substr(1, token.length()-1);
+		tag.setName(token.substr(1, token.length()-1));
 		tag.closing = true;
 	}
 	else
-		tag.name = token;
+		tag.setName(token);
 	
 	// Attributes
 	stream >> token;
@@ -195,3 +195,4 @@ void Parser::skipComment() {
 		}
 	}
 }
+

@@ -1,8 +1,8 @@
 <!-- multitexture.xml -->
 
 
-<texture type="2D" file="input/crate.jpg" name="crate">
-<texture type="2D" file="input/stone.jpg" name="stone">
+<texture2d file="input/crate.jpg" name="crate">
+<texture2d file="input/stone.jpg" name="stone">
 	<program>
 		<shader type="fragment" file="glsl/multitexture.glsl" />
 		<uniform type="sampler2D" name="left" link="crate">
@@ -20,5 +20,5 @@
 		</uniform>
 		</uniform>
 	</program>
-</texture>
-</texture>
+</texture2d>
+</texture2d>

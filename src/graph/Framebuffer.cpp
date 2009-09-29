@@ -21,6 +21,21 @@ Framebuffer::Framebuffer() {
 
 
 /**
+ * Creates a new %Framebuffer from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Framebuffer::Framebuffer(const Tag &tag) {
+	
+	// Initialize
+	className = "Framebuffer";
+	this->handle = 0;
+}
+
+
+
+/**
  * Deletes the %Framebuffer.
  */
 Framebuffer::~Framebuffer() {

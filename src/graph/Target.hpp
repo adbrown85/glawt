@@ -12,6 +12,7 @@
 #include <string>
 #include "Node.hpp"
 #include "Framebuffer.hpp"
+#include "Tag.hpp"
 #include "Texture2D.hpp"
 using namespace std;
 
@@ -23,6 +24,7 @@ class Target : public Node {
 	public:
 		
 		Target(string link);
+		Target(const Tag &tag);
 		string toString() const;
 	
 	

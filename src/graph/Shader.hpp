@@ -41,15 +41,15 @@ class Shader : public Node {
 		void log() const;
 		string toString() const;
 		
-		GLuint getName() const {return name;}
 		string getFilename() const {return filename;}
+		GLuint getHandle() const {return handle;}
 		string getType() const {return type;}
 	
 	
 	private :
 		
 		const char **source;
-		GLuint name;
+		GLuint handle;
 		int length;
 		string filename, type;
 		vector<string> lines;

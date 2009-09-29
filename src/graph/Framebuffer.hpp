@@ -13,6 +13,7 @@
 #include <string>
 #include "Applicable.hpp"
 #include "Node.hpp"
+#include "Tag.hpp"
 
 
 
@@ -23,6 +24,7 @@ class Framebuffer : public Node,
 	public :
 		
 		Framebuffer();
+		Framebuffer(const Tag &tag);
 		~Framebuffer();
 		virtual void apply();
 		virtual void remove();

@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Shape.hpp"
 #include "Vector.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -25,22 +26,20 @@ class Square : public Shape {
 	
 	public : 
 		
-		Square(float size,
-		       bool inClipSpace=false);
+		Square(float size);
+		Square(const Tag &tag);
 		virtual void draw() const;
-		virtual string toString() const;
 	
 	
 	protected: 
-		
-		bool inClipSpace;
 		
 		static bool loaded;
 		static GLfloat points[4][3];
 		static GLubyte indices[4];
 		
-		void initIndices();
-		void initPoints();
+		virtual void init();
+		virtual void initIndices();
+		virtual void initPoints();
 };
 
 

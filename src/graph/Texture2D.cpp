@@ -68,7 +68,6 @@ void Texture2D::apply() {
 	
 	// Enable texturing
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glClientActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(GL_TEXTURE_2D);
 	
 	// Bind texture
@@ -95,7 +94,6 @@ void Texture2D::associate() {
 	
 	// Activate texture unit
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glClientActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(GL_TEXTURE_2D);
 	
 	// Generate or load

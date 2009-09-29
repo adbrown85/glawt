@@ -71,7 +71,7 @@ void Shader::associate() {
 	if (program != NULL) {
 		create();
 		load();
-		glAttachShader(program->getName(), name);
+		glAttachShader(program->getHandle(), handle);
 		compile();
 	}
 }
@@ -86,15 +86,15 @@ void Shader::compile() {
 	GLint compiled=0;
 	
 	// Compile shader
-	glCompileShader(name);
+	glCompileShader(handle);
 	
 	// Attach shader to program if successful
-	glGetShaderiv(name, GL_COMPILE_STATUS, &compiled);
+	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
-		cerr << "Gander,Shader: '"
+		cerr << "[Gander,Shader] '"
 		     << filename 
 		     << "' did not compile." << endl;
-		cerr << "Gander,Shader: Printing log..." << endl;
+		cerr << "[Gander,Shader] Printing log..." << endl;
 		log();
 		exit(1);
 	}
@@ -108,16 +108,16 @@ void Shader::compile() {
 void Shader::create() {
 	
 	// Check if already created
-	if (name != 0)
+	if (handle != 0)
 		return;
 	
 	// Create shader of correct type
 	if (type.compare("fragment") == 0)
-		name = glCreateShader(GL_FRAGMENT_SHADER);
+		handle = glCreateShader(GL_FRAGMENT_SHADER);
 	else if (type.compare("vertex") == 0)
-		name = glCreateShader(GL_VERTEX_SHADER);
+		handle = glCreateShader(GL_VERTEX_SHADER);
 	else
-		throw "Gander,Shader: Type not supported.";
+		throw "[Gander,Shader] Type not supported.";
 }
 
 
@@ -129,7 +129,7 @@ void Shader::init() {
 	
 	className = "Shader";
 	this->length = 0;
-	this->name = 0;
+	this->handle = 0;
 	this->source = NULL;
 }
 
@@ -158,7 +158,7 @@ void Shader::load() {
 	// Open file
 	file.open(filename.c_str());
 	if (!file) {
-		message = "Gander,Shader: Could not open '";
+		message = "[Gander,Shader] Could not open '";
 		message += filename;
 		message += "'.";
 		throw message.c_str();
@@ -178,7 +178,7 @@ void Shader::load() {
 		source[i] = lines[i].c_str();
 	
 	// Pass to OpenGL
-	glShaderSource(name, length, source, NULL);
+	glShaderSource(handle, length, source, NULL);
 }
 
 
@@ -192,11 +192,11 @@ void Shader::log() const {
 	GLint count=0, returned=0;
 	
 	// Get length
-	glGetShaderiv(name, GL_INFO_LOG_LENGTH, &count);
+	glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &count);
 	
 	// Print the log
 	log = new GLchar[count+1];
-	glGetShaderInfoLog(name, count, &returned, log);
+	glGetShaderInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
 	if (strlen(log) != 0)
 		cerr << log << endl;
@@ -218,7 +218,7 @@ string Shader::toString() const {
 	stream << Node::toString();
 	stream << " type='" << type << "'"
 	       << " file='" << filename << "'"
-	       << " name='" << name << "'";
+	       << " handle='" << handle << "'";
 	return stream.str();
 }
 

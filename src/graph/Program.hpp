@@ -31,18 +31,20 @@ class Program : public Node,
 		
 		Program();
 		Program(const Tag &tag);
-		void apply();
-		void associate();
-		void finalize();
-		void remove();
+		virtual void apply();
+		virtual void associate();
+		virtual void finalize();
+		virtual void remove();
+		virtual string toString() const;
 		
-		GLuint getName() const {return name;}
+		virtual GLuint getHandle() const {return handle;}
+		
 		static Program* getCurrent() {return current;}
 	
 	
 	private:
 		
-		GLuint name;
+		GLuint handle;
 		
 		static Program *current;
 		
