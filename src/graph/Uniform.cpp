@@ -13,12 +13,14 @@ set<string> Uniform::types;
 /**
  * Initializes a new uniform variable with a value and type.
  * 
+ * @param type
+ *     Type of the variable.
  * @param name
  *     Name of the variable.
  * @param value
  *     Value to be stored.
- * @param type
- *     Type of the variable.  Should be 'i' for int or 'f' for float.
+ * @param link
+ *     Name of a node to get the value from.
  */
 Uniform::Uniform(string type,
                  string name,
@@ -26,16 +28,30 @@ Uniform::Uniform(string type,
                  string link) {
 	
 	// Initialize
-	className = "Uniform";
-	this->program = NULL;
 	this->type = type;
 	this->name = name;
 	this->value = value;
 	this->link = link;
-	if (type.compare("float") == 0)
-		this->valueType = GL_FLOAT;
-	else
-		this->valueType = GL_INT;
+	init();
+	verify();
+}
+
+
+
+/**
+ * Creates a new %Uniform from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Uniform::Uniform(const Tag &tag) {
+	
+	// Initialize
+	tag.get("type", type);
+	tag.get("name", name);
+	tag.get("value", value, false);
+	tag.get("link", link, false);
+	init();
 	verify();
 }
 
@@ -68,7 +84,7 @@ void Uniform::associate() {
 			current = current->getParent();
 		}
 		if (texture == NULL)
-			throw "Gander,Uniform: Could not find texture linked to.";
+			throw "[Gander,Uniform] Could not find texture linked to.";
 		value = texture->getUnit();
 	}
 }
@@ -104,6 +120,23 @@ void Uniform::finalize() {
 		return;
 }
 
+
+
+/**
+ * Initializes the %Uniform's attributes.
+ */
+void Uniform::init() {
+	
+	// Defaults
+	className = "Uniform";
+	this->program = NULL;
+	
+	// Conversions
+	if (type.compare("float") == 0)
+		this->valueType = GL_FLOAT;
+	else
+		this->valueType = GL_INT;
+}
 
 
 /**
@@ -150,13 +183,6 @@ bool Uniform::isSupported(string type) {
 
 
 
-void Uniform::print() const {
-	
-	cout << "  " << toString() << endl;
-}
-
-
-
 /**
  * Resets the uniform variable in the program to 0.
  */
@@ -179,20 +205,23 @@ void Uniform::verify() {
 	// Check if type is supported
 	initTypes();
 	if (!isSupported(this->type))
-		throw "Gander,Uniform: Type not supported.";
+		throw "[Gander,Uniform] Type not supported.";
 	
 	// Check if sampler type has link
 	if (isSampler() && link.empty())
-		throw "Gander,Uniform: Sampler types require link.";
+		throw "[Gander,Uniform] Sampler types require link.";
 }
 
 
 
+/**
+ * Forms a string from the object's attributes.
+ */
 string Uniform::toString() const {
 	
 	stringstream stream;
 	
-	// Print
+	// Build string
 	stream << Node::toString();
 	stream << " type='" << type << "'"
 	       << " name='" << name << "'"

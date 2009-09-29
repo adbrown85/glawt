@@ -22,6 +22,21 @@ Program::Program() {
 
 
 /**
+ * Creates a new %Program from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Program::Program(const Tag &tag) {
+	
+	// Initialize
+	className = "Program";
+	name = 0;
+}
+
+
+
+/**
  * Installs the program into the current context.
  */
 void Program::apply() {

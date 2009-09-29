@@ -10,7 +10,5 @@
 <program>
 	<shader type="fragment" file="glsl/world.frag" />
 	<shader type="vertex" file="glsl/world.vert" />
-	<translate x="0.0" y="0.0" z="0.0">
-		<shape type="Box" size="2.0" style="3D" />
-	</translate>
+	<box size="2.0" />
 </program>

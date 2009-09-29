@@ -16,6 +16,7 @@
 #include <vector>
 #include "Node.hpp"
 #include "Program.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -32,6 +33,7 @@ class Shader : public Node {
 		
 		Shader(string type,
 		       string filename);
+		Shader(const Tag &tag);
 		~Shader();
 		void associate();
 		void finalize() {}
@@ -55,6 +57,7 @@ class Shader : public Node {
 		Shader();
 		void compile();
 		void create();
+		void init();
 		void load();
 };
 

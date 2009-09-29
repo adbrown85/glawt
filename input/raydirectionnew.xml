@@ -13,7 +13,7 @@
 	<!--
 	-->
 		<translate x="0.0" y="0.0" z="0.0">
-			<shape type="Box" size="1.0" style="3D" />
+			<box size="1.0" style="3D" />
 		</translate>
 	<!--
 	-->

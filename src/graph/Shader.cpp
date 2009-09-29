@@ -15,12 +15,25 @@ Shader::Shader(string type,
                string filename) {
 	
 	// Initialize
-	className = "Shader";
-	this->filename = filename;
-	this->length = 0;
-	this->name = 0;
-	this->source = NULL;
+	init();
 	this->type = type;
+	this->filename = filename;
+}
+
+
+
+/**
+ * Creates a new %Shader from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Shader::Shader(const Tag &tag) {
+	
+	// Initialize
+	init();
+	tag.get("type", type);
+	tag.get("file", filename);
 }
 
 
@@ -110,6 +123,19 @@ void Shader::create() {
 
 
 /**
+ * Initializes the %Shader's attributes.
+ */
+void Shader::init() {
+	
+	className = "Shader";
+	this->length = 0;
+	this->name = 0;
+	this->source = NULL;
+}
+
+
+
+/**
  * Prints the file stored in the source array.
  */
 void Shader::list() const {
@@ -181,13 +207,18 @@ void Shader::log() const {
 
 
 
+/**
+ * Forms a string from the object's attributes.
+ */
 string Shader::toString() const {
 	
 	stringstream stream;
 	
+	// Build string
 	stream << Node::toString();
 	stream << " type='" << type << "'"
 	       << " file='" << filename << "'"
 	       << " name='" << name << "'";
 	return stream.str();
 }
+

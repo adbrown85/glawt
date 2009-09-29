@@ -20,11 +20,25 @@ Texture::Texture(string name,
                  string filename) {
 	
 	// Initialize
-	className = "Texture";
+	Texture::init();
 	this->name = name;
 	this->filename = filename;
-	this->unit = 0;
-	this->handle = 0;
+}
+
+
+
+/**
+ * Creates a new %Texture from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Texture::Texture(const Tag &tag) {
+	
+	// Initialize
+	Texture::init();
+	tag.get("name", name);
+	tag.get("file", filename, false);
 }
 
 
@@ -49,6 +63,19 @@ void Texture::associate() {
 	// Change unit
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
+}
+
+
+
+/**
+ * Initializes attributes common to all constructors.
+ */
+void Texture::init() {
+	
+	// Defaults
+	className = "Texture";
+	this->unit = 0;
+	this->handle = 0;
 }
 
 

@@ -18,6 +18,23 @@ Translation::Translation(float x,
 
 
 
+/**
+ * Creates a new %Translation from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Translation::Translation(const Tag &tag) {
+	
+	// Initialize
+	className = "Translation";
+	tag.get("x", x, false);
+	tag.get("y", y, false);
+	tag.get("z", z, false);
+}
+
+
+
 
 /**
  * Adds a vector to this translation.
@@ -77,16 +94,6 @@ void Translation::sortByDepthEnd(Matrix &matrix) {
 
 
 /**
- * Prints the Translation with a small indent.
- */
-void Translation::print() const {
-	
-	cout << "  " << toString() << endl;
-}
-
-
-
-/**
  * Restores transformation that was in effect before Translation was applied.
  */
 void Translation::remove() {
@@ -97,13 +104,18 @@ void Translation::remove() {
 
 
 
+/**
+ * Forms a string from the object's attributes.
+ */
 string Translation::toString() const {
 	
 	stringstream stream;
 	
+	// Build string
 	stream << Node::toString();
 	stream << " x='" << x << "'"
 	       << " y='" << y << "'"
 	       << " z='" << z << "'";
 	return stream.str();
 }
+

@@ -79,6 +79,32 @@ Matrix Scene::getRotationMatrix() const {
 
 
 
+
+/**
+ * Opens a scene from a file.
+ * 
+ * @param filename
+ *     Path to the file.
+ */
+void Scene::open(string filename) {
+	
+	Factory factory(&root);
+	Parser parser;
+	
+	// Parse and process tags
+	try {
+		cerr << "[Gander,Scene] Opening '" << filename << "'..." << endl;
+		parser.open(filename);
+		factory.process(parser.tags);
+	}
+	catch (char const *e) {
+		cerr << e << endl;
+		exit(1);
+	}
+}
+
+
+
 /**
  * Allows nodes in graph to associate and finalize themselves.
  */

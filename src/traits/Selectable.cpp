@@ -22,6 +22,19 @@ Selectable::Selectable(float size) : Drawable(size) {
 
 
 /**
+ * Creates a new %Selectable from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Selectable::Selectable(const Tag &tag) : Drawable(tag) {
+	
+	selected = false;
+}
+
+
+
+/**
  * Marks the item as not selected.  The item should not be used for 
  * operations on selections.
  */

@@ -13,6 +13,7 @@
 #include <vector>
 #include "Applicable.hpp"
 #include "Node.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -29,6 +30,7 @@ class Program : public Node,
 	public :
 		
 		Program();
+		Program(const Tag &tag);
 		void apply();
 		void associate();
 		void finalize();

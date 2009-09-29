@@ -17,10 +17,17 @@ void init(string);
 int main(int argc,
          char *argv[]) {
 	
+	string filename;
+	Tag tag;
+	Texture *texture;
+	
 	// Handle arguments
-	if (argc != 2) {
-		cerr << "Usage: " << argv[0]
-		     << " <filename> " << endl;
+	if (argc == 1)
+		filename = "../../input/bear.vlb";
+	else if (argc == 2)
+		filename = argv[1];
+	else {
+		cerr << "Usage: " << argv[0] << " <filename> " << endl;
 		exit(1);
 	}
 	
@@ -29,14 +36,21 @@ int main(int argc,
 	
 	try {
 		
+		// Test tag
+		cout << "\nTesting tag..." << endl;
+		tag.attributes["file"] = filename;
+		tag.attributes["name"] = "bear";
+		texture = new Texture3D(tag);
+		texture->print();
+		
 		// Create texture
-		Texture3D texture(argv[1]);
+		cout << "\nCreating texture..." << endl;
+		Texture3D texture(filename);
 		texture.associate();
 		
 		// Print
-		cout << "Attributes:" << endl;
+		cout << "\nAttributes:" << endl;
 		texture.print();
-		cout << "Showing cross-section at p=0.5:" << endl;
 	}
 	catch (char const *e) {
 		cerr << e << endl;
@@ -44,6 +58,8 @@ int main(int argc,
 	}
 	
 	// Start OpenGL
+	cout << "\nStarting OpenGL..." << endl;
+	cout << "  Showing cross-section at p=0.5:" << endl;
 	glutDisplayFunc(display);
 	glutMainLoop();
 }

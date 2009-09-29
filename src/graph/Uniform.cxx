@@ -25,29 +25,38 @@ void init(string);
 int main(int argc,
          char *argv[]) {
 	
-	Program program;
 	Scene scene;
-	Shader *shader;
-	Texture *textures[2];
+	Tag tag;
 	Uniform *uniform;
 	
 	// Initialize
 	init("Uniform");
 	
-	// Create scene
 	try {
+		
+		// Test tag
+		tag.attributes["type"] = "int";
+		tag.attributes["name"] = "foo";
+		tag.attributes["value"] = "36.9";
+		tag.attributes["link"] = "bar";
+		uniform = new Uniform(tag);
+		uniform->print();
+		
+		// Create scene
 		scene.addToLast(new Texture2D("crate", "input/crate.jpg"));
 		scene.addToLast(new Texture2D("stone", "input/stone.jpg"));
 		scene.addToLast(new Program());
-		scene.addToLast(new Shader("fragment", "glsl/texture.glsl"));
+		scene.addToLast(new Shader("fragment", "glsl/texture.frag"));
 		scene.addToLast(new Uniform("sampler2D", "primary", 0, "stone"));
+		
+		// Prepare scene
+		scene.prepare();
+		scene.print();
 	}
 	catch (const char *e) {
 		cerr << e << endl;
 		exit(1);
 	}
-	scene.prepare();
-	scene.print();
 	
 	// Start display
 	apply(&scene.root);

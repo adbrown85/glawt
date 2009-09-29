@@ -27,6 +27,24 @@ DatasetHeader::DatasetHeader(string filename) {
 
 
 /**
+ * Creates a new %DatasetHeader from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+DatasetHeader::DatasetHeader(const Tag &tag) {
+	
+	// Initialize
+	tag.get("file", filename);
+	
+	// Check and read
+	check();
+	read();
+}
+
+
+
+/**
  * Checks if a file has a good header and finds its beginning.
  */
 void DatasetHeader::check() {

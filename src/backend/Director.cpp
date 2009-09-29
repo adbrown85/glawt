@@ -73,7 +73,7 @@ void Director::select(Scene *scene, int cmd) {
 	
 	switch (cmd) {
 		case Command::SELECT_ALL :
-			scene->selection.addAll(&(scene->rootNode));
+			scene->selection.addAll(&(scene->root));
 			break;
 		case Command::DESELECT :
 			scene->selection.clear();

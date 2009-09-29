@@ -34,7 +34,7 @@ Producer::Producer() {
 void Producer::copy(Scene *scene,
                     int command) {
 	
-	std::cout << "Producer::cmdCopy(Scene*,int)" << std::endl;
+	cout << "Producer::cmdCopy(Scene*,int)" << endl;
 }
 
 
@@ -42,7 +42,7 @@ void Producer::copy(Scene *scene,
 void Producer::duplicate(Scene *scene,
                          int command) {
 	
-	std::cout << "Producer::cmdDuplicate(Scene*,int)" << std::endl;
+	cout << "Producer::cmdDuplicate(Scene*,int)" << endl;
 }
 
 
@@ -50,7 +50,7 @@ void Producer::duplicate(Scene *scene,
 void Producer::cut(Scene *scene,
                    int command) {
 	
-	std::cout << "Producer::cmdCut(Scene*,int)" << std::endl;
+	cout << "Producer::cmdCut(Scene*,int)" << endl;
 }
 
 
@@ -66,21 +66,7 @@ void Producer::open(Scene *scene,
                     int command,
                     string filename) {
 	
-	Factory factory(scene);
-	Parser parser;
-	
-	// Parse file into tags
-	cerr << "Gander,Producer: Opening '" << filename << "'..." << endl;
-	parser.open(filename);
-	
-	// Process tags
-	try {
-		factory.process(parser.tags);
-	}
-	catch (char const *e) {
-		cerr << e << endl;
-		exit(1);
-	}
+	scene->open(filename);
 }
 
 
@@ -88,7 +74,7 @@ void Producer::open(Scene *scene,
 void Producer::paste(Scene *scene,
                      int command) {
 	
-	std::cout << "Producer::cmdPaste(Scene*,int)" << std::endl;
+	cout << "Producer::cmdPaste(Scene*,int)" << endl;
 }
 
 
@@ -96,7 +82,7 @@ void Producer::paste(Scene *scene,
 void Producer::save(Scene *scene,
                     int command) {
 	
-	std::cout << "Producer::cmdSave(Scene*,int)" << std::endl;
+	cout << "Producer::cmdSave(Scene*,int)" << endl;
 }
 
 

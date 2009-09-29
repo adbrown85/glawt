@@ -22,11 +22,23 @@ void setTextureCoordinates(float,float);
 int main(int argc,
          char *argv[]) {
 	
-	Node *node;
+	Texture2D *texture;
 	Scene scene;
+	Tag tag;
 	
 	// Initialize
 	init("Texture2D");
+	
+	// Tag
+	cout << "\nTesting tag..." << endl;
+	tag.attributes["name"] = "foo";
+	tag.attributes["file"] = "glsl/bar.frag";
+	tag.attributes["size"] = "1024";
+	texture = new Texture2D(tag);
+	texture->print();
+	
+	// Create scene
+	cout << "\nCreating scene..." << endl;
 	scene.addToLast(new Texture2D("crate", "input/crate.jpg"));
 	scene.addToLast(new Texture2D("stone", "input/stone.jpg"));
 	scene.prepare();

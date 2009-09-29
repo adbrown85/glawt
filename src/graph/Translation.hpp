@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include "Matrix.hpp"
+#include "Tag.hpp"
 #include "Transformation.hpp"
 #include "Vector.hpp"
 using namespace std;
@@ -32,10 +33,10 @@ class Translation : public Transformation,
 		Translation(float x=0.0,
 		            float y=0.0,
 		            float z=0.0);
+		Translation(const Tag &tag);
 		
 		void add(const Vector &B);
 		virtual void apply();
-		virtual void print() const;
 		virtual void remove();
 		virtual string toString() const;
 	

@@ -21,10 +21,7 @@ Texture2D::Texture2D(string name,
                      Texture(name, filename) {
 	
 	// Initialize
-	className = "Texture2D";
-	this->type = "2D";
-	this->image = 0;
-	this->size = 0;
+	Texture2D::init();
 }
 
 
@@ -42,10 +39,24 @@ Texture2D::Texture2D(string name,
                      Texture(name) {
 	
 	// Initialize
-	className = "Texture2D";
-	this->type = "2D";
-	this->image = 0;
+	Texture2D::init();
 	this->size = size;
+}
+
+
+
+/**
+ * Creates a new 2D texture from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Texture2D::Texture2D(const Tag &tag) :
+                     Texture(tag) {
+	
+	// Initialize
+	Texture2D::init();
+	tag.get("size", size, false);
 }
 
 
@@ -154,6 +165,20 @@ void Texture2D::generate() {
 
 
 /**
+ * Initializes attributes common to all constructors.
+ */
+void Texture2D::init() {
+	
+	// Attributes
+	className = "Texture2D";
+	this->type = "2D";
+	this->image = 0;
+	this->size = 0;
+}
+
+
+
+/**
  * Initializes required libraries, currently just DevIL.
  * 
  * Checks that DevIL libraries being run by the user are not older than the 
@@ -226,5 +251,20 @@ void Texture2D::remove() {
 	// Disable texturing
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glDisable(GL_TEXTURE_2D);
+}
+
+
+
+/**
+ * Forms a string from the object's attributes.
+ */
+string Texture2D::toString() const {
+	
+	stringstream stream;
+	
+	// Build string
+	stream << Texture::toString();
+	stream << " size='" << size << "'";
+	return stream.str();
 }
 

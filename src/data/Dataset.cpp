@@ -18,29 +18,22 @@ Dataset::Dataset(string filename) :
                  header(filename) {
 	
 	// Initialize
-	initTypeBlock();
-	initDimensions();
-	
-	// Allocate and read data
-	data = malloc(length * block);
-	readData();
+	Dataset::init();
 }
 
 
 
 /**
- * Creates a new %Dataset by copying another.
+ * Creates a new %Dataset from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
  */
-Dataset::Dataset(const Dataset &other) :
-                 header(other.header) {
+Dataset::Dataset(const Tag &tag) :
+                 header(tag) {
 	
-	// Copy attributes
-	initTypeBlock();
-	initDimensions();
-	
-	// Allocate and copy data
-	data = malloc(length * block);
-	memcpy(data, other.data, block);
+	// Initialize
+	Dataset::init();
 }
 
 
@@ -97,6 +90,22 @@ void Dataset::get(const Index &index,
 	// Set value and type
 	value = (void*)findPosition(index);
 	type = this->type;
+}
+
+
+
+/**
+ * Initializes attributes common to all constructors.
+ */
+void Dataset::init() {
+	
+	// Initialize
+	initTypeBlock();
+	initDimensions();
+	
+	// Allocate and read data
+	data = malloc(length * block);
+	readData();
 }
 
 

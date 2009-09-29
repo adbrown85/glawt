@@ -23,6 +23,22 @@ Drawable::Drawable(float size) {
 
 
 /**
+ * Creates a new Drawable from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Drawable::Drawable(const Tag &tag) {
+	
+	// Initialize attributes
+	this->visible = true;
+	if (!tag.get("size", size, false))
+		size = 1.0;
+}
+
+
+
+/**
  * Makes a drawable object the same size as another.
  * 
  * @param other

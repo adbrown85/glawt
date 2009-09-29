@@ -24,30 +24,32 @@ class Tag {
 	
 	public:
 		
-		bool closing;
+		bool closing, empty;
 		map<string,string> attributes;
 		string name;
 		
 		Tag();
 		void clear();
-		void get(const string &key,
+		bool get(const string &key,
 		         bool &value,
 		         bool required=true) const;
-		void get(const string &key,
+		bool get(const string &key,
 		         char &value,
 		         bool required=true) const;
-		void get(const string &key,
+		bool get(const string &key,
 		         float &value,
 		         bool required=true) const;
-		void get(const string &key,
+		bool get(const string &key,
 		         int &value,
 		         bool required=true) const;
-		void get(const string &key,
+		bool get(const string &key,
 		         string &value,
 		         bool required=true) const;
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Tag &tag);
+		                           
+		static string tolower(string str);
 	
 	
 	private:
@@ -58,3 +60,4 @@ class Tag {
 };
 
 #endif
+

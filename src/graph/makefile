@@ -36,7 +36,9 @@ Square.o: Shape.o
 
 # Collections of nodes
 Selection.o: Node.o
-Scene.o: Node.o Selection.o
+Factory.o: Box.o Program.o Shader.o Texture2D.o Texture3D.o Translation.o \
+           Uniform.o
+Scene.o: Node.o Factory.o Selection.o
 
 # Tests
 Framebuffer: Scene.o

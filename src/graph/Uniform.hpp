@@ -13,6 +13,7 @@
 #include <string>
 #include "Node.hpp"
 #include "Program.hpp"
+#include "Tag.hpp"
 #include "Texture.hpp"
 using namespace std;
 
@@ -33,10 +34,10 @@ class Uniform : public Node,
 		        string name,
 		        GLfloat value,
 		        string link="");
+		Uniform(const Tag &tag);
 		void associate();
 		void apply();
 		void finalize();
-		void print() const;
 		void remove();
 		string toString() const;
 		
@@ -53,7 +54,7 @@ class Uniform : public Node,
 		static set<string> types;
 		string link, name, type;
 		
-		Uniform();
+		void init();
 		static void initTypes();
 		bool isSampler();
 		static bool isSupported(string type);

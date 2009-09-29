@@ -11,6 +11,7 @@
 #include <IL/ilut.h>
 #include <iostream>
 #include <sstream>
+#include <string>
 #include "Texture.hpp"
 
 
@@ -29,9 +30,11 @@ class Texture2D : public Texture {
 		          string filename);
 		Texture2D(string name,
 		          int size);
+		Texture2D(const Tag &tag);
 		virtual void apply();
 		virtual void associate();
 		virtual void remove();
+		virtual string toString() const;
 		
 		virtual int getSize() {return size;}
 		
@@ -45,9 +48,10 @@ class Texture2D : public Texture {
 		ILuint image;
 		int size;
 		
-		void generate();
-		void initLibraries();
-		void load();
+		virtual void generate();
+		virtual void init();
+		virtual void initLibraries();
+		virtual void load();
 };
 
 

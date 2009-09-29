@@ -26,6 +26,7 @@ void Tag::clear() {
 	
 	// Reset attributes
 	closing = false;
+	empty = false;
 	name = "";
 	attributes.clear();
 }
@@ -82,7 +83,7 @@ void Tag::error(string key,
  * @param value
  *     Boolean to store the value in.
  */
-void Tag::get(const string &key,
+bool Tag::get(const string &key,
               bool &value,
               bool required) const {
 	
@@ -97,11 +98,13 @@ void Tag::get(const string &key,
 			value = false;
 		else
 			error(key, "bool");
+		return true;
 	}
 	else if (!required)
 		value = false;
 	else
 		error(key);
+	return false;
 }
 
 
@@ -114,7 +117,7 @@ void Tag::get(const string &key,
  * @param value
  *     Character to store the value in.
  */
-void Tag::get(const string &key,
+bool Tag::get(const string &key,
               char &value,
               bool required) const {
 	
@@ -122,12 +125,15 @@ void Tag::get(const string &key,
 	
 	// Find and convert
 	ai = attributes.find(key);
-	if (ai != attributes.end())
+	if (ai != attributes.end()) {
 		value = ai->second[0];
+		return true;
+	}
 	else if (!required)
 		value = '0';
 	else
 		error(key);
+	return false;
 }
 
 
@@ -140,7 +146,7 @@ void Tag::get(const string &key,
  * @param value
  *     Float to store the value in.
  */
-void Tag::get(const string &key,
+bool Tag::get(const string &key,
               float &value,
               bool required) const {
 	
@@ -148,12 +154,15 @@ void Tag::get(const string &key,
 	
 	// Find and convert
 	ai = attributes.find(key);
-	if (ai != attributes.end())
+	if (ai != attributes.end()) {
 		value = atof(ai->second.c_str());
+		return true;
+	}
 	else if (!required)
 		value = 0.0f;
 	else
 		error(key);
+	return false;
 }
 
 
@@ -166,7 +175,7 @@ void Tag::get(const string &key,
  * @param value
  *     Integer to store the value in.
  */
-void Tag::get(const string &key,
+bool Tag::get(const string &key,
               int &value,
               bool required) const {
 	
@@ -174,12 +183,15 @@ void Tag::get(const string &key,
 	
 	// Find and convert
 	ai = attributes.find(key);
-	if (ai != attributes.end())
+	if (ai != attributes.end()) {
 		value = atoi(ai->second.c_str());
+		return true;
+	}
 	else if (!required)
 		value = 0;
 	else
 		error(key);
+	return false;
 }
 
 
@@ -192,7 +204,7 @@ void Tag::get(const string &key,
  * @param value
  *     String to store the value in.
  */
-void Tag::get(const string &key,
+bool Tag::get(const string &key,
               string &value,
               bool required) const {
 	
@@ -200,12 +212,31 @@ void Tag::get(const string &key,
 	
 	// Find and convert
 	ai = attributes.find(key);
-	if (ai != attributes.end())
-		value = ai->second;
+	if (ai != attributes.end()) {
+		value = tolower(ai->second);
+		return true;
+	}
 	else if (!required)
 		value = "";
 	else
 		error(key);
+	return false;
+}
+
+
+
+/**
+ * Converts each character of a string to lowercase.
+ */
+string Tag::tolower(string str) {
+	
+	int length;
+	
+	// Convert each character
+	length = str.length();
+	for (int i=0; i<length; ++i)
+		str[i] = std::tolower(str[i]);
+	return str;
 }
 
 
@@ -217,6 +248,10 @@ ostream& operator<<(ostream &stream,
 	
 	// Print name and attributes
 	stream << tag.name;
+	if (tag.closing)
+		stream << " {closing}";
+	if (tag.empty)
+		stream << " {empty}";
 	for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai)
 		stream << " [" 
 		       << ai->first << "," 
@@ -224,3 +259,4 @@ ostream& operator<<(ostream &stream,
 		       << "]";
 	return stream;
 }
+

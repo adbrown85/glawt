@@ -13,12 +13,16 @@ include $(GANDER)/src/globals.mak
 include $(GANDER)/src/module.mak
 
 
-# General
+# Math
 Vector.o:
 Matrix.o: Vector.o
 Quaternion.o: Matrix.o Vector.o
 
 # Volume
-DatasetHeader.o:
-Dataset.o: DatasetHeader.o
+DatasetHeader.o: Tag.o
+Dataset.o: DatasetHeader.o Tag.o
 Slice.o: Dataset.o
+
+# XML
+Tag.o :
+Parser.o : Tag.o

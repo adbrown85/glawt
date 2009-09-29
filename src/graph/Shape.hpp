@@ -15,6 +15,7 @@
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Selectable.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -31,6 +32,7 @@ class Shape : public Node,
 	public :
 		
 		Shape(float size=1.0);
+		Shape(const Tag &tag);
 		virtual string toString() const;
 		
 		GLenum getStyle() {return style;}
@@ -46,3 +48,4 @@ class Shape : public Node,
 
 
 #endif
+

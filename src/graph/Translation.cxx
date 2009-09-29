@@ -14,6 +14,9 @@
  */
 class FakeLeaf : public Node {
 	public :
+		FakeLeaf() : Node() {
+			className = "Leaf";
+		}
 		virtual void computeDepth(Matrix &matrix) {
 			depth = matrix(2,3);
 		}
@@ -31,13 +34,22 @@ int main() {
 	float randomNum;
 	Matrix rotMatrix;
 	Node root;
-	Translation trans[4];
+	Tag tag;
+	Translation *translation, trans[4];
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
+	
+	// Test tag
+	cout << "\nTesting tag..." << endl;
+	tag.attributes["x"] = "10.0";
+	tag.attributes["y"] = "20.0";
+	tag.attributes["z"] = "30.0";
+	translation = new Translation(tag);
+	translation->print();
 	
 	// Build tree
 	cout << "\nBuilding tree..." << endl;

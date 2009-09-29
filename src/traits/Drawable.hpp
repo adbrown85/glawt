@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include "Identifiable.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -28,6 +29,7 @@ class Drawable : public Identifiable {
 	public :
 		
 		Drawable(float size=1.0);
+		Drawable(const Tag &tag);
 		virtual void copySizeOf(const Drawable &other);
 		virtual void draw() const = 0;
 		virtual void hide();

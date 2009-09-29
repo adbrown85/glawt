@@ -17,39 +17,29 @@
  *     Name another node can reference.
  */
 Texture3D::Texture3D(string filename,
-                     string name) : Texture(filename, name),
-                                    dataset(filename) {
+                     string name) : 
+                     Texture(filename, name),
+                     dataset(filename) {
 	
 	// Initialize
-	className = "Texture3D";
-	type = "3D";
+	Texture3D::init();
 }
 
 
 
 /**
- * Creates a new texture by processing another texture.
+ * Creates a new 3D texture from an XML tag.
  * 
- * @param effect
- *     Indicates which effect to use.
- * @param name
- *     Indicates which dataset to use.
+ * @param tag
+ *     XML tag.
  */
-/*
-Texture3D::Texture3D(string effect,
-                     string name) {
+Texture3D::Texture3D(const Tag &tag) : 
+                     Texture(tag),
+                     dataset(tag) {
 	
-	Dataset *dataset;
-	Texture3D *texture3d;
-	
-	// Find dataset
-	texture3d = find(name);
-	dataset = texture3d->getDataset();
-	
-	// 
-	Effect::apply(effect, *dataset, this->dataset);
+	// Initialize
+	Texture3D::init();
 }
-*/
 
 
 
@@ -78,45 +68,14 @@ void Texture3D::associate() {
 
 
 /**
- * Finds another Texture3D by name.
- * 
- * @return
- *     Pointer to the Texture3D.
+ * Initializes attributes common to all constructors.
  */
-Texture3D* Texture3D::find(string name) {
-	
-	bool found;
-	Node *node;
-	Texture3D *texture3d;
-	string message;
+void Texture3D::init() {
 	
 	// Initialize
-	found = false;
-	node = parent;
-	
-	// Look for matching node up the tree
-	while (node != NULL) {
-		texture3d = dynamic_cast<Texture3D*>(node);
-		if (texture3d == NULL) {
-			node = node->getParent();
-			continue;
-		}
-		if (name.compare(texture3d->getName()) == 0) {
-			found = true;
-			break;
-		}
-	}
-	
-	// Finish
-	if (!found) {
-		message = "Texture3D: Could not find Texture3D with name '";
-		message += name;
-		message += "'!";
-		throw message.c_str();
-	}
-	return texture3d;
+	className = "Texture3D";
+	type = "3D";
 }
-
 
 
 /**

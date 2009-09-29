@@ -14,9 +14,7 @@
 	<uniform type="float" name="brightness" value="10.0">
 		<texture type="3D" file="input/dendrite.vlb" name="dendrite">
 		<uniform type="sampler3D" name="volume" link="dendrite">
-			<translate x="0.0" y="0.0" z="0.0">
-				<shape type="Box" size="1.0" style="3D" />
-			</translate>
+			<box size="1.0" />
 		</uniform>
 		</texture>
 	</uniform>

@@ -19,18 +19,22 @@ GLubyte Box::indices[24], Box::map[8][3];
  */
 Box::Box(float size) : Shape(size) {
 	
-	// Class name
-	className = "Box";
+	// Initialize
+	init();
+}
+
+
+
+/**
+ * Creates a new box from an XML tag.
+ * 
+ * @param tag
+ *     XML tag.
+ */
+Box::Box(const Tag &tag) : Shape(tag) {
 	
-	// Initialize vertices of class
-	if (!loaded) {
-		initMap();
-		initPoints();
-		initCoords();
-		initNormals();
-		initIndices();
-		loaded = true;
-	}
+	// Initialize
+	init();
 }
 
 
@@ -67,7 +71,28 @@ void Box::draw() const {
 
 
 /**
- * Initializes the %Box classes's static coordinates array.
+ * Initializes the %Box's attributes.
+ */
+void Box::init() {
+	
+	// Class name
+	className = "Box";
+	
+	// Initialize vertices of class
+	if (!loaded) {
+		initMap();
+		initPoints();
+		initCoords();
+		initNormals();
+		initIndices();
+		loaded = true;
+	}
+}
+
+
+
+/**
+ * Initializes the %Box class's static coordinates array.
  * 
  * Note two-dimensional coordinates for each face are always created here so 
  * that if an image is specified as a texture it will appear correctly on each 

@@ -11,12 +11,10 @@
 #include <set>
 #include <vector>
 #include "Box.hpp"
+#include "Node.hpp"
 #include "Program.hpp"
 #include "Scene.hpp"
 #include "Shader.hpp"
-#include "Shape.hpp"
-#include "Square.hpp"
-#include "Texture.hpp"
 #include "Texture2D.hpp"
 #include "Texture3D.hpp"
 #include "Translation.hpp"
@@ -34,28 +32,18 @@ using namespace std;
 class Factory {
 	
 	
-	public :
+	public:
 		
-		Factory(Scene *scene);
-		void process(vector<Tag> &tags);
+		Factory(Node *root);
+		void process(const vector<Tag> &tags);
 	
 	
 	private:
 		
-		Node *current;
-		Scene *scene;
-		set<string> containers;
+		Node *root;
 		
-		void createProgram(Tag &tag);
-		void createShader(Tag &tag);
-		void createShape(Tag &tag);
-		void createTexture(Tag &tag);
-		void createTranslation(Tag &tag);
-		void createUniform(Tag &tag);
-		
-		void initContainers();
-		bool isContainer(string name);
-		string tolower(string str);
+		Node* create(const Tag &tag);
+		Node* createTexture(const Tag &tag);
 };
 
 

@@ -1,0 +1,9 @@
+<!-- This is a comment! -->
+
+<program>
+	<shader type="fragment" file="shader-file.frag" />
+	<translate x="1.0" y="2.0" z="3.0">
+		<shape type="box" size="1.0" />
+	</translate>
+</program>
+

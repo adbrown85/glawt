@@ -6,13 +6,13 @@
 	<program>
 		<shader type="fragment" file="glsl/sampler.glsl" />
 		<uniform type="sampler2D" name="primary" link="crate">
-			<translate x="-2.0" y="0.0" z="0.0">
-				<shape type="Box" size="2.0" />
+			<translate x="-2.0">
+				<box size="2.0" style="2d" />
 			</translate>
 		</uniform>
 		<uniform type="sampler2D" name="primary" link="stone">
-			<translate x="2.0" y="0.0" z="0.0">
-				<shape type="Box" size="2.0" />
+			<translate x="+2.0">
+				<box size="2.0" style="2d" />
 			</translate>
 		</uniform>
 	</program>

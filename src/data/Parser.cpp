@@ -71,7 +71,7 @@ void Parser::open(string filename) {
 	// Open file
 	file.open(filename.c_str(), ios_base::binary);
 	if (!file) {
-		cerr << "Gander,Parser: Could not open file." << endl;
+		cerr << "[Gander,Parser] Could not open file." << endl;
 		exit(1);
 	}
 	
@@ -141,8 +141,10 @@ void Parser::parseTag(string tagString,
 	stringstream stream;
 	
 	// Ignore ending slash (for now)
-	if (tagString[tagString.length()-1] == '/')
+	if (tagString[tagString.length()-1] == '/') {
 		tagString = tagString.substr(0, tagString.length()-1);
+		tag.empty = true;
+	}
 	stream.str(tagString);
 	
 	// Name

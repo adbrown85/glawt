@@ -31,35 +31,38 @@ class FakeShape : public Shape {
 int main() {
 	
 	float rotation;
-	Scene scene;
+	Scene sceneA, sceneB;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
+	
+	// Test open
+	cout << "\nTesting open..." << endl;
+	sceneB.open("input/Scene.xml");
+	sceneB.print();
 	
 	// Build scene
-	cout << "Building scene..." << endl;
+	cout << "\nBuilding scene..." << endl;
 	srand(time(NULL));
 	for (int i=0; i<NUM_OF_ITEMS; ++i) {
-		scene.addToRoot(new Translation(0, 0, rand()%10));
-		scene.addToLast(new FakeShape(1.0));
-		scene.backup();
-		scene.addToLast(new FakeShape(2.0));
+		sceneA.addToRoot(new Translation(0, 0, rand()%10));
+		sceneA.addToLast(new FakeShape(1.0));
+		sceneA.backup();
+		sceneA.addToLast(new FakeShape(2.0));
 	}
-	scene.print();
+	sceneA.print();
 	
 	// Sort by depth
-	cout << endl;
-	cout << "Enter rotation:  ";
+	cout << "\nEnter rotation:  ";
 	cin >> rotation;
 	while (cin) {
-		scene.setRotation(rotation, 0, 1, 0);
+		sceneA.setRotation(rotation, 0, 1, 0);
 		cout << "Sorting by depth..." << endl;
-		scene.sortByDepth();
-		scene.print();
+		sceneA.sortByDepth();
+		sceneA.print();
 		cout << endl;
 		cout << "Enter rotation:  ";
 		cin >> rotation;

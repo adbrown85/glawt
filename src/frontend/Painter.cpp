@@ -39,7 +39,7 @@ void Painter::paint(Scene &scene,
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	paintNode(&scene.rootNode, renderMode, manipulators);
+	paintNode(&scene.root, renderMode, manipulators);
 }
 
 

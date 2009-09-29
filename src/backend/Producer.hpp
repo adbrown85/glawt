@@ -15,8 +15,6 @@
 #include <vector>
 #include "Command.hpp"
 #include "Delegate.hpp"
-#include "Factory.hpp"
-#include "Parser.hpp"
 #include "Scene.hpp"
 #include "Tag.hpp"
 using namespace std;

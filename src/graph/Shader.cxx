@@ -19,15 +19,31 @@ int main(int argc,
 	
 	Program *current=NULL, program;
 	Shader *shader=NULL;
+	Tag tag;
 	
 	// Initialize
 	init("Shader");
 	
+	// Test tag
+	try {
+		cout << "\nTesting tag..." << endl;
+		tag.attributes["type"] = "fragment";
+		tag.attributes["file"] = "glsl/coordinates.frag";
+		shader = new Shader(tag);
+		shader->print();
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+		exit(1);
+	}
+	
 	// Initialize shader
-	shader = new Shader("fragment", "glsl/coordinates.glsl");
+	cout << "\nInitializing shader..." << endl;
+	shader = new Shader("fragment", "glsl/coordinates.frag");
 	shader->print();
 	
 	// Make graph
+	cout << "\nMaking graph..." << endl;
 	program.addChild(shader);
 	program.associateTree();
 	program.finalizeTree();

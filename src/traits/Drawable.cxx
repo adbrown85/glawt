@@ -17,6 +17,8 @@ using namespace std;
 class FakeDrawable : public Drawable {
 	
 	public: 
+		FakeDrawable() {}
+		FakeDrawable(const Tag &tag) : Drawable(tag) {}
 		void draw() const {}
 };
 
@@ -34,7 +36,9 @@ void print(const FakeDrawable &item) {
  */
 int main() {
 	
+	FakeDrawable *drawable;
 	FakeDrawable items[NUMBER_OF_ITEMS];
+	Tag tag;
 	
 	// Start
 	cout << endl;
@@ -43,8 +47,14 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Test tag
+	cout << "\nTag:" << endl;
+	tag.attributes["size"] = "8.0";
+	drawable = new FakeDrawable(tag);
+	print(*drawable);
+	
 	// Initialize
-	cout << "Original: " << endl;
+	cout << "\nOriginal: " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i)
 		print(items[i]);
 	
@@ -87,3 +97,4 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

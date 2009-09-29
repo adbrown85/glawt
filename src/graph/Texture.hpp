@@ -15,6 +15,7 @@
 #include <typeinfo>
 #include "Applicable.hpp"
 #include "Node.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -32,6 +33,7 @@ class Texture : public Node,
 		
 		Texture(string name,
 		        string filename="");
+		Texture(const Tag &tag);
 		virtual void apply() = 0;
 		virtual void associate();
 		virtual void remove() = 0;
@@ -50,7 +52,7 @@ class Texture : public Node,
 		int unit;
 		string filename, name, type;
 		
-		Texture();
+		virtual void init();
 };
 
 

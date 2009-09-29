@@ -73,7 +73,7 @@ void Compositor::info(Scene *scene,
 void Compositor::showAll(Scene *scene,
                          int cmd) {
 	
-	showAll(&(scene->rootNode));
+	showAll(&(scene->root));
 }
 
 

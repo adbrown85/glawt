@@ -18,6 +18,8 @@ using namespace std;
  */
 class FakeShape : public Shape {
 	public:
+		FakeShape() : Shape() {}
+		FakeShape(const Tag &tag) : Shape(tag) {}
 		void draw() const {};
 };
 
@@ -28,9 +30,10 @@ class FakeShape : public Shape {
  */
 int main() {
 	
-	FakeShape shapes[NUMBER_OF_ITEMS];
+	FakeShape shapes[NUMBER_OF_ITEMS], *shape;
 	int randomNum;
 	Matrix rotMatrix;
+	Tag tag;
 	Translation trans[NUMBER_OF_ITEMS];
 	Node root;
 	
@@ -39,10 +42,22 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
+	
+	// Tag
+	try {
+		cout << "\nTesting tag..." << endl;
+		tag.attributes["size"] = "5.5";
+		tag.attributes["style"] = "3D";
+		shape = new FakeShape(tag);
+		shape->print();
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+		exit(1);
+	}
 	
 	// Print
-	cout << "Building tree... " << endl;
+	cout << "\nBuilding tree... " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		root.addChild(&trans[i]);
 		trans[i].addChild(&shapes[i]);
@@ -50,12 +65,12 @@ int main() {
 	root.printTree();
 	
 	// Style
-	cout << "Setting style of first shape..." << endl;
+	cout << "\nSetting style of first shape..." << endl;
 	shapes[0].setStyle(GL_TEXTURE_3D);
 	root.printTree();
 	
 	// Randomize
-	cout << "Randomizing..." << endl;
+	cout << "\nRandomizing..." << endl;
 	srand(time(NULL));
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		randomNum = rand() % 10;
@@ -63,7 +78,7 @@ int main() {
 	}
 	
 	// Sort by depth
-	cout << "Sorting by depth..." << endl;
+	cout << "\nSorting by depth..." << endl;
 	root.sortByDepth(rotMatrix);
 	root.printTree();
 	
@@ -72,5 +87,5 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
-	cout << endl;
 }
+

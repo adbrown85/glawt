@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include "Dataset.hpp"
+#include "Tag.hpp"
 #include "Texture.hpp"
 using namespace std;
 
@@ -28,11 +29,11 @@ class Texture3D : public Texture {
 		
 		Texture3D(string filename,
 		          string name="");
+		Texture3D(const Tag &tag);
 		virtual void apply();
 		virtual void associate();
 		virtual void remove();
 		
-		/* Dataset* getDataset() {return &dataset;} */
 		int getDepth() {return dataset.getDepth();}
 		int getHeight() {return dataset.getHeight();}
 		int getWidth() {return dataset.getWidth();}
@@ -43,9 +44,8 @@ class Texture3D : public Texture {
 		Dataset dataset;
 		GLuint handle;
 		
-		Texture3D();
-		Texture3D* find(string name);
-		void load();
+		virtual void init();
+		virtual void load();
 };
 
 

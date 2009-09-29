@@ -15,9 +15,6 @@ include $(GANDER)/src/module.mak
 
 # Utilities
 Command.o : 
-Tag.o :
-Parser.o : Tag.o
-Factory.o : Tag.o
 
 # Delegates
 Delegate.hpp : Command.o
@@ -25,7 +22,7 @@ Cameraman.o : Command.o Delegate.hpp
 Compositor.o : Command.o Delegate.hpp
 Director.o :  Command.o Delegate.hpp
 Grip.o : Command.o Delegate.hpp
-Producer.o : Command.o Delegate.hpp Factory.o Parser.o
+Producer.o : Command.o Delegate.hpp
 
 # Interpreting
 Interpreter.o : Cameraman.o Compositor.o Director.o Grip.o Producer.o

@@ -18,6 +18,7 @@
 #include <utility>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -33,23 +34,23 @@ class Dataset {
 	public :
 		
 		Dataset(string filename);
-		Dataset(const Dataset &original);
+		Dataset(const Tag &tag);
 		virtual ~Dataset();
-		void print() const {header.print();}
-		void print(Index I);
+		virtual void print() const {header.print();}
+		virtual void print(Index I);
 		
-		void get(const Index &I,
-		         void *&value,
-		         GLenum &type) const;
-		int getBlock() const {return block;}
-		void* getData() const {return data;}
-		int getDepth() const {return depth;}
-		int getHeight() const {return height;}
-		GLenum getType() const {return type;}
-		int getWidth() const {return width;}
-		void set(const Index &I,
-		         const void *value,
-		         GLenum type);
+		virtual void get(const Index &I,
+		                 void *&value,
+		                 GLenum &type) const;
+		virtual int getBlock() const {return block;}
+		virtual void* getData() const {return data;}
+		virtual int getDepth() const {return depth;}
+		virtual int getHeight() const {return height;}
+		virtual GLenum getType() const {return type;}
+		virtual int getWidth() const {return width;}
+		virtual void set(const Index &I,
+		                 const void *value,
+		                 GLenum type);
 	
 	
 	private:
@@ -60,11 +61,12 @@ class Dataset {
 		int width, height, depth, widthTimesHeight;
 		void *data;
 		
-		char* findPosition(const Index &I) const;
-		void initDimensions();
-		void initTypeBlock();
-		void readData();
-		void checkIndex(const Index &I) const;
+		virtual char* findPosition(const Index &I) const;
+		virtual void init();
+		virtual void initDimensions();
+		virtual void initTypeBlock();
+		virtual void readData();
+		virtual void checkIndex(const Index &I) const;
 };
 
 

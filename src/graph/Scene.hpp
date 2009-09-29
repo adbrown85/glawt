@@ -13,6 +13,8 @@
 #include <vector>
 #include "Matrix.hpp"
 #include "Node.hpp"
+#include "Parser.hpp"
+#include "Factory.hpp"
 #include "Quaternion.hpp"
 #include "Selection.hpp"
 #include "Vector.hpp"
@@ -40,6 +42,7 @@ class Scene {
 		void addToRoot(Node *node);
 		void backup();
 		void prepare();
+		void open(string filename);
 		void print();
 		void reset();
 		void rotate(float angle,

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Tag.hpp"
 using namespace std;
 
 
@@ -22,6 +23,7 @@ class DatasetHeader {
 	public :
 		
 		DatasetHeader(string filename);
+		DatasetHeader(const Tag &tag);
 		void check();
 		void print() const;
 		void read();
