@@ -44,23 +44,11 @@ Texture3D::Texture3D(const Tag &tag) :
 
 
 /**
- * Enables 3D texturing, activates a texture unit, and binds the texture to it.
- */
-void Texture3D::apply() {
-	
-	// Enable texturing
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glEnable(GL_TEXTURE_3D);
-}
-
-
-
-/**
  * Loads the texture on an available texture unit.
  */
 void Texture3D::associate() {
 	
-	// Load the texture
+	// Find the unit and load
 	Texture::associate();
 	load();
 }
@@ -74,8 +62,9 @@ void Texture3D::init() {
 	
 	// Initialize
 	className = "Texture3D";
-	type = "3D";
+	initType();
 }
+
 
 
 /**
@@ -105,17 +94,5 @@ void Texture3D::load() {
 	             GL_LUMINANCE,            // Format
 	             dataset.getType(),       // Type
 	             dataset.getData());      // Data
-}
-
-
-
-/**
- * Disables 3D texturing on the unit so other objects will not be textured.
- */
-void Texture3D::remove() {
-	
-	// Disable texturing
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glDisable(GL_TEXTURE_3D);
 }
 

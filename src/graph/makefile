@@ -31,9 +31,9 @@ Uniform.o: Node.o Program.o Shader.o Texture2D.o Texture3D.o
 # Drawable/Selectable nodes
 Fullscreen.o: Node.o
 Shape.o: Node.o
-Box.o: Shape.o
+Box.o: Shape.o Texture.o
 Outline.o: Shape.o
-Square.o: Shape.o
+Square.o: Shape.o Texture.o
 
 # Collections of nodes
 Selection.o: Node.o

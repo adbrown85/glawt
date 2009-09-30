@@ -9,6 +9,8 @@
 
 <texture2d name="crate" file="../../input/crate.jpg">
 	<texture2d name="stone" file="../../input/stone.jpg">
-		<square/>
+		<translate z="2.0">
+			<square/>
+		</translate>
 	</texture2d>
 </texture2d>

@@ -44,16 +44,26 @@ Box::Box(const Tag &tag) : Shape(tag) {
  */
 void Box::draw() const {
 	
-	// Enable arrays
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	if (style == GL_TEXTURE_2D)
-		glTexCoordPointer(3, GL_FLOAT, 0, coords);
-	else
-		glTexCoordPointer(3, GL_FLOAT, 0, points);
-	glNormalPointer(GL_FLOAT, 0, normals);
+	int numberOfActiveUnits;
+	
+	// Enable vertex array
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, points);
+	
+	// Enable normal arrays
 	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, normals);
+	
+	// Enable texture coordinate arrays
+	numberOfActiveUnits = Texture::getNumberOfActiveUnits();
+	for (int i=0; i<numberOfActiveUnits; ++i) {
+		glClientActiveTexture(GL_TEXTURE0 + i);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		if (style == GL_TEXTURE_2D)
+			glTexCoordPointer(3, GL_FLOAT, 0, coords);
+		else
+			glTexCoordPointer(3, GL_FLOAT, 0, points);
+	}
 	
 	// Draw vertices
 	glPushMatrix(); {
@@ -64,8 +74,11 @@ void Box::draw() const {
 	
 	// Disable arrays
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
+	for (int i=0; i<numberOfActiveUnits; ++i) {
+		glClientActiveTexture(GL_TEXTURE0 + i);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
 }
 
 

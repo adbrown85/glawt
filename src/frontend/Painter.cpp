@@ -130,7 +130,6 @@ void Painter::paintUIElements(Selectable *selectable,
                               GLenum renderMode,
                               vector<Manipulator*> &manipulators) {
 	
-	GLboolean tex2dEnabled, tex3dEnabled;
 	Program *program;
 	vector<Manipulator*>::iterator mi;
 	
@@ -138,12 +137,7 @@ void Painter::paintUIElements(Selectable *selectable,
 	program = Program::getCurrent();
 	if (program != NULL)
 		program->remove();
-	glGetBooleanv(GL_TEXTURE_2D, &tex2dEnabled);
-	if (tex2dEnabled)
-		glDisable(GL_TEXTURE_2D);
-	glGetBooleanv(GL_TEXTURE_3D, &tex3dEnabled);
-	if (tex3dEnabled)
-		glDisable(GL_TEXTURE_3D);
+	Texture::pause();
 	
 	// Draw outline
 	glPushAttrib(GL_CURRENT_BIT);
@@ -174,8 +168,6 @@ void Painter::paintUIElements(Selectable *selectable,
 	// Restore shading and texturing
 	if (program != NULL)
 		program->apply();
-	if (tex2dEnabled)
-		glEnable(GL_TEXTURE_2D);
-	if (tex3dEnabled)
-		glEnable(GL_TEXTURE_3D);
+	Texture::restart();
 }
+

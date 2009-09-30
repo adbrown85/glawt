@@ -18,6 +18,7 @@
 #include "Node.hpp"                // Traversing the scene graph
 #include "Program.hpp"             // Disable GLSL for outlines
 #include "Selectable.hpp"          // Drawing manipulators for selection
+#include "Texture.hpp"             // Pausing and restarting texturing
 #include "Transformation.hpp"      // Drawing manipulators for selection
 #include "Scene.hpp"               // Rotating camera and accessing root node
 #include "Vector.hpp"
@@ -45,6 +46,7 @@ class Painter {
 		
 		static Box outline;
 		
+		static void disableTexturing();
 		static void paintChildren(Node *node,
 		                          GLenum renderMode,
 		                          vector<Manipulator*> &manipulators);

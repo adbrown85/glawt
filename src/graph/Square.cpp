@@ -48,15 +48,19 @@ Square::Square(const Tag &tag) :
  */
 void Square::draw() const {
 	
-	// Enable arrays
+	int numberOfActiveUnits;
+	
+	// Enable vertex array
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, points);
-	glClientActiveTexture(GL_TEXTURE0);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(3, GL_FLOAT, 0, points);
-	glClientActiveTexture(GL_TEXTURE1);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(3, GL_FLOAT, 0, points);
+	
+	// Enable texture coordinate arrays
+	numberOfActiveUnits = Texture::getNumberOfActiveUnits();
+	for (int i=0; i<numberOfActiveUnits; ++i) {
+		glClientActiveTexture(GL_TEXTURE0 + i);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(3, GL_FLOAT, 0, points);
+	}
 	
 	// Draw
 	glMatrixMode(GL_MODELVIEW);
@@ -68,10 +72,10 @@ void Square::draw() const {
 	
 	// Disable arrays
 	glDisableClientState(GL_VERTEX_ARRAY);
-	glClientActiveTexture(GL_TEXTURE0);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glClientActiveTexture(GL_TEXTURE1);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	for (int i=0; i<numberOfActiveUnits; ++i) {
+		glClientActiveTexture(GL_TEXTURE0 + i);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
 }
 
 
