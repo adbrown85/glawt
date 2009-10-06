@@ -1,3 +1,9 @@
+/*
+ * multitexture.frag
+ * 
+ * Author
+ *     Andy Brown <andybrown85@gmail.com>
+ */
 uniform sampler2D left, right;
 
 
@@ -8,3 +14,4 @@ void main() {
 	else
 		gl_FragColor = texture2D(right, gl_TexCoord[0].st);
 }
+

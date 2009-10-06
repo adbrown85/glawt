@@ -14,11 +14,11 @@
  */
 class FakeTexture : public Texture {
 	public:
-		FakeTexture(string filename,
-		            string name) : Texture(filename,name) {}
+		FakeTexture(string name,
+		            string filename) : Texture(name,filename) {}
 		FakeTexture(const Tag &tag) : Texture(tag) {}
-		void apply() {}
-		void remove() {}
+	protected:
+		void initType() {type = GL_TEXTURE_2D;}
 };
 
 
@@ -48,7 +48,7 @@ int main() {
 	// Create textures
 	cout << "\nCreating textures..." << endl;
 	for (int i=0; i<4; ++i)
-		scene.addToLast(new FakeTexture("crate", "input/crate.jpg"));
+		scene.addToLast(new FakeTexture("crate", "../../input/crate.jpg"));
 	
 	// Prepare nodes
 	cout << "\nPreparing nodes..." << endl;

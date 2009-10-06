@@ -1,5 +1,16 @@
-<texture2d name="crate" file="input/crate.jpg">
-	<texture2d name="stone" file="input/stone.jpg">
-		<square/>
+<!--
+ * Texture2D.xml
+ *     Test for Texture2D.
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<texture2d name="crate" file="../../input/crate.jpg">
+	<texture2d name="stone" file="../../input/stone.jpg">
+		<translate z="2.0">
+			<square/>
+		</translate>
 	</texture2d>
 </texture2d>

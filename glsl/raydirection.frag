@@ -32,3 +32,4 @@ void main() {
 	else if (direction.y < -0.5)
 		gl_FragColor = yellow;
 }
+

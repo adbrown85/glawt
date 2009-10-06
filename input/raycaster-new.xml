@@ -1,5 +1,5 @@
 <!--
- * raycasternew.xml
+ * raycaster-new.xml
  *     Casts rays through a volume.
  * 
  * Author
@@ -9,7 +9,7 @@
 
 
 <program>
-	<shader type="fragment" file="glsl/raycasternew.frag" />
+	<shader type="fragment" file="glsl/raycaster-new.frag" />
 	<uniform type="int" name="samples" value="100">
 	<uniform type="float" name="brightness" value="10.0">
 		<texture type="3D" file="input/dendrite.vlb" name="dendrite">

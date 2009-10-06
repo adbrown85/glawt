@@ -1,5 +1,5 @@
 /*
- * halfmoon.glsl
+ * halfmoon.frag
  *     Colors half an object dark and the other light.
  */
 
@@ -11,3 +11,4 @@ void main() {
 	else
 		gl_FragColor = vec4(1.00, 1.00, 1.00, 0.90);
 }
+

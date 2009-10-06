@@ -1,0 +1,20 @@
+<!--
+ * double.xml
+ *     Uses two textures.
+ *
+ * Author
+ *     Andy Brown
+-->
+
+
+
+<texture2d file="input/crate.jpg" name="crate">
+<texture2d file="input/stone.jpg" name="stone">
+	<translate x="-2.0">
+		<box size="2.0" style="2d" />
+	</translate>
+	<translate x="+2.0">
+		<box size="2.0" style="2d" />
+	</translate>
+</texture2d>
+</texture2d>

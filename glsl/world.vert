@@ -16,3 +16,4 @@ void main() {
 	vertexPosition = gl_ModelViewMatrix * gl_Vertex;
 	gl_Position = ftransform();
 }
+

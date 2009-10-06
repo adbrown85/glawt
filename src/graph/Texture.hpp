@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <stack>
 #include <sstream>
 #include <string>
 #include <typeinfo>
@@ -34,25 +35,33 @@ class Texture : public Node,
 		Texture(string name,
 		        string filename="");
 		Texture(const Tag &tag);
-		virtual void apply() = 0;
+		virtual void apply();
 		virtual void associate();
-		virtual void remove() = 0;
+		virtual void remove();
 		virtual string toString() const;
 		
 		virtual string getFilename() const {return filename;}
 		virtual GLuint getHandle() {return handle;}
 		virtual string getName() const {return name;}
-		virtual string getType() const {return type;}
+		virtual GLenum getType() const {return type;}
 		virtual int getUnit() const {return unit;}
+		
+		static int getNumberOfActiveUnits() {return active_units.size();}
+		static void pause();
+		static void restart();
 	
 	
 	protected:
 		
+		GLenum type;
 		GLuint handle;
 		int unit;
-		string filename, name, type;
+		string filename, name;
+		
+		static vector<GLenum> active_units;
 		
 		virtual void init();
+		virtual void initType() = 0;
 };
 
 

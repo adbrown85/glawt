@@ -31,9 +31,7 @@ class Texture2D : public Texture {
 		Texture2D(string name,
 		          int size);
 		Texture2D(const Tag &tag);
-		virtual void apply();
 		virtual void associate();
-		virtual void remove();
 		virtual string toString() const;
 		
 		virtual int getSize() {return size;}
@@ -50,6 +48,7 @@ class Texture2D : public Texture {
 		
 		virtual void generate();
 		virtual void init();
+		virtual void initType() {type = GL_TEXTURE_2D;}
 		virtual void initLibraries();
 		virtual void load();
 };

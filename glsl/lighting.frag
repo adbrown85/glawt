@@ -47,3 +47,4 @@ void main() {
 	/* Color from ambient and diffuse light */
 	gl_FragColor = ambientLight() + diffuseLight();
 }
+

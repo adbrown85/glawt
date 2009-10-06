@@ -9,17 +9,13 @@
 
 
 <program>
-	<shader type="vertex" file="glsl/raydirection.vert" />
 	<shader type="fragment" file="glsl/raycaster-lit.frag" />
 	<uniform type="int" name="samples" value="256">
 	<uniform type="float" name="pitch" value="0.00390625">
-		<texture type="3D" file="input/bear.vlb" name="volume">
+		<texture3d file="input/bear.vlb" name="volume">
 		<uniform type="sampler3D" name="volume" link="volume">
-			<translate x="0.0" y="0.0" z="0.0">
-				<box size="1.0" />
-			</translate>
+			<box size="1.0" />
 		</uniform>
-		</texture>
-	</uniform>
+		</texture3d>
 	</uniform>
 </program>

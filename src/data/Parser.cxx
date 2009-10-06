@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 	cout << endl;
 	
 	// Test
-	parser.open("input/scene.xml");
+	parser.open("Parser.xml");
 	parser.print();
 	
 	// Finish

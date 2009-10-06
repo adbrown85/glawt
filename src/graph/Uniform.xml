@@ -8,11 +8,11 @@
 
 
 
-<texture2d name="crate" file="input/crate.jpg">
-<texture2d name="stone" file="input/stone.jpg">
+<texture2d name="crate" file="../../input/crate.jpg">
+<texture2d name="stone" file="../../input/stone.jpg">
 	<program>
-		<shader type="fragment" file="glsl/texture.frag" />
-		<uniform type="sampler2D" name="tex" link="crate">
+		<shader type="fragment" file="../../glsl/texture.frag" />
+		<uniform type="sampler2D" name="texture" link="crate">
 			<translate z="2.0">
 				<square />
 			</translate>

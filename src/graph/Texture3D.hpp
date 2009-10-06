@@ -30,9 +30,7 @@ class Texture3D : public Texture {
 		Texture3D(string filename,
 		          string name="");
 		Texture3D(const Tag &tag);
-		virtual void apply();
 		virtual void associate();
-		virtual void remove();
 		
 		int getDepth() {return dataset.getDepth();}
 		int getHeight() {return dataset.getHeight();}
@@ -45,6 +43,7 @@ class Texture3D : public Texture {
 		GLuint handle;
 		
 		virtual void init();
+		virtual void initType() {type = GL_TEXTURE_3D;}
 		virtual void load();
 };
 

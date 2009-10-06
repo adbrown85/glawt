@@ -62,27 +62,6 @@ Texture2D::Texture2D(const Tag &tag) :
 
 
 /**
- * Enables 2D texturing, activates a texture unit, and binds the texture to it.
- */
-void Texture2D::apply() {
-	
-	// Enable texturing
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glEnable(GL_TEXTURE_2D);
-	
-	// Bind texture
-	if (filename.empty()) {
-		glBindTexture(GL_TEXTURE_2D, handle);
-	}
-	else {
-		ilBindImage(image);
-		ilutGLBindTexImage();
-	}
-}
-
-
-
-/**
  * Generates or loads the texture.
  * 
  * Is done in "associate" rather than "finalize" because other nodes might 
@@ -90,6 +69,7 @@ void Texture2D::apply() {
  */
 void Texture2D::associate() {
 	
+	// Find unit
 	Texture::associate();
 	
 	// Activate texture unit
@@ -169,7 +149,7 @@ void Texture2D::init() {
 	
 	// Attributes
 	className = "Texture2D";
-	this->type = "2D";
+	initType();
 	this->image = 0;
 	this->size = 0;
 }
@@ -224,7 +204,7 @@ void Texture2D::load() {
 	// Initialize DevIL
 	initLibraries();
 	
-	// Load image as texture
+	// Load image
 	ilGenImages(1, &image);
 	ilBindImage(image);
 	if (ilLoadImage(filename.c_str()))
@@ -237,18 +217,12 @@ void Texture2D::load() {
 		     << "'." << endl;
 		exit(1);
 	}
-}
-
-
-
-/**
- * Disables 2D texturing so other objects will not be textured.
- */
-void Texture2D::remove() {
 	
-	// Disable texturing
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glDisable(GL_TEXTURE_2D);
+	// Load into texture
+	ilBindImage(image);
+	handle = ilutGLBindTexImage();
+	if (handle == 0)
+		throw "[Gander,Texture2D] DevIL did not bind image to texture.";
 }
 
 

@@ -12,6 +12,7 @@
 #include "Shape.hpp"
 #include "Vector.hpp"
 #include "Tag.hpp"
+#include "Texture.hpp"
 using namespace std;
 
 

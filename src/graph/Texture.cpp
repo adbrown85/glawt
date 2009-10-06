@@ -5,6 +5,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Texture.hpp"
+vector<GLenum> Texture::active_units;
 
 
 
@@ -37,8 +38,22 @@ Texture::Texture(const Tag &tag) {
 	
 	// Initialize
 	Texture::init();
-	tag.get("name", name);
+	tag.get("name", name, false);
 	tag.get("file", filename, false);
+}
+
+
+
+/**
+ * Applies the texture.
+ */
+void Texture::apply() {
+	
+	// Enable texturing on unit
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(type);
+	glBindTexture(type, handle);
+	active_units.push_back(type);
 }
 
 
@@ -68,6 +83,53 @@ void Texture::associate() {
 
 
 /**
+ * Temporarily disables texturing on all active units.
+ */
+void Texture::pause() {
+	
+	int count;
+	
+	// Disable each unit
+	count = active_units.size();
+	for (int i=0; i<count; ++i) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glDisable(active_units[i]);
+	}
+}
+
+
+
+/**
+ * Renables texturing on all active units.
+ */
+void Texture::restart() {
+	
+	int count;
+	
+	// Enable each unit
+	count = active_units.size();
+	for (int i=0; i<count; ++i) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glEnable(active_units[i]);
+	}
+}
+
+
+
+/**
+ * Removes the texture.
+ */
+void Texture::remove() {
+	
+	// Disable texturing on unit
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glDisable(type);
+	active_units.pop_back();
+}
+
+
+
+/**
  * Initializes attributes common to all constructors.
  */
 void Texture::init() {
@@ -89,8 +151,8 @@ string Texture::toString() const {
 	
 	stream << Node::toString();
 	stream << " name='" << name << "'"
-	       << " hand='" << handle << "'"
 	       << " unit='" << unit << "'"
+	       << " hand='" << handle << "'"
 	       << " file='" << filename << "'";
 	return stream.str();
 }

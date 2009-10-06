@@ -9,6 +9,7 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "Shape.hpp"
+#include "Texture.hpp"
 #include "Vector.hpp"
 using namespace std;
 

@@ -56,3 +56,4 @@ void main() {
 	/* Ray direction */
 	computeRayDirection();
 }
+
