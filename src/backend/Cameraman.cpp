@@ -44,9 +44,10 @@ Cameraman::Cameraman() {
 /**
  * Fits items in the view.
  */
-void Cameraman::fit(Scene *scene, int cmd) {
+void Cameraman::fit(Scene *scene,
+                    int cmd) {
 	
-	std::cout << "Cameraman::fit(int)" << std::endl;
+	cout << "Cameraman::fit(int)" << endl;
 }
 
 
@@ -54,7 +55,8 @@ void Cameraman::fit(Scene *scene, int cmd) {
 /**
  * Resets the view's rotation.
  */
-void Cameraman::reset(Scene *scene, int cmd) {
+void Cameraman::reset(Scene *scene,
+                      int cmd) {
 	
 	// Resets rotation
 	scene->setRotation(0.0, 0.0, 1.0, 0.0);
@@ -65,12 +67,16 @@ void Cameraman::reset(Scene *scene, int cmd) {
 /**
  * Rotates the camera around the scene.
  * 
+ * @param scene
+ *     Pointer to the current scene.
  * @param cmd
  *     Command.  Should be in CIRCLE family.
  * @param amt
  *     Amount to rotate the camera.
  */
-void Cameraman::rotate(Scene *scene, int cmd, float amt) {
+void Cameraman::rotate(Scene *scene,
+                       int cmd,
+                       float amt) {
 	
 	// Rotate according to command
 	switch (cmd) {
@@ -94,12 +100,16 @@ void Cameraman::rotate(Scene *scene, int cmd, float amt) {
 /**
  * Moves the camera.
  * 
+ * @param scene
+ *     Pointer to the current scene.
  * @param cmd
  *     Command.  Either BOOM, TRACK, or ZOOM family.
  * @param amt
  *     Amount to move the camera.
  */
-void Cameraman::translate(Scene *scene, int cmd, float amt) {
+void Cameraman::translate(Scene *scene,
+                          int cmd,
+                          float amt) {
 	
 	switch (cmd) {
 		case Command::BOOM :
@@ -120,3 +130,4 @@ void Cameraman::translate(Scene *scene, int cmd, float amt) {
 			scene->position.z -= amt; break;
 	}
 }
+

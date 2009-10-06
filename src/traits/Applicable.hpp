@@ -1,11 +1,11 @@
 /*
  * Applicable.hpp
- *
+ * 
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __APPLICABLE_HPP__
-#define __APPLICABLE_HPP__
+#ifndef APPLICABLE_HPP
+#define APPLICABLE_HPP
 #include <cstdlib>
 #include <iostream>
 

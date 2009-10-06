@@ -26,7 +26,7 @@ using namespace std;
  * @mainpage
  * <table align="center" border="0" width="70%">
  * <tr>
- *     <td><img src="../gander-big.png"></td>
+ *     <td><img src="../images/gander-big.png"></td>
  * </tr>
  * <tr>
  *     <td><p>This document describes the C++ classes that make up 

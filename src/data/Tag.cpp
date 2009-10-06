@@ -74,6 +74,8 @@ void Tag::error(string key) const {
  * 
  * @param key
  *     Name of the attribute.
+ * @param type
+ *     Type trying to convert to.
  */
 void Tag::error(string key,
                 string type) const {
@@ -99,6 +101,8 @@ void Tag::error(string key,
  *     Name of the attribute.
  * @param value
  *     Boolean to store the value in.
+ * @param required
+ *     If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               bool &value,
@@ -133,6 +137,8 @@ bool Tag::get(const string &key,
  *     Name of the attribute.
  * @param value
  *     Character to store the value in.
+ * @param required
+ *     If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               char &value,
@@ -162,6 +168,8 @@ bool Tag::get(const string &key,
  *     Name of the attribute.
  * @param value
  *     Float to store the value in.
+ * @param required
+ *     If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               float &value,
@@ -191,6 +199,8 @@ bool Tag::get(const string &key,
  *     Name of the attribute.
  * @param value
  *     Integer to store the value in.
+ * @param required
+ *     If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               int &value,
@@ -220,6 +230,8 @@ bool Tag::get(const string &key,
  *     Name of the attribute.
  * @param value
  *     String to store the value in.
+ * @param required
+ *     If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               string &value,
@@ -254,6 +266,9 @@ void Tag::setName(const string &name) {
 
 /**
  * Converts each character of a string to lowercase.
+ * 
+ * @param original
+ *     String to convert.
  */
 string Tag::tolower(const string &original) {
 	
@@ -269,6 +284,14 @@ string Tag::tolower(const string &original) {
 
 
 
+/**
+ * Prints the %Tag to a stream.
+ * 
+ * @param stream
+ *     Stream to print to.
+ * @param tag
+ *     XML tag.
+ */
 ostream& operator<<(ostream &stream,
                     const Tag &tag) {
 	

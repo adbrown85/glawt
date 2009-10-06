@@ -1,12 +1,12 @@
 /*
  * Cameraman.hpp
- *     Responsible for creating and storing scenes.
+ *     Responsible for moving the camera.
  *
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#ifndef __CAMERAMAN_HPP__
-#define __CAMERAMAN_HPP__
+#ifndef CAMERAMAN_HPP
+#define CAMERAMAN_HPP
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -14,7 +14,7 @@
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-using std::map;
+using namespace std;
 
 
 
@@ -30,15 +30,24 @@ class Cameraman : public Delegate {
 		
 		Cameraman();
 		
-		virtual void run(int command) {;}
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, string argument) {;}
+		virtual void run(int command) {}
+		virtual void run(int command,
+		                 float argument) {}
+		virtual void run(int command,
+		                 string argument) {}
 	
-		static void fit(Scene *scene, int command);
-		static void reset(Scene *scene, int command);
-		static void rotate(Scene *scene, int command, float amount);
-		static void translate(Scene *scene, int command, float amount);
+		static void fit(Scene *scene,
+		                int command);
+		static void reset(Scene *scene,
+		                  int command);
+		static void rotate(Scene *scene,
+		                   int command,
+		                   float amount);
+		static void translate(Scene *scene,
+		                      int command,
+		                      float amount);
 };
 
 
 #endif
+

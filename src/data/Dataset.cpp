@@ -1,6 +1,6 @@
 /*
  * Dataset.cpp
- *
+ * 
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
@@ -209,7 +209,7 @@ void Dataset::readData() {
 /**
  * Sets an element in the dataset.
  * 
- * @param I
+ * @param index
  *     Index specifying the location of the element.
  * @param value
  *     Pointer to the value to set.
