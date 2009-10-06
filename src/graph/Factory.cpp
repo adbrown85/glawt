@@ -79,7 +79,9 @@ Node* Factory::create(const Tag &tag) {
 void Factory::start() {
 	
 	Node *current, *node;
-	vector<Tag>::const_iterator ti;
+	map<string,string>::const_iterator ai;
+	string path;
+	vector<Tag>::iterator ti;
 	
 	// Initialize
 	current = root;
@@ -92,6 +94,13 @@ void Factory::start() {
 		if (ti->closing) {
 			current = current->getParent();
 			continue;
+		}
+		
+		// Make "file" attributes relative to scene file
+		ai = ti->attributes.find("file");
+		if (ai != ti->attributes.end()) {
+			path = FileUtility::getRelativePath(filename, ai->second);
+			ti->attributes["file"] = path;
 		}
 		
 		// Create node and update current

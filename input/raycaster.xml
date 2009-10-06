@@ -9,11 +9,11 @@
 
 
 <program>
-	<shader type="fragment" file="glsl/raycaster.frag" />
-	<shader type="vertex" file="glsl/world.vert" />
+	<shader type="fragment" file="../glsl/raycaster.frag" />
+	<shader type="vertex" file="../glsl/world.vert" />
 	<uniform type="int" name="samples" value="50">
 		<uniform type="float" name="brightness" value="5.0">
-		<texture type="3D" file="input/skull.vlb" name="skull">
+		<texture type="3D" file="skull.vlb" name="skull">
 			<uniform type="sampler3D" name="volume" link="skull">
 				<translate x="0.0" y="0.0" z="0.0">
 					<box size="1.0" />

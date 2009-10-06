@@ -9,7 +9,7 @@
 
 
 <program>
-	<shader type="fragment" file="glsl/raycaster-lit.frag" />
+	<shader type="fragment" file="../glsl/raycaster-lit.frag" />
 	<uniform type="int" name="samples" value="256">
 	<uniform type="float" name="pitch" value="0.00390625">
 		<texture3d file="input/bear.vlb" name="volume">

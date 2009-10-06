@@ -8,7 +8,7 @@
 
 
 <program>
-	<shader type="vertex" file="glsl/world.vert" />
-	<shader type="fragment" file="glsl/raydirectionnew.frag" />
+	<shader type="vertex" file="../glsl/world.vert" />
+	<shader type="fragment" file="../glsl/raydirectionnew.frag" />
 		<box />
 </program>

@@ -8,17 +8,28 @@
 
 
 
+/**
+ * Builds a path from its parts.
+ * 
+ * @param result
+ *     Where to store the built path.
+ * @param parts
+ *     Parts of the path.
+ * @param ignoreDots
+ *     Whether to ignore "." and ".." parts.
+ */
 void FileUtility::build(string &result,
-                        vector<string> &parts) {
+                        vector<string> &parts,
+                        bool ignoreDots) {
 	
 	vector<string>::iterator it;
 	
 	// Build up parts
 	for (it=parts.begin(); it!=parts.end()-1; ++it) {
-		if (*it != ".." && *it != ".") {
-			result += *it;
-			result += '/';
-		}
+		if (ignoreDots && (*it == ".." || *it == "."))
+			continue;
+		result += *it;
+		result += '/';
 	}
 	result += *it;
 }
@@ -36,6 +47,7 @@ void FileUtility::build(string &result,
 string FileUtility::getRelativePath(const string &primary,
                                     const string &secondary) {
 	
+	bool stackWasEmpty;
 	string root, result;
 	vector<string> stack, list;
 	vector<string>::iterator it;
@@ -52,27 +64,29 @@ string FileUtility::getRelativePath(const string &primary,
 	tokenize(primary, stack, &root);
 	tokenize(secondary, list, NULL);
 	stack.pop_back();
+	stackWasEmpty = stack.empty();
 	
 	// Check for special case of primary path in root
-	if (isAbsolutePath(primary) && stack.empty()) {
+	if (isAbsolutePath(primary) && stackWasEmpty) {
 		result = root;
-		build(result, list);
+		build(result, list, true);
 		return result;
 	}
 	
-	// Manipulate stack according to list
+	// Add part from list to stack, but pop for each ".."
 	for (it=list.begin(); it!=list.end(); ++it) {
 		if (*it == ".")
 			continue;
-		else if (*it == "..")
+		else if (*it == ".." && !stackWasEmpty && !stack.empty()) {
 			stack.pop_back();
-		else {
-			stack.push_back(*it);
+			stackWasEmpty = stack.empty();
+			continue;
 		}
+		stack.push_back(*it);
 	}
 	
 	// Build string from stack
-	build(result, stack);
+	build(result, stack, false);
 	return result;
 }
 

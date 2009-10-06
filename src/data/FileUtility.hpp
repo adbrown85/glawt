@@ -29,7 +29,8 @@ class FileUtility {
 	private:
 		
 		static void build(string &result,
-		                  vector<string> &parts);
+		                  vector<string> &parts,
+		                  bool ignoreDots);
 		static void tokenize(const string &filename,
 		                     vector<string> &tokens,
 		                     string *root);

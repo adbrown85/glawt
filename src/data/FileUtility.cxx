@@ -20,9 +20,9 @@ void testRelativePath(const string &A,
 	
 	// Get result and print
 	cout << "Testing relative path..." << endl;
-	result = FileUtility::getRelativePath(A, B);
 	cout << "  A: " << A << endl;
 	cout << "  B: " << B << endl;
+	result = FileUtility::getRelativePath(A, B);
 	cout << "  " << result << endl;
 	assert(result == answer);
 }
@@ -51,6 +51,9 @@ int main() {
 	testRelativePath("input/scene.xml",
 	                 "../glsl/file.frag",
 	                 "glsl/file.frag");
+	testRelativePath("input/scene.xml",
+	                 "../../../glsl/file.frag",
+	                 "../../glsl/file.frag");
 	
 	// Test if any are absolute paths
 	cout << "\nWhen A or B is absolute..." << endl;
@@ -72,6 +75,12 @@ int main() {
 	testRelativePath("C:\\scene.xml",
 	                 "../glsl/file.frag",
 	                 "C:\\glsl/file.frag");
+	
+	// Test if A has no directory
+	cout << "\nWhen A has no directory..." << endl;
+	testRelativePath("scene.xml",
+	                 "../../glsl/file.frag",
+	                 "../../glsl/file.frag");
 	
 	// Finish
 	cout << endl;

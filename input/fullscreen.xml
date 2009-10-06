@@ -8,7 +8,7 @@
 
 
 
-<texture2d file="input/crate.jpg" name="crate">
+<texture2d file="crate.jpg" name="crate">
 <!--
 	<program>
 		<shader type="fragment" file="glsl/coordinates.frag"/>

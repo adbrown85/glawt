@@ -8,11 +8,13 @@
 #define FACTORY_HPP
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <set>
 #include <vector>
 #include "Box.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
+#include "FileUtility.hpp"
 #include "Fullscreen.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"

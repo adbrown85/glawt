@@ -8,8 +8,8 @@
 
 
 
-<texture2d file="input/crate.jpg" name="crate">
-<texture2d file="input/stone.jpg" name="stone">
+<texture2d file="crate.jpg" name="crate">
+<texture2d file="stone.jpg" name="stone">
 	<translate x="-2.0">
 		<box size="2.0" style="2d" />
 	</translate>
