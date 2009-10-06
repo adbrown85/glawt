@@ -1,5 +1,6 @@
 Dataset
 DatasetHeader
+FileUtility
 Matrix
 Parser
 Quaternion
