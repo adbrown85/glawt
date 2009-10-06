@@ -1,6 +1,6 @@
 /*
  * Painter.cpp
- *
+ * 
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
@@ -16,6 +16,8 @@ Box Painter::outline(1.0);
  *     Collection of items and camera information.
  * @param manipulators
  *     UI elements used to manipulate selected items.
+ * @param renderMode
+ *     Either GL_RENDER or GL_SELECT.
  */
 void Painter::paint(Scene &scene,
                     vector<Manipulator*> &manipulators,
@@ -144,6 +146,7 @@ void Painter::paintUIElements(Selectable *selectable,
 		glColor3f(1.0, 1.0, 0.0);
 		glPushAttrib(GL_POLYGON_BIT);
 			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
 			glPolygonMode(GL_FRONT, GL_LINE);
 			outline.copySizeOf(*selectable);
 			outline.draw();

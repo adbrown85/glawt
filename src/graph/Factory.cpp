@@ -33,6 +33,8 @@ Node* Factory::create(const Tag &tag) {
 	// Supported nodes
 	if (tag.name.compare("box") == 0)
 		return new Box(tag);
+	else if (tag.name.compare("cull") == 0)
+		return new Cull(tag);
 	else if (tag.name.compare("framebuffer") == 0)
 		return new Framebuffer(tag);
 	else if (tag.name.compare("fullscreen") == 0)

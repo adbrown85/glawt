@@ -17,6 +17,7 @@ include $(GANDER)/src/module.mak
 Node.o:
 
 # Applicable nodes
+Cull.o: Node.o
 Framebuffer.o: Node.o
 Transformation.hpp: Node.o
 Translation.o: Node.o Transformation.hpp

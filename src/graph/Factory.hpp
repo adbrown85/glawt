@@ -11,6 +11,7 @@
 #include <set>
 #include <vector>
 #include "Box.hpp"
+#include "Cull.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
 #include "Node.hpp"

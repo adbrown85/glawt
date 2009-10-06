@@ -1,0 +1,16 @@
+<!--
+ * Cull.xml
+ * 
+ * Author
+ *     Andrew Brown
+-->
+
+
+<cull faces="back">
+	<program>
+		<shader type="fragment" file="../../glsl/coordinates.frag"/>
+		<translate x="+0.5" z="-2" y="+0.5">
+			<box/>
+		</translate>
+	</program>
+</cull>
