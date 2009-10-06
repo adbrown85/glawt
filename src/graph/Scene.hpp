@@ -13,7 +13,6 @@
 #include <vector>
 #include "Matrix.hpp"
 #include "Node.hpp"
-#include "Parser.hpp"
 #include "Factory.hpp"
 #include "Quaternion.hpp"
 #include "Selection.hpp"

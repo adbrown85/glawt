@@ -79,7 +79,6 @@ Matrix Scene::getRotationMatrix() const {
 
 
 
-
 /**
  * Opens a scene from a file.
  * 
@@ -88,14 +87,12 @@ Matrix Scene::getRotationMatrix() const {
  */
 void Scene::open(string filename) {
 	
-	Factory factory(&root);
-	Parser parser;
+	Factory factory(&root, filename);
 	
 	// Parse and process tags
 	try {
 		cerr << "[Gander,Scene] Opening '" << filename << "'..." << endl;
-		parser.open(filename);
-		factory.process(parser.tags);
+		factory.start();
 	}
 	catch (char const *e) {
 		cerr << e << endl;

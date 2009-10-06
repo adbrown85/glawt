@@ -13,11 +13,15 @@
  * 
  * @param root
  *     Pointer to the root node of a scene.
+ * @param filename
+ *     Path to an XML scene description.
  */
-Factory::Factory(Node *root) {
+Factory::Factory(Node *root,
+                 string filename) {
 	
 	// Initialize
 	this->root = root;
+	this->filename = filename;
 }
 
 
@@ -72,16 +76,17 @@ Node* Factory::create(const Tag &tag) {
  * @param tags
  *     Reference to a collection of tags.
  */
-void Factory::process(const vector<Tag> &tags) {
+void Factory::start() {
 	
 	Node *current, *node;
 	vector<Tag>::const_iterator ti;
 	
-	// Initialize current node
+	// Initialize
 	current = root;
+	parser.open(filename);
 	
 	// Look through tags
-	for (ti=tags.begin(); ti!=tags.end(); ++ti) {
+	for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
 		
 		// Step back on closing tags
 		if (ti->closing) {

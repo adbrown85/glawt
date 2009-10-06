@@ -15,6 +15,7 @@
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
 #include "Node.hpp"
+#include "Parser.hpp"
 #include "Program.hpp"
 #include "Scene.hpp"
 #include "Shader.hpp"
@@ -39,16 +40,18 @@ class Factory {
 	
 	public:
 		
-		Factory(Node *root);
-		void process(const vector<Tag> &tags);
+		Factory(Node *root,
+		        string filename);
+		void start();
 	
 	
 	private:
 		
 		Node *root;
+		Parser parser;
+		string filename;
 		
 		Node* create(const Tag &tag);
-		Node* createTexture(const Tag &tag);
 };
 
 
