@@ -16,8 +16,6 @@ GLubyte Square::indices[4];
  * 
  * @param size
  *     Length of the square's sides.
- * @param inClipSpace
- *     Draw the square in clip space.
  */
 Square::Square(float size) : 
                Shape(size) {
@@ -56,6 +54,8 @@ void Square::draw() const {
 	
 	// Enable texture coordinate arrays
 	numberOfActiveUnits = Texture::getNumberOfActiveUnits();
+	if (numberOfActiveUnits == 0)
+		numberOfActiveUnits = 1;
 	for (int i=0; i<numberOfActiveUnits; ++i) {
 		glClientActiveTexture(GL_TEXTURE0 + i);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);

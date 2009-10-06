@@ -56,6 +56,8 @@ void Box::draw() const {
 	
 	// Enable texture coordinate arrays
 	numberOfActiveUnits = Texture::getNumberOfActiveUnits();
+	if (numberOfActiveUnits == 0)
+		numberOfActiveUnits = 1;
 	for (int i=0; i<numberOfActiveUnits; ++i) {
 		glClientActiveTexture(GL_TEXTURE0 + i);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
