@@ -167,8 +167,11 @@ void Uniform::initTypes() {
  */
 bool Uniform::isSampler() {
 	
+	string type;
+	
 	// Compare strings
-	return (type.compare("sampler2d") == 0 || type.compare("sampler3d") == 0);
+	type = Tag::tolower(this->type);
+	return (type == "sampler2d" || type == "sampler3d");
 }
 
 
