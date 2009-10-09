@@ -11,14 +11,14 @@
 /**
  * Creates a new 3D texture.
  * 
- * @param filename
- *     Path to the file.
  * @param name
  *     Name another node can reference.
+ * @param filename
+ *     Path to the file.
  */
-Texture3D::Texture3D(string filename,
-                     string name) : 
-                     Texture(filename, name),
+Texture3D::Texture3D(string name,
+                     string filename) : 
+                     Texture(name, filename),
                      dataset(filename) {
 	
 	// Initialize

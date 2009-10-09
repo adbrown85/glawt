@@ -27,8 +27,8 @@ class Texture3D : public Texture {
 	
 	public :
 		
-		Texture3D(string filename,
-		          string name="");
+		Texture3D(string name,
+		          string filename);
 		Texture3D(const Tag &tag);
 		virtual void associate();
 		

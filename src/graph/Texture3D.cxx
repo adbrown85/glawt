@@ -45,7 +45,7 @@ int main(int argc,
 		
 		// Create texture
 		cout << "\nCreating texture..." << endl;
-		Texture3D texture(filename);
+		Texture3D texture("bear", filename);
 		texture.associate();
 		
 		// Print
