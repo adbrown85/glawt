@@ -64,6 +64,7 @@ void Uniform::associate() {
 	
 	Node *current;
 	Texture *texture;
+	string message;
 	
 	// Look for a Program ancestor
 	current = parent;
@@ -83,8 +84,11 @@ void Uniform::associate() {
 				break;
 			current = current->getParent();
 		}
-		if (texture == NULL)
-			throw "[Gander,Uniform] Could not find texture linked to.";
+		if (texture == NULL) {
+			message = "[Gander,Uniform] Could not find texture with '";
+			message += link + "' as name.";
+			throw message.c_str();
+		}
 		value = texture->getUnit();
 	}
 }
