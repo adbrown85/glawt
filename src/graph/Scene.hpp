@@ -35,8 +35,8 @@ class Scene {
 		Selection selection;
 		Vector position;
 		
-		Scene(int width=640,
-		      int height=480);
+		Scene(int width=512,
+		      int height=512);
 		void addToLast(Node *node);
 		void addToRoot(Node *node);
 		void backup();

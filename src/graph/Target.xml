@@ -12,13 +12,13 @@
 		<target link="mytexture" />
 		<program>
 			<shader type="fragment" file="../../glsl/coordinates.frag" />
-			<box style="2d"/>
+			<square style="2d"/>
 		</program>
 	</framebuffer>
 	<program>
 		<shader type="fragment" file="../../glsl/texture.frag" />
 		<uniform type="int" name="texture" link="mytexture">
-			<box />
+			<square />
 		</uniform>
 	</program>
 </texture2d>
