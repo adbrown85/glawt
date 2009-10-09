@@ -1,0 +1,6 @@
+<program>
+	<shader type="fragment" file="../glsl/window.frag"/>
+	<translate x="1.0">
+		<box/>
+	</translate>
+</program>
