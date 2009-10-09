@@ -12,11 +12,11 @@
 	<shader type="fragment" file="../glsl/raycaster-new.frag" />
 	<uniform type="int" name="samples" value="100">
 	<uniform type="float" name="brightness" value="10.0">
-		<texture type="3D" file="input/dendrite.vlb" name="dendrite">
+		<texture3d file="dendrite.vlb" name="dendrite">
 		<uniform type="sampler3D" name="volume" link="dendrite">
 			<box size="1.0" />
 		</uniform>
-		</texture>
+		</texture3d>
 	</uniform>
 	</uniform>
 </program>

@@ -92,5 +92,6 @@ void main() {
 	
 	/* Set final color */
 	gl_FragColor = rayColor;
+	gl_FragColor.a = 1.0;
 }
 
