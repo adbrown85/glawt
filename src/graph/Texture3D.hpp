@@ -40,7 +40,6 @@ class Texture3D : public Texture {
 	private:
 		
 		Dataset dataset;
-		GLuint handle;
 		
 		virtual void init();
 		virtual void initType() {type = GL_TEXTURE_3D;}

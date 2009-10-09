@@ -152,7 +152,7 @@ string Texture::toString() const {
 	stream << Node::toString();
 	stream << " name='" << name << "'"
 	       << " unit='" << unit << "'"
-	       << " hand='" << handle << "'"
+	       << " handle='" << handle << "'"
 	       << " file='" << filename << "'";
 	return stream.str();
 }
