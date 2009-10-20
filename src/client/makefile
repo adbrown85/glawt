@@ -15,8 +15,10 @@ BINARIES += $(bindir)/gander
 
 
 # Phony targets for directing make
-.PHONY: all clean
+.PHONY: all clean install
 all: gander
+install: 
+	install $(bindir)/gander /usr/local/bin
 
 
 # Executables

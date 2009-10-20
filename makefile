@@ -10,7 +10,7 @@ include $(GANDER)/src/globals.mak
 
 
 # Phony targets for directing make
-DIRECTIVES = all clean check tests
+DIRECTIVES = all check clean install mostlyclean tests
 .PHONY: $(DIRECTIVES) $(MODULES)
 .DEFAULT: all
 $(DIRECTIVES) $(MODULES):

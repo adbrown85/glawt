@@ -41,9 +41,6 @@ check:
 	@echo "  BINARIES = $(BINARIES)"
 	@echo "  ARCHIVE  = $(ARCHIVE)"
 	@echo "  ARCHIVES = $(ARCHIVES)"
-mostlyclean: 
-	@echo "  Removing $(OBJECTS)"
-	@$(RM) $(OBJECTS)
 clean: 
 	@echo "  Removing $(OBJECTS)"
 	@$(RM) $(OBJECTS) 
@@ -51,6 +48,10 @@ clean:
 	@$(RM) $(ARCHIVE)
 	@echo "  Removing $(BINARIES)"
 	@$(RM) $(BINARIES)
+mostlyclean: 
+	@echo "  Removing $(OBJECTS)"
+	@$(RM) $(OBJECTS)
+install: all
 tests: $(OBJECTS) $(BINARIES)
 
 
