@@ -11,10 +11,8 @@ varying vec4 vertexPosition;
 
 void main() {
 	
-	vec4 worldPosition;
-	
 	/* Set fragment color to world coordinates */
-	worldPosition = normalize(vertexPosition * gl_ModelViewMatrix);
-	gl_FragColor = worldPosition;
+	gl_FragColor = normalize(vertexPosition);
+	gl_FragColor.a = 1.0;
 }
 
