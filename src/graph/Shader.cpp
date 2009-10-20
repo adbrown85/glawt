@@ -32,8 +32,9 @@ Shader::Shader(const Tag &tag) {
 	
 	// Initialize
 	init();
-	tag.get("type", type);
 	tag.get("file", filename);
+	if (!tag.get("type", type, false))
+		initType();
 }
 
 
@@ -131,6 +132,33 @@ void Shader::init() {
 	this->length = 0;
 	this->handle = 0;
 	this->source = NULL;
+}
+
+
+
+/**
+ * Initializes the type by guessing from the file's extension.
+ */
+void Shader::initType() {
+	
+	int pos;
+	string extension;
+	
+	// Check extension for ".frag" or ".vert"
+	pos = filename.find_last_of('.');
+	extension = filename.substr(pos);
+	if (extension == ".frag")
+		type = "fragment";
+	else if (extension == ".vert")
+		type = "vertex";
+	else {
+		stringstream message;
+		message << "[Gander,Shader] Extension '"
+		        << extension << "' not recognized as type.\n";
+		message << "[Gander,Shader] Use '.frag' or '.vert', "
+		        << "or declare 'type' as 'fragment' or 'vertex'.";
+		throw message.str().c_str();
+	}
 }
 
 

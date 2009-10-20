@@ -58,6 +58,7 @@ class Shader : public Node {
 		void compile();
 		void create();
 		void init();
+		void initType();
 		void load();
 };
 

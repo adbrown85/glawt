@@ -21,9 +21,15 @@ int main(int argc,
 	}
 	
 	// Start
-	Tester::initialize(argv[1]);
-	Tester::open(argv[1]);
-	Tester::start();
+	try {
+		Tester::initialize(argv[1]);
+		Tester::open(argv[1]);
+		Tester::start();
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+		exit(1);
+	}
 	
 	// Finish
 	return 0;
