@@ -12,14 +12,14 @@
 		<framebuffer>
 			<target link="target" />
 			<program>
-				<shader type="fragment" file="../glsl/coordinates.frag" />
+				<shader file="../glsl/coordinates.frag" />
 				<cull faces="front">
 					<box/>
 				</cull>
 			</program>
 		</framebuffer>
 		<program>
-			<shader type="fragment" file="../glsl/kruger.frag" />
+			<shader file="../glsl/kruger.frag" />
 			<texture3d file="bear.vlb" name="volume">
 			<uniform type="sampler3d" name="volume" link="volume">
 				<uniform type="sampler2d" name="target" link="target">

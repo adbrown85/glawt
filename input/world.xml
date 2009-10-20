@@ -8,7 +8,7 @@
 
 
 <program>
-	<shader type="fragment" file="../glsl/world.frag" />
-	<shader type="vertex" file="../glsl/world.vert" />
+	<shader file="../glsl/world.vert" />
+	<shader file="../glsl/world.frag" />
 	<box size="2.0" />
 </program>

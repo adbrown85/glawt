@@ -11,7 +11,7 @@
 <texture2d file="crate.jpg" name="crate">
 <texture2d file="stone.jpg" name="stone">
 	<program>
-		<shader type="fragment" file="../glsl/multitexture.frag" />
+		<shader file="../glsl/multitexture.frag" />
 		<uniform type="sampler2D" name="left" link="crate">
 		<uniform type="sampler2D" name="right" link="stone">
 			<translate x="-2.0">

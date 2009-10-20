@@ -2,13 +2,13 @@
 
 
 <program>
-	<shader type="fragment" file="../glsl/halfmoon.glsl" />
+	<shader file="../glsl/halfmoon.frag" />
 	<translate x="5.0">
 		<box size="2.0" style="2d" />
 	</translate>
 </program>
 <program>
-	<shader type="fragment" file="../glsl/coordinates.glsl" />
+	<shader file="../glsl/coordinates.frag" />
 	<translate x="-5.0" z="-1.0">
 		<box size="4.0" />
 	</translate>

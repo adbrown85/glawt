@@ -9,8 +9,8 @@
 
 
 <program>
-	<shader type="vertex" file="../glsl/normal.vert"/>
-	<shader type="fragment" file="../glsl/lighting.frag"/>
+	<shader file="../glsl/normal.vert"/>
+	<shader file="../glsl/lighting.frag"/>
 	<uniform type="float" name="ambient" value="0.5">
 		<translate x="3.0">
 			<box size="1.0"/>

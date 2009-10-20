@@ -8,8 +8,8 @@
 
 
 <program>
-	<shader type="fragment" file="../glsl/raydirection.frag" />
-	<shader type="vertex" file="../glsl/world.vert" />
+	<shader file="../glsl/raydirection.frag" />
+	<shader file="../glsl/world.vert" />
 	<uniform type="int" name="width" value="640">
 	<uniform type="int" name="height" value="480">
 		<translate x="0.0" y="0.0" z="0.0">

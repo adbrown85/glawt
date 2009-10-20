@@ -6,7 +6,7 @@
 -->
 
 <program>
-	<shader type="fragment" file="../glsl/coordinates.frag"/>
+	<shader file="../glsl/coordinates.frag"/>
 	<cull faces="front">
 		<translate x="-2">
 			<box size="2"/>
