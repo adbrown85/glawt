@@ -15,9 +15,10 @@ import java.util.Scanner;
  */
 public class VolumeData implements DataSource {
 	
-	double[][] data;
-	int size;
-	String filename;
+	private double pitch;
+	private double[][] data;
+	private int size;
+	private String filename;
 	
 	
 	public VolumeData(String filename)
@@ -28,9 +29,25 @@ public class VolumeData implements DataSource {
 	}
 	
 	
-	public double getData() {
+	public double getPitch() {
 		
+		return pitch;
+	}
+	
+	
+	public double getSample(Point point) {
 		
+		int x, y;
+		
+		x = (int)(point.x * size - 0.5);
+		y = (int)(point.y * size - 0.5);
+		return data[y][x];
+	}
+	
+	
+	public int getSize() {
+		
+		return size;
 	}
 	
 	
@@ -39,13 +56,14 @@ public class VolumeData implements DataSource {
 		
 		Scanner scanner;
 		
-		// Open and get number of lines
+		// Open and set size and pitch
 		scanner = new Scanner(new File(filename));
 		size = scanner.nextInt();
+		pitch = 1.0 / size;
 		
 		// Load data
 		data = new double[size][size];
-		for (int i=0; i<size; ++i) {
+		for (int i=size-1; i>=0; --i) {
 			for (int j=0; j<size; ++j) {
 				data[i][j] = scanner.nextDouble();
 			}
@@ -56,7 +74,7 @@ public class VolumeData implements DataSource {
 	public void print() {
 		
 		System.out.printf("Size: %d\n", size);
-		for (int i=0; i<size; ++i) {
+		for (int i=size-1; i>=0; --i) {
 			for (int j=0; j<size; ++j) {
 				System.out.print(data[i][j] + " ");
 			}
@@ -67,29 +85,30 @@ public class VolumeData implements DataSource {
 	
 	public static void main(String[] args) {
 		
+		double data, halfPitch, pitch;
 		VolumeData volumeData;
 		
-		// Start
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("VolumeData");
-		System.out.println("****************************************");
-		System.out.println();
-		
-		// Test
 		try {
+			
+			// Load and print
 			volumeData = new VolumeData("volume.dat");
 			volumeData.print();
-		} catch (FileNotFoundException e) {
+			
+			// getSample and getPitch
+			System.out.println();
+			pitch = volumeData.getPitch();
+			halfPitch = pitch * 0.5;
+			for (double y=1.0-halfPitch; y>0.0; y-=pitch) {
+				for (double x=halfPitch; x<1.0; x+=pitch) {
+					data = volumeData.getSample(new Point(x, y));
+					System.out.print(data + " ");
+				}
+				System.out.println();
+			}
+		}
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		// Finish
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("VolumeData");
-		System.out.println("****************************************");
-		System.out.println();
 	}
 }
 

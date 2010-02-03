@@ -13,6 +13,10 @@
 public interface DataSource {
 	
 	
-	double getData(Point point);
+	public double getPitch();
+	
+	public double getSample(Point point);
+	
+	public int getSize();
 }
 
