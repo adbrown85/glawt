@@ -121,6 +121,29 @@ public class Ray implements Drawable {
 	}
 	
 	
+	/**
+	 * Returns the time at a value on a given component.
+	 */
+	public double getTimeAt(int i,
+	                        double value) {
+		
+		double di=direction.get(i), oi=origin.get(i);
+		
+		// If parallel to axis use infinity based on origin
+		if (Math.abs(di) < ZERO_TOLERANCE) {
+			if (value < oi) {
+				return Double.NEGATIVE_INFINITY;
+			} else if (value > oi) {
+				return Double.POSITIVE_INFINITY;
+			} else {
+				return 0.0;
+			}
+		}
+		
+		// Otherwise just calculate normally
+		return (value - oi) / di;
+	}
+	
 	
 	public boolean isDirectionZero(int i) {
 		
