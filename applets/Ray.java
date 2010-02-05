@@ -75,7 +75,10 @@ public class Ray implements Drawable {
 		// Draw line
 		end = Point.add(origin, Vector2D.scale(direction, 1000));
 		graphic.setStroke(stroke);
-		graphic.drawLine((int)origin.x, (int)origin.y, (int)end.x, (int)end.y);
+		graphic.drawLine((int)origin.x,
+		                 (int)(dimension.height - origin.y),
+		                 (int)end.x,
+		                 (int)(dimension.height - end.y));
 		
 		// Draw intersections
 		for (Intersection intersection : intersections) {

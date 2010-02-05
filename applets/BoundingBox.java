@@ -38,8 +38,13 @@ public class BoundingBox implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension) {
 		
+		int size, x, y;
+		
 		graphic.setStroke(stroke);
-		graphic.drawRect((int)lower.x, (int)lower.y, (int)size, (int)size);
+		x = (int)(lower.x + 0.5);
+		y = (int)(dimension.height - upper.y + 0.5);
+		size = (int)(this.size + 0.5);
+		graphic.drawRect(x, y, size, size);
 	}
 	
 	

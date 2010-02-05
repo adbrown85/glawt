@@ -44,14 +44,15 @@ public class Square implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension) {
 		
-		double x, y;
+		int x, y, size;
 		
 		// Calculate
-		x = center.x - half;
-		y = center.y - half;
+		x = (int)(center.x - half + 0.5);
+		y = (int)(dimension.height - center.y - half + 0.5);
+		size = (int)(this.size + 0.5);
 		
 		// Draw
-		graphic.drawRect((int)x, (int)y, (int)size, (int)size);
+		graphic.drawRect(x, y, size, size);
 		for (AxisAlignedSlab slab : slabs) {
 			slab.draw(graphic, dimension);
 		}

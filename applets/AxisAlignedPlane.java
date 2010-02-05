@@ -57,10 +57,13 @@ public class AxisAlignedPlane implements Drawable {
 		graphic.setStroke(stroke);
 		
 		// Draw horizontal or vertical line
-		if (point.x != 0.0)
-			graphic.drawLine((int)point.x, 0, (int)point.x, dimension.height);
-		else
-			graphic.drawLine(0, (int)point.y, dimension.width, (int)point.y);
+		if (point.x != 0.0) {
+			int x = (int)(point.x + 0.5);
+			graphic.drawLine(x, 0, x, dimension.height);
+		} else {
+			int y = (int)(dimension.height - point.y + 0.5);
+			graphic.drawLine(0, y, dimension.width, y);
+		}
 	}
 	
 	
