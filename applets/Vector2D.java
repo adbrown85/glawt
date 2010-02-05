@@ -17,10 +17,6 @@ public class Vector2D {
 	public double x, y;
 	
 	
-	
-	/**
-	 * Creates a new Vector2D.
-	 */
 	public Vector2D() {
 		
 		x = 0;
@@ -29,14 +25,6 @@ public class Vector2D {
 	
 	
 	
-	/**
-	 * Creates a new Vector2D.
-	 * 
-	 * @param x
-	 *     X component.
-	 * @param y
-	 *     Y component.
-	 */
 	public Vector2D(double x,
 	                double y) {
 		
@@ -45,19 +33,11 @@ public class Vector2D {
 	}
 	
 	
-	
-	/**
-	 * Creates a new Vector2D by copying another.
-	 * 
-	 * @param B
-	 *     %Vector2D object to copy.
-	 */
 	public Vector2D(Vector2D B) {
 		
 		this.x = B.x;
 		this.y = B.y;
 	}
-	
 	
 	
 	/**
@@ -79,10 +59,6 @@ public class Vector2D {
 	}
 	
 	
-	
-	/**
-	 * Subtracts a vector from this vector.
-	 */
 	public Vector2D minus(Vector2D B) {
 		
 		Vector2D C = new Vector2D();
@@ -110,30 +86,18 @@ public class Vector2D {
 	}
 	
 	
-	
-	/**
-	 * Prints the vector.
-	 */
 	public void print() {
 		
 		System.out.println(toString());
 	}
 	
 	
-	
-	/**
-	 * Formats the vector as a string.
-	 */
 	public String toString() {
 		
 		return String.format("[%.2f %.2f]", x, y);
 	}
 	
 	
-	
-	/**
-	 * Test for Vector2D.
-	 */
 	public static void main(String[] args) {
 		
 		Vector2D A, B, C;
