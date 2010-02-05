@@ -96,6 +96,29 @@ public class Vector2D {
 		return new Vector2D(A.x*invLen, A.y*invLen);
 	}
 	
+	
+	/**
+	 * Set a component of the vector by its index.
+	 * 
+	 * @param i
+	 *     Index of the component.
+	 */
+	public void set(int i,
+	                double value) {
+		
+		switch (i) {
+			case 0: 
+				x = value;
+				break;
+			case 1:
+				y = value;
+				break;
+			default:
+				throw new IndexOutOfBoundsException("Out of bounds.");
+		}
+	}
+	
+	
 	/**
 	 * Scales a vector by a number.
 	 */
