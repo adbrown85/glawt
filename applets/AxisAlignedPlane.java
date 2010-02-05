@@ -9,14 +9,16 @@ import java.lang.Math;
 
 
 
-
 public class AxisAlignedPlane implements Drawable {
 	
-	
+	private static final Stroke stroke;
 	private int index;
 	private Point point;
-	private Stroke stroke;
 	
+	
+	static {
+		stroke = new DottedStroke();
+	}
 	
 	
 	/**
@@ -39,11 +41,7 @@ public class AxisAlignedPlane implements Drawable {
 			String message = "[AxisAlignedPlane] One component must be 0.";
 			throw new Exception(message);
 		}
-		
-		// Initialize
-		stroke = new DashedStroke();
 	}
-	
 	
 	
 	/**
