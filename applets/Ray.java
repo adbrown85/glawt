@@ -163,7 +163,7 @@ public class Ray implements Drawable {
 		ray.addIntersection(ray.getIntersectionAt(100));
 		
 		// Show
-		display = new Display("Ray", 640, 480);
+		display = new Display("Ray");
 		display.add(ray);
 		display.start();
 		

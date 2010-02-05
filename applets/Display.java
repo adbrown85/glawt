@@ -21,6 +21,12 @@ public class Display extends Component {
 	Vector<Drawable> drawables;
 	
 	
+	public Display(String title) {
+		
+		init(title, 640, 480);
+	}
+	
+	
 	
 	/**
 	 * Creates a new %Display.
@@ -29,11 +35,7 @@ public class Display extends Component {
 	               int width,
 	               int height) {
 		
-		// Initialize
-		this.title = title;
-		this.width = width;
-		this.height = height;
-		drawables = new Vector<Drawable>();
+		init(title, width, height);
 	}
 	
 	
@@ -45,6 +47,17 @@ public class Display extends Component {
 		
 		// Store the item
 		drawables.add(drawable);
+	}
+	
+	
+	private void init(String title,
+	                  int width,
+	                  int height) {
+		
+		this.title = title;
+		this.width = width;
+		this.height = height;
+		drawables = new Vector<Drawable>();
 	}
 	
 	
