@@ -86,6 +86,24 @@ public class Vector2D {
 	
 	
 	/**
+	 * Returns the maximum component of the vector.
+	 */
+	public static double max(Vector2D A) {
+		
+		return Math.max(A.x, A.y);
+	}
+	
+	
+	/**
+	 * Returns the minimum component of the vector.
+	 */
+	public static double min(Vector2D A) {
+		
+		return Math.min(A.x, A.y);
+	}
+	
+	
+	/**
 	 * Returns a unit vector of length 1.
 	 */
 	public static Vector2D normalize(Vector2D A) {
