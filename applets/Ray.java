@@ -12,6 +12,7 @@ import java.util.Vector;
 
 public class Ray implements Drawable {
 	
+	public static final double ZERO_TOLERANCE=0.0000001;
 	public static final Stroke stroke;
 	
 	public Point origin;
@@ -30,19 +31,24 @@ public class Ray implements Drawable {
 	public Ray(Point origin,
 	           Vector2D direction) {
 		
-		// Copy attributes
 		this.origin = origin;
-		this.direction = direction;
-		
+		this.direction = Vector2D.normalize(direction);
 		intersections = new Vector<Intersection>();
 	}
 	
+	
+	public void addIntersectionAt(double t) {
+		
+		addIntersection(getIntersectionAt(t));
+	}
 	
 	
 	public void addIntersection(Intersection intersection) {
 		
 		// Add to vector
-		intersections.add(intersection);
+		if (intersection != null) {
+			intersections.add(intersection);
+		}
 	}
 	
 	
@@ -56,7 +62,6 @@ public class Ray implements Drawable {
 			intersections.add(intersectionPair.max);
 		}
 	}
-	
 	
 	
 	public void draw(Graphics2D graphic,
@@ -79,7 +84,6 @@ public class Ray implements Drawable {
 	}
 	
 	
-	
 	/**
 	 * Gets a point along the ray.
 	 * 
@@ -100,7 +104,6 @@ public class Ray implements Drawable {
 	}
 	
 	
-	
 	/**
 	 * Gets a point along the ray as an intersection.
 	 * 
@@ -119,6 +122,12 @@ public class Ray implements Drawable {
 	
 	
 	
+	public boolean isDirectionZero(int i) {
+		
+		return Math.abs(direction.get(i)) < ZERO_TOLERANCE;
+	}
+	
+	
 	/**
 	 * Prints the %Ray's attributes.
 	 */
@@ -128,7 +137,6 @@ public class Ray implements Drawable {
 	}
 	
 	
-	
 	/**
 	 * Formats the %Ray's attributes as a string.
 	 */
@@ -136,7 +144,6 @@ public class Ray implements Drawable {
 		
 		return String.format("[ori:%s dir:%s]", origin, direction);
 	}
-	
 	
 	
 	/**
