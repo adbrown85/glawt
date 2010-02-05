@@ -76,6 +76,25 @@ public class Vector2D {
 	}
 	
 	
+	/**
+	 * Returns the length of the vector.
+	 */
+	public static double length(Vector2D A) {
+		
+		return Math.sqrt(A.x*A.x + A.y*A.y);
+	}
+	
+	
+	/**
+	 * Returns a unit vector of length 1.
+	 */
+	public static Vector2D normalize(Vector2D A) {
+		
+		double invLen;
+		
+		invLen = 1 / Vector2D.length(A);
+		return new Vector2D(A.x*invLen, A.y*invLen);
+	}
 	
 	/**
 	 * Scales a vector by a number.
