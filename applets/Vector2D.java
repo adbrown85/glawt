@@ -19,10 +19,16 @@ public class Vector2D {
 	
 	public Vector2D() {
 		
-		x = 0;
-		y = 0;
+		this.x = 0;
+		this.y = 0;
 	}
 	
+	
+	public Vector2D(double value) {
+		
+		this.x = value;
+		this.y = value;
+	}
 	
 	
 	public Vector2D(double x,
