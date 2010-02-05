@@ -66,6 +66,13 @@ public class Point implements Drawable {
 	}
 	
 	
+	public static Point add(Point A,
+	                        double b) {
+		
+		return new Point(A.x+b, A.y+b);
+	}
+	
+	
 	
 	/**
 	 * Adds two points together.
@@ -150,6 +157,13 @@ public class Point implements Drawable {
 	public void setStroked() {
 		
 		stroke = new BasicStroke();
+	}
+	
+	
+	public static Point subtract(Point A,
+	                             double b) {
+		
+		return new Point(A.x-b, A.y-b);
 	}
 	
 	

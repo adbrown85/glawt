@@ -12,12 +12,16 @@ import java.util.Vector;
 
 public class Ray implements Drawable {
 	
+	public static final Stroke stroke;
 	
-	public Stroke stroke;
 	public Point origin;
 	public Vector2D direction;
 	public Vector<Intersection> intersections;
 	
+	
+	static {
+		stroke = new DashedStroke();
+	}
 	
 	
 	/**
@@ -30,8 +34,6 @@ public class Ray implements Drawable {
 		this.origin = origin;
 		this.direction = direction;
 		
-		// Initialize stroke
-		stroke = new DottedStroke();
 		intersections = new Vector<Intersection>();
 	}
 	
@@ -42,7 +44,6 @@ public class Ray implements Drawable {
 		// Add to vector
 		intersections.add(intersection);
 	}
-	
 	
 	
 	public void addIntersectionPair(IntersectionPair intersectionPair) {
