@@ -22,7 +22,7 @@ public class Ray implements Drawable {
 	
 	
 	static {
-		stroke = new DashedStroke();
+		stroke = new DashedStroke(5.0);
 	}
 	
 	
@@ -72,17 +72,17 @@ public class Ray implements Drawable {
 		
 		Point end;
 		
-		// Draw origin
-		origin.draw(graphic, dimension);
-		
 		// Draw line
 		end = Point.add(origin, Vector2D.scale(direction, 1000));
-		graphic.setColor(Color.BLACK);
+		graphic.setColor(Color.BLUE);
 		graphic.setStroke(stroke);
 		graphic.drawLine((int)origin.x,
 		                 (int)(dimension.height - origin.y),
 		                 (int)end.x,
 		                 (int)(dimension.height - end.y));
+		
+		// Draw origin
+		origin.draw(graphic, dimension);
 		
 		// Draw intersections
 		for (Intersection intersection : intersections) {

@@ -15,10 +15,6 @@ import java.awt.BasicStroke;
 public class DashedStroke extends BasicStroke {
 	
 	
-	
-	/**
-	 * Creates a new %DashedStroke.
-	 */
 	public DashedStroke() {
 		
 		super(1.0f,
@@ -26,6 +22,17 @@ public class DashedStroke extends BasicStroke {
 		      BasicStroke.JOIN_BEVEL,
 		      0.0f,
 		      new float[]{3, 5},
+		      0.0f);
+	}
+	
+	
+	public DashedStroke(double width) {
+		
+		super((float)width,
+		      BasicStroke.CAP_BUTT,
+		      BasicStroke.JOIN_BEVEL,
+		      0.0f,
+		      new float[]{(float)width*2, (float)width*4},
 		      0.0f);
 	}
 }
