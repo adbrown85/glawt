@@ -143,12 +143,14 @@ public class Vector2D {
 	public static Vector2D scale(Vector2D A,
 	                             double b) {
 		
-		Vector2D C = new Vector2D();
+		return new Vector2D(A.x*b, A.y*b);
+	}
+	
+	
+	public static Vector2D subtract(double[] A,
+	                                double[] B) {
 		
-		// Multiply components
-		C.x = A.x * b;
-		C.y = A.y * b;
-		return C;
+		return new Vector2D(A[0]-B[0], A[1]-B[1]);
 	}
 	
 	
