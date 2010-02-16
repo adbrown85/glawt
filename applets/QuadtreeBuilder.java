@@ -16,7 +16,7 @@ public class QuadtreeBuilder {
 	
 	private DataSource data;
 	private int height;
-	public double[] pitch;
+	public double[] childOffsets;
 	
 	
 	private QuadtreeBuilder(DataSource data) {
@@ -25,11 +25,11 @@ public class QuadtreeBuilder {
 		this.data = data;
 		this.height = getHeightOf(data);
 		
-		// Pitch array
-		pitch = new double[height+2];
-		pitch[0] = 1.0;
-		for (int i=1; i<pitch.length; ++i) {
-			pitch[i] = data.getPitch() / i;
+		// Child offsets
+		childOffsets = new double[height+1];
+		childOffsets[0] = 0.25;
+		for (int i=1; i<childOffsets.length; ++i) {
+			childOffsets[i] = childOffsets[i-1] / 2;
 		}
 	}
 	
@@ -67,8 +67,8 @@ public class QuadtreeBuilder {
 		Point samplePoint;
 		
 		for (int i=0; i<4; ++i) {
-			samplePoint = offsetPoint(node.center, i, pitch[node.depth+1]);
-			if (data.getSample(samplePoint) > 0.0) {
+			samplePoint = offsetPoint(center, i, childOffsets[depth]);
+			if (data.getSample(samplePoint) > 0.5) {
 				return;
 			}
 		}
@@ -76,20 +76,33 @@ public class QuadtreeBuilder {
 	}
 	
 	
-	private void buildNodeAsInner(QuadtreeNode node) {
+	private void buildNodeAsInner(int depth,
+	                              Point center,
+	                              QuadtreeNode node) {
 		
+		boolean empty;
 		Point childCenter;
+		QuadtreeNode childNode;
 		
+		empty = true;
 		for (int i=0; i<4; ++i) {
-			childCenter = offsetPoint(node.center, i, pitch[node.depth+1]);
-			node.addChild(buildNode(node.depth+1, i, childCenter));
+			childCenter = offsetPoint(center, i, childOffsets[depth]);
+			childNode = buildNode(depth+1, childCenter, i);
+			node.addChild(childNode);
+			if (!childNode.isEmpty()) {
+				empty = false;
+			}
 		}
+		node.setEmpty(empty);
 	}
 	
 	
 	public static int getHeightOf(DataSource data) {
 		
-		return (int)(Math.log(data.getSize()) / Math.log(4));
+		int size;
+		
+		size = data.getSize();
+		return (int)(Math.log(size*size) / Math.log(4)) - 1;
 	}
 	
 	
