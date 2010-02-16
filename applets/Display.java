@@ -98,7 +98,7 @@ public class Display extends Component
 	public void start() {
 		
 		// Make frame
-		frame = new JFrame("Display");
+		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		
