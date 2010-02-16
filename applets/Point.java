@@ -143,6 +143,13 @@ public class Point implements Drawable {
 	}
 	
 	
+	public static Point subtract(Point A,
+	                             Point B) {
+		
+		return new Point(A.x-B.x, A.y-B.y);
+	}
+	
+	
 	public void print() {
 		
 		System.out.println(toString());
