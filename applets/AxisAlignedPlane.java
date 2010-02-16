@@ -59,7 +59,8 @@ public class AxisAlignedPlane implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension) {
 		
-		// Set stroke
+		// Set properties
+		graphic.setColor(Color.LIGHT_GRAY);
 		graphic.setStroke(stroke);
 		
 		// Draw horizontal or vertical line

@@ -14,23 +14,21 @@ import java.awt.event.*;
  */
 public class BoundingBox implements Drawable {
 	
-	public static final Stroke stroke;
+	public Color color;
 	public double size;
 	public Point center, lower, upper;
-	
-	
-	static {
-		stroke = new DottedStroke();
-	}
+	public Stroke stroke;
 	
 	
 	public BoundingBox(double size,
 	                   Point center) {
 		
+		this.color = Color.BLACK;
 		this.size = size;
 		this.center = center;
 		this.lower = Point.subtract(center, size*0.5);
 		this.upper = Point.add(center, size*0.5);
+		this.stroke = new BasicStroke();
 	}
 	
 	
@@ -44,6 +42,7 @@ public class BoundingBox implements Drawable {
 		
 		int size, x, y;
 		
+		graphic.setColor(color);
 		graphic.setStroke(stroke);
 		x = (int)(lower.x + 0.5);
 		y = (int)(dimension.height - upper.y + 0.5);
@@ -74,6 +73,18 @@ public class BoundingBox implements Drawable {
 			}
 		}
 		return bc;
+	}
+	
+	
+	public void setColor(Color color) {
+		
+		this.color = new Color(color.getRGB());
+	}
+	
+	
+	public void setStrokeWidth(double width) {
+		
+		this.stroke = new BasicStroke((float)width);
 	}
 	
 	

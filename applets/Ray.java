@@ -77,6 +77,7 @@ public class Ray implements Drawable {
 		
 		// Draw line
 		end = Point.add(origin, Vector2D.scale(direction, 1000));
+		graphic.setColor(Color.BLACK);
 		graphic.setStroke(stroke);
 		graphic.drawLine((int)origin.x,
 		                 (int)(dimension.height - origin.y),

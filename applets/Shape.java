@@ -42,6 +42,7 @@ public class Shape implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension) {
 		
+		graphic.setColor(Color.BLACK);
 		boundingBox.draw(graphic, dimension);
 	}
 	

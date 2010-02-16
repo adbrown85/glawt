@@ -91,6 +91,7 @@ public class Point implements Drawable {
 		y = (int)(dimension.height - this.y - halfWidth + 0.5);
 		
 		// Draw
+		graphic.setColor(Color.BLACK);
 		if (stroke != null) {
 			graphic.setStroke(stroke);
 			graphic.drawOval(x, y, width, width);
