@@ -32,6 +32,17 @@ public class BoundingBox implements Drawable {
 	}
 	
 	
+	public BoundingBox(BoundingBox other) {
+		
+		this.color = Color.BLACK;
+		this.size = other.size;
+		this.center = other.center;
+		this.lower = other.lower;
+		this.upper = other.upper;
+		this.stroke = new BasicStroke();
+	}
+	
+	
 	public void addActionListener(ActionListener listener) {
 		
 	}
