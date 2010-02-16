@@ -47,6 +47,12 @@ public class Shape implements Drawable {
 	}
 	
 	
+	public BoundingBox getBoundingBox() {
+		
+		return boundingBox;
+	}
+	
+	
 	public String toString() {
 		
 		return String.format("size=%f, center=%s", size, center);
