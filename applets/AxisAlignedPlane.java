@@ -34,9 +34,9 @@ public class AxisAlignedPlane implements Drawable {
 		this.point = point;
 		
 		// Set index
-		if (point.x == 0.0) {
+		if (Math.abs(point.x) < 0.0000001) {
 			index = 1;
-		} else if (point.y == 0.0) {
+		} else if (Math.abs(point.y) < 0.0000001) {
 			index = 0;
 		} else {
 			String message = "[AxisAlignedPlane] One component must be 0.";
