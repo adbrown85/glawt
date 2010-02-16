@@ -101,10 +101,6 @@ public class Ray implements Drawable {
 		
 		Vector2D offset;
 		
-		// Check if behind origin
-		if (t < 0)
-			return null;
-		
 		// Scale direction by t and add it to the origin
 		offset = Vector2D.scale(direction, t);
 		return Point.add(origin, offset);
