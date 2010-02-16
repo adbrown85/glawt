@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.*;
 import java.lang.IndexOutOfBoundsException;
 
@@ -70,6 +71,11 @@ public class Point implements Drawable {
 		C.x = A.x + B.x;
 		C.y = A.y + B.y;
 		return C;
+	}
+	
+	
+	public void addActionListener(ActionListener listener) {
+		
 	}
 	
 	

@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 import java.util.Vector;
 
 
@@ -25,15 +26,17 @@ public class Ray implements Drawable {
 	}
 	
 	
-	/**
-	 * Creates a new %Ray.
-	 */
 	public Ray(Point origin,
 	           Vector2D direction) {
 		
 		this.origin = origin;
 		this.direction = Vector2D.normalize(direction);
 		intersections = new Vector<Intersection>();
+	}
+	
+	
+	public void addActionListener(ActionListener listener) {
+		
 	}
 	
 	

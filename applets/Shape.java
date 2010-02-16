@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-import java.awt.Dimension;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.event.*;
 
 
 
@@ -25,6 +25,11 @@ public class Shape implements Drawable {
 		this.size = size;
 		this.center = center;
 		this.boundingBox = new BoundingBox(size, center);
+	}
+	
+	
+	public void addActionListener(ActionListener listener) {
+		
 	}
 	
 	

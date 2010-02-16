@@ -4,9 +4,8 @@
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
+import java.awt.event.*;
 
 
 
@@ -32,6 +31,11 @@ public class BoundingBox implements Drawable {
 		this.center = center;
 		this.lower = Point.subtract(center, size*0.5);
 		this.upper = Point.add(center, size*0.5);
+	}
+	
+	
+	public void addActionListener(ActionListener listener) {
+		
 	}
 	
 	

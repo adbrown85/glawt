@@ -5,14 +5,15 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 import java.util.Vector;
 import javax.swing.*;
 
 
 
 
-public class Display extends Component {
-	
+public class Display extends Component
+                     implements ActionListener {
 	
 	Container pane;
 	JFrame frame;
@@ -27,15 +28,22 @@ public class Display extends Component {
 	}
 	
 	
-	
-	/**
-	 * Creates a new %Display.
-	 */
 	public Display(String title,
 	               int width,
 	               int height) {
 		
 		init(title, width, height);
+	}
+	
+	
+	public void actionPerformed(ActionEvent event) {
+		
+		String command;
+		
+		command = event.getActionCommand();
+		if (command.equals("Update")) {
+			repaint();
+		}
 	}
 	
 	
@@ -45,8 +53,9 @@ public class Display extends Component {
 	 */
 	public void add(Drawable drawable) {
 		
-		// Store the item
+		// Store the item and register as listener
 		drawables.add(drawable);
+		drawable.addActionListener(this);
 	}
 	
 	
