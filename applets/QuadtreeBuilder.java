@@ -39,28 +39,30 @@ public class QuadtreeBuilder {
 		QuadtreeBuilder builder;
 		
 		builder = new QuadtreeBuilder(data);
-		return builder.buildNode(0, 0, new Point(0.5,0.5));
+		return builder.buildNode(0, new Point(0.5,0.5), 0);
 	}
 	
 	
 	private QuadtreeNode buildNode(int depth,
-	                               int index,
-	                               Point center) {
+	                               Point center,
+	                               int index) {
 		
 		QuadtreeNode node;
 		
 		// Make node
-		node = new QuadtreeNode(depth, index, center);
+		node = new QuadtreeNode(index);
 		if (depth == height) {
-			buildNodeAsLeaf(node);
+			buildNodeAsLeaf(depth, center, node);
 		} else {
-			buildNodeAsInner(node);
+			buildNodeAsInner(depth, center, node);
 		}
 		return node;
 	}
 	
 	
-	private void buildNodeAsLeaf(QuadtreeNode node) {
+	private void buildNodeAsLeaf(int depth,
+	                             Point center,
+	                             QuadtreeNode node) {
 		
 		Point samplePoint;
 		
