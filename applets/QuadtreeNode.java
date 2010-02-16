@@ -29,6 +29,12 @@ public class QuadtreeNode extends TreeNode {
 	}
 	
 	
+	public QuadtreeNode getChild(int index) {
+		
+		return (QuadtreeNode)super.getChild(index);
+	}
+	
+	
 	public boolean isEmpty() {
 		
 		return empty;
