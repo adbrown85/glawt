@@ -65,7 +65,7 @@ public class Intersection extends Point {
 	 */
 	public static void main(String[] args) {
 		
-		Display display;
+		DisplayFrame display;
 		Intersection intersection;
 		
 		// Start
@@ -76,7 +76,7 @@ public class Intersection extends Point {
 		System.out.println();
 		
 		// Test
-		display = new Display("Intersection", 640, 480);
+		display = new DisplayFrame("Intersection", 640, 480);
 		intersection = new Intersection(45, 50, 100);
 		display.add(intersection);
 		display.start();

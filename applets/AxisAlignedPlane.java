@@ -125,7 +125,7 @@ public class AxisAlignedPlane implements Drawable {
 	public static void main(String[] args) throws Exception {
 		
 		AxisAlignedPlane plane;
-		Display display;
+		DisplayFrame display;
 		Intersection intersection=null;
 		Ray ray;
 		
@@ -148,7 +148,7 @@ public class AxisAlignedPlane implements Drawable {
 		}
 		
 		// Display objects
-		display = new Display("AxisAlignedPlane", 640, 480);
+		display = new DisplayFrame("AxisAlignedPlane", 640, 480);
 		display.add(plane);
 		display.add(ray);
 		display.start();

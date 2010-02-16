@@ -110,12 +110,12 @@ public class BoundingBox implements Drawable {
 		BoundingBox boundingBox;
 		BoundsCheck[] boundsChecks=new BoundsCheck[3];
 		Ray[] rays=new Ray[3];
-		Display display;
+		DisplayFrame display;
 		
 		// Start
 		boundingBox = new BoundingBox(40.0, new Point(80.0,90.0));
 		System.out.println(boundingBox);
-		display = new Display("Bounding Box");
+		display = new DisplayFrame("Bounding Box");
 		display.add(boundingBox);
 		
 		// Check rays

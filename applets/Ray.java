@@ -177,7 +177,7 @@ public class Ray implements Drawable {
 	 */
 	public static void main(String[] args) {
 		
-		Display display;
+		DisplayFrame display;
 		Ray ray;
 		Point origin;
 		Vector2D direction;
@@ -197,7 +197,7 @@ public class Ray implements Drawable {
 		ray.addIntersection(ray.getIntersectionAt(100));
 		
 		// Show
-		display = new Display("Ray");
+		display = new DisplayFrame("Ray");
 		display.add(ray);
 		display.start();
 		

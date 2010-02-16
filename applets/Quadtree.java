@@ -332,7 +332,7 @@ public class Quadtree implements Drawable {
 	                   throws Exception {
 		
 		double sample;
-		Display display;
+		DisplayFrame display;
 		Quadtree quadtree;
 		Ray ray;
 		Shape shape;
@@ -348,7 +348,7 @@ public class Quadtree implements Drawable {
 			ray = new Ray(new Point(40,160), new Vector2D(1.0,0.1));
 			
 			// Show
-			display = new Display("Quadtree");
+			display = new DisplayFrame("Quadtree");
 			display.add(quadtree);
 			display.add(shape);
 			display.add(volumeData);

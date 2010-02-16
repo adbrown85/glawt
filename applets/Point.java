@@ -164,7 +164,7 @@ public class Point implements Drawable {
 	
 	public static void main(String[] args) {
 		
-		Display display;
+		DisplayFrame display;
 		Point point;
 		
 		// Test
@@ -172,7 +172,7 @@ public class Point implements Drawable {
 		point.print();
 		
 		// Display
-		display = new Display("Point", 640, 480);
+		display = new DisplayFrame("Point", 640, 480);
 		display.add(point);
 		display.start();
 	}

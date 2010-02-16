@@ -157,7 +157,7 @@ public class VolumeData implements DataSource,
 	
 	public static void main(String[] args) {
 		
-		Display display;
+		DisplayFrame display;
 		double data, halfPitch, pitch;
 		VolumeData volumeData;
 		
@@ -181,7 +181,7 @@ public class VolumeData implements DataSource,
 			}
 			
 			// Display
-			display = new Display("VolumeData");
+			display = new DisplayFrame("VolumeData");
 			display.add(volumeData);
 			display.start();
 		}

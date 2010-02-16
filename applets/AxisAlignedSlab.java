@@ -108,7 +108,7 @@ public class AxisAlignedSlab implements Drawable {
 	public static void main(String[] args) throws Exception {
 		
 		AxisAlignedSlab slab=null;
-		Display display;
+		DisplayFrame display;
 		IntersectionPair intersectionPair;
 		Ray ray;
 		
@@ -129,7 +129,7 @@ public class AxisAlignedSlab implements Drawable {
 		}
 		
 		// Show
-		display = new Display("AxisAlignedPlane", 640, 480);
+		display = new DisplayFrame("AxisAlignedPlane", 640, 480);
 		display.add(slab);
 		display.add(ray);
 		display.start();

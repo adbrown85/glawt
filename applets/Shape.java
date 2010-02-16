@@ -64,7 +64,7 @@ public class Shape implements Drawable {
 		Ray ray;
 		BoundsCheck boundsCheck;
 		Shape shape;
-		Display display;
+		DisplayFrame display;
 		
 		// Constructor
 		shape = new Shape(40.0, new Point(80.0,90.0));
@@ -76,7 +76,7 @@ public class Shape implements Drawable {
 		System.out.println(boundsCheck);
 		
 		// Show
-		display = new Display("Shape", 640, 480);
+		display = new DisplayFrame("Shape", 640, 480);
 		display.add(shape);
 		display.add(ray);
 		if (boundsCheck.isHit()) {

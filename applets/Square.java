@@ -132,7 +132,7 @@ public class Square implements Drawable {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		Display display;
+		DisplayFrame display;
 		Intersection intersection;
 		Ray ray;
 		Square square;
@@ -158,7 +158,7 @@ public class Square implements Drawable {
 		}
 		
 		// Show it
-		display = new Display("Square", 640, 480);
+		display = new DisplayFrame("Square", 640, 480);
 		display.add(square);
 		display.add(ray);
 		display.start();
