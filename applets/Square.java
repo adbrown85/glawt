@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 import java.lang.Math;
 
 
@@ -36,6 +37,10 @@ public class Square implements Drawable {
 		slabs[1] = new AxisAlignedSlab(new Point(0,center.y), size);
 	}
 	
+	
+	public void addActionListener(ActionListener listener) {
+		
+	}
 	
 	
 	/**

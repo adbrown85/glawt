@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 
 
 
@@ -46,6 +47,11 @@ public class IntersectionPair implements Drawable {
 				min = intersection;
 			}
 		}
+	}
+	
+	
+	public void addActionListener(ActionListener listener) {
+		
 	}
 	
 	

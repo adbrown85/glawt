@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
+import java.awt.event.*;
 
 
 
@@ -46,6 +47,10 @@ public class AxisAlignedSlab implements Drawable {
 		planes[1] = new AxisAlignedPlane(max);
 	}
 	
+	
+	public void addActionListener(ActionListener listener) {
+		
+	}
 	
 	
 	/**
