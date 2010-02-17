@@ -7,7 +7,9 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 
@@ -21,7 +23,7 @@ public class VolumeData implements DataSource,
 	private double pitch, threshold;
 	private double[][] data;
 	private int size;
-	private String filename;
+	private InputStream stream;
 	
 	private BoundingBox box;
 	
@@ -29,7 +31,14 @@ public class VolumeData implements DataSource,
 	public VolumeData(String filename)
 	                  throws FileNotFoundException {
 		
-		this.filename = filename;
+		this.stream = new FileInputStream(filename);
+		load();
+	}
+	
+	
+	public VolumeData(InputStream stream) {
+		
+		this.stream = stream;
 		load();
 	}
 	
@@ -121,13 +130,12 @@ public class VolumeData implements DataSource,
 	 * That way the values should look the same in your text editor as they do 
 	 * on screen.
 	 */
-	private void load()
-	                  throws FileNotFoundException {
+	private void load() {
 		
 		Scanner scanner;
 		
 		// Open and set size and pitch
-		scanner = new Scanner(new File(filename));
+		scanner = new Scanner(stream);
 		size = scanner.nextInt();
 		pitch = 1.0 / size;
 		threshold = scanner.nextDouble();

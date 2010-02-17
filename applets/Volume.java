@@ -7,6 +7,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import javax.swing.*;
 
 
@@ -27,6 +28,15 @@ public class Volume extends Shape {
 		
 		super(size, center);
 		init(new VolumeData(filename));
+	}
+	
+	
+	public Volume(double size,
+	              Point center,
+	              InputStream stream) {
+		
+		super(size, center);
+		init(new VolumeData(stream));
 	}
 	
 	

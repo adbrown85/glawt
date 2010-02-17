@@ -6,7 +6,9 @@
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import javax.swing.*;
 
 
@@ -16,14 +18,12 @@ import javax.swing.*;
  */
 public class QuadtreeAppletPanel extends JPanel {
 	
-	private static final String VOLUME_FILE="volume.dat";
-	
 	DisplayPanel displayPanel;
 	QuadtreeAppletSidePanel sidePanel;
 	QuadtreeAppletScene scene;
 	
 	
-	public QuadtreeAppletPanel()
+	public QuadtreeAppletPanel(InputStream stream)
 	                           throws FileNotFoundException {
 		
 		super();
@@ -32,7 +32,7 @@ public class QuadtreeAppletPanel extends JPanel {
 		// Make scene
 		scene = new QuadtreeAppletScene();
 		scene.ray = new Ray(new Point(10,10), new Vector2D(1.0,1.0));
-		scene.volume = new Volume(200, new Point(320,240), VOLUME_FILE);
+		scene.volume = new Volume(200, new Point(320,240), stream);
 		
 		// Add components
 		sidePanel = new QuadtreeAppletSidePanel(scene);
@@ -52,11 +52,13 @@ public class QuadtreeAppletPanel extends JPanel {
 				
 				JFrame frame;
 				QuadtreeAppletPanel panel;
+				InputStream stream;
 				
 				try {
 					
 					// Create panel
-					panel = new QuadtreeAppletPanel();
+					stream = new FileInputStream("volume.dat");
+					panel = new QuadtreeAppletPanel(stream);
 					
 					// Show frame
 					frame = new JFrame("QuadtreeAppletPanel");
