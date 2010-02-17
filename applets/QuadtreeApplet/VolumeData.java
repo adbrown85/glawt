@@ -59,7 +59,7 @@ public class VolumeData implements DataSource,
 		halfSize = ovalSize * 0.5;
 		for (double y=halfPitch; y<1.0; y+=pitch) {
 			for (double x=halfPitch; x<1.0; x+=pitch) {
-				sample = (int)(getSample(new Point(x, y)) * 255);
+				sample = (int)((1.0 - getSample(new Point(x,y))) * 255);
 				ovalX = (int)(box.lower.x + box.size * x - halfSize);
 				ovalY = (int)(box.lower.y + box.size * y - halfSize);
 				ovalY = dimension.height - ovalY - ovalSize;
