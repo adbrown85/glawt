@@ -6,16 +6,20 @@
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.*;
 
 
 
 /**
  * 
  */
-public class JArraySpinner extends Box {
+public class JArraySpinner extends Box
+                           implements ChangeListener {
 	
 	private JNumberSpinner[] spinners;
+	private ArrayList<ChangeListener> changeListeners;
 	
 	
 	public JArraySpinner(int length,
@@ -25,6 +29,9 @@ public class JArraySpinner extends Box {
 	                     int stepSize) {
 		
 		super(BoxLayout.LINE_AXIS);
+		
+		// Listeners
+		initListeners();
 		
 		// Spinners
 		spinners = new JNumberSpinner[length];
@@ -43,6 +50,9 @@ public class JArraySpinner extends Box {
 		
 		super(BoxLayout.LINE_AXIS);
 		
+		// Listeners
+		initListeners();
+		
 		// Spinners
 		spinners = new JNumberSpinner[length];
 		for (int i=0; i<spinners.length; ++i) {
@@ -52,15 +62,28 @@ public class JArraySpinner extends Box {
 	}
 	
 	
+	public void addChangeListener(ChangeListener listener) {
+		
+		changeListeners.add(listener);
+	}
+	
+	
+	private void addSpinner(JNumberSpinner spinner) {
+		
+		add(spinner);
+		spinner.addChangeListener(this);
+	}
+	
+	
 	private void addSpinners() {
 		
-		if (spinners.length < 1)
+		if (spinners.length == 0)
 			return;
 		
-		add(spinners[0]);
+		addSpinner(spinners[0]);
 		for (int i=1; i<spinners.length; ++i) {
 			add(Box.createRigidArea(new Dimension(4,1)));
-			add(spinners[i]);
+			addSpinner(spinners[i]);
 		}
 	}
 	
@@ -83,6 +106,12 @@ public class JArraySpinner extends Box {
 	}
 	
 	
+	private void initListeners() {
+		
+		changeListeners = new ArrayList<ChangeListener>();
+	}
+	
+	
 	public void reset() {
 		
 		for (JNumberSpinner spinner : spinners) {
@@ -99,6 +128,14 @@ public class JArraySpinner extends Box {
 	}
 	
 	
+	public void stateChanged(ChangeEvent event) {
+		
+		for (ChangeListener listener : changeListeners) {
+			listener.stateChanged(event);
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		Box box;
@@ -111,6 +148,11 @@ public class JArraySpinner extends Box {
 		box = new Box(BoxLayout.PAGE_AXIS);
 		spinner = new JArraySpinner(2, 0, 0, 100, 1);
 		box.add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				System.out.println("Changed!");
+			}
+		});
 		
 		// Print button
 		button = new JButton("Print");

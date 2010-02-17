@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.event.*;
 
 
 
@@ -16,7 +17,8 @@ import javax.swing.*;
  * Side panel for manipulating the ray and volume in the applet.
  */
 public class QuadtreeAppletSidePanel extends JPanel
-                                     implements ActionListener {
+                                     implements ActionListener,
+                                                ChangeListener {
 	
 	ButtonPanel buttonPanel;
 	InputPanel rayPanel, volumePanel;
@@ -39,8 +41,6 @@ public class QuadtreeAppletSidePanel extends JPanel
 		command = event.getActionCommand();
 		if (command.equals("Sample")) {
 			handleSample();
-		} else if (command.equals("Update")) {
-			handleUpdate();
 		}
 	}
 	
@@ -49,41 +49,13 @@ public class QuadtreeAppletSidePanel extends JPanel
 		
 		SwingWorker worker;
 		
-		// First update
-		handleUpdate();
-		
 		// Do sample
-		worker = new SwingWorker<Void,Void>() {
-			public Void doInBackground() {
-				
-				double value;
-				
-				value = scene.volume.sample(scene.ray);
-				System.out.printf("%.2f", value);
-				return null;
+		worker = new SwingWorker<Double,Void>() {
+			public Double doInBackground() {
+				return scene.volume.sample(scene.ray);
 			}
 		};
 		worker.execute();
-	}
-	
-	
-	public void handleUpdate() {
-		
-		double size;
-		Point center;
-		
-		// Ray, volume, then confirm
-		scene.ray.setOrigin(rayPanel.getValuesFrom("Origin"));
-		scene.ray.setDirection(rayPanel.getValuesFrom("Direction"));
-		
-		// Volume
-		size = ((Number)volumePanel.getValueFrom("Size")).doubleValue();
-		center = new Point(volumePanel.getValuesFrom("Center"));
-		scene.volume.set(size, center);
-		
-		// Confirm
-		updateFields();
-		scene.fireUpdateEvent();
 	}
 	
 	
@@ -96,12 +68,11 @@ public class QuadtreeAppletSidePanel extends JPanel
 		// Add components
 		initRayPanel();
 		initVolumePanel();
-		add(Box.createVerticalGlue());
 		initButtonPanel();
+		add(Box.createVerticalGlue());
 		
 		// Finish
 		InputPanel.setLabelWidths(inputPanels);
-		updateFields();
 	}
 	
 	
@@ -109,7 +80,6 @@ public class QuadtreeAppletSidePanel extends JPanel
 		
 		buttonPanel = new ButtonPanel();
 		buttonPanel.addButton("Sample");
-		buttonPanel.addButton("Update");
 		buttonPanel.addActionListener(this);
 		buttonPanel.lockHeight();
 		add(buttonPanel);
@@ -118,35 +88,54 @@ public class QuadtreeAppletSidePanel extends JPanel
 	
 	private void initRayPanel() {
 		
+		// Create and add
 		rayPanel = new InputPanel("Ray");
-		rayPanel.addInput("Origin", new JArraySpinner(2,0,0,512,1));
+		rayPanel.addInput("Origin", new JArraySpinner(2,0,0,512,10));
 		rayPanel.addInput("Direction", new JArraySpinner(2,0.0,-1.0,1.0,0.1));
 		rayPanel.lockHeight();
 		add(rayPanel);
 		inputPanels.add(rayPanel);
+		
+		// Set values and add listener
+		rayPanel.setValuesIn("Origin", scene.ray.origin.toArray());
+		rayPanel.setValuesIn("Direction", scene.ray.direction.toArray());
+		rayPanel.addChangeListener(this);
 	}
 	
 	
 	private void initVolumePanel() {
 		
+		// Create and add
 		volumePanel = new InputPanel("Volume");
-		volumePanel.addInput("Size", new JNumberSpinner(50,1,500,1));
-		volumePanel.addInput("Center", new JArraySpinner(2,0,0,640,1));
+		volumePanel.addInput("Size", new JNumberSpinner(50,1,500,10));
+		volumePanel.addInput("Center", new JArraySpinner(2,0,0,640,10));
 		volumePanel.lockHeight();
 		add(volumePanel);
 		inputPanels.add(volumePanel);
+		
+		// Set values and add listener
+		volumePanel.setValueIn("Size", scene.volume.size);
+		volumePanel.setValuesIn("Center", scene.volume.center.toArray());
+		volumePanel.addChangeListener(this);
 	}
 	
 	
-	public void updateFields() {
+	public void stateChanged(ChangeEvent event) {
 		
-		// Ray
-		rayPanel.setValuesIn("Origin", scene.ray.origin.toArray());
-		rayPanel.setValuesIn("Direction", scene.ray.direction.toArray());
+		double size;
+		Point center;
 		
-		// Volume
-		volumePanel.setValueIn("Size", scene.volume.size);
-		volumePanel.setValuesIn("Center", scene.volume.center.toArray());
+		// Ray attributes
+		scene.ray.setOrigin(rayPanel.getValuesFrom("Origin"));
+		scene.ray.setDirection(rayPanel.getValuesFrom("Direction"));
+		
+		// Volume attributes
+		size = ((Number)volumePanel.getValueFrom("Size")).doubleValue();
+		center = new Point(volumePanel.getValuesFrom("Center"));
+		scene.volume.set(size, center);
+		
+		// Signal
+		scene.fireUpdateEvent();
 	}
 	
 	

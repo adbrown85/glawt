@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.TreeMap;
 import java.util.Vector;
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.text.JTextComponent;
 
 
@@ -19,11 +20,13 @@ import javax.swing.text.JTextComponent;
  * Panel containing input fields with labels.
  */
 public class InputPanel extends JPanel
-                        implements ActionListener {
+                        implements ActionListener,
+                                   ChangeListener {
 	
 	protected int row=-1;
 	protected TreeMap<String,JComponent> inputs;
-	protected Vector<ActionListener> listeners;
+	protected Vector<ActionListener> actionListeners;
+	protected Vector<ChangeListener> changeListeners;
 	protected Vector<JLabel> labels;
 	
 	
@@ -40,13 +43,14 @@ public class InputPanel extends JPanel
 		setBorder(BorderFactory.createTitledBorder(title));
 		inputs = new TreeMap<String,JComponent>();
 		labels = new Vector<JLabel>();
-		listeners = new Vector<ActionListener>();
+		actionListeners = new Vector<ActionListener>();
+		changeListeners = new Vector<ChangeListener>();
 	}
 	
 	
 	public void actionPerformed(ActionEvent event) {
 		
-		for (ActionListener listener : listeners) {
+		for (ActionListener listener : actionListeners) {
 			listener.actionPerformed(event);
 		}
 	}
@@ -54,7 +58,13 @@ public class InputPanel extends JPanel
 	
 	public void addActionListener(ActionListener listener) {
 		
-		listeners.add(listener);
+		actionListeners.add(listener);
+	}
+	
+	
+	public void addChangeListener(ChangeListener listener) {
+		
+		changeListeners.add(listener);
 	}
 	
 	
@@ -151,6 +161,10 @@ public class InputPanel extends JPanel
 		if (input instanceof JComboBox) {
 			((JComboBox)input).setActionCommand(name);
 			((JComboBox)input).addActionListener(this);
+		} else if (input instanceof JSpinner) {
+			((JSpinner)input).addChangeListener(this);
+		} else if (input instanceof JArraySpinner) {
+			((JArraySpinner)input).addChangeListener(this);
 		}
 	}
 	
@@ -338,6 +352,14 @@ public class InputPanel extends JPanel
 	}
 	
 	
+	public void stateChanged(ChangeEvent event) {
+		
+		for (ChangeListener listener : changeListeners) {
+			listener.stateChanged(event);
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		final InputPanel panel;
@@ -350,6 +372,11 @@ public class InputPanel extends JPanel
 		panel.addInput("Name", new JTextField(20));
 		panel.addInput("Description", new JTextArea(4, 28));
 		panel.addInput("Numbers", new JNumberSpinner(0, 0, 100, 1));
+		panel.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				System.out.println("Changed!");
+			}
+		});
 		
 		// Check width of labels
 		System.out.println("Label width: " + panel.getLabelWidth());
@@ -357,7 +384,7 @@ public class InputPanel extends JPanel
 		// Create button
 		button = new JButton("Clear");
 		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.addActionListener(new ActionListener(){
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				panel.clear();
 			}

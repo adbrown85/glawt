@@ -16,9 +16,12 @@ import javax.swing.*;
 public class JNumberSpinner extends JSpinner {
 	
 	private static final int DEFAULT_WIDTH=60;
+	private static final int INTEGER_TYPE=0;
+	private static final int DOUBLE_TYPE=1;
 	
 	private SpinnerNumberModel numberModel;
 	private Object defaultValue;
+	private int numberType;
 	
 	
 	
@@ -29,6 +32,7 @@ public class JNumberSpinner extends JSpinner {
 		
 		super(new SpinnerNumberModel(value, minimum, maximum, stepSize));
 		defaultValue = value;
+		numberType = INTEGER_TYPE;
 	}
 	
 	
@@ -39,6 +43,7 @@ public class JNumberSpinner extends JSpinner {
 		
 		super(new SpinnerNumberModel(value, minimum, maximum, stepSize));
 		defaultValue = value;
+		numberType = DOUBLE_TYPE;
 	}
 	
 	
@@ -55,6 +60,19 @@ public class JNumberSpinner extends JSpinner {
 		size = super.getPreferredSize();
 		size.width = DEFAULT_WIDTH;
 		return size;
+	}
+	
+	
+	public void setValue(Object value) {
+		
+		switch (numberType) {
+			case INTEGER_TYPE:
+				super.setValue(((Number)value).intValue());
+				break;
+			case DOUBLE_TYPE:
+				super.setValue(((Number)value).doubleValue());
+				break;
+		}
 	}
 	
 	
