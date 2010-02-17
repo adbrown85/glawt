@@ -12,7 +12,7 @@ import javax.swing.*;
 
 
 
-public class DisplayPanel extends Component
+public class DisplayPanel extends JComponent
                           implements ActionListener {
 	
 	int width, height;
@@ -67,11 +67,12 @@ public class DisplayPanel extends Component
 	/**
 	 * Clears the panel and paints all the Drawable items.
 	 */
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
 		
 		Graphics2D graphic = (Graphics2D)g;
 		
 		// Clear
+		super.paintComponent(g);
 		graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		                         RenderingHints.VALUE_ANTIALIAS_ON);
 		graphic.setBackground(Color.WHITE);
