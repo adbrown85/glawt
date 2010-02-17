@@ -53,6 +53,14 @@ public class Shape implements Drawable {
 	}
 	
 	
+	public void set(double size,
+	                Point center) {
+		
+		this.size = size;
+		this.center = new Point(center);
+		this.boundingBox = new BoundingBox(size, center);
+	}
+	
 	public String toString() {
 		
 		return String.format("size=%f, center=%s", size, center);

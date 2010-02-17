@@ -37,6 +37,13 @@ public class Point implements Drawable {
 	}
 	
 	
+	public Point(Object[] values) {
+		
+		set(values);
+		init(x, y);
+	}
+	
+	
 	public Point(Point point) {
 		
 		init(point.x, point.y);
@@ -124,6 +131,13 @@ public class Point implements Drawable {
 	}
 	
 	
+	public void set(Object[] array) {
+		
+		x = ((Number)array[0]).doubleValue();
+		y = ((Number)array[1]).doubleValue();
+	}
+	
+	
 	public void setWidth(int width) {
 		
 		this.width = width;
@@ -153,6 +167,17 @@ public class Point implements Drawable {
 	public void print() {
 		
 		System.out.println(toString());
+	}
+	
+	
+	public Double[] toArray() {
+		
+		Double[] array;
+		
+		array = new Double[2];
+		array[0] = x;
+		array[1] = y;
+		return array;
 	}
 	
 	

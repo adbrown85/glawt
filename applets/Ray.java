@@ -163,6 +163,30 @@ public class Ray implements Drawable {
 	}
 	
 	
+	public void setDirection(Object[] values) {
+		
+		setDirection(new Vector2D(values));
+	}
+	
+	
+	public void setDirection(Vector2D direction) {
+		
+		this.direction = Vector2D.normalize(direction);
+	}
+	
+	
+	public void setOrigin(Object[] values) {
+		
+		setOrigin(new Point(values));
+	}
+	
+	
+	public void setOrigin(Point origin) {
+		
+		this.origin = new Point(origin);
+	}
+	
+	
 	/**
 	 * Formats the %Ray's attributes as a string.
 	 */

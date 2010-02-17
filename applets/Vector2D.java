@@ -39,6 +39,12 @@ public class Vector2D {
 	}
 	
 	
+	public Vector2D(Object[] values) {
+		
+		set(values);
+	}
+	
+	
 	public Vector2D(Vector2D B) {
 		
 		this.x = B.x;
@@ -137,6 +143,13 @@ public class Vector2D {
 	}
 	
 	
+	public void set(Object[] values) {
+		
+		x = (Double)values[0];
+		y = (Double)values[1];
+	}
+	
+	
 	/**
 	 * Scales a vector by a number.
 	 */
@@ -157,6 +170,17 @@ public class Vector2D {
 	public void print() {
 		
 		System.out.println(toString());
+	}
+	
+	
+	public Double[] toArray() {
+		
+		Double[] array;
+		
+		array = new Double[2];
+		array[0] = x;
+		array[1] = y;
+		return array;
 	}
 	
 	
