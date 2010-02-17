@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class VolumeData implements DataSource,
                                    Drawable {
 	
-	private double pitch;
+	private double pitch, threshold;
 	private double[][] data;
 	private int size;
 	private String filename;
@@ -106,13 +106,20 @@ public class VolumeData implements DataSource,
 	}
 	
 	
+	public double getThreshold() {
+		
+		return threshold;
+	}
+	
+	
 	/**
 	 * Loads all the samples from a file.
 	 * 
-	 * First sets the size to the first value in the file, and also calculates 
-	 * the pitch accordingly.  Then loads all the samples by putting the 
-	 * values in earlier lines at the top of the data.  That way the values 
-	 * should look the same in your text editor as they do on screen.
+	 * First sets the size to the first value in the file, setting the pitch 
+	 * accordingly, and the threshold to the second value.  Then loads all the 
+	 * samples by putting the values in earlier lines at the top of the data.  
+	 * That way the values should look the same in your text editor as they do 
+	 * on screen.
 	 */
 	private void load()
 	                  throws FileNotFoundException {
@@ -123,6 +130,7 @@ public class VolumeData implements DataSource,
 		scanner = new Scanner(new File(filename));
 		size = scanner.nextInt();
 		pitch = 1.0 / size;
+		threshold = scanner.nextDouble();
 		
 		// Load data
 		data = new double[size][size];

@@ -18,5 +18,7 @@ public interface DataSource {
 	public double getSample(Point point);
 	
 	public int getSize();
+	
+	public double getThreshold();
 }
 

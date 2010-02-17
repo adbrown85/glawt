@@ -68,7 +68,7 @@ public class QuadtreeBuilder {
 		
 		for (int i=0; i<4; ++i) {
 			samplePoint = offsetPoint(center, i, childOffsets[depth]);
-			if (data.getSample(samplePoint) > 0.5) {
+			if (data.getSample(samplePoint) > data.getThreshold()) {
 				return;
 			}
 		}
