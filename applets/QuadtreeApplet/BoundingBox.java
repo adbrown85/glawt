@@ -98,6 +98,7 @@ public class BoundingBox extends BasicDrawable
 		BoundingBox boundingBox;
 		BoundsCheck[] boundsChecks=new BoundsCheck[3];
 		Ray[] rays=new Ray[3];
+		RayTimePair intersectionTimes;
 		DisplayFrame display;
 		
 		// Start
@@ -116,8 +117,9 @@ public class BoundingBox extends BasicDrawable
 			display.add(rays[i]);
 			if (boundsChecks[i].isHit()) {
 				System.out.printf("Hit ray %d!\n", i);
-				rays[i].addIntersectionAt(boundsChecks[i].tEnter);
-				rays[i].addIntersectionAt(boundsChecks[i].tLeave);
+				intersectionTimes = boundsChecks[i].getIntersectionTimes();
+				rays[i].addIntersectionAt(intersectionTimes.first);
+				rays[i].addIntersectionAt(intersectionTimes.second);
 			}
 		}
 		display.start();

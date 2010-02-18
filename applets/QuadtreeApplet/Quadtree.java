@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Quadtree extends BasicDrawable
                       implements Drawable {
 	
+	private static final long SLEEP_TIME=1000;
 	private static final int XZ_PLANE=0;
 	private static final int YZ_PLANE=1;
 	
@@ -223,6 +224,18 @@ public class Quadtree extends BasicDrawable
 	                            QuadtreeNode node,
 	                            BoundsCheck times) {
 		
+		double t;
+		RayTimePair pair;
+		
+		pair = times.getIntersectionTimes();
+		t = pair.first + 5.0;
+		while (t < pair.second) {
+			ray.addIntersectionAt(t);
+			fireUpdateEvent();
+			sleep();
+			t += 10.0;
+		}
+		
 		return 0.2;
 	}
 	
@@ -250,6 +263,16 @@ public class Quadtree extends BasicDrawable
 			childNode = findNextChild(parentNode, childTimes, childNode);
 		}
 		return result;
+	}
+	
+	
+	private void sleep() {
+		
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			System.err.println("[Quadtree] Interrupted in sleep.");
+		}
 	}
 	
 	
@@ -306,13 +329,10 @@ public class Quadtree extends BasicDrawable
 	
 	private void updateDisplay(Color color) {
 		
-		try {
-			boundingBox.setColor(color);
-			boundingBox.setStrokeWidth(3.0);
-			fireUpdateEvent();
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-		}
+		boundingBox.setColor(color);
+		boundingBox.setStrokeWidth(3.0);
+		fireUpdateEvent();
+		sleep();
 	}
 	
 	

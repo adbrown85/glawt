@@ -74,6 +74,7 @@ public class Shape extends BasicDrawable
 	public static void main(String[] args) {
 		
 		Ray ray;
+		RayTimePair rayTimes;
 		BoundsCheck boundsCheck;
 		Shape shape;
 		DisplayFrame display;
@@ -92,8 +93,9 @@ public class Shape extends BasicDrawable
 		display.add(shape);
 		display.add(ray);
 		if (boundsCheck.isHit()) {
-			ray.addIntersectionAt(boundsCheck.tEnter);
-			ray.addIntersectionAt(boundsCheck.tLeave);
+			rayTimes = boundsCheck.getIntersectionTimes();
+			ray.addIntersectionAt(rayTimes.first);
+			ray.addIntersectionAt(rayTimes.second);
 		}
 		display.start();
 	}

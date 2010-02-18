@@ -13,8 +13,7 @@ import java.util.Arrays;
  */
 public class BoundsCheck {
 	
-	public double tEnter, tLeave;
-	public double[] t0, t1, th, tMin, tMax;
+	public double[] t0, t1, th;
 	
 	
 	public BoundsCheck() {
@@ -22,26 +21,40 @@ public class BoundsCheck {
 		t0 = new double[2];
 		t1 = new double[2];
 		th = new double[2];
-		tMin = new double[2];
-		tMax = new double[2];
 	}
 	
 	
-	public boolean isHit() {
+	public RayTimePair getIntersectionTimes() {
 		
-		// Set min and max
+		double[] tMin, tMax;
+		RayTimePair pair;
+		
+		// Find min and max
+		tMin = new double[2];
+		tMax = new double[2];
 		for (int i=0; i<2; ++i) {
 			tMin[i] = Math.min(t0[i], t1[i]);
 			tMax[i] = Math.max(t0[i], t1[i]);
 		}
 		
-		// Check enter and leave
-		tEnter = Math.max(tMin[0], tMin[1]);
-		tLeave = Math.min(tMax[0], tMax[1]);
-		if (tLeave < 0) {
+		// Get times where it enters and exits
+		pair = new RayTimePair();
+		pair.first = Math.max(tMin[0], tMin[1]);
+		pair.second = Math.min(tMax[0], tMax[1]);
+		return pair;
+	}
+	
+	
+	public boolean isHit() {
+		
+		RayTimePair pair;
+		
+		// Check enter and exit
+		pair = getIntersectionTimes();
+		if (pair.second < 0) {
 			return false;
 		} else {
-			return tEnter < tLeave;
+			return pair.first < pair.second;
 		}
 	}
 	
