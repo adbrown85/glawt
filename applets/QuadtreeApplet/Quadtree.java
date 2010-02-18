@@ -31,7 +31,7 @@ public class Quadtree extends BasicDrawable
 	
 	public Quadtree(DataSource data) {
 		
-		super();
+		super(null, null);
 		
 		// Core
 		this.data = data;
