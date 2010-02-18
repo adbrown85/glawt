@@ -13,11 +13,10 @@ import java.awt.event.*;
 /**
  * Container for a pair of Intersections.
  */
-public class IntersectionPair implements Drawable {
-	
+public class IntersectionPair extends BasicDrawable
+                              implements Drawable {
 	
 	public Intersection min, max;
-	
 	
 	
 	/**
@@ -25,11 +24,12 @@ public class IntersectionPair implements Drawable {
 	 */
 	public IntersectionPair() {
 		
+		super(null, null);
+		
 		// Initialize
 		min = null;
 		max = null;
 	}
-	
 	
 	
 	/**
@@ -50,12 +50,6 @@ public class IntersectionPair implements Drawable {
 	}
 	
 	
-	public void addActionListener(ActionListener listener) {
-		
-	}
-	
-	
-	
 	/**
 	 * Draws each Intersection in %IntersectionPair.
 	 */
@@ -65,7 +59,6 @@ public class IntersectionPair implements Drawable {
 		min.draw(graphic, dimension);
 		max.draw(graphic, dimension);
 	}
-	
 	
 	
 	/**

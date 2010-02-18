@@ -10,16 +10,11 @@ import java.lang.Math;
 
 
 
-public class AxisAlignedPlane implements Drawable {
+public class AxisAlignedPlane extends BasicDrawable
+                              implements Drawable {
 	
-	private static final Stroke stroke;
 	private int index;
 	private Point point;
-	
-	
-	static {
-		stroke = new DottedStroke();
-	}
 	
 	
 	/**
@@ -29,6 +24,8 @@ public class AxisAlignedPlane implements Drawable {
 	 *     Point on either the X or Y axis.
 	 */
 	public AxisAlignedPlane(Point point) throws Exception {
+		
+		super(Color.LIGHT_GRAY, new DottedStroke());
 		
 		// Copy
 		this.point = point;
@@ -45,11 +42,6 @@ public class AxisAlignedPlane implements Drawable {
 	}
 	
 	
-	public void addActionListener(ActionListener listener) {
-		
-	}
-	
-	
 	/**
 	 * Draws the plane as a line.
 	 * 
@@ -60,7 +52,7 @@ public class AxisAlignedPlane implements Drawable {
 	                 Dimension dimension) {
 		
 		// Set properties
-		graphic.setColor(Color.LIGHT_GRAY);
+		graphic.setColor(color);
 		graphic.setStroke(stroke);
 		
 		// Draw horizontal or vertical line
@@ -72,7 +64,6 @@ public class AxisAlignedPlane implements Drawable {
 			graphic.drawLine(0, y, dimension.width, y);
 		}
 	}
-	
 	
 	
 	/**
@@ -97,7 +88,6 @@ public class AxisAlignedPlane implements Drawable {
 	}
 	
 	
-	
 	/**
 	 * Determines if the plane is intersected by a ray.
 	 */
@@ -118,7 +108,6 @@ public class AxisAlignedPlane implements Drawable {
 	}
 	
 	
-	
 	/**
 	 * Test for the %AxisAlignedPlane.
 	 */
@@ -128,13 +117,6 @@ public class AxisAlignedPlane implements Drawable {
 		DisplayFrame display;
 		Intersection intersection=null;
 		Ray ray;
-		
-		// Start
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("AxisAlignedPlane");
-		System.out.println("****************************************");
-		System.out.println();
 		
 		// Create objects
 		plane = new AxisAlignedPlane(new Point(20.0, 0.0));
@@ -152,13 +134,6 @@ public class AxisAlignedPlane implements Drawable {
 		display.add(plane);
 		display.add(ray);
 		display.start();
-		
-		// Finish
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("AxisAlignedPlane");
-		System.out.println("****************************************");
-		System.out.println();
 	}
 }
 

@@ -12,7 +12,8 @@ import java.awt.event.*;
 /**
  * Shape with a size, center, and origin.
  */
-public class Shape implements Drawable {
+public class Shape extends BasicDrawable
+                   implements Drawable {
 	
 	public BoundingBox boundingBox;
 	public double size;
@@ -22,14 +23,12 @@ public class Shape implements Drawable {
 	public Shape(double size,
 	             Point center) {
 		
+		super(null, null);
+		
+		// Initialize
 		this.size = size;
 		this.center = center;
 		this.boundingBox = new BoundingBox(size, center);
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
 	}
 	
 	
@@ -42,8 +41,12 @@ public class Shape implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension) {
 		
+		// Bounding box
 		graphic.setColor(Color.BLACK);
 		boundingBox.draw(graphic, dimension);
+		
+		// Accessories
+		super.draw(graphic, dimension);
 	}
 	
 	
@@ -60,6 +63,7 @@ public class Shape implements Drawable {
 		this.center = new Point(center);
 		this.boundingBox = new BoundingBox(size, center);
 	}
+	
 	
 	public String toString() {
 		

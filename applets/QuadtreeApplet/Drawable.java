@@ -4,9 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-import java.awt.event.ActionListener;
-import java.awt.Graphics2D;
-import java.awt.Dimension;
+import java.awt.*;
+import java.awt.event.*;
 
 
 
@@ -14,10 +13,15 @@ import java.awt.Dimension;
 public interface Drawable {
 	
 	
+	public void addAccessory(Drawable accessory);
+	
 	public void addActionListener(ActionListener listener);
 	
+	public void clearAccessories();
 	
 	public void draw(Graphics2D graphic,
 	                 Dimension dimension);
+	
+	public void setColor(Color color);
 }
 

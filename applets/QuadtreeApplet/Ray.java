@@ -6,37 +6,37 @@
  */
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 
 
 
 
-public class Ray implements Drawable {
+public class Ray extends BasicDrawable
+                 implements Drawable {
 	
 	public static final double ZERO_TOLERANCE=0.0000001;
-	public static final Stroke stroke;
 	
 	public Point origin;
 	public Vector2D direction;
-	public Vector<Intersection> intersections;
-	
-	
-	static {
-		stroke = new DashedStroke(5.0);
-	}
 	
 	
 	public Ray(Point origin,
 	           Vector2D direction) {
 		
+		super(Color.BLUE, new DashedStroke(5.0));
+		
+		// Initialize
 		this.origin = origin;
 		this.direction = Vector2D.normalize(direction);
-		intersections = new Vector<Intersection>();
 	}
 	
 	
-	public void addActionListener(ActionListener listener) {
+	public Ray(Ray ray) {
 		
+		super(Color.BLUE, new DashedStroke(5.0));
+		
+		// Copy
+		this.origin = new Point(ray.origin);
+		this.direction = new Vector2D(ray.direction);
 	}
 	
 	
@@ -50,7 +50,7 @@ public class Ray implements Drawable {
 		
 		// Add to vector
 		if (intersection != null) {
-			intersections.add(intersection);
+			addAccessory(intersection);
 		}
 	}
 	
@@ -59,10 +59,10 @@ public class Ray implements Drawable {
 		
 		// Add to vector
 		if (intersectionPair.min != null) {
-			intersections.add(intersectionPair.min);
+			addAccessory(intersectionPair.min);
 		}
 		if (intersectionPair.max != null) {
-			intersections.add(intersectionPair.max);
+			addAccessory(intersectionPair.max);
 		}
 	}
 	
@@ -74,20 +74,16 @@ public class Ray implements Drawable {
 		
 		// Draw line
 		end = Point.add(origin, Vector2D.scale(direction, 1000));
-		graphic.setColor(Color.BLUE);
+		graphic.setColor(color);
 		graphic.setStroke(stroke);
 		graphic.drawLine((int)origin.x,
 		                 (int)(dimension.height - origin.y),
 		                 (int)end.x,
 		                 (int)(dimension.height - end.y));
 		
-		// Draw origin
+		// Draw origin and accessories
 		origin.draw(graphic, dimension);
-		
-		// Draw intersections
-		for (Intersection intersection : intersections) {
-			intersection.draw(graphic, dimension);
-		}
+		super.draw(graphic, dimension);
 	}
 	
 	
@@ -154,9 +150,6 @@ public class Ray implements Drawable {
 	}
 	
 	
-	/**
-	 * Prints the %Ray's attributes.
-	 */
 	public void print() {
 		
 		System.out.println(toString());
@@ -187,18 +180,12 @@ public class Ray implements Drawable {
 	}
 	
 	
-	/**
-	 * Formats the %Ray's attributes as a string.
-	 */
 	public String toString() {
 		
 		return String.format("[ori:%s dir:%s]", origin, direction);
 	}
 	
 	
-	/**
-	 * Tests the %Ray.
-	 */
 	public static void main(String[] args) {
 		
 		DisplayFrame display;

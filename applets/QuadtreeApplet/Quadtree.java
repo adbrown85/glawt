@@ -14,7 +14,8 @@ import java.util.ArrayList;
 /**
  * Tree with nodes that have four children to accelerate data access.
  */
-public class Quadtree implements Drawable {
+public class Quadtree extends BasicDrawable
+                      implements Drawable {
 	
 	private static final int XZ_PLANE=0;
 	private static final int YZ_PLANE=1;
@@ -23,12 +24,13 @@ public class Quadtree implements Drawable {
 	private int height;
 	private QuadtreeNode root;
 	
-	private ArrayList<ActionListener> listeners;
 	private BoundingBox boundingBox;
 	private AxisAlignedPlane[] halfPlanes;
 	
 	
 	public Quadtree(DataSource data) {
+		
+		super();
 		
 		// Core
 		this.data = data;
@@ -36,15 +38,8 @@ public class Quadtree implements Drawable {
 		this.root = QuadtreeBuilder.build(data);
 		
 		// Display
-		this.listeners = new ArrayList<ActionListener>();
 		this.boundingBox = null;
 		this.halfPlanes = new AxisAlignedPlane[2];
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
-		listeners.add(listener);
 	}
 	
 	
@@ -87,6 +82,7 @@ public class Quadtree implements Drawable {
 	public void draw(Graphics2D graphic,
 	                 Dimension size) {
 		
+		// Node bounding box
 		if (boundingBox != null) {
 			boundingBox.draw(graphic, size);
 			for (AxisAlignedPlane halfPlane : halfPlanes) {
@@ -95,6 +91,9 @@ public class Quadtree implements Drawable {
 				}
 			}
 		}
+		
+		// Accessories
+		super.draw(graphic, size);
 	}
 	
 	
@@ -155,17 +154,6 @@ public class Quadtree implements Drawable {
 					case YZ_PLANE: return null;
 				}
 			default: throw new IndexOutOfBoundsException();
-		}
-	}
-	
-	
-	private void fireUpdateEvent() {
-		
-		ActionEvent event;
-		
-		event = new ActionEvent(this, 0, "Update");
-		for (ActionListener listener : listeners) {
-			listener.actionPerformed(event);
 		}
 	}
 	

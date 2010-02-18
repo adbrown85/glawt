@@ -15,7 +15,8 @@ import java.lang.IndexOutOfBoundsException;
 /**
  * Container for an X,Y coordinate.
  */
-public class Point implements Drawable {
+public class Point extends BasicDrawable
+                   implements Drawable {
 	
 	private static final int DEFAULT_WIDTH=6;
 	
@@ -26,6 +27,7 @@ public class Point implements Drawable {
 	
 	public Point() {
 		
+		super(Color.BLACK, null);
 		init(0.0, 0.0);
 	}
 	
@@ -33,12 +35,14 @@ public class Point implements Drawable {
 	public Point(double x,
 	             double y) {
 		
+		super(Color.BLACK, null);
 		init(x, y);
 	}
 	
 	
 	public Point(Object[] values) {
 		
+		super(Color.BLACK, null);
 		set(values);
 		init(x, y);
 	}
@@ -46,6 +50,7 @@ public class Point implements Drawable {
 	
 	public Point(Point point) {
 		
+		super(point.color, point.stroke);
 		init(point.x, point.y);
 	}
 	
@@ -78,11 +83,6 @@ public class Point implements Drawable {
 		C.x = A.x + B.x;
 		C.y = A.y + B.y;
 		return C;
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
 	}
 	
 	
@@ -127,7 +127,6 @@ public class Point implements Drawable {
 		this.x = x;
 		this.y = y;
 		setWidth(DEFAULT_WIDTH);
-		stroke = null;
 	}
 	
 	
@@ -138,15 +137,15 @@ public class Point implements Drawable {
 	}
 	
 	
-	public void setWidth(int width) {
-		
-		this.width = width;
-	}
-	
-	
 	public void setStroked() {
 		
 		stroke = new BasicStroke();
+	}
+	
+	
+	public void setWidth(int width) {
+		
+		this.width = width;
 	}
 	
 	

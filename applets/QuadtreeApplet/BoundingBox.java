@@ -12,39 +12,33 @@ import java.awt.event.*;
 /**
  * Axis-aligned box around a shape.
  */
-public class BoundingBox implements Drawable {
+public class BoundingBox extends BasicDrawable
+                         implements Drawable {
 	
-	public Color color;
 	public double size;
 	public Point center, lower, upper;
-	public Stroke stroke;
 	
 	
 	public BoundingBox(double size,
 	                   Point center) {
 		
-		this.color = Color.BLACK;
+		super(Color.BLACK, new BasicStroke());
+		
 		this.size = size;
 		this.center = center;
 		this.lower = Point.subtract(center, size*0.5);
 		this.upper = Point.add(center, size*0.5);
-		this.stroke = new BasicStroke();
 	}
 	
 	
 	public BoundingBox(BoundingBox other) {
 		
-		this.color = Color.BLACK;
+		super(Color.BLACK, new BasicStroke());
+		
 		this.size = other.size;
 		this.center = other.center;
 		this.lower = other.lower;
 		this.upper = other.upper;
-		this.stroke = new BasicStroke();
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
 	}
 	
 	
@@ -84,12 +78,6 @@ public class BoundingBox implements Drawable {
 			}
 		}
 		return bc;
-	}
-	
-	
-	public void setColor(Color color) {
-		
-		this.color = new Color(color.getRGB());
 	}
 	
 	

@@ -11,13 +11,12 @@ import java.lang.Math;
 
 
 
-public class Square implements Drawable {
-	
+public class Square extends BasicDrawable
+                    implements Drawable {
 	
 	public AxisAlignedSlab slabs[];
 	public double half, size;
 	public Point center;
-	
 	
 	
 	/**
@@ -25,6 +24,8 @@ public class Square implements Drawable {
 	 */
 	public Square(double size,
 	              Point center) throws Exception {
+		
+		super(null, null);
 		
 		// Copy
 		this.size = size;
@@ -35,11 +36,6 @@ public class Square implements Drawable {
 		slabs = new AxisAlignedSlab[2];
 		slabs[0] = new AxisAlignedSlab(new Point(center.x,0), size);
 		slabs[1] = new AxisAlignedSlab(new Point(0,center.y), size);
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
 	}
 	
 	
@@ -62,7 +58,6 @@ public class Square implements Drawable {
 			slab.draw(graphic, dimension);
 		}
 	}
-	
 	
 	
 	/**
@@ -111,43 +106,24 @@ public class Square implements Drawable {
 	}
 	
 	
-	
-	/**
-	 * Prints the %Square's attributes.
-	 */
 	public void print() {
 		
 		System.out.println(toString());
 	}
 	
 	
-	
-	/**
-	 * Formats the %Square's attributes as a string.
-	 */
 	public String toString() {
 		
 		return String.format("[%.2f %s]", size, center);
 	}
 	
 	
-	
-	/**
-	 * Test for the %Square.
-	 */
 	public static void main(String[] args) throws Exception {
 		
 		DisplayFrame display;
 		Intersection intersection;
 		Ray ray;
 		Square square;
-		
-		// Start
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("Square");
-		System.out.println("****************************************");
-		System.out.println();
 		
 		// Create the shape
 		square = new Square(100.0, new Point(200.0, 200.0));
@@ -167,13 +143,6 @@ public class Square implements Drawable {
 		display.add(square);
 		display.add(ray);
 		display.start();
-		
-		// Finish
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("Square");
-		System.out.println("****************************************");
-		System.out.println();
 	}
 }
 

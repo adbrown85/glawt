@@ -9,9 +9,11 @@ import java.awt.event.*;
 
 
 
-
-public class AxisAlignedSlab implements Drawable {
-	
+/**
+ * Pair of AxisAlignedPlanes.
+ */
+public class AxisAlignedSlab extends BasicDrawable
+                             implements Drawable {
 	
 	private AxisAlignedPlane planes[];
 	private double half, width;
@@ -28,6 +30,8 @@ public class AxisAlignedSlab implements Drawable {
 	 */
 	public AxisAlignedSlab(Point center,
 	                       double width) throws Exception {
+		
+		super(null, null);
 		
 		// Copy
 		this.width = width;
@@ -48,11 +52,6 @@ public class AxisAlignedSlab implements Drawable {
 	}
 	
 	
-	public void addActionListener(ActionListener listener) {
-		
-	}
-	
-	
 	/**
 	 * Checks if a ray is inside the slab.
 	 */
@@ -63,7 +62,6 @@ public class AxisAlignedSlab implements Drawable {
 		else
 			return ray.origin.y >= min.y && ray.origin.y <= max.y;
 	}
-	
 	
 	
 	/**
@@ -77,7 +75,6 @@ public class AxisAlignedSlab implements Drawable {
 			plane.draw(graphic, dimension);
 		}
 	}
-	
 	
 	
 	/**
@@ -106,23 +103,12 @@ public class AxisAlignedSlab implements Drawable {
 	}
 	
 	
-	
-	/**
-	 * Test for %AxisAlignedSlab.
-	 */
 	public static void main(String[] args) throws Exception {
 		
 		AxisAlignedSlab slab=null;
 		DisplayFrame display;
 		IntersectionPair intersectionPair;
 		Ray ray;
-		
-		// Start
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("AxisAlignedSlab");
-		System.out.println("****************************************");
-		System.out.println();
 		
 		// Test
 		slab = new AxisAlignedSlab(new Point(100, 0), 50);
@@ -138,13 +124,6 @@ public class AxisAlignedSlab implements Drawable {
 		display.add(slab);
 		display.add(ray);
 		display.start();
-		
-		// Finish
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("AxisAlignedSlab");
-		System.out.println("****************************************");
-		System.out.println();
 	}
 }
 

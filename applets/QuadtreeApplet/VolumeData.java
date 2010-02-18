@@ -17,7 +17,8 @@ import java.util.Scanner;
 /**
  * Stores volumetric data.
  */
-public class VolumeData implements DataSource,
+public class VolumeData extends BasicDrawable
+                        implements DataSource,
                                    Drawable {
 	
 	private double pitch, threshold;
@@ -31,6 +32,8 @@ public class VolumeData implements DataSource,
 	public VolumeData(String filename)
 	                  throws FileNotFoundException {
 		
+		super(null, null);
+		
 		this.stream = new FileInputStream(filename);
 		load();
 	}
@@ -38,13 +41,10 @@ public class VolumeData implements DataSource,
 	
 	public VolumeData(InputStream stream) {
 		
+		super(null, null);
+		
 		this.stream = stream;
 		load();
-	}
-	
-	
-	public void addActionListener(ActionListener listener) {
-		
 	}
 	
 	

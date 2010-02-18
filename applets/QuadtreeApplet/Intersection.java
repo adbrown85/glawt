@@ -7,15 +7,12 @@
 
 
 
-
 /**
  * Circle showing a point at an intersection.
  */
 public class Intersection extends Point {
 	
-	
 	double t;
-	
 	
 	
 	/**
@@ -32,7 +29,6 @@ public class Intersection extends Point {
 	}
 	
 	
-	
 	/**
 	 * Creates a new %Intersection from a point and a time.
 	 */
@@ -44,7 +40,6 @@ public class Intersection extends Point {
 		this.t = t;
 		setStroked();
 	}
-	
 	
 	
 	/**
@@ -59,34 +54,16 @@ public class Intersection extends Point {
 	}
 	
 	
-	
-	/**
-	 * Test for %IntersectionPoint.
-	 */
 	public static void main(String[] args) {
 		
 		DisplayFrame display;
 		Intersection intersection;
-		
-		// Start
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("Intersection");
-		System.out.println("****************************************");
-		System.out.println();
 		
 		// Test
 		display = new DisplayFrame("Intersection", 640, 480);
 		intersection = new Intersection(45, 50, 100);
 		display.add(intersection);
 		display.start();
-		
-		// Finish
-		System.out.println();
-		System.out.println("****************************************");
-		System.out.println("Intersection");
-		System.out.println("****************************************");
-		System.out.println();
 	}
 }
 
