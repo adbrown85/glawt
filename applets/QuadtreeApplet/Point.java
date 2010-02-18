@@ -134,8 +134,30 @@ public class Point extends BasicDrawable
 		
 		System.out.println(toString());
 	}
-
-
+	
+	
+	/**
+	 * Set a component of the vector by its index.
+	 * 
+	 * @param i
+	 *     Index of the component.
+	 */
+	public void set(int i,
+	                double value) {
+		
+		switch (i) {
+			case 0: 
+				x = value;
+				break;
+			case 1:
+				y = value;
+				break;
+			default:
+				throw new IndexOutOfBoundsException("Out of bounds.");
+		}
+	}
+	
+	
 	public void set(Object[] array) {
 		
 		x = ((Number)array[0]).doubleValue();
