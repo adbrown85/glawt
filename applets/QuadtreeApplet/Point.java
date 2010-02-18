@@ -130,6 +130,12 @@ public class Point extends BasicDrawable
 	}
 	
 	
+	public void print() {
+		
+		System.out.println(toString());
+	}
+
+
 	public void set(Object[] array) {
 		
 		x = ((Number)array[0]).doubleValue();
@@ -160,12 +166,6 @@ public class Point extends BasicDrawable
 	                             Point B) {
 		
 		return new Point(A.x-B.x, A.y-B.y);
-	}
-	
-	
-	public void print() {
-		
-		System.out.println(toString());
 	}
 	
 	
