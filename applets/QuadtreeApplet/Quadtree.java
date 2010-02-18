@@ -171,6 +171,68 @@ public class Quadtree extends BasicDrawable
 	}
 	
 	
+	private Ray getRayPrime(Ray ray,
+	                        BoundingBox boundingBox) {
+		
+		boolean flipped;
+		double center, origin;
+		Ray rayPrime;
+		
+		// Copy ray
+		rayPrime = new Ray(ray);
+		rayPrime.setColor(Color.ORANGE);
+		
+		// Try to flip it
+		flipped = false;
+		for (int i=0; i<2; ++i) {
+			if (ray.direction.get(i) < 0) {
+				center = boundingBox.center.get(i);
+				origin = center - (ray.origin.get(i) - center);
+				rayPrime.origin.set(i, origin);
+				rayPrime.direction.set(i, -ray.direction.get(i));
+				flipped = true;
+			}
+		}
+		
+		// Finish
+		if (flipped) {
+			return rayPrime;
+		} else {
+			return null;
+		}
+	}
+	
+	
+	private QuadtreeNode getRealChild(QuadtreeNode parent,
+	                                  QuadtreeNode childNode,
+	                                  Ray ray) {
+		
+		int index;
+		
+		if (childNode == null)
+			return null;
+		
+		index = childNode.getIndex();
+		if (ray.direction.x < 0) {
+			switch (index) {
+				case 0 : index = 1; break;
+				case 1 : index = 0; break;
+				case 2 : index = 3; break;
+				case 3 : index = 2; break;
+			}
+		}
+		if (ray.direction.y < 0) {
+			switch (index) {
+				case 0: index = 2; break;
+				case 1: index = 3; break;
+				case 2: index = 0; break;
+				case 3: index = 1; break;
+			}
+		}
+		return parent.getChild(index);
+	}
+	
+	
 	public void print() {
 		
 		root.printRecursive();
@@ -182,14 +244,27 @@ public class Quadtree extends BasicDrawable
 		
 		double result;
 		BoundsCheck times;
+		Ray rayPrime;
+		
+		// Reset
+		ray.clearAccessories();
 		
 		// Get times from bounding box
 		boundingBox = new BoundingBox(shape.getBoundingBox());
 		times = boundingBox.check(ray);
 		updatePlanes(ray, times);
 		updateDisplay(Color.YELLOW);
+		
+		// Sample
 		if (times.isHit()) {
-			result = sample(ray, root, times);
+			rayPrime = getRayPrime(ray, boundingBox);
+			if (rayPrime != null) {
+				ray.addAccessory(rayPrime);
+				times = boundingBox.check(rayPrime);
+				result = sample(ray, rayPrime, root, root, times);
+			} else {
+				result = sample(ray, ray, root, root, times);
+			}
 		} else {
 			updateDisplay(Color.RED);
 			result = 0.0;
@@ -200,7 +275,9 @@ public class Quadtree extends BasicDrawable
 	
 	
 	private double sample(Ray ray,
+	                      Ray rayPrime,
 	                      QuadtreeNode node,
+	                      QuadtreeNode nodePrime,
 	                      BoundsCheck times) {
 		
 		// Check if empty or missed
@@ -213,22 +290,21 @@ public class Quadtree extends BasicDrawable
 		
 		// Leaf take sample data
 		if (node.isLeaf())
-			return sampleAsLeaf(ray, node, times);
+			return sampleAsLeaf(ray, times);
 		
 		// Otherwise sample children
-		return sampleChildren(ray, node, times);
+		return sampleChildren(ray, rayPrime, node, nodePrime, times);
 	}
 	
 	
 	private double sampleAsLeaf(Ray ray,
-	                            QuadtreeNode node,
 	                            BoundsCheck times) {
 		
 		double t;
 		RayTimePair pair;
 		
 		pair = times.getIntersectionTimes();
-		t = pair.first + 5.0;
+		t = pair.first + 10.0;
 		while (t < pair.second) {
 			ray.addIntersectionAt(t);
 			fireUpdateEvent();
@@ -241,26 +317,30 @@ public class Quadtree extends BasicDrawable
 	
 	
 	private double sampleChildren(Ray ray,
+	                              Ray rayPrime,
 	                              QuadtreeNode parentNode,
-	                              BoundsCheck parentTimes) {
+	                              QuadtreeNode parentNodePrime,
+	                              BoundsCheck parentTimesPrime) {
 		
 		BoundingBox parentBoundingBox;
-		BoundsCheck childTimes;
+		BoundsCheck childTimesPrime;
 		double result=0;
-		QuadtreeNode childNode;
+		QuadtreeNode childNode, childNodePrime;
 		
 		// Store current bounding box for all children
 		parentBoundingBox = new BoundingBox(boundingBox);
 		
 		// Traverse children until out of parent
-		childNode = findFirstChild(parentNode, parentTimes);
-		while (childNode != null) {
-			childTimes = updateTimes(childNode, parentTimes);
+		childNodePrime = findFirstChild(parentNode, parentTimesPrime);
+		childNode = getRealChild(parentNode, childNodePrime, ray);
+		while (childNodePrime != null) {
+			childTimesPrime = updateTimes(childNodePrime, parentTimesPrime);
 			updateBoundingBox(childNode, parentBoundingBox);
-			updatePlanes(ray, childTimes);
+			updatePlanes(ray, childTimesPrime);
 			updateDisplay(Color.YELLOW);
-			result += sample(ray, childNode, childTimes);
-			childNode = findNextChild(parentNode, childTimes, childNode);
+			result += sample(ray, rayPrime, childNode, childNodePrime, childTimesPrime);
+			childNodePrime = findNextChild(parentNodePrime, childTimesPrime, childNodePrime);
+			childNode = getRealChild(parentNode, childNodePrime, ray);
 		}
 		return result;
 	}
@@ -353,7 +433,7 @@ public class Quadtree extends BasicDrawable
 			volumeData = new VolumeData("volume.dat");
 			volumeData.setBoundingBox(shape.getBoundingBox());
 			quadtree = new Quadtree(volumeData);
-			ray = new Ray(new Point(40,160), new Vector2D(1.0,0.1));
+			ray = new Ray(new Point(300,20), new Vector2D(-1.0,1.0));
 			
 			// Show
 			display = new DisplayFrame("Quadtree");
