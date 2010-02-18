@@ -52,7 +52,7 @@ public class Shape extends BasicDrawable
 	
 	public BoundingBox getBoundingBox() {
 		
-		return boundingBox;
+		return new BoundingBox(boundingBox);
 	}
 	
 	
