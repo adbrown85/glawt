@@ -91,22 +91,6 @@ public class Ray extends BasicDrawable
 	
 	
 	/**
-	 * Gets a point along the ray.
-	 * 
-	 * @param t
-	 *     Time of the point along the ray.
-	 */
-	public Point getPointAt(double t) {
-		
-		Vector2D offset;
-		
-		// Scale direction by t and add it to the origin
-		offset = Vector2D.scale(direction, t);
-		return Point.add(origin, offset);
-	}
-	
-	
-	/**
 	 * Gets a point along the ray as an intersection.
 	 * 
 	 * @param t
@@ -120,6 +104,22 @@ public class Ray extends BasicDrawable
 		
 		// Return intersection
 		return new Intersection(getPointAt(t), t);
+	}
+	
+	
+	/**
+	 * Gets a point along the ray.
+	 * 
+	 * @param t
+	 *     Time of the point along the ray.
+	 */
+	public Point getPointAt(double t) {
+		
+		Vector2D offset;
+		
+		// Scale direction by t and add it to the origin
+		offset = Vector2D.scale(direction, t);
+		return Point.add(origin, offset);
 	}
 	
 	
@@ -144,6 +144,13 @@ public class Ray extends BasicDrawable
 		
 		// Otherwise just calculate normally
 		return (value - oi) / di;
+	}
+	
+	
+	public double getValueAt(int i,
+	                         double t) {
+		
+		return origin.get(i) + direction.get(i) * t;
 	}
 	
 	
