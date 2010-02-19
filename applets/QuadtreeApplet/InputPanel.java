@@ -285,6 +285,7 @@ public class InputPanel extends JPanel
 		for (JLabel label : labels) {
 			size = label.getPreferredSize();
 			size.width = labelWidth;
+			label.setMinimumSize(size);
 			label.setPreferredSize(size);
 		}
 	}
