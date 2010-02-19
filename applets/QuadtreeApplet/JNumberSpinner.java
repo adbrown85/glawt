@@ -7,6 +7,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 
 
 
@@ -83,10 +84,19 @@ public class JNumberSpinner extends JSpinner {
 		JFrame frame;
 		final JNumberSpinner spinner;
 		
-		// Components
+		// Box
 		box = new Box(BoxLayout.PAGE_AXIS);
+		
+		// Spinner
 		spinner = new JNumberSpinner(0, -100, 100, 1);
 		box.add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent event) {
+				System.out.println("Changed!");
+			}
+		});
+		
+		// Button
 		button = new JButton("Reset");
 		box.add(button);
 		button.addActionListener(new ActionListener() {

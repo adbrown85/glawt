@@ -20,6 +20,7 @@ public class QuadtreeAppletSidePanel extends JPanel
                                      implements ActionListener,
                                                 ChangeListener {
 	
+	boolean pausedEvents;
 	ButtonPanel buttonPanel;
 	InputPanel rayPanel, volumePanel;
 	QuadtreeAppletScene scene;
@@ -59,9 +60,30 @@ public class QuadtreeAppletSidePanel extends JPanel
 	}
 	
 	
+	public void handleUpdate() {
+		
+		double size;
+		Point center;
+		
+		// Ray attributes
+		scene.ray.setOrigin(rayPanel.getValuesFrom("Origin"));
+		scene.ray.setDirection(rayPanel.getValuesFrom("Direction"));
+		scene.ray.clearAccessories();
+		
+		// Volume attributes
+		size = ((Number)volumePanel.getValueFrom("Size")).doubleValue();
+		center = new Point(volumePanel.getValuesFrom("Center"));
+		scene.volume.set(size, center);
+		
+		// Update and signal
+		updateInputs();
+		scene.fireUpdateEvent();
+	}
+	
+	
 	private void init(QuadtreeAppletScene scene) {
 		
-		// Fields
+		// Attributes
 		this.scene = scene;
 		this.inputPanels = new Vector<InputPanel>();
 		
@@ -70,9 +92,10 @@ public class QuadtreeAppletSidePanel extends JPanel
 		initVolumePanel();
 		initButtonPanel();
 		add(Box.createVerticalGlue());
-		
-		// Finish
 		InputPanel.setLabelWidths(inputPanels);
+		
+		// Inputs
+		updateInputs();
 	}
 	
 	
@@ -91,14 +114,12 @@ public class QuadtreeAppletSidePanel extends JPanel
 		// Create and add
 		rayPanel = new InputPanel("Ray");
 		rayPanel.addInput("Origin", new JArraySpinner(2,0,0,512,10));
-		rayPanel.addInput("Direction", new JArraySpinner(2,0.0,-1.0,1.0,0.1));
+		rayPanel.addInput("Direction", new JArraySpinner(2,0.0,-2.0,2.0,0.1));
 		rayPanel.lockHeight();
 		add(rayPanel);
 		inputPanels.add(rayPanel);
 		
-		// Set values and add listener
-		rayPanel.setValuesIn("Origin", scene.ray.origin.toArray());
-		rayPanel.setValuesIn("Direction", scene.ray.direction.toArray());
+		// Add listener
 		rayPanel.addChangeListener(this);
 	}
 	
@@ -113,30 +134,35 @@ public class QuadtreeAppletSidePanel extends JPanel
 		add(volumePanel);
 		inputPanels.add(volumePanel);
 		
-		// Set values and add listener
-		volumePanel.setValueIn("Size", scene.volume.size);
-		volumePanel.setValuesIn("Center", scene.volume.center.toArray());
+		// Add listener
 		volumePanel.addChangeListener(this);
 	}
 	
 	
 	public void stateChanged(ChangeEvent event) {
 		
-		double size;
-		Point center;
+		// Check if caused by changes by the side panel
+		if (pausedEvents)
+			return;
 		
-		// Ray attributes
-		scene.ray.setOrigin(rayPanel.getValuesFrom("Origin"));
-		scene.ray.setDirection(rayPanel.getValuesFrom("Direction"));
-		scene.ray.clearAccessories();
+		// Otherwise update scene
+		handleUpdate();
+	}
+	
+	
+	public void updateInputs() {
 		
-		// Volume attributes
-		size = ((Number)volumePanel.getValueFrom("Size")).doubleValue();
-		center = new Point(volumePanel.getValuesFrom("Center"));
-		scene.volume.set(size, center);
+		// Pause
+		pausedEvents = true;
 		
-		// Signal
-		scene.fireUpdateEvent();
+		// Set values
+		rayPanel.setValuesIn("Origin", scene.ray.origin.toArray());
+		rayPanel.setValuesIn("Direction", scene.ray.direction.toArray());
+		volumePanel.setValueIn("Size", scene.volume.size);
+		volumePanel.setValuesIn("Center", scene.volume.center.toArray());
+		
+		// Restart
+		pausedEvents = false;
 	}
 	
 	
