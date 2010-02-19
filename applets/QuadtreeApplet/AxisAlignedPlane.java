@@ -13,6 +13,8 @@ import java.lang.Math;
 public class AxisAlignedPlane extends BasicDrawable
                               implements Drawable {
 	
+	private static final double STROKE_WIDTH=1.0;
+	
 	private int index;
 	private Point point;
 	
@@ -25,7 +27,7 @@ public class AxisAlignedPlane extends BasicDrawable
 	 */
 	public AxisAlignedPlane(Point point) throws Exception {
 		
-		super(Color.LIGHT_GRAY, new DottedStroke());
+		super(Color.LIGHT_GRAY, new DottedStroke(STROKE_WIDTH));
 		
 		// Copy
 		this.point = point;

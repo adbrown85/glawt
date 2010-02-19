@@ -15,10 +15,6 @@ import java.awt.BasicStroke;
 public class DottedStroke extends BasicStroke {
 	
 	
-	
-	/**
-	 * Creates a new %DottedStroke.
-	 */
 	public DottedStroke() {
 		
 		super(1.0f,
@@ -26,6 +22,17 @@ public class DottedStroke extends BasicStroke {
 		      BasicStroke.JOIN_BEVEL,
 		      0.0f,
 		      new float[]{2, 2, 2},
+		      0.0f);
+	}
+	
+	
+	public DottedStroke(double width) {
+		
+		super((float)width,
+		      BasicStroke.CAP_BUTT,
+		      BasicStroke.JOIN_BEVEL,
+		      0.0f,
+		      new float[]{(float)width*2, (float)width*2, (float)width*2},
 		      0.0f);
 	}
 }

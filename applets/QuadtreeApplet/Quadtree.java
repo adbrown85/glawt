@@ -26,7 +26,7 @@ public class Quadtree extends BasicDrawable
 	private QuadtreeNode root;
 	
 	private BoundingBox boundingBox;
-	private AxisAlignedPlane[] halfPlanes;
+	private AxisAlignedPlane[] planes;
 	
 	
 	public Quadtree(DataSource data) {
@@ -40,7 +40,7 @@ public class Quadtree extends BasicDrawable
 		
 		// Display
 		this.boundingBox = null;
-		this.halfPlanes = new AxisAlignedPlane[2];
+		this.planes = new AxisAlignedPlane[6];
 	}
 	
 	
@@ -73,7 +73,7 @@ public class Quadtree extends BasicDrawable
 	private void clearDisplay() {
 		
 		boundingBox = null;
-		for (AxisAlignedPlane plane : halfPlanes) {
+		for (AxisAlignedPlane plane : planes) {
 			plane = null;
 		}
 		fireUpdateEvent();
@@ -85,12 +85,12 @@ public class Quadtree extends BasicDrawable
 		
 		// Node bounding box
 		if (boundingBox != null) {
-			boundingBox.draw(graphic, size);
-			for (AxisAlignedPlane halfPlane : halfPlanes) {
-				if (halfPlane != null) {
-					halfPlane.draw(graphic, size);
+			for (AxisAlignedPlane plane : planes) {
+				if (plane != null) {
+					plane.draw(graphic, size);
 				}
 			}
+			boundingBox.draw(graphic, size);
 		}
 		
 		// Accessories
@@ -372,13 +372,21 @@ public class Quadtree extends BasicDrawable
 	private void updatePlanes(Ray ray,
 	                          BoundsCheck times) {
 		
-		Point hx, hy;
+		double t0x, t0y, t1x, t1y, thx, thy;
 		
-		hx = ray.getPointAt(times.th[0]);
-		hy = ray.getPointAt(times.th[1]);
+		t0x = ray.getValueAt(0, times.t0[0]);
+		t0y = ray.getValueAt(1, times.t0[1]);
+		t1x = ray.getValueAt(0, times.t1[0]);
+		t1y = ray.getValueAt(1, times.t1[1]);
+		thx = ray.getValueAt(0, times.th[0]);
+		thy = ray.getValueAt(1, times.th[1]);
 		try {
-			halfPlanes[0] = new AxisAlignedPlane(new Point(hx.x,0.0));
-			halfPlanes[1] = new AxisAlignedPlane(new Point(0.0,hy.y));
+			planes[0] = new AxisAlignedPlane(new Point(t0x,0.0));
+			planes[1] = new AxisAlignedPlane(new Point(0.0,t0y));
+			planes[2] = new AxisAlignedPlane(new Point(t1x,0.0));
+			planes[3] = new AxisAlignedPlane(new Point(0.0,t1y));
+			planes[4] = new AxisAlignedPlane(new Point(thx,0.0));
+			planes[5] = new AxisAlignedPlane(new Point(0.0,thy));
 		} catch (Exception e) {
 		}
 	}
