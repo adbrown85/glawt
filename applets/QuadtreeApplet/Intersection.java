@@ -25,7 +25,6 @@ public class Intersection extends Point {
 		// Initialize
 		super(x, y);
 		this.t = t;
-		setStroked();
 	}
 	
 	
@@ -38,7 +37,6 @@ public class Intersection extends Point {
 		// Initialize
 		super(point);
 		this.t = t;
-		setStroked();
 	}
 	
 	
@@ -50,7 +48,6 @@ public class Intersection extends Point {
 		// Initialize
 		super();
 		this.t = t;
-		setStroked();
 	}
 	
 	

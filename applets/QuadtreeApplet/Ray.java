@@ -13,7 +13,9 @@ import java.awt.event.*;
 public class Ray extends BasicDrawable
                  implements Drawable {
 	
-	public static final double ZERO_TOLERANCE=0.0000001;
+	private static final double ZERO_TOLERANCE=0.0000001;
+	private static final int ORIGIN_WIDTH=12;
+	private static final double STROKE_WIDTH=5.0;
 	
 	public Point origin;
 	public Vector2D direction;
@@ -22,7 +24,7 @@ public class Ray extends BasicDrawable
 	public Ray(Point origin,
 	           Vector2D direction) {
 		
-		super(Color.BLUE, new DashedStroke(5.0));
+		super(Color.BLUE, new DashedStroke(STROKE_WIDTH));
 		
 		// Initialize
 		this.origin = origin;
@@ -32,7 +34,7 @@ public class Ray extends BasicDrawable
 	
 	public Ray(Ray ray) {
 		
-		super(Color.BLUE, new DashedStroke(5.0));
+		super(Color.BLUE, new DashedStroke(STROKE_WIDTH));
 		
 		// Copy
 		this.origin = new Point(ray.origin);
@@ -82,6 +84,7 @@ public class Ray extends BasicDrawable
 		                 (int)(dimension.height - end.y));
 		
 		// Draw origin and accessories
+		origin.setWidth(ORIGIN_WIDTH);
 		origin.draw(graphic, dimension);
 		super.draw(graphic, dimension);
 	}

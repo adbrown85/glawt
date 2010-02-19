@@ -18,7 +18,7 @@ import java.lang.IndexOutOfBoundsException;
 public class Point extends BasicDrawable
                    implements Drawable {
 	
-	private static final int DEFAULT_WIDTH=6;
+	private static final int DEFAULT_WIDTH=8;
 	
 	public double x, y;
 	public int width;
