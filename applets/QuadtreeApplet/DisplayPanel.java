@@ -15,13 +15,16 @@ import javax.swing.*;
 public class DisplayPanel extends JComponent
                           implements ActionListener {
 	
+	private static final int DEFAULT_HEIGHT=512;
+	private static final int DEFAULT_WIDTH=512;
+	
 	int width, height;
 	Vector<Drawable> drawables;
 	
 	
 	public DisplayPanel() {
 		
-		init(640, 480);
+		init(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 	
 	
@@ -51,6 +54,18 @@ public class DisplayPanel extends JComponent
 		// Store the item and register as listener
 		drawables.add(drawable);
 		drawable.addActionListener(this);
+	}
+	
+	
+	public static int getDefaultHeight() {
+		
+		return DEFAULT_HEIGHT;
+	}
+	
+	
+	public static int getDefaultWidth() {
+		
+		return DEFAULT_WIDTH;
 	}
 	
 	
@@ -91,7 +106,7 @@ public class DisplayPanel extends JComponent
 		JFrame frame;
 		
 		// Display
-		displayPanel = new DisplayPanel(640, 480);
+		displayPanel = new DisplayPanel();
 		
 		// Frame
 		frame = new JFrame("DisplayPanel");

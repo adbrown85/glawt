@@ -90,7 +90,7 @@ public class QuadtreeAppletSidePanel extends JPanel
 		
 		// Create and add
 		rayPanel = new InputPanel("Ray");
-		rayPanel.addInput("Origin", new JArraySpinner(2,0,0,640,10));
+		rayPanel.addInput("Origin", new JArraySpinner(2,0,0,512,10));
 		rayPanel.addInput("Direction", new JArraySpinner(2,0.0,-1.0,1.0,0.1));
 		rayPanel.lockHeight();
 		add(rayPanel);
@@ -107,8 +107,8 @@ public class QuadtreeAppletSidePanel extends JPanel
 		
 		// Create and add
 		volumePanel = new InputPanel("Volume");
-		volumePanel.addInput("Size", new JNumberSpinner(50,1,500,10));
-		volumePanel.addInput("Center", new JArraySpinner(2,0,0,640,10));
+		volumePanel.addInput("Size", new JNumberSpinner(50,1,1000,10));
+		volumePanel.addInput("Center", new JArraySpinner(2,0,0,512,10));
 		volumePanel.lockHeight();
 		add(volumePanel);
 		inputPanels.add(volumePanel);
