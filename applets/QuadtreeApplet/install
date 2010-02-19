@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+jar uf html/QuadtreeApplet.jar *.class *.dat
+cp html/* ~/web/adbrown/code
