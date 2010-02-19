@@ -18,8 +18,9 @@ import javax.swing.*;
  */
 public class QuadtreeAppletPanel extends JPanel {
 	
-	private static final int DISPLAY_HEIGHT=512;
 	private static final int DISPLAY_WIDTH=512;
+	private static final int DISPLAY_HEIGHT=512;
+	private static final int VOLUME_SIZE=350;
 	
 	DisplayPanel displayPanel;
 	QuadtreeAppletSidePanel sidePanel;
@@ -65,7 +66,7 @@ public class QuadtreeAppletPanel extends JPanel {
 		// Make scene
 		scene = new QuadtreeAppletScene();
 		scene.ray = new Ray(new Point(10,10), new Vector2D(1.0,1.0));
-		scene.volume = new Volume(200, middle, stream);
+		scene.volume = new Volume(VOLUME_SIZE, middle, stream);
 	}
 	
 	
