@@ -41,15 +41,15 @@ public class QuadtreeNode extends TreeNode {
 	}
 	
 	
-	public String toString() {
-		
-		return String.format("%s, empty=%s", super.toString(), empty);
-	}
-	
-	
 	public void setEmpty(boolean empty) {
 		
 		this.empty = empty;
+	}
+	
+	
+	public String toString() {
+		
+		return String.format("%s, empty=%s", super.toString(), empty);
 	}
 	
 	
