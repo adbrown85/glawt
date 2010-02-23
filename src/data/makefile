@@ -21,6 +21,7 @@ Quaternion.o: Matrix.o Vector.o
 # Volume
 DatasetHeader.o: Tag.o
 Dataset.o: DatasetHeader.o Tag.o
+OctreeNode.o: 
 Slice.o: Dataset.o
 
 # XML

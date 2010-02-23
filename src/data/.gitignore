@@ -2,6 +2,7 @@ Dataset
 DatasetHeader
 FileUtility
 Matrix
+OctreeNode
 Parser
 Quaternion
 Sequence
