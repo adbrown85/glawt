@@ -24,12 +24,26 @@ class Index {
 			this->j = 0;
 			this->k = 0;
 		}
+		
 		Index(int i,
 		      int j,
 		      int k) {
 			this->i = i;
 			this->j = j;
 			this->k = k;
+		}
+		
+		void set(int value) {
+			this->i = value;
+			this->j = value;
+			this->k = value;
+		}
+		
+		Index& operator=(const Index &B) {
+			
+			this->i = B.i;
+			this->j = B.j;
+			this->k = B.k;
 		}
 		
 		friend ostream& operator<<(ostream &stream,
@@ -39,6 +53,12 @@ class Index {
 			       << ',' << index.k
 			       << ')';
 			return stream;
+		}
+		
+		friend Index operator+(const Index &A,
+		                       const Index &B) {
+			
+			return Index(A.i+B.i, A.j+B.j, A.k+B.k);
 		}
 };
 
