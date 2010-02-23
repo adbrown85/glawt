@@ -1,0 +1,14 @@
+<!--
+ * coordinates.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="../glsl/coordinates.frag"/>
+	<translate>
+		<box size="1.0"/>
+	</translate>
+</program>
