@@ -51,6 +51,7 @@ class Dataset {
 		virtual void* getData() const {return data;}
 		virtual int getDepth() const {return depth;}
 		virtual int getHeight() const {return height;}
+		virtual int getMaximumDimension() const;
 		virtual GLenum getType() const {return type;}
 		virtual int getWidth() const {return width;}
 		virtual void set(const Index &I,

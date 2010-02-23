@@ -145,6 +145,23 @@ short Dataset::getAsShort(const Index &I) const {
 }
 
 
+/**
+ * Gets the maximum of width, height, and depth.
+ */
+int Dataset::getMaximumDimension() const {
+	
+	int max;
+	
+	// Find max
+	max = width;
+	if (height > max)
+		max = height;
+	if (depth > max)
+		max = depth;
+	return max;
+}
+
+
 
 /**
  * Initializes attributes common to all constructors.
