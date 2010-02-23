@@ -79,6 +79,13 @@ char* Dataset::findPosition(const Index &index) const {
 }
 
 
+void Dataset::get(const Index &index,
+                  void *&value) const {
+	
+	// Get value
+	value = (void*)findPosition(index);
+}
+
 
 /**
  * Gets the value of an element in the data.
@@ -87,9 +94,54 @@ void Dataset::get(const Index &index,
                   void *&value,
                   GLenum &type) const {
 	
-	// Set value and type
-	value = (void*)findPosition(index);
+	// Get value and type
+	get(index, value);
 	type = this->type;
+}
+
+
+unsigned char Dataset::getAsByte(const Index &I) const {
+	
+	void *value;
+	
+	// Check type
+	if (type != GL_UNSIGNED_BYTE) {
+		throw "[Dataset] Data is not made up of unsigned bytes.";
+	}
+	
+	// Return the value
+	get(I, value);
+	return *((unsigned char*)value);
+}
+
+
+float Dataset::getAsFloat(const Index &I) const {
+	
+	void *value;
+	
+	// Check type
+	if (type != GL_FLOAT) {
+		throw "[Dataset] Data is not made up of floats.";
+	}
+	
+	// Return the value
+	get(I, value);
+	return *((float*)value);
+}
+
+
+short Dataset::getAsShort(const Index &I) const {
+	
+	void *value;
+	
+	// Check type
+	if (type != GL_SHORT) {
+		throw "[Dataset] Data is not made up of shorts.";
+	}
+	
+	// Return the value
+	get(I, value);
+	return *((short*)value);
 }
 
 

@@ -40,8 +40,13 @@ class Dataset {
 		virtual void print(Index I);
 		
 		virtual void get(const Index &I,
+		                 void *&value) const;
+		virtual void get(const Index &I,
 		                 void *&value,
 		                 GLenum &type) const;
+		virtual unsigned char getAsByte(const Index &I) const;
+		virtual float getAsFloat(const Index &I) const;
+		virtual short getAsShort(const Index &I) const;
 		virtual int getBlock() const {return block;}
 		virtual void* getData() const {return data;}
 		virtual int getDepth() const {return depth;}
