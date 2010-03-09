@@ -8,6 +8,15 @@
 #include <cassert>
 
 
+void print(const string &result) {
+	
+	if (result.empty()) {
+		cout << "  {empty}" << endl;
+	} else {
+		cout << "  " << result << endl;
+	}
+}
+
 
 /**
  * Tests relative path function.
@@ -23,10 +32,9 @@ void testRelativePath(const string &A,
 	cout << "  A: " << A << endl;
 	cout << "  B: " << B << endl;
 	result = FileUtility::getRelativePath(A, B);
-	cout << "  " << result << endl;
+	print(result);
 	assert(result == answer);
 }
-
 
 
 /**
@@ -34,7 +42,7 @@ void testRelativePath(const string &A,
  */
 int main() {
 	
-	string A, B;
+	vector<string> tokens;
 	
 	// Start
 	cout << endl;
@@ -43,8 +51,35 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Basename
+	cout << "\nTesting getBasename" << endl;
+	print(FileUtility::getBasename("input/scene.xml"));
+	
+	// Dirname
+	cout << "\nTesting getDirname" << endl;
+	print(FileUtility::getDirname("input/scene.xml"));
+	print(FileUtility::getDirname("scene.xml"));
+	print(FileUtility::getDirname("/scene.xml"));
+	
+	// Internals
+	cout << "\nTesting getInternals" << endl;
+	print(FileUtility::getInternals("input/scene.xml"));
+	print(FileUtility::getInternals("/input/scene.xml"));
+	print(FileUtility::getInternals("./input/scene.xml"));
+	print(FileUtility::getInternals("scene.xml"));
+	print(FileUtility::getInternals("gander/input/scene.xml"));
+	print(FileUtility::getInternals("C:\\scene.xml"));
+	print(FileUtility::getInternals("C:\\gander/input/scene.xml"));
+	
+	// Tokenize
+	cout << "\nTesting tokenize" << endl;
+	FileUtility::tokenize("input/scene.xml", tokens);
+	for (int i=0; i<tokens.size(); ++i) {
+		print(tokens[i]);
+	}
+	
 	// Test both relative
-	cout << "When both A and B are relative..." << endl;
+	cout << "\nWhen both A and B are relative..." << endl;
 	testRelativePath("input\\scene.xml",
 	                 "glsl/file.frag",
 	                 "input/glsl/file.frag");
@@ -67,20 +102,30 @@ int main() {
 	                 "../glsl/file.frag",
 	                 "/home/user/gander/glsl/file.frag");
 	
-	// Test if A is in root
-	cout << "\nWhen A is in root..." << endl;
-	testRelativePath("/scene.xml",
-	                 "../glsl/file.frag",
-	                 "/glsl/file.frag");
-	testRelativePath("C:\\scene.xml",
-	                 "../glsl/file.frag",
-	                 "C:\\glsl/file.frag");
-	
 	// Test if A has no directory
 	cout << "\nWhen A has no directory..." << endl;
 	testRelativePath("scene.xml",
 	                 "../../glsl/file.frag",
 	                 "../../glsl/file.frag");
+	
+	// Test if A is in root
+	cout << "\nWhen A is in root..." << endl;
+	try {
+		testRelativePath("/scene.xml",
+		                 "../glsl/file.frag",
+		                 "/glsl/file.frag");
+		assert(false);
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
+	try {
+		testRelativePath("C:\\scene.xml",
+		                 "../glsl/file.frag",
+		                 "C:\\glsl/file.frag");
+		assert(false);
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	cout << endl;

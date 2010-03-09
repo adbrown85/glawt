@@ -10,30 +10,38 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 using namespace std;
 
 
-
+/**
+ * @ingroup data
+ * @brief
+ *     Utility for working with file paths.
+ */
 class FileUtility {
-	
 	
 	public:
 		
+		static string build(const string &root,
+		                    vector<string> &parts);
+		static string getBasename(const string &path);
+		static string getDirname(const string &path);
+		static string getInternals(const string &path);
 		static string getRelativePath(const string &base,
 		                              const string &filename);
+		static string getRoot(const string &path);
+		static bool hasWindowsRoot(const string& token);
 		static bool isAbsolutePath(const string& filename);
-	
-	
-	private:
-		
-		static void build(string &result,
-		                  vector<string> &parts,
-		                  bool ignoreDots);
+		static bool isWindowsRoot(const string& token);
+		static string mergePaths(const string &root,
+		                         vector<string> &base,
+		                         vector<string> &change);
+		static string stripRoot(const string &path);
 		static void tokenize(const string &filename,
-		                     vector<string> &tokens,
-		                     string *root);
+		                     vector<string> &tokens);
 };
 
 

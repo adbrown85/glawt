@@ -11,29 +11,73 @@
 /**
  * Builds a path from its parts.
  * 
- * @param result
- *     Where to store the built path.
+ * @param root
+ *     Root of the path.
  * @param parts
  *     Parts of the path.
- * @param ignoreDots
- *     Whether to ignore "." and ".." parts.
  */
-void FileUtility::build(string &result,
-                        vector<string> &parts,
-                        bool ignoreDots) {
+string FileUtility::build(const string &root,
+                          vector<string> &parts) {
 	
-	vector<string>::iterator it;
+	ostringstream path;
 	
-	// Build up parts
-	for (it=parts.begin(); it!=parts.end()-1; ++it) {
-		if (ignoreDots && (*it == ".." || *it == "."))
-			continue;
-		result += *it;
-		result += '/';
+	// Check for no parts
+	if (parts.empty()) {
+		return "";
 	}
-	result += *it;
+	
+	// Build path from parts using separator
+	path << root;
+	path << parts[0];
+	for (int i=1; i<parts.size(); ++i) {
+		path << '/';
+		path << parts[i];
+	}
+	return path.str();
 }
 
+
+string FileUtility::getBasename(const string& path) {
+	
+	int length, index;
+	
+	index = path.find_last_of("/\\");
+	if (index == -1) {
+		return path;
+	} else {
+		return path.substr(index+1, path.length()-index);
+	}
+}
+
+
+string FileUtility::getDirname(const string& path) {
+	
+	int index;
+	string result;
+	
+	index = path.find_last_of("/\\");
+	if (index == -1) {
+		result = ".";
+	} else if (index == 0) {
+		result = "/";
+	} else {
+		result = path.substr(0, index);
+	}
+	
+	// Finish
+	if (isWindowsRoot(result)) {
+		result = "";
+	}
+	
+	// Finish
+	return result;
+}
+
+
+string FileUtility::getInternals(const string& path) {
+	
+	return stripRoot(getDirname(path));
+}
 
 
 /**
@@ -41,55 +85,53 @@ void FileUtility::build(string &result,
  * 
  * @param primary
  *     Path used as the base.
- * @param filename
- *     Path to make relative to base.
+ * @param secondary
+ *     Relative path to modify primary.
  */
 string FileUtility::getRelativePath(const string &primary,
                                     const string &secondary) {
 	
-	bool stackWasEmpty;
-	string root, result;
-	vector<string> stack, list;
-	vector<string>::iterator it;
+	string root;
+	vector<string> path, change;
 	
 	// Check for empty strings
 	if (primary.empty() || secondary.empty())
-		throw "[Gander,FileUtility] Cannot use an empty string.";
+		throw "[FileUtility] Cannot use an empty string.";
 	
-	// Check for absolute path
+	// Handle absolute paths
 	if (isAbsolutePath(secondary))
 		return secondary;
+	root = getRoot(primary);
 	
-	// Fill vectors
-	tokenize(primary, stack, &root);
-	tokenize(secondary, list, NULL);
-	stack.pop_back();
-	stackWasEmpty = stack.empty();
+	// Split paths
+	tokenize(getInternals(primary), path);
+	tokenize(secondary, change);
 	
-	// Check for special case of primary path in root
-	if (isAbsolutePath(primary) && stackWasEmpty) {
-		result = root;
-		build(result, list, true);
-		return result;
-	}
-	
-	// Add part from list to stack, but pop for each ".."
-	for (it=list.begin(); it!=list.end(); ++it) {
-		if (*it == ".")
-			continue;
-		else if (*it == ".." && !stackWasEmpty && !stack.empty()) {
-			stack.pop_back();
-			stackWasEmpty = stack.empty();
-			continue;
-		}
-		stack.push_back(*it);
-	}
-	
-	// Build string from stack
-	build(result, stack, false);
-	return result;
+	// Merge them back together
+	return mergePaths(root, path, change);
 }
 
+
+string FileUtility::getRoot(const string &path) {
+	
+	// Unix
+	if (path[0] == '/') {
+		return "/";
+	}
+	
+	// Windows
+	if (isAbsolutePath(path)) {
+		return path.substr(0,3);
+	}
+	
+	return "";
+}
+
+
+bool FileUtility::hasWindowsRoot(const string &token) {
+	
+	return isalpha(token[0]) && token[1]==':';
+}
 
 
 /**
@@ -105,15 +147,76 @@ bool FileUtility::isAbsolutePath(const string& filename) {
 		return true;
 	
 	// Check for Windows absolute path
-	if (filename.length() < 3)
+	if (filename.length() < 2)
 		return false;
 	if (isalpha(filename[0])
-	    && filename[1] == ':'
-	    && (filename[2] == '/' || filename[2] == '\\'))
+	      && filename[1] == ':'
+	      && (filename[2] == '/' || filename[2] == '\\'))
 		return true;
 	return false;
 }
 
+
+bool FileUtility::isWindowsRoot(const string& token) {
+	
+	return token.length()==2 && hasWindowsRoot(token);
+}
+
+
+string FileUtility::mergePaths(const string &root,
+                               vector<string> &path,
+                               vector<string> &change) {
+	
+	vector<string>::iterator it;
+	
+	// Move up in path for each ".." in change
+	for (it=change.begin(); it!=change.end(); ++it) {
+		if (*it != ".." || path.empty()) {
+			break;
+		}
+		path.pop_back();
+	}
+	
+	// Check if the path is trying to go above root
+	if (!root.empty()
+	      && path.empty()
+	      && *it == "..") {
+		throw "[FileUtility] Relative path cannot go above root.";
+	}
+	
+	// After that just add each change to path
+	for (; it!=change.end(); ++it) {
+		path.push_back(*it);
+	}
+	
+	// Build string from path
+	return build(root, path);
+}
+
+
+string FileUtility::stripRoot(const string &path) {
+	
+	// Absolute path
+	if (isAbsolutePath(path)) {
+		if (path[0] == '/') {
+			return path.substr(1, -1);
+		} else {
+			return path.substr(3, -1);
+		}
+	}
+	
+	// Also remove current directory
+	if (path[0] == '.') {
+		if (path.length()>1 && path[1]=='/') {
+			return path.substr(2, -1);
+		} else {
+			return "";
+		}
+	}
+	
+	// Nothing found
+	return path;
+}
 
 
 /**
@@ -125,29 +228,22 @@ bool FileUtility::isAbsolutePath(const string& filename) {
  *     Parts of the path.
  */
 void FileUtility::tokenize(const string &filename,
-                           vector<string> &tokens,
-                           string *root) {
+                           vector<string> &tokens) {
 	
-	bool skipSeparator;
-	string token;
+	char *token, *buffer;
 	
-	// Skip first separator for absolute paths
-	skipSeparator = isAbsolutePath(filename);
+	// Copy filename into buffer
+	buffer = new char[filename.length()+1];
+	strcpy(buffer, filename.c_str());
 	
-	// Split up by slashes
-	for (int i=0; i<filename.length(); ++i) {
-		if (filename[i] == '/' || filename[i] == '\\') {
-			if (!skipSeparator) {
-				tokens.push_back(token);
-				token.clear();
-				continue;
-			}
-			if (root != NULL)
-				*root = token + filename[i];
-			skipSeparator = false;
-		}
-		token += filename[i];
+	// Break up buffer into tokens
+	token = strtok(buffer, "/\\");
+	while (token != NULL) {
+		tokens.push_back(token);
+		token = strtok(NULL, "/\\");
 	}
-	tokens.push_back(token);
+	
+	// Finish
+	delete[] buffer;
 }
 
