@@ -12,7 +12,7 @@
 	<shader file="raycaster-new.frag" />
 	<uniform type="int" name="samples" value="100">
 	<uniform type="float" name="brightness" value="10.0">
-		<texture3d file="bear.vlb" name="dendrite">
+		<texture3d file="../textures/bear.vlb" name="dendrite">
 		<uniform type="sampler3D" name="volume" link="dendrite">
 			<box size="1.0" />
 		</uniform>

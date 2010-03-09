@@ -8,7 +8,7 @@
 
 
 <program>
-	<shader type="fragment" file="../../glsl/coordinates.frag" />
+	<shader type="fragment" file="../../input/coordinates.frag" />
 	<translate x="0.5" y="0.5">
 		<box size="1.0" />
 	</translate>

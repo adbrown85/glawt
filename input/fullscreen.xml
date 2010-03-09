@@ -8,7 +8,7 @@
 
 
 
-<texture2d file="crate.jpg" name="crate">
+<texture2d file="../textures/crate.jpg" name="crate">
 	<program>
 		<shader file="coordinates.frag"/>
 		<fullscreen/>

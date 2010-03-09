@@ -8,7 +8,7 @@
 
 
 <program>
-	<!-- <shader type="fragment" file="../../glsl/coordinates.frag" />  -->
-	<shader file="../../glsl/coordinates.vert" />
+	<!-- <shader type="fragment" file="../../input/coordinates.frag" />  -->
+	<shader file="../../input/coordinates.vert" />
 	<square />
 </program>
