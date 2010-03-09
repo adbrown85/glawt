@@ -72,7 +72,7 @@ void Framebuffer::associate() {
  * 
  * @param node
  *     Node to start looking.
- * @param
+ * @param pointer
  *     Pointer to the %Framebuffer.
  */
 void Framebuffer::find(Node *node,

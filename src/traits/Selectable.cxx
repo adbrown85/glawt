@@ -9,22 +9,16 @@
 using namespace std;
 
 
-
-/**
- * Fake class providing stubs for abstract methods.
- */
 class FakeSelectable : public Selectable {
 	public:
 		void draw() const {}
 };
 
 
-
 void print(const FakeSelectable &item) {
 	
 	cout << "  " << item.toString() << endl;
 }
-
 
 
 int main() {
@@ -65,3 +59,4 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

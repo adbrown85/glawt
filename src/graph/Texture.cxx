@@ -8,9 +8,6 @@
 #include "Scene.hpp"
 
 
-/**
- * Fake Texture subclass with stubs needed for testing.
- */
 class FakeTexture : public Texture {
 	public:
 		FakeTexture(string name,

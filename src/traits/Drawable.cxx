@@ -11,9 +11,6 @@ using namespace std;
 
 
 
-/**
- * Fake class providing stubs for abstract methods.
- */
 class FakeDrawable : public Drawable {
 	
 	public: 
@@ -23,12 +20,10 @@ class FakeDrawable : public Drawable {
 };
 
 
-
 void print(const FakeDrawable &item) {
 	
 	cout << "  " << item.toString() << endl;
 }
-
 
 
 /**

@@ -57,6 +57,8 @@ void Painter::paint(Scene &scene,
  *     Pointer to the parent node.
  * @param renderMode
  *     If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators
+ *     UI elements used to manipulate selected items.
  */
 void Painter::paintChildren(Node *node,
                             GLenum renderMode,
@@ -84,6 +86,8 @@ void Painter::paintChildren(Node *node,
  *     Pointer to the Node to paint.
  * @param renderMode
  *     If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators
+ *     UI elements used to manipulate selected items.
  */
 void Painter::paintNode(Node *node,
                         GLenum renderMode,
