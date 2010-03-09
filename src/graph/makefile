@@ -19,15 +19,23 @@ Node.o:
 # Applicable nodes
 Cull.o: Node.o
 Framebuffer.o: Node.o
+Light.o: Node.o
+LightColor.o: Node.o Light.o
 Transformation.hpp: Node.o
 Translation.o: Node.o Transformation.hpp
 Program.o: Node.o
-Shader.o: Node.o Program.o
 Target.o: Framebuffer.o Node.o Texture2D.o
 Texture.o : Node.o
 Texture2D.o : Node.o Texture.o
 Texture3D.o : Node.o Texture.o
 Uniform.o: Node.o Program.o Shader.o Texture2D.o Texture3D.o
+
+# Sub nodes
+Shader.o: Node.o Program.o
+Ambient.o: LightColor.o
+Diffuse.o: LightColor.o
+Position.o: Light.o
+Specular.o: LightColor.o
 
 # Drawable/Selectable nodes
 Fullscreen.o: Node.o
