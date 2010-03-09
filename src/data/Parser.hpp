@@ -19,9 +19,9 @@ using namespace std;
 
 
 /**
+ * @ingroup data
  * @brief
  *     Reads an XML file, breaking it up into tags and attributes.
- * @ingroup backend
  */
 class Parser {
 	

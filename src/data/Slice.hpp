@@ -41,9 +41,9 @@ class Slice {
 		Dataset *dataset;
 		
 		Slice();
+		void drawAsByte(int offset);
 		void drawAsFloat(int offset);
 		void drawAsShort(int offset);
-		void drawAsByte(int offset);
 		void initType();
 };
 

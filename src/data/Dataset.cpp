@@ -7,11 +7,10 @@
 #include "Dataset.hpp"
 
 
-
 /**
  * Creates a new %Dataset from a file.
  * 
- * @param filename
+ * @param [in] filename
  *     Path to the file containing the data.
  */
 Dataset::Dataset(string filename) :
@@ -22,12 +21,11 @@ Dataset::Dataset(string filename) :
 }
 
 
-
 /**
  * Creates a new %Dataset from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param [in] tag
+ *     XML tag specifying the file with the data.
  */
 Dataset::Dataset(const Tag &tag) :
                  header(tag) {
@@ -35,7 +33,6 @@ Dataset::Dataset(const Tag &tag) :
 	// Initialize
 	Dataset::init();
 }
-
 
 
 /**
@@ -47,12 +44,11 @@ Dataset::~Dataset() {
 }
 
 
-
 /**
  * Makes sure that an index is in bounds.
  * 
- * @param I
- *     Index into the array.
+ * @param [in] index
+ *     Integer coordinates specifying the location in the dataset.
  */
 void Dataset::checkIndex(const Index &index) const {
 	
@@ -60,13 +56,15 @@ void Dataset::checkIndex(const Index &index) const {
 	if (index.i < 0 || index.i > height
 	    || index.j < 0 || index.j > width
 	    || index.k < 0 || index.k > depth)
-		throw "Gander,Dataset: Index is out of bounds.";
+		throw "[Dataset] Index is out of bounds.";
 }
-
 
 
 /**
  * Finds a position in the array.
+ * 
+ * @param [in] index
+ *     Integer coordinates specifying the location in the dataset.
  */
 char* Dataset::findPosition(const Index &index) const {
 	
@@ -79,6 +77,19 @@ char* Dataset::findPosition(const Index &index) const {
 }
 
 
+/**
+ * Gets the value of an element in the data.
+ * 
+ * To dereference the pointer properly, use getType().
+ * 
+ * @param [in] index
+ *     Integer coordinates specifying the location in the dataset.
+ * @param [out] value
+ *     Pointer to the value that will be set.
+ * 
+ * @note We don't make this method public because it has the potential to 
+ * change the data.  (Even though it is declared @e const.)
+ */
 void Dataset::get(const Index &index,
                   void *&value) const {
 	
@@ -89,17 +100,15 @@ void Dataset::get(const Index &index,
 
 /**
  * Gets the value of an element in the data.
+ * 
+ * @param [in] I
+ *     Integer coordinates specifying the location in the dataset.
+ * @return Copy of the value as an unsigned byte.
+ * 
+ * @throws const_char* if the dataset's type is not GL_UNSIGNED_BYTE.
+ * 
+ * @note Remember if you want to print the value, cast it to an @c int first.
  */
-void Dataset::get(const Index &index,
-                  void *&value,
-                  GLenum &type) const {
-	
-	// Get value and type
-	get(index, value);
-	type = this->type;
-}
-
-
 unsigned char Dataset::getAsByte(const Index &I) const {
 	
 	void *value;
@@ -115,6 +124,15 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 }
 
 
+/**
+ * Gets the value of an element in the data.
+ * 
+ * @param [in] I
+ *     Integer coordinates specifying the location in the dataset.
+ * @return Copy of the value as a float.
+ * 
+ * @throws const_char* if the dataset's type is not GL_FLOAT.
+ */
 float Dataset::getAsFloat(const Index &I) const {
 	
 	void *value;
@@ -130,6 +148,15 @@ float Dataset::getAsFloat(const Index &I) const {
 }
 
 
+/**
+ * Gets the value of an element in the data.
+ * 
+ * @param [in] I
+ *     Integer coordinates specifying the location in the dataset.
+ * @return Copy of the value as a short.
+ * 
+ * @throws const_char* if the dataset's type is not GL_SHORT.
+ */
 short Dataset::getAsShort(const Index &I) const {
 	
 	void *value;
@@ -146,7 +173,11 @@ short Dataset::getAsShort(const Index &I) const {
 
 
 /**
- * Gets the maximum of width, height, and depth.
+ * @return the maximum of @c width, @c height, and @c depth.
+ * 
+ * @see getWidth()
+ * @see getHeight()
+ * @see getDepth()
  */
 int Dataset::getMaximumDimension() const {
 	
@@ -160,7 +191,6 @@ int Dataset::getMaximumDimension() const {
 		max = depth;
 	return max;
 }
-
 
 
 /**
@@ -178,9 +208,12 @@ void Dataset::init() {
 }
 
 
-
 /**
  * Initializes the dimensions of the dataset from its header.
+ * 
+ * @see getWidth()
+ * @see getHeight()
+ * @see getDepth()
  */
 void Dataset::initDimensions() {
 	
@@ -195,9 +228,11 @@ void Dataset::initDimensions() {
 }
 
 
-
 /**
  * Initializes the %Dataset's type and block based on the header.
+ * 
+ * @see getType()
+ * @see getBlock()
  */
 void Dataset::initTypeBlock() {
 	
@@ -221,9 +256,11 @@ void Dataset::initTypeBlock() {
 }
 
 
-
 /**
  * Prints a value in the dataset.
+ * 
+ * @param [in] index
+ *     Integer coordinates specifying the location in the dataset.
  */
 void Dataset::print(Index index) {
 	
@@ -249,7 +286,6 @@ void Dataset::print(Index index) {
 }
 
 
-
 /**
  * Reads the data from the file into the data array.
  */
@@ -270,20 +306,22 @@ void Dataset::readData() {
 	// Read the data by type
 	file.read(reinterpret_cast<char*>(data), length * block);
 	if (file.gcount() != length * block)
-		throw "Gander,Dataset: Did not read correct number of bytes.";
+		throw "[Dataset] Did not read correct number of bytes.";
 }
 
 
-
 /**
- * Sets an element in the dataset.
+ * Sets a sample in the dataset.
  * 
- * @param index
- *     Index specifying the location of the element.
- * @param value
- *     Pointer to the value to set.
- * @param type
+ * @param [in] index
+ *     Index specifying the location of the sample.
+ * @param [in] value
+ *     Pointer to the value that the sample will be set to.
+ * @param [in] type
  *     Type of the value to set.
+ * 
+ * @throws const_char* if the type passed does not match.
+ * @see getType()
  */
 void Dataset::set(const Index &index,
                   const void *value,

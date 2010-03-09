@@ -15,9 +15,9 @@ using namespace std;
 
 
 /**
+ * @ingroup data
  * @brief
  *     XML tag holding a map of attributes and their values.
- * @ingroup backend
  */
 class Tag {
 	

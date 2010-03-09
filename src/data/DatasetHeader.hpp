@@ -16,9 +16,27 @@
 using namespace std;
 
 
-
+/**
+ * @ingroup data
+ * @brief
+ *     Loads metadata from a dataset.
+ * 
+ * Perhaps most significant is the type of the data, which determines how many 
+ * bytes in the data make up a single sample and what C++ type the sample 
+ * corresponds with.  
+ * 
+ * Also important are the height, width, and depth of the dataset, which is 
+ * measured in the number of samples, as well as the offset needed to skip over 
+ * the header and get to the data.
+ * 
+ * @see check()
+ * @see getWidth()
+ * @see getHeight()
+ * @see getDepth()
+ * @see getOffset()
+ * @see getType()
+ */
 class DatasetHeader {
-	
 	
 	public :
 		

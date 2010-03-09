@@ -11,8 +11,10 @@
 /**
  * Reads a header from a dataset file.
  * 
- * @param filename
+ * @param [in] filename
  *     Path to the file.
+ * 
+ * @throws const_char* from check()
  */
 DatasetHeader::DatasetHeader(string filename) {
 	
@@ -27,10 +29,12 @@ DatasetHeader::DatasetHeader(string filename) {
 
 
 /**
- * Creates a new %DatasetHeader from an XML tag.
+ * Reads a header from a dataset file specified by an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param [in] tag
+ *     XML tag with file attribute specifying path to the file.
+ * 
+ * @throws const_char* from check()
  */
 DatasetHeader::DatasetHeader(const Tag &tag) {
 	
@@ -45,7 +49,23 @@ DatasetHeader::DatasetHeader(const Tag &tag) {
 
 
 /**
- * Checks if a file has a good header and finds its beginning.
+ * Checks if a file has a good header, then finds its beginning.
+ * 
+ * Determines if the header is good by reading the first line of the file as 
+ * text.  It will only be deemed appropriate if the first line is equal to 
+ * @e VLIB.1.
+ * 
+ * To find the beginning of the actual information in the header, it continues 
+ * reading the file by skipping over any comments.  Note that comments are 
+ * lines in which the first character is @e #.
+ * 
+ * At the end of the execution of this method, @c beginning will be set to the 
+ * number of lines that should be skipped to get to the start of the metadata 
+ * in the file's header.  In other words, the next line after that will be the 
+ * first line containing metadata.
+ * 
+ * @throws const_char* if the file could not be opened.
+ * @throws const_char* if the file does not have an appropriate header.
  */
 void DatasetHeader::check() {
 	
@@ -79,6 +99,11 @@ void DatasetHeader::check() {
 
 /**
  * Prints details of the header.
+ * 
+ * @see getWidth()
+ * @see getHeight()
+ * @see getDepth()
+ * @see getType()
  */
 void DatasetHeader::print() const {
 	
@@ -106,7 +131,9 @@ void DatasetHeader::print() const {
 
 
 /**
- * Reads the details in the header and sets 'offset'.
+ * Reads the details in the header and sets @c offset.
+ * 
+ * @see getOffset()
  */
 void DatasetHeader::read() {
 	

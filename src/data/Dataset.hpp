@@ -24,9 +24,20 @@ using namespace std;
 
 
 /**
- * @brief
- *     Loads and holds volumetric data.
  * @ingroup data
+ * @brief Loads and holds volumetric data.
+ * 
+ * In most cases, the user is only concerned with getting values from the 
+ * data.
+ * 
+ * To get one value, use one of the @c getAs methods.  However, you should use 
+ * @c getType() to determine which one to call first since they will throw an 
+ * exception if it doesn't match the dataset's type.  We suggest using a switch 
+ * statement for this purpose.
+ * 
+ * Of course, some purposes will need an actual pointer to all of the data, 
+ * such as using the dataset as an OpenGL texture.  In that case, use @c 
+ * getData() and @c getType().
  */
 class Dataset {
 	

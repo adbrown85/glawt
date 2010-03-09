@@ -72,9 +72,6 @@ Node* Factory::create(const Tag &tag) {
 
 /**
  * Creates items from XML tags.
- * 
- * @param tags
- *     Reference to a collection of tags.
  */
 void Factory::start() {
 	

@@ -17,9 +17,9 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup data
  * @brief
- *     Node in an octree.
+ *     Element of an octree.
  */
 class OctreeNode {
 	
