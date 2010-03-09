@@ -30,9 +30,8 @@ class Texture2D : public Texture {
 		          int size);
 		Texture2D(const Tag &tag);
 		virtual void associate();
-		virtual string toString() const;
-		
 		virtual int getSize() {return size;}
+		virtual string toString() const;
 		
 		static void find(Node *node,
 		                 Texture2D *&pointer,

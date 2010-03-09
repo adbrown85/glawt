@@ -60,8 +60,8 @@ Texture2D::Texture2D(const Tag &tag) :
 /**
  * Generates or loads the texture.
  * 
- * Is done in "associate" rather than "finalize" because other nodes might 
- * need to get the texture's handle.
+ * Is done here rather than @c finalize() because other nodes might need to get 
+ * the texture's handle.
  */
 void Texture2D::associate() {
 	
@@ -184,6 +184,7 @@ void Texture2D::initLibraries() {
 	
 	// Initialize DevIL
 	ilInit();
+	ilutRenderer(ILUT_OPENGL);
 }
 
 
