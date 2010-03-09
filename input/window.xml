@@ -1,5 +1,5 @@
 <program>
-	<shader file="../glsl/window.frag"/>
+	<shader file="window.frag"/>
 	<translate x="1.0">
 		<box/>
 	</translate>

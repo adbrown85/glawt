@@ -9,8 +9,8 @@
 
 
 <program>
-	<shader type="fragment" file="../glsl/raycaster.frag" />
-	<shader type="vertex" file="../glsl/world.vert" />
+	<shader type="fragment" file="raycaster.frag" />
+	<shader type="vertex" file="world.vert" />
 	<uniform type="int" name="samples" value="50">
 		<uniform type="float" name="brightness" value="5.0">
 		<texture3d file="skull.vlb" name="skull">

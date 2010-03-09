@@ -9,7 +9,7 @@
 
 
 <program>
-	<shader file="../glsl/raycaster-new.frag" />
+	<shader file="raycaster-new.frag" />
 	<uniform type="int" name="samples" value="100">
 	<uniform type="float" name="brightness" value="10.0">
 		<texture3d file="bear.vlb" name="dendrite">

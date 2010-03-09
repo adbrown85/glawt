@@ -8,7 +8,7 @@
 
 
 <program>
-	<shader file="../glsl/halfmoon.frag" />
+	<shader file="halfmoon.frag" />
 		<translate x="+3.0">
 			<box size="2.0" style="2d" />
 		</translate>
