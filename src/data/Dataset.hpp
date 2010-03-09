@@ -50,11 +50,6 @@ class Dataset {
 		virtual void print() const;
 		virtual void print(Index I);
 		
-		virtual void get(const Index &I,
-		                 void *&value) const;
-		virtual void get(const Index &I,
-		                 void *&value,
-		                 GLenum &type) const;
 		virtual unsigned char getAsByte(const Index &I) const;
 		virtual float getAsFloat(const Index &I) const;
 		virtual short getAsShort(const Index &I) const;
@@ -79,6 +74,8 @@ class Dataset {
 		void *data;
 		
 		virtual char* findPosition(const Index &I) const;
+		virtual void get(const Index &I,
+		                 void *&value) const;
 		virtual void init();
 		virtual void initDimensions();
 		virtual void initTypeBlock();

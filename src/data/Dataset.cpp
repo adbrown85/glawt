@@ -264,23 +264,19 @@ void Dataset::initTypeBlock() {
  */
 void Dataset::print(Index index) {
 	
-	GLenum type;
-	void *value;
-	
 	// Message
 	cout << "Element at " << index << ":" << endl;
 	
 	// Get and print
-	get(index, value, type);
 	switch (type) {
 		case GL_UNSIGNED_BYTE:
-			cout << "  " << (int)*((unsigned char*)value) << endl;
+			cout << "  " << (int)getAsByte(index) << endl;
 			break;
 		case GL_SHORT:
-			cout << "  " << *((short*)value) << endl;
+			cout << "  " << getAsShort(index) << endl;
 			break;
 		case GL_FLOAT:
-			cout << "  " << *((float*)value) << endl;
+			cout << "  " << getAsFloat(index) << endl;
 			break;
 	}
 }
