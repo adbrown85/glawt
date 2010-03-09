@@ -5,6 +5,7 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #include "Texture2D.hpp"
+bool Texture2D::librariesLoaded=false;
 
 
 /**
@@ -159,6 +160,10 @@ void Texture2D::initLibraries() {
 	
 	ILint ilVersion, iluVersion, ilutVersion;
 	
+	// Check if already loaded
+	if (librariesLoaded)
+		return;
+	
 	// Check DevIL components
 	ilVersion = ilGetInteger(IL_VERSION_NUM);
 	if (ilVersion < IL_VERSION)
@@ -185,6 +190,7 @@ void Texture2D::initLibraries() {
 	// Initialize DevIL
 	ilInit();
 	ilutRenderer(ILUT_OPENGL);
+	librariesLoaded = true;
 }
 
 

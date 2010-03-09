@@ -32,10 +32,6 @@ class Texture2D : public Texture {
 		virtual void associate();
 		virtual int getSize() {return size;}
 		virtual string toString() const;
-		
-		static void find(Node *node,
-		                 Texture2D *&pointer,
-		                 string name);
 	
 	private:
 		
@@ -45,8 +41,19 @@ class Texture2D : public Texture {
 		virtual void generate();
 		virtual void init();
 		virtual void initType() {type = GL_TEXTURE_2D;}
-		virtual void initLibraries();
 		virtual void load();
+	
+	public: 
+		
+		static void find(Node *node,
+		                 Texture2D *&pointer,
+		                 string name);
+	
+	private:
+		
+		static bool librariesLoaded;
+		
+		static void initLibraries();
 };
 
 
