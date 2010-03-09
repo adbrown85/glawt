@@ -14,7 +14,7 @@ void light(in int i,
 	float nDotL, nDotHV, pf;
 	vec3 L;
 	
-	L = normalize(vec3(gl_LightSource[i].position));
+	L = normalize(vec3(gl_LightSource[i].position - gl_Position));
 	nDotL = max(0.0, dot(gl_Normal, L));
 	
 /*
