@@ -4,6 +4,7 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#include <sstream>
 #include "Texture.hpp"
 #include "Scene.hpp"
 
@@ -23,15 +24,10 @@ class FakeTexture : public Texture {
  */
 int main() {
 	
+	ostringstream name;
 	Scene scene;
 	Tag tag;
 	Texture *texture;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Texture" << endl;
-	cout << "****************************************" << endl;
 	
 	// Test tag
 	cout << "\nTesting tag..." << endl;
@@ -42,18 +38,16 @@ int main() {
 	
 	// Create textures
 	cout << "\nCreating textures..." << endl;
-	for (int i=0; i<4; ++i)
-		scene.addToLast(new FakeTexture("crate", "../../input/crate.jpg"));
+	for (int i=0; i<4; ++i) {
+		name.str("");
+		name << "crate" << i+1;
+		texture = new FakeTexture(name.str(), "../../input/crate.jpg");
+		scene.addToLast(texture);
+	}
 	
 	// Prepare nodes
 	cout << "\nPreparing nodes..." << endl;
 	scene.prepare();
 	scene.print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Texture" << endl;
-	cout << "****************************************" << endl;
 }
 

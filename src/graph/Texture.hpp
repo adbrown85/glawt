@@ -25,7 +25,10 @@ using namespace std;
  * @brief
  *     OpenGL texture node.
  * 
- * Base class for textures of various dimensions.
+ * Abstract base class for textures of various dimensions.  Provides some
+ * basic texture capability, including finding an open texture unit and binding
+ * the texture to that unit.  There are also two static methods, pause() and
+ * restart() that disable and reenable all active texture units.
  * 
  * @see Texture2D
  * @see Texture3D
@@ -40,14 +43,13 @@ class Texture : public Node,
 		Texture(const Tag &tag);
 		virtual void apply();
 		virtual void associate();
-		virtual void remove();
-		virtual string toString() const;
-		
 		virtual string getFilename() const;
 		virtual GLuint getHandle() const;
 		virtual string getName() const;
 		virtual GLenum getType() const;
 		virtual int getUnit() const;
+		virtual void remove();
+		virtual string toString() const;
 		
 		static int getNumberOfActiveUnits();
 		static void pause();
@@ -86,6 +88,12 @@ inline string Texture::getName() const {return name;}
 
 
 /**
+ * @return Number of texture units being used.
+ */
+inline int Texture::getNumberOfActiveUnits() {return active_units.size();}
+
+
+/**
  * @return Type of the texture.
  * 
  * @note Should be one of:
@@ -97,17 +105,11 @@ inline GLenum Texture::getType() const {return type;}
 
 
 /**
- * @return Texture unit holding the texture.
+ * @return %Texture unit holding the texture.
  * 
- * @note Intended to be added to @c GL_TEXTURE0 to be used with OpenGL.
+ * @note Intended to be added to @c GL_TEXTURE0 when used with OpenGL.
  */
 inline int Texture::getUnit() const {return unit;}
-
-
-/**
- * @return Number of texture units being used.
- */
-inline int Texture::getNumberOfActiveUnits() {return active_units.size();}
 
 
 #endif

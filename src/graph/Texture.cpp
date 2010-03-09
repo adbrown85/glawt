@@ -11,9 +11,9 @@ vector<GLenum> Texture::active_units;
 /**
  * Initializes a texture.
  * 
- * @param name
+ * @param [in] name
  *     Name of the texture.
- * @param filename
+ * @param [in] filename
  *     Path to a file containing the texture.
  */
 Texture::Texture(string name,
@@ -27,9 +27,9 @@ Texture::Texture(string name,
 
 
 /**
- * Creates a new %Texture from an XML tag.
+ * Creates a new texture from an XML tag.
  * 
- * @param tag
+ * @param [in] tag
  *     XML tag.
  */
 Texture::Texture(const Tag &tag) {
@@ -55,7 +55,7 @@ void Texture::apply() {
 
 
 /**
- * Finds out which texture unit to use by looking for other %Texture ancestors.
+ * Finds out which texture unit to use by looking for other texture ancestors.
  */
 void Texture::associate() {
 	
