@@ -25,8 +25,8 @@ void light(in int i,
 		pf = pow(nDotHV, gl_FrontMaterial.shininess);
 */
 	
-	ambient += gl_LightSource[i].ambient;
-	diffuse += gl_LightSource[i].diffuse * nDotL;
+	ambient += gl_LightSource[i].ambient * gl_Color;
+	diffuse += gl_LightSource[i].diffuse * gl_Color * nDotL;
 	/* specular += gl_LightSource[i].specular * pf; */
 }
 
