@@ -31,7 +31,6 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     Creates items from XML tags and adds them to the scene.
@@ -39,13 +38,11 @@ using namespace std;
  */
 class Factory {
 	
-	
 	public:
 		
 		Factory(Node *root,
 		        string filename);
 		void start();
-	
 	
 	private:
 		

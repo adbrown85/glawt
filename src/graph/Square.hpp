@@ -16,7 +16,6 @@
 using namespace std;
 
 
-
 /**
  * @ingroup graph
  * @brief
@@ -24,13 +23,11 @@ using namespace std;
  */
 class Square : public Shape {
 	
-	
 	public : 
 		
 		Square(float size);
 		Square(const Tag &tag);
 		virtual void draw() const;
-	
 	
 	protected: 
 		

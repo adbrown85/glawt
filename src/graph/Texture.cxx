@@ -8,7 +8,6 @@
 #include "Scene.hpp"
 
 
-
 /**
  * Fake Texture subclass with stubs needed for testing.
  */
@@ -20,7 +19,6 @@ class FakeTexture : public Texture {
 	protected:
 		void initType() {type = GL_TEXTURE_2D;}
 };
-
 
 
 /**

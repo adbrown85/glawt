@@ -15,7 +15,6 @@
 using namespace std;
 
 
-
 /// @defgroup graph
 /**
  * @ingroup graph
@@ -25,14 +24,12 @@ using namespace std;
 class Cull : public Node,
              public Applicable {
 	
-	
 	public :
 		
 		Cull(const Tag &tag);
 		void apply();
 		void remove();
 		string toString() const;
-	
 	
 	private:
 		

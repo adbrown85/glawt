@@ -18,15 +18,13 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup graph
  * @brief
  *     Container for GLSL uniform variables.
- * @ingroup graph
  */
 class Uniform : public Node,
                 public Applicable {
-	
 	
 	public :
 		
@@ -43,7 +41,6 @@ class Uniform : public Node,
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Uniform &uniform);
-	
 	
 	private :
 		

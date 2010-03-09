@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 /**
  * Fake shape node.
  */
@@ -22,7 +21,6 @@ class FakeShape : public Shape {
 		FakeShape(float size=1.0) : Shape(size) {}
 		void draw() const {};
 };
-
 
 
 /**

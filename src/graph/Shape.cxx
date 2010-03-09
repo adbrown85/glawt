@@ -12,7 +12,6 @@
 using namespace std;
 
 
-
 /**
  * Fake class for testing Shape.
  */
@@ -22,7 +21,6 @@ class FakeShape : public Shape {
 		FakeShape(const Tag &tag) : Shape(tag) {}
 		void draw() const {};
 };
-
 
 
 /**

@@ -8,7 +8,6 @@
 #include "Translation.hpp"
 
 
-
 /**
  * Fake leaf node that computes its depth from the matrix.
  */
@@ -21,8 +20,6 @@ class FakeLeaf : public Node {
 			depth = matrix(2,3);
 		}
 };
-
-
 
 
 /**
@@ -79,3 +76,4 @@ int main() {
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
 }
+

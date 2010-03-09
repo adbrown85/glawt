@@ -7,7 +7,6 @@
 #include "Shader.hpp"
 
 
-
 /**
  * Initializes an empty %Shader object.
  */
@@ -19,7 +18,6 @@ Shader::Shader(string type,
 	this->type = type;
 	this->filename = filename;
 }
-
 
 
 /**
@@ -38,7 +36,6 @@ Shader::Shader(const Tag &tag) {
 }
 
 
-
 /**
  * Cleans up the source array allocated by the %Shader object.
  */
@@ -48,7 +45,6 @@ Shader::~Shader() {
 	if (source != NULL)
 		delete[] source;
 }
-
 
 
 /**
@@ -78,7 +74,6 @@ void Shader::associate() {
 }
 
 
-
 /**
  * Compiles the shader.  Prints the log and exits if unsuccessful.
  */
@@ -102,7 +97,6 @@ void Shader::compile() {
 }
 
 
-
 /**
  * Creates a GLSL shader.
  */
@@ -122,7 +116,6 @@ void Shader::create() {
 }
 
 
-
 /**
  * Initializes the %Shader's attributes.
  */
@@ -133,7 +126,6 @@ void Shader::init() {
 	this->handle = 0;
 	this->source = NULL;
 }
-
 
 
 /**
@@ -162,7 +154,6 @@ void Shader::initType() {
 }
 
 
-
 /**
  * Prints the file stored in the source array.
  */
@@ -172,7 +163,6 @@ void Shader::list() const {
 	for (int i=0; i<length; i++)
 		cout << source[i] << endl;
 }
-
 
 
 /**
@@ -210,7 +200,6 @@ void Shader::load() {
 }
 
 
-
 /**
  * Prints the log for this shader.
  */
@@ -232,7 +221,6 @@ void Shader::log() const {
 	// Finish
 	delete[] log;
 }
-
 
 
 /**

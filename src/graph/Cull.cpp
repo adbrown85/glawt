@@ -7,7 +7,6 @@
 #include "Cull.hpp"
 
 
-
 /**
  * Creates a new %Cull object from a tag.
  * 
@@ -35,7 +34,6 @@ Cull::Cull(const Tag &tag) {
 }
 
 
-
 /**
  * Enables culling.
  */
@@ -50,7 +48,6 @@ void Cull::apply() {
 }
 
 
-
 /**
  * Restores backface culling.
  */
@@ -59,7 +56,6 @@ void Cull::remove() {
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 }
-
 
 
 /**

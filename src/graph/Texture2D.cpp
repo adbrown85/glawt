@@ -7,7 +7,6 @@
 #include "Texture2D.hpp"
 
 
-
 /**
  * Creates a new 2D texture from a file that can be referenced by name.
  * 
@@ -23,7 +22,6 @@ Texture2D::Texture2D(string name,
 	// Initialize
 	Texture2D::init();
 }
-
 
 
 /**
@@ -44,7 +42,6 @@ Texture2D::Texture2D(string name,
 }
 
 
-
 /**
  * Creates a new 2D texture from an XML tag.
  * 
@@ -58,7 +55,6 @@ Texture2D::Texture2D(const Tag &tag) :
 	Texture2D::init();
 	tag.get("size", size, false);
 }
-
 
 
 /**
@@ -82,7 +78,6 @@ void Texture2D::associate() {
 	else
 		load();
 }
-
 
 
 /**
@@ -114,7 +109,6 @@ void Texture2D::find(Node *node,
 }
 
 
-
 /**
  * Generates a blank texture.
  */
@@ -141,7 +135,6 @@ void Texture2D::generate() {
 }
 
 
-
 /**
  * Initializes attributes common to all constructors.
  */
@@ -153,7 +146,6 @@ void Texture2D::init() {
 	this->image = 0;
 	this->size = 0;
 }
-
 
 
 /**
@@ -195,7 +187,6 @@ void Texture2D::initLibraries() {
 }
 
 
-
 /**
  * Loads an image into the texture.
  */
@@ -224,7 +215,6 @@ void Texture2D::load() {
 	if (handle == 0)
 		throw "[Gander,Texture2D] DevIL did not bind image to texture.";
 }
-
 
 
 /**

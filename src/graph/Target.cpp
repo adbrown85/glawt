@@ -7,7 +7,6 @@
 #include "Target.hpp"
 
 
-
 /**
  * Creates a new %Target linked to a %Texture2D.
  * 
@@ -22,7 +21,6 @@ Target::Target(string link) {
 }
 
 
-
 /**
  * Creates a new %Target from an XML tag.
  */
@@ -32,7 +30,6 @@ Target::Target(const Tag &tag) {
 	className = "Target";
 	tag.get("link", link);
 }
-
 
 
 /**
@@ -58,7 +55,6 @@ void Target::associate() {
 }
 
 
-
 /**
  * Attaches the target to the %Framebuffer.
  */
@@ -78,7 +74,6 @@ void Target::finalize() {
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		throw "[Gander,Target] Framebuffer is not complete!";
 }
-
 
 
 /**

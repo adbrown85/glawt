@@ -7,7 +7,6 @@
 #include "Selection.hpp"
 
 
-
 /**
  * Adds a selectable item to the selection.
  */
@@ -16,7 +15,6 @@ void Selection::add(Selectable *item) {
 	item->select();
 	items.insert(item);
 }
-
 
 
 /**
@@ -39,7 +37,6 @@ void Selection::addAll(Node *node) {
 }
 
 
-
 /**
  * Returns an iterator to the beginning of the selection.
  */
@@ -47,7 +44,6 @@ Selection::iterator Selection::begin() {
 	
 	return items.begin();
 }
-
 
 
 /**
@@ -64,7 +60,6 @@ void Selection::clear() {
 }
 
 
-
 /**
  * Returns an iterator to the beginning of the selection.
  */
@@ -72,7 +67,6 @@ Selection::iterator Selection::end() {
 	
 	return items.end();
 }
-
 
 
 /**
@@ -89,3 +83,4 @@ void Selection::remove(Selectable *item) {
 		items.erase(si);
 	}
 }
+

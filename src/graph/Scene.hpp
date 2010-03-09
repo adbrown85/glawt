@@ -20,14 +20,12 @@
 using namespace std;
 
 
-
 /**
  * @ingroup graph
  * @brief
  *     Collection of items that also stores selection and camera information.
  */
 class Scene {
-	
 	
 	public :
 		
@@ -59,7 +57,6 @@ class Scene {
 		                 float x,
 		                 float y,
 		                 float z);
-	
 	
 	private :
 		

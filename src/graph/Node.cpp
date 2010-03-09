@@ -7,7 +7,6 @@
 #include "Node.hpp"
 
 
-
 /**
  * Creates a new node with no parent.
  */
@@ -18,7 +17,6 @@ Node::Node() {
 	depth = 0.0;
 	parent = NULL;
 }
-
 
 
 /**
@@ -33,7 +31,6 @@ void Node::addChild(Node *child) {
 	child->parent = this;
 	children.push_back(child);
 }
-
 
 
 /**
@@ -51,7 +48,6 @@ void Node::associateTree() {
 }
 
 
-
 /**
  * Compares two Node pointers by depth.
  */
@@ -60,7 +56,6 @@ bool compare(Node *A,
 	
 	return A->depth < B->depth;
 }
-
 
 
 /**
@@ -83,7 +78,6 @@ void Node::computeDepth(Matrix &matrix) {
 }
 
 
-
 /**
  * Allow nodes to finish preparing themselves after associating with others.
  */
@@ -99,7 +93,6 @@ void Node::finalizeTree() {
 }
 
 
-
 /**
  * Prints important attributes to standard out with a small indent.
  */
@@ -108,7 +101,6 @@ void Node::print() const {
 	// Print with indent
 	print(this);
 }
-
 
 
 /**
@@ -121,7 +113,6 @@ void Node::print(const Node *node) {
 }
 
 
-
 /**
  * Recursively prints important attributes to standard out.
  */
@@ -130,7 +121,6 @@ void Node::printTree() const {
 	// Print with indent
 	printTree(0);
 }
-
 
 
 /**
@@ -157,7 +147,6 @@ void Node::printTree(int level) const {
 }
 
 
-
 void Node::sortByDepth(Matrix &matrix) {
 	
 	int numOfChildren;
@@ -180,7 +169,6 @@ void Node::sortByDepth(Matrix &matrix) {
 }
 
 
-
 string Node::toString() const {
 	
 	stringstream stream;
@@ -189,3 +177,4 @@ string Node::toString() const {
 	stream << className;
 	return stream.str();
 }
+

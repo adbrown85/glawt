@@ -20,14 +20,12 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     GLSL shader with loading and compiling capabilities.
  * @ingroup graph
  */
 class Shader : public Node {
-	
 	
 	public :
 		
@@ -44,7 +42,6 @@ class Shader : public Node {
 		string getFilename() const {return filename;}
 		GLuint getHandle() const {return handle;}
 		string getType() const {return type;}
-	
 	
 	private :
 		

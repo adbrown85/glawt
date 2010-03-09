@@ -7,7 +7,6 @@
 #include "Translation.hpp"
 
 
-
 Translation::Translation(float x,
                          float y,
                          float z) : Vector(x,y,z) {
@@ -15,7 +14,6 @@ Translation::Translation(float x,
 	// Initialize
 	className = "Translation";
 }
-
 
 
 /**
@@ -34,8 +32,6 @@ Translation::Translation(const Tag &tag) {
 }
 
 
-
-
 /**
  * Adds a vector to this translation.
  */
@@ -48,7 +44,6 @@ void Translation::add(const Vector &B) {
 }
 
 
-
 /**
  * Performs the translation.
  */
@@ -58,7 +53,6 @@ void Translation::apply() {
 	glPushMatrix();
 	glTranslatef(x, y, z);
 }
-
 
 
 /**
@@ -76,7 +70,6 @@ void Translation::sortByDepthBeg(Matrix &matrix) {
 }
 
 
-
 /**
  * Remove the translation from the matrix after sorting.
  */
@@ -92,7 +85,6 @@ void Translation::sortByDepthEnd(Matrix &matrix) {
 }
 
 
-
 /**
  * Restores transformation that was in effect before Translation was applied.
  */
@@ -101,7 +93,6 @@ void Translation::remove() {
 	// Restore
 	glPopMatrix();
 }
-
 
 
 /**

@@ -10,7 +10,6 @@ GLfloat Square::points[4][3];
 GLubyte Square::indices[4];
 
 
-
 /**
  * Creates a new square.
  * 
@@ -25,7 +24,6 @@ Square::Square(float size) :
 }
 
 
-
 /**
  * Creates a new %Square from an XML tag.
  * 
@@ -38,7 +36,6 @@ Square::Square(const Tag &tag) :
 	// Initialize
 	Square::init();
 }
-
 
 
 /**
@@ -79,7 +76,6 @@ void Square::draw() const {
 }
 
 
-
 /**
  * Initializes attributes common to all constructors.
  */
@@ -97,7 +93,6 @@ void Square::init() {
 }
 
 
-
 /**
  * Initializes the indices used to draw the square's faces.
  */
@@ -107,7 +102,6 @@ void Square::initIndices() {
 	for (int i=0; i<4; i++)
 		this->indices[i] = i;
 }
-
 
 
 /**

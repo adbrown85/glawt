@@ -10,7 +10,6 @@ void display(void);
 void init(string);
 
 
-
 /**
  * Unit test for Texture3D.
  */
@@ -65,7 +64,6 @@ int main(int argc,
 }
 
 
-
 /**
  * Initializes the GLUT display.
  */
@@ -95,7 +93,6 @@ void init(string title) {
 	gluPerspective(30.0, 1.33, 1.0, 100.0);
 	glEnable(GL_BLEND);
 }
-
 
 
 /**

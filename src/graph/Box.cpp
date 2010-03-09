@@ -10,7 +10,6 @@ GLfloat Box::coords[24][3], Box::points[24][3], Box::normals[24][3];
 GLubyte Box::indices[24], Box::map[8][3];
 
 
-
 /**
  * Creates a new box.
  * 
@@ -24,7 +23,6 @@ Box::Box(float size) : Shape(size) {
 }
 
 
-
 /**
  * Creates a new box from an XML tag.
  * 
@@ -36,7 +34,6 @@ Box::Box(const Tag &tag) : Shape(tag) {
 	// Initialize
 	init();
 }
-
 
 
 /**
@@ -84,7 +81,6 @@ void Box::draw() const {
 }
 
 
-
 /**
  * Initializes the %Box's attributes.
  */
@@ -103,7 +99,6 @@ void Box::init() {
 		loaded = true;
 	}
 }
-
 
 
 /**
@@ -137,7 +132,6 @@ void Box::initCoords() {
 }
 
 
-
 /**
  * Initializes the indices used to draw the box's faces.
  */
@@ -147,7 +141,6 @@ void Box::initIndices() {
 	for (int i=0; i<24; ++i)
 		this->indices[i] = i;
 }
-
 
 
 /**
@@ -172,7 +165,6 @@ void Box::initMap() {
 }
 
 
-
 void Box::initNormals() {
 	
 	GLfloat normals[6][3] = {{ 0.0,  0.0, +1.0},     // front
@@ -191,7 +183,6 @@ void Box::initNormals() {
 		}
 	}
 }
-
 
 
 /**

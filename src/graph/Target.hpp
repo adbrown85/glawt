@@ -17,9 +17,7 @@
 using namespace std;
 
 
-
 class Target : public Node {
-	
 	
 	public:
 		
@@ -27,12 +25,10 @@ class Target : public Node {
 		Target(const Tag &tag);
 		string toString() const;
 	
-	
 	protected:
 		
 		void associate();
 		void finalize();
-	
 	
 	private:
 		

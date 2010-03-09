@@ -10,7 +10,6 @@ GLfloat Outline::points[24][3];
 GLubyte Outline::indices[24], Outline::map[8][3];
 
 
-
 /**
  * Creates a new Outline.
  * 
@@ -24,7 +23,6 @@ Outline::Outline(float size) {
 	this->size = size;
 	setColor(1.0, 1.0, 1.0);
 }
-
 
 
 /**
@@ -49,7 +47,6 @@ void Outline::draw() const {
 }
 
 
-
 /**
  * Initializes the Outline.
  */
@@ -68,7 +65,6 @@ void Outline::initialize() {
 }
 
 
-
 /**
  * Initializes the indices used to draw the Outline's faces.
  */
@@ -78,7 +74,6 @@ void Outline::initializeIndices() {
 	for (int i=0; i<24; i++)
 		this->indices[i] = i;
 }
-
 
 
 void Outline::initializeMap() {
@@ -97,7 +92,6 @@ void Outline::initializeMap() {
 		for (int j=0; j<3; j++)
 			this->map[i][j] = map[i][j];
 }
-
 
 
 /**
@@ -126,7 +120,6 @@ void Outline::initializePoints() {
 }
 
 
-
 /**
  * Sets the color of the entire Outline.
  * 
@@ -146,7 +139,6 @@ void Outline::setColor(float r,
 	color[1] = g;
 	color[2] = b;
 }
-
 
 
 

@@ -17,14 +17,12 @@
 using namespace std;
 
 
-
 /**
  * @ingroup graph
  * @brief
  *     Basic element of the scene graph.
  */
 class Node {
-	
 	
 	public :
 		
@@ -44,7 +42,6 @@ class Node {
 		float getDepth() const {return depth;}
 		string getClassName() const {return className;}
 		Node* getParent() const {return parent;}
-	
 	
 	protected :
 		

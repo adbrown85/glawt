@@ -8,7 +8,6 @@
 Program *Program::current=NULL;
 
 
-
 /**
  * Initializes the program's attributes.
  */
@@ -18,7 +17,6 @@ Program::Program() {
 	className = "Program";
 	handle = 0;
 }
-
 
 
 /**
@@ -35,7 +33,6 @@ Program::Program(const Tag &tag) {
 }
 
 
-
 /**
  * Installs the program into the current context.
  */
@@ -46,7 +43,6 @@ void Program::apply() {
 }
 
 
-
 /**
  * Creates the program so other nodes can use it.
  */
@@ -55,7 +51,6 @@ void Program::associate() {
 	// Create program
 	handle = glCreateProgram();
 }
-
 
 
 /**
@@ -81,7 +76,6 @@ void Program::finalize() {
 }
 
 
-
 /**
  * Prints the log for this program.
  */
@@ -105,7 +99,6 @@ void Program::log() const {
 }
 
 
-
 /**
  * Stops using the program.
  */
@@ -115,7 +108,6 @@ void Program::remove() {
 	glUseProgram(0);
 	current = NULL;
 }
-
 
 
 /**

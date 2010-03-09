@@ -7,7 +7,6 @@
 #include "Scene.hpp"
 
 
-
 /**
  * Creates and initializes a new scene.
  * 
@@ -27,7 +26,6 @@ Scene::Scene(int width,
 }
 
 
-
 /**
  * Adds a node as a child of the scene's last node.
  * 
@@ -39,7 +37,6 @@ void Scene::addToLast(Node *node) {
 	last->addChild(node);
 	last = node;
 }
-
 
 
 /**
@@ -55,7 +52,6 @@ void Scene::addToRoot(Node *node) {
 }
 
 
-
 /**
  * Changes the last node to its parent.
  */
@@ -67,7 +63,6 @@ void Scene::backup() {
 }
 
 
-
 /**
  * Returns the scene's rotation as a matrix.
  */
@@ -76,7 +71,6 @@ Matrix Scene::getRotationMatrix() const {
 	// Return matrix
 	return rotation.getMatrix();
 }
-
 
 
 /**
@@ -101,7 +95,6 @@ void Scene::open(string filename) {
 }
 
 
-
 /**
  * Allows nodes in graph to associate and finalize themselves.
  */
@@ -110,7 +103,6 @@ void Scene::prepare() {
 	root.associateTree();
 	root.finalizeTree();
 }
-
 
 
 /**
@@ -122,7 +114,6 @@ void Scene::print() {
 }
 
 
-
 /**
  * Resets the scene's camera information.
  */
@@ -132,7 +123,6 @@ void Scene::reset() {
 	position.set(0.0, 0.0, -10);
 	rotation.set(0.0, 0.0, 0.0, 1.0);
 }
-
 
 
 /**
@@ -151,7 +141,6 @@ void Scene::rotate(float angle,
 }
 
 
-
 /**
  * Sets the rotation of the scene using axis/angle.
  */
@@ -163,7 +152,6 @@ void Scene::setRotation(float angle,
 	// Set rotation
 	rotation.set(angle, x, y, z);
 }
-
 
 
 /**

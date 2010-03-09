@@ -11,7 +11,6 @@ GLubyte Fullscreen::indices[4];
 GLfloat Fullscreen::points[4][3];
 
 
-
 /**
  * Creates a new Fullscreen.
  */
@@ -21,7 +20,6 @@ Fullscreen::Fullscreen() :
 	// Initialize
 	Fullscreen::init();
 }
-
 
 
 /**
@@ -37,7 +35,6 @@ Fullscreen::Fullscreen(const Tag &tag) :
 	Fullscreen::init();
 	this->size = 2.0;
 }
-
 
 
 /**
@@ -70,7 +67,6 @@ void Fullscreen::draw() const {
 }
 
 
-
 /**
  * Initializes attributes common to all constructors.
  */
@@ -87,7 +83,6 @@ void Fullscreen::init() {
 		loaded = true;
 	}
 }
-
 
 
 /**
@@ -107,7 +102,6 @@ void Fullscreen::initCoordinates() {
 }
 
 
-
 /**
  * Initializes the static indices array of the class.
  */
@@ -117,7 +111,6 @@ void Fullscreen::initIndices() {
 	for (int i=0; i<4; i++)
 		this->indices[i] = i;
 }
-
 
 
 /**

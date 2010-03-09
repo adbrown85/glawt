@@ -15,14 +15,12 @@
 using std::set;
 
 
-
 /**
  * @ingroup graph
  * @brief
  *     Collection of selected items.
  */
 class Selection {
-	
 	
 	public :
 		

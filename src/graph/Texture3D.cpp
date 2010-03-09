@@ -7,7 +7,6 @@
 #include "Texture3D.hpp"
 
 
-
 /**
  * Creates a new 3D texture.
  * 
@@ -26,7 +25,6 @@ Texture3D::Texture3D(string name,
 }
 
 
-
 /**
  * Creates a new 3D texture from an XML tag.
  * 
@@ -42,7 +40,6 @@ Texture3D::Texture3D(const Tag &tag) :
 }
 
 
-
 /**
  * Loads the texture on an available texture unit.
  */
@@ -54,7 +51,6 @@ void Texture3D::associate() {
 }
 
 
-
 /**
  * Initializes attributes common to all constructors.
  */
@@ -64,7 +60,6 @@ void Texture3D::init() {
 	className = "Texture3D";
 	initType();
 }
-
 
 
 /**

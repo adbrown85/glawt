@@ -16,10 +16,13 @@
 #include "Tag.hpp"
 
 
-
+/**
+ * @ingroup graph
+ * @brief
+ *     Container for offscreen rendering targets.
+ */
 class Framebuffer : public Node,
                     public Applicable {
-	
 	
 	public :
 		
@@ -35,11 +38,9 @@ class Framebuffer : public Node,
 		static void find(Node *node,
 		                 Framebuffer *&pointer);
 	
-	
 	protected:
 		
 		virtual void associate();
-	
 	
 	private:
 		

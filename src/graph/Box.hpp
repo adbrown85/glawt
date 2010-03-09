@@ -14,7 +14,6 @@
 using namespace std;
 
 
-
 /**
  * @ingroup graph
  * @brief
@@ -22,13 +21,11 @@ using namespace std;
  */
 class Box : public Shape {
 	
-	
 	public : 
 		
 		Box(float size=1.0);
 		Box(const Tag &tag);
 		virtual void draw() const;
-	
 	
 	protected: 
 		

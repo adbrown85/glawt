@@ -8,7 +8,6 @@
 Scene Tester::scene;
 
 
-
 /**
  * GLUT display callback.
  */
@@ -26,7 +25,6 @@ void Tester::display(void) {
 	// Finish
 	glFlush();
 }
-
 
 
 /**
@@ -59,7 +57,6 @@ void Tester::initialize(string title) {
 }
 
 
-
 /**
  * Exits the %Tester on Escape key.
  */
@@ -74,7 +71,6 @@ void Tester::keyboard(unsigned char key,
 }
 
 
-
 /**
  * Opens a scene.
  */
@@ -86,7 +82,6 @@ void Tester::open(string filename) {
 }
 
 
-
 /**
  * Starts the GLUT display.
  */
@@ -96,7 +91,6 @@ void Tester::start() {
 	glutKeyboardFunc(Tester::keyboard);
 	glutMainLoop();
 }
-
 
 
 /**
@@ -127,7 +121,6 @@ void Tester::traverse(Node *node) {
 	// Node
 	traverseChildren(node);
 }
-
 
 
 /**

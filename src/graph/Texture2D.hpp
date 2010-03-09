@@ -15,14 +15,12 @@
 #include "Texture.hpp"
 
 
-
 /**
  * @brief
  *     %Texture node for images.
  * @ingroup graph
  */
 class Texture2D : public Texture {
-	
 	
 	public :
 		
@@ -39,7 +37,6 @@ class Texture2D : public Texture {
 		static void find(Node *node,
 		                 Texture2D *&pointer,
 		                 string name);
-	
 	
 	private:
 		

@@ -7,7 +7,6 @@
 #include "Shape.hpp"
 
 
-
 /**
  * Creates a shape.
  * 
@@ -20,7 +19,6 @@ Shape::Shape(float size) : Selectable(size) {
 	className = "Shape";
 	style = GL_TEXTURE_2D;
 }
-
 
 
 /**
@@ -53,7 +51,6 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 }
 
 
-
 /**
  * Computes the shape's depth using the matrix.
  */
@@ -65,7 +62,6 @@ void Shape::computeDepth(Matrix &matrix) {
 	pos = matrix * pos;
 	depth = pos.z;
 }
-
 
 
 /**

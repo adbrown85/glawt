@@ -12,14 +12,12 @@
 #include "Vector.hpp"
 
 
-
 /**
  * @brief
  *     Bounding box made up of lines.
  * @ingroup graph
  */
 class Outline : public Shape {
-	
 	
 	public : 
 		
@@ -28,7 +26,6 @@ class Outline : public Shape {
 		virtual void draw() const;
 		
 		void setColor(float r, float g, float b);
-	
 	
 	private:
 		

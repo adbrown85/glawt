@@ -16,14 +16,12 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     %Texture nodes for volumes.
  * @ingroup graph
  */
 class Texture3D : public Texture {
-	
 	
 	public :
 		
@@ -35,7 +33,6 @@ class Texture3D : public Texture {
 		int getDepth() {return dataset.getDepth();}
 		int getHeight() {return dataset.getHeight();}
 		int getWidth() {return dataset.getWidth();}
-	
 	
 	private:
 		

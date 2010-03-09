@@ -14,7 +14,11 @@
 #include "Tag.hpp"
 
 
-
+/**
+ * @ingroup graph
+ * @brief
+ *     Polygon that takes up the entire window.
+ */
 class Fullscreen : public Node,
                    public Drawable {
 	

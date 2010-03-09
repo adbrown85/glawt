@@ -7,7 +7,6 @@
 #include "Factory.hpp"
 
 
-
 /**
  * Makes a Factory that will create items in a scene.
  * 
@@ -23,7 +22,6 @@ Factory::Factory(Node *root,
 	this->root = root;
 	this->filename = filename;
 }
-
 
 
 /**
@@ -67,7 +65,6 @@ Node* Factory::create(const Tag &tag) {
 		throw message.c_str();
 	}
 }
-
 
 
 /**

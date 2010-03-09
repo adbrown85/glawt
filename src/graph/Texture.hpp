@@ -20,15 +20,13 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup graph
  * @brief
  *     OpenGL texture node.
- * @ingroup graph
  */
 class Texture : public Node,
                 public Applicable {
-	
 	
 	public:
 		
@@ -49,7 +47,6 @@ class Texture : public Node,
 		static int getNumberOfActiveUnits() {return active_units.size();}
 		static void pause();
 		static void restart();
-	
 	
 	protected:
 		

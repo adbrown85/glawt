@@ -12,10 +12,8 @@
 #include "Node.hpp"
 
 
-
 class Transformation : public Applicable,
                        public Node {
-	
 	
 	public :
 		

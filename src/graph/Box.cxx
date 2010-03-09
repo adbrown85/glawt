@@ -11,7 +11,6 @@
 using namespace std;
 
 
-
 /**
  * Structure to access Box internals.
  */
@@ -61,7 +60,6 @@ struct BoxTester : public Box {
 };
 
 
-
 /**
  * Unit test for Box.
  */
@@ -105,3 +103,4 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

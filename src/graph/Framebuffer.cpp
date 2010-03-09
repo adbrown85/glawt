@@ -7,7 +7,6 @@
 #include "Framebuffer.hpp"
 
 
-
 /**
  * Creates a new %Framebuffer.
  */
@@ -17,7 +16,6 @@ Framebuffer::Framebuffer() {
 	className = "Framebuffer";
 	this->handle = 0;
 }
-
 
 
 /**
@@ -34,7 +32,6 @@ Framebuffer::Framebuffer(const Tag &tag) {
 }
 
 
-
 /**
  * Deletes the %Framebuffer.
  */
@@ -43,7 +40,6 @@ Framebuffer::~Framebuffer() {
 	// Delete the framebuffer
 	glDeleteFramebuffers(1, &handle);
 }
-
 
 
 /**
@@ -60,7 +56,6 @@ void Framebuffer::apply() {
 }
 
 
-
 /**
  * Generates the %Framebuffer in OpenGL and binds it.
  */
@@ -70,7 +65,6 @@ void Framebuffer::associate() {
 	glGenFramebuffers(1, &handle);
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
 }
-
 
 
 /**
@@ -95,7 +89,6 @@ void Framebuffer::find(Node *node,
 }
 
 
-
 /**
  * Unbinds the %Framebuffer.
  */
@@ -106,7 +99,6 @@ void Framebuffer::remove() {
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
-
 
 
 /**

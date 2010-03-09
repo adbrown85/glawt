@@ -16,9 +16,7 @@
 using namespace std;
 
 
-
 class Tester {
-	
 	
 	public :
 		

@@ -19,7 +19,6 @@
 using namespace std;
 
 
-
 /**
  * @ingroup graph
  * @brief
@@ -27,7 +26,6 @@ using namespace std;
  */
 class Shape : public Node,
               public Selectable {
-	
 	
 	public :
 		
@@ -37,7 +35,6 @@ class Shape : public Node,
 		
 		GLenum getStyle() {return style;}
 		void setStyle(GLenum style) {this->style = style;}
-	
 	
 	protected : 
 		

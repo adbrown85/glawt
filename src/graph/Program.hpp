@@ -17,7 +17,6 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
@@ -25,7 +24,6 @@ using namespace std;
  */
 class Program : public Node,
                 public Applicable {
-	
 	
 	public :
 		
@@ -40,7 +38,6 @@ class Program : public Node,
 		virtual GLuint getHandle() const {return handle;}
 		
 		static Program* getCurrent() {return current;}
-	
 	
 	private:
 		

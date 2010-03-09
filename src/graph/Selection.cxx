@@ -8,13 +8,10 @@
 #include "Selection.hpp"
 
 
-
 class SelectableTester : public Selectable {
 	public:
 		void draw() const {};
 };
-
-
 
 
 /**
@@ -71,3 +68,4 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

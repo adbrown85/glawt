@@ -7,7 +7,6 @@
 #include "Tester.hpp"
 
 
-
 /**
  * Simple GLUT application for testing nodes with XML files.
  */

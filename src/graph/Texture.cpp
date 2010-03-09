@@ -8,7 +8,6 @@
 vector<GLenum> Texture::active_units;
 
 
-
 /**
  * Initializes a texture.
  * 
@@ -27,7 +26,6 @@ Texture::Texture(string name,
 }
 
 
-
 /**
  * Creates a new %Texture from an XML tag.
  * 
@@ -43,7 +41,6 @@ Texture::Texture(const Tag &tag) {
 }
 
 
-
 /**
  * Applies the texture.
  */
@@ -55,7 +52,6 @@ void Texture::apply() {
 	glBindTexture(type, handle);
 	active_units.push_back(type);
 }
-
 
 
 /**
@@ -81,7 +77,6 @@ void Texture::associate() {
 }
 
 
-
 /**
  * Temporarily disables texturing on all active units.
  */
@@ -96,7 +91,6 @@ void Texture::pause() {
 		glDisable(active_units[i]);
 	}
 }
-
 
 
 /**
@@ -115,7 +109,6 @@ void Texture::restart() {
 }
 
 
-
 /**
  * Removes the texture.
  */
@@ -128,7 +121,6 @@ void Texture::remove() {
 }
 
 
-
 /**
  * Initializes attributes common to all constructors.
  */
@@ -139,7 +131,6 @@ void Texture::init() {
 	this->unit = 0;
 	this->handle = 0;
 }
-
 
 
 /**

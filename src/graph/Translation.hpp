@@ -18,7 +18,6 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     %Node that moves items in the scene.
@@ -26,7 +25,6 @@ using namespace std;
  */
 class Translation : public Transformation,
                     public Vector {
-	
 	
 	public:
 		
@@ -39,7 +37,6 @@ class Translation : public Transformation,
 		virtual void apply();
 		virtual void remove();
 		virtual string toString() const;
-	
 	
 	protected:
 		

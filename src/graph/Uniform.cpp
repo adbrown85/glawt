@@ -9,7 +9,6 @@
 set<string> Uniform::types;
 
 
-
 /**
  * Initializes a new uniform variable with a value and type.
  * 
@@ -37,7 +36,6 @@ Uniform::Uniform(string type,
 }
 
 
-
 /**
  * Creates a new %Uniform from an XML tag.
  * 
@@ -54,7 +52,6 @@ Uniform::Uniform(const Tag &tag) {
 	init();
 	verify();
 }
-
 
 
 /**
@@ -94,7 +91,6 @@ void Uniform::associate() {
 }
 
 
-
 /**
  * Sets the value of the variable in the program.
  */
@@ -106,7 +102,6 @@ void Uniform::apply() {
 	else
 		glUniform1i(location, static_cast<int>(value));
 }
-
 
 
 /**
@@ -123,7 +118,6 @@ void Uniform::finalize() {
 	if (location == -1)
 		return;
 }
-
 
 
 /**
@@ -143,7 +137,6 @@ void Uniform::init() {
 }
 
 
-
 /**
  * Initializes the supported types.
  */
@@ -161,7 +154,6 @@ void Uniform::initTypes() {
 }
 
 
-
 /**
  * Checks if the uniform is a sampler type.
  */
@@ -173,7 +165,6 @@ bool Uniform::isSampler() {
 	type = Tag::tolower(this->type);
 	return (type == "sampler2d" || type == "sampler3d");
 }
-
 
 
 /**
@@ -189,7 +180,6 @@ bool Uniform::isSupported(string type) {
 }
 
 
-
 /**
  * Resets the uniform variable in the program to 0.
  */
@@ -201,7 +191,6 @@ void Uniform::remove() {
 	else
 		glUniform1i(location, 0);
 }
-
 
 
 /**
@@ -218,7 +207,6 @@ void Uniform::verify() {
 	if (isSampler() && link.empty())
 		throw "[Gander,Uniform] Sampler types require link.";
 }
-
 
 
 /**
