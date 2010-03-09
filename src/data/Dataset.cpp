@@ -252,7 +252,7 @@ void Dataset::initTypeBlock() {
 		block = 4;
 	}
 	else
-		throw "Gander,Dataset: Data type not currently supported.";
+		throw "[Dataset] Data type not currently supported.";
 }
 
 
@@ -297,7 +297,7 @@ void Dataset::readData() {
 	// Open the file
 	file.open(header.getFilename().c_str(), ios_base::binary);
 	if (!file)
-		throw "Gander,Dataset: Could not open file in binary mode.";
+		throw "[Dataset] Could not open file in binary mode.";
 	
 	// Skip everything up to the data
 	for (int i=0; i<header.getOffset(); ++i)
@@ -331,7 +331,7 @@ void Dataset::set(const Index &index,
 	
 	// Check type
 	if (type != this->type)
-		throw "Gander,Dataset: Types do not match!";
+		throw "[Dataset] Types do not match!";
 	
 	// Copy the value
 	position = findPosition(index);

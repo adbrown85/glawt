@@ -75,12 +75,12 @@ void DatasetHeader::check() {
 	// Open file
 	file.open(filename.c_str());
 	if (!file)
-		throw "Gander,DatasetHeader: Could not open file.";
+		throw "[DatasetHeader] Could not open file.";
 	
 	// Look for file descriptor
 	getline(file, line);
 	if (line.compare("VLIB.1") != 0)
-		throw "Gander,DatasetHeader: First line of file is not 'VLIB.1'.";
+		throw "[DatasetHeader] First line of file is not 'VLIB.1'.";
 	beginning = 1;
 	
 	// Skip comments
