@@ -24,27 +24,23 @@ using namespace std;
 
 /**
  * @mainpage
- * <table align="center" border="0" width="70%">
- * <tr>
- *     <td><img src="../images/gander-big.png"></td>
- * </tr>
- * <tr>
- *     <td><p>This document describes the C++ classes that make up 
- *         <a href="../" target="_parent">Gander</a>.  We suggest starting 
- *         with the <i>Modules</i> page, which gives a good overview of how the 
- *         application is divided up into several different layers, starting 
- *         at the bottom with <i>Data</i> and moving all the way up to 
- *         <i>Graph</i>, <i>Backend</i>, <i>Frontend</i>, and finally 
- *         <i>%Client</i>.
- *         <p>After that, check out the <i>Class Hierarchy</i> to get a 
- *         better idea of how the classes work together.  Finally, go ahead 
- *         and dive in to the actual classes themselves.
- *         <p>For source code, check out our <a 
- *         href="http://gander.git.sourceforge.net"
- *         target="_parent">Git repository</a>.
- * </td>
- * </tr>
- * </table>
+ * @image html gander.png
+ * 
+ * <table align="center" border="0" style="width:34em"><tr><td>
+ * This document describes the C++ classes that make up Gander.  We suggest 
+ * starting with the @e Modules page, which gives a good overview of how the 
+ * application is divided up into several different layers, starting at the 
+ * bottom with @e Data and moving all the way up to @e Graph, @e Backend, 
+ * @e Frontend, and finally @e %Client.</p>
+ * 
+ * After that, check out the <i>Class Hierarchy</i> to get a better idea of 
+ * how the classes work together, or go ahead and dive in to the actual 
+ * classes themselves.
+ * 
+ * For the latest source code, check out our <a href="http://gander.git.sf.net" 
+ * target="_blank">Git repository</a>.
+ * </td></tr></table>
+ * 
  * @defgroup client Client
  * @defgroup frontend Frontend
  * @defgroup backend Backend

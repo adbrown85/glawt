@@ -9,6 +9,7 @@
 
 # Resolve directories
 bindir = $(GANDER)/bin
+docdir = $(GANDER)/doc
 libdir = $(GANDER)/lib
 srcdir = $(GANDER)/src
 VPATH = $(bindir) $(libdir) $(srcdir)
@@ -28,8 +29,11 @@ LDFLAGS = -lm -lglut -lIL -lILU -lILUT
 
 
 # Phony targets for directing make
-.PHONY : all tests FORCE
-all tests : FORCE
+.PHONY : all html tests FORCE
+all tests: FORCE
 FORCE :
 	@mkdir -p $(bindir)
 	@mkdir -p $(libdir)
+html:
+	@make -C $(docdir)
+

@@ -9,7 +9,7 @@ MODULE = backend
 CHILDREN = graph traits data
 FILTER = 
 GANDER = ../..
-include $(GANDER)/src/globals.mak
+include $(GANDER)/globals.mak
 include $(GANDER)/src/module.mak
 
 

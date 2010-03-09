@@ -6,7 +6,7 @@
 #     Andy Brown <andybrown85@gmail.com>
 #
 GANDER = .
-include $(GANDER)/src/globals.mak
+include $(GANDER)/globals.mak
 
 
 # Phony targets for directing make
