@@ -33,29 +33,39 @@ Factory::Factory(Node *root,
 Node* Factory::create(const Tag &tag) {
 	
 	// Supported nodes
-	if (tag.name.compare("box") == 0)
+	if (tag.name == "ambient")
+		return new Ambient(tag);
+	else if (tag.name == "box")
 		return new Box(tag);
-	else if (tag.name.compare("cull") == 0)
+	else if (tag.name == "cull")
 		return new Cull(tag);
-	else if (tag.name.compare("framebuffer") == 0)
+	else if (tag.name == "diffuse")
+		return new Diffuse(tag);
+	else if (tag.name == "framebuffer")
 		return new Framebuffer(tag);
-	else if (tag.name.compare("fullscreen") == 0)
+	else if (tag.name == "fullscreen")
 		return new Fullscreen(tag);
-	else if (tag.name.compare("program") == 0)
+	else if (tag.name == "light")
+		return new Light(tag);
+	else if (tag.name == "position")
+		return new Position(tag);
+	else if (tag.name == "program")
 		return new Program(tag);
-	else if (tag.name.compare("shader") == 0)
+	else if (tag.name == "shader")
 		return new Shader(tag);
-	else if (tag.name.compare("square") == 0)
+	else if (tag.name == "specular")
+		return new Specular(tag);
+	else if (tag.name == "square")
 		return new Square(tag);
-	else if (tag.name.compare("target") == 0)
+	else if (tag.name == "target")
 		return new Target(tag);
-	else if (tag.name.compare("texture2d") == 0)
+	else if (tag.name == "texture2d")
 		return new Texture2D(tag);
-	else if (tag.name.compare("texture3d") == 0)
+	else if (tag.name == "texture3d")
 		return new Texture3D(tag);
-	else if (tag.name.compare("translate") == 0)
+	else if (tag.name == "translate")
 		return new Translation(tag);
-	else if (tag.name.compare("uniform") == 0)
+	else if (tag.name == "uniform")
 		return new Uniform(tag);
 	
 	// Unsupported

@@ -1,0 +1,14 @@
+<!--
+ * Light.xml
+ *     Test for Light.
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<light>
+	<translate>
+		<box/>
+	</translate>
+</light>
