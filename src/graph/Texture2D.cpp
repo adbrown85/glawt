@@ -196,6 +196,8 @@ void Texture2D::initLibraries() {
 
 /**
  * Loads an image into the texture.
+ * 
+ * @throws const_char* if the image cannot be loaded or bound
  */
 void Texture2D::load() {
 	
@@ -210,11 +212,13 @@ void Texture2D::load() {
 		     << filename
 		     << "'." << endl;
 	else {
-		cerr << "[Gander,Texture2D] DevIL could not load '" 
-		     << filename 
-		     << "'." << endl;
-		exit(1);
+		ostringstream message;
+		message << "[Gander,Texture2D] DevIL could not load '" 
+		        << filename 
+		        << "'." << endl;
+		throw message.str().c_str();
 	}
+	size = ilGetInteger(IL_IMAGE_WIDTH);
 	
 	// Load into texture
 	ilBindImage(image);
