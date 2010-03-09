@@ -13,7 +13,6 @@
 #include "Tag.hpp"
 
 
-
 /**
  * @ingroup graph
  * @brief
@@ -21,12 +20,10 @@
  */
 class Position : public Node {
 	
-	
 	public :
 		
 		Position(const Tag &tag);
 		virtual string toString() const;
-	
 	
 	private:
 		

@@ -7,7 +7,6 @@
 #include "Position.hpp"
 
 
-
 /**
  * Creates a position for a light.
  */
@@ -21,7 +20,6 @@ Position::Position(const Tag &tag) {
 	tag.get("y", y, false);
 	tag.get("z", z, false);
 }
-
 
 
 /**
@@ -40,7 +38,6 @@ void Position::associate() {
 	// Set position
 	glLightfv(light->getHandle(), GL_POSITION, position);
 }
-
 
 
 /**

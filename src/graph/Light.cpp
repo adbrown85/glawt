@@ -75,6 +75,16 @@ Light* Light::find(Node *node) {
 
 
 /**
+ * Temporarily disables all lighting.
+ */
+void Light::pause() {
+	
+	if (active_lights > 0)
+		glDisable(GL_LIGHTING);
+}
+
+
+/**
  * Disables the light.
  */
 void Light::remove() {
@@ -83,6 +93,16 @@ void Light::remove() {
 	--active_lights;
 	if (active_lights == 0)
 		glDisable(GL_LIGHTING);
+}
+
+
+/**
+ * Enables all lighting after it had been temporarily disabled.
+ */
+void Light::restart() {
+	
+	if (active_lights > 0)
+		glEnable(GL_LIGHTING);
 }
 
 

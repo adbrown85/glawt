@@ -144,6 +144,7 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->remove();
 	Texture::pause();
+	Light::pause();
 	
 	// Draw outline
 	glPushAttrib(GL_CURRENT_BIT);
@@ -176,5 +177,6 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->apply();
 	Texture::restart();
+	Light::restart();
 }
 

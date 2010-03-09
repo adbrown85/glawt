@@ -40,6 +40,8 @@ class Light : public Node,
 		GLenum getHandle() const {return handle;}
 		
 		static Light* find(Node *node);
+		static void pause();
+		static void restart();
 	
 	private:
 		
