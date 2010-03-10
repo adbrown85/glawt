@@ -51,6 +51,25 @@ void Texture3D::associate() {
 }
 
 
+Texture3D* Texture3D::find(Node *node,
+                           const string &name) {
+	
+	Node *current;
+	Texture3D *texture3d;
+	
+	current = node->getParent();
+	while (current != NULL) {
+		texture3d = dynamic_cast<Texture3D*>(current);
+		if (texture3d != NULL && texture3d->getName()==name) {
+			return texture3d;
+		} else {
+			current = current->getParent();
+		}
+	}
+	return NULL;
+}
+
+
 /**
  * Initializes attributes common to all constructors.
  */

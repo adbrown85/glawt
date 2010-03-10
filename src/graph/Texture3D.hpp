@@ -33,6 +33,8 @@ class Texture3D : public Texture {
 		int getDepth() {return dataset.getDepth();}
 		int getHeight() {return dataset.getHeight();}
 		int getWidth() {return dataset.getWidth();}
+		static Texture3D* find(Node *node,
+		                       const string &name);
 	
 	private:
 		
