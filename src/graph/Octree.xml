@@ -1,0 +1,12 @@
+<!--
+ * Octree.xml
+ * 
+ * Author
+ *     Andrew Brown
+-->
+
+
+<texture3d file="../../textures/bear.vlb" name="bear">
+	<octree name="octree" link="bear">
+	</octree>
+</texture3d>

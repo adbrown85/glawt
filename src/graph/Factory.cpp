@@ -47,6 +47,8 @@ Node* Factory::create(const Tag &tag) {
 		return new Fullscreen(tag);
 	else if (tag.name == "light")
 		return new Light(tag);
+	else if (tag.name == "octree")
+		return new Octree(tag);
 	else if (tag.name == "position")
 		return new Position(tag);
 	else if (tag.name == "program")

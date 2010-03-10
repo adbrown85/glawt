@@ -20,6 +20,7 @@
 #include "Fullscreen.hpp"
 #include "Light.hpp"
 #include "Node.hpp"
+#include "Octree.hpp"
 #include "Parser.hpp"
 #include "Position.hpp"
 #include "Program.hpp"
@@ -37,9 +38,9 @@ using namespace std;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Creates items from XML tags and adds them to the scene.
- * @ingroup backend
  */
 class Factory {
 	
