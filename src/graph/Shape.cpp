@@ -70,7 +70,7 @@ void Shape::computeDepth(Matrix &matrix) {
 string Shape::toString() const {
 	
 	string styleStr;
-	stringstream stream;
+	ostringstream stream;
 	
 	// Format
 	styleStr = style==GL_TEXTURE_2D ? "2D" : "3D";

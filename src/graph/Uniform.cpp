@@ -214,7 +214,7 @@ void Uniform::verify() {
  */
 string Uniform::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Build string
 	stream << Node::toString();

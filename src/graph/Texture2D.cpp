@@ -233,7 +233,7 @@ void Texture2D::load() {
  */
 string Texture2D::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Build string
 	stream << Texture::toString();

@@ -138,7 +138,7 @@ void Texture::init() {
  */
 string Texture::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	stream << Node::toString();
 	stream << " name='" << name << "'"

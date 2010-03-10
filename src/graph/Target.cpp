@@ -81,7 +81,7 @@ void Target::finalize() {
  */
 string Target::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	stream << Node::toString()
 	       << " size='" << size << "'"

@@ -111,7 +111,7 @@ void Light::restart() {
  */
 string Light::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	stream << Node::toString();
 	stream << " handle='" << handle << "'";

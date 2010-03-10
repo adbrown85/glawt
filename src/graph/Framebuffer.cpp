@@ -106,7 +106,7 @@ void Framebuffer::remove() {
  */
 string Framebuffer::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Insert attributes
 	stream << Node::toString()

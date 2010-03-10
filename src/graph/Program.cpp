@@ -115,7 +115,7 @@ void Program::remove() {
  */
 string Program::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Build string
 	stream << Node::toString();

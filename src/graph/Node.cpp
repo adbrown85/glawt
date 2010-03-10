@@ -171,7 +171,7 @@ void Node::sortByDepth(Matrix &matrix) {
 
 string Node::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Make string
 	stream << className;

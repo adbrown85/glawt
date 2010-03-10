@@ -48,7 +48,7 @@ void LightColor::associate() {
  */
 string LightColor::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	stream << Node::toString();
 	stream << " r='" << r << "'"

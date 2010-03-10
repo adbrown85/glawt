@@ -45,7 +45,7 @@ void Position::associate() {
  */
 string Position::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	stream << Node::toString();
 	stream << " x='" << x << "'"

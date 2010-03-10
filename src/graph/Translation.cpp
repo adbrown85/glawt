@@ -100,7 +100,7 @@ void Translation::remove() {
  */
 string Translation::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Build string
 	stream << Node::toString();

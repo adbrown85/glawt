@@ -144,7 +144,7 @@ void Shader::initType() {
 	else if (extension == ".vert")
 		type = "vertex";
 	else {
-		stringstream message;
+		ostringstream message;
 		message << "[Gander,Shader] Extension '"
 		        << extension << "' not recognized as type.\n";
 		message << "[Gander,Shader] Use '.frag' or '.vert', "
@@ -228,7 +228,7 @@ void Shader::log() const {
  */
 string Shader::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Build string
 	stream << Node::toString();
