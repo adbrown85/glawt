@@ -74,17 +74,27 @@ int main(int argc,
 	OctreeNode *root;
 	OctreeBuilderTester *builder;
 	
-	// Basics
-	dataset = new Dataset("../../input/bear.vlb");
-	builder = new OctreeBuilderTester(dataset);
-	builder->print();
-	cout << "Offsets: " << endl;
-	builder->printOffsets();
+	try {
 	
-	// Build
-	cout << "Building: " << endl;
-	root = builder->build();
-	OctreeBuilderTester::printRecursive(root, 0, 2);
+		// Basics
+		dataset = new Dataset("../../textures/bear.vlb");
+		builder = new OctreeBuilderTester(dataset);
+		builder->print();
+		cout << "Offsets: " << endl;
+		builder->printOffsets();
+		
+		// Build
+		cout << "\nBuilding: " << endl;
+		root = builder->build();
+		OctreeBuilderTester::printRecursive(root, 0, 2);
+		
+		// Total nodes
+		cout << "\nTotal Nodes: " << endl;
+		cout << "  " << builder->getTotalNodes() << endl;
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	return 0;

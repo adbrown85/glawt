@@ -12,6 +12,7 @@ OctreeBuilder::OctreeBuilder(Dataset *dataset) {
 	// Basics
 	this->dataset = dataset;
 	this->treeHeight = getTreeHeightOf(dataset);
+	totalNodes = 0;
 	
 	// Offsets
 	offsets = new int[treeHeight+1];
@@ -31,11 +32,10 @@ OctreeBuilder::~OctreeBuilder() {
 OctreeNode* OctreeBuilder::build() {
 	
 	Index center;
-	OctreeBuilder builder(dataset);
 	
 	// Build up from root node
 	center.set(offsets[0]);
-	return builder.buildNode(center, 0);
+	return buildNode(center, 0);
 }
 
 
@@ -45,6 +45,7 @@ OctreeNode* OctreeBuilder::buildNode(Index &center,
 	OctreeNode *node;
 	
 	node = new OctreeNode();
+	++totalNodes;
 	if (depth == treeHeight) {
 		buildNodeAsLeaf(center, depth, node);
 	} else {

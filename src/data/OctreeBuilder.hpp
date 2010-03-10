@@ -28,6 +28,7 @@ class OctreeBuilder {
 		~OctreeBuilder();
 		
 		OctreeNode* build();
+		int getTotalNodes() const {return totalNodes;}
 		int getTreeHeight() const {return treeHeight;}
 		static int getTreeHeightOf(Dataset *dataset);
 		string toString();
@@ -36,6 +37,7 @@ class OctreeBuilder {
 		
 		Dataset *dataset;
 		int *offsets;
+		int totalNodes;
 		int treeHeight;
 		
 		OctreeNode* buildNode(Index &center,
