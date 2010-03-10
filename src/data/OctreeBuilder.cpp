@@ -13,6 +13,7 @@ OctreeBuilder::OctreeBuilder(Dataset *dataset) {
 	this->dataset = dataset;
 	this->treeHeight = getTreeHeightOf(dataset);
 	totalNodes = 0;
+	threshold = 0;
 	
 	// Offsets
 	offsets = new int[treeHeight+1];
@@ -92,15 +93,15 @@ void OctreeBuilder::buildNodeAsLeaf(const Index &center,
 		sampleIndex = offsetSample(center, i);
 		switch (type) {
 			case GL_UNSIGNED_BYTE:
-				if (dataset->getAsByte(sampleIndex) > 0)
+				if (dataset->getAsByte(sampleIndex) > (int)threshold)
 					return;
 				break;
 			case GL_FLOAT:
-				if (dataset->getAsFloat(sampleIndex) > 0.0)
+				if (dataset->getAsFloat(sampleIndex) > threshold)
 					return;
 				break;
 			case GL_SHORT:
-				if (dataset->getAsShort(sampleIndex) > 0)
+				if (dataset->getAsShort(sampleIndex) > (short)threshold)
 					return;
 				break;
 			default:

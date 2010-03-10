@@ -56,7 +56,7 @@ void OctreeBuilderTester::printRecursive(OctreeNode *node,
                                          int depth,
                                          int maximumDepth) {
 	
-	if (depth > maximumDepth)
+	if (depth > maximumDepth || node == NULL)
 		return;
 	
 	indent(depth);
@@ -71,14 +71,31 @@ int main(int argc,
          char *argv[]) {
 	
 	Dataset *dataset;
+	float threshold;
 	OctreeNode *root;
 	OctreeBuilderTester *builder;
+	string filename;
+	
+	// Handle arguments
+	if (argc == 1) {
+		filename = "../../textures/bear.vlb";
+		threshold = 0;
+	} else if (argc == 3) {
+		filename = argv[1];
+		threshold = atoi(argv[2]);
+	} else {
+		cerr << "Usage: " << argv[0] 
+		     << " <filename>"
+		     << " <threshold>" << endl;
+		exit(1);
+	}
 	
 	try {
 	
 		// Basics
-		dataset = new Dataset("../../textures/bear.vlb");
+		dataset = new Dataset(filename);
 		builder = new OctreeBuilderTester(dataset);
+		builder->setThreshold(threshold);
 		builder->print();
 		cout << "Offsets: " << endl;
 		builder->printOffsets();

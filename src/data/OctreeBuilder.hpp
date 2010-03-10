@@ -31,14 +31,14 @@ class OctreeBuilder {
 		int getTotalNodes() const {return totalNodes;}
 		int getTreeHeight() const {return treeHeight;}
 		static int getTreeHeightOf(Dataset *dataset);
+		void setThreshold(float threshold);
 		string toString();
 	
 	protected:
 		
 		Dataset *dataset;
-		int *offsets;
-		int totalNodes;
-		int treeHeight;
+		float threshold;
+		int *offsets, totalNodes, treeHeight;
 		
 		OctreeNode* buildNode(Index &center,
 		                      int depth);
@@ -55,6 +55,16 @@ class OctreeBuilder {
 		Index offsetSample(const Index &Center,
 		                   int sampleNumber);
 };
+
+
+/**
+ * @param [in] threshold
+ *     Number that determines if a node is empty.
+ */
+inline void OctreeBuilder::setThreshold(float threshold) {
+	
+	this->threshold = threshold;
+}
 
 
 #endif
