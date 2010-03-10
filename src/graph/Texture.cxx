@@ -6,7 +6,6 @@
  */
 #include <sstream>
 #include "Texture.hpp"
-#include "Scene.hpp"
 
 
 class FakeTexture : public Texture {
@@ -25,7 +24,7 @@ class FakeTexture : public Texture {
 int main() {
 	
 	ostringstream name;
-	Scene scene;
+	Node *root, *last;
 	Tag tag;
 	Texture *texture;
 	
@@ -38,16 +37,20 @@ int main() {
 	
 	// Create textures
 	cout << "\nCreating textures..." << endl;
+	root = new Node();
+	last = root;
 	for (int i=0; i<4; ++i) {
 		name.str("");
 		name << "crate" << i+1;
 		texture = new FakeTexture(name.str(), "../../input/crate.jpg");
-		scene.addToLast(texture);
+		last->addChild(texture);
+		last = texture;
 	}
 	
 	// Prepare nodes
 	cout << "\nPreparing nodes..." << endl;
-	scene.prepare();
-	scene.print();
+	root->associateTree();
+	root->finalizeTree();
+	root->printTree();
 }
 

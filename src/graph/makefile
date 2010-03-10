@@ -55,4 +55,3 @@ Tester.o: Scene.o
 Scene: Shape.o Translation.o
 Shape: Translation.o
 Tester: 
-Texture: Scene.o
