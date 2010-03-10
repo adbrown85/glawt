@@ -48,6 +48,7 @@ class DatasetHeader {
 		void print() const;
 		void read();
 		void read(istream &stream);
+		void write(ostream &stream);
 		
 		int getDepth() const;
 		string getFilename() const;
