@@ -7,7 +7,6 @@
 #include "DatasetHeader.hpp"
 
 
-
 /**
  * Reads a header from a dataset file.
  * 
@@ -25,7 +24,6 @@ DatasetHeader::DatasetHeader(string filename) {
 	check();
 	read();
 }
-
 
 
 /**
@@ -47,54 +45,75 @@ DatasetHeader::DatasetHeader(const Tag &tag) {
 }
 
 
+/**
+ * Reads a dataset header directly from an input stream.
+ * 
+ * @param [in] stream
+ *     Input stream to read from.
+ * 
+ * @throws const_char* from check()
+ */
+DatasetHeader::DatasetHeader(istream &stream) {
+	
+	check(stream);
+	read(stream);
+}
+
 
 /**
- * Checks if a file has a good header, then finds its beginning.
- * 
- * Determines if the header is good by reading the first line of the file as 
- * text.  It will only be deemed appropriate if the first line is equal to 
- * @e VLIB.1.
- * 
- * To find the beginning of the actual information in the header, it continues 
- * reading the file by skipping over any comments.  Note that comments are 
- * lines in which the first character is @e #.
- * 
- * At the end of the execution of this method, @c beginning will be set to the 
- * number of lines that should be skipped to get to the start of the metadata 
- * in the file's header.  In other words, the next line after that will be the 
- * first line containing metadata.
+ * Checks if the file exists, then calls check(istream&).
  * 
  * @throws const_char* if the file could not be opened.
- * @throws const_char* if the file does not have an appropriate header.
  */
 void DatasetHeader::check() {
 	
 	ifstream file;
-	string line;
 	
-	// Open file
+	// Open file and check it
 	file.open(filename.c_str());
 	if (!file)
 		throw "[DatasetHeader] Could not open file.";
-	
-	// Look for file descriptor
-	getline(file, line);
-	if (line.compare("VLIB.1") != 0)
-		throw "[DatasetHeader] First line of file is not 'VLIB.1'.";
-	beginning = 1;
-	
-	// Skip comments
-	getline(file, line);
-	while (line[0] == '#') {
-		comments.push_back(line.substr(1, line.length()-1));
-		getline(file, line);
-	}
-	beginning += comments.size();
-	
-	// Finish
+	check(file);
 	file.close();
 }
 
+
+/**
+ * Checks if the stream has a good header, then finds its beginning.
+ * 
+ * Determines if the header is good by reading the first line of the stream as 
+ * text.  It will only be deemed appropriate if the first line is equal to 
+ * @e VLIB.1.
+ * 
+ * To find the beginning of the actual information in the header, it continues 
+ * reading the stream by skipping over any comments.  Note that comments are 
+ * lines in which the first character is @e #.
+ * 
+ * At the end of the execution of this method, @c beginning will be set to the 
+ * number of lines that should be skipped to get to the start of the metadata 
+ * in the stream's header.  In other words, the next line after that will be 
+ * the first line containing metadata.
+ * 
+ * @throws const_char* if the stream does not have an appropriate header.
+ */
+void DatasetHeader::check(istream &stream) {
+	
+	string line;
+	
+	// Look for descriptor
+	getline(stream, line);
+	if (line != "VLIB.1")
+		throw "[DatasetHeader] First line of stream is not 'VLIB.1'.";
+	beginning = 1;
+	
+	// Skip comments
+	getline(stream, line);
+	while (line[0] == '#') {
+		comments.push_back(line.substr(1, line.length()-1));
+		getline(stream, line);
+	}
+	beginning += comments.size();
+}
 
 
 /**
@@ -129,32 +148,42 @@ void DatasetHeader::print() const {
 }
 
 
+/**
+ * Opens the file then calls read(istream&).
+ */
+void DatasetHeader::read() {
+	
+	ifstream file;
+	
+	// Open file and read it
+	file.open(filename.c_str());
+	read(file);
+	file.close();
+}
+
 
 /**
  * Reads the details in the header and sets @c offset.
  * 
  * @see getOffset()
  */
-void DatasetHeader::read() {
+void DatasetHeader::read(istream &stream) {
 	
-	ifstream file;
 	string line;
 	
-	// Open file, skip to beginning of details
-	file.open(filename.c_str());
+	// Skip to beginning of details
 	for (int i=0; i<beginning; ++i)
-		getline(file, line);
+		getline(stream, line);
 	
 	// Get details
-	file >> width >> height >> depth;
-	file >> type;
-	file >> endian;
-	file >> pitch[0] >> pitch[1] >> pitch[2];
-	file >> min >> max;
-	file >> low >> high;
+	stream >> width >> height >> depth;
+	stream >> type;
+	stream >> endian;
+	stream >> pitch[0] >> pitch[1] >> pitch[2];
+	stream >> min >> max;
+	stream >> low >> high;
 	
 	// Finish
 	offset = beginning + 6;
-	file.close();
 }
 

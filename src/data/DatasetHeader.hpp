@@ -42,9 +42,12 @@ class DatasetHeader {
 		
 		DatasetHeader(string filename);
 		DatasetHeader(const Tag &tag);
+		DatasetHeader(istream &stream);
 		void check();
+		void check(istream &stream);
 		void print() const;
 		void read();
+		void read(istream &stream);
 		
 		int getDepth() const;
 		string getFilename() const;
