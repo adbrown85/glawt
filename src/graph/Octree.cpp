@@ -65,7 +65,6 @@ void Octree::finalize() {
 	cerr << "[Octree] Building octree..." << endl;
 	root = builder.build();
 	size = builder.getTotalNodes();
-	cout << size << endl;
 	load();
 }
 

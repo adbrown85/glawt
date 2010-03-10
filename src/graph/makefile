@@ -23,7 +23,7 @@ Light.o: Node.o
 LightColor.o: Node.o Light.o
 Transformation.hpp: Node.o
 Translation.o: Node.o Transformation.hpp
-Octree.o: Texture3D.o
+Octree.o: Texture3D.o Texture.o
 Program.o: Node.o
 Target.o: Framebuffer.o Node.o Texture2D.o
 Texture.o : Node.o
