@@ -22,7 +22,7 @@ int main(int argc,
 	
 	// Handle arguments
 	if (argc == 1)
-		filename = "../../input/bear.vlb";
+		filename = "../../textures/bear.vlb";
 	else if (argc == 5) {
 		filename = argv[1];
 		index = Index(atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
