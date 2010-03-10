@@ -1,0 +1,10 @@
+VLIB.1
+# These are some comments!
+# Woo hoo!  Comments!
+4 4 4
+uint8
+little
+1 1 1
+0 255
+65 90
+AAZZAAZZAAAAAAAAAAZZAAZZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZ

@@ -24,6 +24,7 @@ Dataset.o: DatasetHeader.o Tag.o
 OctreeBuilder.o: 
 OctreeNode.o: 
 Slice.o: Dataset.o
+VlbMaker.o: DatasetHeader.o
 
 # XML
 Tag.o :
