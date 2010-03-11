@@ -149,6 +149,7 @@ void Uniform::initTypes() {
 	// Add to set
 	types.insert("float");
 	types.insert("int");
+	types.insert("sampler1d");
 	types.insert("sampler2d");
 	types.insert("sampler3d");
 }
@@ -163,7 +164,9 @@ bool Uniform::isSampler() {
 	
 	// Compare strings
 	type = Tag::tolower(this->type);
-	return (type == "sampler2d" || type == "sampler3d");
+	return (type == "sampler1d"
+	          || type == "sampler2d"
+	          || type == "sampler3d");
 }
 
 
