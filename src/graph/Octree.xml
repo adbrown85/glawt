@@ -2,11 +2,17 @@
  * Octree.xml
  * 
  * Author
- *     Andrew Brown
+ *     Andrew Brown <adb1413@rit.edu>
 -->
 
 
-<texture3d file="../../textures/bear.vlb" name="bear">
-	<octree name="octree" link="bear">
+<texture3d file="../../textures/chunk.vlb" name="chunk">
+	<octree name="octree" link="chunk" threshold="80">
+		<program>
+			<shader file="Octree.frag">
+			<uniform type="sampler1d" name="octree" link="octree">
+				<square/>
+			</uniform>
+		</program>
 	</octree>
 </texture3d>

@@ -11,20 +11,23 @@ Octree::Octree(const Tag &tag):
                Texture(tag) {
 	
 	className = "Octree";
-	array = NULL;
+	textureData = NULL;
 	dataset = NULL;
 	size = 0;
 	tag.get("link", link, true);
+	tag.get("threshold", threshold, false);
 }
 
 
 /**
+ * Deletes the texture data.
+ * 
  * @todo Should recursively delete root.
  */
 Octree::~Octree() {
 	
-	if (array != NULL)
-		delete[] array;
+	if (textureData != NULL)
+		delete[] textureData;
 }
 
 
@@ -56,37 +59,75 @@ void Octree::associate() {
 
 
 /**
- * Builds an octree and then creates a texture from it.
+ * Builds an octree and then calls load().
  */
 void Octree::finalize() {
 	
 	OctreeBuilder builder(dataset);
 	
-	cerr << "[Octree] Building octree..." << endl;
+	// Build
+	builder.setThreshold(threshold);
 	root = builder.build();
 	size = builder.getTotalNodes();
+	height = builder.getTreeHeight();
+	
+	// Load it
 	load();
 }
 
 
+/**
+ * Loads the octree data into the texture.
+ */
 void Octree::load() {
 	
 	// Get the data
-	array = new unsigned char[size];
+	textureData = new unsigned char[size];
+	store(root, 0, 0);
 	
 	// Create the texture
 	glGenTextures(1, &handle);
-/*
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(GL_TEXTURE_1D);
 	glBindTexture(GL_TEXTURE_1D, handle);
 	glTexImage1D(GL_TEXTURE_1D,          // target
 	             0,                      // level
-	             GL_INTENSITY,           // internalFormat
+	             1,                      // components
 	             size,                   // width
 	             0,                      // border
 	             GL_LUMINANCE,           // format
 	             GL_UNSIGNED_BYTE,       // type
-	             data);                  // data
-*/
+	             textureData);           // data
+	
+	// Set parameters
+	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+}
+
+
+/**
+ * Recursively stores an octree node and its children into the texture data.
+ * 
+ * @param [in] node
+ *     Pointer to the octree node.
+ * @param [in] index
+ *     Where to store the node in the array.
+ * @param [in] depth
+ *     Current number of levels down from the root
+ */
+void Octree::store(OctreeNode *node,
+                   int index,
+                   int depth) {
+	
+	// Store self
+	textureData[index] = (int)(node->isEmpty()) * 255;
+	
+	// Store children
+	if (depth < height) {
+		for (int i=0; i<8; ++i) {
+			store(node->getChild(i), ++index, depth+1);
+		}
+	}
 }
 
 
@@ -94,8 +135,14 @@ string Octree::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Texture::toString();
-	stream << " size='" << size << "'";
+	stream << Node::toString();
+	stream << " name='" << name << "'"
+	       << " unit='" << unit << "'"
+	       << " handle='" << handle << "'"
+	       << " link='" << link << "'"
+	       << " threshold='" << threshold << "'"
+	       << " size='" << size << "'"
+	       << " height='" << height << "'";
 	return stream.str();
 }
 

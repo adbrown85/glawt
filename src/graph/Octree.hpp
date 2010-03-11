@@ -20,23 +20,28 @@ using namespace std;
 
 
 /**
- * 1D texture holding empty-space skipping information.
+ * @ingroup graph
+ * @brief
+ *     1D texture holding empty-space skipping information.
  */
 class Octree : public Texture {
 	
 	public:
 		
 		Octree(const Tag &tag);
-		~Octree();
+		virtual ~Octree();
 		virtual void associate();
 		virtual void finalize();
+		virtual void store(OctreeNode *node,
+		                   int index,
+		                   int depth);
 		virtual string toString() const;
 	
 	protected:
 		
-		unsigned char *array;
+		unsigned char *textureData;
 		Dataset *dataset;
-		int size;
+		int height, size, threshold;
 		OctreeNode *root;
 		string link;
 		
