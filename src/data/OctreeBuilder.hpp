@@ -18,7 +18,7 @@
 /**
  * @ingroup data
  * @brief
- *     Builds an octree and returns the root node.
+ *     Builds an octree from a dataset and returns the root node.
  */
 class OctreeBuilder {
 	

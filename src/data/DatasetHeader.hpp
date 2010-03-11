@@ -30,6 +30,20 @@ using namespace std;
  * measured in the number of samples, as well as the offset needed to skip over 
  * the header and get to the data.
  * 
+ * Here is the form of a valid file:
+ * 
+ * <tt>
+ * VLIB.1<br>
+ * # Comments<br>
+ * # More comments<br>
+ * width height depth<br>
+ * type<br>
+ * endian<br>
+ * pitchX pitchY pitchZ<br>
+ * min max<br>
+ * low high<br>
+ * </tt>
+ * 
  * @see check()
  * @see getWidth()
  * @see getHeight()
