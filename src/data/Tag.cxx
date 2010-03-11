@@ -7,7 +7,6 @@
 #include "Tag.hpp"
 
 
-
 int main() {
 	
 	Tag tag;
@@ -22,6 +21,7 @@ int main() {
 	cout << "\nTesting..." << endl;
 	tag.setName("Foo");
 	tag.add("fOO", "bAr");
+	tag.add("fIle", "/foo/Bar");
 	cout << tag << endl;
 	
 	// Finish

@@ -7,7 +7,6 @@
 #include "Tag.hpp"
 
 
-
 /**
  * Creates a new, normal tag.
  */
@@ -16,7 +15,6 @@ Tag::Tag() {
 	// Initialze
 	clear();
 }
-
 
 
 /**
@@ -30,9 +28,14 @@ Tag::Tag() {
 void Tag::add(const string &key,
               const string &value) {
 	
-	attributes[tolower(key)] = value;
+	string keyLower;
+	
+	keyLower = tolower(key);
+	if (keyLower != "file")
+		attributes[keyLower] = tolower(value);
+	else
+		attributes[keyLower] = value;
 }
-
 
 
 /**
@@ -46,7 +49,6 @@ void Tag::clear() {
 	name = "";
 	attributes.clear();
 }
-
 
 
 /**
@@ -66,7 +68,6 @@ void Tag::error(string key) const {
 	     + "' attribute!";
 	throw msg.c_str();
 }
-
 
 
 /**
@@ -91,7 +92,6 @@ void Tag::error(string key,
 	     + "'!";
 	throw msg.c_str();
 }
-
 
 
 /**
@@ -129,7 +129,6 @@ bool Tag::get(const string &key,
 }
 
 
-
 /**
  * Gets the value of an attribute as a character.
  * 
@@ -158,7 +157,6 @@ bool Tag::get(const string &key,
 		error(key);
 	return false;
 }
-
 
 
 /**
@@ -191,7 +189,6 @@ bool Tag::get(const string &key,
 }
 
 
-
 /**
  * Gets the value of an attribute as an integer.
  * 
@@ -222,7 +219,6 @@ bool Tag::get(const string &key,
 }
 
 
-
 /**
  * Gets the value of an attribute as a string.
  * 
@@ -242,7 +238,7 @@ bool Tag::get(const string &key,
 	// Find and convert
 	ai = attributes.find(key);
 	if (ai != attributes.end()) {
-		value = tolower(ai->second);
+		value = ai->second;
 		return true;
 	}
 	else if (!required)
@@ -253,7 +249,6 @@ bool Tag::get(const string &key,
 }
 
 
-
 /**
  * Sets the name of this tag.
  */
@@ -261,7 +256,6 @@ void Tag::setName(const string &name) {
 	
 	this->name = tolower(name);
 }
-
 
 
 /**
@@ -281,7 +275,6 @@ string Tag::tolower(const string &original) {
 		temp[i] = std::tolower(temp[i]);
 	return temp;
 }
-
 
 
 /**

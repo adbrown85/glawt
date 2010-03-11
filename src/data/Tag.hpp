@@ -13,14 +13,12 @@
 using namespace std;
 
 
-
 /**
  * @ingroup data
  * @brief
  *     XML tag holding a map of attributes and their values.
  */
 class Tag {
-	
 	
 	public:
 		
@@ -53,7 +51,6 @@ class Tag {
 		                           const Tag &tag);
 		                           
 		static string tolower(const string &original);
-	
 	
 	private:
 		
