@@ -71,8 +71,12 @@ void DatasetHeader::check() {
 	
 	// Open file and check it
 	file.open(filename.c_str());
-	if (!file)
-		throw "[DatasetHeader] Could not open file.";
+	if (!file) {
+		ostringstream message;
+		message << "[DatasetHeader] Could not open '"
+		        << filename << "'." << endl;
+		throw message.str().c_str();
+	}
 	check(file);
 	file.close();
 }
