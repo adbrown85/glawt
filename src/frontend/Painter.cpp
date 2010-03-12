@@ -121,7 +121,9 @@ void Painter::paintNode(Node *node,
 	// Node is applicable
 	else if (applicable = dynamic_cast<Applicable*>(node)) {
 		applicable->apply();
-		paintChildren(node, renderMode, manipulators);
+		if (!(renderMode == GL_SELECT && Framebuffer::isActive())) {
+			paintChildren(node, renderMode, manipulators);
+		}
 		applicable->remove();
 	}
 	
