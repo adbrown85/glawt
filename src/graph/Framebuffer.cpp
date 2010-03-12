@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Framebuffer.hpp"
+bool Framebuffer::active=false;
 
 
 /**
@@ -49,6 +50,7 @@ void Framebuffer::apply() {
 	
 	// Bind
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
+	active = true;
 	
 	// Clear
 	glClearColor(0.8, 0.8, 0.8, 1.0);
@@ -96,6 +98,7 @@ void Framebuffer::remove() {
 	
 	// Unbind
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	active = false;
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 }

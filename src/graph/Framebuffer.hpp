@@ -37,6 +37,7 @@ class Framebuffer : public Node,
 		
 		static void find(Node *node,
 		                 Framebuffer *&pointer);
+		static bool isActive();
 	
 	protected:
 		
@@ -45,7 +46,19 @@ class Framebuffer : public Node,
 	private:
 		
 		GLuint depthBuffer, handle;
+		
+		static bool active;
 };
+
+
+
+/**
+ * @return true if a Framebuffer is active.
+ */
+inline bool Framebuffer::isActive() {
+	
+	return active;
+}
 
 
 #endif

@@ -70,8 +70,9 @@ void Painter::paintChildren(Node *node,
 	// Paint each child
 	children = node->getChildren();
 	numberOfChildren = children.size();
-	for (int i=0; i<numberOfChildren; ++i)
+	for (int i=0; i<numberOfChildren; ++i) {
 		paintNode(children[i], renderMode, manipulators);
+	}
 }
 
 
@@ -96,10 +97,11 @@ void Painter::paintNode(Node *node,
 	Applicable *applicable;
 	Drawable *drawable;
 	Selectable *selectable;
+	Framebuffer *framebuffer;
 	
 	// Node is drawable and visible
 	if ((drawable = dynamic_cast<Drawable*>(node))
-		&& drawable->isVisible()) {
+	      && drawable->isVisible()) {
 		
 		// Draw the node
 		if (renderMode == GL_SELECT)
@@ -108,8 +110,9 @@ void Painter::paintNode(Node *node,
 		
 		// Paint UI elements for selected nodes
 		if ((selectable = dynamic_cast<Selectable*>(node))
-			&& selectable->isSelected())
-				paintUIElements(selectable, renderMode, manipulators);
+		      && selectable->isSelected()
+		      && !Framebuffer::isActive())
+			paintUIElements(selectable, renderMode, manipulators);
 		
 		// Paint children
 		paintChildren(node, renderMode, manipulators);
