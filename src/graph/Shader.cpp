@@ -89,6 +89,7 @@ void Shader::compile() {
 	// Attach shader to program if successful
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
+		log();
 		ostringstream message;
 		message << "[Shader] '" << filename << "' did not compile." << endl;
 		throw message.str().c_str();
