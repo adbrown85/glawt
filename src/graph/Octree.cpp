@@ -8,7 +8,7 @@
 
 
 Octree::Octree(const Tag &tag):
-               Texture(tag) {
+               Texture(GL_TEXTURE_1D, tag) {
 	
 	className = "Octree";
 	textureData = NULL;

@@ -38,9 +38,11 @@ class Texture : public Node,
 	
 	public:
 		
-		Texture(string name,
+		Texture(GLenum type,
+		        string name,
 		        string filename="");
-		Texture(const Tag &tag);
+		Texture(GLenum type,
+		        const Tag &tag);
 		virtual void apply();
 		virtual void associate();
 		virtual string getFilename() const;
@@ -61,11 +63,12 @@ class Texture : public Node,
 		GLuint handle;
 		int unit;
 		string filename, name;
+	
+	private:
 		
 		static vector<GLenum> active_units;
 		
-		virtual void init();
-		virtual void initType() = 0;
+		virtual void init(GLenum type);
 };
 
 

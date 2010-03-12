@@ -11,16 +11,19 @@ vector<GLenum> Texture::active_units;
 /**
  * Initializes a texture.
  * 
+ * @param [in] type
+ *     1D, 2D, or 3D.
  * @param [in] name
  *     Name of the texture.
  * @param [in] filename
  *     Path to a file containing the texture.
  */
-Texture::Texture(string name,
+Texture::Texture(GLenum type,
+                 string name,
                  string filename) {
 	
 	// Initialize
-	Texture::init();
+	Texture::init(type);
 	this->name = name;
 	this->filename = filename;
 }
@@ -29,13 +32,16 @@ Texture::Texture(string name,
 /**
  * Creates a new texture from an XML tag.
  * 
+ * @param [in] type
+ *     1D, 2D, or 3D.
  * @param [in] tag
  *     XML tag.
  */
-Texture::Texture(const Tag &tag) {
+Texture::Texture(GLenum type,
+                 const Tag &tag) {
 	
 	// Initialize
-	Texture::init();
+	Texture::init(type);
 	tag.get("name", name, false);
 	tag.get("file", filename, false);
 }
@@ -78,6 +84,19 @@ void Texture::associate() {
 
 
 /**
+ * Initializes attributes common to all constructors.
+ */
+void Texture::init(GLenum type) {
+	
+	// Defaults
+	className = "Texture";
+	this->unit = 0;
+	this->handle = 0;
+	this->type = type;
+}
+
+
+/**
  * Temporarily disables texturing on all active units.
  */
 void Texture::pause() {
@@ -89,22 +108,6 @@ void Texture::pause() {
 	for (int i=0; i<count; ++i) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glDisable(active_units[i]);
-	}
-}
-
-
-/**
- * Renables texturing on all active units.
- */
-void Texture::restart() {
-	
-	int count;
-	
-	// Enable each unit
-	count = active_units.size();
-	for (int i=0; i<count; ++i) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glEnable(active_units[i]);
 	}
 }
 
@@ -122,14 +125,18 @@ void Texture::remove() {
 
 
 /**
- * Initializes attributes common to all constructors.
+ * Renables texturing on all active units.
  */
-void Texture::init() {
+void Texture::restart() {
 	
-	// Defaults
-	className = "Texture";
-	this->unit = 0;
-	this->handle = 0;
+	int count;
+	
+	// Enable each unit
+	count = active_units.size();
+	for (int i=0; i<count; ++i) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glEnable(active_units[i]);
+	}
 }
 
 

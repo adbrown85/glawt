@@ -45,7 +45,6 @@ class Octree : public Texture {
 		OctreeNode *root;
 		string link;
 		
-		virtual void initType() {type = GL_TEXTURE_1D;}
 		virtual void load();
 };
 

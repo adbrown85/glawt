@@ -17,7 +17,7 @@
  */
 Texture3D::Texture3D(string name,
                      string filename) : 
-                     Texture(name, filename),
+                     Texture(GL_TEXTURE_3D, name, filename),
                      dataset(filename) {
 	
 	// Initialize
@@ -32,7 +32,7 @@ Texture3D::Texture3D(string name,
  *     XML tag.
  */
 Texture3D::Texture3D(const Tag &tag) : 
-                     Texture(tag),
+                     Texture(GL_TEXTURE_3D, tag),
                      dataset(tag) {
 	
 	// Initialize
@@ -77,7 +77,6 @@ void Texture3D::init() {
 	
 	// Initialize
 	className = "Texture3D";
-	initType();
 }
 
 

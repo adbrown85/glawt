@@ -17,9 +17,9 @@ using namespace std;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     %Texture nodes for volumes.
- * @ingroup graph
  */
 class Texture3D : public Texture {
 	
@@ -42,7 +42,6 @@ class Texture3D : public Texture {
 		Dataset dataset;
 		
 		virtual void init();
-		virtual void initType() {type = GL_TEXTURE_3D;}
 		virtual void load();
 };
 

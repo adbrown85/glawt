@@ -11,8 +11,8 @@
 class FakeTexture : public Texture {
 	public:
 		FakeTexture(string name,
-		            string filename) : Texture(name,filename) {}
-		FakeTexture(const Tag &tag) : Texture(tag) {}
+		            string filename) : Texture(GL_TEXTURE_2D, name,filename) {}
+		FakeTexture(const Tag &tag) : Texture(GL_TEXTURE_2D, tag) {}
 	protected:
 		void initType() {type = GL_TEXTURE_2D;}
 };
@@ -52,5 +52,11 @@ int main() {
 	root->associateTree();
 	root->finalizeTree();
 	root->printTree();
+	
+	// Print types (,,32879)
+	cout << "\nPrinting types..." << endl;
+	cout << "  GL_TEXTURE_1D: " << GL_TEXTURE_1D << endl;
+	cout << "  GL_TEXTURE_2D: " << GL_TEXTURE_2D << endl;
+	cout << "  GL_TEXTURE_3D: " << GL_TEXTURE_3D << endl;
 }
 

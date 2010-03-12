@@ -16,9 +16,9 @@
 
 
 /**
+ * @ingroup graph
  * @brief
  *     %Texture node for images.
- * @ingroup graph
  */
 class Texture2D : public Texture {
 	
@@ -40,7 +40,6 @@ class Texture2D : public Texture {
 		
 		virtual void generate();
 		virtual void init();
-		virtual void initType() {type = GL_TEXTURE_2D;}
 		virtual void load();
 	
 	public: 

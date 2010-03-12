@@ -18,7 +18,7 @@ bool Texture2D::librariesLoaded=false;
  */
 Texture2D::Texture2D(string name,
                      string filename) :
-                     Texture(name, filename) {
+                     Texture(GL_TEXTURE_2D, name, filename) {
 	
 	// Initialize
 	Texture2D::init();
@@ -35,7 +35,7 @@ Texture2D::Texture2D(string name,
  */
 Texture2D::Texture2D(string name,
                      int size) :
-                     Texture(name) {
+                     Texture(GL_TEXTURE_2D, name) {
 	
 	// Initialize
 	Texture2D::init();
@@ -50,7 +50,7 @@ Texture2D::Texture2D(string name,
  *     XML tag.
  */
 Texture2D::Texture2D(const Tag &tag) :
-                     Texture(tag) {
+                     Texture(GL_TEXTURE_2D, tag) {
 	
 	// Initialize
 	Texture2D::init();
@@ -143,7 +143,6 @@ void Texture2D::init() {
 	
 	// Attributes
 	className = "Texture2D";
-	initType();
 	this->image = 0;
 	this->size = 0;
 }
