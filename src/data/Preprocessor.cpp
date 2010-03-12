@@ -215,23 +215,33 @@ string Preprocessor::stripComments(const string &line,
 	
 	length = line.length();
 	for (int i=0; i<length; ++i) {
-		if (line[i] == '/') {
-			if (line[i+1] == '/') {
-				break;
-			}
-			if (line[i+1] == '*') {
-				inComment = true;
-				++i;
-			}
-		} else if (line[i] == '*') {
-			if (line[i+1] == '/') {
-				inComment = false;
-				++i;
-				continue;
-			}
-		} else if (!inComment) {
-			buffer << line[i];
+		
+		// Single-line comment
+		if (line[i] == '/' && line[i+1] == '/') {
+			break;
 		}
+		
+		// Start of multi-line comment
+		else if (line[i] == '/' && line[i+1] == '*') {
+			inComment = true;
+			++i;
+			continue;
+		}
+		
+		// End of multi-line comment
+		else if (line[i] == '*' && line[i+1] == '/') {
+			inComment = false;
+			++i;
+			continue;
+		}
+		
+		// In comment
+		if (inComment) {
+			continue;
+		}
+		
+		// Normal
+		buffer << line[i];
 	}
 	return buffer.str();
 }
