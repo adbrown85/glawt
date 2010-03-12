@@ -16,6 +16,7 @@
 #include <vector>
 #include "Node.hpp"
 #include "Program.hpp"
+#include "Preprocessor.hpp"
 #include "Tag.hpp"
 using namespace std;
 
@@ -35,21 +36,20 @@ class Shader : public Node {
 		~Shader();
 		void associate();
 		void finalize() {}
-		void list() const;
-		void log() const;
-		string toString() const;
-		
 		string getFilename() const {return filename;}
 		GLuint getHandle() const {return handle;}
 		string getType() const {return type;}
+		void list() const;
+		void log() const;
+		string toString() const;
 	
 	private :
 		
 		const char **source;
 		GLuint handle;
 		int length;
+		Preprocessor preprocessor;
 		string filename, type;
-		vector<string> lines;
 		
 		Shader();
 		void compile();

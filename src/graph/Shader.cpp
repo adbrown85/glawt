@@ -76,6 +76,8 @@ void Shader::associate() {
 
 /**
  * Compiles the shader.  Prints the log and exits if unsuccessful.
+ * 
+ * @throws const_char* if the shader doesn't compile.
  */
 void Shader::compile() {
 	
@@ -87,12 +89,9 @@ void Shader::compile() {
 	// Attach shader to program if successful
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
-		cerr << "[Gander,Shader] '"
-		     << filename 
-		     << "' did not compile." << endl;
-		cerr << "[Gander,Shader] Printing log..." << endl;
-		log();
-		exit(1);
+		ostringstream message;
+		message << "[Shader] '" << filename << "' did not compile." << endl;
+		throw message.str().c_str();
 	}
 }
 
@@ -167,27 +166,17 @@ void Shader::list() const {
 
 /**
  * Loads a file into the Shader's source array and passes it to OpenGL.
+ * 
+ * @throws const_char* from load()
  */
 void Shader::load() {
 	
-	ifstream file;
-	string line, message;
+	vector<string> lines;
 	
-	// Open file
-	file.open(filename.c_str());
-	if (!file) {
-		message = "[Gander,Shader] Could not open '";
-		message += filename;
-		message += "'.";
-		throw message.c_str();
-	}
-	
-	// Load into vector
-	getline(file, line);
-	while (file) {
-		lines.push_back(line);
-		getline(file, line);
-	}
+	// Load file
+	preprocessor.setFilename(filename);
+	preprocessor.start();
+	lines = preprocessor.getLines();
 	
 	// Copy to source array
 	length = lines.size();
