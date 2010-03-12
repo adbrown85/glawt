@@ -32,3 +32,4 @@ Parser.o : Tag.o
 
 # Files
 FileUtility.o: 
+Preprocessor.o: FileUtility.o

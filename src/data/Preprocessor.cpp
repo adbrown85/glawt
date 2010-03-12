@@ -161,6 +161,7 @@ void Preprocessor::onInclude(const string &line) {
 	// Load filename
 	argument = getPragmaArgument(line);
 	filename = stripQuoted(argument);
+	filename = FileUtility::getRelativePath(this->filename, filename);
 	load(filename);
 }
 
