@@ -32,10 +32,12 @@ class Preprocessor {
 	
 	public :
 		
+		Preprocessor();
 		Preprocessor(const string &filename);
 		vector<string> getLines();
 		void printDefines();
 		void printLines();
+		void setFilename(const string &filename);
 		void start();
 	
 	protected:

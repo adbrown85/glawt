@@ -7,6 +7,14 @@
 #include "Preprocessor.hpp"
 
 
+/**
+ * @note Use setFilename() after.
+ */
+Preprocessor::Preprocessor() {
+	
+}
+
+
 Preprocessor::Preprocessor(const string &filename) {
 	
 	this->filename = filename;
@@ -116,12 +124,11 @@ void Preprocessor::onDefine(const string &line) {
 	set<string>::iterator it;
 	string token;
 	
-	// Store define and add line
+	// Store define
 	token = getPragmaArgument(line);
 	it = defines.find(token);
 	if (it == defines.end()) {
 		defines.insert(token);
-		lines.push_back(line);
 	}
 }
 
@@ -175,6 +182,12 @@ void Preprocessor::printLines() {
 	for (line=lines.begin(); line!=lines.end(); ++line) {
 		cout << *line << endl;
 	}
+}
+
+
+void Preprocessor::setFilename(const string &filename) {
+	
+	this->filename = filename;
 }
 
 
