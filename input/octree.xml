@@ -1,0 +1,41 @@
+<!--
+ * octree.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<translate>
+	<texture2d name="buffer" size="512">
+		<framebuffer>
+			<target link="buffer"/>
+			<program>
+				<shader file="coordinates.frag"/>
+				<cull faces="front">
+					<box/>
+				</cull>
+			</program>
+		</framebuffer>
+		<texture3d file="../textures/chunk.vlb" name="volume">
+		<octree name="octree" link="volume" threshold="80">
+			<program>
+				<shader file="octree.frag"/>
+				<uniform type="sampler2d" name="buffer" link="buffer">
+				<uniform type="int" name="bufferSize" value="512">
+				<uniform type="sampler3d" name="volume" link="volume">
+				<uniform type="sampler1d" name="octree" link="octree">
+				<uniform type="int" name="length" value="9">
+				<uniform type="int" name="height" value="1">
+					<box/>
+				</uniform>
+				</uniform>
+				</uniform>
+				</uniform>
+				</uniform>
+				</uniform>
+			</program>
+		</octree>
+		</texture3d>
+	</texture2d>
+</translate>
