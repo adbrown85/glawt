@@ -26,14 +26,17 @@ void Preprocessor::addLine(string &line,
 	
 	// Pragmas
 	if (isPragma(line)) {
-		if (isDefine(line)) {
-			onDefine(line);
-		} else if (isEndIf(line)) {
+		if (!skipLines()) {
+			if (isDefine(line)) {
+				onDefine(line);
+			} else if (isInclude(line)) {
+				onInclude(line);
+			}
+		}
+		if (isEndIf(line)) {
 			onEndIf(line);
 		} else if (isIfNotDefined(line)) {
 			onIfNotDefined(line);
-		} else if (isInclude(line)) {
-			onInclude(line);
 		}
 	}
 	
@@ -42,21 +45,37 @@ void Preprocessor::addLine(string &line,
 		line = stripComments(line, inComment);
 		line = stripTrailingSpaces(line);
 		if (!line.empty()) {
+			line = replaceDefines(line);
 			lines.push_back(line);
 		}
 	}
 }
 
 
-string Preprocessor::getPragmaArgument(const string &line) {
+string Preprocessor::getPragmaKey(const string &line) {
 	
-	istringstream buffer;
+	return getToken(line, 1);
+}
+
+
+string Preprocessor::getPragmaValue(const string &line) {
+	
+	return getToken(line, 2);
+}
+
+
+string Preprocessor::getToken(const string &line,
+                              int number) {
+	
+	istringstream buffer(line);
 	string token;
 	
-	// Get second token from line
-	buffer.str(line);
-	buffer >> token;
-	buffer >> token;
+	for (int i=0; i<=number; ++i) {
+		buffer >> token;
+	}
+	if (!buffer) {
+		token = "";
+	}
 	return token;
 }
 
@@ -119,16 +138,24 @@ void Preprocessor::load(const string &filename) {
 }
 
 
+/**
+ * @throws const_char* if the token has already been defined
+ */
 void Preprocessor::onDefine(const string &line) {
 	
-	set<string>::iterator it;
-	string token;
+	map<string,string>::iterator it;
+	string key, value;
 	
 	// Store define
-	token = getPragmaArgument(line);
-	it = defines.find(token);
+	key = getPragmaKey(line);
+	value = getPragmaValue(line);
+	it = defines.find(key);
 	if (it == defines.end()) {
-		defines.insert(token);
+		defines[key] = value;
+	} else {
+		ostringstream message;
+		message << "[Preprocessor] Token '" << key << "' already defined.";
+		throw message.str().c_str();
 	}
 }
 
@@ -143,12 +170,12 @@ void Preprocessor::onEndIf(const string &line) {
 void Preprocessor::onIfNotDefined(const string &line) {
 	
 	bool result;
-	set<string>::iterator it;
-	string token;
+	map<string,string>::iterator it;
+	string key;
 	
 	// Test condition and store the result
-	token = getPragmaArgument(line);
-	it = defines.find(token);
+	key = getPragmaKey(line);
+	it = defines.find(key);
 	result = (it != defines.end());
 	conditionals.push(result);
 }
@@ -159,7 +186,7 @@ void Preprocessor::onInclude(const string &line) {
 	string argument, filename;
 	
 	// Load filename
-	argument = getPragmaArgument(line);
+	argument = getPragmaKey(line);
 	filename = stripQuoted(argument);
 	filename = FileUtility::getRelativePath(this->filename, filename);
 	load(filename);
@@ -168,10 +195,10 @@ void Preprocessor::onInclude(const string &line) {
 
 void Preprocessor::printDefines() {
 	
-	set<string>::const_iterator it;
+	map<string,string>::const_iterator it;
 	
 	for (it=defines.begin(); it!=defines.end(); ++it) {
-		cout << *it << endl;
+		cout << "  [" << it->first << "," << it->second << "]" << endl;
 	}
 }
 
@@ -183,6 +210,12 @@ void Preprocessor::printLines() {
 	for (line=lines.begin(); line!=lines.end(); ++line) {
 		cout << *line << endl;
 	}
+}
+
+
+string Preprocessor::replaceDefines(string &line) {
+	
+	return Text::replace(line, defines);
 }
 
 
@@ -244,6 +277,16 @@ string Preprocessor::stripComments(const string &line,
 		buffer << line[i];
 	}
 	return buffer.str();
+}
+
+
+string Preprocessor::stripFirstToken(const string &line) {
+	
+	int spacePos;
+	
+	// Get everything after first space
+	spacePos = line.find(' ');
+	return line.substr(spacePos+1);
 }
 
 

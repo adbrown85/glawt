@@ -9,12 +9,13 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <set>
+#include <map>
 #include <sstream>
 #include <string>
 #include <stack>
 #include <vector>
 #include "FileUtility.hpp"
+#include "Text.hpp"
 using namespace std;
 
 
@@ -43,14 +44,17 @@ class Preprocessor {
 	
 	protected:
 		
-		set<string> defines;
+		map<string,string> defines;
 		stack<bool> conditionals;
 		string filename;
 		vector<string> lines;
 		
 		void addLine(string &line,
 		             bool &inComment);
-		string getPragmaArgument(const string &line);
+		string getPragmaKey(const string &line);
+		string getPragmaValue(const string &line);
+		string getToken(const string &line,
+		                int i);
 		bool isDefine(const string &line);
 		bool isEndIf(const string &line);
 		bool isIfNotDefined(const string &line);
@@ -61,9 +65,11 @@ class Preprocessor {
 		void onEndIf(const string &line);
 		void onIfNotDefined(const string &line);
 		void onInclude(const string &line);
+		string replaceDefines(string &line);
 		bool skipLines();
 		string stripComments(const string &line,
 		                     bool &inComment);
+		string stripFirstToken(const string &line);
 		string stripQuoted(const string &line);
 		string stripTrailingSpaces(const string &line);
 };

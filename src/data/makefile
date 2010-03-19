@@ -12,7 +12,6 @@ GANDER = ../..
 include $(GANDER)/globals.mak
 include $(GANDER)/src/module.mak
 
-
 # Math
 Vector.o:
 Matrix.o: Vector.o
@@ -32,4 +31,4 @@ Parser.o : Tag.o
 
 # Files
 FileUtility.o: 
-Preprocessor.o: FileUtility.o
+Preprocessor.o: FileUtility.o Text.o
