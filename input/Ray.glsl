@@ -99,7 +99,7 @@ float Ray_getTimeAt(in Ray ray,
 
 bool Ray_isNegative(in Ray ray) {
 	
-	return ray.d.x < 0 || ray.d.y < 0 || ray.d.z < 0;
+	return ray.d.x < 0.0 || ray.d.y < 0.0 || ray.d.z < 0.0;
 }
 
 
