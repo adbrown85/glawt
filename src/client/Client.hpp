@@ -12,14 +12,16 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <string>
+#include "DatasetHeader.hpp"
 #include "Display.hpp"
 #include "Interpreter.hpp"
 #include "Keyboard.hpp"
 #include "Menu.hpp"
 #include "Mouse.hpp"
+#include "Preprocessor.hpp"
 #include "Scene.hpp"
+#include "VlbMaker.hpp"
 using namespace std;
-
 
 
 /**
@@ -55,17 +57,21 @@ using namespace std;
  */
 class Client {
 	
-	
-	public :
+	public:
 		
-		void parse(int argc, char *argv[]);
+		void banner();
+		void display();
+		void onHeader();
+		void onPreprocess();
+		void onVlb();
+		void parse(int argc,
+		           char *argv[]);
 		void start();
 	
-	
-	private :
+	private:
 		
 		Scene scene;
-		string filename, title;
+		string inFilename, option, outFilename, title;
 };
 
 

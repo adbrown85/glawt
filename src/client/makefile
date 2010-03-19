@@ -22,6 +22,6 @@ install:
 
 
 # Executables
-gander: Client.o ${addsuffix .a,$(CHILDREN)}
+gander: Client
 	@echo "  $(bindir)/$@"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(bindir)/$@ $^
+	@cp Client $(bindir)/gander
