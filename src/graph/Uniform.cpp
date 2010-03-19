@@ -189,10 +189,12 @@ bool Uniform::isSupported(string type) {
 void Uniform::remove() {
 	
 	// Set value
+/*
 	if (valueType == GL_FLOAT)
 		glUniform1f(location, 0.0f);
 	else
 		glUniform1i(location, 0);
+*/
 }
 
 
