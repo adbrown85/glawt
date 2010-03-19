@@ -4,7 +4,6 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#version 150
 #include "Octree.glsl"
 uniform int bufferSize;
 uniform sampler2D buffer;
@@ -17,15 +16,12 @@ uniform int height;
 
 void main() {
 	
-	BoundaryTimes times;
-	BoundingBox box;
-	OctreeNode root;
 	Ray ray;
+	vec4 rayEnd;
 	
 	// Initialize
-	Ray_(ray, gl_TexCoord[0], texture2D(buffer,gl_FragCoord.xy/bufferSize));
-	BoundingBox_(box);
-	OctreeNode_(root, 0, 0);
+	rayEnd = texture2D(buffer, gl_FragCoord.xy/float(bufferSize));
+	Ray_(ray, gl_TexCoord[0], rayEnd);
 	
 	// Can't handle negative directions yet
 	if (Ray_isNegative(ray)) {
@@ -33,7 +29,6 @@ void main() {
 	}
 	
 	// Sample
-	times = BoundingBox_calculateTimes(box, ray);
-	gl_FragColor = Octree_sample(volume, octree, length, ray, root, times, height, 0);
+	gl_FragColor = Octree_sample(volume, octree, length, ray, height);
 }
 
