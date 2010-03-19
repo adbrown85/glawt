@@ -24,6 +24,13 @@ Preprocessor::Preprocessor(const string &filename) {
 void Preprocessor::addLine(string &line,
                            bool &inComment) {
 	
+	// Strip comments and trailing space
+	line = stripComments(line, inComment);
+	line = stripTrailingSpaces(line);
+	if (line.empty()) {
+		return;
+	}
+	
 	// Pragmas
 	if (isPragma(line)) {
 		if (!skipLines()) {
@@ -44,12 +51,8 @@ void Preprocessor::addLine(string &line,
 	
 	// Regular lines
 	else if (!skipLines()) {
-		line = stripComments(line, inComment);
-		line = stripTrailingSpaces(line);
-		if (!line.empty()) {
-			line = replaceDefines(line);
-			lines.push_back(line);
-		}
+		line = replaceDefines(line);
+		lines.push_back(line);
 	}
 }
 
