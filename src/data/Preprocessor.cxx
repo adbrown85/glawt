@@ -28,7 +28,6 @@ int main(int argc,
 		// Results
 		cout << "Defines:" << endl;
 		pp->printDefines();
-		
 		cout << "\nLines:" << endl;
 		pp->printLines();
 	}

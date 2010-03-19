@@ -35,13 +35,16 @@ class VlbMaker {
 		
 		VlbMaker(const string &inFilename,
 		         const string &outFilename);
+		void start();
+	
+	protected:
+		
 		void process(istream &inStream,
 		             ostream &outStream);
 		void processData(istream &inStream,
 		                 ostream &outStream);
 		void processHeader(istream &inStream,
 		                   ostream &outStream);
-		void start();
 	
 	private:
 		
