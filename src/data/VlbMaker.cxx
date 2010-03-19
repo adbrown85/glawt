@@ -11,6 +11,19 @@ int main(int argc,
          char *argv[]) {
 	
 	VlbMaker *vlbMaker;
+	string inFilePath, outFilePath;
+	
+	// Check arguments
+	if (argc == 3) {
+		inFilePath = argv[1];
+		outFilePath = argv[2];
+	} else {
+		cout << "Usage: " << argv[0]
+		     << " <input>"
+		     << " <output>"
+		     << endl;
+		exit(1);
+	}
 	
 	// Start
 	cout << endl;
@@ -19,10 +32,16 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Test
-	cout << "Testing..." << endl;
-	vlbMaker = new VlbMaker("VlbMaker.in", "VlbMaker.out");
-	vlbMaker->start();
+	try {
+		
+		// Test
+		cout << "Making VLB file..." << endl;
+		vlbMaker = new VlbMaker(inFilePath, outFilePath);
+		vlbMaker->start();
+	}
+	catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	cout << endl;
