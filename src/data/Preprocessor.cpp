@@ -31,6 +31,8 @@ void Preprocessor::addLine(string &line,
 				onDefine(line);
 			} else if (isInclude(line)) {
 				onInclude(line);
+			} else if (isVersion(line)) {
+				onVersion(line);
 			}
 		}
 		if (isEndIf(line)) {
@@ -107,6 +109,12 @@ bool Preprocessor::isInclude(const string &line) {
 bool Preprocessor::isPragma(const string &line) {
 	
 	return line[0] == '#';
+}
+
+
+bool Preprocessor::isVersion(const string &line) {
+	
+	return line.substr(0,8) == "#version";
 }
 
 
@@ -190,6 +198,12 @@ void Preprocessor::onInclude(const string &line) {
 	filename = stripQuoted(argument);
 	filename = FileUtility::getRelativePath(this->filename, filename);
 	load(filename);
+}
+
+
+void Preprocessor::onVersion(const string &line) {
+	
+	lines.push_back(line);
 }
 
 

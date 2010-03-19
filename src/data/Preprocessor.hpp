@@ -60,11 +60,13 @@ class Preprocessor {
 		bool isIfNotDefined(const string &line);
 		bool isInclude(const string &line);
 		bool isPragma(const string &line);
+		bool isVersion(const string &line);
 		void load(const string &filename);
 		void onDefine(const string &line);
 		void onEndIf(const string &line);
 		void onIfNotDefined(const string &line);
 		void onInclude(const string &line);
+		void onVersion(const string &line);
 		string replaceDefines(string &line);
 		bool skipLines();
 		string stripComments(const string &line,
