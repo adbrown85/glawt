@@ -6,8 +6,6 @@
  */
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.TreeMap;
 import java.util.Vector;
 import javax.swing.*;

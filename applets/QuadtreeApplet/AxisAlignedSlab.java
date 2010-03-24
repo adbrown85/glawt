@@ -5,7 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 import java.awt.*;
-import java.awt.event.*;
 
 
 
@@ -16,7 +15,7 @@ public class AxisAlignedSlab extends BasicDrawable
                              implements Drawable {
 	
 	private AxisAlignedPlane planes[];
-	private double half, width;
+	private double halfWidth;
 	private Point center, min, max;
 	
 	
@@ -34,18 +33,17 @@ public class AxisAlignedSlab extends BasicDrawable
 		super(null, null);
 		
 		// Copy
-		this.width = width;
 		this.center = center;
 		
 		// Initialize
-		half = width / 2;
+		halfWidth = width / 2;
 		planes = new AxisAlignedPlane[2];
 		if (center.x != 0.0) {
-			min = new Point(center.x-half, 0.0);
-			max = new Point(center.x+half, 0.0);
+			min = new Point(center.x-halfWidth, 0.0);
+			max = new Point(center.x+halfWidth, 0.0);
 		} else {
-			min = new Point(0.0, center.y-half);
-			max = new Point(0.0, center.y+half);
+			min = new Point(0.0, center.y-halfWidth);
+			max = new Point(0.0, center.y+halfWidth);
 		}
 		planes[0] = new AxisAlignedPlane(min);
 		planes[1] = new AxisAlignedPlane(max);

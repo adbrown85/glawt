@@ -5,9 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 import java.awt.*;
-import java.awt.event.*;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 
 
@@ -21,10 +19,7 @@ public class Quadtree extends BasicDrawable
 	private static final int XZ_PLANE=0;
 	private static final int YZ_PLANE=1;
 	
-	private DataSource data;
-	private int height;
 	private QuadtreeNode root;
-	
 	private BoundingBox boundingBox;
 	private AxisAlignedPlane[] planes;
 	
@@ -34,8 +29,6 @@ public class Quadtree extends BasicDrawable
 		super(null, null);
 		
 		// Core
-		this.data = data;
-		this.height = QuadtreeBuilder.getHeightOf(data);
 		this.root = QuadtreeBuilder.build(data);
 		
 		// Display
@@ -73,8 +66,8 @@ public class Quadtree extends BasicDrawable
 	private void clearDisplay() {
 		
 		boundingBox = null;
-		for (AxisAlignedPlane plane : planes) {
-			plane = null;
+		for (int i=0; i<planes.length; ++i) {
+			planes[i] = null;
 		}
 		fireUpdateEvent();
 	}
@@ -425,7 +418,7 @@ public class Quadtree extends BasicDrawable
 	
 	
 	public static void main(String[] args)
-	                   throws Exception {
+	                        throws Exception {
 		
 		double sample;
 		DisplayFrame display;

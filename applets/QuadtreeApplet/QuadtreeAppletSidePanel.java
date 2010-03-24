@@ -4,7 +4,6 @@
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.Vector;
@@ -48,7 +47,7 @@ public class QuadtreeAppletSidePanel extends JPanel
 	
 	public void handleSample() {
 		
-		SwingWorker worker;
+		SwingWorker<Double,Void> worker;
 		
 		// Do sample
 		worker = new SwingWorker<Double,Void>() {

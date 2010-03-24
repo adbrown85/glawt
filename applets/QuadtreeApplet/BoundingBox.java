@@ -5,7 +5,6 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 import java.awt.*;
-import java.awt.event.*;
 
 
 

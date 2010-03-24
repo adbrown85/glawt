@@ -4,10 +4,8 @@
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
-import javax.swing.*;
 
 
 

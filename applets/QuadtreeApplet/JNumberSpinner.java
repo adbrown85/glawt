@@ -20,7 +20,6 @@ public class JNumberSpinner extends JSpinner {
 	private static final int INTEGER_TYPE=0;
 	private static final int DOUBLE_TYPE=1;
 	
-	private SpinnerNumberModel numberModel;
 	private Object defaultValue;
 	private int numberType;
 	
