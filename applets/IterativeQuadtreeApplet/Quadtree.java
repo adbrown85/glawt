@@ -15,16 +15,18 @@ import java.io.FileNotFoundException;
 public class Quadtree extends BasicDrawable
                       implements Drawable {
 	
+	private static final int FIRST_STEP=1, SECOND_STEP=2;
+	private static final int FIRST_CHILD=0, NULL_CHILD=-1, ROOT_KEY=0;
 	private static final long SLEEP_TIME=1000;
 	private static final int XZ_PLANE=0;
 	private static final int YZ_PLANE=1;
+	private static final int MAX_HEIGHT=5;
 	private static final int[] jump={1,5,21,85,341,1365,5461,21845,87381};
 	
 	private AxisAlignedPlane[] planes;
 	private boolean[] texture;
 	private BoundingBox boundingBox;
 	private int height, length;
-	private NodeIndex root;
 	
 	
 	public Quadtree(DataSource data) {
@@ -53,7 +55,6 @@ public class Quadtree extends BasicDrawable
 		this.length = builder.getTotalNodes();
 		this.texture = new boolean[length];
 		store(root, 0, 0);
-		this.root = new NodeIndex();
 	}
 	
 	
@@ -122,14 +123,14 @@ public class Quadtree extends BasicDrawable
 	
 	
 	private NodeIndex findFirstChild(NodeIndex parentNode,
-	                                 BoundsCheck times,
+	                                 BoundsCheck parentTimes,
 	                                 int subtreeHeight) {
 		
 		int name;
 		
 		// Enters on bottom side, then right or left
-		if (times.t0[0] < times.t0[1]) {
-			if (times.th[0] < times.t0[1]) {
+		if (parentTimes.t0[0] < parentTimes.t0[1]) {
+			if (parentTimes.th[0] < parentTimes.t0[1]) {
 				name = 1;
 			} else {
 				name = 0;
@@ -138,7 +139,7 @@ public class Quadtree extends BasicDrawable
 		
 		// Enters on left side, then top or bottom
 		else {
-			if (times.th[1] < times.t0[0]) {
+			if (parentTimes.th[1] < parentTimes.t0[0]) {
 				name = 2;
 			} else {
 				name = 0;
@@ -164,17 +165,17 @@ public class Quadtree extends BasicDrawable
 			case 1:
 				switch (findExitPlane(childTimes)) {
 					case XZ_PLANE: return getChild(parentNode, 3, subtreeHeight);
-					case YZ_PLANE: return null;
+					case YZ_PLANE: return nullNode();
 				}
 			case 2:
 				switch (findExitPlane(childTimes)) {
-					case XZ_PLANE: return null;
+					case XZ_PLANE: return nullNode();
 					case YZ_PLANE: return getChild(parentNode, 3, subtreeHeight);
 				}
 			case 3:
 				switch (findExitPlane(childTimes)) {
-					case XZ_PLANE: return null;
-					case YZ_PLANE: return null;
+					case XZ_PLANE: return nullNode();
+					case YZ_PLANE: return nullNode();
 				}
 			default: throw new IndexOutOfBoundsException();
 		}
@@ -238,15 +239,15 @@ public class Quadtree extends BasicDrawable
 	}
 	
 	
-	private NodeIndex getRealChild(NodeIndex parent,
+	private NodeIndex getRealChild(NodeIndex parentNode,
 	                               NodeIndex childNode,
 	                               Ray ray,
 	                               int subtreeHeight) {
 		
 		int name;
 		
-		if (childNode == null)
-			return null;
+		if (childNode.name == NULL_CHILD)
+			return childNode;
 		
 		name = childNode.name;
 		if (ray.direction.x < 0) {
@@ -265,13 +266,23 @@ public class Quadtree extends BasicDrawable
 				case 3: name = 1; break;
 			}
 		}
-		return getChild(parent, name, subtreeHeight);
+		return getChild(parentNode, name, subtreeHeight);
 	}
 	
 	
 	private boolean isEmpty(NodeIndex node) {
 		
 		return texture[node.key];
+	}
+
+	
+	private NodeIndex nullNode() {
+		
+		NodeIndex node;
+		
+		node = new NodeIndex();
+		node.name = NULL_CHILD;
+		return node;
 	}
 	
 	
@@ -297,9 +308,9 @@ public class Quadtree extends BasicDrawable
 			if (rayPrime != null) {
 				ray.addAccessory(rayPrime);
 				times = boundingBox.check(rayPrime);
-				result = sample(ray, rayPrime, root, root, times, 0, height);
+				result = sample(ray, rayPrime, times);
 			} else {
-				result = sample(ray, ray, root, root, times, 0, height);
+				result = sample(ray, ray, times);
 			}
 		} else {
 			updateDisplay(Color.RED);
@@ -312,29 +323,96 @@ public class Quadtree extends BasicDrawable
 	
 	private double sample(Ray ray,
 	                      Ray rayPrime,
-	                      NodeIndex node,
-	                      NodeIndex nodePrime,
-	                      BoundsCheck times,
-	                      int depth,
-	                      int subtreeHeight) {
+	                      BoundsCheck rootTimes) {
 		
-		// Check if empty or missed
-		if (isEmpty(node)) {
-			updateDisplay(Color.RED);
-			return 0.0;
-		} else {
-			updateDisplay(Color.GREEN);
+		BoundingBox[] box=new BoundingBox[MAX_HEIGHT];
+		BoundsCheck[] times=new BoundsCheck[MAX_HEIGHT];
+		float result;
+		int depth, childDepth, childHeight;
+		int[] step=new int[MAX_HEIGHT];
+		NodeIndex[] node=new NodeIndex[MAX_HEIGHT],
+		            nodePrime=new NodeIndex[MAX_HEIGHT];
+		
+		// Initialize
+		result = 0.0f;
+		depth = 0;
+		childHeight = height - 1;
+		node[0] = new NodeIndex(FIRST_CHILD, ROOT_KEY);
+		nodePrime[0] = new NodeIndex(FIRST_CHILD, ROOT_KEY);
+		step[0] = FIRST_STEP;
+		times[0] = rootTimes;
+		box[0] = new BoundingBox(boundingBox);
+		for (int i=1; i<MAX_HEIGHT; ++i) {
+			nodePrime[i] = new NodeIndex(NULL_CHILD, NULL_CHILD);
+			step[i] = FIRST_STEP;
+			times[i] = new BoundsCheck();
 		}
 		
-		// Leaf take sample data
-		if (depth == height)
-			return sampleAsLeaf(ray, times);
+		// While in volume
+		while (depth >= 0) {
+			switch (step[depth]) {
+			case FIRST_STEP:
+				
+				// Check if empty
+				if (isEmpty(node[depth])) {
+					updateDisplay(Color.RED);
+					--depth;
+					++childHeight;
+					continue;
+				} else {
+					updateDisplay(Color.GREEN);
+				}
+				
+				// If a leaf, sample it
+				if (depth == height) {
+					result += sampleAsLeaf(ray, times[depth]);
+					--depth;
+					++childHeight;
+					continue;
+				}
+			
+			case SECOND_STEP:
+				
+				// Find first or next child
+				childDepth = depth + 1;
+				if (nodePrime[childDepth].name == NULL_CHILD) {
+					nodePrime[childDepth] = findFirstChild(nodePrime[depth],
+					                                       times[depth],
+					                                       childHeight);
+				} else {
+					nodePrime[childDepth] = findNextChild(nodePrime[depth],
+					                                      times[childDepth],
+					                                      nodePrime[childDepth],
+					                                      childHeight);
+				}
+				node[childDepth] = getRealChild(node[depth],
+				                                nodePrime[childDepth],
+				                                ray,
+				                                childHeight);
+				
+				// Move up tree if outside of node
+				if (nodePrime[childDepth].name == NULL_CHILD) {
+					--depth;
+					++childHeight;
+				}
+				
+				// Otherwise move to child
+				else {
+					times[childDepth] = updateTimes(nodePrime[childDepth], times[depth]);
+					updateDisplay(ray, times, node, box, depth, childDepth);
+					step[depth] = SECOND_STEP;
+					step[childDepth] = FIRST_STEP;
+					++depth;
+					--childHeight;
+				}
+			}
+		}
 		
-		// Otherwise sample children
-		return sampleChildren(ray, rayPrime, node, nodePrime, times, depth+1, subtreeHeight-1);
+		// Finish
+		return result;
 	}
-	
-	
+
+
 	private double sampleAsLeaf(Ray ray,
 	                            BoundsCheck times) {
 		
@@ -351,38 +429,6 @@ public class Quadtree extends BasicDrawable
 		}
 		
 		return 0.2;
-	}
-	
-	
-	private double sampleChildren(Ray ray,
-	                              Ray rayPrime,
-	                              NodeIndex parentNode,
-	                              NodeIndex parentNodePrime,
-	                              BoundsCheck parentTimesPrime,
-	                              int depth,
-	                              int subtreeHeight) {
-		
-		BoundingBox parentBoundingBox;
-		BoundsCheck childTimesPrime;
-		double result=0;
-		NodeIndex childNode, childNodePrime;
-		
-		// Store current bounding box for all children
-		parentBoundingBox = new BoundingBox(boundingBox);
-		
-		// Traverse children until out of parent
-		childNodePrime = findFirstChild(parentNode, parentTimesPrime, subtreeHeight);
-		childNode = getRealChild(parentNode, childNodePrime, ray, subtreeHeight);
-		while (childNodePrime != null) {
-			childTimesPrime = updateTimes(childNodePrime, parentTimesPrime);
-			updateBoundingBox(childNode, parentBoundingBox);
-			updatePlanes(ray, childTimesPrime);
-			updateDisplay(Color.YELLOW);
-			result += sample(ray, rayPrime, childNode, childNodePrime, childTimesPrime, depth, subtreeHeight);
-			childNodePrime = findNextChild(parentNodePrime, childTimesPrime, childNodePrime, subtreeHeight);
-			childNode = getRealChild(parentNode, childNodePrime, ray, subtreeHeight);
-		}
-		return result;
 	}
 	
 	
@@ -470,6 +516,20 @@ public class Quadtree extends BasicDrawable
 		childTimes.th[1] = (childTimes.t0[1] + childTimes.t1[1]) * 0.5;
 		return childTimes;
 	}
+
+	
+	private void updateDisplay(Ray ray,
+                               BoundsCheck[] times,
+                               NodeIndex[] node,
+                               BoundingBox[] box,
+                               int depth,
+                               int childDepth) {
+	    
+		updatePlanes(ray, times[childDepth]);
+		updateBoundingBox(node[childDepth], box[depth]);
+		box[childDepth] = new BoundingBox(boundingBox);
+		updateDisplay(Color.YELLOW);
+    }
 	
 	
 	private void updateDisplay(Color color) {
@@ -498,7 +558,7 @@ public class Quadtree extends BasicDrawable
 			volumeData = new VolumeData("volume.dat");
 			volumeData.setBoundingBox(shape.getBoundingBox());
 			quadtree = new Quadtree(volumeData);
-			ray = new Ray(new Point(50,20), new Vector2D(1.0,1.0));
+			ray = new Ray(new Point(250,20), new Vector2D(-1.0,1.0));
 			
 			// Show
 			display = new DisplayFrame("Quadtree");
