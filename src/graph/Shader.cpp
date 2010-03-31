@@ -112,7 +112,7 @@ void Shader::create() {
 	else if (type.compare("vertex") == 0)
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	else
-		throw "[Gander,Shader] Type not supported.";
+		throw "[Shader] Type not supported.";
 }
 
 
@@ -145,9 +145,9 @@ void Shader::initType() {
 		type = "vertex";
 	else {
 		ostringstream message;
-		message << "[Gander,Shader] Extension '"
+		message << "[Shader] Extension '"
 		        << extension << "' not recognized as type.\n";
-		message << "[Gander,Shader] Use '.frag' or '.vert', "
+		message << "[Shader] Use '.frag' or '.vert', "
 		        << "or declare 'type' as 'fragment' or 'vertex'.";
 		throw message.str().c_str();
 	}
@@ -161,7 +161,7 @@ void Shader::list() const {
 	
 	// Print
 	for (int i=0; i<length; i++)
-		cout << source[i] << endl;
+		cout << source[i];
 }
 
 
@@ -182,8 +182,9 @@ void Shader::load() {
 	// Copy to source array
 	length = lines.size();
 	source = new const char*[length];
-	for (int i=0; i<length; ++i)
+	for (int i=0; i<length; ++i) {
 		source[i] = lines[i].c_str();
+	}
 	
 	// Pass to OpenGL
 	glShaderSource(handle, length, source, NULL);

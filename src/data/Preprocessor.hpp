@@ -51,6 +51,7 @@ class Preprocessor {
 		
 		void addLine(string &line,
 		             bool &inComment);
+		void addNewLines();
 		string getPragmaKey(const string &line);
 		string getPragmaValue(const string &line);
 		string getToken(const string &line,

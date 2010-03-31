@@ -57,6 +57,16 @@ void Preprocessor::addLine(string &line,
 }
 
 
+void Preprocessor::addNewLines() {
+	
+	vector<string>::iterator it;
+	
+	for (it=lines.begin(); it!=lines.end(); ++it) {
+		it->append("\n");
+	}
+}
+
+
 string Preprocessor::getPragmaKey(const string &line) {
 	
 	return getToken(line, 1);
@@ -225,7 +235,7 @@ void Preprocessor::printLines() {
 	vector<string>::iterator line;
 	
 	for (line=lines.begin(); line!=lines.end(); ++line) {
-		cout << *line << endl;
+		cout << *line;
 	}
 }
 
@@ -254,6 +264,7 @@ bool Preprocessor::skipLines() {
 void Preprocessor::start() {
 	
 	load(filename);
+	addNewLines();
 }
 
 
