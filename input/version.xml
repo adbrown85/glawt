@@ -1,0 +1,12 @@
+<!--
+ * version.xml
+ * 
+ * Author
+ *     Andrew Brown
+-->
+
+
+<program>
+	<shader file="version.frag" />
+	<box />
+</program>
