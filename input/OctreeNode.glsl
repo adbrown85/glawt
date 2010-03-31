@@ -6,12 +6,13 @@
  */
 #ifndef OCTREENODE_GLSL
 #define OCTREENODE_GLSL
+#define NULL -1
 
 
 /**
  * Node of an Octree.
  * 
- * @see OctreeNode_()
+ * @see OctreeNode_(int,int)
  */
 struct OctreeNode {
 	int key;
@@ -20,21 +21,34 @@ struct OctreeNode {
 
 
 /**
+ * Default constructor.
+ * 
+ * @return node with NULL for key and name.
+ */
+OctreeNode OctreeNode_() {
+	
+	OctreeNode node;
+	
+	node.key = NULL;
+	node.name = NULL;
+	return node;
+}
+
+
+/**
  * Constructor.
  * 
- * @param node
- *     OctreeNode instance.
- * @param key
- *     Index into the array.
- * @param name
- *     Which child the node is.
+ * @param key Index into the array
+ * @param name Which child the node is
  */
-void OctreeNode_(inout OctreeNode node,
-                 in int key,
-                 in int name) {
+OctreeNode OctreeNode_(in int key,
+                       in int name) {
+	
+	OctreeNode node;
 	
 	node.key = key;
 	node.name = name;
+	return node;
 }
 
 

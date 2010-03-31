@@ -21,14 +21,17 @@ struct BoundingBox {
 /**
  * Constructs a default BoundingBox.
  * 
- * @param [in,out] box
+ * @returns
  *     BoundingBox instance.
  */
-void BoundingBox_(inout BoundingBox box) {
+BoundingBox BoundingBox_() {
+	
+	BoundingBox box;
 	
 	box.lower = vec4(0,0,0,1);
 	box.upper = vec4(1,1,1,1);
 	box.center = vec4(0.5,0.5,0.5,1);
+	return box;
 }
 
 

@@ -4,18 +4,24 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Octree.glsl"
+#version 110
+#include "Colors.glsl"
+// #include "Octree.glsl"
+/*
 uniform int bufferSize;
 uniform sampler2D buffer;
 uniform sampler1D octree;
 uniform sampler3D volume;
 uniform int length;
 uniform int height;
+*/
 
 
 
 void main() {
 	
+	gl_FragColor = RED;
+/*
 	Ray ray;
 	vec4 rayEnd;
 	
@@ -29,6 +35,7 @@ void main() {
 	}
 	
 	// Sample
-	gl_FragColor = Octree_sample(volume, octree, length, ray, height);
+	Octree_sample(volume, octree, length, ray, height);
+*/
 }
 
