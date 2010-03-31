@@ -151,29 +151,41 @@ public class Quadtree extends BasicDrawable
 	}
 	
 	
-	private NodeIndex findNextChild(NodeIndex parentNode,
-	                                BoundsCheck childTimes,
-	                                NodeIndex lastChildNode,
-	                                int subtreeHeight) {
+	/**
+	 * Finds next child ray enters by examining last child and its times.
+	 * 
+	 * @param pNode Parent node
+	 * @param cTimesLast Times of the last child node
+	 * @param cNodeLast Last child node
+	 * @param cHeight Height of the subtree at the child's depth
+	 * @return the next child node
+	 */
+	private NodeIndex findNextChild(NodeIndex pNode,
+	                                BoundsCheck cTimesLast,
+	                                NodeIndex cNodeLast,
+	                                int cHeight) {
 		
-		switch (lastChildNode.name) {
+		int exitPlane;
+		
+		exitPlane = findExitPlane(cTimesLast);
+		switch (cNodeLast.name) {
 			case 0:
-				switch (findExitPlane(childTimes)) {
-					case XZ_PLANE: return getChild(parentNode, 2, subtreeHeight);
-					case YZ_PLANE: return getChild(parentNode, 1, subtreeHeight);
+				switch (exitPlane) {
+					case XZ_PLANE: return getChild(pNode, 2, cHeight);
+					case YZ_PLANE: return getChild(pNode, 1, cHeight);
 				}
 			case 1:
-				switch (findExitPlane(childTimes)) {
-					case XZ_PLANE: return getChild(parentNode, 3, subtreeHeight);
+				switch (exitPlane) {
+					case XZ_PLANE: return getChild(pNode, 3, cHeight);
 					case YZ_PLANE: return nullNode();
 				}
 			case 2:
-				switch (findExitPlane(childTimes)) {
+				switch (exitPlane) {
 					case XZ_PLANE: return nullNode();
-					case YZ_PLANE: return getChild(parentNode, 3, subtreeHeight);
+					case YZ_PLANE: return getChild(pNode, 3, cHeight);
 				}
 			case 3:
-				switch (findExitPlane(childTimes)) {
+				switch (exitPlane) {
 					case XZ_PLANE: return nullNode();
 					case YZ_PLANE: return nullNode();
 				}
@@ -337,8 +349,8 @@ public class Quadtree extends BasicDrawable
 		result = 0.0f;
 		depth = 0;
 		childHeight = height - 1;
-		node[0] = new NodeIndex(FIRST_CHILD, ROOT_KEY);
-		nodePrime[0] = new NodeIndex(FIRST_CHILD, ROOT_KEY);
+		node[0] = new NodeIndex(ROOT_KEY, FIRST_CHILD);
+		nodePrime[0] = new NodeIndex(ROOT_KEY, FIRST_CHILD);
 		step[0] = FIRST_STEP;
 		times[0] = rootTimes;
 		box[0] = new BoundingBox(boundingBox);
