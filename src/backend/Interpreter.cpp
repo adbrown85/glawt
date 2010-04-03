@@ -57,7 +57,7 @@ Interpreter::Interpreter(Scene *scene) {
 Interpreter::~Interpreter() {
 	
 	// Clean up
-	for (int i=0; i<delegates.size(); i++)
+	for (size_t i=0; i<delegates.size(); i++)
 		delete delegates[i];
 }
 

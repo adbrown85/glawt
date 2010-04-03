@@ -96,6 +96,6 @@ void Compositor::showAll(Node *node) {
 	
 	// Show children
 	children = node->getChildren();
-	for (int i=0; i<children.size(); ++i)
+	for (size_t i=0; i<children.size(); ++i)
 		showAll(children[i]);
 }
