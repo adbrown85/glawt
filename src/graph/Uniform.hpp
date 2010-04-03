@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <iostream>
 #include <set>
+#include <sstream>
 #include <string>
 #include "Node.hpp"
 #include "Program.hpp"
@@ -44,17 +45,21 @@ class Uniform : public Node,
 	
 	private :
 		
+		bool isMatrix;
 		GLenum valueType;
-		GLfloat value;
+		GLenum matrixType;
+		GLfloat value, matrix[16];
 		GLint location;
 		Program *program;
 		static set<string> types;
 		string link, name, type;
 		
 		void init();
+		void initAsMatrix();
 		static void initTypes();
 		bool isSampler();
 		static bool isSupported(string type);
+		void loadMatrix();
 		void verify();
 };
 

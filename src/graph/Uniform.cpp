@@ -61,7 +61,6 @@ void Uniform::associate() {
 	
 	Node *current;
 	Texture *texture;
-	string message;
 	
 	// Look for a Program ancestor
 	current = parent;
@@ -82,9 +81,10 @@ void Uniform::associate() {
 			current = current->getParent();
 		}
 		if (texture == NULL) {
-			message = "[Gander,Uniform] Could not find texture with '";
-			message += link + "' as name.";
-			throw message.c_str();
+			ostringstream message;
+			message << "[Uniform] Could not find texture with '" << link
+			        << "'as name.";
+			throw message.str().c_str();
 		}
 		value = texture->getUnit();
 	}
@@ -97,26 +97,46 @@ void Uniform::associate() {
 void Uniform::apply() {
 	
 	// Set value
-	if (valueType == GL_FLOAT)
-		glUniform1f(location, value);
-	else
-		glUniform1i(location, static_cast<int>(value));
+	if (isMatrix) {
+		glGetFloatv(matrixType, matrix);
+		glUniformMatrix4fv(location, 1, false, matrix);
+	} else {
+		switch (valueType) {
+		case GL_FLOAT:
+			glUniform1f(location, value);
+			break;
+		case GL_INT:
+			glUniform1i(location, static_cast<int>(value));
+			break;
+		}
+	}
 }
 
 
 /**
  * Finds the variable's location in the program.
+ * 
+ * @throws const_char* if program cannot be found.
+ * @throws const_char* if location for uniform cannot be found
  */
 void Uniform::finalize() {
 	
 	// Check for no program
-	if (program == NULL)
-		return;
+	if (program == NULL) {
+		ostringstream message;
+		message << "[Uniform] Program for uniform named '" << name
+		        << "' cannot be found.";
+		throw message.str().c_str();
+	}
 	
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
-	if (location == -1)
-		return;
+	if (location == -1) {
+		ostringstream message;
+		message << "[Uniform] Location for uniform named '" << name
+		        << "' cannot be found.";
+		throw message.str().c_str();
+	}
 }
 
 
@@ -127,13 +147,31 @@ void Uniform::init() {
 	
 	// Defaults
 	className = "Uniform";
-	this->program = NULL;
+	program = NULL;
+	isMatrix = false;
 	
 	// Conversions
-	if (type.compare("float") == 0)
-		this->valueType = GL_FLOAT;
-	else
-		this->valueType = GL_INT;
+	if (type == "float") {
+		valueType = GL_FLOAT;
+	} else if (type == "mat4") {
+		initAsMatrix();
+	} else {
+		valueType = GL_INT;
+	}
+}
+
+
+void Uniform::initAsMatrix() {
+	
+	isMatrix = true;
+	
+	if (link == "modelview") {
+		matrixType = GL_MODELVIEW_MATRIX;
+	} else if (link == "projection") {
+		matrixType = GL_PROJECTION_MATRIX;
+	} else {
+		throw "[Uniform] Matrix not supported.";
+	}
 }
 
 
@@ -149,6 +187,7 @@ void Uniform::initTypes() {
 	// Add to set
 	types.insert("float");
 	types.insert("int");
+	types.insert("mat4");
 	types.insert("sampler1d");
 	types.insert("sampler2d");
 	types.insert("sampler3d");
@@ -205,12 +244,12 @@ void Uniform::verify() {
 	
 	// Check if type is supported
 	initTypes();
-	if (!isSupported(this->type))
-		throw "[Gander,Uniform] Type not supported.";
+	if (!isSupported(type))
+		throw "[Uniform] Type not supported.";
 	
 	// Check if sampler type has link
 	if (isSampler() && link.empty())
-		throw "[Gander,Uniform] Sampler types require link.";
+		throw "[Uniform] Sampler types require link to texture.";
 }
 
 
@@ -224,9 +263,12 @@ string Uniform::toString() const {
 	// Build string
 	stream << Node::toString();
 	stream << " type='" << type << "'"
-	       << " name='" << name << "'"
-	       << " value='" << value << "'"
-	       << " link='" << link << "'";
+	       << " name='" << name << "'";
+	if (!isMatrix) {
+		stream << " value='" << value << "'";
+	}
+	stream << " link='" << link << "'"
+	       << " location='" << location << "'";
 	return stream.str();
 }
 

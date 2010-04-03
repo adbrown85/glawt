@@ -11,12 +11,21 @@
 <texture2d name="crate" file="../../textures/crate.jpg">
 <texture2d name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader type="fragment" file="../../input/texture.frag" />
-		<uniform type="sampler2D" name="texture" link="crate">
-			<translate z="2.0">
-				<square />
-			</translate>
-		</uniform>
+		<shader type="vertex" file="../../input/basic.vert" />
+		<shader type="fragment" file="../../input/basic.frag" />
+		<translate z="-5.0">
+			<uniform type="mat4" name="mvMatrix" link="modelview">
+			<uniform type="mat4" name="pMatrix" link="projection">
+<!--
+			<uniform type="sampler2d" name="texture" link="crate">
+-->
+				<boxvbo />
+			</uniform>
+			</uniform>
+<!--
+			</uniform>
+-->
+		</translate>
 	</program>
 </texture2d>
 </texture2d>
