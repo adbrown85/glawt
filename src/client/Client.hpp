@@ -59,17 +59,20 @@ class Client {
 	
 	public:
 		
+		Client(int argc,
+		       char *argv[]);
 		void banner();
 		void display();
 		void onHeader();
 		void onPreprocess();
 		void onVlb();
-		void parse(int argc,
-		           char *argv[]);
+		void parse();
 		void start();
 	
 	private:
 		
+		int argc;
+		char **argv;
 		Scene scene;
 		string inFilename, option, outFilename, title;
 };

@@ -8,6 +8,22 @@
 #include "Client.hpp"
 
 
+/**
+ * Creates a %Client.
+ * 
+ * @param argc
+ *     Number of arguments.
+ * @param argv
+ *     Array of arguments as C-strings.
+ */
+Client::Client(int argc,
+               char *argv[]) {
+	
+	this->argc = argc;
+	this->argv = argv;
+}
+
+
 void Client::banner() {
 	
 	cout << endl;
@@ -37,7 +53,7 @@ void Client::display() {
 	scene.setFilename(inFilename);
 	title = "Gander [";
 	title += inFilename + "]";
-	Display::start(title, &scene, &interpreter);
+	Display::start(argc, argv, title, &scene, &interpreter);
 }
 
 
@@ -68,14 +84,8 @@ void Client::onVlb() {
 
 /**
  * Parses the command line arguments.
- * 
- * @param argc
- *     Number of arguments.
- * @param argv
- *     Array of arguments as C-strings.
  */
-void Client::parse(int argc,
-                   char *argv[]) {
+void Client::parse() {
 	
 	// Handle arguments
 	if (argc == 2) {
@@ -100,7 +110,7 @@ void Client::parse(int argc,
 
 
 /**
- * 
+ * Starts the actions.
  */
 void Client::start() {
 	

@@ -10,11 +10,10 @@
 int main(int argc,
          char *argv[]) {
 	
-	Client client;
+	Client client(argc, argv);
 	
 	try {
 		// Start the client
-		client.parse(argc, argv);
 		client.start();
 	}
 	catch (const char *e) {
