@@ -7,7 +7,7 @@
 #include "Texture3D.hpp"
 using namespace std;
 void display(void);
-void init(string);
+void init(int,char*[],string);
 
 
 /**
@@ -31,7 +31,7 @@ int main(int argc,
 	}
 	
 	// Initialize OpenGL
-	init("Texture3D");
+	init(argc, argv, "Texture3D");
 	
 	try {
 		
@@ -67,10 +67,9 @@ int main(int argc,
 /**
  * Initializes the GLUT display.
  */
-void init(string title) {
-	
-	char **argv;
-	int argc=0;
+void init(int argc,
+          char *argv[],
+          string title) {
 	
 	// Print
 	cout << endl;
@@ -125,3 +124,4 @@ void display(void) {
 	// Finish
 	glFlush();
 }
+

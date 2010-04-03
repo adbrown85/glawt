@@ -37,6 +37,8 @@ Node* Factory::create(const Tag &tag) {
 		return new Ambient(tag);
 	else if (tag.name == "box")
 		return new Box(tag);
+	else if (tag.name == "boxvbo")
+		return new BoxVBO(tag);
 	else if (tag.name == "cull")
 		return new Cull(tag);
 	else if (tag.name == "diffuse")

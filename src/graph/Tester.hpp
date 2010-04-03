@@ -23,7 +23,8 @@ class Tester {
 		static Scene scene;
 		
 		static void display(void);
-		static void initialize(string title);
+		static void initialize(int argc,
+		                       char *argv[]);
 		static void keyboard(unsigned char key,
 		                     int x,
 		                     int y);

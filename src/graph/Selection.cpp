@@ -32,7 +32,7 @@ void Selection::addAll(Node *node) {
 	
 	// Add children
 	children = node->getChildren();
-	for (int i=0; i<children.size(); ++i)
+	for (size_t i=0; i<children.size(); ++i)
 		addAll(children[i]);
 }
 

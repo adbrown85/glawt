@@ -13,6 +13,7 @@
 #include <vector>
 #include "Ambient.hpp"
 #include "Box.hpp"
+#include "BoxVBO.hpp"
 #include "Cull.hpp"
 #include "Diffuse.hpp"
 #include "Framebuffer.hpp"

@@ -30,15 +30,13 @@ void Tester::display(void) {
 /**
  * Initializes the GLUT display.
  */
-void Tester::initialize(string title) {
-	
-	char **argv;
-	int argc=0;
+void Tester::initialize(int argc,
+                        char *argv[]) {
 	
 	// Print
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << title << endl;
+	cout << argv[0] << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
@@ -47,7 +45,7 @@ void Tester::initialize(string title) {
 	glutInitDisplayMode(GLUT_SINGLE);
 	glutInitWindowPosition(50, 300);
 	glutInitWindowSize(512, 512);
-	glutCreateWindow(title.c_str());
+	glutCreateWindow(argv[0]);
 	
 	// Set up viewport
 	glViewport(0, 0, 512, 512);

@@ -21,7 +21,7 @@ int main(int argc,
 	
 	// Start
 	try {
-		Tester::initialize(argv[1]);
+		Tester::initialize(argc, argv);
 		Tester::open(argv[1]);
 		Tester::start();
 	}

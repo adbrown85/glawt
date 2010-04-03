@@ -178,8 +178,9 @@ void Box::initNormals() {
 	// Copy to class
 	for (int f=0; f<6; ++f) {
 		for (int v=0; v<4; ++v) {
+			m = f * 4 + v;
 			for (int c=0; c<3; c++)
-				this->normals[f*4+v][c] = normals[f][c];
+				this->normals[m][c] = normals[f][c];
 		}
 	}
 }
