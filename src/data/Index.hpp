@@ -67,6 +67,7 @@ inline Index& Index::operator=(const Index &B) {
 	this->i = B.i;
 	this->j = B.j;
 	this->k = B.k;
+	return *this;
 }
 
 

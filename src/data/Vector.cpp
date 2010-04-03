@@ -1,12 +1,11 @@
 /*
  * Vector.cpp
  *     General three-dimensional vector.
- *
+ * 
  * Author
  *     Andrew Brown
  */
 #include "Matrix.hpp"
-
 
 
 Vector::Vector() {
@@ -20,7 +19,6 @@ Vector::Vector() {
 }
 
 
-
 Vector::Vector(float x, float y) {
 	
 	// Set components
@@ -30,7 +28,6 @@ Vector::Vector(float x, float y) {
 	this->w = 1.0;
 	size = 2;
 }
-
 
 
 Vector::Vector(float x, float y, float z) {
@@ -44,7 +41,6 @@ Vector::Vector(float x, float y, float z) {
 }
 
 
-
 Vector::Vector(float x, float y, float z, float w) {
 	
 	// Set components
@@ -54,7 +50,6 @@ Vector::Vector(float x, float y, float z, float w) {
 	this->w = w;
 	size = 4;
 }
-
 
 
 Vector& Vector::operator=(const Vector& B) {
@@ -73,7 +68,6 @@ Vector& Vector::operator=(const Vector& B) {
 }
 
 
-
 Vector operator*(const Vector& A, float b) {
 	
 	Vector C;
@@ -86,7 +80,6 @@ Vector operator*(const Vector& A, float b) {
 	C.size = A.size;
 	return C;
 }
-
 
 
 Vector operator*(const Vector& A, const Vector& B) {
@@ -103,7 +96,6 @@ Vector operator*(const Vector& A, const Vector& B) {
 }
 
 
-
 Vector operator/(const Vector& A, float b) {
 	
 	Vector C;
@@ -118,7 +110,6 @@ Vector operator/(const Vector& A, float b) {
 	C.size = A.size;
 	return C;
 }
-
 
 
 Vector operator/(const Vector& A, const Vector& B) {
@@ -139,7 +130,6 @@ Vector operator/(const Vector& A, const Vector& B) {
 }
 
 
-
 Vector operator+(const Vector& A, const Vector& B) {
 	
 	Vector C;
@@ -154,7 +144,6 @@ Vector operator+(const Vector& A, const Vector& B) {
 }
 
 
-
 Vector operator-(const Vector& A, const Vector& B) {
 	
 	Vector C;
@@ -167,7 +156,6 @@ Vector operator-(const Vector& A, const Vector& B) {
 	C.size = A.size;
 	return C;
 }
-
 
 
 std::ostream& operator<<(std::ostream& out, const Vector& A) {
@@ -188,22 +176,17 @@ std::ostream& operator<<(std::ostream& out, const Vector& A) {
 }
 
 
-
 float& Vector::operator()(int i) {
-	
-	// Check size
-	if (i < 0 || i >= size)
-		throw "Vector: Access out of bounds.";
 	
 	// Return correct component
 	switch (i) {
-		case 0 : return x;
-		case 1 : return y;
-		case 2 : return z;
-		case 3 : return w;
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: throw "[Vector] Index out of bounds.";
 	}
 }
-
 
 
 Vector Vector::crossProduct(const Vector &B) const {
@@ -221,7 +204,6 @@ Vector Vector::crossProduct(const Vector &B) const {
 }
 
 
-
 float Vector::dotProduct(const Vector &B) const {
 	
 	// Calculate
@@ -232,22 +214,20 @@ float Vector::dotProduct(const Vector &B) const {
 }
 
 
-
+/**
+ * @throws const_char* if index out of bounds.
+ */
 float Vector::get(int i) const {
-	
-	// Check size
-	if (i < 0 || i >= size)
-		throw "Vector: Access out of bounds.";
 	
 	// Return correct component
 	switch (i) {
-		case 0 : return x;
-		case 1 : return y;
-		case 2 : return z;
-		case 3 : return w;
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: throw "[Vector] Index out of bounds.";
 	}
 }
-
 
 
 Vector Vector::getNormalized() const {
@@ -274,7 +254,6 @@ Vector Vector::getNormalized() const {
 }
 
 
-
 float Vector::length() const {
 	
 	// Return root of sum of squares
@@ -283,7 +262,6 @@ float Vector::length() const {
 	else
 		return sqrt(x*x + y*y + z*z);
 }
-
 
 
 void Vector::set(float x, float y) {
@@ -295,7 +273,6 @@ void Vector::set(float x, float y) {
 }
 
 
-
 void Vector::set(float x, float y, float z) {
 	
 	// Set components
@@ -304,7 +281,6 @@ void Vector::set(float x, float y, float z) {
 	this->z = z;
 	size = 3;
 }
-
 
 
 void Vector::set(float x, float y, float z, float w) {

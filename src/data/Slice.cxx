@@ -8,14 +8,13 @@
 #include <GL/glut.h>
 #include "Slice.hpp"
 void display(void);
-void init(string);
+void init(int argc, char *argv[], string);
 void keyboard(unsigned char,int,int);
 void special(int,int,int);
 Dataset *dataset=NULL;
 float xText, yText;
 int height, width;
 Slice *slice=NULL;
-
 
 
 int main(int argc,
@@ -45,7 +44,7 @@ int main(int argc,
 		height = dataset->getHeight();
 		xText = ((float)width - 15) / width;
 		yText = ((float)height - 30) / height;
-		init("Slice");
+		init(argc, argv, "Slice");
 		dataset->print();
 	}
 	catch (char const *e) {
@@ -76,7 +75,7 @@ void display(void) {
 	// Add index
 	glRasterPos2f(-xText, +yText);
 	sprintf(buffer, "%d", slice->getIndex());
-	for (int i=0; i<strlen(buffer); ++i)
+	for (size_t i=0; i<strlen(buffer); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,
 		                    buffer[i]);
 	
@@ -89,10 +88,9 @@ void display(void) {
 /**
  * Initializes the GLUT display.
  */
-void init(string title) {
-	
-	char **argv;
-	int argc=0;
+void init(int argc,
+          char *argv[],
+          string title) {
 	
 	// Print
 	cout << endl;

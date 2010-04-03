@@ -52,26 +52,25 @@ void Tag::clear() {
 
 
 /**
- * Throw an exception if the tag doesn't have an attribute.
+ * @throws const_char* if the tag doesn't have an attribute.
  * 
  * @param key
  *     Name of the attribute.
  */
 void Tag::error(string key) const {
 	
-	string msg="  Tag named '";
+	ostringstream msg;
 	
 	// Build and throw message
-	msg += name
-	     + "' does not have necessary '"
-	     + key
-	     + "' attribute!";
-	throw msg.c_str();
+	msg << "[Tag] Tag named '" << name
+	    << "' does not have necessary '" << key
+	    << "' attribute.";
+	throw msg.str().c_str();
 }
 
 
 /**
- * Throw an exception if an attribute can't be converted to a type.
+ * @throws const_char* if an attribute can't be converted to a type.
  * 
  * @param key
  *     Name of the attribute.
@@ -81,16 +80,14 @@ void Tag::error(string key) const {
 void Tag::error(string key,
                 string type) const {
 	
-	string msg="  In tag named '";
+	ostringstream msg;
 	
 	// Build and throw message
-	msg += name
-	     + "', attribute '"
-	     + key
-	     + "' cannot be parsed as '"
-	     + type;
-	     + "'!";
-	throw msg.c_str();
+	msg << "[Tag] In tag named '" << name
+	    << "', attribute '" << key
+	    << "' cannot be parsed as '" << type
+	    << ".";
+	throw msg.str().c_str();
 }
 
 

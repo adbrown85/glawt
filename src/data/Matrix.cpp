@@ -65,7 +65,7 @@ Matrix::Matrix(float a0, float a1, float a2, float a3,
 float Matrix::det(int n) const {
 	
 	float po, rec, ret=0;
-	int i=0, j=0, times;
+	int i=0, j=0;
 	
 	// Ending condition
 	if (n == 2)

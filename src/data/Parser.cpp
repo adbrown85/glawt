@@ -41,7 +41,6 @@ string Parser::findTagString() {
  */
 bool Parser::isComment(string comment) {
 	
-	char character;
 	int length=comment.length();
 	
 	// Get next three characters
@@ -136,7 +135,6 @@ void Parser::parseAttribute(string attribute,
 void Parser::parseTag(string tagString,
                       Tag &tag) {
 	
-	char character;
 	string token;
 	stringstream stream;
 	
@@ -172,7 +170,7 @@ void Parser::parseTag(string tagString,
 void Parser::print() {
 	
 	cout << "Tags: " << endl;
-	for (int i=0; i<tags.size(); ++i)
+	for (size_t i=0; i<tags.size(); ++i)
 		cout << "  " << tags[i] << endl;
 }
 

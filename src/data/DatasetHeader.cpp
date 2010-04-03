@@ -147,7 +147,7 @@ void DatasetHeader::print() const {
 	if (comments.size() > 0)
 		cout << setw(12) << "  Comments" << endl;
 	cout << right;
-	for (int i=0; i<comments.size(); ++i)
+	for (size_t i=0; i<comments.size(); ++i)
 		cout << "    " << comments[i] << endl;
 }
 
@@ -196,7 +196,7 @@ void DatasetHeader::write(ostream &stream) {
 	
 	// Descriptor and comments
 	stream << "VLIB.1" << endl;
-	for (int i=0; i<comments.size(); ++i) {
+	for (size_t i=0; i<comments.size(); ++i) {
 		stream << '#' << comments[i] << endl;
 	}
 	

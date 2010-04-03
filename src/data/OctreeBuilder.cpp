@@ -85,7 +85,6 @@ void OctreeBuilder::buildNodeAsLeaf(const Index &center,
 	
 	GLenum type;
 	Index sampleIndex;
-	void *value;
 	
 	// Check each voxel around sample point
 	type = dataset->getType();
