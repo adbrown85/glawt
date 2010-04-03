@@ -8,7 +8,6 @@
 #include "Matrix.hpp"
 
 
-
 /**
  * Creates the identity matrix.
  */
@@ -24,7 +23,6 @@ Matrix::Matrix() {
 	for (int i=0; i<size; i++)
 		arr[i][i] = 1.0;
 }
-
 
 
 /**
@@ -58,7 +56,6 @@ Matrix::Matrix(float a0, float a1, float a2, float a3,
 }
 
 
-
 /**
  * Calculate the determinant of a part of the matrix.
  */
@@ -85,7 +82,6 @@ float Matrix::det(int n) const {
 }
 
 
-
 /**
  * Puts the matrix into a single-subscript array.  Column-major order.
  */
@@ -97,7 +93,6 @@ void Matrix::getArray(float array[16]) {
 }
 
 
-
 /**
  * Calculate the determinant of the entire matrix.
  */
@@ -105,7 +100,6 @@ float Matrix::getDeterminant() const {
 	
 	return det(getRows());
 }
-
 
 
 /**
@@ -134,7 +128,6 @@ Matrix Matrix::getInverse() const {
 }
 
 
-
 /**
  * Returns one of the elements in the matrix.
  * 
@@ -146,12 +139,11 @@ Matrix Matrix::getInverse() const {
 float& Matrix::operator()(int i, int j) {
 	
 	if (i < 0 || i >= size)
-		throw "Matrix: i out of bounds.";
+		throw "[Matrix] Index out of bounds.";
 	if (j < 0 || j >= size)
-		throw "Matrix: j out of bounds.";
+		throw "[Matrix] Index out of bounds.";
 	return arr[i][j];
 }
-
 
 
 /**
@@ -161,25 +153,25 @@ float& Matrix::operator()(int i, int j) {
  * matrices could have variables sizes, Matrix a needs to have the same number 
  * of columns as Matrix b has rows.
  */
-Matrix operator*(const Matrix & a, const Matrix &b) {
+Matrix operator*(const Matrix &A,
+                 const Matrix &B) {
 	
-	Matrix c;
+	Matrix C;
 	
 	// Check if matrices can't be multiplied
-	if (a.getColumns() != b.getRows())
+	if (A.getColumns() != B.getRows())
 		throw "Matrix: Matrices cannot be multiplied.";
 	
 	// Multiply rows of A with columns in B
-	for (int i=0; i<c.getRows(); ++i) {
-		for (int j=0; j<c.getColumns(); ++j) {
-			c(i,j) = 0.0;
-			for (int k=0; k<a.getColumns(); k++)
-				c(i,j) += a.get(i,k) * b.get(k,j);
+	for (int i=0; i<C.getRows(); ++i) {
+		for (int j=0; j<C.getColumns(); ++j) {
+			C(i,j) = 0.0;
+			for (int k=0; k<A.getColumns(); ++k)
+				C(i,j) += A.get(i,k) * B.get(k,j);
 		}
 	}
-	return c;
+	return C;
 }
-
 
 
 /**
@@ -189,7 +181,8 @@ Matrix operator*(const Matrix & a, const Matrix &b) {
  * matrices could have variables sizes, Matrix a needs to have the same number 
  * of columns as Matrix b has rows.
  */
-Vector operator*(const Matrix & A, const Vector &B) {
+Vector operator*(const Matrix &A,
+                 const Vector &B) {
 	
 	Vector C;
 	
@@ -201,7 +194,6 @@ Vector operator*(const Matrix & A, const Vector &B) {
 	}
 	return C;
 }
-
 
 
 /**
@@ -225,11 +217,11 @@ void Matrix::print() {
 }
 
 
-
 /**
  * Returns a new matrix with row i and column j deleted.
  */
-Matrix Matrix::getSubmatrix(int i, int j) const {
+Matrix Matrix::getSubmatrix(int i,
+                            int j) const {
 	
 	int bi=0, bj=0;
 	Matrix b;
@@ -252,7 +244,6 @@ Matrix Matrix::getSubmatrix(int i, int j) const {
 	b.size = this->size - 1;
 	return b;
 }
-
 
 
 /**
