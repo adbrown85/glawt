@@ -119,8 +119,9 @@ void Mouse::installManipulators() {
 	add(new Translator(0.0, 0.0, 1.0));
 	
 	// Set delegates
-	for (int i=0; i<manipulators.size(); ++i)
+	for (size_t i=0; i<manipulators.size(); ++i) {
 		manipulators[i]->setDelegate(delegate);
+	}
 }
 
 
@@ -148,3 +149,4 @@ void Mouse::onDrag(int x,
 	// Pass to drag helper
 	obj->dragHelper.onDrag(x, y);
 }
+

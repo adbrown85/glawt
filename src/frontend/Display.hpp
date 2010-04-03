@@ -20,7 +20,6 @@
 using namespace std;
 
 
-
 /**
  * @brief
  *     3D display for items in a scene.
@@ -28,17 +27,17 @@ using namespace std;
  */
 class Display {
 	
-	
 	public :
 		
 		static void display(void);
 		static void idle(void);
 		static void install(Control *control);
-		static void start(string title,
+		static void start(int argc,
+		                  char *argv[],
+		                  string title,
 		                  Scene *scene,
 		                  Delegate *delegate);
 		static void visibility(int visible);
-	
 	
 	private :
 		

@@ -163,7 +163,7 @@ void Picker::storeIDsOfItems() {
 		shapeID = *ptr;
 		
 		// Record item picked with shape it was attached to
-		for (int j=0; j<numOfIDs; ++j) {
+		for (size_t j=0; j<numOfIDs; ++j) {
 			id = *ptr;
 			ptr++;
 		}

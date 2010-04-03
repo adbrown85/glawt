@@ -14,7 +14,6 @@ vector<Control*> Display::controls;
 vector<Manipulator*> Display::manipulators;
 
 
-
 /**
  * Draws the scene in the window.
  */
@@ -32,7 +31,6 @@ void Display::display(void) {
 }
 
 
-
 /**
  * Refreshes the display.
  */
@@ -40,7 +38,6 @@ void Display::idle(void) {
 	
 	glutPostRedisplay();
 }
-
 
 
 /**
@@ -54,7 +51,6 @@ void Display::install(Control *control) {
 	// Add to vector
 	controls.push_back(control);
 }
-
 
 
 /**
@@ -94,7 +90,7 @@ void Display::overlay() {
 	
 	// Draw text
 	sprintf(buffer, "fps: %d", framesPerSecond);
-	for (int i=0; i<strlen(buffer); ++i)
+	for (size_t i=0; i<strlen(buffer); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, buffer[i]);
 }
 
@@ -110,12 +106,13 @@ void Display::overlay() {
  * @param delegate
  *     Delegate that opens scene.
  */
-void Display::start(std::string title,
+void Display::start(int argc,
+                    char *argv[],
+                    std::string title,
                     Scene *scene,
                     Delegate *delegate) {
 	
-	char **argv;
-	int argc=0, width, height, x=100, y=100;
+	int width, height, x=100, y=100;
 	vector<Manipulator*> manipulators;
 	
 	// Copy
@@ -156,16 +153,15 @@ void Display::start(std::string title,
 	// Register functions
 	glutDisplayFunc(Display::display);
 	glutVisibilityFunc(Display::visibility);
-	for (int i=0; i<controls.size(); i++) {
+	for (size_t i=0; i<controls.size(); i++) {
 		manipulators = controls[i]->install(scene);
-		for (int j=0; j<manipulators.size(); j++)
+		for (size_t j=0; j<manipulators.size(); j++)
 			Display::manipulators.push_back(manipulators[j]);
 	}
 	
 	// Start
 	glutMainLoop();
 }
-
 
 
 void Display::visibility(int visible) {

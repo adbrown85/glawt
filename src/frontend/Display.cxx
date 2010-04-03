@@ -37,7 +37,7 @@ int main(int argc,
 	Display::install(&menu);
 	Display::install(&keyboard);
 	Display::install(&mouse);
-	Display::start("Display", &scene, &interpreter);
+	Display::start(argc, argv, "Display", &scene, &interpreter);
 	
 	// Finish
 	return 0;

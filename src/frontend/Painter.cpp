@@ -97,7 +97,6 @@ void Painter::paintNode(Node *node,
 	Applicable *applicable;
 	Drawable *drawable;
 	Selectable *selectable;
-	Framebuffer *framebuffer;
 	
 	// Node is drawable and visible
 	if ((drawable = dynamic_cast<Drawable*>(node))
@@ -119,7 +118,7 @@ void Painter::paintNode(Node *node,
 	}
 	
 	// Node is applicable
-	else if (applicable = dynamic_cast<Applicable*>(node)) {
+	else if ((applicable = dynamic_cast<Applicable*>(node))) {
 		applicable->apply();
 		if (!(renderMode == GL_SELECT && Framebuffer::isActive())) {
 			paintChildren(node, renderMode, manipulators);

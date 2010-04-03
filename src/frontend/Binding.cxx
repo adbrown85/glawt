@@ -39,7 +39,7 @@ int main(int argc,
 	bins.push_back(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT, Command::CIRCLE_UP));
 	bins.push_back(Binding('\t', 0, Command::NEXT, 5.0f));
 	bins.push_back(Binding('C', GLUT_ACTIVE_CTRL, Command::COPY));
-	for (int i=0; i<bins.size(); i++)
+	for (size_t i=0; i<bins.size(); i++)
 		cout << "  " << bins[i] << endl;
 	
 	// Check argument

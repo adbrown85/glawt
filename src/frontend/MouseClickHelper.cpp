@@ -146,9 +146,6 @@ void MouseClickHelper::tryBindings() {
  */
 void MouseClickHelper::tryBinding(Binding *binding) {
 	
-	char direction;
-	int modifier;
-	
 	// Ignore bindings that don't match current conditions
 	if (binding->getModifier() != data->modifier)
 		return;
@@ -158,11 +155,12 @@ void MouseClickHelper::tryBinding(Binding *binding) {
 		return;
 	
 	// Issue the command
-	if (binding->hasArgument())
+	if (binding->hasArgument()) {
 		delegate->run(binding->getCommand(),
 		              binding->getArgument());
-	else
+	} else {
 		delegate->run(binding->getCommand());
+	}
 	glutPostRedisplay();
 }
 

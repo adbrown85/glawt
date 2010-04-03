@@ -167,8 +167,11 @@ bool MouseDragHelper::useConstrained() {
 	range = bindings.equal_range(data->button);
 	for (pi=range.first; pi!=range.second; ++pi) {
 		binding = &(pi->second);
-		if (binding->getCommand() == Command::CIRCLE_X ||
-		    binding->getCommand() == Command::CIRCLE_Y)
+		if (binding->getCommand() == Command::CIRCLE_X
+		    || binding->getCommand() == Command::CIRCLE_Y) {
 			return true;
+		}
 	}
+	return false;
 }
+

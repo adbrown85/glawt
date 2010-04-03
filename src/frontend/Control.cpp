@@ -29,7 +29,7 @@ Control::Control(Delegate *delegate) {
 Control::~Control() {
 	
 	// Delete each manipulator
-	for (int i=0; i<manipulators.size(); ++i)
+	for (size_t i=0; i<manipulators.size(); ++i)
 		delete manipulators[i];
 }
 
