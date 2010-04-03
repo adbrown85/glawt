@@ -8,15 +8,12 @@
 #include <iostream>
 #include "Identifiable.hpp"
 #define NUMBER_OF_ITEMS 4
-using namespace std;
-
 
 
 void print(const Identifiable item) {
 	
 	cout << "  " << item.toString() << endl;
 }
-
 
 
 int main() {
@@ -32,7 +29,7 @@ int main() {
 	
 	// Check assignment of IDs
 	cout << "Asserting assignment of IDs: " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+	for (unsigned int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		print(items[i]);
 		assert(items[i].getID() == i);
 	}

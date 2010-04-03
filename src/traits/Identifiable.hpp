@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 /**
  * @interface Identifiable
  * @ingroup traits
@@ -21,7 +20,6 @@ using namespace std;
  *     Interface for an object that has a unique ID number.
  */
 class Identifiable {
-	
 	
 	public :
 		
@@ -42,7 +40,6 @@ class Identifiable {
 					return a->getID() < b->getID();
 				}
 		};
-	
 	
 	private :
 		
