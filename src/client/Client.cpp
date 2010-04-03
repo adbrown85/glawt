@@ -98,12 +98,7 @@ void Client::parse() {
 		inFilename = argv[2];
 		outFilename = argv[3];
 	} else {
-		cerr << "Usage: " << argv[0] << " [OPTION] INPUT [OUTPUT]" << endl;
-		cerr << endl;
-		cerr << "Options: " << endl;
-		cerr << "  --preprocess     Preprocess GLSL file" << endl;
-		cerr << "  --vlb            Make VLB volume file" << endl;
-		cerr << "  --header         Print header of VLB file" << endl;
+		usage();
 		exit(1);
 	}
 }
@@ -114,6 +109,7 @@ void Client::parse() {
  */
 void Client::start() {
 	
+	parse();
 	if (option == "--preprocess") {
 		onPreprocess();
 	} else if (option == "--vlb") {
@@ -125,5 +121,19 @@ void Client::start() {
 		display();
 		banner();
 	}
+}
+
+
+/**
+ * Prints a usage message.
+ */
+void Client::usage() {
+	
+	cerr << "Usage: " << argv[0] << " [OPTION] INPUT [OUTPUT]" << endl;
+	cerr << endl;
+	cerr << "Options: " << endl;
+	cerr << "  --preprocess     Preprocess GLSL file" << endl;
+	cerr << "  --vlb            Make VLB volume file" << endl;
+	cerr << "  --header         Print header of VLB file" << endl;
 }
 

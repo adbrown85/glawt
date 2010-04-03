@@ -61,13 +61,17 @@ class Client {
 		
 		Client(int argc,
 		       char *argv[]);
+		void start();
+	
+	protected:
+		
 		void banner();
 		void display();
 		void onHeader();
 		void onPreprocess();
 		void onVlb();
 		void parse();
-		void start();
+		void usage();
 	
 	private:
 		

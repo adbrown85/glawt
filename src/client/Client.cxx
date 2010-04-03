@@ -13,10 +13,8 @@ int main(int argc,
 	Client client(argc, argv);
 	
 	try {
-		// Start the client
 		client.start();
-	}
-	catch (const char *e) {
+	} catch (const char *e) {
 		cerr << e << endl;
 	}
 	return 0;
