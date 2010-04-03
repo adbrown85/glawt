@@ -1,0 +1,19 @@
+<!--
+ * BoxVBO.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<translate>
+	<program>
+		<shader file="../../input/basic.vert" />
+		<shader file="../../input/basic.frag" />
+		<uniform type="mat4" name="mvMatrix" link="modelview">
+		<uniform type="mat4" name="pMatrix" link="projection">
+			<boxvbo />
+		</uniform>
+		</uniform>
+	</program>
+</translate>
