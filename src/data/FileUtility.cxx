@@ -57,6 +57,7 @@ int main() {
 	
 	// Dirname
 	cout << "\nTesting getDirname" << endl;
+	print(FileUtility::getDirname("../../scene.xml"));
 	print(FileUtility::getDirname("input/scene.xml"));
 	print(FileUtility::getDirname("scene.xml"));
 	print(FileUtility::getDirname("/scene.xml"));
@@ -66,6 +67,7 @@ int main() {
 	print(FileUtility::getInternals("input/scene.xml"));
 	print(FileUtility::getInternals("/input/scene.xml"));
 	print(FileUtility::getInternals("./input/scene.xml"));
+	print(FileUtility::getInternals("../../input/scene.xml"));
 	print(FileUtility::getInternals("scene.xml"));
 	print(FileUtility::getInternals("gander/input/scene.xml"));
 	print(FileUtility::getInternals("C:\\scene.xml"));
@@ -74,7 +76,7 @@ int main() {
 	// Tokenize
 	cout << "\nTesting tokenize" << endl;
 	FileUtility::tokenize("input/scene.xml", tokens);
-	for (int i=0; i<tokens.size(); ++i) {
+	for (size_t i=0; i<tokens.size(); ++i) {
 		print(tokens[i]);
 	}
 	
@@ -89,6 +91,9 @@ int main() {
 	testRelativePath("input/scene.xml",
 	                 "../../../glsl/file.frag",
 	                 "../../glsl/file.frag");
+	testRelativePath("../../input/basic.vert",
+	                 "file.frag",
+	                 "../../input/file.frag");
 	
 	// Test if any are absolute paths
 	cout << "\nWhen A or B is absolute..." << endl;

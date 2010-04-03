@@ -35,6 +35,7 @@ class FileUtility {
 		static string getRoot(const string &path);
 		static bool hasWindowsRoot(const string& token);
 		static bool isAbsolutePath(const string& filename);
+		static bool isSeparator(char character);
 		static bool isWindowsRoot(const string& token);
 		static string mergePaths(const string &root,
 		                         vector<string> &base,

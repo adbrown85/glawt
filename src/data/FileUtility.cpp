@@ -29,7 +29,7 @@ string FileUtility::build(const string &root,
 	// Build path from parts using separator
 	path << root;
 	path << parts[0];
-	for (int i=1; i<parts.size(); ++i) {
+	for (size_t i=1; i<parts.size(); ++i) {
 		path << '/';
 		path << parts[i];
 	}
@@ -39,7 +39,7 @@ string FileUtility::build(const string &root,
 
 string FileUtility::getBasename(const string& path) {
 	
-	int length, index;
+	int index;
 	
 	index = path.find_last_of("/\\");
 	if (index == -1) {
@@ -52,16 +52,16 @@ string FileUtility::getBasename(const string& path) {
 
 string FileUtility::getDirname(const string& path) {
 	
-	int index;
-	string result;
+	size_t index;
+	const char *result;
 	
 	index = path.find_last_of("/\\");
-	if (index == -1) {
+	if (index > path.length()) {
 		result = ".";
 	} else if (index == 0) {
 		result = "/";
 	} else {
-		result = path.substr(0, index);
+		result = path.substr(0, index).c_str();
 	}
 	
 	// Finish
@@ -159,7 +159,13 @@ bool FileUtility::isAbsolutePath(const string& filename) {
 
 bool FileUtility::isWindowsRoot(const string& token) {
 	
-	return token.length()==2 && hasWindowsRoot(token);
+	return (token.length()==2) && hasWindowsRoot(token);
+}
+
+
+bool FileUtility::isSeparator(char character) {
+	
+	return character == '/' || character == '\\';
 }
 
 
@@ -207,10 +213,10 @@ string FileUtility::stripRoot(const string &path) {
 	
 	// Also remove current directory
 	if (path[0] == '.') {
-		if (path.length()>1 && path[1]=='/') {
-			return path.substr(2, -1);
-		} else {
+		if (path.length() == 1) {
 			return "";
+		} else if (isSeparator(path[1])) {
+			return path.substr(2, -1);
 		}
 	}
 	
