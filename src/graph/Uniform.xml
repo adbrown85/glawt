@@ -13,19 +13,15 @@
 	<program>
 		<shader type="vertex" file="../../input/basic.vert" />
 		<shader type="fragment" file="../../input/basic.frag" />
-		<translate z="-5.0">
-			<uniform type="mat4" name="mvMatrix" link="modelview">
-			<uniform type="mat4" name="pMatrix" link="projection">
+			<uniform type="mat4" name="mvpMatrix" link="modelviewprojection">
 <!--
 			<uniform type="sampler2d" name="texture" link="crate">
 -->
 				<boxvbo />
 			</uniform>
-			</uniform>
 <!--
 			</uniform>
 -->
-		</translate>
 	</program>
 </texture2d>
 </texture2d>

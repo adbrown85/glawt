@@ -12,10 +12,12 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include "Matrix.hpp"
 #include "Node.hpp"
 #include "Program.hpp"
 #include "Tag.hpp"
 #include "Texture.hpp"
+#include "Transform.hpp"
 using namespace std;
 
 
@@ -45,15 +47,19 @@ class Uniform : public Node,
 	
 	private :
 		
+		enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION};
+		
 		bool isMatrix;
 		GLenum valueType;
-		GLenum matrixType;
-		GLfloat value, matrix[16];
+		MatrixType matrixType;
+		GLfloat matrix[16], value;
 		GLint location;
 		Program *program;
 		static set<string> types;
 		string link, name, type;
 		
+		void applyAsMatrix();
+		void applyAsValue();
 		void init();
 		void initAsMatrix();
 		static void initTypes();

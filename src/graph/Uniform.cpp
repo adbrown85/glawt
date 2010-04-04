@@ -98,17 +98,39 @@ void Uniform::apply() {
 	
 	// Set value
 	if (isMatrix) {
-		glGetFloatv(matrixType, matrix);
-		glUniformMatrix4fv(location, 1, false, matrix);
+		applyAsMatrix();
 	} else {
-		switch (valueType) {
-		case GL_FLOAT:
-			glUniform1f(location, value);
-			break;
-		case GL_INT:
-			glUniform1i(location, static_cast<int>(value));
-			break;
-		}
+		applyAsValue();
+	}
+}
+
+
+void Uniform::applyAsMatrix() {
+	
+	switch (matrixType) {
+	case MODELVIEW:
+		glGetFloatv(GL_MODELVIEW_MATRIX, matrix);
+		break;
+	case PROJECTION:
+		glGetFloatv(GL_PROJECTION_MATRIX, matrix);
+		break;
+	case MODELVIEW_PROJECTION:
+		Transform::getModelViewProjectionMatrix(matrix);
+		break;
+	}
+	glUniformMatrix4fv(location, 1, false, matrix);
+}
+
+
+void Uniform::applyAsValue() {
+	
+	switch (valueType) {
+	case GL_FLOAT:
+		glUniform1f(location, value);
+		break;
+	case GL_INT:
+		glUniform1i(location, static_cast<int>(value));
+		break;
 	}
 }
 
@@ -166,9 +188,11 @@ void Uniform::initAsMatrix() {
 	isMatrix = true;
 	
 	if (link == "modelview") {
-		matrixType = GL_MODELVIEW_MATRIX;
+		matrixType = MODELVIEW;
 	} else if (link == "projection") {
-		matrixType = GL_PROJECTION_MATRIX;
+		matrixType = PROJECTION;
+	} else if (link == "modelviewprojection") {
+		matrixType = MODELVIEW_PROJECTION;
 	} else {
 		throw "[Uniform] Matrix not supported.";
 	}
