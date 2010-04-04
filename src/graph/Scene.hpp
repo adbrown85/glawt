@@ -48,11 +48,11 @@ class Scene {
 		            float z);
 		void sortByDepth();
 		
-		string getFilename() const {return filename;}
-		int getHeight() const {return height;}
+		string getFilename() const;
+		int getHeight() const;
 		Matrix getRotationMatrix() const;
-		int getWidth() const {return width;}
-		void setFilename(string filename) {this->filename = filename;}
+		int getWidth() const;
+		void setFilename(const string &filename);
 		void setRotation(float angle,
 		                 float x,
 		                 float y,
@@ -66,6 +66,23 @@ class Scene {
 		
 		void destroy(Node *node);
 };
+
+
+inline string Scene::getFilename() const {
+	return filename;
+}
+
+inline int Scene::getHeight() const {
+	return height;
+}
+
+inline int Scene::getWidth() const {
+	return width;
+}
+
+inline void Scene::setFilename(const string &filename) {
+	this->filename = filename;
+}
 
 
 #endif
