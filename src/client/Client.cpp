@@ -1,9 +1,8 @@
 /*
  * Client.cpp
- *     Client for visualizing volumes.
  * 
  * Author
- *     Andrew Brown
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Client.hpp"
 

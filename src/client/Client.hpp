@@ -1,9 +1,8 @@
 /*
  * Client.hpp
- *     Client for visualizing volumes.
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
