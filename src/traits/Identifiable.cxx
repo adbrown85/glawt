@@ -1,8 +1,8 @@
 /*
- * Identifiable-test.cpp
- *
+ * Identifiable.cxx
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include <cassert>
 #include <iostream>
