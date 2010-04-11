@@ -1,9 +1,8 @@
 /*
  * Identifiable.hpp
- *     Interface featuring the getID method and a comparator for the STL.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef IDENTIFIABLE_HPP
 #define IDENTIFIABLE_HPP

@@ -1,8 +1,8 @@
 /*
  * Selectable.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef SELECTABLE_HPP
 #define SELECTABLE_HPP

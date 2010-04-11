@@ -1,8 +1,8 @@
 /*
  * Identifiable.cpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Identifiable.hpp"
 unsigned int Identifiable::count=0;

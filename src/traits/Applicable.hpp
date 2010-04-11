@@ -2,7 +2,7 @@
  * Applicable.hpp
  * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef APPLICABLE_HPP
 #define APPLICABLE_HPP
