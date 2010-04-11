@@ -144,6 +144,23 @@ float& Matrix::operator()(int i, int j) {
 
 
 /**
+ * Returns one of the elements in the matrix.
+ * 
+ * @param i Row of the element.
+ * @param j Column of the element.
+ */
+float Matrix::operator()(int i,
+                         int j) const {
+	
+	if (i < 0 || i >= size)
+		throw "[Matrix] Index out of bounds.";
+	if (j < 0 || j >= size)
+		throw "[Matrix] Index out of bounds.";
+	return arr[i][j];
+}
+
+
+/**
  * Multiplies two matrices together.
  * 
  * @note Currently the Matrix class is fixed as a 4x4 matrix, but if it was not 

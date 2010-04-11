@@ -40,6 +40,7 @@ class Matrix {
 		int getSize() const;
 		Matrix getSubmatrix(int i, int j) const;
 		float& operator()(int i, int j);
+		float operator()(int i, int j) const;
 		friend Matrix operator*(const Matrix &A, const Matrix &B);
 		friend Vector operator*(const Matrix &A, const Vector &B);
 		void print();
