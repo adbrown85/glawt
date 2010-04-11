@@ -77,3 +77,21 @@ string Text::replace(const string &text,
 	return textCopy;
 }
 
+
+/**
+ * Converts each character of a string to lowercase.
+ * 
+ * @param original String to convert.
+ */
+string Text::toLower(const string &original) {
+	
+	int length;
+	string temp(original);
+	
+	// Convert each character
+	length = temp.length();
+	for (int i=0; i<length; ++i)
+		temp[i] = tolower(temp[i]);
+	return temp;
+}
+

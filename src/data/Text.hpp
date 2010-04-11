@@ -25,6 +25,7 @@ class Text {
 		                                  int pos);
 		static string replace(const string &text,
 		                      map<string,string> &dictionary);
+		static string toLower(const string &original);
 };
 
 

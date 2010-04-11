@@ -220,7 +220,7 @@ bool Uniform::isSampler() {
 	string type;
 	
 	// Compare strings
-	type = Tag::tolower(this->type);
+	type = Text::toLower(this->type);
 	return (type == "sampler1d"
 	          || type == "sampler2d"
 	          || type == "sampler3d");

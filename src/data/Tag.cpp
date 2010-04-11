@@ -28,9 +28,9 @@ void Tag::add(const string &key,
 	
 	string keyLower;
 	
-	keyLower = tolower(key);
+	keyLower = Text::toLower(key);
 	if (keyLower != "file")
-		attributes[keyLower] = tolower(value);
+		attributes[keyLower] = Text::toLower(value);
 	else
 		attributes[keyLower] = value;
 }
@@ -231,25 +231,7 @@ bool Tag::get(const string &key,
  */
 void Tag::setName(const string &name) {
 	
-	this->name = tolower(name);
-}
-
-
-/**
- * Converts each character of a string to lowercase.
- * 
- * @param original String to convert.
- */
-string Tag::tolower(const string &original) {
-	
-	int length;
-	string temp(original);
-	
-	// Convert each character
-	length = temp.length();
-	for (int i=0; i<length; ++i)
-		temp[i] = tolower(temp[i]);
-	return temp;
+	this->name = Text::toLower(name);
 }
 
 

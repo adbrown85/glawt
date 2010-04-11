@@ -26,7 +26,7 @@ Slice.o: Dataset.o
 VlbMaker.o: DatasetHeader.o
 
 # XML
-Tag.o :
+Tag.o : Text.o
 Parser.o : Tag.o
 
 # Files

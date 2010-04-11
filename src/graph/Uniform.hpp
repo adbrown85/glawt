@@ -16,6 +16,7 @@
 #include "Node.hpp"
 #include "Program.hpp"
 #include "Tag.hpp"
+#include "Text.hpp"
 #include "Texture.hpp"
 #include "Transform.hpp"
 using namespace std;

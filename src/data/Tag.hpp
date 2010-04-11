@@ -11,6 +11,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include "Text.hpp"
 using namespace std;
 
 
@@ -50,8 +51,6 @@ class Tag {
 		
 		friend ostream& operator<<(ostream &stream,
 		                           const Tag &tag);
-		                           
-		static string tolower(const string &original);
 	
 	private:
 		
