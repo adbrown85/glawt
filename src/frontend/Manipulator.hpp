@@ -1,8 +1,8 @@
 /*
  * Manipulator.hpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef MANIPULATOR_HPP
 #define MANIPULATOR_HPP

@@ -1,8 +1,8 @@
 /*
  * Control.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef __CONTROL_HEADER__
 #define __CONTROL_HEADER__

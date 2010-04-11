@@ -1,8 +1,8 @@
 /*
  * Keyboard.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef __KEYBOARD_HEADER__
 #define __KEYBOARD_HEADER__

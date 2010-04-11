@@ -1,8 +1,8 @@
 /*
  * Menu.hpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef __MENU_HEADER__
 #define __MENU_HEADER__

@@ -1,8 +1,8 @@
 /*
  * MouseHelper.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef MOUSEHELPER_HPP
 #define MOUSEHELPER_HPP

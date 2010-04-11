@@ -1,8 +1,8 @@
 /*
  * Translator.hpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef TRANSLATOR_HPP
 #define TRANSLATOR_HPP
