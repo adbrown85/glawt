@@ -7,7 +7,6 @@
 #include "Grip.hpp"
 
 
-
 /**
  * Adds the handlers Grip supports.
  */
@@ -29,7 +28,6 @@ Grip::Grip() {
 }
 
 
-
 /**
  * Rotates the current selection.
  */
@@ -41,7 +39,6 @@ void Grip::rotate(Scene *scene,
 }
 
 
-
 /**
  * Scales the current selection.
  */
@@ -51,7 +48,6 @@ void Grip::scale(Scene *scene,
 	
 	std::cout << "Grip::scale(Scene*,int)" << std::endl;
 }
-
 
 
 Translation* Grip::findTranslation(Node *node) {
@@ -67,7 +63,6 @@ Translation* Grip::findTranslation(Node *node) {
 	}
 	return static_cast<Translation*>(currentNode);
 }
-
 
 
 /**
@@ -107,3 +102,4 @@ void Grip::translate(Scene *scene,
 		}
 	}
 }
+

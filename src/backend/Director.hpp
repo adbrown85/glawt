@@ -19,14 +19,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Delegate responsible for selecting items in the scene.
- * @ingroup backend
  */
 class Director : public Delegate {
-	
 	
 	public :
 		

@@ -10,11 +10,11 @@
 using namespace std;
 
 
-
 /**
  * Simple test program.
  */
-int main(int argc, char *argv[]) {
+int main(int argc,
+         char *argv[]) {
 	
 	Producer producer;
 	Scene scene;
@@ -38,3 +38,4 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	return 0;
 }
+

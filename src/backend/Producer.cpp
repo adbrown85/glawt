@@ -7,7 +7,6 @@
 #include "Producer.hpp"
 
 
-
 /**
  * Adds the commands this delegate supports and sets up handlers.
  */
@@ -29,13 +28,11 @@ Producer::Producer() {
 }
 
 
-
 void Producer::copy(Scene *scene,
                     int command) {
 	
 	cout << "Producer::cmdCopy(Scene*,int)" << endl;
 }
-
 
 
 void Producer::duplicate(Scene *scene,
@@ -45,13 +42,11 @@ void Producer::duplicate(Scene *scene,
 }
 
 
-
 void Producer::cut(Scene *scene,
                    int command) {
 	
 	cout << "Producer::cmdCut(Scene*,int)" << endl;
 }
-
 
 
 /**
@@ -69,13 +64,11 @@ void Producer::open(Scene *scene,
 }
 
 
-
 void Producer::paste(Scene *scene,
                      int command) {
 	
 	cout << "Producer::cmdPaste(Scene*,int)" << endl;
 }
-
 
 
 void Producer::save(Scene *scene,
@@ -85,9 +78,9 @@ void Producer::save(Scene *scene,
 }
 
 
-
 void Producer::quit(Scene *scene,
                     int command) {
 	
 	exit(0);
 }
+

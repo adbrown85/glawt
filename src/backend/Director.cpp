@@ -7,7 +7,6 @@
 #include "Director.hpp"
 
 
-
 /**
  * Adds the commands this delegate supports and sets up handlers.
  */
@@ -27,11 +26,12 @@ Director::Director() {
 }
 
 
-
 /**
  * Picks an item in the scene by its ID number.
  */
-void Director::grab(Scene *scene, int cmd, float id) {
+void Director::grab(Scene *scene,
+                    int cmd,
+                    float id) {
 	
 	Identifiable *identifiable;
 	Selectable *selectable;
@@ -50,17 +50,16 @@ void Director::grab(Scene *scene, int cmd, float id) {
 }
 
 
-
 /**
  * Iterates through the items in the scene.
  * 
  * @bug Probably needs Scene to store lastSelectedShape.
  */
-void Director::iterate(Scene *scene, int cmd) {
+void Director::iterate(Scene *scene,
+                       int cmd) {
 	
 	cout << "Director::cmdIterate(Scene*,int)" << endl;
 }
-
 
 
 /**
@@ -68,7 +67,8 @@ void Director::iterate(Scene *scene, int cmd) {
  * 
  * @bug Wait for Selectable interface.
  */
-void Director::select(Scene *scene, int cmd) {
+void Director::select(Scene *scene,
+                      int cmd) {
 	
 	switch (cmd) {
 		case Command::SELECT_ALL :
@@ -82,3 +82,4 @@ void Director::select(Scene *scene, int cmd) {
 	}
 	glutPostRedisplay();
 }
+

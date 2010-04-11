@@ -27,11 +27,10 @@ using std::string;
 using std::vector;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     Interprets commands and passes them on to other %Delegates.
- * @ingroup backend
  * 
  * @see Cameraman
  * @see Compositor
@@ -40,7 +39,6 @@ using std::vector;
  * @see Producer
  */
 class Interpreter : public Delegate {
-	
 	
 	public :
 		
@@ -51,7 +49,6 @@ class Interpreter : public Delegate {
 		virtual void run(int command);
 		virtual void run(int command, float argument);
 		virtual void run(int command, string argument);
-	
 	
 	private:
 		

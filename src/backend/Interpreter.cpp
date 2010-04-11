@@ -7,7 +7,6 @@
 #include "Interpreter.hpp"
 
 
-
 /**
  * Initializes the scene, loads the delegates, and adds commands from each.
  * 
@@ -49,7 +48,6 @@ Interpreter::Interpreter(Scene *scene) {
 }
 
 
-
 /**
  * Cleans up the delegates.
  */
@@ -59,7 +57,6 @@ Interpreter::~Interpreter() {
 	for (size_t i=0; i<delegates.size(); i++)
 		delete delegates[i];
 }
-
 
 
 /**
@@ -85,12 +82,10 @@ void Interpreter::print() {
 }
 
 
-
 /**
  * Runs a command by calling a delegate's method.
  * 
- * @param command
- *     Enumerated type from 'Command.hpp'.
+ * @param command Enumerated type from 'Command.hpp'.
  */
 void Interpreter::run(int command) {
 	
@@ -103,16 +98,14 @@ void Interpreter::run(int command) {
 }
 
 
-
 /**
  * Runs a command by handing it off to a delegate.
  * 
- * @param command
- *     Enumerated type from 'Command.hpp'.
- * @param argument
- *     Argument to the command.
+ * @param command Enumerated type from 'Command.hpp'.
+ * @param argument Argument to the command.
  */
-void Interpreter::run(int command, float argument) {
+void Interpreter::run(int command,
+                      float argument) {
 	
 	map<int,void(*)(Scene*,int,float)>::iterator hi;
 	
@@ -127,12 +120,11 @@ void Interpreter::run(int command, float argument) {
 /**
  * Runs a command by handing it off to a delegate.
  * 
- * @param command
- *     Enumerated type from 'Command.hpp'.
- * @param argument
- *     Argument to the command.
+ * @param command Enumerated type from 'Command.hpp'.
+ * @param argument Argument to the command.
  */
-void Interpreter::run(int command, string argument) {
+void Interpreter::run(int command,
+                      string argument) {
 	
 	map<int,void(*)(Scene*,int,string)>::iterator hi;
 	

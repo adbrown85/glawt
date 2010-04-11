@@ -20,14 +20,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Delegate responsible for creating and storing scenes.
- * @ingroup backend
  */
 class Producer : public Delegate {
-	
 	
 	public :
 		

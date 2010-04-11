@@ -19,14 +19,12 @@
 #include "Vector.hpp"
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Delegate responsible for moving individual items around the scene.
- * @ingroup backend
  */
 class Grip : public Delegate {
-	
 	
 	public :
 		
