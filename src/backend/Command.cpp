@@ -50,32 +50,3 @@ string Command::getName(int command) {
 	return names[command];
 }
 
-
-/**
- * Simple test program.
- */
-/*
-int main(int argc, char *argv[]) {
-	
-	using namespace std;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Command" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	Command::print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Command" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
-}
-*/
-

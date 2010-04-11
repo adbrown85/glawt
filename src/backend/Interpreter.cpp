@@ -132,32 +132,3 @@ void Interpreter::run(int command,
 		(hi->second)(scene, command, argument);
 }
 
-
-/**
- * Simple test program.
- */
-/*
-int main(int argc, char *argv[]) {
-	
-	Scene scene;
-	Interpreter interpreter(&scene);
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Interpreter" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	interpreter.print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Interpreter" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
-}
-*/
