@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __CONTROL_HEADER__
-#define __CONTROL_HEADER__
+#ifndef CONTROL_HPP
+#define CONTROL_HPP
 #include <cstdlib>
 #include <iostream>
 #include <map>

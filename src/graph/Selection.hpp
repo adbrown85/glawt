@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __SELECTION_HPP__
-#define __SELECTION_HPP__
+#ifndef SELECTION_HPP
+#define SELECTION_HPP
 #include <cstdlib>
 #include <iostream>
 #include <set>

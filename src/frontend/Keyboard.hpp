@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __KEYBOARD_HEADER__
-#define __KEYBOARD_HEADER__
+#ifndef KEYBOARD_HPP
+#define KEYBOARD_HPP
 #include <cctype>
 #include <cstdlib>
 #include <GL/glut.h>

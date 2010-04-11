@@ -4,6 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#ifndef VLBMAKER_HPP
+#define VLBMAKER_HPP
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -52,3 +54,5 @@ class VlbMaker {
 		string inFilename, outFilename;
 };
 
+
+#endif

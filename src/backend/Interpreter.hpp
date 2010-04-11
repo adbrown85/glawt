@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __INTERPRETER_HPP__
-#define __INTERPRETER_HPP__
+#ifndef INTERPRETER_HPP
+#define INTERPRETER_HPP
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>

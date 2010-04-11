@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __DELEGATE_HPP__
-#define __DELEGATE_HPP__
+#ifndef DELEGATE_HPP
+#define DELEGATE_HPP
 #include <map>
 #include <string>
 #include "Command.hpp"

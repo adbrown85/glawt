@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef __MENU_HEADER__
-#define __MENU_HEADER__
+#ifndef MENU_HPP
+#define MENU_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
