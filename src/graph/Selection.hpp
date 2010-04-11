@@ -12,7 +12,7 @@
 #include "Identifiable.hpp"
 #include "Node.hpp"
 #include "Selectable.hpp"
-using std::set;
+using namespace std;
 
 
 /**
