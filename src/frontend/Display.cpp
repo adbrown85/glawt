@@ -103,7 +103,7 @@ void Display::overlay() {
  */
 void Display::start(int argc,
                     char *argv[],
-                    std::string title,
+                    string title,
                     Scene *scene,
                     Delegate *delegate) {
 	

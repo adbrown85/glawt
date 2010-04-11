@@ -15,8 +15,7 @@
 #include "Command.hpp"
 #define GLUT_UP_BUTTON 3
 #define GLUT_DOWN_BUTTON 4
-using std::map;
-using std::string;
+using namespace std;
 
 
 /**
@@ -66,8 +65,8 @@ class Binding {
 		bool hasModifier() const {return modifier != 0;}
 		bool isCharacter() const {return isCharacter(this->trigger);}
 		
-		friend std::ostream& operator<<(std::ostream& stream,
-		                                const Binding &b);
+		friend ostream& operator<<(ostream& stream,
+		                           const Binding &b);
 	
 	private :
 		

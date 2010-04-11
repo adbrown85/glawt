@@ -20,7 +20,7 @@
 #include "Shape.hpp"
 #include "Translation.hpp"
 #include "Vector.hpp"
-using std::vector;
+using namespace std;
 
 
 /**

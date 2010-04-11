@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
+#include <pair>
 #include <utility>
 #include <vector>
 #include "Binding.hpp"
@@ -18,9 +19,7 @@
 #include "Control.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-using std::multimap;
-using std::pair;
-using std::vector;
+using namespace std;
 
 
 /**

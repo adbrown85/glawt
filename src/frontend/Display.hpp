@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
+#include <string>
 #include <vector>
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting

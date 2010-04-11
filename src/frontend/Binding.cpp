@@ -286,8 +286,8 @@ bool Binding::isCharacter(int trigger) {
 /**
  * Prints the binding.
  */
-std::ostream& operator<<(std::ostream& stream,
-                         const Binding &b) {
+ostream& operator<<(ostream& stream,
+                    const Binding &b) {
 	
 	string str;
 	
@@ -297,7 +297,7 @@ std::ostream& operator<<(std::ostream& stream,
 	str += b.getTriggerStr();
 	
 	// Print with formatted command
-	stream << std::setw(15) << std::left << str;
+	stream << setw(15) << left << str;
 	stream << b.getCommandStr();
 	return stream;
 }

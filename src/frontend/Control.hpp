@@ -9,18 +9,15 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <pair>
 #include <string>
 #include <utility>
+#include <vector>
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
 #include "Scene.hpp"
-using std::cout;
-using std::endl;
-using std::multimap;
-using std::pair;
-using std::string;
-using std::vector;
+using namespace std;
 
 
 /**

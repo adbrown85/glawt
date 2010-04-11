@@ -8,14 +8,14 @@
 #define MOUSEHELPER_HPP
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <vector>
 #include "Control.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
 #include "MouseData.hpp"
 #include "Scene.hpp"
-using std::vector;
-using std::multimap;
+using namespace std;
 
 
 /**

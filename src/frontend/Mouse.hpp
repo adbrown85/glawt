@@ -11,8 +11,10 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
+#include <pair>
 #include <typeinfo>
 #include <utility>
+#include <vector>
 #include "Binding.hpp"
 #include "Command.hpp"
 #include "Control.hpp"
@@ -24,10 +26,7 @@
 #include "MouseDragHelper.hpp"
 #include "Scene.hpp"
 #include "Translator.hpp"
-using std::map;
-using std::multimap;
-using std::pair;
-using std::vector;
+using namespace std;
 
 
 /**

@@ -14,7 +14,7 @@
 #include "Control.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"
-using std::vector;
+using namespace std;
 
 
 /**
