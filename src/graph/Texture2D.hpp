@@ -1,8 +1,8 @@
 /*
  * Texture2D.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef TEXTURE2D_HPP
 #define TEXTURE2D_HPP

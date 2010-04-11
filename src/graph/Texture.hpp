@@ -1,8 +1,8 @@
 /*
  * Texture.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP

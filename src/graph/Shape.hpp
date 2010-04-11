@@ -1,8 +1,8 @@
 /*
  * Shape.hpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef SHAPE_HPP
 #define SHAPE_HPP

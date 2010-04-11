@@ -2,7 +2,7 @@
  * Shader.hpp
  * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef SHADER_HPP
 #define SHADER_HPP

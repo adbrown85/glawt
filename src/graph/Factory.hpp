@@ -1,8 +1,8 @@
 /*
  * Factory.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef FACTORY_HPP
 #define FACTORY_HPP

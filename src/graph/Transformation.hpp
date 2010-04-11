@@ -1,8 +1,8 @@
 /*
  * Transformation.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef TRANSFORMATION_HPP
 #define TRANSFORMATION_HPP

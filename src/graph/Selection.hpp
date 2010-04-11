@@ -1,8 +1,8 @@
 /*
  * Selection.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef __SELECTION_HPP__
 #define __SELECTION_HPP__

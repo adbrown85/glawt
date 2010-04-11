@@ -1,8 +1,8 @@
 /*
  * Octree.hpp
- *
+ * 
  * Author
- *     Andrew Brown <andrew@andrewdbrown.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef OCTREE_HPP
 #define OCTREE_HPP

@@ -1,8 +1,8 @@
 /*
  * Square.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef SQUARE_HPP
 #define SQUARE_HPP
