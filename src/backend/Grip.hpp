@@ -8,6 +8,7 @@
 #define GRIP_HPP
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include <typeinfo>
 #include "Command.hpp"
 #include "Delegate.hpp"
@@ -17,6 +18,7 @@
 #include "Scene.hpp"
 #include "Translation.hpp"
 #include "Vector.hpp"
+using namespace std;
 
 
 /**

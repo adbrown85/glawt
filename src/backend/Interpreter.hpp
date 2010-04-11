@@ -20,11 +20,7 @@
 #include "Grip.hpp"
 #include "Producer.hpp"
 #include "Scene.hpp"
-using std::cout;
-using std::endl;
-using std::map;
-using std::string;
-using std::vector;
+using namespace std;
 
 
 /**

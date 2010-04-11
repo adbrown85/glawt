@@ -35,7 +35,7 @@ void Grip::rotate(Scene *scene,
                   int command,
                   float argument) {
 	
-	std::cout << "Grip::rotate(Scene*,int)" << std::endl;
+	cout << "Grip::rotate(Scene*,int)" << endl;
 }
 
 
@@ -46,7 +46,7 @@ void Grip::scale(Scene *scene,
                  int command,
                  float argument) {
 	
-	std::cout << "Grip::scale(Scene*,int)" << std::endl;
+	cout << "Grip::scale(Scene*,int)" << endl;
 }
 
 
