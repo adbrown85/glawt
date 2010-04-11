@@ -7,6 +7,12 @@
 #include "Text.hpp"
 
 
+/**
+ * @return position of first character in string that can be part of a word.
+ * 
+ * @param text String to search
+ * @param pos Position to start from
+ */
 int Text::findFirstWordCharacter(const string &text,
                                  int pos) {
 	
@@ -22,6 +28,12 @@ int Text::findFirstWordCharacter(const string &text,
 }
 
 
+/**
+ * @return position of first character in string that cannot be part of a word.
+ * 
+ * @param text String to search
+ * @param pos Position to start from
+ */
 int Text::findFirstNotWordCharacter(const string &text,
                                     int pos) {
 	
@@ -37,6 +49,12 @@ int Text::findFirstNotWordCharacter(const string &text,
 }
 
 
+/**
+ * @return start of the first word and its length.
+ * 
+ * @param text String to search
+ * @param pos Position to search from
+ */
 pair<int,int> Text::findFirstWord(const string &text,
                                   int pos) {
 	
@@ -54,6 +72,13 @@ pair<int,int> Text::findFirstWord(const string &text,
 }
 
 
+/**
+ * Replaces occurences of tokens in a string with their replacements.
+ * 
+ * @param text String to search
+ * @param dictionary Map with tokens and their replacements
+ * @return string with the replacements made
+ */
 string Text::replace(const string &text,
                      map<string,string> &dictionary) {
 	

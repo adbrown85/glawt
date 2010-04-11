@@ -18,7 +18,7 @@ using namespace std;
 /**
  * @ingroup data
  * @brief
- *     Encapsulation of a rotation that avoids gimbal lock.
+ *     Encapsulation of an axis/angle rotation that avoids gimbal lock.
  */
 class Quaternion {
 	

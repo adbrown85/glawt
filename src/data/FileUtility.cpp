@@ -10,10 +10,8 @@
 /**
  * Builds a path from its parts.
  * 
- * @param root
- *     Root of the path.
- * @param parts
- *     Parts of the path.
+ * @param root Root of the path.
+ * @param parts Parts of the path.
  */
 string FileUtility::build(const string &root,
                           vector<string> &parts) {
@@ -36,6 +34,9 @@ string FileUtility::build(const string &root,
 }
 
 
+/**
+ * @return filename part from a path.
+ */
 string FileUtility::getBasename(const string& path) {
 	
 	int index;
@@ -49,6 +50,9 @@ string FileUtility::getBasename(const string& path) {
 }
 
 
+/**
+ * @return directory part from a path.
+ */
 string FileUtility::getDirname(const string& path) {
 	
 	size_t index;
@@ -73,6 +77,9 @@ string FileUtility::getDirname(const string& path) {
 }
 
 
+/**
+ * @return directories between root and filename.
+ */
 string FileUtility::getInternals(const string& path) {
 	
 	return stripRoot(getDirname(path));
@@ -82,10 +89,8 @@ string FileUtility::getInternals(const string& path) {
 /**
  * Makes a filename relative to another path.
  * 
- * @param primary
- *     Path used as the base.
- * @param secondary
- *     Relative path to modify primary.
+ * @param primary Path used as the base.
+ * @param secondary Relative path to modify primary.
  */
 string FileUtility::getRelativePath(const string &primary,
                                     const string &secondary) {
@@ -111,6 +116,9 @@ string FileUtility::getRelativePath(const string &primary,
 }
 
 
+/**
+ * @return top-most directory from a path.
+ */
 string FileUtility::getRoot(const string &path) {
 	
 	// Unix
@@ -127,6 +135,9 @@ string FileUtility::getRoot(const string &path) {
 }
 
 
+/**
+ * @return true if the path starts with a drive letter and a colon.
+ */
 bool FileUtility::hasWindowsRoot(const string &token) {
 	
 	return isalpha(token[0]) && token[1]==':';
@@ -134,10 +145,7 @@ bool FileUtility::hasWindowsRoot(const string &token) {
 
 
 /**
- * Checks if a filename is an absolute path.
- * 
- * @return
- *     True if the filename is an absolute path.
+ * @return true if the filename is an absolute path.
  */
 bool FileUtility::isAbsolutePath(const string& filename) {
 	
@@ -156,18 +164,31 @@ bool FileUtility::isAbsolutePath(const string& filename) {
 }
 
 
+/**
+ * @return true if the token is a drive letter followed by a colon.
+ */
 bool FileUtility::isWindowsRoot(const string& token) {
 	
 	return (token.length()==2) && hasWindowsRoot(token);
 }
 
 
+/**
+ * @return true if the character is a forward slash or backslash.
+ */
 bool FileUtility::isSeparator(char character) {
 	
 	return character == '/' || character == '\\';
 }
 
 
+/**
+ * Merges a relative path with a base path.
+ * 
+ * @param root Top-most directory
+ * @param path Base path
+ * @param change Relative path 
+ */
 string FileUtility::mergePaths(const string &root,
                                vector<string> &path,
                                vector<string> &change) {
@@ -199,6 +220,9 @@ string FileUtility::mergePaths(const string &root,
 }
 
 
+/**
+ * Removes the top-most directory from a path.
+ */
 string FileUtility::stripRoot(const string &path) {
 	
 	// Absolute path

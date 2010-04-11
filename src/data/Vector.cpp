@@ -7,6 +7,9 @@
 #include "Vector.hpp"
 
 
+/**
+ * Creates a four-component vector initialized to all zeroes.
+ */
 Vector::Vector() {
 	
 	// Set components
@@ -18,6 +21,9 @@ Vector::Vector() {
 }
 
 
+/**
+ * Creates a two-component vector.
+ */
 Vector::Vector(float x,
                float y) {
 	
@@ -30,6 +36,9 @@ Vector::Vector(float x,
 }
 
 
+/**
+ * Creates a three-component vector.
+ */
 Vector::Vector(float x,
                float y,
                float z) {
@@ -43,6 +52,9 @@ Vector::Vector(float x,
 }
 
 
+/**
+ * Creates a four-component vector.
+ */
 Vector::Vector(float x,
                float y,
                float z,
@@ -188,6 +200,9 @@ ostream& operator<<(ostream &out,
 }
 
 
+/**
+ * @throws const_char* if the index is out of bounds.
+ */
 float& Vector::operator[](int i) {
 	
 	// Return correct component
@@ -201,6 +216,9 @@ float& Vector::operator[](int i) {
 }
 
 
+/**
+ * @throws const_char* if the index is out of bounds.
+ */
 float Vector::operator[](int i) const {
 	
 	// Return correct component
@@ -214,6 +232,9 @@ float Vector::operator[](int i) const {
 }
 
 
+/**
+ * @return vector perpendicular to the plane formed by two vectors.
+ */
 Vector Vector::crossProduct(const Vector &B) const {
 	
 	Vector C;
@@ -229,6 +250,9 @@ Vector Vector::crossProduct(const Vector &B) const {
 }
 
 
+/**
+ * @return projection of one vector onto another.
+ */
 float Vector::dotProduct(const Vector &B) const {
 	
 	// Calculate
@@ -255,6 +279,9 @@ float Vector::get(int i) const {
 }
 
 
+/**
+ * @return Normalized version of this vector.
+ */
 Vector Vector::getNormalized() const {
 	
 	float len;
@@ -279,6 +306,9 @@ Vector Vector::getNormalized() const {
 }
 
 
+/**
+ * @return Length of the vector.
+ */
 float Vector::length() const {
 	
 	// Return root of sum of squares
