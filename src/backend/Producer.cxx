@@ -27,7 +27,7 @@ int main(int argc,
 	cout << endl;
 	
 	// Test
-	producer.open(&scene, Command::OPEN, "input/fullscreen.xml");
+	producer.open(&scene, Command::OPEN, "Producer.xml");
 	scene.print();
 	
 	// Finish
