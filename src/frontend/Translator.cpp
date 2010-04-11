@@ -7,7 +7,6 @@
 #include "Translator.hpp"
 
 
-
 /**
  * Creates a new Translator using an axis.
  */
@@ -23,7 +22,6 @@ Translator::Translator(float x, float y, float z) {
 	disk = gluNewQuadric();
 	gluQuadricDrawStyle(disk, GLU_FILL);
 }
-
 
 
 /**
@@ -63,14 +61,11 @@ void Translator::draw() const {
 }
 
 
-
 /**
  * Calculates how a pixel compares to a global unit.
  * 
- * @param scene
- *     Graph of nodes.
- * @param shapeID
- *     ID of the shape to use for the depth component.
+ * @param scene Graph of nodes.
+ * @param shapeID ID of the shape to use for the depth component.
  */
 float Translator::findPixelFactor(Scene *scene,
                                   GLuint shapeID) {
@@ -101,16 +96,12 @@ float Translator::findPixelFactor(Scene *scene,
 }
 
 
-
 /**
  * Use the Translator.
  * 
- * @param scene
- *     Graph of nodes.
- * @param movement
- *     Difference between current and last cursor positions.
- * @param shapeID
- *     ID of the shape the translator is attached to.
+ * @param scene Graph of nodes.
+ * @param movement Difference between current and last cursor positions.
+ * @param shapeID ID of the shape the translator is attached to.
  */
 void Translator::use(Scene *scene,
                      const Vector &movement,
@@ -137,3 +128,4 @@ void Translator::use(Scene *scene,
 			delegate->run(Command::TRANSLATE_Z, translateAmount);
 	}
 }
+

@@ -24,14 +24,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Determines which item is under the mouse cursor.
- * @ingroup frontend
  */
 class Picker {
-	
 	
 	public :
 		
@@ -39,7 +37,6 @@ class Picker {
 		                           vector<Manipulator*> &manipulators,
 		                           int x,
 		                           int y);
-	
 	
 	private:
 		

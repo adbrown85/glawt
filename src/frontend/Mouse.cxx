@@ -12,7 +12,6 @@
 using namespace std;
 
 
-
 /**
  * Unit test for Mouse.
  */
@@ -41,3 +40,4 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

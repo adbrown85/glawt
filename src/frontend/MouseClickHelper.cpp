@@ -7,12 +7,10 @@
 #include "MouseClickHelper.hpp"
 
 
-
 /**
  * Creates a new MouseClickHelper control.
  * 
- * @param delegate
- *     Delegate to send commands to.
+ * @param delegate Delegate to send commands to.
  */
 MouseClickHelper::MouseClickHelper(Delegate *delegate) :
                                    MouseHelper(delegate) {
@@ -20,12 +18,10 @@ MouseClickHelper::MouseClickHelper(Delegate *delegate) :
 }
 
 
-
 /**
  * Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
  * 
- * @param bindings
- *     Bindings from %Mouse.
+ * @param bindings Bindings from %Mouse.
  */
 void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
 	
@@ -41,7 +37,6 @@ void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
 }
 
 
-
 /**
  * Handles mouse clicks.
  * 
@@ -49,14 +44,10 @@ void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
  * wheel as two separate buttons, defined in %Binding as <i>GLUT_UP_BUTTON</i> 
  * and <i>GLUT_DOWN_BUTTON</i>.
  * 
- * @param button
- *     Button that was clicked.
- * @param state
- *     State of the button.
- * @param x
- *     Current horizontal coordinate of the mouse when it was clicked.
- * @param y
- *     Current vertical coordinate of the mouse when it was clicked.
+ * @param button Button that was clicked.
+ * @param state State of the button.
+ * @param x Current horizontal coordinate of mouse when it was clicked.
+ * @param y Current vertical coordinate of mouse when it was clicked.
  */
 void MouseClickHelper::onClick(int button,
                                int state,
@@ -79,7 +70,6 @@ void MouseClickHelper::onClick(int button,
 	// Store positions for next time
 	updateLastData();
 }
-
 
 
 /**
@@ -119,8 +109,6 @@ void MouseClickHelper::pickItem() {
 }
 
 
-
-
 /**
  * Issue the command for bindings if they match the current conditions.
  */
@@ -137,12 +125,10 @@ void MouseClickHelper::tryBindings() {
 }
 
 
-
 /**
  * Issue the command for a binding if it matches the current conditions.
  * 
- * @param binding
- *     Pointer to a %Binding.
+ * @param binding Pointer to a %Binding.
  */
 void MouseClickHelper::tryBinding(Binding *binding) {
 	

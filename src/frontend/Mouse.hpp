@@ -30,17 +30,15 @@ using std::pair;
 using std::vector;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     %Mouse control for the %Display.
- * @ingroup frontend
  * 
  * @todo
  *     Need to deallocate manipulators.
  */
 class Mouse : public Control {
-	
 	
 	public :
 		
@@ -56,7 +54,6 @@ class Mouse : public Control {
 		                    int y);
 		static void onDrag(int x,
 		                   int y);
-	
 	
 	private :
 		

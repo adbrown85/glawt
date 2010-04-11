@@ -20,14 +20,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Handles mouse dragging actions for %Mouse.
- * @ingroup frontend
  */
 class MouseDragHelper : public MouseHelper {
-	
 	
 	public :
 		
@@ -35,7 +33,6 @@ class MouseDragHelper : public MouseHelper {
 		void initialize(multimap<int,Binding> bindings);
 		void onDrag(int x,
 		            int y);
-	
 	
 	private:
 		

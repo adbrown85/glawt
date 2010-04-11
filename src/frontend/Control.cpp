@@ -7,19 +7,16 @@
 #include "Control.hpp"
 
 
-
 /**
  * Creates a new Control using the specified Delegate to run commands.
  * 
- * @param delegate
- *     Pointer to a Delegate that runs 
+ * @param delegate Pointer to a Delegate that runs 
  */
 Control::Control(Delegate *delegate) {
 	
 	// Initialize
 	this->delegate = delegate;
 }
-
 
 
 /**
@@ -33,12 +30,10 @@ Control::~Control() {
 }
 
 
-
 /**
  * Adds a Binding to the Control.
  * 
- * @param binding
- *     Binding to add.  Creates a copy.
+ * @param binding Binding to add (creates a copy).
  */
 void Control::add(const Binding &binding) {
 	
@@ -46,7 +41,6 @@ void Control::add(const Binding &binding) {
 	bindings.insert(pair<int,Binding>(binding.getTrigger(),
 	                                  binding));
 }
-
 
 
 /**
@@ -57,7 +51,6 @@ void Control::add(Manipulator *manipulator) {
 	// Add the manipulator
 	manipulators.push_back(manipulator);
 }
-
 
 
 /**
@@ -76,3 +69,4 @@ void Control::print() {
 	for (bi=bindings.begin(); bi!=bindings.end(); bi++)
 		cout << "  " << bi->second << endl;
 }
+

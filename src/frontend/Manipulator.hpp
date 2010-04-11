@@ -16,14 +16,12 @@
 #include "Vector.hpp"
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Abstract base class for an item that manipulates other items.
- * @ingroup frontend
  */
 class Manipulator : public Drawable  {
-	
 	
 	public :
 		
@@ -34,7 +32,6 @@ class Manipulator : public Drawable  {
 		                 GLuint shapeID) = 0;
 		Vector getAxis() {return axis;}
 		void setDelegate(Delegate *delegate) {this->delegate = delegate;}
-	
 	
 	protected :
 		

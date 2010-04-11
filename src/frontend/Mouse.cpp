@@ -8,12 +8,10 @@
 Mouse *Mouse::obj=NULL;
 
 
-
 /**
  * Installs the control into the current context.
  * 
- * @param scene
- *     Makes the Control use this scene;
+ * @param scene Makes the Control use this scene;
  */
 vector<Manipulator*> Mouse::install(Scene *scene) {
 	
@@ -43,7 +41,6 @@ vector<Manipulator*> Mouse::install(Scene *scene) {
 	print();
 	return manipulators;
 }
-
 
 
 /**
@@ -92,10 +89,10 @@ void Mouse::installBindings() {
 }
 
 
-
 /**
- * Installs the GLUT callbacks for the mouse.  Will register the callback 
- * functions for both clicks and drags with GLUT.
+ * Installs the GLUT callbacks for the mouse.
+ * 
+ * Will register the callback functions for both clicks and drags with GLUT.
  */
 void Mouse::installCallbacks() {
 	
@@ -105,10 +102,11 @@ void Mouse::installCallbacks() {
 }
 
 
-
 /**
- * Installs the manipulators to show for selected items.  A class that uses 
- * the control should draw these manipulators for selected items.
+ * Installs the manipulators to show for selected items.
+ * 
+ * A class that uses the control should draw these manipulators for selected 
+ * items.
  */
 void Mouse::installManipulators() {
 	
@@ -124,7 +122,6 @@ void Mouse::installManipulators() {
 }
 
 
-
 /**
  * GLUT callback for mouse clicks.
  */
@@ -136,7 +133,6 @@ void Mouse::onClick(int button,
 	// Pass to click helper
 	obj->clickHelper.onClick(button, state, x, y);
 }
-
 
 
 /**

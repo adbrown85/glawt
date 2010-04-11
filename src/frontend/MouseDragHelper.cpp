@@ -8,7 +8,6 @@
 char MouseDragHelper::directions[2] = {'x', 'y'};
 
 
-
 /**
  * Creates a new MouseDragHelper control.
  */
@@ -16,7 +15,6 @@ MouseDragHelper::MouseDragHelper(Delegate *delegate) :
                                  MouseHelper(delegate) {
 	type = "MouseDragHelper";
 }
-
 
 
 /**
@@ -54,7 +52,6 @@ void MouseDragHelper::decideAxis() {
 }
 
 
-
 /**
  * Copies bindings from %Mouse that use drag into %MouseDragHelper.
  */
@@ -72,14 +69,11 @@ void MouseDragHelper::initialize(multimap<int,Binding> bindings) {
 }
 
 
-
 /**
  * Manipulates the scene when the mouse is dragged.
  * 
- * @param x
- *     Current horizontal coordinate of the mouse while it's being dragged.
- * @param y
- *     Current vertical coordinate of the mouse while it's being dragged.
+ * @param x Current horizontal coordinate of mouse while it's being dragged.
+ * @param y Current vertical coordinate of mouse while it's being dragged.
  */
 void MouseDragHelper::onDrag(int x,
                              int y) {
@@ -104,7 +98,6 @@ void MouseDragHelper::onDrag(int x,
 	updateLastData();
 	glutPostRedisplay();
 }
-
 
 
 void MouseDragHelper::tryBinding(Binding *binding) {
@@ -135,7 +128,6 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 }
 
 
-
 void MouseDragHelper::tryBindings() {
 	
 	multimap<int,Binding>::iterator pi;
@@ -149,12 +141,10 @@ void MouseDragHelper::tryBindings() {
 }
 
 
-
 /**
  * Checks if the dragging motion should be constrained to one direction.
  * 
- * @return
- *     True if it should be constrained.
+ * @return True if it should be constrained.
  */
 bool MouseDragHelper::useConstrained() {
 	

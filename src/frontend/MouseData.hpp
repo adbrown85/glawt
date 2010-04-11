@@ -12,7 +12,6 @@
 #include "Vector.hpp"
 
 
-
 struct MouseData {
 	
 	int button, modifier, state, x, y;

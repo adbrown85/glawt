@@ -13,7 +13,6 @@
 using namespace std;
 
 
-
 /**
  * Unit test for Binding.
  */
@@ -63,3 +62,4 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

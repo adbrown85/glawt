@@ -8,16 +8,12 @@
 Box Painter::outline(1.0);
 
 
-
 /**
  * Paints all the items in a scene.
  * 
- * @param scene
- *     Collection of items and camera information.
- * @param manipulators
- *     UI elements used to manipulate selected items.
- * @param renderMode
- *     Either GL_RENDER or GL_SELECT.
+ * @param scene Collection of items and camera information.
+ * @param manipulators UI elements used to manipulate selected items.
+ * @param renderMode Either GL_RENDER or GL_SELECT.
  */
 void Painter::paint(Scene &scene,
                     vector<Manipulator*> &manipulators,
@@ -45,7 +41,6 @@ void Painter::paint(Scene &scene,
 }
 
 
-
 /**
  * Recursively paints the children of a node.
  * 
@@ -53,12 +48,9 @@ void Painter::paint(Scene &scene,
  * incorporating it directly into <i>paint</i>, because some nodes need to 
  * paint their children at different times.
  * 
- * @param node
- *     Pointer to the parent node.
- * @param renderMode
- *     If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators
- *     UI elements used to manipulate selected items.
+ * @param node Pointer to the parent node.
+ * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators UI elements used to manipulate selected items.
  */
 void Painter::paintChildren(Node *node,
                             GLenum renderMode,
@@ -76,19 +68,15 @@ void Painter::paintChildren(Node *node,
 }
 
 
-
 /**
  * Recursively paints a node.
  * 
  * Automatically takes care of performing different actions depending on what 
  * type of interfaces the node supports.
  * 
- * @param node
- *     Pointer to the Node to paint.
- * @param renderMode
- *     If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators
- *     UI elements used to manipulate selected items.
+ * @param node Pointer to the Node to paint.
+ * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
+ * @param manipulators UI elements used to manipulate selected items.
  */
 void Painter::paintNode(Node *node,
                         GLenum renderMode,
@@ -130,7 +118,6 @@ void Painter::paintNode(Node *node,
 	else
 		paintChildren(node, renderMode, manipulators);
 }
-
 
 
 /**

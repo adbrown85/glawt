@@ -20,14 +20,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Handles mouse clicking actions for %Mouse.
- * @ingroup frontend
  */
 class MouseClickHelper : public MouseHelper {
-	
 	
 	public :
 		
@@ -37,7 +35,6 @@ class MouseClickHelper : public MouseHelper {
 		             int state,
 		             int x,
 		             int y);
-	
 	
 	private:
 		

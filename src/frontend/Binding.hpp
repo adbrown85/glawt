@@ -19,19 +19,15 @@ using std::map;
 using std::string;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Maps a combination of keys or buttons to a command.
- * @ingroup frontend
  * 
- * @bug
- *     Currently mouse bindings should not be stored with keyboard bindings.
- * @bug
- *     F9 and tab should not both be used because their GLUT codes are the same.
+ * @bug Currently mouse bindings should not be stored with keyboard bindings.
+ * @bug F9 and Tab should not both be used because GLUT codes are the same.
  */
 class Binding {
-	
 	
 	public :
 		
@@ -73,9 +69,7 @@ class Binding {
 		friend std::ostream& operator<<(std::ostream& stream,
 		                                const Binding &b);
 	
-	
 	private :
-		
 		
 		bool hasArg;
 		int command, modifier, state, trigger;

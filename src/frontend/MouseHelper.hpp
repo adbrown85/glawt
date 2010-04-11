@@ -18,14 +18,12 @@ using std::vector;
 using std::multimap;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Generic handler for a mouse action.
- * @ingroup frontend
  */
 class MouseHelper : public Control {
-	
 	
 	public:
 		
@@ -37,7 +35,6 @@ class MouseHelper : public Control {
 		virtual vector<Manipulator*> install(Scene *scene);
 		virtual void updateCurrentData(int x, int y);
 		virtual void updateLastData();
-	
 	
 	protected:
 		

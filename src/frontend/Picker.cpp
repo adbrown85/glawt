@@ -9,7 +9,6 @@ GLuint Picker::buf[PICK_BUFFER_SIZE];
 map<GLuint,GLuint> Picker::ids;
 
 
-
 /**
  * Choose the item to return.
  * 
@@ -48,7 +47,6 @@ pair<GLuint,GLuint> Picker::chooseItem(Scene *scene) {
 }
 
 
-
 /**
  * Restores the original projection matrix.
  */
@@ -58,7 +56,6 @@ void Picker::finish() {
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 }
-
 
 
 /**
@@ -91,7 +88,6 @@ void Picker::initialize(int x, int y) {
 }
 
 
-
 /**
  * Picks an item from a scene
  * 
@@ -116,7 +112,6 @@ pair<GLuint,GLuint> Picker::pick(Scene *scene,
 	else
 		return chooseItem(scene);
 }
-
 
 
 /**
@@ -170,3 +165,4 @@ void Picker::storeIDsOfItems() {
 		ids.insert(pair<GLuint,GLuint>(id, shapeID));
 	}
 }
+

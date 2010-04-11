@@ -8,7 +8,6 @@
 Keyboard *Keyboard::obj=NULL;
 
 
-
 /**
  * Installs the controls into the current context.
  */
@@ -31,7 +30,6 @@ vector<Manipulator*> Keyboard::install(Scene *scene) {
 }
 
 
-
 /**
  * Handles character keys.
  */
@@ -42,18 +40,16 @@ void Keyboard::character(unsigned char key,
 }
 
 
-
 /**
- * Looks up a Binding by its keyboard key and modifier.  Needed because the map 
- * is a multimap with keys being keyboard keys, and multiple keyboard keys can 
- * be included if the modifiers are considered.  Gets the range of bindings 
- * that have the key, then searches through them for the one that has a 
- * matching modifier.
+ * Looks up a Binding by its keyboard key and modifier.
  * 
- * @param key
- *     Keyboard key.
- * @param modifier
- *     Modifier.
+ * Needed because the map is a multimap with keys being keyboard keys, and 
+ * multiple keyboard keys can be included if the modifiers are considered.  
+ * Gets the range of bindings that have the key, then searches through them for 
+ * the one that has a matching modifier.
+ * 
+ * @param key Keyboard key.
+ * @param modifier Modifier key.
  */
 Binding* Keyboard::lookup(int key,
                           int modifier) {
@@ -74,7 +70,6 @@ Binding* Keyboard::lookup(int key,
 }
 
 
-
 /**
  * Handles special keys.
  */
@@ -83,7 +78,6 @@ void Keyboard::special(int key,
                        int y) {
 	obj->trigger(key);
 }
-
 
 
 /**
@@ -109,3 +103,4 @@ void Keyboard::trigger(int key) {
 		delegate->run(binding->getCommand());
 	glutPostRedisplay();
 }
+

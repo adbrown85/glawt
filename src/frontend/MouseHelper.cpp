@@ -7,14 +7,12 @@
 #include "MouseHelper.hpp"
 
 
-
 MouseHelper::MouseHelper(Delegate *delegate) :
                          Control(delegate) {
 	
 	type = "MouseHelper";
 	data = NULL;
 }
-
 
 
 int MouseHelper::getModifier() {
@@ -29,12 +27,10 @@ int MouseHelper::getModifier() {
 }
 
 
-
 void MouseHelper::initialize(vector<Manipulator*> manipulators) {
 	
 	this->manipulators = manipulators;
 }
-
 
 
 void MouseHelper::initialize(MouseData *data) {
@@ -43,13 +39,11 @@ void MouseHelper::initialize(MouseData *data) {
 }
 
 
-
 vector<Manipulator*> MouseHelper::install(Scene *scene) {
 	
 	this->scene = scene;
 	return manipulators;
 }
-
 
 
 void MouseHelper::updateCurrentData(int x, int y) {
@@ -60,8 +54,8 @@ void MouseHelper::updateCurrentData(int x, int y) {
 }
 
 
-
 void MouseHelper::updateLastData() {
 	
 	data->lastPosition.set(data->x, data->y, data->z);
 }
+

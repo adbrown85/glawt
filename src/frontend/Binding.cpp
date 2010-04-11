@@ -10,17 +10,12 @@ bool Binding::loaded=false;
 map<int,string> Binding::triggerNames;
 
 
-
-
 /**
  * Creates a keyboard binding for a command with no argument.
  * 
- * @param trigger
- *     Key pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
+ * @param trigger Key pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
  */
 Binding::Binding(int trigger,
                  int modifier,
@@ -31,18 +26,13 @@ Binding::Binding(int trigger,
 }
 
 
-
 /**
  * Creates a keyboard binding for a command with an argument.
  * 
- * @param trigger
- *     Key pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param argument
- *     Floating-point number to pass to the command as an argument.
+ * @param trigger Key pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param argument Floating-point number to pass to the command as an argument.
  */
 Binding::Binding(int trigger,
                  int modifier,
@@ -54,18 +44,13 @@ Binding::Binding(int trigger,
 }
 
 
-
 /**
  * Creates a mouse binding for a command with no argument.
  * 
- * @param trigger
- *     Button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param state
- *     State of the button pressed.  -1 if none.
+ * @param trigger Button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param state State of the button pressed (-1 if none).
  */
 Binding::Binding(int trigger,
                  int modifier,
@@ -77,20 +62,14 @@ Binding::Binding(int trigger,
 }
 
 
-
 /**
  * Creates a mouse binding for a command with a floating-point argument.
  * 
- * @param trigger
- *     Button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param argument
- *     Floating-point number to pass to the command as an argument.
- * @param state
- *     State of the button pressed.  -1 if none.
+ * @param trigger Button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param argument Floating-point number to pass to command as argument.
+ * @param state State of the button pressed (-1 if none).
  */
 Binding::Binding(int trigger,
                  int modifier,
@@ -103,20 +82,14 @@ Binding::Binding(int trigger,
 }
 
 
-
 /**
  * Creates a mouse binding for a command with an unsigned integer argument.
  * 
- * @param trigger
- *     Button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param argument
- *     Pointer to an unsigned integer to pass to the command as an argument.
- * @param state
- *     State of the button pressed.  -1 if none.
+ * @param trigger Button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param argument Pointer to unsigned integer to pass to command as argument.
+ * @param state State of the button pressed.  -1 if none.
  */
 Binding::Binding(int trigger,
                  int modifier,
@@ -129,10 +102,11 @@ Binding::Binding(int trigger,
 }
 
 
-
 /**
- * Returns the value of the binding's argument.  If the argument holds a 
- * pointer to a variable, the pointer is first dereferenced.
+ * Returns the value of the binding's argument.
+ * 
+ * @note If the argument holds a pointer to a variable, the pointer is first 
+ * dereferenced.
  */
 float Binding::getArgument() const {
 	
@@ -142,7 +116,6 @@ float Binding::getArgument() const {
 	else
 		return argf;
 }
-
 
 
 /**
@@ -161,7 +134,6 @@ string Binding::getModifierStr() const {
 	}
 	return str;
 }
-
 
 
 /**
@@ -186,9 +158,9 @@ string Binding::getTriggerStr() const {
 }
 
 
-
 /**
- * Determines if this Binding should be used for when the mouse is dragged.  
+ * Determines if this Binding should be used for when the mouse is dragged.
+ * 
  * Does so by checking if state is equal to 'x' or 'y'.
  */
 bool Binding::hasDrag() const {
@@ -197,18 +169,13 @@ bool Binding::hasDrag() const {
 }
 
 
-
 /**
  * Initializes the required attributes for a binding.
  * 
- * @param trigger
- *     Key or button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param state
- *     State of the button pressed.  -1 if none.
+ * @param trigger Key or button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param state State of the button pressed (-1 if none).
  */
 void Binding::init(int trigger,
                    int modifier,
@@ -229,20 +196,14 @@ void Binding::init(int trigger,
 }
 
 
-
 /**
  * Initializes the required attributes for a binding.
  * 
- * @param trigger
- *     Key or button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param state
- *     State of the button pressed.  -1 if none.
- * @param argument
- *     Floating-point number to pass to the command as an argument.
+ * @param trigger Key or button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param state State of the button pressed (-1 if none).
+ * @param argument Floating-point number to pass to command as argument.
  */
 void Binding::init(int trigger,
                    int modifier,
@@ -260,20 +221,14 @@ void Binding::init(int trigger,
 }
 
 
-
 /**
  * Initializes the required attributes for a binding.
  * 
- * @param trigger
- *     Key or button pressed by user.
- * @param modifier
- *     Modifier key held while pressing trigger.  0 if none.
- * @param command
- *     Enumeration of a command.
- * @param state
- *     State of the button pressed.  -1 if none.
- * @param argument
- *     Pointer to an unsigned integer to pass to the command as an argument.
+ * @param trigger Key or button pressed by user.
+ * @param modifier Modifier key held while pressing trigger (0 if none).
+ * @param command Enumeration of a command.
+ * @param state State of the button pressed (-1 if none).
+ * @param argument Pointer to unsigned integer to pass to command as argument.
  */
 void Binding::init(int trigger,
                    int modifier,
@@ -289,7 +244,6 @@ void Binding::init(int trigger,
 	this->argi = argument;
 	hasArg = true;
 }
-
 
 
 /**
@@ -313,13 +267,11 @@ void Binding::initTriggerNames() {
 }
 
 
-
 /**
  * Determines if the trigger should be printed as is as a character, or should 
  * be replaced with a formatted name.
  * 
- * @return
- *     True if trigger is not in the 'triggerNames' map.
+ * @return True if trigger is not in the 'triggerNames' map.
  */
 bool Binding::isCharacter(int trigger) {
 	
@@ -329,7 +281,6 @@ bool Binding::isCharacter(int trigger) {
 	ni = triggerNames.find(trigger);
 	return ni == triggerNames.end();
 }
-
 
 
 /**
@@ -350,3 +301,4 @@ std::ostream& operator<<(std::ostream& stream,
 	stream << b.getCommandStr();
 	return stream;
 }
+

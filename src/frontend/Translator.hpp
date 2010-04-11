@@ -23,14 +23,12 @@
 using std::vector;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Tool for moving shapes.
- * @ingroup frontend
  */
 class Translator : public Manipulator {
-	
 	
 	public :
 		
@@ -42,7 +40,6 @@ class Translator : public Manipulator {
 		void use(Scene *scene,
 		         const Vector &movement,
 		         GLuint shapeID);
-	
 	
 	private:
 		

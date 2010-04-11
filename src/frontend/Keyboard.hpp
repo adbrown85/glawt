@@ -23,14 +23,12 @@ using std::pair;
 using std::vector;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     %Keyboard control for the %Display.
- * @ingroup frontend
  */
 class Keyboard : public Control {
-	
 	
 	public :
 		
@@ -44,7 +42,6 @@ class Keyboard : public Control {
 		
 		static void character(unsigned char key, int x, int y);
 		static void special(int key, int x, int y);
-	
 	
 	private :
 		

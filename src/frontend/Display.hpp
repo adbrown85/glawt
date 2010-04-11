@@ -21,9 +21,9 @@ using namespace std;
 
 
 /**
+ * @ingroup frontend
  * @brief
  *     3D display for items in a scene.
- * @ingroup frontend
  */
 class Display {
 	

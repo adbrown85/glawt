@@ -15,7 +15,6 @@
 using namespace std;
 
 
-
 void addBindings(multimap<int,Binding> &bins) {
 	
 	int key=GLUT_LEFT_BUTTON;
@@ -45,7 +44,6 @@ void addBindings(multimap<int,Binding> &bins) {
 	                                      1.0f,
 	                                      'x')));
 }
-
 
 
 /**
@@ -85,3 +83,4 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 }
+

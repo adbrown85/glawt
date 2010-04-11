@@ -23,14 +23,12 @@ using std::string;
 using std::vector;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Interface installed into a %Display that controls the scene.
- * @ingroup frontend
  */
 class Control {
-	
 	
 	public :
 		
@@ -41,7 +39,6 @@ class Control {
 		void add(Manipulator *manipulator);
 		virtual vector<Manipulator*> install(Scene *scene) = 0;
 		void print();
-	
 	
 	protected :
 		

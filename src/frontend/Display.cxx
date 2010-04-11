@@ -12,7 +12,6 @@
 #include "Mouse.hpp"
 
 
-
 /**
  * Simple test program for Display.
  */

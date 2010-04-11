@@ -8,17 +8,16 @@
 Menu *Menu::menu=NULL;
 
 
-
 /**
- * Eventually will take the option and send it to the Interpreter.  Note the 
- * handler is the same between all Menu classes.
+ * Eventually will take the option and send it to the Interpreter.
+ * 
+ * @note Handler is the same between all Menu classes.
  */
 void Menu::handler(GLint option) {
 	
 	menu->delegate->run(option);
 	glutPostRedisplay();
 }
-
 
 
 /**
@@ -43,7 +42,6 @@ vector<Manipulator*> Menu::install(Scene *scene) {
 }
 
 
-
 /**
  * Make the menu for when an item is selected.
  */
@@ -62,7 +60,6 @@ void Menu::menuItem() {
 	for (o=opts.begin(); o!=opts.end(); o++)
 		glutAddMenuEntry(Command::getName(*o).c_str(), *o);
 }
-
 
 
 /**
@@ -85,3 +82,4 @@ void Menu::menuMain() {
 	for (o=opts.begin(); o!=opts.end(); o++)
 		glutAddMenuEntry(Command::getName(*o).c_str(), *o);
 }
+

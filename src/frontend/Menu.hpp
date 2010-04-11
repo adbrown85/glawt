@@ -17,14 +17,12 @@
 using std::vector;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Right-click menu for the %Display.
- * @ingroup frontend
  */
 class Menu : public Control {
-	
 	
 	public :
 		
@@ -37,7 +35,6 @@ class Menu : public Control {
 		void menuItem();
 		void menuMain();
 		void print();
-	
 	
 	private:
 		

@@ -26,16 +26,14 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup frontend
  * @brief
  *     Paints all the items to the screen or pick buffer.
  * 
- * @ingroup frontend
  * @warning Does not flush to the buffer.
  */
 class Painter {
-	
 	
 	public :
 		
@@ -55,8 +53,8 @@ class Painter {
 		                      GLenum renderMode,
 		                      vector<Manipulator*> &manipulators);
 		static void paintUIElements(Selectable *selectable,
-                                    GLenum renderMode,
-                                    vector<Manipulator*> &manipulators);
+		                            GLenum renderMode,
+		                            vector<Manipulator*> &manipulators);
 };
 
 
