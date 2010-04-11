@@ -9,7 +9,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
-#include <pair>
 #include <string>
 #include <utility>
 #include <vector>

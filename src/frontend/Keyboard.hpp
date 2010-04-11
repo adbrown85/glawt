@@ -11,7 +11,6 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
-#include <pair>
 #include <utility>
 #include <vector>
 #include "Binding.hpp"

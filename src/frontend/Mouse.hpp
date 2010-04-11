@@ -11,7 +11,6 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
-#include <pair>
 #include <typeinfo>
 #include <utility>
 #include <vector>
