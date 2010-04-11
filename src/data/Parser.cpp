@@ -64,7 +64,7 @@ void Parser::open(string filename) {
 	file.open(filename.c_str(), ios_base::binary);
 	if (!file) {
 		ostringstream msg;
-		msg << "[Parser] Could not open file '" << filename << "'."
+		msg << "[Parser] Could not open file '" << filename << "'.";
 		throw msg.str().c_str();
 	}
 	
