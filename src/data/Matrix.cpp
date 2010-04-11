@@ -133,7 +133,8 @@ Matrix Matrix::getInverse() const {
  * @param i Row of the element.
  * @param j Column of the element.
  */
-float& Matrix::operator()(int i, int j) {
+float& Matrix::operator()(int i,
+                          int j) {
 	
 	if (i < 0 || i >= size)
 		throw "[Matrix] Index out of bounds.";
@@ -174,14 +175,14 @@ Matrix operator*(const Matrix &A,
 	
 	// Check if matrices can't be multiplied
 	if (A.getColumns() != B.getRows())
-		throw "Matrix: Matrices cannot be multiplied.";
+		throw "[Matrix] Matrices cannot be multiplied.";
 	
 	// Multiply rows of A with columns in B
 	for (int i=0; i<C.getRows(); ++i) {
 		for (int j=0; j<C.getColumns(); ++j) {
 			C(i,j) = 0.0;
 			for (int k=0; k<A.getColumns(); ++k)
-				C(i,j) += A.get(i,k) * B.get(k,j);
+				C(i,j) += A(i,k) * B(k,j);
 		}
 	}
 	return C;
@@ -202,9 +203,9 @@ Vector operator*(const Matrix &A,
 	
 	// Multiply rows of A with columns in B
 	for (int i=0; i<C.size; ++i) {
-		C(i) = 0.0;
-		for (int k=0; k<C.size; k++)
-			C(i) += A.get(i,k) * B.get(k);
+		C[i] = 0.0;
+		for (int k=0; k<C.size; ++k)
+			C[i] += A(i,k) * B[k];
 	}
 	return C;
 }

@@ -4,7 +4,7 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Matrix.hpp"
+#include "Vector.hpp"
 
 
 Vector::Vector() {
@@ -18,7 +18,8 @@ Vector::Vector() {
 }
 
 
-Vector::Vector(float x, float y) {
+Vector::Vector(float x,
+               float y) {
 	
 	// Set components
 	this->x = x;
@@ -29,7 +30,9 @@ Vector::Vector(float x, float y) {
 }
 
 
-Vector::Vector(float x, float y, float z) {
+Vector::Vector(float x,
+               float y,
+               float z) {
 	
 	// Set components
 	this->x = x;
@@ -40,7 +43,10 @@ Vector::Vector(float x, float y, float z) {
 }
 
 
-Vector::Vector(float x, float y, float z, float w) {
+Vector::Vector(float x,
+               float y,
+               float z,
+               float w) {
 	
 	// Set components
 	this->x = x;
@@ -51,7 +57,7 @@ Vector::Vector(float x, float y, float z, float w) {
 }
 
 
-Vector& Vector::operator=(const Vector& B) {
+Vector& Vector::operator=(const Vector &B) {
 	
 	// Check for self-assignment
 	if (this == &B)
@@ -67,7 +73,8 @@ Vector& Vector::operator=(const Vector& B) {
 }
 
 
-Vector operator*(const Vector& A, float b) {
+Vector operator*(const Vector &A,
+                 float b) {
 	
 	Vector C;
 	
@@ -81,7 +88,8 @@ Vector operator*(const Vector& A, float b) {
 }
 
 
-Vector operator*(const Vector& A, const Vector& B) {
+Vector operator*(const Vector &A,
+                 const Vector &B) {
 	
 	Vector C;
 	
@@ -95,7 +103,8 @@ Vector operator*(const Vector& A, const Vector& B) {
 }
 
 
-Vector operator/(const Vector& A, float b) {
+Vector operator/(const Vector &A,
+                 float b) {
 	
 	Vector C;
 	
@@ -111,7 +120,8 @@ Vector operator/(const Vector& A, float b) {
 }
 
 
-Vector operator/(const Vector& A, const Vector& B) {
+Vector operator/(const Vector &A,
+                 const Vector &B) {
 	
 	Vector C;
 	
@@ -129,7 +139,8 @@ Vector operator/(const Vector& A, const Vector& B) {
 }
 
 
-Vector operator+(const Vector& A, const Vector& B) {
+Vector operator+(const Vector &A,
+                 const Vector &B) {
 	
 	Vector C;
 	
@@ -143,7 +154,8 @@ Vector operator+(const Vector& A, const Vector& B) {
 }
 
 
-Vector operator-(const Vector& A, const Vector& B) {
+Vector operator-(const Vector &A,
+                 const Vector &B) {
 	
 	Vector C;
 	
@@ -157,8 +169,8 @@ Vector operator-(const Vector& A, const Vector& B) {
 }
 
 
-ostream& operator<<(ostream& out,
-                    const Vector& A) {
+ostream& operator<<(ostream &out,
+                    const Vector &A) {
 	
 	float com[] = {A.x, A.y, A.z, A.w};
 	
@@ -176,7 +188,20 @@ ostream& operator<<(ostream& out,
 }
 
 
-float& Vector::operator()(int i) {
+float& Vector::operator[](int i) {
+	
+	// Return correct component
+	switch (i) {
+		case 0: return x;
+		case 1: return y;
+		case 2: return z;
+		case 3: return w;
+		default: throw "[Vector] Index out of bounds.";
+	}
+}
+
+
+float Vector::operator[](int i) const {
 	
 	// Return correct component
 	switch (i) {
@@ -264,7 +289,8 @@ float Vector::length() const {
 }
 
 
-void Vector::set(float x, float y) {
+void Vector::set(float x,
+                 float y) {
 	
 	// Set components
 	this->x = x;
@@ -273,7 +299,9 @@ void Vector::set(float x, float y) {
 }
 
 
-void Vector::set(float x, float y, float z) {
+void Vector::set(float x,
+                 float y,
+                 float z) {
 	
 	// Set components
 	this->x = x;
@@ -283,7 +311,10 @@ void Vector::set(float x, float y, float z) {
 }
 
 
-void Vector::set(float x, float y, float z, float w) {
+void Vector::set(float x,
+                 float y,
+                 float z,
+                 float w) {
 	
 	// Set components
 	this->x = x;

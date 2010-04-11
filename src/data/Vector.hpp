@@ -36,7 +36,8 @@ class Vector {
 		friend Vector operator+(const Vector &A, const Vector &B);
 		friend Vector operator-(const Vector &A, const Vector &B);
 		friend ostream& operator<<(ostream& out, const Vector& A);
-		float& operator()(int i);
+		float& operator[](int i);
+		float operator[](int i) const;
 		
 		Vector crossProduct(const Vector& B) const;
 		float dotProduct(const Vector &B) const;
