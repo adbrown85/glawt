@@ -1,0 +1,11 @@
+<!--
+ * Display.xml
+ *
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<translate x="3.0" y="0.0" z="0.0">
+	<box />
+</translate>

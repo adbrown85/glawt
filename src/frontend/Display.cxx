@@ -32,7 +32,7 @@ int main(int argc,
 	cout << endl;
 	
 	// Test
-	scene.setFilename("input/basic.xml");
+	scene.setFilename("Display.xml");
 	Display::install(&menu);
 	Display::install(&keyboard);
 	Display::install(&mouse);
