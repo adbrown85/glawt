@@ -19,7 +19,7 @@ using namespace std;
 /**
  * @ingroup graph
  * @brief
- *     %Texture nodes for volumes.
+ *     %Texture node for volumes.
  */
 class Texture3D : public Texture {
 	

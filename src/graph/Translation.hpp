@@ -19,9 +19,9 @@ using namespace std;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     %Node that moves items in the scene.
- * @ingroup graph
  */
 class Translation : public Transformation,
                     public Vector {
