@@ -116,8 +116,7 @@ void OctreeBuilder::buildNodeAsLeaf(const Index &center,
  * 
  * Calculated as (log base 8 of the total samples) - 1;
  * 
- * @param dataset
- *     Pointer to the Dataset to use.
+ * @param dataset Pointer to the Dataset to use.
  */
 int OctreeBuilder::getTreeHeightOf(Dataset *dataset) {
 	

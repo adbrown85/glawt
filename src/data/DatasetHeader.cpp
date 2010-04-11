@@ -10,9 +10,7 @@
 /**
  * Reads a header from a dataset file.
  * 
- * @param [in] filename
- *     Path to the file.
- * 
+ * @param [in] filename Path to the file.
  * @throws const_char* from check()
  */
 DatasetHeader::DatasetHeader(string filename) {
@@ -29,9 +27,7 @@ DatasetHeader::DatasetHeader(string filename) {
 /**
  * Reads a header from a dataset file specified by an XML tag.
  * 
- * @param [in] tag
- *     XML tag with file attribute specifying path to the file.
- * 
+ * @param [in] tag XML tag with file attribute specifying path to the file.
  * @throws const_char* from check()
  */
 DatasetHeader::DatasetHeader(const Tag &tag) {
@@ -48,9 +44,7 @@ DatasetHeader::DatasetHeader(const Tag &tag) {
 /**
  * Reads a dataset header directly from an input stream.
  * 
- * @param [in] stream
- *     Input stream to read from.
- * 
+ * @param [in] stream Input stream to read from.
  * @throws const_char* from check()
  */
 DatasetHeader::DatasetHeader(istream &stream) {

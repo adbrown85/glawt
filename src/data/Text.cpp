@@ -7,7 +7,6 @@
 #include "Text.hpp"
 
 
-
 int Text::findFirstWordCharacter(const string &text,
                                  int pos) {
 	

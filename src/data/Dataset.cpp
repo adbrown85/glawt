@@ -10,8 +10,7 @@
 /**
  * Creates a new %Dataset from a file.
  * 
- * @param [in] filename
- *     Path to the file containing the data.
+ * @param [in] filename Path to the file containing the data.
  */
 Dataset::Dataset(string filename) :
                  header(filename) {
@@ -24,8 +23,7 @@ Dataset::Dataset(string filename) :
 /**
  * Creates a new %Dataset from an XML tag.
  * 
- * @param [in] tag
- *     XML tag specifying the file with the data.
+ * @param [in] tag XML tag specifying the file with the data.
  */
 Dataset::Dataset(const Tag &tag) :
                  header(tag) {
@@ -47,8 +45,7 @@ Dataset::~Dataset() {
 /**
  * Makes sure that an index is in bounds.
  * 
- * @param [in] index
- *     Integer coordinates specifying the location in the dataset.
+ * @param [in] index Integer coordinates specifying the location in dataset.
  */
 void Dataset::checkIndex(const Index &index) const {
 	
@@ -63,8 +60,7 @@ void Dataset::checkIndex(const Index &index) const {
 /**
  * Finds a position in the array.
  * 
- * @param [in] index
- *     Integer coordinates specifying the location in the dataset.
+ * @param [in] index Integer coordinates specifying the location in dataset.
  */
 char* Dataset::findPosition(const Index &index) const {
 	
@@ -82,11 +78,8 @@ char* Dataset::findPosition(const Index &index) const {
  * 
  * To dereference the pointer properly, use getType().
  * 
- * @param [in] index
- *     Integer coordinates specifying the location in the dataset.
- * @param [out] value
- *     Pointer to the value that will be set.
- * 
+ * @param [in] index Integer coordinates specifying the location in dataset.
+ * @param [out] value Pointer to the value that will be set.
  * @note We don't make this method public because it has the potential to 
  * change the data.  (Even though it is declared @e const.)
  */
@@ -101,12 +94,9 @@ void Dataset::get(const Index &index,
 /**
  * Gets the value of an element in the data.
  * 
- * @param [in] I
- *     Integer coordinates specifying the location in the dataset.
- * @return Copy of the value as an unsigned byte.
- * 
+ * @param [in] I Integer coordinates specifying the location in dataset.
  * @throws const_char* if the dataset's type is not GL_UNSIGNED_BYTE.
- * 
+ * @return Copy of the value as an unsigned byte.
  * @note Remember if you want to print the value, cast it to an @c int first.
  */
 unsigned char Dataset::getAsByte(const Index &I) const {
@@ -127,11 +117,9 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 /**
  * Gets the value of an element in the data.
  * 
- * @param [in] I
- *     Integer coordinates specifying the location in the dataset.
- * @return Copy of the value as a float.
- * 
+ * @param [in] I Integer coordinates specifying the location in dataset.
  * @throws const_char* if the dataset's type is not GL_FLOAT.
+ * @return Copy of the value as a float.
  */
 float Dataset::getAsFloat(const Index &I) const {
 	
@@ -151,11 +139,9 @@ float Dataset::getAsFloat(const Index &I) const {
 /**
  * Gets the value of an element in the data.
  * 
- * @param [in] I
- *     Integer coordinates specifying the location in the dataset.
- * @return Copy of the value as a short.
- * 
+ * @param [in] I Integer coordinates specifying the location in dataset.
  * @throws const_char* if the dataset's type is not GL_SHORT.
+ * @return Copy of the value as a short.
  */
 short Dataset::getAsShort(const Index &I) const {
 	
@@ -242,25 +228,22 @@ void Dataset::initTypeBlock() {
 	if (type.compare("uint8") == 0) {
 		this->type = GL_UNSIGNED_BYTE;
 		block = 1;
-	}
-	else if (type.compare("int16") == 0) {
+	} else if (type.compare("int16") == 0) {
 		this->type = GL_SHORT;
 		block = 2;
-	}
-	else if (type.compare("float") == 0) {
+	} else if (type.compare("float") == 0) {
 		this->type = GL_FLOAT;
 		block = 4;
-	}
-	else
+	} else {
 		throw "[Dataset] Data type not currently supported.";
+	}
 }
 
 
 /**
  * Prints a value in the dataset.
  * 
- * @param [in] index
- *     Integer coordinates specifying the location in the dataset.
+ * @param [in] index Integer coordinates specifying the location in dataset.
  */
 void Dataset::print(Index index) {
 	
@@ -309,13 +292,9 @@ void Dataset::readData() {
 /**
  * Sets a sample in the dataset.
  * 
- * @param [in] index
- *     Index specifying the location of the sample.
- * @param [in] value
- *     Pointer to the value that the sample will be set to.
- * @param [in] type
- *     Type of the value to set.
- * 
+ * @param [in] index Index specifying the location of the sample.
+ * @param [in] value Pointer to the value that the sample will be set to.
+ * @param [in] type Type of the value to set.
  * @throws const_char* if the type passed does not match.
  * @see getType()
  */

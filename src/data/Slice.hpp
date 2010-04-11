@@ -14,14 +14,12 @@
 #include "Dataset.hpp"
 
 
-
 /**
+ * @ingroup data
  * @brief
  *     Utility for accessing and drawing a slice of a volume.
- * @ingroup data
  */
 class Slice {
-	
 	
 	public :
 		
@@ -32,7 +30,6 @@ class Slice {
 		void previous();
 		
 		int getIndex() {return index;}
-	
 	
 	private:
 		

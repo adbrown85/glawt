@@ -20,10 +20,8 @@ Tag::Tag() {
 /**
  * Adds an attribute to the tag.
  * 
- * @param key
- *     Reference to the name of the attribute.
- * @param value
- *     Reference to the value of the attribute.
+ * @param key Reference to the name of the attribute.
+ * @param value Reference to the value of the attribute.
  */
 void Tag::add(const string &key,
               const string &value) {
@@ -54,8 +52,7 @@ void Tag::clear() {
 /**
  * @throws const_char* if the tag doesn't have an attribute.
  * 
- * @param key
- *     Name of the attribute.
+ * @param key Name of the attribute.
  */
 void Tag::error(string key) const {
 	
@@ -72,10 +69,8 @@ void Tag::error(string key) const {
 /**
  * @throws const_char* if an attribute can't be converted to a type.
  * 
- * @param key
- *     Name of the attribute.
- * @param type
- *     Type trying to convert to.
+ * @param key Name of the attribute.
+ * @param type Type trying to convert to.
  */
 void Tag::error(string key,
                 string type) const {
@@ -94,12 +89,9 @@ void Tag::error(string key,
 /**
  * Gets the value of an attribute as a boolean.
  * 
- * @param key
- *     Name of the attribute.
- * @param value
- *     Boolean to store the value in.
- * @param required
- *     If attribute is not found, throw an error.
+ * @param key Name of the attribute.
+ * @param value Boolean to store the value in.
+ * @param required If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               bool &value,
@@ -129,12 +121,9 @@ bool Tag::get(const string &key,
 /**
  * Gets the value of an attribute as a character.
  * 
- * @param key
- *     Name of the attribute.
- * @param value
- *     Character to store the value in.
- * @param required
- *     If attribute is not found, throw an error.
+ * @param key Name of the attribute.
+ * @param value Character to store the value in.
+ * @param required If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               char &value,
@@ -159,12 +148,9 @@ bool Tag::get(const string &key,
 /**
  * Gets the value of an attribute as a float.
  * 
- * @param key
- *     Name of the attribute.
- * @param value
- *     Float to store the value in.
- * @param required
- *     If attribute is not found, throw an error.
+ * @param key Name of the attribute.
+ * @param value Float to store the value in.
+ * @param required If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               float &value,
@@ -189,12 +175,9 @@ bool Tag::get(const string &key,
 /**
  * Gets the value of an attribute as an integer.
  * 
- * @param key
- *     Name of the attribute.
- * @param value
- *     Integer to store the value in.
- * @param required
- *     If attribute is not found, throw an error.
+ * @param key Name of the attribute.
+ * @param value Integer to store the value in.
+ * @param required If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               int &value,
@@ -219,12 +202,9 @@ bool Tag::get(const string &key,
 /**
  * Gets the value of an attribute as a string.
  * 
- * @param key
- *     Name of the attribute.
- * @param value
- *     String to store the value in.
- * @param required
- *     If attribute is not found, throw an error.
+ * @param key Name of the attribute.
+ * @param value String to store the value in.
+ * @param required If attribute is not found, throw an error.
  */
 bool Tag::get(const string &key,
               string &value,
@@ -258,8 +238,7 @@ void Tag::setName(const string &name) {
 /**
  * Converts each character of a string to lowercase.
  * 
- * @param original
- *     String to convert.
+ * @param original String to convert.
  */
 string Tag::tolower(const string &original) {
 	
@@ -277,10 +256,8 @@ string Tag::tolower(const string &original) {
 /**
  * Prints the %Tag to a stream.
  * 
- * @param stream
- *     Stream to print to.
- * @param tag
- *     XML tag.
+ * @param stream Stream to print to.
+ * @param tag XML tag.
  */
 ostream& operator<<(ostream &stream,
                     const Tag &tag) {

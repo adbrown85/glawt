@@ -22,7 +22,6 @@
 using namespace std;
 
 
-
 /**
  * @ingroup data
  * @brief Loads and holds volumetric data.
@@ -40,7 +39,6 @@ using namespace std;
  * getData() and @c getType().
  */
 class Dataset {
-	
 	
 	public:
 		
@@ -63,7 +61,6 @@ class Dataset {
 		virtual void set(const Index &I,
 		                 const void *value,
 		                 GLenum type);
-	
 	
 	private:
 		

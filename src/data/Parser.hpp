@@ -16,14 +16,12 @@
 using namespace std;
 
 
-
 /**
  * @ingroup data
  * @brief
  *     Reads an XML file, breaking it up into tags and attributes.
  */
 class Parser {
-	
 	
 	public :
 		
@@ -36,7 +34,6 @@ class Parser {
 		void skipComment();
 		
 		vector<Tag> tags;
-	
 	
 	private :
 		

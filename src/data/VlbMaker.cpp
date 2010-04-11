@@ -16,20 +16,6 @@ VlbMaker::VlbMaker(const string &inFilename,
 }
 
 
-void VlbMaker::start() {
-	
-	ifstream inFile;
-	ofstream outFile;
-	
-	// Open files and process them
-	inFile.open(inFilename.c_str());
-	outFile.open(outFilename.c_str(), ios_base::binary);
-	process(inFile, outFile);
-	inFile.close();
-	outFile.close();
-}
-
-
 void VlbMaker::process(istream &inStream,
                        ostream &outStream) {
 	
@@ -66,5 +52,19 @@ void VlbMaker::processHeader(istream &inStream,
 	for (int i=0; i<offset; ++i) {
 		getline(inStream, line);
 	}
+}
+
+
+void VlbMaker::start() {
+	
+	ifstream inFile;
+	ofstream outFile;
+	
+	// Open files and process them
+	inFile.open(inFilename.c_str());
+	outFile.open(outFilename.c_str(), ios_base::binary);
+	process(inFile, outFile);
+	inFile.close();
+	outFile.close();
 }
 

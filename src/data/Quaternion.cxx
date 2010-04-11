@@ -7,7 +7,6 @@
 #include "Quaternion.hpp"
 
 
-
 int main() {
 	
 	Matrix mat;
@@ -42,3 +41,4 @@ int main() {
 	cout << "Quaternion" << endl;
 	cout << "****************************************" << endl;
 }
+

@@ -7,7 +7,6 @@
 #include "Matrix.hpp"
 
 
-
 int main() {
 	
 	float arr[16] = { 1.0,  2.0,  3.0,  4.0,
@@ -61,3 +60,4 @@ int main() {
 	cout << "Matrix" << endl;
 	cout << "****************************************" << endl;
 }
+

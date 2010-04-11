@@ -130,10 +130,8 @@ Matrix Matrix::getInverse() const {
 /**
  * Returns one of the elements in the matrix.
  * 
- * @param i
- *     Row of the element.
- * @param j
- *     Column of the element.
+ * @param i Row of the element.
+ * @param j Column of the element.
  */
 float& Matrix::operator()(int i, int j) {
 	
@@ -148,9 +146,9 @@ float& Matrix::operator()(int i, int j) {
 /**
  * Multiplies two matrices together.
  * 
- * Currently the Matrix class is fixed as a 4x4 matrix, but if it was not and 
- * matrices could have variables sizes, Matrix a needs to have the same number 
- * of columns as Matrix b has rows.
+ * @note Currently the Matrix class is fixed as a 4x4 matrix, but if it was not 
+ * and matrices could have variables sizes, Matrix A needs to have the same 
+ * number of columns as Matrix B has rows.
  */
 Matrix operator*(const Matrix &A,
                  const Matrix &B) {
@@ -248,8 +246,7 @@ Matrix Matrix::getSubmatrix(int i,
 /**
  * Sets the Matrix from values in the array.
  * 
- * @param array
- *     4x4 matrix stored in single-subscript array in column-major order.
+ * @param array 4x4 matrix in single-subscript array in column-major order.
  */
 void Matrix::set(float array[16]) {
 	

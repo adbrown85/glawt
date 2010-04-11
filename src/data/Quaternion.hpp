@@ -15,14 +15,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup data
  * @brief
  *     Encapsulation of a rotation that avoids gimbal lock.
- * @ingroup data
  */
 class Quaternion {
-	
 	
 	public:
 		
@@ -35,7 +33,6 @@ class Quaternion {
 		         float y,
 		         float z);
 		string toString();
-	
 	
 	private :
 		

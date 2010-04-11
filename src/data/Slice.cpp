@@ -7,14 +7,11 @@
 #include "Slice.hpp"
 
 
-
 /**
  * Creates a new %Slice.
  * 
- * @param dataset
- *     Pointer to the volume data.
- * @param index
- *     Index into the %Dataset.
+ * @param dataset Pointer to the volume data.
+ * @param index Index into the %Dataset.
  */
 Slice::Slice(Dataset *dataset,
              int index) {
@@ -35,7 +32,6 @@ Slice::Slice(Dataset *dataset,
 }
 
 
-
 /**
  * Draws a slice to the screen.
  */
@@ -50,7 +46,6 @@ void Slice::draw() {
 }
 
 
-
 /**
  * Updates the slice as the next one in the %Dataset.
  */
@@ -61,7 +56,6 @@ void Slice::next() {
 		index = -1;
 	++index;
 }
-
 
 
 /**

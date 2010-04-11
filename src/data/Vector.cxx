@@ -7,7 +7,6 @@
 #include "Vector.hpp"
 
 
-
 /**
  * Unit test for Vector.
  */

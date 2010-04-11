@@ -12,14 +12,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup data
  * @brief
  *     Four-component vector with dot and cross product capabilities.
- * @ingroup data
  */
 class Vector {
-	
 	
 	public:
 		

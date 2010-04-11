@@ -9,7 +9,6 @@
 using namespace std;
 
 
-
 /**
  * Simple test program.
  */
@@ -36,3 +35,4 @@ int main(int argc, char **argv) {
 	cout << endl;
 	return 0;
 }
+

@@ -8,14 +8,12 @@
 float Quaternion::PI=355.0/113.0;
 
 
-
 Quaternion::Quaternion() {
 	
 	// Set defaults
 	s = 1.0;
 	v.set(0.0, 0.0, 0.0);
 }
-
 
 
 /**
@@ -51,7 +49,6 @@ Matrix Quaternion::getMatrix() const {
 }
 
 
-
 void Quaternion::normalize() {
 	
 	float mag;
@@ -65,13 +62,11 @@ void Quaternion::normalize() {
 }
 
 
-
 float Quaternion::radians(float degrees) {
 	
 	// Convert
 	return degrees * PI / 180;
 }
-
 
 
 Quaternion Quaternion::operator*(const Quaternion& B) {
@@ -93,12 +88,10 @@ Quaternion Quaternion::operator*(const Quaternion& B) {
 }
 
 
-
 void Quaternion::print() {
 	
 	cout << "  " << toString() << endl;
 }
-
 
 
 void Quaternion::set(float theta,
@@ -126,7 +119,6 @@ void Quaternion::set(float theta,
 	// Normalize
 	normalize();
 }
-
 
 
 string Quaternion::toString() {

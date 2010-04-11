@@ -14,9 +14,9 @@ using namespace std;
 
 
 /**
+ * @ingroup data
  * @brief
  *     Four-by-four matrix with multiplication and inversion.
- * @ingroup data
  */
 class Matrix {
 	

@@ -7,7 +7,6 @@
 #include "FileUtility.hpp"
 
 
-
 /**
  * Builds a path from its parts.
  * 
@@ -228,10 +227,8 @@ string FileUtility::stripRoot(const string &path) {
 /**
  * Splits a filename up into tokens.
  * 
- * @param filename
- *     Path to split up.
- * @param tokens
- *     Parts of the path.
+ * @param filename Path to split up.
+ * @param tokens Parts of the path.
  */
 void FileUtility::tokenize(const string &filename,
                            vector<string> &tokens) {

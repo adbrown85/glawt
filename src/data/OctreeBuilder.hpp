@@ -58,8 +58,7 @@ class OctreeBuilder {
 
 
 /**
- * @param [in] threshold
- *     Number that determines if a node is empty.
+ * @param [in] threshold Number that determines if a node is empty.
  */
 inline void OctreeBuilder::setThreshold(float threshold) {
 	

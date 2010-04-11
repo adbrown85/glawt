@@ -60,7 +60,6 @@ int main(int argc,
 }
 
 
-
 /**
  * GLUT display callback.
  */
@@ -82,7 +81,6 @@ void display(void) {
 	// Finish
 	glutSwapBuffers();
 }
-
 
 
 /**
@@ -109,7 +107,6 @@ void init(int argc,
 }
 
 
-
 /**
  * GLUT special keys callback.
  */
@@ -130,7 +127,6 @@ void special(int key,
 			break;
 	}
 }
-
 
 
 /**

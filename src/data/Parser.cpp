@@ -7,12 +7,10 @@
 #include "Parser.hpp"
 
 
-
 /**
  * Finds the next tag in the file.
  * 
- * @return
- *     %Tag string without '<' and '>'.
+ * @return %Tag string without '<' and '>'.
  */
 string Parser::findTagString() {
 	
@@ -29,14 +27,11 @@ string Parser::findTagString() {
 }
 
 
-
 /**
  * Checks if the next few characters indicate a comment.
  * 
- * @param comment
- *     Characters that start or end a comment.
- * @return
- *     True if the characters indicate a comment.
+ * @param comment Characters that start or end a comment.
+ * @return True if the characters indicate a comment.
  */
 bool Parser::isComment(string comment) {
 	
@@ -53,12 +48,10 @@ bool Parser::isComment(string comment) {
 }
 
 
-
 /**
  * Opens a file and starts parsing it.
  * 
- * @param filename
- *     Path of the file to open.
+ * @param filename Path of the file to open.
  */
 void Parser::open(string filename) {
 	
@@ -91,14 +84,11 @@ void Parser::open(string filename) {
 }
 
 
-
 /**
  * Parses an attribute into a key and value, and then stores it.
  * 
- * @param attribute
- *     Attribute as a raw string from the file.
- * @param tag
- *     Tag object to store the attribute in.
+ * @param attribute Attribute as a raw string from the file.
+ * @param tag Tag object to store the attribute in.
  */
 void Parser::parseAttribute(string attribute,
                             Tag &tag) {
@@ -122,14 +112,11 @@ void Parser::parseAttribute(string attribute,
 }
 
 
-
 /**
  * Parses a tag.
  * 
- * @param tagString
- *     Raw text for the tag from the file.
- * @param tag
- *     Tag object to store the attribute in.
+ * @param tagString Raw text for the tag from the file.
+ * @param tag Tag object to store the attribute in.
  */
 void Parser::parseTag(string tagString,
                       Tag &tag) {
@@ -162,7 +149,6 @@ void Parser::parseTag(string tagString,
 }
 
 
-
 /**
  * Prints all the tags in the Parser.
  */
@@ -172,7 +158,6 @@ void Parser::print() {
 	for (size_t i=0; i<tags.size(); ++i)
 		cout << "  " << tags[i] << endl;
 }
-
 
 
 /**
