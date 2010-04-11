@@ -1,8 +1,8 @@
 /*
  * Interpreter.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef __INTERPRETER_HPP__
 #define __INTERPRETER_HPP__

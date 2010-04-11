@@ -1,8 +1,8 @@
 /*
  * Compositor.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef COMPOSITOR_HPP
 #define COMPOSITOR_HPP

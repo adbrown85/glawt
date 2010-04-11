@@ -1,8 +1,8 @@
 /*
  * Producer.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef PRODUCER_HPP
 #define PRODUCER_HPP

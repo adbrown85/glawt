@@ -1,9 +1,8 @@
 /*
  * Cameraman.hpp
- *     Responsible for moving the camera.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef CAMERAMAN_HPP
 #define CAMERAMAN_HPP

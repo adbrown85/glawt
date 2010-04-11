@@ -1,8 +1,8 @@
 /*
  * Command.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
