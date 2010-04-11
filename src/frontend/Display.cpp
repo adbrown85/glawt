@@ -96,6 +96,8 @@ void Display::overlay() {
 /**
  * Starts the display.
  * 
+ * @param argc Number of arguments.
+ * @param argv Array of argument values.
  * @param title Text to be shown on the window's title bar.
  * @param scene Pointer to a Scene with items (needs to be constructed first).
  * @param delegate Delegate that opens scene.
