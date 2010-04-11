@@ -8,6 +8,13 @@
 Keyboard *Keyboard::obj=NULL;
 
 
+Keyboard::Keyboard(Delegate *delegate) : 
+                   Control(delegate) {
+	
+	Keyboard::obj = this;
+}
+
+
 /**
  * Installs the controls into the current context.
  */

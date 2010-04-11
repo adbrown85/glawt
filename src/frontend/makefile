@@ -12,7 +12,6 @@ GANDER = ../..
 include $(GANDER)/globals.mak
 include $(GANDER)/src/module.mak
 
-
 # Utilities
 Binding.o: 
 Picker.o: Painter.o Manipulator.hpp
@@ -34,5 +33,8 @@ MouseDragHelper.o: MouseHelper.o Translator.o
 Mouse.o: Control.o MouseClickHelper.o MouseData.hpp MouseDragHelper.o
 
 # Display
-Display.o : Control.o Manipulator.hpp Painter.o
+Display.o : Control.o Manipulator.hpp Painter.o Picker.o
 Painter.o : Manipulator.hpp Translator.o
+
+# Executables
+Display: Keyboard.o Mouse.o Translator.o

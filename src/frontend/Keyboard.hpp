@@ -46,13 +46,6 @@ class Keyboard : public Control {
 };
 
 
-inline Keyboard::Keyboard(Delegate *delgate) : 
-                          Control(delegate) {
-	
-	Keyboard::obj = this;
-}
-
-
 inline void Keyboard::installBindings() {
 	
 	add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
