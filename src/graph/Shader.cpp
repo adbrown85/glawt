@@ -1,8 +1,8 @@
 /*
  * Shader.cpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Shader.hpp"
 

@@ -1,9 +1,8 @@
 /*
  * Uniform.cpp
- *     Container for GLSL uniform variables.
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Uniform.hpp"
 set<string> Uniform::types;

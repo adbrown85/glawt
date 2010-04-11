@@ -1,8 +1,8 @@
 /*
  * Texture2D.cpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Texture2D.hpp"
 bool Texture2D::librariesLoaded=false;

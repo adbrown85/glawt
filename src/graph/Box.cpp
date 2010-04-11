@@ -1,8 +1,8 @@
 /*
  * Box.cpp
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Box.hpp"
 bool Box::loaded = false;

@@ -1,8 +1,8 @@
 /*
  * Texture.cpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Texture.hpp"
 vector<GLenum> Texture::active_units;
