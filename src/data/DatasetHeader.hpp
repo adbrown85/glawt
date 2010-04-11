@@ -60,17 +60,16 @@ class DatasetHeader {
 		DatasetHeader(istream &stream);
 		void check();
 		void check(istream &stream);
-		void print() const;
-		void read();
-		void read(istream &stream);
-		void write(ostream &stream);
-		
 		int getDepth() const;
 		string getFilename() const;
 		int getHeight() const;
 		int getOffset() const;
 		string getType() const;
 		int getWidth() const;
+		void print() const;
+		void read();
+		void read(istream &stream);
+		void write(ostream &stream);
 	
 	private:
 		

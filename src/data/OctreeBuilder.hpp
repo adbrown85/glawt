@@ -28,8 +28,8 @@ class OctreeBuilder {
 		~OctreeBuilder();
 		
 		OctreeNode* build();
-		int getTotalNodes() const {return totalNodes;}
-		int getTreeHeight() const {return treeHeight;}
+		int getTotalNodes() const;
+		int getTreeHeight() const;
 		static int getTreeHeightOf(Dataset *dataset);
 		void setThreshold(float threshold);
 		string toString();
@@ -64,6 +64,10 @@ inline void OctreeBuilder::setThreshold(float threshold) {
 	
 	this->threshold = threshold;
 }
+
+
+inline int OctreeBuilder::getTotalNodes() const {return totalNodes;}
+inline int OctreeBuilder::getTreeHeight() const {return treeHeight;}
 
 
 #endif

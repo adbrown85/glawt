@@ -22,18 +22,15 @@ using namespace std;
  */
 class OctreeNode {
 	
-	
 	public:
 		
 		OctreeNode();
 		
-		OctreeNode* getChild(int index) {return children[index];}
+		OctreeNode* getChild(int index);
 		bool isEmpty();
-		void setChild(int index,
-		              OctreeNode *childNode) {children[index] = childNode;}
+		void setChild(int index, OctreeNode *childNode);
 		void setEmpty(bool empty);
 		string toString();
-	
 	
 	protected:
 		
@@ -41,5 +38,17 @@ class OctreeNode {
 		OctreeNode *children[8];
 };
 
+
+inline OctreeNode* OctreeNode::getChild(int index) {
+	
+	return children[index];
+}
+
+
+inline void OctreeNode::setChild(int index,
+                                 OctreeNode *childNode) {
+	
+	children[index] = childNode;
+}
 
 #endif

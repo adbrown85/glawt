@@ -26,10 +26,9 @@ class Slice {
 		Slice(Dataset *dataset,
 		      int index);
 		void draw();
+		int getIndex() const;
 		void next();
 		void previous();
-		
-		int getIndex() {return index;}
 	
 	private:
 		
@@ -43,6 +42,9 @@ class Slice {
 		void drawAsShort(int offset);
 		void initType();
 };
+
+
+inline int Slice::getIndex() const {return index;}
 
 
 #endif

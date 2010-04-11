@@ -45,9 +45,6 @@ class Dataset {
 		Dataset(string filename);
 		Dataset(const Tag &tag);
 		virtual ~Dataset();
-		virtual void print() const;
-		virtual void print(Index I);
-		
 		virtual unsigned char getAsByte(const Index &I) const;
 		virtual float getAsFloat(const Index &I) const;
 		virtual short getAsShort(const Index &I) const;
@@ -58,6 +55,8 @@ class Dataset {
 		virtual int getMaximumDimension() const;
 		virtual GLenum getType() const;
 		virtual int getWidth() const;
+		virtual void print() const;
+		virtual void print(Index I);
 		virtual void set(const Index &I,
 		                 const void *value,
 		                 GLenum type);
