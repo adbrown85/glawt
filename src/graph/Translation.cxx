@@ -39,9 +39,10 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Test tag
-	cout << "\nTesting tag..." << endl;
+	cout << "Testing tag..." << endl;
 	tag.attributes["x"] = "10.0";
 	tag.attributes["y"] = "20.0";
 	tag.attributes["z"] = "30.0";
@@ -75,5 +76,6 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Translation" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 }
 

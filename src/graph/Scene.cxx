@@ -36,10 +36,11 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Test open
-	cout << "\nTesting open..." << endl;
-	sceneB.open("input/Scene.xml");
+	cout << "Testing open..." << endl;
+	sceneB.open("Scene.xml");
 	sceneB.print();
 	
 	// Build scene

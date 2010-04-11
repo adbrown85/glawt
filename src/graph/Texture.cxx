@@ -28,6 +28,13 @@ int main() {
 	Tag tag;
 	Texture *texture;
 	
+	// Start
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "Texture" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
 	// Test tag
 	cout << "\nTesting tag..." << endl;
 	tag.attributes["name"] = "foo";
@@ -58,5 +65,12 @@ int main() {
 	cout << "  GL_TEXTURE_1D: " << GL_TEXTURE_1D << endl;
 	cout << "  GL_TEXTURE_2D: " << GL_TEXTURE_2D << endl;
 	cout << "  GL_TEXTURE_3D: " << GL_TEXTURE_3D << endl;
+	
+	// Finish
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "Texture" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
 }
 
