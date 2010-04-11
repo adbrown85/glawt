@@ -10,7 +10,6 @@
 #include <iostream>
 
 
-
 /**
  * @interface Applicable
  * @ingroup traits
@@ -18,7 +17,6 @@
  *     Interface for something that can be applied, and then removed.
  */
 class Applicable {
-	
 	
 	public :
 		

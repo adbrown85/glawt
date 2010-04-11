@@ -7,12 +7,10 @@
 #include "Drawable.hpp"
 
 
-
 /**
  * Initializes the item as hidden and sets the size.
  * 
- * @param size
- *     Size of the object.
+ * @param size Size of the object.
  */
 Drawable::Drawable(float size) {
 	
@@ -21,12 +19,10 @@ Drawable::Drawable(float size) {
 }
 
 
-
 /**
  * Creates a new Drawable from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "size" attribute.
  */
 Drawable::Drawable(const Tag &tag) {
 	
@@ -37,18 +33,15 @@ Drawable::Drawable(const Tag &tag) {
 }
 
 
-
 /**
  * Makes a drawable object the same size as another.
  * 
- * @param other
- *     Reference to another drawable object.
+ * @param other Reference to another drawable object.
  */
 void Drawable::copySizeOf(const Drawable &other) {
 	
 	size = other.size;
 }
-
 
 
 /**
@@ -60,7 +53,6 @@ void Drawable::hide() {
 }
 
 
-
 /**
  * Checks if the item is visible.
  */
@@ -68,7 +60,6 @@ bool Drawable::isVisible() const {
 	
 	return visible;
 }
-
 
 
 /**
@@ -80,7 +71,6 @@ void Drawable::show() {
 }
 
 
-
 /**
  * Switches whether the item should be drawn or not.
  */
@@ -88,7 +78,6 @@ void Drawable::toggleVisibility() {
 	
 	visible = !visible;
 }
-
 
 
 string Drawable::toString() const {
@@ -105,3 +94,4 @@ string Drawable::toString() const {
 	       << " siz='" << size << "'";
 	return stream.str();
 }
+
