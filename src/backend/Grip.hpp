@@ -32,9 +32,9 @@ class Grip : public Delegate {
 		
 		Grip();
 		
-		virtual void run(int command) {;}
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, string argument) {;}
+		virtual void run(int command) {}
+		virtual void run(int command, float argument) {}
+		virtual void run(int command, string argument) {}
 		
 		static Translation* findTranslation(Node *node);
 		static void rotate(Scene *scene,

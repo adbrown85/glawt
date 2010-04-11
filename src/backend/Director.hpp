@@ -30,9 +30,9 @@ class Director : public Delegate {
 		
 		Director();
 		
-		virtual void run(int command) {;}
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, string argument) {;}
+		virtual void run(int command) {}
+		virtual void run(int command, float argument) {}
+		virtual void run(int command, string argument) {}
 		
 		static void grab(Scene *scene, int cmd, float id);
 		static void iterate(Scene *scene, int cmd);

@@ -31,9 +31,9 @@ class Producer : public Delegate {
 		
 		Producer();
 		
-		virtual void run(int command) {;}
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, string argument) {;}
+		virtual void run(int command) {}
+		virtual void run(int command, float argument) {}
+		virtual void run(int command, string argument) {}
 		
 		static void copy(Scene *scene, int command);
 		static void cut(Scene *scene, int command);

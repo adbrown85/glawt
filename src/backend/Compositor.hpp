@@ -28,9 +28,9 @@ class Compositor : public Delegate {
 		
 		Compositor();
 		
-		virtual void run(int command) {;}
-		virtual void run(int command, float argument) {;}
-		virtual void run(int command, string argument) {;}
+		virtual void run(int command) {}
+		virtual void run(int command, float argument) {}
+		virtual void run(int command, string argument) {}
 		
 		static void hide(Scene *scene, int command);
 		static void info(Scene *scene, int command);

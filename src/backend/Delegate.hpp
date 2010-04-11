@@ -34,17 +34,11 @@ class Delegate {
 		virtual void run(int command, float argument) = 0;
 		virtual void run(int command, string argument) = 0;
 		
-		map<int,void(*)(Scene*,int)> getHandlersZero() {
-			return handlersZero;
-		}
-		map<int,void(*)(Scene*,int,float)> getHandlersFloat() {
-			return handlersFloat;
-		}
-		map<int,void(*)(Scene*,int,string)> getHandlersString() {
-			return handlersString;
-		}
-		virtual string getType() {return type;}
-		void setScene(Scene *scene) {this->scene = scene;}
+		map<int,void(*)(Scene*,int)> getHandlersZero();
+		map<int,void(*)(Scene*,int,float)> getHandlersFloat();
+		map<int,void(*)(Scene*,int,string)> getHandlersString();
+		virtual string getType() const;
+		void setScene(Scene *scene);
 	
 	protected :
 		
@@ -54,6 +48,37 @@ class Delegate {
 		map<int,void(*)(Scene*,int,float)> handlersFloat;
 		map<int,void(*)(Scene*,int,string)> handlersString;
 };
+
+
+inline map<int,void(*)(Scene*,int)> Delegate::getHandlersZero() {
+	
+	return handlersZero;
+}
+
+inline map<int,void(*)(Scene*,int,float)> Delegate::getHandlersFloat() {
+	
+	return handlersFloat;
+}
+
+
+inline map<int,void(*)(Scene*,int,string)> Delegate::getHandlersString() {
+	
+	return handlersString;
+}
+
+
+inline string Delegate::getType() const {
+	
+	return type;
+}
+
+
+inline void Delegate::setScene(Scene *scene) {
+	
+	this->scene = scene;
+}
+
+
 
 
 #endif
