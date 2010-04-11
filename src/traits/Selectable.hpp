@@ -15,7 +15,6 @@
 using namespace std;
 
 
-
 /**
  * @interface Selectable
  * @ingroup traits
@@ -23,7 +22,6 @@ using namespace std;
  *     Interface for an object that can be part of a selection.
  */
 class Selectable : public Drawable {
-	
 	
 	public :
 		
@@ -34,7 +32,6 @@ class Selectable : public Drawable {
 		virtual void select();
 		virtual void toggleSelected();
 		virtual string toString() const;
-	
 	
 	protected:
 		

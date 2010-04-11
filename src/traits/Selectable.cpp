@@ -7,12 +7,10 @@
 #include "Selectable.hpp"
 
 
-
 /**
  * Initializes the items as deselected.
  * 
- * @param size
- *     Size of the object.
+ * @param size Size of the object.
  */
 Selectable::Selectable(float size) : Drawable(size) {
 	
@@ -20,12 +18,10 @@ Selectable::Selectable(float size) : Drawable(size) {
 }
 
 
-
 /**
  * Creates a new %Selectable from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with size information.
  */
 Selectable::Selectable(const Tag &tag) : Drawable(tag) {
 	
@@ -33,16 +29,15 @@ Selectable::Selectable(const Tag &tag) : Drawable(tag) {
 }
 
 
-
 /**
- * Marks the item as not selected.  The item should not be used for 
- * operations on selections.
+ * Marks the item as not selected.
+ * 
+ * The item should not be used for operations on selections.
  */
 void Selectable::deselect() {
 	
 	selected = false;
 }
-
 
 
 /**
@@ -54,16 +49,15 @@ bool Selectable::isSelected() const {
 }
 
 
-
 /**
- * Marks the item as selected.  The item should be used for operations 
- * on selections.
+ * Marks the item as selected.
+ * 
+ * The item should be used for operations on selections.
  */
 void Selectable::select() {
 	
 	selected = true;
 }
-
 
 
 /**
@@ -73,7 +67,6 @@ void Selectable::toggleSelected() {
 	
 	selected = !selected;
 }
-
 
 
 string Selectable::toString() const {
@@ -89,3 +82,4 @@ string Selectable::toString() const {
 	stream << " sel='" << selectedChar << "'";
 	return stream.str();
 }
+

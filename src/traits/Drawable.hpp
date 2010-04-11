@@ -16,7 +16,6 @@
 using namespace std;
 
 
-
 /**
  * @interface Drawable
  * @ingroup traits
@@ -24,7 +23,6 @@ using namespace std;
  *     Interface for something that can be drawn.
  */
 class Drawable : public Identifiable {
-	
 	
 	public :
 		
@@ -40,7 +38,6 @@ class Drawable : public Identifiable {
 		
 		virtual float getSize() {return size;}
 		virtual void setSize(float size) {this->size = size;}
-	
 	
 	protected:
 		

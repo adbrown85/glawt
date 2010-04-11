@@ -10,7 +10,6 @@
 using namespace std;
 
 
-
 class FakeDrawable : public Drawable {
 	
 	public: 
@@ -26,9 +25,6 @@ void print(const FakeDrawable &item) {
 }
 
 
-/**
- * Unit test for Drawable.
- */
 int main() {
 	
 	FakeDrawable *drawable;
