@@ -16,14 +16,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Delegate responsible for moving or rotating the camera.
- * @ingroup backend
  */
 class Cameraman : public Delegate {
-	
 	
 	public :
 		

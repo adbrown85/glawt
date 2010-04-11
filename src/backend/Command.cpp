@@ -9,7 +9,6 @@ map<int,string> Command::names;
 bool Command::loaded=false;
 
 
-
 /**
  * Initializes the command names.
  */
@@ -21,7 +20,6 @@ void Command::initialize() {
 	// Only initialize once
 	loaded = true;
 }
-
 
 
 /**
@@ -41,7 +39,6 @@ void Command::print() {
 }
 
 
-
 /**
  * Returns the name of a command.
  */
@@ -52,7 +49,6 @@ string Command::getName(int command) {
 		initialize();
 	return names[command];
 }
-
 
 
 /**
@@ -82,3 +78,4 @@ int main(int argc, char *argv[]) {
 	return 0;
 }
 */
+

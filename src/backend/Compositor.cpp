@@ -7,7 +7,6 @@
 #include "Compositor.hpp"
 
 
-
 /**
  * Adds the commands this delegate supports and sets up handlers.
  */
@@ -23,14 +22,11 @@ Compositor::Compositor() {
 }
 
 
-
 /**
  * Hides the items currently selected.
  * 
- * @param scene
- *     Pointer to a collection of nodes.
- * @param cmd
- *     Specific command that was issued.
+ * @param scene Pointer to a collection of nodes.
+ * @param cmd Specific command that was issued.
  */
 void Compositor::hide(Scene *scene,
                       int cmd) {
@@ -44,14 +40,11 @@ void Compositor::hide(Scene *scene,
 }
 
 
-
 /**
  * Displays info about the scene on the screen.
  * 
- * @param scene
- *     Pointer to a collection of nodes.
- * @param cmd
- *     Specific command that was issued.
+ * @param scene Pointer to a collection of nodes.
+ * @param cmd Specific command that was issued.
  */
 void Compositor::info(Scene *scene,
                       int cmd) {
@@ -60,14 +53,11 @@ void Compositor::info(Scene *scene,
 }
 
 
-
 /**
  * Shows all the %Drawable nodes in the scene.
  * 
- * @param scene
- *     Pointer to a collection of nodes.
- * @param cmd
- *     Specific command that was issued.
+ * @param scene Pointer to a collection of nodes.
+ * @param cmd Specific command that was issued.
  */
 void Compositor::showAll(Scene *scene,
                          int cmd) {
@@ -76,12 +66,10 @@ void Compositor::showAll(Scene *scene,
 }
 
 
-
 /**
  * Recursively shows a node and its children.
  * 
- * @param node
- *     Pointer to a node.
+ * @param node Pointer to a node.
  */
 void Compositor::showAll(Node *node) {
 	
@@ -98,3 +86,4 @@ void Compositor::showAll(Node *node) {
 	for (size_t i=0; i<children.size(); ++i)
 		showAll(children[i]);
 }
+

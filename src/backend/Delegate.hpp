@@ -10,16 +10,14 @@
 #include <string>
 #include "Command.hpp"
 #include "Scene.hpp"
-using std::map;
-using std::string;
-
+using namespace std;
 
 
 /**
  * @interface Delegate
+ * @ingroup backend
  * @brief
  *     Interface for a worker that performs %Commands on the %Scene.
- * @ingroup backend
  * 
  * @see Cameraman
  * @see Compositor
@@ -29,7 +27,6 @@ using std::string;
  * @see Producer
  */
 class Delegate {
-	
 	
 	public :
 		
@@ -48,7 +45,6 @@ class Delegate {
 		}
 		virtual string getType() {return type;}
 		void setScene(Scene *scene) {this->scene = scene;}
-	
 	
 	protected :
 		

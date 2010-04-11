@@ -7,7 +7,6 @@
 #include "Cameraman.hpp"
 
 
-
 /**
  * Adds the commands this delegate supports and sets up handlers.
  */
@@ -39,7 +38,6 @@ Cameraman::Cameraman() {
 }
 
 
-
 /**
  * Fits items in the view.
  */
@@ -48,7 +46,6 @@ void Cameraman::fit(Scene *scene,
 	
 	cout << "Cameraman::fit(int)" << endl;
 }
-
 
 
 /**
@@ -62,16 +59,12 @@ void Cameraman::reset(Scene *scene,
 }
 
 
-
 /**
  * Rotates the camera around the scene.
  * 
- * @param scene
- *     Pointer to the current scene.
- * @param cmd
- *     Command.  Should be in CIRCLE family.
- * @param amt
- *     Amount to rotate the camera.
+ * @param scene Pointer to the current scene.
+ * @param cmd Command (should be in CIRCLE family).
+ * @param amt Amount to rotate the camera.
  */
 void Cameraman::rotate(Scene *scene,
                        int cmd,
@@ -95,16 +88,12 @@ void Cameraman::rotate(Scene *scene,
 }
 
 
-
 /**
  * Moves the camera.
  * 
- * @param scene
- *     Pointer to the current scene.
- * @param cmd
- *     Command.  Either BOOM, TRACK, or ZOOM family.
- * @param amt
- *     Amount to move the camera.
+ * @param scene Pointer to the current scene.
+ * @param cmd Command (either BOOM, TRACK, or ZOOM family).
+ * @param amt Amount to move the camera.
  */
 void Cameraman::translate(Scene *scene,
                           int cmd,

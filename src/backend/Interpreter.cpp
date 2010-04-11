@@ -10,8 +10,7 @@
 /**
  * Initializes the scene, loads the delegates, and adds commands from each.
  * 
- * @param scene
- *     Pointer to the Scene to work with.
+ * @param scene Pointer to the Scene to work with.
  */
 Interpreter::Interpreter(Scene *scene) {
 	
@@ -116,7 +115,6 @@ void Interpreter::run(int command,
 }
 
 
-
 /**
  * Runs a command by handing it off to a delegate.
  * 
@@ -133,7 +131,6 @@ void Interpreter::run(int command,
 	if (hi != handlersString.end())
 		(hi->second)(scene, command, argument);
 }
-
 
 
 /**

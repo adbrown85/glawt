@@ -15,14 +15,12 @@ using std::map;
 using std::string;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Commands passed to %Delegates to change the %Scene or %Items.
- * @ingroup backend
  */
 class Command {
-	
 	
 	public:
 		
@@ -73,7 +71,6 @@ class Command {
 			SELECT_ALL,
 			MANIPULATE
 		};
-	
 	
 	private :
 		

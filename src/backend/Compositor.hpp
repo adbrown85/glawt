@@ -17,14 +17,12 @@
 using namespace std;
 
 
-
 /**
+ * @ingroup backend
  * @brief
  *     %Delegate responsible for altering the image, including hiding %Items.
- * @ingroup backend
  */
 class Compositor : public Delegate {
-	
 	
 	public :
 		
