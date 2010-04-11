@@ -8,7 +8,7 @@
 
 
 /**
- * Creates a new Control using the specified Delegate to run commands.
+ * Creates a new control using the specified Delegate to run commands.
  * 
  * @param delegate Pointer to a Delegate that runs 
  */
@@ -31,7 +31,7 @@ Control::~Control() {
 
 
 /**
- * Adds a Binding to the Control.
+ * Adds a Binding to the control.
  * 
  * @param binding Binding to add (creates a copy).
  */
@@ -54,7 +54,7 @@ void Control::add(Manipulator *manipulator) {
 
 
 /**
- * Print each Binding attached to the Control.
+ * Print each Binding attached to the control.
  */
 void Control::print() {
 	

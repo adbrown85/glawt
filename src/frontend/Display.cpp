@@ -42,8 +42,7 @@ void Display::idle(void) {
 /**
  * Installs a control into the display.
  * 
- * @param control
- *     Pointer to an object implementing the Control interface.
+ * @param control Pointer to an object implementing the Control interface.
  */
 void Display::install(Control *control) {
 	
@@ -98,7 +97,7 @@ void Display::overlay() {
  * Starts the display.
  * 
  * @param title Text to be shown on the window's title bar.
- * @param scene Pointer to a Scene with items.  Needs to be constructed first.
+ * @param scene Pointer to a Scene with items (needs to be constructed first).
  * @param delegate Delegate that opens scene.
  */
 void Display::start(int argc,
