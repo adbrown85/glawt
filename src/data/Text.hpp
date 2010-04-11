@@ -2,7 +2,7 @@
  * Text.hpp
  * 
  * Author
- *     Andrew Brown <andrew@andrewdbrown.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef TEXT_HPP
 #define TEXT_HPP

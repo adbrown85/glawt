@@ -1,8 +1,8 @@
 /*
  * Vector.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef VECTOR_HPP
 #define VECTOR_HPP

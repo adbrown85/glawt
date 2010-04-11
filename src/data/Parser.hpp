@@ -1,9 +1,8 @@
 /*
  * Parser.hpp
- *     Parses a scene file.
  * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef PARSER_HPP
 #define PARSER_HPP

@@ -1,8 +1,8 @@
 /*
  * Preprocessor.hpp
- *
+ * 
  * Author
- *     Andrew Brown <andrew@andrewdbrown.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef PREPROCESSOR_HPP
 #define PREPROCESSOR_HPP

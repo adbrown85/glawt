@@ -1,8 +1,8 @@
 /*
  * Slice.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef SLICE_HPP
 #define SLICE_HPP

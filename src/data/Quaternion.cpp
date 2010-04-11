@@ -1,9 +1,8 @@
 /*
  * Quaternion.cpp
- *     Encapsulation of angle/axis rotation.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Quaternion.hpp"
 float Quaternion::PI=355.0/113.0;

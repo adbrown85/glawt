@@ -1,9 +1,8 @@
 /*
  * Vector.cpp
- *     General three-dimensional vector.
  * 
  * Author
- *     Andrew Brown
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Matrix.hpp"
 

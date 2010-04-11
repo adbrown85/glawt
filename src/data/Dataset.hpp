@@ -1,8 +1,8 @@
 /*
  * Dataset.hpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #ifndef DATASET_HPP
 #define DATASET_HPP
