@@ -225,13 +225,13 @@ void Dataset::initTypeBlock() {
 	string type=header.getType();
 	
 	// Set the type based on the header's type
-	if (type.compare("uint8") == 0) {
+	if (type == "uint8") {
 		this->type = GL_UNSIGNED_BYTE;
 		block = 1;
-	} else if (type.compare("int16") == 0) {
+	} else if (type == "int16") {
 		this->type = GL_SHORT;
 		block = 2;
-	} else if (type.compare("float") == 0) {
+	} else if (type == "float") {
 		this->type = GL_FLOAT;
 		block = 4;
 	} else {

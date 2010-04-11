@@ -102,12 +102,13 @@ bool Tag::get(const string &key,
 	// Find and convert
 	ai = attributes.find(key);
 	if (ai != attributes.end()) {
-		if (ai->second.compare("true") == 0)
+		if (ai->second == "true") {
 			value = true;
-		else if (ai->second.compare("false") == 0)
+		} else if (ai->second == "false") {
 			value = false;
-		else
+		} else {
 			error(key, "bool");
+		}
 		return true;
 	}
 	else if (!required)

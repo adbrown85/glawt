@@ -34,9 +34,9 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 	
 	// Style
 	if (tag.get("style", style, false)) {
-		if (style.compare("3d") == 0) {
+		if (style == "3d") {
 			this->style = GL_TEXTURE_3D;
-		} else if (style.compare("2d") == 0) {
+		} else if (style == "2d") {
 			this->style = GL_TEXTURE_2D;
 		} else {
 			ostringstream msg;

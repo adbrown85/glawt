@@ -106,9 +106,9 @@ void Shader::create() {
 		return;
 	
 	// Create shader of correct type
-	if (type.compare("fragment") == 0)
+	if (type == "fragment")
 		handle = glCreateShader(GL_FRAGMENT_SHADER);
-	else if (type.compare("vertex") == 0)
+	else if (type == "vertex")
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	else
 		throw "[Shader] Type not supported.";
