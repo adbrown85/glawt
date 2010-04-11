@@ -36,14 +36,18 @@ class Drawable : public Identifiable {
 		virtual void toggleVisibility();
 		virtual string toString() const;
 		
-		virtual float getSize() {return size;}
-		virtual void setSize(float size) {this->size = size;}
+		virtual float getSize() const;
+		virtual void setSize(float size);
 	
 	protected:
 		
 		bool visible;
 		float size;
 };
+
+
+inline float Drawable::getSize() const {return size;}
+inline void Drawable::setSize(float size) {this->size = size;}
 
 
 #endif
