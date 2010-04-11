@@ -25,8 +25,8 @@ class Texture3D : public Texture {
 	
 	public :
 		
-		Texture3D(string name,
-		          string filename);
+		Texture3D(const string &name,
+		          const string &filename);
 		Texture3D(const Tag &tag);
 		virtual void associate();
 		virtual Dataset* getDataset() {return &dataset;}

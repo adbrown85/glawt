@@ -12,7 +12,7 @@
  * 
  * @param link Name of the %Texture2D object.
  */
-Target::Target(string link) {
+Target::Target(const string &link) {
 	
 	// Initialize
 	className = "Target";

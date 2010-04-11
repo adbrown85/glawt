@@ -13,8 +13,8 @@
  * @param name Name another node can reference.
  * @param filename Path to the file.
  */
-Texture3D::Texture3D(string name,
-                     string filename) : 
+Texture3D::Texture3D(const string &name,
+                     const string &filename) : 
                      Texture(GL_TEXTURE_3D, name, filename),
                      dataset(filename) {
 	

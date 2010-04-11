@@ -39,7 +39,7 @@ class Scene {
 		void addToRoot(Node *node);
 		void backup();
 		void prepare();
-		void open(string filename);
+		void open(const string &filename);
 		void print();
 		void reset();
 		void rotate(float angle,

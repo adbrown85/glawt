@@ -24,9 +24,9 @@ class Texture2D : public Texture {
 	
 	public :
 		
-		Texture2D(string name,
-		          string filename);
-		Texture2D(string name,
+		Texture2D(const string &name,
+		          const string &filename);
+		Texture2D(const string &name,
 		          int size);
 		Texture2D(const Tag &tag);
 		virtual void associate();
@@ -46,7 +46,7 @@ class Texture2D : public Texture {
 		
 		static void find(Node *node,
 		                 Texture2D *&pointer,
-		                 string name);
+		                 const string &name);
 	
 	private:
 		

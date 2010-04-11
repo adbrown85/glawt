@@ -50,7 +50,7 @@ class Factory {
 	public:
 		
 		Factory(Node *root,
-		        string filename);
+		        const string &filename);
 		void start();
 	
 	private:

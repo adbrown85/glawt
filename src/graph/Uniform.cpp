@@ -16,10 +16,10 @@ set<string> Uniform::types;
  * @param value Value to be stored.
  * @param link Name of a node to get the value from.
  */
-Uniform::Uniform(string type,
-                 string name,
+Uniform::Uniform(const string &type,
+                 const string &name,
                  GLfloat value,
-                 string link) {
+                 const string &link) {
 	
 	// Initialize
 	this->type = type;
@@ -230,7 +230,7 @@ bool Uniform::isSampler() {
 /**
  * Determines if the type is supported.
  */
-bool Uniform::isSupported(string type) {
+bool Uniform::isSupported(const string &type) {
 	
 	set<string>::const_iterator si;
 	

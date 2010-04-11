@@ -16,8 +16,8 @@ vector<GLenum> Texture::active_units;
  * @param [in] filename Path to a file containing the texture.
  */
 Texture::Texture(GLenum type,
-                 string name,
-                 string filename) {
+                 const string &name,
+                 const string &filename) {
 	
 	// Initialize
 	Texture::init(type);

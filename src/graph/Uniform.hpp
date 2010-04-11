@@ -32,10 +32,10 @@ class Uniform : public Node,
 	
 	public :
 		
-		Uniform(string type,
-		        string name,
+		Uniform(const string &type,
+		        const string &name,
 		        GLfloat value,
-		        string link="");
+		        const string &link="");
 		Uniform(const Tag &tag);
 		void associate();
 		void apply();
@@ -65,7 +65,7 @@ class Uniform : public Node,
 		void initAsMatrix();
 		static void initTypes();
 		bool isSampler();
-		static bool isSupported(string type);
+		static bool isSupported(const string &type);
 		void loadMatrix();
 		void verify();
 };

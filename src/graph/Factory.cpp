@@ -14,7 +14,7 @@
  * @param filename Path to an XML scene description.
  */
 Factory::Factory(Node *root,
-                 string filename) {
+                 const string &filename) {
 	
 	// Initialize
 	this->root = root;

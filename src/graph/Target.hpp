@@ -26,7 +26,7 @@ class Target : public Node {
 	
 	public:
 		
-		Target(string link);
+		Target(const string &link);
 		Target(const Tag &tag);
 		string toString() const;
 	

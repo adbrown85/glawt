@@ -74,7 +74,7 @@ Matrix Scene::getRotationMatrix() const {
  * 
  * @param filename Path to the file.
  */
-void Scene::open(string filename) {
+void Scene::open(const string &filename) {
 	
 	Factory factory(&root, filename);
 	

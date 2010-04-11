@@ -14,8 +14,8 @@ bool Texture2D::librariesLoaded=false;
  * @param name Name another node can reference.
  * @param filename Path to a file containing the texture.
  */
-Texture2D::Texture2D(string name,
-                     string filename) :
+Texture2D::Texture2D(const string &name,
+                     const string &filename) :
                      Texture(GL_TEXTURE_2D, name, filename) {
 	
 	// Initialize
@@ -29,7 +29,7 @@ Texture2D::Texture2D(string name,
  * @param name Name another node can reference.
  * @param size Size of the texture's width or height in pixels.
  */
-Texture2D::Texture2D(string name,
+Texture2D::Texture2D(const string &name,
                      int size) :
                      Texture(GL_TEXTURE_2D, name) {
 	
@@ -85,7 +85,7 @@ void Texture2D::associate() {
  */
 void Texture2D::find(Node *node,
                      Texture2D *&pointer,
-                     string name) {
+                     const string &name) {
 	
 	// Search
 	node = node->getParent();

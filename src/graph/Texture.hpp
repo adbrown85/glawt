@@ -39,8 +39,8 @@ class Texture : public Node,
 	public:
 		
 		Texture(GLenum type,
-		        string name,
-		        string filename="");
+		        const string &name,
+		        const string &filename="");
 		Texture(GLenum type,
 		        const Tag &tag);
 		virtual void apply();
