@@ -90,6 +90,13 @@ int main(int argc,
 		exit(1);
 	}
 	
+	// Start
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "OctreeBuilder" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
 	try {
 	
 		// Basics
@@ -114,6 +121,11 @@ int main(int argc,
 	}
 	
 	// Finish
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "OctreeBuilder" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
 	return 0;
 }
 

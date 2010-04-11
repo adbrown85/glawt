@@ -29,20 +29,17 @@ int main(int argc,
 	cout << "  B: " <<  B << endl;
 	
 	// Plus/minus
-	cout << endl;
-	cout << "Plus/minus of A, B:" << endl;
+	cout << "\nPlus/minus of A, B:" << endl;
 	cout << "  " <<  A + B << endl;
 	cout << "  " <<  A - B << endl;
 	
 	// Multiply/divide
-	cout << endl;
-	cout << "Multiply/divide of A, B:" << endl;
+	cout << "\nMultiply/divide of A, B:" << endl;
 	cout << "  " <<  A * B << endl;
 	cout << "  " <<  A / B << endl;
 	
 	// Double/half
-	cout << endl;
-	cout << "Double/half of A:" << endl;
+	cout << "\nDouble/half of A:" << endl;
 	cout << "  " <<  A * 2 << endl;
 	cout << "  " <<  A / 2 << endl;
 	

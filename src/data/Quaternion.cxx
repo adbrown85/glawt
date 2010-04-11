@@ -17,9 +17,10 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Quaternion" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Test getMatrix
-	cout << "\nTesting 'set' and 'getMatrix'..." << endl;
+	cout << "Testing 'set' and 'getMatrix'..." << endl;
 	cout << "Using 45 degrees..." << endl;
 	quaA.set(45, 0, 1, 0);
 	quaA.print();
@@ -40,5 +41,7 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Quaternion" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
+	return 0;
 }
 

@@ -16,9 +16,10 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Tag" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Test
-	cout << "\nTesting..." << endl;
+	cout << "Testing..." << endl;
 	tag.setName("Foo");
 	tag.add("fOO", "bAr");
 	tag.add("fIle", "/foo/Bar");
@@ -29,6 +30,7 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Tag" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	return 0;
 }
 

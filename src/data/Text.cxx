@@ -65,7 +65,7 @@ int main(int argc,
 	dictionary["SOME_CONSTANT"] = "3.14";
 	dictionary["ALSO_CONSTANT"] = "1.76";
 	text = Text::replace("4*SOME_CONSTANT + ALSO_CONSTANT BLAH", dictionary);
-	cout << text;
+	cout << text << endl;
 	
 	// End
 	cout << endl;

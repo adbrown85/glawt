@@ -24,7 +24,7 @@ int main(int argc,
 	
 	// Handle arguments
 	if (argc == 1)
-		filename = "../../input/bear.vlb";
+		filename = "../../textures/bear.vlb";
 	else if (argc == 2)
 		filename = argv[1];
 	else {
@@ -57,6 +57,9 @@ int main(int argc,
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(special);
 	glutMainLoop();
+	
+	// Finish
+	return 0;
 }
 
 

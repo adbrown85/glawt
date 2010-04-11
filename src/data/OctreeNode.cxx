@@ -18,8 +18,15 @@ int main(int argc,
 	
 	OctreeNode node, *child;
 	
+	// Start
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "OctreeNode" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
 	// Empty
-	cout << "\nEmpty: " << endl;
+	cout << "Empty: " << endl;
 	print(node);
 	node.setEmpty(true);
 	print(node);
@@ -38,6 +45,11 @@ int main(int argc,
 	}
 	
 	// Finish
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "OctreeNode" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
 	return 0;
 }
 

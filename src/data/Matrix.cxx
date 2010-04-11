@@ -25,9 +25,10 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Matrix" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 	
 	// Original
-	cout << "\nShowing original..." << endl;
+	cout << "Showing original..." << endl;
 	m1.print();
 	
 	// Determinant
@@ -59,5 +60,6 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << "Matrix" << endl;
 	cout << "****************************************" << endl;
+	cout << endl;
 }
 
