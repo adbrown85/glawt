@@ -253,11 +253,12 @@ ostream& operator<<(ostream &stream,
 		stream << " {closing}";
 	if (tag.empty)
 		stream << " {empty}";
-	for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai)
+	for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai) {
 		stream << " [" 
 		       << ai->first << "," 
 		       << ai->second 
 		       << "]";
+	}
 	return stream;
 }
 
