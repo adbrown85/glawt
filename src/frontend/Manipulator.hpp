@@ -25,19 +25,31 @@ class Manipulator : public Drawable  {
 	
 	public :
 		
-		Manipulator() {this->delegate = NULL;}
-		
+		Manipulator();
+		Vector getAxis() const;
+		void setDelegate(Delegate *delegate);
 		virtual void use(Scene *scene,
 		                 const Vector &movement,
 		                 GLuint shapeID) = 0;
-		Vector getAxis() {return axis;}
-		void setDelegate(Delegate *delegate) {this->delegate = delegate;}
 	
 	protected :
 		
 		Delegate *delegate;
 		Vector axis;
 };
+
+
+inline Manipulator::Manipulator() {
+	this->delegate = NULL;
+}
+
+inline Vector Manipulator::getAxis() const {
+	return axis;
+}
+
+inline void Manipulator::setDelegate(Delegate *delegate) {
+	this->delegate = delegate;
+}
 
 
 #endif

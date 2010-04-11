@@ -51,7 +51,6 @@ class Binding {
 		        int command,
 		        unsigned int *argument,
 		        int state);
-		
 		float getArgument() const;
 		int getCommand() const {return command;}
 		string getCommandStr() const {return Command::getName(command);}
