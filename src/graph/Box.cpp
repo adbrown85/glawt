@@ -13,8 +13,7 @@ GLubyte Box::indices[24], Box::map[8][3];
 /**
  * Creates a new box.
  * 
- * @param size
- *     Length of the box's sides.
+ * @param size Length of the box's sides.
  */
 Box::Box(float size) : Shape(size) {
 	
@@ -26,8 +25,7 @@ Box::Box(float size) : Shape(size) {
 /**
  * Creates a new box from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with length of the box's sides.
  */
 Box::Box(const Tag &tag) : Shape(tag) {
 	

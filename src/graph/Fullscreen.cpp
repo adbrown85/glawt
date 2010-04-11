@@ -25,8 +25,7 @@ Fullscreen::Fullscreen() :
 /**
  * Creates a new %Fullscreen from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag.
  */
 Fullscreen::Fullscreen(const Tag &tag) :
                        Drawable(tag) {

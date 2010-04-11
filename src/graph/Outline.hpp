@@ -13,9 +13,9 @@
 
 
 /**
+ * @ingroup graph
  * @brief
  *     Bounding box made up of lines.
- * @ingroup graph
  */
 class Outline : public Shape {
 	

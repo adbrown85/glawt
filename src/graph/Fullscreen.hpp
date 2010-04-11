@@ -22,13 +22,11 @@
 class Fullscreen : public Node,
                    public Drawable {
 	
-	
 	public:
 		
 		Fullscreen();
 		Fullscreen(const Tag &tag);
 		virtual void draw() const;
-	
 	
 	protected:
 		

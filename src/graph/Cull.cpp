@@ -10,8 +10,7 @@
 /**
  * Creates a new %Cull object from a tag.
  * 
- * @param tag
- *     XML tag containing "faces" attribute.
+ * @param tag XML tag containing "faces" attribute.
  */
 Cull::Cull(const Tag &tag) {
 	

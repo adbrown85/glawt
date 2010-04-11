@@ -17,6 +17,11 @@
 using namespace std;
 
 
+/**
+ * @ingroup graph
+ * @brief
+ *     Offscreen render location backed by a texture.
+ */
 class Target : public Node {
 	
 	public:

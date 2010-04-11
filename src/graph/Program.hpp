@@ -18,9 +18,9 @@ using namespace std;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
- * @ingroup graph
  */
 class Program : public Node,
                 public Applicable {

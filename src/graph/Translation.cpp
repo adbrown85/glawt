@@ -19,8 +19,7 @@ Translation::Translation(float x,
 /**
  * Creates a new %Translation from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "x", "y", and "z" values.
  */
 Translation::Translation(const Tag &tag) {
 	

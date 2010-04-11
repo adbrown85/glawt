@@ -22,8 +22,7 @@ Framebuffer::Framebuffer() {
 /**
  * Creates a new %Framebuffer from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag.
  */
 Framebuffer::Framebuffer(const Tag &tag) {
 	
@@ -72,10 +71,8 @@ void Framebuffer::associate() {
 /**
  * Finds a %Framebuffer.
  * 
- * @param node
- *     Node to start looking.
- * @param pointer
- *     Pointer to the %Framebuffer.
+ * @param node Node to start looking.
+ * @param pointer Pointer to the %Framebuffer.
  */
 void Framebuffer::find(Node *node,
                        Framebuffer *&pointer) {

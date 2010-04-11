@@ -11,14 +11,10 @@ set<string> Uniform::types;
 /**
  * Initializes a new uniform variable with a value and type.
  * 
- * @param type
- *     Type of the variable.
- * @param name
- *     Name of the variable.
- * @param value
- *     Value to be stored.
- * @param link
- *     Name of a node to get the value from.
+ * @param type Type of the variable.
+ * @param name Name of the variable.
+ * @param value Value to be stored.
+ * @param link Name of a node to get the value from.
  */
 Uniform::Uniform(string type,
                  string name,
@@ -38,8 +34,7 @@ Uniform::Uniform(string type,
 /**
  * Creates a new %Uniform from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "type", "name", "value", and "link" information.
  */
 Uniform::Uniform(const Tag &tag) {
 	

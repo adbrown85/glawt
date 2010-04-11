@@ -108,12 +108,9 @@ void Octree::load() {
 /**
  * Recursively stores an octree node and its children into the texture data.
  * 
- * @param [in] node
- *     Pointer to the octree node.
- * @param [in] index
- *     Where to store the node in the array.
- * @param [in] depth
- *     Current number of levels down from the root
+ * @param [in] node Pointer to the octree node.
+ * @param [in] index Where to store the node in the array.
+ * @param [in] depth Current number of levels down from the root
  */
 void Octree::store(OctreeNode *node,
                    int index,

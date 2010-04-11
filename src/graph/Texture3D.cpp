@@ -10,10 +10,8 @@
 /**
  * Creates a new 3D texture.
  * 
- * @param name
- *     Name another node can reference.
- * @param filename
- *     Path to the file.
+ * @param name Name another node can reference.
+ * @param filename Path to the file.
  */
 Texture3D::Texture3D(string name,
                      string filename) : 
@@ -28,8 +26,7 @@ Texture3D::Texture3D(string name,
 /**
  * Creates a new 3D texture from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "name" and "filename" attributes.
  */
 Texture3D::Texture3D(const Tag &tag) : 
                      Texture(GL_TEXTURE_3D, tag),

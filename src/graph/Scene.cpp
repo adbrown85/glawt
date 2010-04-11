@@ -10,10 +10,8 @@
 /**
  * Creates and initializes a new scene.
  * 
- * @param width
- *     Width of the window for the scene.
- * @param height
- *     Height of the window for the scene.
+ * @param width Width of the window for the scene.
+ * @param height Height of the window for the scene.
  */
 Scene::Scene(int width,
              int height) {
@@ -29,8 +27,7 @@ Scene::Scene(int width,
 /**
  * Adds a node as a child of the scene's last node.
  * 
- * @param node
- *     Node to add.
+ * @param node Node to add.
  */
 void Scene::addToLast(Node *node) {
 	
@@ -42,8 +39,7 @@ void Scene::addToLast(Node *node) {
 /**
  * Adds a node as a child of the scene's root.
  * 
- * @param node
- *     Node to add.
+ * @param node Node to add.
  */
 void Scene::addToRoot(Node *node) {
 	
@@ -76,8 +72,7 @@ Matrix Scene::getRotationMatrix() const {
 /**
  * Opens a scene from a file.
  * 
- * @param filename
- *     Path to the file.
+ * @param filename Path to the file.
  */
 void Scene::open(string filename) {
 	

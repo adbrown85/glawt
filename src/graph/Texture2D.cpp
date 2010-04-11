@@ -11,10 +11,8 @@ bool Texture2D::librariesLoaded=false;
 /**
  * Creates a new 2D texture from a file that can be referenced by name.
  * 
- * @param name
- *     Name another node can reference.
- * @param filename
- *     Path to a file containing the texture.
+ * @param name Name another node can reference.
+ * @param filename Path to a file containing the texture.
  */
 Texture2D::Texture2D(string name,
                      string filename) :
@@ -28,10 +26,8 @@ Texture2D::Texture2D(string name,
 /**
  * Creates a new 2D texture that can be referenced by name.
  * 
- * @param name
- *     Name another node can reference.
- * @param size
- *     Size of the texture's width or height in pixels.
+ * @param name Name another node can reference.
+ * @param size Size of the texture's width or height in pixels.
  */
 Texture2D::Texture2D(string name,
                      int size) :
@@ -46,8 +42,7 @@ Texture2D::Texture2D(string name,
 /**
  * Creates a new 2D texture from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "size" attributes.
  */
 Texture2D::Texture2D(const Tag &tag) :
                      Texture(GL_TEXTURE_2D, tag) {
@@ -84,12 +79,9 @@ void Texture2D::associate() {
 /**
  * Finds a %Texture2D with a specific name.
  * 
- * @param node
- *     Node to start looking.
- * @param pointer
- *     Pointer to the Texture2D.
- * @param name
- *     Name of the node as specified by the user.
+ * @param node Node to start looking.
+ * @param pointer Pointer to the %Texture2D.
+ * @param name Name of the node as specified by the user.
  */
 void Texture2D::find(Node *node,
                      Texture2D *&pointer,

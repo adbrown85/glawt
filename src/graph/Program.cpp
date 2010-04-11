@@ -22,8 +22,7 @@ Program::Program() {
 /**
  * Creates a new %Program from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag.
  */
 Program::Program(const Tag &tag) {
 	

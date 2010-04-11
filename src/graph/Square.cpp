@@ -13,8 +13,7 @@ GLubyte Square::indices[4];
 /**
  * Creates a new square.
  * 
- * @param size
- *     Length of the square's sides.
+ * @param size Length of the square's sides.
  */
 Square::Square(float size) : 
                Shape(size) {
@@ -27,8 +26,7 @@ Square::Square(float size) :
 /**
  * Creates a new %Square from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "size" attribute.
  */
 Square::Square(const Tag &tag) :
                Shape(tag) {

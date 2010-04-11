@@ -10,8 +10,7 @@
 /**
  * Creates a new %Target linked to a %Texture2D.
  * 
- * @param link
- *     Name of the %Texture2D object.
+ * @param link Name of the %Texture2D object.
  */
 Target::Target(string link) {
 	

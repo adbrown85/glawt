@@ -10,10 +10,8 @@
 /**
  * Makes a Factory that will create items in a scene.
  * 
- * @param root
- *     Pointer to the root node of a scene.
- * @param filename
- *     Path to an XML scene description.
+ * @param root Pointer to the root node of a scene.
+ * @param filename Path to an XML scene description.
  */
 Factory::Factory(Node *root,
                  string filename) {
@@ -27,8 +25,7 @@ Factory::Factory(Node *root,
 /**
  * Creates a %Node based on the tag's name.
  * 
- * @param tag
- *     XML tag with name and attributes.
+ * @param tag XML tag with name and attributes.
  */
 Node* Factory::create(const Tag &tag) {
 	

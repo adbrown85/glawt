@@ -10,8 +10,7 @@
 /**
  * Creates a shape.
  * 
- * @param size
- *     Size of the shape.
+ * @param size Size of the shape.
  */
 Shape::Shape(float size) : Selectable(size) {
 	
@@ -24,8 +23,7 @@ Shape::Shape(float size) : Selectable(size) {
 /**
  * Creates a shape from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "size" attribute.
  */
 Shape::Shape(const Tag &tag) : Selectable(tag) {
 	

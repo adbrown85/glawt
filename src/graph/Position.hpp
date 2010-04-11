@@ -16,7 +16,7 @@
 /**
  * @ingroup graph
  * @brief
- *     %Position for a light.
+ *     Placement for a light.
  */
 class Position : public Node {
 	

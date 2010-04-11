@@ -13,8 +13,7 @@ GLubyte Outline::indices[24], Outline::map[8][3];
 /**
  * Creates a new Outline.
  * 
- * @param size
- *     Length of the Outline's sides.
+ * @param size Length of the Outline's sides.
  */
 Outline::Outline(float size) {
 	
@@ -123,12 +122,9 @@ void Outline::initializePoints() {
 /**
  * Sets the color of the entire Outline.
  * 
- * @param r
- *     Red component.
- * @param g
- *     Green component.
- * @param b
- *     Blue component.
+ * @param r Red component.
+ * @param g Green component.
+ * @param b Blue component.
  */
 void Outline::setColor(float r,
                        float g,

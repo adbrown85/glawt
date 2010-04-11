@@ -23,8 +23,7 @@ Shader::Shader(string type,
 /**
  * Creates a new %Shader from an XML tag.
  * 
- * @param tag
- *     XML tag.
+ * @param tag XML tag with "type" and "file" attributes.
  */
 Shader::Shader(const Tag &tag) {
 	

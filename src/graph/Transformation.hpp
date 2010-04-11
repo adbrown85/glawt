@@ -12,6 +12,12 @@
 #include "Node.hpp"
 
 
+/**
+ * @interface Transformation
+ * @ingroup graph
+ * @brief
+ *     Operation that changes the size, position, or orientation of objects.
+ */
 class Transformation : public Applicable,
                        public Node {
 	

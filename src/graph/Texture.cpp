@@ -11,12 +11,9 @@ vector<GLenum> Texture::active_units;
 /**
  * Initializes a texture.
  * 
- * @param [in] type
- *     1D, 2D, or 3D.
- * @param [in] name
- *     Name of the texture.
- * @param [in] filename
- *     Path to a file containing the texture.
+ * @param [in] type 1D, 2D, or 3D.
+ * @param [in] name Name of the texture.
+ * @param [in] filename Path to a file containing the texture.
  */
 Texture::Texture(GLenum type,
                  string name,
@@ -32,10 +29,8 @@ Texture::Texture(GLenum type,
 /**
  * Creates a new texture from an XML tag.
  * 
- * @param [in] type
- *     1D, 2D, or 3D.
- * @param [in] tag
- *     XML tag.
+ * @param [in] type 1D, 2D, or 3D.
+ * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
 Texture::Texture(GLenum type,
                  const Tag &tag) {

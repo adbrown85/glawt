@@ -22,9 +22,9 @@ using namespace std;
 
 
 /**
+ * @ingroup graph
  * @brief
  *     GLSL shader with loading and compiling capabilities.
- * @ingroup graph
  */
 class Shader : public Node {
 	

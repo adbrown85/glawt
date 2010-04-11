@@ -22,8 +22,7 @@ Node::Node() {
 /**
  * Adds a child to this node.
  * 
- * @param child
- *     Child node.
+ * @param child Child node.
  */
 void Node::addChild(Node *child) {
 	
@@ -126,8 +125,7 @@ void Node::printTree() const {
 /**
  * Recursively prints important attributes.
  * 
- * @param level
- *     Level of recursion used for indenting.
+ * @param level Level of recursion used for indenting.
  */
 void Node::printTree(int level) const {
 	

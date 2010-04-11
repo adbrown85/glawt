@@ -7,7 +7,6 @@
 #include "Specular.hpp"
 
 
-
 /**
  * Creates an ambient color for a light.
  */
@@ -15,7 +14,6 @@ Specular::Specular(const Tag &tag) : LightColor(tag) {
 	
 	className = "Specular";
 }
-
 
 
 /**

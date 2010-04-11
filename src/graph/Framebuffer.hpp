@@ -51,7 +51,6 @@ class Framebuffer : public Node,
 };
 
 
-
 /**
  * @return true if a Framebuffer is active.
  */
