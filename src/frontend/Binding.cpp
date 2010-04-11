@@ -1,9 +1,8 @@
 /*
  * Binding.cpp
- *     Tests Binding class.
  * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include <iostream>
 #include "Binding.hpp"

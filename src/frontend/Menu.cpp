@@ -1,9 +1,8 @@
 /*
  * Menu.cpp
- *     Pop-up menu for 3D display.
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Menu.hpp"
 Menu *Menu::menu=NULL;

@@ -1,9 +1,8 @@
 /*
  * Keyboard.cpp
- *     Keyboard control for a 3D display.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Keyboard.hpp"
 Keyboard *Keyboard::obj=NULL;

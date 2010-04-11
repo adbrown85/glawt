@@ -1,9 +1,8 @@
 /*
  * Display.cpp
- *     3D display for items.
- *
+ * 
  * Author
- *     Andy Brown <adb1413@rit.edu>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
 Delegate *Display::delegate=NULL;

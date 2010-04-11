@@ -1,8 +1,8 @@
 /*
  * Picker.cpp
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Picker.hpp"
 GLuint Picker::buf[PICK_BUFFER_SIZE];

@@ -1,9 +1,8 @@
 /*
  * Mouse.cpp
- *     Mouse control for a 3D display.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Mouse.hpp"
 Mouse *Mouse::obj=NULL;
