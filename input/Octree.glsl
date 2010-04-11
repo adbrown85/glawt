@@ -417,25 +417,18 @@ void Octree_sample(in sampler3D volume,
 		
 		case SECOND_STEP:
 			
-			gl_FragColor = YELLOW;
-			
 			// Sample children
 			cDepth = depth + 1;
 			if (node[cDepth].name == NULL) {
-				gl_FragColor = ORANGE;
-			}
-/*
 				node[cDepth] = Octree_findEntryChild(node[depth],
 				                                     times[depth],
 				                                     cHeight);
-*/
-/*
 			} else {
-				gl_FragColor = PURPLE;
-				node[cDepth] = Octree_getChild(node[depth], 0, cHeight);
+				node[cDepth] = Octree_findNextChild(node[depth],
+				                                    times[depth],
+				                                    cHeight,
+				                                    node[cDepth]);
 			}
-*/
-/*
 			switch (node[cDepth].name) {
 			case 0: gl_FragColor = GREEN; break;
 			case 1: gl_FragColor = BLUE; break;
@@ -446,16 +439,9 @@ void Octree_sample(in sampler3D volume,
 			case 6: gl_FragColor = BROWN; break;
 			case 7: gl_FragColor = GRAY; break;
 			}
-*/
 			
 			
 /*
-			else {
-				node[cDepth] = Octree_findNextChild(node[depth],
-				                                    times[depth],
-				                                    cHeight,
-				                                    node[cDepth]);
-			}
 			
 			// Check if out of volume
 			if (node[cDepth].name == NULL) {
