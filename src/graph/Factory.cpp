@@ -26,6 +26,7 @@ Factory::Factory(Node *root,
  * Creates a %Node based on the tag's name.
  * 
  * @param tag XML tag with name and attributes.
+ * @throws const_char* if tag name not supported.
  */
 Node* Factory::create(const Tag &tag) {
 	
@@ -71,15 +72,18 @@ Node* Factory::create(const Tag &tag) {
 	
 	// Unsupported
 	else {
-		string message = "[Gander,Factory] Tag '";
-		message += tag.name + "' not supported.";
-		throw message.c_str();
+		ostringstream msg;
+		msg << "[Factory] Tag '" << tag.name
+		    << "' not supported.";
+		throw msg.str().c_str();
 	}
 }
 
 
 /**
  * Creates items from XML tags.
+ * 
+ * @throws const_char* from create().
  */
 void Factory::start() {
 	

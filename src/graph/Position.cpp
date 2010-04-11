@@ -33,7 +33,7 @@ void Position::associate() {
 	// Find the light
 	light = Light::find(this);
 	if (light == NULL)
-		throw "[Gander,Position] Could not find light.";
+		throw "[Position] Could not find light.";
 	
 	// Set position
 	glLightfv(light->getHandle(), GL_POSITION, position);

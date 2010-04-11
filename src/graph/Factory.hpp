@@ -10,6 +10,8 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include <sstream>
+#include <string>
 #include <vector>
 #include "Ambient.hpp"
 #include "Box.hpp"

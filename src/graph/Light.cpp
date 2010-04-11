@@ -39,7 +39,7 @@ void Light::associate() {
 	
 	// Verify
 	if (handle > GL_LIGHT7)
-		throw "[Gander,Light] Can only have eight lights.";
+		throw "[Light] Can only have eight lights.";
 }
 
 

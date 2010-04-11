@@ -11,6 +11,7 @@
  * Creates a new %Cull object from a tag.
  * 
  * @param tag XML tag containing "faces" attribute.
+ * @throws const_char* if value for "faces" attribute not supported.
  */
 Cull::Cull(const Tag &tag) {
 	
@@ -28,8 +29,12 @@ Cull::Cull(const Tag &tag) {
 		faces = GL_FRONT_AND_BACK;
 	else if (facesString == "none")
 		enabled = false;
-	else
-		throw "[Gander,Cull] Value for 'faces' attribute not supported.";
+	else {
+		ostringstream msg;
+		msg << "[Cull] Value '" << facesString 
+		    << "' for 'faces' attributes not supported.";
+		throw msg.str().c_str();
+	}
 }
 
 
@@ -41,9 +46,9 @@ void Cull::apply() {
 	if (enabled) {
 		glEnable(GL_CULL_FACE);
 		glCullFace(faces);
-	}
-	else
+	} else {
 		glDisable(GL_CULL_FACE);
+	}
 }
 
 

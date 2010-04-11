@@ -52,6 +52,7 @@ bool Parser::isComment(string comment) {
  * Opens a file and starts parsing it.
  * 
  * @param filename Path of the file to open.
+ * @throws const_char* if file cannot be opened.
  */
 void Parser::open(string filename) {
 	
@@ -62,8 +63,9 @@ void Parser::open(string filename) {
 	// Open file
 	file.open(filename.c_str(), ios_base::binary);
 	if (!file) {
-		cerr << "[Gander,Parser] Could not open file." << endl;
-		exit(1);
+		ostringstream msg;
+		msg << "[Parser] Could not open file '" << filename << "'."
+		throw msg.str().c_str();
 	}
 	
 	// Read and process tags

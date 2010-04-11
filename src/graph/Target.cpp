@@ -33,6 +33,9 @@ Target::Target(const Tag &tag) {
 
 /**
  * Finds the texture to use for the color buffer.
+ * 
+ * @throws const_char* if cannot find framebuffer node.
+ * @throws const_char* if cannot find texture with correct name.
  */
 void Target::associate() {
 	
@@ -42,20 +45,26 @@ void Target::associate() {
 	// Find the framebuffer
 	Framebuffer::find(this, framebuffer);
 	if (framebuffer == NULL)
-		throw "[Gander,Target] Could not find framebuffer.";
+		throw "[Target] Could not find framebuffer.";
 	framebufferHandle = framebuffer->getHandle();
 	
 	// Find the texture
 	Texture2D::find(this, texture, link);
-	if (texture == NULL)
-		throw "[Gander,Target] Could not find texture with correct name.";
+	if (texture == NULL) {
+		ostringstream msg;
+		msg << "[Target] Could not find texture with name '" << link
+		    << "'.";
+		throw msg.str().c_str();
+	}
 	textureHandle = texture->getHandle();
 	size = texture->getSize();
 }
 
 
 /**
- * Attaches the target to the %Framebuffer.
+ * Attaches the target to the Framebuffer.
+ * 
+ * @throws const_char* if Framebuffer is not complete.
  */
 void Target::finalize() {
 	
@@ -71,7 +80,7 @@ void Target::finalize() {
 	
 	// Check status
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		throw "[Gander,Target] Framebuffer is not complete!";
+		throw "[Target] Framebuffer is not complete!";
 }
 
 

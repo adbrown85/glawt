@@ -35,7 +35,7 @@ void LightColor::associate() {
 	// Find light
 	light = Light::find(this);
 	if (light == NULL)
-		throw "[Gander,LightColor] Could not find light.";
+		throw "[LightColor] Could not find light.";
 	
 	// Set color
 	initType();

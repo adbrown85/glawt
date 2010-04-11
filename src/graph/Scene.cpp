@@ -80,7 +80,7 @@ void Scene::open(string filename) {
 	
 	// Parse and process tags
 	try {
-		cerr << "[Gander,Scene] Opening '" << filename << "'..." << endl;
+		cerr << "[Scene] Opening '" << filename << "'..." << endl;
 		factory.start();
 	}
 	catch (char const *e) {

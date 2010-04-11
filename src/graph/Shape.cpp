@@ -27,25 +27,25 @@ Shape::Shape(float size) : Selectable(size) {
  */
 Shape::Shape(const Tag &tag) : Selectable(tag) {
 	
-	string message, style;
+	string style;
 	
 	// Initialize
 	className = "Shape";
 	
 	// Style
 	if (tag.get("style", style, false)) {
-		if (style.compare("3d") == 0)
+		if (style.compare("3d") == 0) {
 			this->style = GL_TEXTURE_3D;
-		else if (style.compare("2d") == 0)
+		} else if (style.compare("2d") == 0) {
 			this->style = GL_TEXTURE_2D;
-		else {
-			message = "[Gander,Shape] Style '";
-			message += style + "' not supported.";
-			throw message.c_str();
+		} else {
+			ostringstream msg;
+			msg << "[Shape] Style '" << style << "' not supported.";
+			throw msg.str().c_str();
 		}
-	}
-	else
+	} else {
 		this->style = GL_TEXTURE_3D;
+	}
 }
 
 
