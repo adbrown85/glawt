@@ -3,7 +3,7 @@
 #     Common variables and rules needed by all the other makefiles.
 # 
 # Author
-#     Andy Brown <andybrown85@gmail.com>
+#     Andrew Brown <adb1413@rit.edu>
 #
 
 

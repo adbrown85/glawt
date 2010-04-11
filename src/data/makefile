@@ -1,9 +1,9 @@
 #
 # makefile
 #     Builds the Data module.
-#
+# 
 # Author
-#     Andy Brown <andybrown85@gmail.com>
+#     Andrew Brown <adb1413@rit.edu>
 #
 MODULE = data
 CHILDREN = 

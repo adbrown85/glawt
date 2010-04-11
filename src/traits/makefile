@@ -1,9 +1,9 @@
 #
 # makefile
 #     Builds the Traits module.
-#
+# 
 # Author
-#     Andy Brown <andybrown85@gmail.com>
+#     Andrew Brown <adb1413@rit.edu>
 #
 MODULE = traits
 CHILDREN = data
