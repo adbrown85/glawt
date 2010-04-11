@@ -1,8 +1,8 @@
 /*
  * MouseClickHelper.cxx
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include <GL/glut.h>
 #include <iostream>
