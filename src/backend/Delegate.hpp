@@ -37,7 +37,7 @@ class Delegate {
 		map<int,void(*)(Scene*,int)> getHandlersZero();
 		map<int,void(*)(Scene*,int,float)> getHandlersFloat();
 		map<int,void(*)(Scene*,int,string)> getHandlersString();
-		virtual string getType() const;
+		string getType() const;
 		void setScene(Scene *scene);
 	
 	protected :
