@@ -33,8 +33,8 @@ class Shape : public Node,
 		Shape(const Tag &tag);
 		virtual string toString() const;
 		
-		GLenum getStyle() {return style;}
-		void setStyle(GLenum style) {this->style = style;}
+		GLenum getStyle() const;
+		void setStyle(GLenum style);
 	
 	protected : 
 		
@@ -43,6 +43,9 @@ class Shape : public Node,
 		virtual void computeDepth(Matrix &matrx);
 };
 
+
+inline GLenum Shape::getStyle() const {return style;}
+inline void Shape::setStyle(GLenum style) {this->style = style;}
 
 #endif
 

@@ -30,7 +30,7 @@ class Texture2D : public Texture {
 		          int size);
 		Texture2D(const Tag &tag);
 		virtual void associate();
-		virtual int getSize() {return size;}
+		virtual int getSize() const;
 		virtual string toString() const;
 	
 	private:
@@ -54,6 +54,9 @@ class Texture2D : public Texture {
 		
 		static void initLibraries();
 };
+
+
+inline int Texture2D::getSize() const {return size;}
 
 
 #endif

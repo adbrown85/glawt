@@ -38,10 +38,10 @@ class Node {
 		static void print(const Node *node);
 		friend bool compare(Node *A, Node *B);
 		
-		vector<Node*> getChildren() const {return children;}
-		float getDepth() const {return depth;}
-		string getClassName() const {return className;}
-		Node* getParent() const {return parent;}
+		vector<Node*> getChildren() const;
+		float getDepth() const;
+		string getClassName() const;
+		Node* getParent() const;
 	
 	protected :
 		
@@ -57,6 +57,12 @@ class Node {
 		virtual void sortByDepthBeg(Matrix &matrix) {}
 		virtual void sortByDepthEnd(Matrix &matrix) {}
 };
+
+
+inline vector<Node*> Node::getChildren() const {return children;}
+inline float Node::getDepth() const {return depth;}
+inline string Node::getClassName() const {return className;}
+inline Node* Node::getParent() const {return parent;}
 
 
 #endif

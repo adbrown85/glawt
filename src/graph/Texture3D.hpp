@@ -29,10 +29,10 @@ class Texture3D : public Texture {
 		          const string &filename);
 		Texture3D(const Tag &tag);
 		virtual void associate();
-		virtual Dataset* getDataset() {return &dataset;}
-		virtual int getDepth() {return dataset.getDepth();}
-		virtual int getHeight() {return dataset.getHeight();}
-		virtual int getWidth() {return dataset.getWidth();}
+		virtual Dataset* getDataset();
+		virtual int getDepth() const;
+		virtual int getHeight() const;
+		virtual int getWidth() const;
 		
 		static Texture3D* find(Node *node,
 		                       const string &name);
@@ -44,6 +44,12 @@ class Texture3D : public Texture {
 		virtual void init();
 		virtual void load();
 };
+
+
+inline Dataset* Texture3D::getDataset() {return &dataset;}
+inline int Texture3D::getDepth() const {return dataset.getDepth();}
+inline int Texture3D::getHeight() const {return dataset.getHeight();}
+inline int Texture3D::getWidth() const {return dataset.getWidth();}
 
 
 #endif

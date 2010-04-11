@@ -30,10 +30,9 @@ class Framebuffer : public Node,
 		Framebuffer(const Tag &tag);
 		~Framebuffer();
 		virtual void apply();
+		virtual GLuint getHandle() const;
 		virtual void remove();
 		virtual string toString() const;
-		
-		virtual GLuint getHandle() {return handle;}
 		
 		static void find(Node *node,
 		                 Framebuffer *&pointer);
@@ -54,10 +53,13 @@ class Framebuffer : public Node,
 /**
  * @return true if a Framebuffer is active.
  */
-inline bool Framebuffer::isActive() {
-	
-	return active;
-}
+inline bool Framebuffer::isActive() {return active;}
+
+
+/**
+ * @return integer identifying the framebuffer with OpenGL.
+ */
+inline GLuint Framebuffer::getHandle() const {return handle;}
 
 
 #endif
