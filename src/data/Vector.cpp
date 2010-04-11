@@ -157,20 +157,21 @@ Vector operator-(const Vector& A, const Vector& B) {
 }
 
 
-std::ostream& operator<<(std::ostream& out, const Vector& A) {
+ostream& operator<<(ostream& out,
+                    const Vector& A) {
 	
 	float com[] = {A.x, A.y, A.z, A.w};
 	
 	// Add to stream
-	out << std::fixed << std::setprecision(2);
+	out << fixed << setprecision(2);
 	out << "[";
 	if (A.size != 0)
 		out << com[0];
 	for (int i=1; i<A.size; i++)
 		out << ", " << com[i];
 	out << "]";
-	out << std::resetiosflags(std::ios_base::floatfield);
-	out << std::setprecision(6);
+	out << resetiosflags(ios_base::floatfield);
+	out << setprecision(6);
 	return out;
 }
 

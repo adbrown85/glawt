@@ -35,7 +35,7 @@ class Vector {
 		friend Vector operator/(const Vector &A, const Vector &B);
 		friend Vector operator+(const Vector &A, const Vector &B);
 		friend Vector operator-(const Vector &A, const Vector &B);
-		friend std::ostream& operator<<(std::ostream& out, const Vector& A);
+		friend ostream& operator<<(ostream& out, const Vector& A);
 		float& operator()(int i);
 		
 		Vector crossProduct(const Vector& B) const;

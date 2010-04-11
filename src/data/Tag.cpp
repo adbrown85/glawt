@@ -248,7 +248,7 @@ string Tag::tolower(const string &original) {
 	// Convert each character
 	length = temp.length();
 	for (int i=0; i<length; ++i)
-		temp[i] = std::tolower(temp[i]);
+		temp[i] = tolower(temp[i]);
 	return temp;
 }
 
