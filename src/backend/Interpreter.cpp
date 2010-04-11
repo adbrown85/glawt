@@ -1,9 +1,8 @@
 /*
  * Interpreter.cpp
- *     Interprets directives and issues commands for Gander.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Interpreter.hpp"
 

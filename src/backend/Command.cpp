@@ -1,9 +1,8 @@
 /*
  * Command.cpp
- *     Class containing commands and a list of their names.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Command.hpp"
 map<int,string> Command::names;

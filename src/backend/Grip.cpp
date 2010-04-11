@@ -1,9 +1,8 @@
 /*
  * Grip.cpp
- *     Responsible for creating and storing scenes.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Grip.hpp"
 

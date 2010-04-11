@@ -1,9 +1,8 @@
 /*
  * Compositor.cpp
- *     Responsible for hiding items and showing information.
- *
+ * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Compositor.hpp"
 
