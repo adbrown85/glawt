@@ -36,7 +36,7 @@
 #include "Translation.hpp"
 #include "Tag.hpp"
 #include "Target.hpp"
-#include "Uniform.hpp"
+#include "UniformFactory.hpp"
 using namespace std;
 
 

@@ -67,8 +67,9 @@ Node* Factory::create(const Tag &tag) {
 		return new Texture3D(tag);
 	else if (tag.name == "translate")
 		return new Translation(tag);
-	else if (tag.name == "uniform")
-		return new Uniform(tag);
+	else if (tag.name == "uniform") {
+		return UniformFactory::create(tag);
+	}
 	
 	// Unsupported
 	else {

@@ -30,44 +30,20 @@ using namespace std;
 class Uniform : public Node,
                 public Applicable {
 	
-	public :
+	public:
 		
-		Uniform(const string &type,
-		        const string &name,
-		        GLfloat value,
-		        const string &link="");
 		Uniform(const Tag &tag);
-		void associate();
-		void apply();
-		void finalize();
-		void remove();
-		string toString() const;
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Uniform &uniform);
+		virtual void associate();
+		virtual void apply() = 0;
+		virtual void finalize();
+		virtual void remove() = 0;
+		virtual string toString() const;
 	
-	private :
+	protected:
 		
-		enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION};
-		
-		bool isMatrix;
-		GLenum valueType;
-		MatrixType matrixType;
-		GLfloat matrix[16], value;
 		GLint location;
 		Program *program;
-		static set<string> types;
 		string link, name, type;
-		
-		void applyAsMatrix();
-		void applyAsValue();
-		void init();
-		void initAsMatrix();
-		static void initTypes();
-		bool isSampler();
-		static bool isSupported(const string &type);
-		void loadMatrix();
-		void verify();
 };
 
 
