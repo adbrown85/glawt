@@ -75,6 +75,21 @@ void Program::finalize() {
 }
 
 
+Program* Program::find(Node *node) {
+	
+	Program *program;
+	
+	// Look for a Program ancestor
+	while (node != NULL) {
+		program = dynamic_cast<Program*>(node);
+		if (program != NULL)
+			break;
+		node = node->getParent();
+	}
+	return program;
+}
+
+
 /**
  * Prints the log for this program.
  */

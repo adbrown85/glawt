@@ -32,21 +32,28 @@ class Program : public Node,
 		virtual void apply();
 		virtual void associate();
 		virtual void finalize();
+		static Program* find(Node *node);
+		static Program* getCurrent();
+		virtual GLuint getHandle() const;
+		void log() const;
 		virtual void remove();
 		virtual string toString() const;
-		
-		virtual GLuint getHandle() const {return handle;}
-		
-		static Program* getCurrent() {return current;}
 	
 	private:
 		
 		GLuint handle;
-		
 		static Program *current;
-		
-		void log() const;
 };
+
+
+inline GLuint Program::getHandle() const {
+	return handle;
+}
+
+
+inline Program* Program::getCurrent() {
+	return current;
+}
 
 
 #endif
