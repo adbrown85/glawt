@@ -14,7 +14,7 @@ Octree::Octree(const Tag &tag):
 	textureData = NULL;
 	dataset = NULL;
 	size = 0;
-	tag.get("link", link, true);
+	tag.get("link", link, true, false);
 	tag.get("threshold", threshold, false);
 }
 

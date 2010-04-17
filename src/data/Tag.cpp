@@ -29,10 +29,7 @@ void Tag::add(const string &key,
 	string keyLower;
 	
 	keyLower = Text::toLower(key);
-	if (keyLower != "file")
-		attributes[keyLower] = Text::toLower(value);
-	else
-		attributes[keyLower] = value;
+	attributes[keyLower] = value;
 }
 
 
@@ -98,13 +95,15 @@ bool Tag::get(const string &key,
               bool required) const {
 	
 	map<string,string>::const_iterator ai;
+	string text;
 	
 	// Find and convert
 	ai = attributes.find(key);
 	if (ai != attributes.end()) {
-		if (ai->second == "true") {
+		text = Text::toLower(ai->second);
+		if (text == "true") {
 			value = true;
-		} else if (ai->second == "false") {
+		} else if (text == "false") {
 			value = false;
 		} else {
 			error(key, "bool");
@@ -206,17 +205,23 @@ bool Tag::get(const string &key,
  * @param key Name of the attribute.
  * @param value String to store the value in.
  * @param required If attribute is not found, throw an error.
+ * @param lowercase True if the value should be converted to lowercase.
  */
 bool Tag::get(const string &key,
               string &value,
-              bool required) const {
+              bool required,
+              bool lowercase) const {
 	
 	map<string,string>::const_iterator ai;
 	
 	// Find and convert
 	ai = attributes.find(key);
 	if (ai != attributes.end()) {
-		value = ai->second;
+		if (lowercase) {
+			value = Text::toLower(ai->second);
+		} else {
+			value = ai->second;
+		}
 		return true;
 	}
 	else if (!required)

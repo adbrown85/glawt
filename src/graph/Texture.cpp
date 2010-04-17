@@ -37,8 +37,8 @@ Texture::Texture(GLenum type,
 	
 	// Initialize
 	Texture::init(type);
-	tag.get("name", name, false);
-	tag.get("file", filename, false);
+	tag.get("name", name, false, false);
+	tag.get("file", filename, false, false);
 }
 
 

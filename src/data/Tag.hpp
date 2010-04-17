@@ -46,7 +46,8 @@ class Tag {
 		         bool required=true) const;
 		bool get(const string &key,
 		         string &value,
-		         bool required=true) const;
+		         bool required=true,
+		         bool lowercase=true) const;
 		void setName(const string &name);
 		
 		friend ostream& operator<<(ostream &stream,

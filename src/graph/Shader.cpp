@@ -29,7 +29,7 @@ Shader::Shader(const Tag &tag) {
 	
 	// Initialize
 	init();
-	tag.get("file", filename);
+	tag.get("file", filename, true, false);
 	if (!tag.get("type", type, false))
 		initType();
 }

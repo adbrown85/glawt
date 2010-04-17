@@ -27,7 +27,7 @@ Target::Target(const Tag &tag) {
 	
 	// Initialize
 	className = "Target";
-	tag.get("link", link);
+	tag.get("link", link, true, false);
 }
 
 
