@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-bool Display::useOverlay=true;
+bool Display::useOverlay=false;
 Interpreter *Display::interpreter=NULL;
 unsigned long Display::timeStarted=0;
 int Display::frames=0, Display::framesPerSecond=0;
@@ -140,9 +140,9 @@ void Display::start(int argc,
 	// Open and prepare scene
 	try {
 		interpreter->run(Command::OPEN, scene->getFilename());
+		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
 		scene->prepare();
 		scene->print();
-		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
 	}
 	catch (char const *e) {
 		cerr << e << endl;
@@ -175,9 +175,9 @@ void Display::toggleOverlay() {
 
 void Display::visibility(int visible) {
 	
-	if (visible)
-		glutIdleFunc(Display::idle);
-	else
+	if (!visible) {
+		useOverlay = false;
 		glutIdleFunc(NULL);
+	}
 }
 
