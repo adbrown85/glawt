@@ -17,7 +17,6 @@ Compositor::Compositor() {
 	
 	// Add handlers
 	handlersZero[Command::HIDE] = &Compositor::hide;
-	handlersZero[Command::INFORMATION] = &Compositor::info;
 	handlersZero[Command::SHOW_ALL] = &Compositor::showAll;
 }
 
@@ -37,19 +36,6 @@ void Compositor::hide(Scene *scene,
 	for (si=scene->selection.begin(); si!=scene->selection.end(); ++si)
 		(*si)->hide();
 	scene->selection.clear();
-}
-
-
-/**
- * Displays info about the scene on the screen.
- * 
- * @param scene Pointer to a collection of nodes.
- * @param cmd Specific command that was issued.
- */
-void Compositor::info(Scene *scene,
-                      int cmd) {
-	
-	cout << "Compositor::info(Scene*,int)" << endl;
 }
 
 
