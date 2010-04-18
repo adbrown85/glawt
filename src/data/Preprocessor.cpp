@@ -23,7 +23,7 @@ Preprocessor::Preprocessor(const string &filename) {
 
 void Preprocessor::addBoundary(const string &filename) {
 	
-	boundaries[lines.size()] = filename;
+	boundaries[lines.size()+1] = filename;
 }
 
 
@@ -92,7 +92,7 @@ string Preprocessor::getFileForLine(int line) const {
 
 int Preprocessor::getRealLineNumber(int line) const {
 	
-	return lineNumbers[line];
+	return lineNumbers[line-1];
 }
 
 
@@ -289,7 +289,7 @@ void Preprocessor::printLines() {
 	
 	// Print
 	for (size_t i=0; i<lines.size(); ++i) {
-		cout << "  " << setw(width) << i << "  " << lines[i];
+		cout << "  " << setw(width) << i+1 << "  " << lines[i];
 	}
 }
 

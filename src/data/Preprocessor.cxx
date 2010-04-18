@@ -17,7 +17,8 @@ void testFileForLine(int line) {
 
 void testRealLineNumber(int line) {
 	
-	cout << "  " << pp->getRealLineNumber(line) << endl;
+	cout << "  " << setw(2) << line 
+	     << " " << pp->getRealLineNumber(line) << endl;
 }
 
 
@@ -47,13 +48,13 @@ int main(int argc,
 		
 		// Files for lines
 		cout << "\nFiles for lines:" << endl;
-		testFileForLine(0);
+		testFileForLine(1);
 		testFileForLine(15);
 		testFileForLine(31);
 		
 		// Line numbers
 		cout << "\nLine numbers:" << endl;
-		testRealLineNumber(0);
+		testRealLineNumber(1);
 		testRealLineNumber(15);
 		testRealLineNumber(31);
 	}
