@@ -14,7 +14,7 @@
 #include <vector>
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
-#include "Delegate.hpp"            // Open the scene
+#include "Interpreter.hpp"         // Send commands
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
@@ -37,12 +37,14 @@ class Display {
 		                  char *argv[],
 		                  string title,
 		                  Scene *scene,
-		                  Delegate *delegate);
+		                  Interpreter *interpreter);
+		static void toggleOverlay();
 		static void visibility(int visible);
 	
 	private :
 		
-		static Delegate *delegate;
+		static bool useOverlay;
+		static Interpreter *interpreter;
 		static unsigned long timeStarted;
 		static int frames, framesPerSecond;
 		static Scene *scene;

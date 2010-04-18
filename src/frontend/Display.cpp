@@ -5,7 +5,8 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-Delegate *Display::delegate=NULL;
+bool Display::useOverlay=true;
+Interpreter *Display::interpreter=NULL;
 unsigned long Display::timeStarted=0;
 int Display::frames=0, Display::framesPerSecond=0;
 Scene *Display::scene=NULL;
@@ -23,7 +24,8 @@ void Display::display(void) {
 	
 	// Paint scene and overlay
 	Painter::paint(*scene, manipulators);
-	overlay();
+	if (useOverlay)
+		overlay();
 	
 	// Refresh
 	glutSwapBuffers();
@@ -100,13 +102,13 @@ void Display::overlay() {
  * @param argv Array of argument values.
  * @param title Text to be shown on the window's title bar.
  * @param scene Pointer to a Scene with items (needs to be constructed first).
- * @param delegate Delegate that opens scene.
+ * @param interpreter Delegate that opens scene.
  */
 void Display::start(int argc,
                     char *argv[],
                     string title,
                     Scene *scene,
-                    Delegate *delegate) {
+                    Interpreter *interpreter) {
 	
 	int width, height, x=100, y=100;
 	vector<Manipulator*> manipulators;
@@ -115,7 +117,7 @@ void Display::start(int argc,
 	height = scene->getHeight();
 	width = scene->getWidth();
 	Display::scene = scene;
-	Display::delegate = delegate;
+	Display::interpreter = interpreter;
 	
 	// Initialize window
 	glutInit(&argc, argv);
@@ -137,9 +139,10 @@ void Display::start(int argc,
 	
 	// Open and prepare scene
 	try {
-		delegate->run(Command::OPEN, scene->getFilename());
+		interpreter->run(Command::OPEN, scene->getFilename());
 		scene->prepare();
 		scene->print();
+		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
 	}
 	catch (char const *e) {
 		cerr << e << endl;
@@ -157,6 +160,16 @@ void Display::start(int argc,
 	
 	// Start
 	glutMainLoop();
+}
+
+
+void Display::toggleOverlay() {
+	
+	useOverlay = !useOverlay;
+	if (useOverlay)
+		glutIdleFunc(Display::idle);
+	else
+		glutIdleFunc(NULL);
 }
 
 

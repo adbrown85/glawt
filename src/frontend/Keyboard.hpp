@@ -58,6 +58,7 @@ inline void Keyboard::installBindings() {
 	add(Binding('D', 0, Command::DESELECT));
 	add(Binding('H', 0, Command::HIDE));
 	add(Binding('S', 0, Command::SHOW_ALL));
+	add(Binding('I', 0, Command::INFORMATION));
 	// add(Binding('C', GLUT_ACTIVE_ALT, Command::COPY));
 	// add(Binding('V', GLUT_ACTIVE_ALT, Command::PASTE));
 	// add(Binding('X', GLUT_ACTIVE_ALT, Command::CUT));
@@ -67,7 +68,6 @@ inline void Keyboard::installBindings() {
 	// add(Binding('F', 0, Command::FIT_SELECTED));
 	// add(Binding('A', 0, Command::FIT_ALL));
 	// add(Binding('\t', 0, Command::NEXT));
-	// add(Binding('I', 0, Command::INFORMATION));
 }
 
 
