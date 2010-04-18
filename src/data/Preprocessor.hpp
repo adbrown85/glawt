@@ -8,6 +8,7 @@
 #define PREPROCESSOR_HPP
 #include <cstdlib>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <sstream>
@@ -36,7 +37,9 @@ class Preprocessor {
 		
 		Preprocessor();
 		Preprocessor(const string &filename);
+		string getFileForLine(int line) const;
 		vector<string> getLines();
+		void printBoundaries();
 		void printDefines();
 		void printLines();
 		void setFilename(const string &filename);
@@ -44,11 +47,14 @@ class Preprocessor {
 	
 	protected:
 		
+		map<int,string> boundaries;
 		map<string,string> defines;
 		stack<bool> conditionals;
+		stack<string> paths;
 		string filename;
 		vector<string> lines;
 		
+		void addBoundary(const string &line);
 		void addLine(string &line,
 		             bool &inComment);
 		void addNewLines();

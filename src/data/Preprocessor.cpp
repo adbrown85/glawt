@@ -21,6 +21,12 @@ Preprocessor::Preprocessor(const string &filename) {
 }
 
 
+void Preprocessor::addBoundary(const string &filename) {
+	
+	boundaries[lines.size()] = filename;
+}
+
+
 void Preprocessor::addLine(string &line,
                            bool &inComment) {
 	
@@ -64,6 +70,20 @@ void Preprocessor::addNewLines() {
 	for (it=lines.begin(); it!=lines.end(); ++it) {
 		it->append("\n");
 	}
+}
+
+
+string Preprocessor::getFileForLine(int line) const {
+	
+	map<int,string>::const_iterator it;
+	string filename;
+	
+	for (it=boundaries.begin(); it!=boundaries.end(); ++it) {
+		if (it->first > line)
+			break;
+		filename = it->second;
+	}
+	return filename;
 }
 
 
@@ -210,13 +230,29 @@ void Preprocessor::onInclude(const string &line) {
 	argument = getPragmaKey(line);
 	filename = stripQuoted(argument);
 	filename = FileUtility::getRelativePath(this->filename, filename);
+	paths.push(filename);
+	addBoundary(filename);
 	load(filename);
+	paths.pop();
+	addBoundary(paths.top());
 }
 
 
 void Preprocessor::onVersion(const string &line) {
 	
 	lines.push_back(line);
+}
+
+
+void Preprocessor::printBoundaries() {
+	
+	map<int,string>::iterator it;
+	
+	for (it=boundaries.begin(); it!=boundaries.end(); ++it) {
+		cout << "  [" << it->first 
+		     << ", '" << it->second 
+		     << "']" << endl;
+	}
 }
 
 
@@ -232,10 +268,16 @@ void Preprocessor::printDefines() {
 
 void Preprocessor::printLines() {
 	
-	vector<string>::iterator line;
+	int width;
+	ostringstream stream;
 	
-	for (line=lines.begin(); line!=lines.end(); ++line) {
-		cout << *line;
+	// Find width
+	stream << lines.size();
+	width = stream.str().length();
+	
+	// Print
+	for (size_t i=0; i<lines.size(); ++i) {
+		cout << "  " << setw(width) << i << "  " << lines[i];
 	}
 }
 
@@ -263,6 +305,8 @@ bool Preprocessor::skipLines() {
 
 void Preprocessor::start() {
 	
+	paths.push(filename);
+	addBoundary(filename);
 	load(filename);
 	addNewLines();
 }

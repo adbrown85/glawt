@@ -26,7 +26,12 @@ int main(int argc,
 		pp->start();
 		
 		// Results
-		cout << "Defines:" << endl;
+		cout << "Boundaries:" << endl;
+		pp->printBoundaries();
+		cout << "  " << setw(2) <<  0 << " " << pp->getFileForLine( 0) << endl;
+		cout << "  " << setw(2) << 15 << " " << pp->getFileForLine(15) << endl;
+		cout << "  " << setw(2) << 31 << " " << pp->getFileForLine(31) << endl;
+		cout << "\nDefines:" << endl;
 		pp->printDefines();
 		cout << "\nLines:" << endl;
 		pp->printLines();
