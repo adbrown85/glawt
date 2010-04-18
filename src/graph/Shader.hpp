@@ -55,9 +55,11 @@ class Shader : public Node {
 		void compile();
 		void create();
 		int findLogLine(const string &line) const;
+		string findLogMessage(const string &line) const;
 		void init();
 		void initType();
 		void load();
+		string processLogLine(const string &line) const;
 };
 
 

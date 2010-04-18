@@ -84,14 +84,12 @@ void Shader::compile() {
 	
 	// Compile shader
 	glCompileShader(handle);
-	
-	// Attach shader to program if successful
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	log();
 	if (!compiled) {
-		ostringstream message;
-		message << "[Shader] '" << filename << "' did not compile." << endl;
-		throw message.str().c_str();
+		ostringstream msg;
+		msg << "[Shader] '" << filename << "' did not compile." << endl;
+		throw msg.str().c_str();
 	}
 }
 
@@ -197,7 +195,6 @@ void Shader::log() const {
 	
 	GLchar *log;
 	GLint count=0, returned=0;
-	int lineNum;
 	string line;
 	stringstream stream;
 	
@@ -212,15 +209,11 @@ void Shader::log() const {
 		stream << log;
 		getline(stream, line);
 		while (stream) {
-			lineNum = findLogLine(line);
-			cerr << "In '" << preprocessor.getFileForLine(lineNum)
-			     << "'" << endl;
-			cerr << line << endl;
+			if (!line.empty())
+				cerr << processLogLine(line) << endl;
 			getline(stream, line);
 		}
 	}
-	
-	// Print
 	
 	// Finish
 	delete[] log;
@@ -236,6 +229,29 @@ int Shader::findLogLine(const string &line) const {
 	end = line.find(')') - 1;
 	token = line.substr(beg, end);
 	return atoi(token.c_str());
+}
+
+
+string Shader::findLogMessage(const string &line) const {
+	
+	int beg;
+	
+	beg = line.find(':') + 1;
+	beg = line.find(':', beg) + 1;
+	return line.substr(beg);
+}
+
+
+string Shader::processLogLine(const string &line) const {
+	
+	int lineNum;
+	ostringstream stream;
+	
+	lineNum = findLogLine(line);
+	stream << preprocessor.getFileForLine(lineNum) << "(" 
+	       << preprocessor.getRealLineNumber(lineNum) << "):"
+	       << findLogMessage(line);
+	return stream.str();
 }
 
 
