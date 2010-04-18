@@ -5,14 +5,11 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-#version 130
-in vec3 texCoord;
-out vec4 fragColor;
-
+#version 110
 
 
 void main() {
 	
-	fragColor = vec4(texCoord, 1.0);
+	gl_FragColor = gl_TexCoord[0];
 }
 

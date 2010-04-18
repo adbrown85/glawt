@@ -35,21 +35,4 @@ OctreeNode OctreeNode_() {
 }
 
 
-/**
- * Constructor.
- * 
- * @param key Index into the array
- * @param name Which child the node is
- */
-OctreeNode OctreeNode_(in int key,
-                       in int name) {
-	
-	OctreeNode node;
-	
-	node.key = key;
-	node.name = name;
-	return node;
-}
-
-
 #endif

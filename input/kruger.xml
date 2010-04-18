@@ -20,16 +20,16 @@
 		</framebuffer>
 		<program>
 			<shader file="kruger.frag" />
-			<texture3d file="../textures/bear.vlb" name="volume">
-			<uniform type="sampler3d" name="volume" link="volume">
+			<texture3d file="../textures/chunk.vlb" name="volume">
+				<uniform type="sampler3d" name="volume" link="volume">
 				<uniform type="sampler2d" name="target" link="target">
-					<uniform type="int" name="samples" value="256">
-						<cull faces="back">
-							<box />
-						</cull>
-					</uniform>
+				<uniform type="int" name="samples" value="256">
+					<cull faces="back">
+						<box />
+					</cull>
 				</uniform>
-			</uniform>
+				</uniform>
+				</uniform>
 			</texture3d>
 		</program>
 	</translate>
