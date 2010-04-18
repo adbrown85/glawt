@@ -37,6 +37,7 @@ class Preprocessor {
 		
 		Preprocessor();
 		Preprocessor(const string &filename);
+		int getRealLineNumber(int line) const;
 		string getFileForLine(int line) const;
 		vector<string> getLines();
 		void printBoundaries();
@@ -53,9 +54,11 @@ class Preprocessor {
 		stack<string> paths;
 		string filename;
 		vector<string> lines;
+		vector<int> lineNumbers;
 		
 		void addBoundary(const string &line);
 		void addLine(string &line,
+		             int lineNumber,
 		             bool &inComment);
 		void addNewLines();
 		string getPragmaKey(const string &line);

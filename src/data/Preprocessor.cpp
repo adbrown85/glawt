@@ -28,6 +28,7 @@ void Preprocessor::addBoundary(const string &filename) {
 
 
 void Preprocessor::addLine(string &line,
+                           int lineNumber,
                            bool &inComment) {
 	
 	// Strip comments and trailing space
@@ -46,6 +47,7 @@ void Preprocessor::addLine(string &line,
 				onInclude(line);
 			} else if (isVersion(line)) {
 				onVersion(line);
+				lineNumbers.push_back(lineNumber);
 			}
 		}
 		if (isEndIf(line)) {
@@ -59,6 +61,7 @@ void Preprocessor::addLine(string &line,
 	else if (!skipLines()) {
 		line = replaceDefines(line);
 		lines.push_back(line);
+		lineNumbers.push_back(lineNumber);
 	}
 }
 
@@ -84,6 +87,12 @@ string Preprocessor::getFileForLine(int line) const {
 		filename = it->second;
 	}
 	return filename;
+}
+
+
+int Preprocessor::getRealLineNumber(int line) const {
+	
+	return lineNumbers[line];
 }
 
 
@@ -160,6 +169,7 @@ void Preprocessor::load(const string &filename) {
 	
 	bool inComment;
 	ifstream file;
+	int lineNumber;
 	string line;
 	
 	// Open file
@@ -171,9 +181,11 @@ void Preprocessor::load(const string &filename) {
 	}
 	
 	// Load into vector
+	lineNumber = 0;
 	getline(file, line);
 	while (file) {
-		addLine(line, inComment);
+		++lineNumber;
+		addLine(line, lineNumber, inComment);
 		getline(file, line);
 	}
 }

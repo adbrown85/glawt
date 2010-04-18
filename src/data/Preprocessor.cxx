@@ -5,12 +5,24 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Preprocessor.hpp"
+Preprocessor *pp;
+
+
+void testFileForLine(int line) {
+	
+	cout << "  " << setw(2) << line 
+	     << " " << pp->getFileForLine(line) << endl;
+}
+
+
+void testRealLineNumber(int line) {
+	
+	cout << "  " << pp->getRealLineNumber(line) << endl;
+}
 
 
 int main(int argc,
          char *argv[]) {
-	
-	Preprocessor *pp;
 	
 	// Start
 	cout << endl;
@@ -28,13 +40,22 @@ int main(int argc,
 		// Results
 		cout << "Boundaries:" << endl;
 		pp->printBoundaries();
-		cout << "  " << setw(2) <<  0 << " " << pp->getFileForLine( 0) << endl;
-		cout << "  " << setw(2) << 15 << " " << pp->getFileForLine(15) << endl;
-		cout << "  " << setw(2) << 31 << " " << pp->getFileForLine(31) << endl;
 		cout << "\nDefines:" << endl;
 		pp->printDefines();
 		cout << "\nLines:" << endl;
 		pp->printLines();
+		
+		// Files for lines
+		cout << "\nFiles for lines:" << endl;
+		testFileForLine(0);
+		testFileForLine(15);
+		testFileForLine(31);
+		
+		// Line numbers
+		cout << "\nLine numbers:" << endl;
+		testRealLineNumber(0);
+		testRealLineNumber(15);
+		testRealLineNumber(31);
 	}
 	catch (const char *e) {
 		cerr << e << endl;
