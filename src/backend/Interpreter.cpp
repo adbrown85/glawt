@@ -58,6 +58,13 @@ Interpreter::~Interpreter() {
 }
 
 
+void Interpreter::addListener(int command,
+                              void(*function)()) {
+	
+	listeners[command] = function;
+}
+
+
 /**
  * Prints the commands.
  */
@@ -88,7 +95,13 @@ void Interpreter::print() {
  */
 void Interpreter::run(int command) {
 	
+	map<int,void(*)()>::iterator li;
 	map<int,void(*)(Scene*,int)>::iterator hi;
+	
+	// Check for listener
+	li = listeners.find(command);
+	if (li != listeners.end())
+		(li->second)();
 	
 	// Hand off to delegate
 	hi = handlersZero.find(command);
@@ -106,7 +119,13 @@ void Interpreter::run(int command) {
 void Interpreter::run(int command,
                       float argument) {
 	
+	map<int,void(*)()>::iterator li;
 	map<int,void(*)(Scene*,int,float)>::iterator hi;
+	
+	// Check for listener
+	li = listeners.find(command);
+	if (li != listeners.end())
+		(li->second)();
 	
 	// Hand off to delegate
 	hi = handlersFloat.find(command);
@@ -124,7 +143,13 @@ void Interpreter::run(int command,
 void Interpreter::run(int command,
                       string argument) {
 	
+	map<int,void(*)()>::iterator li;
 	map<int,void(*)(Scene*,int,string)>::iterator hi;
+	
+	// Check for listener
+	li = listeners.find(command);
+	if (li != listeners.end())
+		(li->second)();
 	
 	// Hand off to delegate
 	hi = handlersString.find(command);

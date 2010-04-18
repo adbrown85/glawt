@@ -7,6 +7,12 @@
 #include "Interpreter.hpp"
 
 
+void cutListener() {
+	
+	cout << "void cutListener()" << endl;
+}
+
+
 int main(int argc,
          char *argv[]) {
 	
@@ -20,8 +26,14 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Test
+	// Print commands
 	interpreter.print();
+	
+	// Run
+	cout << "\nRun commands:" << endl;
+	interpreter.run(Command::COPY);
+	interpreter.addListener(Command::CUT, &cutListener);
+	interpreter.run(Command::CUT);
 	
 	// Finish
 	cout << endl;
