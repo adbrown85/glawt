@@ -54,6 +54,7 @@ class Shader : public Node {
 		Shader();
 		void compile();
 		void create();
+		int findLogLine(const string &line) const;
 		void init();
 		void initType();
 		void load();

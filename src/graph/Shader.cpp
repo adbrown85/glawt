@@ -197,19 +197,45 @@ void Shader::log() const {
 	
 	GLchar *log;
 	GLint count=0, returned=0;
+	int lineNum;
+	string line;
+	stringstream stream;
 	
 	// Get length
 	glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &count);
 	
-	// Print the log
+	// Get the text
 	log = new GLchar[count+1];
 	glGetShaderInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
-	if (strlen(log) != 0)
-		cerr << log << endl;
+	if (strlen(log) != 0) {
+		stream << log;
+		getline(stream, line);
+		while (stream) {
+			lineNum = findLogLine(line);
+			cerr << "In '" << preprocessor.getFileForLine(lineNum)
+			     << "'" << endl;
+			cerr << line << endl;
+			getline(stream, line);
+		}
+	}
+	
+	// Print
 	
 	// Finish
 	delete[] log;
+}
+
+
+int Shader::findLogLine(const string &line) const {
+	
+	int beg, end;
+	string token;
+	
+	beg = line.find('(') + 1;
+	end = line.find(')') - 1;
+	token = line.substr(beg, end);
+	return atoi(token.c_str());
 }
 
 

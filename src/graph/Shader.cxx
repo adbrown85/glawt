@@ -36,7 +36,6 @@ int main(int argc,
 	}
 	catch (const char *e) {
 		cerr << e << endl;
-		shader->log();
 	}
 	shader->list();
 	

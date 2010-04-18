@@ -12,7 +12,7 @@
 void main() {
 	
 	// A comment!
-	gl_FragColor = gl_TexCoord[0];		// Another comment
+	gl_FragColor = gl_TexCoor[0];		// Another comment
 	/* This one might be tricky! */
 }
 
