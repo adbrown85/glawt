@@ -17,6 +17,8 @@ class Text {
 	
 	public :
 		
+		static int count(const string &text,
+		                 char character);
 		static int findFirstNotWordCharacter(const string &text,
 		                                     int pos);
 		static pair<int,int> findFirstWord(const string &text,

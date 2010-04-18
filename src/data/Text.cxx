@@ -11,7 +11,7 @@
 int main(int argc,
          char *argv[]) {
 	
-	int pos;
+	int pos, result;
 	map<string,string> dictionary;
 	pair<int,int> bounds;
 	string text;
@@ -23,8 +23,14 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Count
+	cout << "Count" << endl;
+	result = Text::count("abracadabra", 'a');
+	cout << "  " << result << endl;
+	assert(result == 5);
+	
 	// First word character
-	cout << "First word character" << endl;
+	cout << "\nFirst word character" << endl;
 	text = "    (foo)";
 	pos = Text::findFirstWordCharacter(text, 0);
 	cout << "  " << pos << endl;

@@ -14,6 +14,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Log.hpp"
 #include "Node.hpp"
 #include "Program.hpp"
 #include "Preprocessor.hpp"
@@ -54,12 +55,9 @@ class Shader : public Node {
 		Shader();
 		void compile();
 		void create();
-		int findLogLine(const string &line) const;
-		string findLogMessage(const string &line) const;
 		void init();
 		void initType();
 		void load();
-		string processLogLine(const string &line) const;
 };
 
 

@@ -24,11 +24,18 @@ Program::Program() {
  * 
  * @param tag XML tag.
  */
-Program::Program(const Tag &tag) {
+Program::Program(const Tag& tag) {
 	
 	// Initialize
 	className = "Program";
 	handle = 0;
+}
+
+
+void Program::addCode(int handle,
+                      const Preprocessor* preprocessor) {
+	
+	code[0] = preprocessor;
 }
 
 
@@ -66,16 +73,16 @@ void Program::finalize() {
 	
 	// Use if successful
 	glGetProgramiv(handle, GL_LINK_STATUS, &linked);
-	if (linked)
+	log();
+	if (linked) {
 		glUseProgram(handle);
-	else {
-		log();
+	} else {
 		throw "[Program] Could not link the shader program.";
 	}
 }
 
 
-Program* Program::find(Node *node) {
+Program* Program::find(Node* node) {
 	
 	Program *program;
 	
@@ -105,8 +112,7 @@ void Program::log() const {
 	log = new GLchar[count+1];
 	glGetProgramInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
-	if (strlen(log) != 0)
-		cerr << log << endl;
+	Log::print(log, code);
 	
 	// Finish
 	delete[] log;

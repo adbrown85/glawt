@@ -7,6 +7,21 @@
 #include "Text.hpp"
 
 
+int Text::count(const string &text,
+                char character) {
+	
+	int times;
+	
+	times = 0;
+	for (size_t i=0; i<text.length(); ++i) {
+		if (text[i] == character) {
+			++times;
+		}
+	}
+	return times;
+}
+
+
 /**
  * @return position of first character in string that can be part of a word.
  * 

@@ -12,7 +12,9 @@
 #include <iostream>
 #include <vector>
 #include "Applicable.hpp"
+#include "Log.hpp"
 #include "Node.hpp"
+#include "Preprocessor.hpp"
 #include "Tag.hpp"
 using namespace std;
 
@@ -28,21 +30,24 @@ class Program : public Node,
 	public :
 		
 		Program();
-		Program(const Tag &tag);
+		Program(const Tag& tag);
+		virtual void addCode(int handle,
+		                     const Preprocessor *preprocessor);
 		virtual void apply();
 		virtual void associate();
 		virtual void finalize();
-		static Program* find(Node *node);
+		static Program* find(Node* node);
 		static Program* getCurrent();
 		virtual GLuint getHandle() const;
-		void log() const;
+		virtual void log() const;
 		virtual void remove();
 		virtual string toString() const;
 	
 	private:
 		
 		GLuint handle;
-		static Program *current;
+		map<int,const Preprocessor*> code;
+		static Program* current;
 };
 
 

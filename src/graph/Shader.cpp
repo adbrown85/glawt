@@ -51,23 +51,15 @@ Shader::~Shader() {
  */
 void Shader::associate() {
 	
-	Node *current;
 	Program *program;
 	
-	// Look for parent program
-	current = parent;
-	while (current != NULL) {
-		program = dynamic_cast<Program*>(current);
-		if (program != NULL)
-			break;
-		current = current->getParent();
-	}
-	
 	// Attach and compile shader if found
+	program = Program::find(parent);
 	if (program != NULL) {
 		create();
 		load();
 		glAttachShader(program->getHandle(), handle);
+		program->addCode(handle, &preprocessor);
 		compile();
 	}
 }
@@ -195,8 +187,6 @@ void Shader::log() const {
 	
 	GLchar *log;
 	GLint count=0, returned=0;
-	string line;
-	stringstream stream;
 	
 	// Get length
 	glGetShaderiv(handle, GL_INFO_LOG_LENGTH, &count);
@@ -205,53 +195,10 @@ void Shader::log() const {
 	log = new GLchar[count+1];
 	glGetShaderInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
-	if (strlen(log) != 0) {
-		stream << log;
-		getline(stream, line);
-		while (stream) {
-			if (!line.empty())
-				cerr << processLogLine(line) << endl;
-			getline(stream, line);
-		}
-	}
+	Log::print(log, handle, preprocessor);
 	
 	// Finish
 	delete[] log;
-}
-
-
-int Shader::findLogLine(const string &line) const {
-	
-	int beg, end;
-	string token;
-	
-	beg = line.find('(') + 1;
-	end = line.find(')') - 1;
-	token = line.substr(beg, end);
-	return atoi(token.c_str());
-}
-
-
-string Shader::findLogMessage(const string &line) const {
-	
-	int beg;
-	
-	beg = line.find(':') + 1;
-	beg = line.find(':', beg) + 1;
-	return line.substr(beg);
-}
-
-
-string Shader::processLogLine(const string &line) const {
-	
-	int lineNum;
-	ostringstream stream;
-	
-	lineNum = findLogLine(line);
-	stream << preprocessor.getFileForLine(lineNum) << "(" 
-	       << preprocessor.getRealLineNumber(lineNum) << "):"
-	       << findLogMessage(line);
-	return stream.str();
 }
 
 
