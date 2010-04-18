@@ -1,6 +1,5 @@
 VLIB.1
-# These are some comments!
-# Woo hoo!  Comments!
+# This volume is completely empty except for a chunk in one corner
 4 4 4
 uint8
 little
@@ -26,4 +25,4 @@ little
 65 65 65 65
 65 65 65 65
 65 65 65 65
-65 65 65 90
+65 65 65 65
