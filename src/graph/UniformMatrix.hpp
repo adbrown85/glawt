@@ -20,7 +20,7 @@ class UniformMatrix : public Uniform {
 	
 	private:
 		
-		enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION};
+		enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION, NORMAL};
 		
 		GLfloat value[16];
 		MatrixType matrixType;

@@ -18,19 +18,19 @@ Uniform* UniformFactory::create(const Tag &tag) {
 	
 	string type;
 	
-	// Create uniform based on type
+	// Get type
 	tag.get("type", type);
-	if (type == "int") {
+	
+	// Create based on type
+	if (type == "int")
 		return new UniformInt(tag);
-	} else if (type == "float") {
+	else if (type == "float")
 		return new UniformFloat(tag);
-	} else if (type == "mat4") {
+	else if (type == "mat4" || type == "mat3")
 		return new UniformMatrix(tag);
-	} else if (type == "sampler1d"
-	           || type == "sampler2d"
-	           || type == "sampler3d") {
+	else if (type == "sampler1d" || type == "sampler2d" || type == "sampler3d")
 		return new UniformSampler(tag);
-	} else {
+	else {
 		ostringstream msg;
 		msg << "[UniformFactory] Type '" << type
 		    << "' not supported.";
