@@ -13,8 +13,8 @@ out vec4 FragColor;
 void main() {
 	
 	if (TexCoord.s < 0.5)
-		FragColor = texture2D(left, TexCoord.st);
+		FragColor = texture(left, TexCoord.st);
 	else
-		FragColor = texture2D(right, TexCoord.st);
+		FragColor = texture(right, TexCoord.st);
 }
 
