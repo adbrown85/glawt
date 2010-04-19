@@ -6,11 +6,14 @@
  */
 #version 130
 #include "Colors.glsl"
-out vec4 fragColor;
+in vec3 TexCoord;
+in float LightIntensity;
+out vec4 FragColor;
 
 
 void main() {
 	
-	fragColor = RED;
+	//fragColor = BLUE;
+	FragColor = vec4(TexCoord,1.0) * vec4(vec3(LightIntensity),1.0);
 }
 

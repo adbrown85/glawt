@@ -1,0 +1,20 @@
+<!--
+ * basic.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<translate>
+	<program>
+		<shader file="basic.vert" />
+		<shader file="basic.frag" />
+		<uniform type="mat4" name="MVMatrix" link="modelview" />
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="mat3" name="NormalMatrix" link="normal" />
+		<uniform type="float" name="Ambient" value="0.2" />
+		<uniform type="vec3" name="LightPosition" value="10.0 10.0 10.0" />
+		<cube/>
+	</program>
+</translate>
