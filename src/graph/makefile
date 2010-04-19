@@ -47,6 +47,7 @@ Specular.o: LightColor.o
 Fullscreen.o: Node.o
 Shape.o: Node.o
 Box.o: Shape.o Texture.o
+Cube.o: Shape.o
 Outline.o: Shape.o
 Square.o: Shape.o Texture.o
 

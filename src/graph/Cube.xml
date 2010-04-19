@@ -1,5 +1,5 @@
 <!--
- * BoxVBO.xml
+ * Cube.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -10,10 +10,8 @@
 	<program>
 		<shader file="../../input/basic.vert" />
 		<shader file="../../input/basic.frag" />
-		<uniform type="mat4" name="mvMatrix" link="modelview">
-		<uniform type="mat4" name="pMatrix" link="projection">
-			<boxvbo />
-		</uniform>
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection">
+			<cube style="2d"/>
 		</uniform>
 	</program>
 </translate>
