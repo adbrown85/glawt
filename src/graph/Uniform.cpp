@@ -68,8 +68,10 @@ string Uniform::toString() const {
 	// Build string
 	stream << Node::toString();
 	stream << " name='" << name << "'"
-	       << " link='" << link << "'"
 	       << " location='" << location << "'";
+	if (!link.empty()) {
+		stream << " link='" << link << "'";
+	}
 	return stream.str();
 }
 
