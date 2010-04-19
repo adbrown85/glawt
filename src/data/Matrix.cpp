@@ -117,6 +117,49 @@ Matrix Matrix::getInverse() const {
 
 
 /**
+ * Returns a new matrix with row i and column j deleted.
+ */
+Matrix Matrix::getSubmatrix(int i,
+                            int j) const {
+	
+	int bi=0, bj=0;
+	Matrix b;
+	
+	// Copy everything but row i and j
+	for (int ai=0; ai<size; ++ai) {
+		if (ai == i)
+			continue;
+		bj = 0;
+		for (int aj=0; aj<size; ++aj) {
+			if (aj == j)
+				continue;
+			b(bi,bj) = arr[ai][aj];
+			++bj;
+		}
+		++bi;
+	}
+	
+	// Finish
+	b.size = this->size - 1;
+	return b;
+}
+
+
+Matrix Matrix::getTranspose() const {
+	
+	Matrix B;
+	
+	B.size = 3;
+	for (int i=0; i<3; ++i) {
+		for (int j=0; j<3; ++j) {
+			B(i,j) = arr[j][i];
+		}
+	}
+	return B;
+}
+
+
+/**
  * Returns one of the elements in the matrix.
  * 
  * @param i Row of the element.
@@ -218,35 +261,6 @@ void Matrix::print() {
 	
 	// Reset
 	cout << resetiosflags(ios_base::floatfield) << setprecision(6);
-}
-
-
-/**
- * Returns a new matrix with row i and column j deleted.
- */
-Matrix Matrix::getSubmatrix(int i,
-                            int j) const {
-	
-	int bi=0, bj=0;
-	Matrix b;
-	
-	// Copy everything but row i and j
-	for (int ai=0; ai<size; ++ai) {
-		if (ai == i)
-			continue;
-		bj = 0;
-		for (int aj=0; aj<size; ++aj) {
-			if (aj == j)
-				continue;
-			b(bi,bj) = arr[ai][aj];
-			++bj;
-		}
-		++bi;
-	}
-	
-	// Finish
-	b.size = this->size - 1;
-	return b;
 }
 
 

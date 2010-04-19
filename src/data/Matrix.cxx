@@ -45,6 +45,11 @@ int main() {
 	m3 = m1 * m2;
 	m3.print();
 	
+	// Normal
+	cout << "\nCalculating transpose..." << endl;
+	m3 = m1.getTranspose();
+	m3.print();
+	
 	// Vector
 	cout << "\nMultiplying by Vector..." << endl;
 	v2 = m2 * v1;
