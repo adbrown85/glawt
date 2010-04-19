@@ -29,12 +29,15 @@ Target.o: Framebuffer.o Node.o Texture2D.o
 Texture.o : Node.o
 Texture2D.o : Node.o Texture.o
 Texture3D.o : Node.o Texture.o
+
+# Uniform nodes
+UNIFORMS = ${filter-out Uniform.o UniformFactory.o, ${wildcard Uniform*.o}}
 Uniform.o: Node.o Program.o Shader.o Texture2D.o Texture3D.o Transform.o
-UniformFloat.o: Uniform.o
-UniformInt.o: Uniform.o
-UniformMatrix.o: Uniform.o
-UniformSampler.o: Uniform.o
-UniformFactory.o: UniformFloat.o UniformInt.o UniformMatrix.o UniformSampler.o
+$(UNIFORMS): Uniform.o
+UniformFactory.o: $(UNIFORMS)
+check: checkUniforms
+checkUniforms:
+	@echo "  UNIFORMS = $(UNIFORMS)"
 
 # Sub nodes
 Shader.o: Node.o Program.o

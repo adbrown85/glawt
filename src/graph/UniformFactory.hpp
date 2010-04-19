@@ -15,6 +15,7 @@
 #include "UniformFloat.hpp"
 #include "UniformMatrix.hpp"
 #include "UniformSampler.hpp"
+#include "UniformVector.hpp"
 using namespace std;
 
 

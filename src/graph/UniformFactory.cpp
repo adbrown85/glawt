@@ -30,6 +30,8 @@ Uniform* UniformFactory::create(const Tag &tag) {
 		return new UniformMatrix(tag);
 	else if (type == "sampler1d" || type == "sampler2d" || type == "sampler3d")
 		return new UniformSampler(tag);
+	else if (type == "vec3" || type == "vec4")
+		return new UniformVector(tag);
 	else {
 		ostringstream msg;
 		msg << "[UniformFactory] Type '" << type
