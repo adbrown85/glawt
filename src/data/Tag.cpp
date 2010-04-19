@@ -172,6 +172,31 @@ bool Tag::get(const string &key,
 }
 
 
+bool Tag::get(const string &key,
+              float value[4],
+              bool required) const {
+	
+	map<string,string>::const_iterator ai;
+	stringstream stream;
+	
+	// Find and convert
+	ai = attributes.find(key);
+	if (ai != attributes.end()) {
+		stream << ai->second;
+		for (int i=0; i<4; ++i)
+			stream >> value[i];
+		return true;
+	}
+	else if (!required) {
+		for (int i=0; i<4; ++i)
+			value[i] = 0.0f;
+	}
+	else
+		error(key);
+	return false;
+}
+
+
 /**
  * Gets the value of an attribute as an integer.
  * 

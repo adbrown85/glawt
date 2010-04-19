@@ -7,6 +7,25 @@
 #include "Parser.hpp"
 
 
+string Parser::findAttribute(stringstream &stream) {
+	
+	int count=0;
+	stringstream buffer;
+	string token;
+	
+	stream >> token;
+	while (stream) {
+		buffer << token;
+		count += Text::count(token, '"');
+		if (count >= 2)
+			break;
+		buffer << ' ';
+		stream >> token;
+	}
+	return buffer.str();
+}
+
+
 /**
  * Finds the next tag in the file.
  * 
@@ -24,6 +43,19 @@ string Parser::findTagString() {
 		character = file.get();
 	}
 	return tagString;
+}
+
+
+string Parser::findTagName(const string &text,
+                           size_t &pos) {
+	
+	size_t beg, end;
+	
+	// Return up to first space
+	beg = text.find_first_not_of(' ');
+	end = text.find(' ', beg);
+	pos = end;
+	return text.substr(beg, end-beg);
 }
 
 
@@ -117,36 +149,36 @@ void Parser::parseAttribute(string attribute,
 /**
  * Parses a tag.
  * 
- * @param tagString Raw text for the tag from the file.
- * @param tag Tag object to store the attribute in.
+ * @param tagText Raw text for the tag from the file.
+ * @param tag Tag object to store the attributes in.
  */
-void Parser::parseTag(string tagString,
+void Parser::parseTag(string text,
                       Tag &tag) {
 	
 	string token;
 	stringstream stream;
 	
-	// Ignore ending slash (for now)
-	if (tagString[tagString.length()-1] == '/') {
-		tagString = tagString.substr(0, tagString.length()-1);
+	// Remove ending slash and put text in stream
+	if (Text::endsWith(text, '/')) {
+		text = text.substr(0, text.length()-1);
 		tag.empty = true;
 	}
-	stream.str(tagString);
+	stream.str(text);
 	
 	// Name
 	stream >> token;
 	if (token[0] == '/') {
-		tag.setName(token.substr(1, token.length()-1));
+		tag.setName(token.substr(1));
 		tag.closing = true;
-	}
-	else
+	} else {
 		tag.setName(token);
+	}
 	
 	// Attributes
-	stream >> token;
+	token = findAttribute(stream);
 	while (stream) {
 		parseAttribute(token, tag);
-		stream >> token;
+		token = findAttribute(stream);
 	}
 }
 

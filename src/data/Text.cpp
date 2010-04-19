@@ -22,6 +22,16 @@ int Text::count(const string &text,
 }
 
 
+bool Text::endsWith(const string &text,
+                    char character) {
+	
+	int last;
+	
+	last = text.length() - 1;
+	return text[last] == character;
+}
+
+
 /**
  * @return position of first character in string that can be part of a word.
  * 

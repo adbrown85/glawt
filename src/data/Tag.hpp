@@ -42,6 +42,9 @@ class Tag {
 		         float &value,
 		         bool required=true) const;
 		bool get(const string &key,
+		         float value[4],
+		         bool required=true) const;
+		bool get(const string &key,
 		         int &value,
 		         bool required=true) const;
 		bool get(const string &key,

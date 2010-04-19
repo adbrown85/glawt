@@ -26,6 +26,8 @@ class Parser {
 	public :
 		
 		bool isComment(string comment);
+		string findAttribute(stringstream &stream);
+		string findTagName(const string &text, size_t &pos);
 		string findTagString();
 		void open(string filename);
 		void parseAttribute(string attributeString, Tag &tag);

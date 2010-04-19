@@ -4,6 +4,7 @@
 	<shader type="fragment" file="shader-file.frag" />
 	<translate x="1.0" y="2.0" z="3.0">
 		<shape type="box" size="1.0" />
+		<uniform type="vec4" name="position" value="1.0 2.0 -3.0 4.0" />
 	</translate>
 </program>
 
