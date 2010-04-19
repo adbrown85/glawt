@@ -6,8 +6,10 @@
  */
 #include "Cube.hpp"
 bool Cube::loaded = false;
-int Cube::coords2dOffset, Cube::coords3dOffset, Cube::pointsOffset;
-GLfloat Cube::coords2d[24][3], Cube::coords3d[24][3], Cube::points[24][3];
+GLint Cube::pointsOffset, Cube::normalsOffset;
+GLint Cube::coords2dOffset, Cube::coords3dOffset;
+GLfloat Cube::points[24][3], Cube::normals[24][3];
+GLfloat Cube::coords2d[24][3], Cube::coords3d[24][3];
 GLubyte Cube::map[8][3];
 GLuint Cube::indicesBuffer=0, Cube::dataBuffer=0;
 GLushort Cube::indices[24];
@@ -24,6 +26,7 @@ Cube::Cube(const Tag &tag) :
 		initIndices();
 		initMap();
 		initPoints();
+		initNormals();
 		initCoords2d();
 		initCoords3d();
 		initBuffers();
@@ -38,10 +41,12 @@ void Cube::draw() const {
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
 	glEnableVertexAttribArray(pointsLoc);
+	glEnableVertexAttribArray(normalsLoc);
 	glEnableVertexAttribArray(coordsLoc);
 	
 	// Draw
 	glVertexAttribPointer(pointsLoc, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
+	glVertexAttribPointer(normalsLoc, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
 	if (style == GL_TEXTURE_2D)
 		glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
 	else
@@ -50,6 +55,7 @@ void Cube::draw() const {
 	
 	// Disable buffers and arrays
 	glDisableVertexAttribArray(pointsLoc);
+	glDisableVertexAttribArray(normalsLoc);
 	glDisableVertexAttribArray(coordsLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -59,7 +65,7 @@ void Cube::draw() const {
 /**
  * Finds vertex attribute locations in the current shader program.
  * 
- * @throws const_char* if a location cannot be found.
+ * @note Does not throw an error in case shaders do not use an attribute.
  */
 void Cube::finalize() {
 	
@@ -68,13 +74,8 @@ void Cube::finalize() {
 	// Find locations in program
 	program = Program::find(parent);
 	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
+	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
 	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
-	
-	// Verify
-	if (pointsLoc == -1)
-		throw "[Cube] Could not find attribute location for 'McVertex'.";
-	if (coordsLoc == -1)
-		throw "[Cube] Could not find attribute location for 'TexCoord0'.";
 }
 
 
@@ -83,9 +84,10 @@ void Cube::initBuffers() {
 	int dataSize;
 	
 	// Calculate sizes and offsets
-	dataSize = sizeof(points) + sizeof(coords2d) + sizeof(coords3d);
+	dataSize = sizeof(points) + sizeof(normals) + sizeof(coords2d) + sizeof(coords3d);
 	pointsOffset = 0;
-	coords2dOffset = pointsOffset + sizeof(points);
+	normalsOffset = pointsOffset + sizeof(points);
+	coords2dOffset = normalsOffset + sizeof(normals);
 	coords3dOffset = coords2dOffset + sizeof(coords2d);
 	
 	// Points and coordinates
@@ -93,6 +95,7 @@ void Cube::initBuffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
 	glBufferData(GL_ARRAY_BUFFER, dataSize, NULL, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, pointsOffset, sizeof(points), points);
+	glBufferSubData(GL_ARRAY_BUFFER, normalsOffset, sizeof(normals), normals);
 	glBufferSubData(GL_ARRAY_BUFFER, coords2dOffset, sizeof(coords2d), coords2d);
 	glBufferSubData(GL_ARRAY_BUFFER, coords3dOffset, sizeof(coords3d), coords3d);
 	
@@ -181,6 +184,27 @@ void Cube::initMap() {
 	for (int i=0; i<8; ++i)
 		for (int j=0; j<3; ++j)
 			this->map[i][j] = map[i][j];
+}
+
+
+void Cube::initNormals() {
+	
+	GLfloat normals[6][3] = {{ 0.0,  0.0, +1.0},     // front
+	                         { 0.0,  0.0, -1.0},     // back
+	                         {-1.0,  0.0,  0.0},     // left
+	                         {+1.0,  0.0,  0.0},     // right
+	                         { 0.0, +1.0,  0.0},     // top
+	                         { 0.0, -1.0,  0.0}};    // bottom
+	int m;
+	
+	// Copy to class
+	for (int f=0; f<6; ++f) {
+		for (int v=0; v<4; ++v) {
+			m = f * 4 + v;
+			for (int c=0; c<3; c++)
+				this->normals[m][c] = normals[f][c];
+		}
+	}
 }
 
 

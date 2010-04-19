@@ -10,8 +10,10 @@
 	<program>
 		<shader file="../../input/basic.vert" />
 		<shader file="../../input/basic.frag" />
-		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection">
-			<cube style="2d"/>
-		</uniform>
+		<uniform type="mat4" name="MVMatrix" link="modelview" />
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="mat3" name="NormalMatrix" link="normal" />
+		<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
+		<cube/>
 	</program>
 </translate>
