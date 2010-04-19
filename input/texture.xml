@@ -1,12 +1,33 @@
-<!-- texture.xml -->
+<!--
+ * texture.xml
+ * 
+ * Author
+ *     Andrew Brown
+-->
 
-<texture2d file="../textures/crate.jpg">
-	<translate x="+5.0">
-		<box size="2.0" style="2d" />
-	</translate>
-</texture2d>
-<texture2d file="../textures/stone.jpg">
-	<translate x="-5.0">
-		<box size="4.0" style="2d" />
-	</translate>
-</texture2d>
+<program>
+	<shader file="texture.vert" />
+	<shader file="texture.frag" />
+	
+	<!-- Left cube -->
+	<texture2d name="crate" file="../textures/crate.jpg">
+		<translate x="+5.0">
+		<scale value="4.0">
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="sampler2d" name="unit" link="crate" />
+			<cube style="2d" />
+		</scale>
+		</translate>
+	</texture2d>
+
+	<!-- Right cube -->
+	<texture2d name="stone" file="../textures/stone.jpg">
+		<translate x="-5.0">
+		<scale value="4.0">
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="sampler2d" name="unit" link="stone" />
+			<cube style="2d" />
+		</scale>
+		</translate>
+	</texture2d>
+</program>

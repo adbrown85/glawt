@@ -5,12 +5,15 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
-uniform sampler2D texture;
+#version 130
+uniform sampler2D unit;
+in vec3 TexCoord;
+out vec4 FragColor;
 
 
 
 void main() {
 	
-	gl_FragColor = texture2D(texture, gl_TexCoord[0].st);
+	FragColor = texture(unit, TexCoord.st);
 }
 
