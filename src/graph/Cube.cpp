@@ -123,7 +123,7 @@ void Cube::initCoords2d() {
 		for (int v=0; v<6; v++) {
 			m = map[i][v];
 			for (int c=0; c<3; c++)
-				coords2d[m][c] = coords[i][c];
+				this->coords2d[m][c] = coords[i][c];
 		}
 	}
 }
@@ -149,7 +149,7 @@ void Cube::initCoords3d() {
 		for (int v=0; v<3; ++v) {
 			m = map[i][v];
 			for (int c=0; c<3; ++c)
-				coords3d[m][c] = coords[i][c];
+				this->coords3d[m][c] = coords[i][c];
 		}
 	}
 }
