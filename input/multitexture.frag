@@ -4,14 +4,17 @@
  * Author
  *     Andy Brown <andybrown85@gmail.com>
  */
+#version 130
 uniform sampler2D left, right;
+in vec3 TexCoord;
+out vec4 FragColor;
 
 
 void main() {
 	
-	if (gl_TexCoord[0].s < 0.5)
-		gl_FragColor = texture2D(left, gl_TexCoord[0].st);
+	if (TexCoord.s < 0.5)
+		FragColor = texture2D(left, TexCoord.st);
 	else
-		gl_FragColor = texture2D(right, gl_TexCoord[0].st);
+		FragColor = texture2D(right, TexCoord.st);
 }
 

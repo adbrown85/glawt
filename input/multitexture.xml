@@ -11,21 +11,24 @@
 <texture2d file="../textures/crate.jpg" name="crate">
 <texture2d file="../textures/stone.jpg" name="stone">
 	<program>
+		<shader file="multitexture.vert" />
 		<shader file="multitexture.frag" />
-		<uniform type="sampler2d" name="left" link="crate">
-		<uniform type="sampler2d" name="right" link="stone">
-			<translate x="-2.0">
-				<box size="2.0" style="2d" />
-			</translate>
-		</uniform>
-		</uniform>
-		<uniform type="sampler2d" name="left" link="stone">
-		<uniform type="sampler2d" name="right" link="crate">
-			<translate x="+2.0">
-				<box size="2.0" style="2d" />
-			</translate>
-		</uniform>
-		</uniform>
+		
+		<!-- Left cube -->
+		<translate x="-1.0">
+			<uniform type="sampler2d" name="left" link="crate" />
+			<uniform type="sampler2d" name="right" link="stone" />
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<cube style="2d" />
+		</translate>
+		
+		<!-- Right cube -->
+		<translate x="+1.0">
+			<uniform type="sampler2d" name="left" link="stone" />
+			<uniform type="sampler2d" name="right" link="crate" />
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<cube style="2d" />
+		</translate>
 	</program>
 </texture2d>
 </texture2d>
