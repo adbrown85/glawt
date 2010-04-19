@@ -82,17 +82,6 @@ float Matrix::det(int n) const {
 
 
 /**
- * Puts the matrix into a single-subscript array.  Column-major order.
- */
-void Matrix::getArray(float array[16]) {
-	
-	for (int j=0; j<4; ++j)
-		for (int i=0; i<4; ++i)
-			array[j*4+i] = this->get(i,j);
-}
-
-
-/**
  * Calculate the determinant of the entire matrix.
  */
 float Matrix::getDeterminant() const {
@@ -272,4 +261,16 @@ void Matrix::set(float array[16]) {
 		for (int i=0; i<4; i++)
 			arr[i][j] = array[j*4+i];
 }
+
+
+/**
+ * Puts the matrix into a single-subscript array.  Column-major order.
+ */
+void Matrix::toArray(float *array) {
+	
+	for (int j=0; j<size; ++j)
+		for (int i=0; i<size; ++i)
+			array[j*size+i] = this->get(i,j);
+}
+
 

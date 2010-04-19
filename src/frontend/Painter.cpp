@@ -35,7 +35,7 @@ void Painter::paint(Scene &scene,
 	             scene.position.y,
 	             scene.position.z);
 	rotationMatrix = scene.getRotationMatrix();
-	rotationMatrix.getArray(rotationMatrixArray);
+	rotationMatrix.toArray(rotationMatrixArray);
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw

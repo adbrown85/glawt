@@ -31,7 +31,6 @@ class Matrix {
 		       float c0, float c1, float c2, float c3,
 		       float d0, float d1, float d2, float d3);
 		float get(int i, int j) const;
-		void getArray(float array[16]);
 		float getDeterminant() const;
 		int getColumns() const;
 		Matrix getInverse() const;
@@ -44,6 +43,7 @@ class Matrix {
 		friend Vector operator*(const Matrix &A, const Vector &B);
 		void print();
 		void set(float array[16]);
+		void toArray(float *array);
 	
 	private :
 		

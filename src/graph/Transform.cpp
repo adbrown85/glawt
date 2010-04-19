@@ -44,6 +44,6 @@ void Transform::getModelViewProjectionMatrix(GLfloat array[16]) {
 	Matrix mvpMatrix;
 	
 	mvpMatrix = getModelViewProjectionMatrix();
-	mvpMatrix.getArray(array);
+	mvpMatrix.toArray(array);
 }
 
