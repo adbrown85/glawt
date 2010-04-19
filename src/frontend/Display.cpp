@@ -127,9 +127,9 @@ void Display::start(int argc,
 	glutCreateWindow(title.c_str());
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glDepthFunc(GL_ALWAYS);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glEnable(GL_BLEND);
+	//glDepthFunc(GL_ALWAYS);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	// Initialize view
 	glViewport(0, 0, width, height);
