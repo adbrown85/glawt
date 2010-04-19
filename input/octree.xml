@@ -26,13 +26,9 @@
 				<uniform type="sampler1d" name="octree" link="octree">
 				<uniform type="int" name="count" value="9">
 				<uniform type="int" name="height" value="1">
-<!--
 				<uniform type="sampler3d" name="volume" link="volume">
--->
 					<box/>
-<!--
 				</uniform>
--->
 				</uniform>
 				</uniform>
 				</uniform>

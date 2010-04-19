@@ -24,12 +24,6 @@ int jump[MAX_HEIGHT];
 bool Octree_init(in int height,
                  in int count) {
 	
-	// Check height and length
-	if (height > MAX_HEIGHT || count == 0) {
-		gl_FragColor = RED;
-		return false;
-	}
-	
 	// Initialize jumps
 	jump[0] = 1;
 	jump[1] = 9;
@@ -39,6 +33,12 @@ bool Octree_init(in int height,
 	jump[5] = 37449;
 	jump[6] = 299593;
 	jump[7] = 2396745;
+	
+	// Check height and length
+	if (height > MAX_HEIGHT || count == 0) {
+		gl_FragColor = RED;
+		return false;
+	}
 	
 	// Finish
 	return true;
@@ -293,7 +293,6 @@ OctreeNode Octree_findNextChild(in OctreeNode pNode,
  * @param cNode Child node
  * @return vector with 1 in component if that direction changed
  */
-/*
 vec3 Octree_getChange(in OctreeNode cNode) {
 	
 	switch (cNode.name) {
@@ -307,7 +306,6 @@ vec3 Octree_getChange(in OctreeNode cNode) {
 	case 7: return vec3(1,1,1);
 	}
 }
-*/
 
 
 /**
@@ -317,7 +315,6 @@ vec3 Octree_getChange(in OctreeNode cNode) {
  * @param pTimes Parent times
  * @return times of the child node
  */
-/*
 BoundaryTimes Octree_updateTimes(in OctreeNode cNode,
                                  in BoundaryTimes pTimes) {
 	
@@ -334,10 +331,8 @@ BoundaryTimes Octree_updateTimes(in OctreeNode cNode,
 	cTimes.th = (cTimes.t0 + cTimes.t1) * 0.5;
 	return cTimes;
 }
-*/
 
 
-/*
 void Octree_sampleAsLeaf(in Ray ray,
                          BoundaryTimes times,
                          in sampler3D volume) {
@@ -359,7 +354,6 @@ void Octree_sampleAsLeaf(in Ray ray,
 		t += 0.1;
 	}
 }
-*/
 
 
 void Octree_sample(in sampler3D volume,
@@ -381,6 +375,9 @@ void Octree_sample(in sampler3D volume,
 	// Initialize bounding box and times
 	box = BoundingBox_();
 	times[0] = BoundingBox_calculateTimes(box, ray);
+	for (int i=1; i<MAX_HEIGHT; ++i) {
+		times[i] = BoundaryTimes_();
+	}
 	
 	// Initialize depth and height
 	depth = 0;
@@ -395,13 +392,13 @@ void Octree_sample(in sampler3D volume,
 	}
 	
 	// While in volume
-	// while (depth >= 0) {
+	gl_FragColor = BLACK;
+	while (depth >= 0) {
 		switch (step[depth]) {
 		case FIRST_STEP:
 			
 			// Check if empty
 			if (Octree_isEmpty(octree, count, node[depth])) {
-				gl_FragColor = RED;
 				--depth;
 				++cHeight;
 				continue;
@@ -409,8 +406,7 @@ void Octree_sample(in sampler3D volume,
 			
 			// Check if leaf
 			if (depth == height) {
-				// Octree_sampleAsLeaf(ray, times[depth], volume);
-				gl_FragColor = GREEN;
+				Octree_sampleAsLeaf(ray, times[depth], volume);
 				--depth;
 				++cHeight;
 				continue;
@@ -418,24 +414,36 @@ void Octree_sample(in sampler3D volume,
 		
 		case SECOND_STEP:
 			
-			// Sample children
+			// Sample first child
 			cDepth = depth + 1;
 			if (node[cDepth].name == NULL) {
 				node[cDepth] = Octree_findEntryChild(node[depth],
 				                                     times[depth],
 				                                     cHeight);
+				switch (node[cDepth].name) {
+					case 0: gl_FragColor = WHITE; break;
+					case 1: gl_FragColor = GREEN; break;
+					case 2: gl_FragColor = BLUE; break;
+					case 3: gl_FragColor = YELLOW; break;
+					case 4: gl_FragColor = ORANGE; break;
+					case 5: gl_FragColor = PURPLE; break;
+					case 6: gl_FragColor = BROWN; break;
+					case 7: gl_FragColor = GRAY; break;
+					default: break;
+				}
+				times[cDepth] = Octree_updateTimes(node[cDepth], times[depth]);
+				step[depth] = SECOND_STEP;
+				step[cDepth] = FIRST_STEP;
+				++depth;
+				--cHeight;
 			}
 			
-			switch (node[cDepth].name) {
-			case 0: gl_FragColor = WHITE; break;
-			case 1: gl_FragColor = GREEN; break;
-			case 2: gl_FragColor = BLUE; break;
-			case 3: gl_FragColor = YELLOW; break;
-			case 4: gl_FragColor = ORANGE; break;
-			case 5: gl_FragColor = PURPLE; break;
-			case 6: gl_FragColor = BROWN; break;
-			case 7: gl_FragColor = GRAY; break;
+			// Otherwise move back up
+			else {
+				--depth;
+				++cHeight;
 			}
+			
 /*
 			else {
 				node[cDepth] = Octree_findNextChild(node[depth],
@@ -460,6 +468,6 @@ void Octree_sample(in sampler3D volume,
 			}
 */
 		}
-	//}
+	}
 }
 

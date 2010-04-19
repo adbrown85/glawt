@@ -17,6 +17,20 @@ struct BoundaryTimes {
 
 
 /**
+ * Default constructor.
+ */
+BoundaryTimes BoundaryTimes_() {
+	
+	BoundaryTimes times;
+	
+	times.t0 = vec3(0,0,0);
+	times.t1 = vec3(0,0,0);
+	times.th = vec3(0,0,0);
+	return times;
+}
+
+
+/**
  * Finds where the ray actually intersects a bounding box.
  * 
  * @param times Instance
