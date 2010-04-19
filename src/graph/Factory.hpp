@@ -27,6 +27,7 @@
 #include "Parser.hpp"
 #include "Position.hpp"
 #include "Program.hpp"
+#include "Scale.hpp"
 #include "Scene.hpp"
 #include "Shader.hpp"
 #include "Specular.hpp"

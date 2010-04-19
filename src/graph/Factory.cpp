@@ -53,6 +53,8 @@ Node* Factory::create(const Tag &tag) {
 		return new Position(tag);
 	else if (tag.name == "program")
 		return new Program(tag);
+	else if (tag.name == "scale")
+		return new Scale(tag);
 	else if (tag.name == "shader")
 		return new Shader(tag);
 	else if (tag.name == "specular")
