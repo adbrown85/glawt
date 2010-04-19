@@ -18,17 +18,6 @@ Matrix Transform::getModelViewMatrix() {
 }
 
 
-Matrix Transform::getProjectionMatrix() {
-	
-	GLfloat array[16];
-	Matrix matrix;
-	
-	glGetFloatv(GL_PROJECTION_MATRIX, array);
-	matrix.set(array);
-	return matrix;
-}
-
-
 Matrix Transform::getModelViewProjectionMatrix() {
 	
 	Matrix mvMatrix, pMatrix;
@@ -47,3 +36,28 @@ void Transform::getModelViewProjectionMatrix(GLfloat array[16]) {
 	mvpMatrix.toArray(array);
 }
 
+
+Matrix Transform::getNormalMatrix() {
+	
+	return getModelViewMatrix().getInverse().getTranspose();
+}
+
+
+void Transform::getNormalMatrix(GLfloat array[9]) {
+	
+	Matrix normalMatrix;
+	
+	normalMatrix = getNormalMatrix();
+	normalMatrix.toArray(array);
+}
+
+
+Matrix Transform::getProjectionMatrix() {
+	
+	GLfloat array[16];
+	Matrix matrix;
+	
+	glGetFloatv(GL_PROJECTION_MATRIX, array);
+	matrix.set(array);
+	return matrix;
+}

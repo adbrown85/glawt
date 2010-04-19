@@ -18,9 +18,11 @@ class Transform {
 	public :
 		
 		static Matrix getModelViewMatrix();
-		static Matrix getProjectionMatrix();
 		static Matrix getModelViewProjectionMatrix();
 		static void getModelViewProjectionMatrix(GLfloat array[16]);
+		static Matrix getNormalMatrix();
+		static void getNormalMatrix(GLfloat array[9]);
+		static Matrix getProjectionMatrix();
 };
 
 
