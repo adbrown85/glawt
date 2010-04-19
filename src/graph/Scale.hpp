@@ -31,6 +31,10 @@ class Scale : public Transformation,
 		virtual void apply();
 		virtual void remove();
 		virtual string toString() const;
+	
+	private:
+		
+		float value;
 };
 
 

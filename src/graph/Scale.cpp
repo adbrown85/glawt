@@ -14,14 +14,22 @@
  */
 Scale::Scale(const Tag &tag) {
 	
-	// Initialize
+	// Class name
 	className = "Scale";
-	if (!tag.get("x", x, false))
-		x = 1.0f;
-	if (!tag.get("y", y, false))
-		y = 1.0f;
-	if (!tag.get("z", z, false))
-		z = 1.0f;
+	
+	// Values
+	if (tag.get("value", value, false)) {
+		x = value;
+		y = value;
+		z = value;
+	} else {
+		if (!tag.get("x", x, false))
+			x = 1.0f;
+		if (!tag.get("y", y, false))
+			y = 1.0f;
+		if (!tag.get("z", z, false))
+			z = 1.0f;
+	}
 }
 
 
