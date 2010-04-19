@@ -15,19 +15,23 @@
 		<shader file="multitexture.frag" />
 		
 		<!-- Left cube -->
-		<translate x="-1.0">
+		<translate x="-2.0">
+		<scale x="2.0" y="2.0" z="2.0">
 			<uniform type="sampler2d" name="left" link="crate" />
 			<uniform type="sampler2d" name="right" link="stone" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<cube style="2d" />
+		</scale>
 		</translate>
 		
 		<!-- Right cube -->
-		<translate x="+1.0">
+		<translate x="+2.0">
+		<scale x="2.0" y="2.0" z="2.0">
 			<uniform type="sampler2d" name="left" link="stone" />
 			<uniform type="sampler2d" name="right" link="crate" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<cube style="2d" />
+		</scale>
 		</translate>
 	</program>
 </texture2d>
