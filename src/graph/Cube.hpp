@@ -27,10 +27,10 @@ class Cube : public Shape {
 		
 		GLint coordsLoc, pointsLoc, normalsLoc;
 		static bool loaded;
-		static GLint coords2dOffset, coords3dOffset;
-		static GLint pointsOffset, normalsOffset;
 		static GLfloat coords2d[24][3], coords3d[24][3];
 		static GLfloat points[24][3], normals[24][3];
+		static GLint coords2dOffset, coords3dOffset;
+		static GLint pointsOffset, normalsOffset;
 		static GLubyte map[8][3];
 		static GLuint dataBuffer, indicesBuffer;
 		static GLushort indices[24];
