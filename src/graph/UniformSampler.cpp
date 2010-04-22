@@ -59,7 +59,7 @@ string UniformSampler::toString() const {
 	ostringstream stream;
 	
 	stream << Uniform::toString();
-	stream << " value='" << value;
+	stream << " value='" << value << "'";
 	return stream.str();
 }
 
