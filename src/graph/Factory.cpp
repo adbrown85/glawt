@@ -61,6 +61,8 @@ Node* Factory::create(const Tag &tag) {
 		return new Specular(tag);
 	else if (tag.name == "square")
 		return new Square(tag);
+	else if (tag.name == "squarevbo")
+		return new SquareVBO(tag);
 	else if (tag.name == "target")
 		return new Target(tag);
 	else if (tag.name == "texture2d")

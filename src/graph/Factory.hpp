@@ -32,6 +32,7 @@
 #include "Shader.hpp"
 #include "Specular.hpp"
 #include "Square.hpp"
+#include "SquareVBO.hpp"
 #include "Texture2D.hpp"
 #include "Texture3D.hpp"
 #include "Translation.hpp"

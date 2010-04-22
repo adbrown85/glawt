@@ -54,6 +54,7 @@ Box.o: Shape.o Texture.o
 Cube.o: Shape.o
 Outline.o: Shape.o
 Square.o: Shape.o Texture.o
+SquareVBO.o: Shape.o Program.o
 
 # Collections of nodes
 Selection.o: Node.o

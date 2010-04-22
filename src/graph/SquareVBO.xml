@@ -1,0 +1,21 @@
+<!--
+ * SquareVBO.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="../../input/basic.vert" />
+	<shader file="../../input/basic.frag" />
+	<translate>
+	<scale value="2">
+		<uniform type="mat4" name="MVMatrix" link="modelview" />
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="mat3" name="NormalMatrix" link="normal" />
+		<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
+		<squarevbo />
+	</scale>
+	</translate>
+</program>
