@@ -4,18 +4,33 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-uniform sampler1D octree;
+#version 130
+#include "../../input/Colors.glsl"
+uniform usampler1D octree;
+in vec3 TexCoord;
+out vec4 FragColor;
+
+
+bool isAtEdge() {
+	
+	return TexCoord.s < 0.01 || TexCoord.s > 0.99 ||
+	       TexCoord.t < 0.01 || TexCoord.t > 0.99;
+}
 
 
 void main() {
 	
-	if (gl_TexCoord[0].s < 0.01
-	      || gl_TexCoord[0].s > 0.99
-	      || gl_TexCoord[0].t < 0.01
-	      || gl_TexCoord[0].t > 0.99) {
-		gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+	uvec4 texel;
+	
+	if (isAtEdge()) {
+		FragColor = YELLOW;
 	} else {
-		gl_FragColor = texture1D(octree, gl_TexCoord[0].s);
+		texel = texelFetch(octree, 8, 0);
+		if (texel.x == uint(0)) {
+			FragColor = GREEN;
+		} else {
+			FragColor = RED;
+		}
 	}
 }
 

@@ -6,13 +6,14 @@
 -->
 
 
-<texture3d file="../../textures/chunk.vlb" name="chunk">
-	<octree name="octree" link="chunk" threshold="80">
-		<program>
-			<shader file="Octree.frag">
-			<uniform type="sampler1d" name="octree" link="octree">
-				<square/>
-			</uniform>
-		</program>
-	</octree>
-</texture3d>
+<program>
+	<shader file="Octree.vert" />
+	<shader file="Octree.frag" />
+	<texture3d file="../../textures/chunk.vlb" name="chunk">
+		<octree name="octree" link="chunk" threshold="80">
+			<uniform type="sampler1d" name="octree" link="octree" />
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<squarevbo />
+		</octree>
+	</texture3d>
+</program>

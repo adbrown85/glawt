@@ -92,10 +92,10 @@ void Octree::load() {
 	glBindTexture(GL_TEXTURE_1D, handle);
 	glTexImage1D(GL_TEXTURE_1D,          // target
 	             0,                      // level
-	             1,                      // components
+	             GL_R8UI,                // internal format
 	             size,                   // width
 	             0,                      // border
-	             GL_LUMINANCE,           // format
+	             GL_RED_INTEGER,         // format
 	             GL_UNSIGNED_BYTE,       // type
 	             textureData);           // data
 	
