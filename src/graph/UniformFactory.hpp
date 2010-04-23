@@ -8,6 +8,7 @@
 #define UNIFORMFACTORY_HPP
 #include <cstdlib>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <string>
 #include "Uniform.hpp"
@@ -26,9 +27,19 @@ using namespace std;
  */
 class UniformFactory {
 	
-	public :
+	public:
 		
 		static Uniform* create(const Tag &tag);
+	
+	private:
+		
+		static bool loaded;
+		static set<string> matrices, samplers, vectors;
+		
+		static void init();
+		static bool isMatrix(const string &type);
+		static bool isSampler(const string &type);
+		static bool isVector(const string &type);
 };
 
 
