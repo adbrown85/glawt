@@ -331,13 +331,18 @@ void Octree_sampleAsLeaf(in Ray ray,
                          BoundaryTimes times,
                          in sampler3D volume) {
 	
-	float t, tEnter, tLeave;
-	vec4 rayPos, sample;
+	int steps;
+	float tEnter, tLeave;
+	vec4 rayEnd, rayInc, rayPos, sample;
 	
 	BoundaryTimes_getIntersections(times, tEnter, tLeave);
-	t = tEnter + 0.05;
-	while (t < tLeave) {
-		rayPos = ray.o + (ray.d * t);
+	rayPos = ray.o + (ray.d * tEnter);
+	rayEnd = ray.o + (ray.d * tLeave);
+	rayInc = ray.d * (1.732 / 64);
+	steps = int(length(rayEnd-rayPos) / length(rayInc));
+	
+	for (int i=0; i<steps; ++i) {
+		rayPos += rayInc;
 		sample = texture(volume, rayPos.stp);
 		sample.a = sample.x;
 		if (sample.a > 0.01) {
@@ -345,7 +350,6 @@ void Octree_sampleAsLeaf(in Ray ray,
 			if (FragColor.a > 0.9)
 				break;
 		}
-		t += 0.1;
 	}
 }
 
