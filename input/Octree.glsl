@@ -189,7 +189,6 @@ OctreeNode Octree_findEntryChild(in OctreeNode pNode,
  * 
  * @param times Times of the node
  */
-/*
 int Octree_findExitPlane(in BoundaryTimes times) {
 	
 	// X hits before Y, then compare to Z
@@ -210,7 +209,6 @@ int Octree_findExitPlane(in BoundaryTimes times) {
 		}
 	}
 }
-*/
 
 
 /**
@@ -222,7 +220,6 @@ int Octree_findExitPlane(in BoundaryTimes times) {
  * @param cNodeLast Last child node
  * @return the next child node
  */
-/*
 OctreeNode Octree_findNextChild(in OctreeNode pNode,
                                 in BoundaryTimes cTimesLast,
                                 in int cHeight,
@@ -282,7 +279,6 @@ OctreeNode Octree_findNextChild(in OctreeNode pNode,
 		}
 	}
 }
-*/
 
 
 /**
@@ -411,61 +407,30 @@ void Octree_sample(in sampler3D volume,
 		
 		case SECOND_STEP:
 			
-			// Sample first child
+			// Find first or next child
 			cDepth = depth + 1;
 			if (node[cDepth].name == NULL) {
 				node[cDepth] = Octree_findEntryChild(node[depth],
 				                                     times[depth],
 				                                     cHeight);
-				times[cDepth] = Octree_updateTimes(node[cDepth], times[depth]);
-				step[depth] = SECOND_STEP;
-				step[cDepth] = FIRST_STEP;
-				++depth;
-				--cHeight;
-/*
-				switch (node[cDepth].key) {
-					case 1: FragColor = WHITE; break;
-					case 2: FragColor = GREEN; break;
-					case 3: FragColor = BLUE; break;
-					case 4: FragColor = YELLOW; break;
-					case 5: FragColor = ORANGE; break;
-					case 6: FragColor = PURPLE; break;
-					case 7: FragColor = BROWN; break;
-					case 8: FragColor = GRAY; break;
-					default: break;
-				}
-*/
-			}
-			
-			// Otherwise move back up
-			else {
-				--depth;
-				++cHeight;
-			}
-			
-/*
-			else {
+			} else {
 				node[cDepth] = Octree_findNextChild(node[depth],
 				                                    times[depth],
 				                                    cHeight,
 				                                    node[cDepth]);
 			}
 			
-			// Check if out of volume
-			if (node[cDepth].name == NULL) {
-				--depth;
-				++cHeight;
-			}
-			
-			// Otherwise move to child
-			else {
+			// Move to child if not out of volume
+			if (node[cDepth].name != NULL) {
 				times[cDepth] = Octree_updateTimes(node[cDepth], times[depth]);
 				step[depth] = SECOND_STEP;
 				step[cDepth] = FIRST_STEP;
 				++depth;
 				--cHeight;
+			} else {
+				--depth;
+				++cHeight;
 			}
-*/
 		}
 	}
 }
