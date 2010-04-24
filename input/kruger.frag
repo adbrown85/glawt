@@ -23,9 +23,9 @@ void main() {
 	rayPos = TexCoord;
 	rayDir = normalize(rayEnd - rayPos);
 	rayInc = rayDir * (1.732 / samples);
-	steps = int(length(rayEnd-rayPos) / length(rayInc));
 	
 	// Sample through volume
+	steps = int(length(rayEnd-rayPos) / length(rayInc));
 	for (int i=0; i<steps; ++i) {
 		rayPos += rayInc;
 		sample = texture(volume, rayPos.stp);
