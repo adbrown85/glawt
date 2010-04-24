@@ -1,15 +1,16 @@
 /*
  * coordinates.frag
- *     Sets the fragment equal to its coordinates.
  * 
  * Author
- *     Andy Brown <andybrown85@gmail.com>
+ *     Andrew Brown <adb1413@rit.edu>
  */
-#version 110
+#version 130
+in vec3 TexCoord;
+out vec4 FragColor;
 
 
 void main() {
 	
-	gl_FragColor = gl_TexCoord[0];
+	FragColor = vec4(TexCoord, 1.0);
 }
 
