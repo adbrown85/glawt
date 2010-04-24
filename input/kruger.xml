@@ -9,27 +9,32 @@
 
 <texture2d name="target" size="512">
 	<translate>
+		
+		<!-- Render back faces into offscreen buffer -->
 		<framebuffer>
 			<target link="target" />
 			<program>
+				<shader file="coordinates.vert" />
 				<shader file="coordinates.frag" />
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 				<cull faces="front">
-					<box/>
+					<cube />
 				</cull>
 			</program>
 		</framebuffer>
+		
+		<!-- Sample volume -->
 		<program>
+			<shader file="kruger.vert" />
 			<shader file="kruger.frag" />
-			<texture3d file="../textures/chunk.vlb" name="volume">
-				<uniform type="sampler3d" name="volume" link="volume">
+			<texture3d file="../textures/bear.vlb" name="volume">
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 				<uniform type="sampler2d" name="target" link="target">
-				<uniform type="int" name="samples" value="256">
-					<cull faces="back">
-						<box />
-					</cull>
-				</uniform>
-				</uniform>
-				</uniform>
+				<uniform type="sampler3d" name="volume" link="volume">
+				<uniform type="int" name="samples" value="64">
+				<cull faces="back">
+					<cube />
+				</cull>
 			</texture3d>
 		</program>
 	</translate>
