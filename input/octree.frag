@@ -4,13 +4,11 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#version 110
+#version 130
 #include "Octree.glsl"
-uniform int bufferSize;
 uniform sampler2D buffer;
-uniform sampler1D octree;
-uniform int count;
 uniform sampler3D volume;
+uniform usampler1D octree;
 uniform int height;
 
 
@@ -18,19 +16,15 @@ uniform int height;
 void main() {
 	
 	Ray ray;
-	vec4 rayDir, rayEnd;
 	
-	// Initialize
-	rayEnd = texture2D(buffer, gl_FragCoord.xy/float(bufferSize));
-	rayDir = rayEnd - gl_TexCoord[0];
-	ray = Ray(gl_TexCoord[0], rayDir);
-	
-	// Can't handle negative directions yet
+	// Initialize ray
+	ray.o = TexCoord;
+	ray.d = normalize(texelFetch(buffer,ivec2(gl_FragCoord.xy),0) - TexCoord);
 	if (Ray_isNegative(ray)) {
 		discard;
 	}
 	
 	// Sample
-	Octree_sample(volume, octree, count, ray, height);
+	Octree_sample(volume, octree, height, ray);
 }
 

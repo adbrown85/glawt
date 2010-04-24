@@ -11,29 +11,25 @@
 		<framebuffer>
 			<target link="buffer"/>
 			<program>
-				<shader file="coordinates.frag"/>
+				<shader file="coordinates.vert" />
+				<shader file="coordinates.frag" />
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 				<cull faces="front">
-					<box/>
+					<cube />
 				</cull>
 			</program>
 		</framebuffer>
 		<texture3d file="../textures/chunk.vlb" name="volume">
 		<octree name="octree" link="volume" threshold="80">
 			<program>
+				<shader file="octree.vert"/>
 				<shader file="octree.frag"/>
-				<uniform type="sampler2d" name="buffer" link="buffer">
-				<uniform type="int" name="bufferSize" value="512">
-				<uniform type="sampler1d" name="octree" link="octree">
-				<uniform type="int" name="count" value="9">
-				<uniform type="int" name="height" value="1">
-				<uniform type="sampler3d" name="volume" link="volume">
-					<box/>
-				</uniform>
-				</uniform>
-				</uniform>
-				</uniform>
-				</uniform>
-				</uniform>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="sampler2D" name="buffer" link="buffer" />
+				<uniform type="sampler3D" name="volume" link="volume" />
+				<uniform type="usampler1D" name="octree" link="octree" />
+				<uniform type="int" name="height" value="1" />
+				<cube />
 			</program>
 		</octree>
 		</texture3d>

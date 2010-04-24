@@ -18,11 +18,12 @@
 #define FIRST_CHILD 0
 #define ROOT_KEY 0
 #define NULL_NODE OctreeNode_()
+in vec4 TexCoord;
+out vec4 FragColor;
 int jump[MAX_HEIGHT];
 
 
-bool Octree_init(in int height,
-                 in int count) {
+bool Octree_init(in int height) {
 	
 	// Initialize jumps
 	jump[0] = 1;
@@ -35,8 +36,8 @@ bool Octree_init(in int height,
 	jump[7] = 2396745;
 	
 	// Check height and length
-	if (height > MAX_HEIGHT || count == 0) {
-		gl_FragColor = RED;
+	if (height > MAX_HEIGHT) {
+		FragColor = RED;
 		return false;
 	}
 	
@@ -45,20 +46,17 @@ bool Octree_init(in int height,
 }
 
 
-bool Octree_isEmpty(in sampler1D octree,
-                    in int count,
-                    in OctreeNode node) {
+bool Octree_isEmpty(in usampler1D octree,
+                    in int nodeKey) {
 	
-	float index;
-	vec4 texel;
+	uvec4 texel;
 	
 	// Check if index in octree texture is empty
-	index = float(node.key) / float(count);
-	texel = texture1D(octree, index);
-	if (texel.x > 0.5) {
-		return true;
-	} else {
+	texel = texelFetch(octree, nodeKey, 0);
+	if (texel.r == uint(0)) {
 		return false;
+	} else {
+		return true;
 	}
 }
 
@@ -344,11 +342,11 @@ void Octree_sampleAsLeaf(in Ray ray,
 	t = tEnter + 0.05;
 	while (t < tLeave) {
 		rayPos = ray.o + (ray.d * t);
-		sample = texture3D(volume, rayPos.stp);
+		sample = texture(volume, rayPos.stp);
 		sample.a = sample.x;
 		if (sample.a > 0.01) {
-			gl_FragColor = mix(gl_FragColor, sample, sample.a);
-			if (gl_FragColor.a > 0.9)
+			FragColor = mix(FragColor, sample, sample.a);
+			if (FragColor.a > 0.9)
 				break;
 		}
 		t += 0.1;
@@ -357,10 +355,9 @@ void Octree_sampleAsLeaf(in Ray ray,
 
 
 void Octree_sample(in sampler3D volume,
-                   in sampler1D octree,
-                   in int count,
-                   in Ray ray,
-                   in int height) {
+                   in usampler1D octree,
+                   in int height,
+                   in Ray ray) {
 	
 	BoundingBox box;
 	BoundaryTimes times[MAX_HEIGHT];
@@ -368,7 +365,7 @@ void Octree_sample(in sampler3D volume,
 	OctreeNode node[MAX_HEIGHT];
 	
 	// Initialize octree
-	if (!Octree_init(height, count)) {
+	if (!Octree_init(height)) {
 		return;
 	}
 	
@@ -392,13 +389,13 @@ void Octree_sample(in sampler3D volume,
 	}
 	
 	// While in volume
-	gl_FragColor = BLACK;
+	FragColor = BLACK;
 	while (depth >= 0) {
 		switch (step[depth]) {
 		case FIRST_STEP:
 			
 			// Check if empty
-			if (Octree_isEmpty(octree, count, node[depth])) {
+			if (Octree_isEmpty(octree, node[depth].key)) {
 				--depth;
 				++cHeight;
 				continue;
@@ -420,22 +417,24 @@ void Octree_sample(in sampler3D volume,
 				node[cDepth] = Octree_findEntryChild(node[depth],
 				                                     times[depth],
 				                                     cHeight);
-				switch (node[cDepth].name) {
-					case 0: gl_FragColor = WHITE; break;
-					case 1: gl_FragColor = GREEN; break;
-					case 2: gl_FragColor = BLUE; break;
-					case 3: gl_FragColor = YELLOW; break;
-					case 4: gl_FragColor = ORANGE; break;
-					case 5: gl_FragColor = PURPLE; break;
-					case 6: gl_FragColor = BROWN; break;
-					case 7: gl_FragColor = GRAY; break;
-					default: break;
-				}
 				times[cDepth] = Octree_updateTimes(node[cDepth], times[depth]);
 				step[depth] = SECOND_STEP;
 				step[cDepth] = FIRST_STEP;
 				++depth;
 				--cHeight;
+/*
+				switch (node[cDepth].key) {
+					case 1: FragColor = WHITE; break;
+					case 2: FragColor = GREEN; break;
+					case 3: FragColor = BLUE; break;
+					case 4: FragColor = YELLOW; break;
+					case 5: FragColor = ORANGE; break;
+					case 6: FragColor = PURPLE; break;
+					case 7: FragColor = BROWN; break;
+					case 8: FragColor = GRAY; break;
+					default: break;
+				}
+*/
 			}
 			
 			// Otherwise move back up
