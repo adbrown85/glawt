@@ -20,7 +20,7 @@
 #define ROOT_KEY 0
 
 // Constants
-int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745/**/);
+int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745);
 
 // Uniforms
 uniform sampler2D buffer;
@@ -226,31 +226,8 @@ void findNextChild() {
 }
 
 
-/**
- * Determines change in boundaries between a parent and child node.
- * 
- * @param cName Child node name
- * @return vector with 1 in component if that direction changed
- */
-/*
-vec3 getChange(in int cName) {
-	
-	switch (cName) {
-	case 0: return vec3(0,0,0);
-	case 1: return vec3(1,0,0);
-	case 2: return vec3(0,1,0);
-	case 3: return vec3(1,1,0);
-	case 4: return vec3(0,0,1);
-	case 5: return vec3(1,0,1);
-	case 6: return vec3(0,1,1);
-	case 7: return vec3(1,1,1);
-	}
-}
-*/
-
-
-void update(in float t0x, in float t0y, in float t0z,
-            in float t1x, in float t1y, in float t1z) {
+void updateTimes(in float t0x, in float t0y, in float t0z,
+                 in float t1x, in float t1y, in float t1z) {
 	
 	t0[c].x = t0x;
 	t0[c].y = t0y;
@@ -268,28 +245,28 @@ void updateTimes() {
 	
 	switch (node[c].name) {
 		case 0:
-			update(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
+			updateTimes(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
 			break;
 		case 1:
-			update(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
+			updateTimes(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
 			break;
 		case 2:
-			update(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
+			updateTimes(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
 			break;
 		case 3:
-			update(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
+			updateTimes(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
 			break;
 		case 4:
-			update(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
+			updateTimes(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
 			break;
 		case 5:
-			update(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
+			updateTimes(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
 			break;
 		case 6:
-			update(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
+			updateTimes(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
 			break;
 		case 7:
-			update(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
+			updateTimes(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
 			break;
 	}
 }
