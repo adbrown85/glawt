@@ -249,7 +249,6 @@ vec3 getChange(in int cName) {
 */
 
 
-/*
 void update(in float t0x, in float t0y, in float t0z,
             in float t1x, in float t1y, in float t1z) {
 	
@@ -260,7 +259,6 @@ void update(in float t0x, in float t0y, in float t0z,
 	t1[c].y = t1y;
 	t1[c].z = t1z;
 }
-*/
 
 
 /**
@@ -270,36 +268,28 @@ void updateTimes() {
 	
 	switch (node[c].name) {
 		case 0:
-			t0[c].x = t0[d].x;  t0[c].y = t0[d].y;  t0[c].z = t0[d].z;
-			t1[c].x = th[d].x;  t1[c].y = th[d].y;  t1[c].z = th[d].z;
+			update(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
 			break;
 		case 1:
-			t0[c].x = th[d].x;  t0[c].y = t0[d].y;  t0[c].z = t0[d].z;
-			t1[c].x = t1[d].x;  t1[c].y = th[d].y;  t1[c].z = th[d].z;
+			update(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
 			break;
 		case 2:
-			t0[c].x = t0[d].x;  t0[c].y = th[d].y;  t0[c].z = t0[d].z;
-			t1[c].x = th[d].x;  t1[c].y = t1[d].y;  t1[c].z = th[d].z;
+			update(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
 			break;
 		case 3:
-			t0[c].x = th[d].x;  t0[c].y = th[d].y;  t0[c].z = t0[d].z;
-			t1[c].x = t1[d].x;  t1[c].y = t1[d].y;  t1[c].z = th[d].z;
+			update(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
 			break;
 		case 4:
-			t0[c].x = t0[d].x;  t0[c].y = t0[d].y;  t0[c].z = th[d].z;
-			t1[c].x = th[d].x;  t1[c].y = th[d].y;  t1[c].z = t1[d].z;
+			update(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
 			break;
 		case 5:
-			t0[c].x = th[d].x;  t0[c].y = t0[d].y;  t0[c].z = th[d].z;
-			t1[c].x = t1[d].x;  t1[c].y = th[d].y;  t1[c].z = t1[d].z;
+			update(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
 			break;
 		case 6:
-			t0[c].x = t0[d].x;  t0[c].y = th[d].y;  t0[c].z = th[d].z;
-			t1[c].x = th[d].x;  t1[c].y = t1[d].y;  t1[c].z = t1[d].z;
+			update(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
 			break;
 		case 7:
-			t0[c].x = th[d].x;  t0[c].y = th[d].y;  t0[c].z = th[d].z;
-			t1[c].x = t1[d].x;  t1[c].y = t1[d].y;  t1[c].z = t1[d].z;
+			update(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
 			break;
 	}
 }
