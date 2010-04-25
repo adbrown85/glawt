@@ -20,7 +20,7 @@
 #define ROOT_KEY 0
 
 // Constants
-int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745);
+int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745/**/);
 
 // Uniforms
 uniform sampler2D buffer;
@@ -33,7 +33,7 @@ in vec4 TexCoord;
 out vec4 FragColor;
 
 // Globals
-BoundaryTimes t[MAX_HEIGHT];
+vec3 t0[MAX_HEIGHT], t1[MAX_HEIGHT], th[MAX_HEIGHT];
 BoundingBox box=BoundingBox_();
 OctreeNode node[MAX_HEIGHT];
 Ray ray;
@@ -60,8 +60,8 @@ void updateChild(in int cName) {
 int findEntryPlane() {
 	
 	// X hits after Y, then compare to Z
-	if (t[d].t0.x > t[d].t0.y) {
-		if (t[d].t0.x > t[d].t0.z) {
+	if (t0[d].x > t0[d].y) {
+		if (t0[d].x > t0[d].z) {
 			return YZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -70,7 +70,7 @@ int findEntryPlane() {
 	
 	// Y hits after X, then compare to Z
 	else {
-		if (t[d].t0.y > t[d].t0.z) {
+		if (t0[d].y > t0[d].z) {
 			return XZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -89,14 +89,14 @@ void findEntryChild() {
 		
 		// Enters on front face
 		case XY_PLANE:
-			if (t[d].th.x < t[d].t0.z) {
-				if (t[d].th.y < t[d].t0.z) {
+			if (th[d].x < t0[d].z) {
+				if (th[d].y < t0[d].z) {
 					updateChild(3);
 				} else {
 					updateChild(1);
 				}
 			} else {
-				if (t[d].th.y < t[d].t0.z) {
+				if (th[d].y < t0[d].z) {
 					updateChild(2);
 				} else {
 					updateChild(0);
@@ -106,14 +106,14 @@ void findEntryChild() {
 		
 		// Enters on left face
 		case YZ_PLANE:
-			if (t[d].th.y < t[d].t0.x) {
-				if (t[d].th.z < t[d].t0.x) {
+			if (th[d].y < t0[d].x) {
+				if (th[d].z < t0[d].x) {
 					updateChild(6);
 				} else {
 					updateChild(2);
 				}
 			} else {
-				if (t[d].th.z < t[d].t0.x) {
+				if (th[d].z < t0[d].x) {
 					updateChild(4);
 				} else {
 					updateChild(0);
@@ -123,14 +123,14 @@ void findEntryChild() {
 		
 		// Enters on bottom face
 		case XZ_PLANE:
-			if (t[d].th.x < t[d].t0.y) {
-				if (t[d].th.z < t[d].t0.y) {
+			if (th[d].x < t0[d].y) {
+				if (th[d].z < t0[d].y) {
 					updateChild(5);
 				} else {
 					updateChild(1);
 				}
 			} else {
-				if (t[d].th.z < t[d].t0.y) {
+				if (th[d].z < t0[d].y) {
 					updateChild(4);
 				} else {
 					updateChild(0);
@@ -147,8 +147,8 @@ void findEntryChild() {
 int findExitPlane() {
 	
 	// X hits before Y, then compare to Z
-	if (t[c].t1.x < t[c].t1.y) {
-		if (t[c].t1.x < t[c].t1.z) {
+	if (t1[c].x < t1[c].y) {
+		if (t1[c].x < t1[c].z) {
 			return YZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -157,7 +157,7 @@ int findExitPlane() {
 	
 	// Y hits before X, then compare to Z
 	else {
-		if (t[c].t1.y < t[c].t1.z) {
+		if (t1[c].y < t1[c].z) {
 			return XZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -232,6 +232,7 @@ void findNextChild() {
  * @param cName Child node name
  * @return vector with 1 in component if that direction changed
  */
+/*
 vec3 getChange(in int cName) {
 	
 	switch (cName) {
@@ -245,6 +246,19 @@ vec3 getChange(in int cName) {
 	case 7: return vec3(1,1,1);
 	}
 }
+*/
+
+
+void update(in float t0x, in float t0y, in float t0z,
+            in float t1x, in float t1y, in float t1z) {
+	
+	t0[c].x = t0x;
+	t0[c].y = t0y;
+	t0[c].z = t0z;
+	t1[c].x = t1x;
+	t1[c].y = t1y;
+	t1[c].z = t1z;
+}
 
 
 /**
@@ -252,26 +266,59 @@ vec3 getChange(in int cName) {
  */
 void updateTimes() {
 	
-	vec3 change, delta;
+	switch (node[c].name) {
+		case 0:
+			update(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
+			break;
+		case 1:
+			update(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
+			break;
+		case 2:
+			update(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
+			break;
+		case 3:
+			update(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
+			break;
+		case 4:
+			update(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
+			break;
+		case 5:
+			update(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
+			break;
+		case 6:
+			update(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
+			break;
+		case 7:
+			update(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
+			break;
+	}
+}
+
+
+void findIntersections(out float tEnter,
+                       out float tLeave) {
 	
-	// Initialize
-	change = getChange(node[c].name);
-	delta = (t[d].t1 - t[d].t0) * 0.5;
+	vec3 tMin, tMax;
 	
-	// Calculate child times
-	t[c].t0 = t[d].t0 + (delta * change);
-	t[c].t1 = t[c].t0 + delta;
-	t[c].th = (t[c].t0 + t[c].t1) * 0.5;
+	// Find min and max
+	for (int i=0; i<3; ++i) {
+		tMin[i] = min(t0[d][i], t1[d][i]);
+		tMax[i] = max(t0[d][i], t1[d][i]);
+	}
+	
+	// Get times where it enters and exits
+	tEnter = max(tMin.x, max(tMin.y,tMin.z));
+	tLeave = min(tMax.x, min(tMax.y,tMax.z));
 }
 
 
 void sampleAsLeaf() {
 	
-	float time, tExit;
+	float time, timeExit;
 	vec4 rayPos, texel;
 	
-	BoundaryTimes_getIntersections(t[d], time, tExit);
-	while (time < tExit) {
+	findIntersections(time, timeExit);
+	while (time < timeExit) {
 		rayPos = ray.o + (ray.d * time);
 		texel = texture(volume, rayPos.stp);
 		texel.a = texel.x;
@@ -288,13 +335,12 @@ void sampleAsLeaf() {
 
 void sample() {
 	
-	BoundingBox box=BoundingBox_();
 	int step[MAX_HEIGHT];
 	
-	// Initialize times
-	t[0].t0 = vec3((box.lower - ray.o) / ray.d);
-	t[0].t1 = vec3((box.upper - ray.o) / ray.d);
-	t[0].th = vec3((box.center - ray.o) / ray.d);
+	// Initialize times for root
+	t0[0] = vec3((box.lower - ray.o) / ray.d);
+	t1[0] = vec3((box.upper - ray.o) / ray.d);
+	th[0] = (t0[0] + t1[0]) * 0.5;
 	
 	// Initialize nodes and steps
 	node[0] = OctreeNode(ROOT_KEY, FIRST_CHILD);
@@ -322,6 +368,9 @@ void sample() {
 				--d;
 				continue;
 			}
+			
+			// Update half times
+			th[d] = (t0[d] + t1[d]) * 0.5;
 		
 		case SECOND_STEP:
 			
@@ -337,7 +386,7 @@ void sample() {
 				}
 			}
 			
-			// Move to next child
+			// Move to child
 			updateTimes();
 			step[d] = SECOND_STEP;
 			step[c] = FIRST_STEP;
