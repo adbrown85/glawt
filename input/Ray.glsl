@@ -20,12 +20,9 @@ struct Ray {
 /**
  * Ray constructor.
  * 
- * @param [in,out] ray
- *     Ray instance.
- * @param [in] origin
- *     Origin of the ray.
- * @param [in] end
- *     End of the ray.
+ * @param [in,out] ray Ray instance.
+ * @param [in] origin Origin of the ray.
+ * @param [in] end End of the ray.
  */
 void Ray_(inout Ray ray,
           in vec4 origin,
@@ -39,8 +36,7 @@ void Ray_(inout Ray ray,
 /**
  * Determines if part of the direction is parallel to an axis.
  * 
- * @param [in] component
- *     x=0, y=1, z=2
+ * @param [in] component x=0, y=1, z=2
  */
 /*
 bool Ray_isDirectionZero(int component) {
@@ -53,10 +49,8 @@ bool Ray_isDirectionZero(int component) {
 /**
  * @return point along the ray at the time.
  * 
- * @param [in] ray
- *     Ray instance.
- * @param [in] t
- *     Time at the point.
+ * @param [in] ray Ray instance.
+ * @param [in] t Time at the point.
  */
 /*
 vec4 Ray_getPointAt(in Ray ray,
@@ -70,12 +64,9 @@ vec4 Ray_getPointAt(in Ray ray,
 /**
  * @return time along the ray at a value along one axis.
  * 
- * @param [in] ray
- *     Ray instance.
- * @param [in] i
- *     Axis where x=0, y=1, z=2
- * @param [in] value
- *     Value on that axis.
+ * @param [in] ray Ray instance.
+ * @param [in] i Axis where x=0, y=1, z=2
+ * @param [in] value Value on that axis.
  */
 float Ray_getTimeAt(in Ray ray,
                     in int i,
