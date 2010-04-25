@@ -292,35 +292,17 @@ void sampleAsLeaf() {
 }
 
 
-/**
- * Calculates when the ray hits the bounding box.
- */
-void initTimes() {
-	
-	// Lower boundary
-	times[0].t0.x = (box.lower.x - ray.o.x) / ray.d.x;
-	times[0].t0.y = (box.lower.y - ray.o.y) / ray.d.y;
-	times[0].t0.z = (box.lower.z - ray.o.z) / ray.d.z;
-	
-	// Upper boundary
-	times[0].t1.x = (box.upper.x - ray.o.x) / ray.d.x;
-	times[0].t1.y = (box.upper.y - ray.o.y) / ray.d.y;
-	times[0].t1.z = (box.upper.z - ray.o.z) / ray.d.z;
-	
-	// Center
-	times[0].th.x = (box.center.x - ray.o.x) / ray.d.x;
-	times[0].th.y = (box.center.y - ray.o.y) / ray.d.y;
-	times[0].th.z = (box.center.z - ray.o.z) / ray.d.z;
-}
-
-
 void sample() {
 	
 	BoundingBox box=BoundingBox_();
 	int step[MAX_HEIGHT];
 	
-	// Initialize
-	initTimes();
+	// Initialize times
+	times[0].t0 = vec3((box.lower - ray.o) / ray.d);
+	times[0].t1 = vec3((box.upper - ray.o) / ray.d);
+	times[0].th = vec3((box.center - ray.o) / ray.d);
+	
+	// Initialize nodes and steps
 	node[0] = OctreeNode(ROOT_KEY, FIRST_CHILD);
 	step[0] = SECOND_STEP;
 	for (int i=1; i<MAX_HEIGHT; ++i) {
