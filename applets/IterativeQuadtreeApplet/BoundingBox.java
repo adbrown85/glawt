@@ -61,8 +61,9 @@ public class BoundingBox extends BasicDrawable
 		
 		// Calculate times
 		for (int i=0; i<2; ++i) {
-			bc.t0[i] = ray.getTimeAt(i, lower.get(i));
-			bc.t1[i] = ray.getTimeAt(i, upper.get(i));
+			bc.t0.set(i, ray.getTimeAt(i,lower.get(i)));
+			bc.t1.set(i, ray.getTimeAt(i,upper.get(i)));
+/*
 			if (ray.isDirectionZero(i)) {
 				if (ray.origin.get(i) < center.get(i)) {
 					bc.th[i] = Double.POSITIVE_INFINITY;
@@ -75,6 +76,7 @@ public class BoundingBox extends BasicDrawable
 			else {
 				bc.th[i] = (bc.t0[i] + bc.t1[i]) * 0.5;
 			}
+*/
 		}
 		return bc;
 	}

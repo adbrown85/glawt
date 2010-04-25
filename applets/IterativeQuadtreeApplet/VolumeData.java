@@ -23,7 +23,6 @@ public class VolumeData extends BasicDrawable
 	private double[][] data;
 	private int size;
 	private InputStream stream;
-	
 	private BoundingBox box;
 	
 	
@@ -33,6 +32,18 @@ public class VolumeData extends BasicDrawable
 		super(null, null);
 		
 		this.stream = new FileInputStream(filename);
+		load();
+	}
+	
+	
+	public VolumeData(String filename,
+	                  Shape shape)
+	                  throws FileNotFoundException {
+		
+		super(null, null);
+		
+		this.stream = new FileInputStream(filename);
+		this.box = shape.getBoundingBox();
 		load();
 	}
 	
@@ -171,6 +182,7 @@ public class VolumeData extends BasicDrawable
 	
 	public static void main(String[] args) {
 		
+		Shape shape;
 		DisplayFrame display;
 		double data, halfPitch, pitch;
 		VolumeData volumeData;
@@ -178,8 +190,8 @@ public class VolumeData extends BasicDrawable
 		try {
 			
 			// Load and print
-			volumeData = new VolumeData("volume.dat");
-			volumeData.setBoundingBox(new BoundingBox(200, new Point(300,300)));
+			shape = new Shape(200, new Point(300,300));
+			volumeData = new VolumeData("volume.dat", shape);
 			volumeData.print();
 			
 			// getSample and getPitch
