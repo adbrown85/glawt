@@ -33,11 +33,11 @@ in vec4 TexCoord;
 out vec4 FragColor;
 
 // Globals
-BoundaryTimes times[MAX_HEIGHT];
+BoundaryTimes t[MAX_HEIGHT];
 BoundingBox box=BoundingBox_();
 OctreeNode node[MAX_HEIGHT];
 Ray ray;
-int depth=0, cDepth;
+int d=0, c;
 
 
 /**
@@ -47,8 +47,8 @@ int depth=0, cDepth;
  */
 void updateChild(in int cName) {
 	
-	node[cDepth].name = cName;
-	node[cDepth].key = (node[depth].key + 1) + (cName * jump[height-cDepth]);
+	node[c].name = cName;
+	node[c].key = (node[d].key + 1) + (cName * jump[height-c]);
 }
 
 
@@ -60,8 +60,8 @@ void updateChild(in int cName) {
 int findEntryPlane() {
 	
 	// X hits after Y, then compare to Z
-	if (times[depth].t0.x > times[depth].t0.y) {
-		if (times[depth].t0.x > times[depth].t0.z) {
+	if (t[d].t0.x > t[d].t0.y) {
+		if (t[d].t0.x > t[d].t0.z) {
 			return YZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -70,7 +70,7 @@ int findEntryPlane() {
 	
 	// Y hits after X, then compare to Z
 	else {
-		if (times[depth].t0.y > times[depth].t0.z) {
+		if (t[d].t0.y > t[d].t0.z) {
 			return XZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -89,14 +89,14 @@ void findEntryChild() {
 		
 		// Enters on front face
 		case XY_PLANE:
-			if (times[depth].th.x < times[depth].t0.z) {
-				if (times[depth].th.y < times[depth].t0.z) {
+			if (t[d].th.x < t[d].t0.z) {
+				if (t[d].th.y < t[d].t0.z) {
 					updateChild(3);
 				} else {
 					updateChild(1);
 				}
 			} else {
-				if (times[depth].th.y < times[depth].t0.z) {
+				if (t[d].th.y < t[d].t0.z) {
 					updateChild(2);
 				} else {
 					updateChild(0);
@@ -106,14 +106,14 @@ void findEntryChild() {
 		
 		// Enters on left face
 		case YZ_PLANE:
-			if (times[depth].th.y < times[depth].t0.x) {
-				if (times[depth].th.z < times[depth].t0.x) {
+			if (t[d].th.y < t[d].t0.x) {
+				if (t[d].th.z < t[d].t0.x) {
 					updateChild(6);
 				} else {
 					updateChild(2);
 				}
 			} else {
-				if (times[depth].th.z < times[depth].t0.x) {
+				if (t[d].th.z < t[d].t0.x) {
 					updateChild(4);
 				} else {
 					updateChild(0);
@@ -123,14 +123,14 @@ void findEntryChild() {
 		
 		// Enters on bottom face
 		case XZ_PLANE:
-			if (times[depth].th.x < times[depth].t0.y) {
-				if (times[depth].th.z < times[depth].t0.y) {
+			if (t[d].th.x < t[d].t0.y) {
+				if (t[d].th.z < t[d].t0.y) {
 					updateChild(5);
 				} else {
 					updateChild(1);
 				}
 			} else {
-				if (times[depth].th.z < times[depth].t0.y) {
+				if (t[d].th.z < t[d].t0.y) {
 					updateChild(4);
 				} else {
 					updateChild(0);
@@ -142,15 +142,13 @@ void findEntryChild() {
 
 
 /**
- * Finds the plane the ray leaves a node through.
- * 
- * @param times Times of the node
+ * Finds the plane the ray leaves a child node through.
  */
 int findExitPlane() {
 	
 	// X hits before Y, then compare to Z
-	if (times[cDepth].t1.x < times[cDepth].t1.y) {
-		if (times[cDepth].t1.x < times[cDepth].t1.z) {
+	if (t[c].t1.x < t[c].t1.y) {
+		if (t[c].t1.x < t[c].t1.z) {
 			return YZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -159,7 +157,7 @@ int findExitPlane() {
 	
 	// Y hits before X, then compare to Z
 	else {
-		if (times[cDepth].t1.y < times[cDepth].t1.z) {
+		if (t[c].t1.y < t[c].t1.z) {
 			return XZ_PLANE;
 		} else {
 			return XY_PLANE;
@@ -170,14 +168,12 @@ int findExitPlane() {
 
 /**
  * Finds next child ray enters by examining last child and its times.
- * 
- * @return the next child node
  */
 void findNextChild() {
 	
 	int exitPlane=findExitPlane();
 	
-	switch (node[cDepth].name) {
+	switch (node[c].name) {
 	case 0:
 		switch (exitPlane) {
 		case XZ_PLANE: updateChild(2); return;
@@ -187,44 +183,44 @@ void findNextChild() {
 	case 1:
 		switch (exitPlane) {
 		case XZ_PLANE: updateChild(3); return;
-		case YZ_PLANE: node[cDepth].name = -1; return;
+		case YZ_PLANE: node[c].name = -1; return;
 		case XY_PLANE: updateChild(5); return;
 		}
 	case 2:
 		switch (exitPlane) {
-		case XZ_PLANE: node[cDepth].name = -1; return;
+		case XZ_PLANE: node[c].name = -1; return;
 		case YZ_PLANE: updateChild(3); return;
 		case XY_PLANE: updateChild(6); return;
 		}
 	case 3:
 		switch (exitPlane) {
-		case XZ_PLANE: node[cDepth].name = -1; return;
-		case YZ_PLANE: node[cDepth].name = -1; return;
+		case XZ_PLANE: node[c].name = -1; return;
+		case YZ_PLANE: node[c].name = -1; return;
 		case XY_PLANE: updateChild(7); return;
 		}
 	case 4:
 		switch (exitPlane) {
 		case XZ_PLANE: updateChild(6); return;
 		case YZ_PLANE: updateChild(5); return;
-		case XY_PLANE: node[cDepth].name = -1; return;
+		case XY_PLANE: node[c].name = -1; return;
 		}
 	case 5:
 		switch (exitPlane) {
 		case XZ_PLANE: updateChild(7); return;
-		case YZ_PLANE: node[cDepth].name = -1; return;
-		case XY_PLANE: node[cDepth].name = -1; return;
+		case YZ_PLANE: node[c].name = -1; return;
+		case XY_PLANE: node[c].name = -1; return;
 		}
 	case 6:
 		switch (exitPlane) {
-		case XZ_PLANE: node[cDepth].name = -1; return;
+		case XZ_PLANE: node[c].name = -1; return;
 		case YZ_PLANE: updateChild(7); return;
-		case XY_PLANE: node[cDepth].name = -1; return;
+		case XY_PLANE: node[c].name = -1; return;
 		}
 	case 7:
 		switch (exitPlane) {
-		case XZ_PLANE: node[cDepth].name = -1; return;
-		case YZ_PLANE: node[cDepth].name = -1; return;
-		case XY_PLANE: node[cDepth].name = -1; return;
+		case XZ_PLANE: node[c].name = -1; return;
+		case YZ_PLANE: node[c].name = -1; return;
+		case XY_PLANE: node[c].name = -1; return;
 		}
 	}
 }
@@ -253,32 +249,30 @@ vec3 getChange(in int cName) {
 
 /**
  * Finds the times of a child node by halving its parent's times.
- * 
- * @return times of the child node
  */
 void updateTimes() {
 	
 	vec3 change, delta;
 	
 	// Initialize
-	change = getChange(node[cDepth].name);
-	delta = (times[depth].t1 - times[depth].t0) * 0.5;
+	change = getChange(node[c].name);
+	delta = (t[d].t1 - t[d].t0) * 0.5;
 	
 	// Calculate child times
-	times[cDepth].t0 = times[depth].t0 + (delta * change);
-	times[cDepth].t1 = times[cDepth].t0 + delta;
-	times[cDepth].th = (times[cDepth].t0 + times[cDepth].t1) * 0.5;
+	t[c].t0 = t[d].t0 + (delta * change);
+	t[c].t1 = t[c].t0 + delta;
+	t[c].th = (t[c].t0 + t[c].t1) * 0.5;
 }
 
 
 void sampleAsLeaf() {
 	
-	float t, tExit;
+	float time, tExit;
 	vec4 rayPos, texel;
 	
-	BoundaryTimes_getIntersections(times[depth], t, tExit);
-	while (t < tExit) {
-		rayPos = ray.o + (ray.d * t);
+	BoundaryTimes_getIntersections(t[d], time, tExit);
+	while (time < tExit) {
+		rayPos = ray.o + (ray.d * time);
 		texel = texture(volume, rayPos.stp);
 		texel.a = texel.x;
 		if (texel.a > 0.01) {
@@ -287,7 +281,7 @@ void sampleAsLeaf() {
 				break;
 			}
 		}
-		t += 0.1;
+		time += 0.1;
 	}
 }
 
@@ -298,9 +292,9 @@ void sample() {
 	int step[MAX_HEIGHT];
 	
 	// Initialize times
-	times[0].t0 = vec3((box.lower - ray.o) / ray.d);
-	times[0].t1 = vec3((box.upper - ray.o) / ray.d);
-	times[0].th = vec3((box.center - ray.o) / ray.d);
+	t[0].t0 = vec3((box.lower - ray.o) / ray.d);
+	t[0].t1 = vec3((box.upper - ray.o) / ray.d);
+	t[0].th = vec3((box.center - ray.o) / ray.d);
 	
 	// Initialize nodes and steps
 	node[0] = OctreeNode(ROOT_KEY, FIRST_CHILD);
@@ -312,42 +306,42 @@ void sample() {
 	
 	// While in volume
 	FragColor = BLACK;
-	while (depth >= 0) {
-		switch (step[depth]) {
+	while (d >= 0) {
+		switch (step[d]) {
 		case FIRST_STEP:
 			
 			// If empty skip it and move back up
-			if (texelFetch(octree,node[depth].key,0).r != uint(0)) {
-				--depth;
+			if (texelFetch(octree,node[d].key,0).r != uint(0)) {
+				--d;
 				continue;
 			}
 			
 			// If leaf sample it and move back up
-			if (depth == height) {
+			if (d == height) {
 				sampleAsLeaf();
-				--depth;
+				--d;
 				continue;
 			}
 		
 		case SECOND_STEP:
 			
 			// Find first or next child
-			cDepth = depth + 1;
-			if (node[cDepth].name == -1) {
+			c = d + 1;
+			if (node[c].name == -1) {
 				findEntryChild();
 			} else {
 				findNextChild();
-				if (node[cDepth].name == -1) {
-					--depth;
+				if (node[c].name == -1) {
+					--d;
 					continue;
 				}
 			}
 			
 			// Move to next child
 			updateTimes();
-			step[depth] = SECOND_STEP;
-			step[cDepth] = FIRST_STEP;
-			++depth;
+			step[d] = SECOND_STEP;
+			step[c] = FIRST_STEP;
+			++d;
 		}
 	}
 }
