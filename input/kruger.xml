@@ -29,9 +29,11 @@
 			<shader file="kruger.frag" />
 			<texture3d file="../textures/bear.vlb" name="volume">
 				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-				<uniform type="sampler2d" name="target" link="target">
-				<uniform type="sampler3d" name="volume" link="volume">
-				<!-- <uniform type="int" name="samples" value="128"> -->
+				<uniform type="sampler2d" name="Target" link="target" />
+				<uniform type="sampler3d" name="Volume" link="volume" />
+				<uniform type="vec3" name="LightDirection" value="15 15 15" />
+				<uniform type="float" name="Ambient" value="0.2" />
+				<uniform type="float" name="Diffuse" value="0.8" />
 				<cull faces="back">
 					<cube />
 				</cull>
