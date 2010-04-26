@@ -27,11 +27,11 @@
 		<program>
 			<shader file="kruger.vert" />
 			<shader file="kruger.frag" />
-			<texture3d file="../textures/chunk.vlb" name="volume">
+			<texture3d file="../textures/bear.vlb" name="volume">
 				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 				<uniform type="sampler2d" name="target" link="target">
 				<uniform type="sampler3d" name="volume" link="volume">
-				<uniform type="int" name="samples" value="128">
+				<!-- <uniform type="int" name="samples" value="128"> -->
 				<cull faces="back">
 					<cube />
 				</cull>
