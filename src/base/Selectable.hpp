@@ -17,13 +17,13 @@ using namespace std;
 
 /**
  * @interface Selectable
- * @ingroup traits
+ * @ingroup base
  * @brief
  *     Interface for an object that can be part of a selection.
  */
 class Selectable : public Drawable {
 	
-	public :
+	public:
 		
 		Selectable(float size=1.0);
 		Selectable(const Tag &tag);

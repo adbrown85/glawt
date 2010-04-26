@@ -12,13 +12,13 @@
 
 /**
  * @interface Applicable
- * @ingroup traits
+ * @ingroup base
  * @brief
  *     Interface for something that can be applied, and then removed.
  */
 class Applicable {
 	
-	public :
+	public:
 		
 		virtual void apply() = 0;
 		virtual void remove() = 0;

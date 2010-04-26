@@ -14,13 +14,13 @@ using namespace std;
 
 /**
  * @interface Identifiable
- * @ingroup traits
+ * @ingroup base
  * @brief
  *     Interface for an object that has a unique ID number.
  */
 class Identifiable {
 	
-	public :
+	public:
 		
 		Identifiable();
 		virtual unsigned int getID() const;
@@ -40,7 +40,7 @@ class Identifiable {
 				}
 		};
 	
-	private :
+	private:
 		
 		unsigned int id;
 		

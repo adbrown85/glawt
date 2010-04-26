@@ -18,13 +18,13 @@ using namespace std;
 
 /**
  * @interface Drawable
- * @ingroup traits
+ * @ingroup base
  * @brief
  *     Interface for something that can be drawn.
  */
 class Drawable : public Identifiable {
 	
-	public :
+	public:
 		
 		Drawable(float size=1.0);
 		Drawable(const Tag &tag);

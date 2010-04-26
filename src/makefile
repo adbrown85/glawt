@@ -22,6 +22,6 @@ $(MODULES):
 client: frontend
 frontend: backend
 backend: graph
-graph: traits
-traits: data
+graph: base
+base: data
 data:

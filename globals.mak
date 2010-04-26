@@ -16,7 +16,7 @@ VPATH = $(bindir) $(libdir) $(srcdir)
 
 
 # Resolve modules and archives
-MODULES = data traits graph backend frontend client
+MODULES = data base graph backend frontend client
 ARCHIVES = frontend.a backend.a graph.a traits.a data.a
 ARCHIVES_FULL = ${addprefix $(libdir)/,$(ARCHIVES)}
 
@@ -29,9 +29,9 @@ LDFLAGS = -lm -lglut -lIL -lILU -lILUT
 
 
 # Phony targets for directing make
-.PHONY : all html tests FORCE
+.PHONY: all html tests FORCE
 all tests: FORCE
-FORCE :
+FORCE:
 	@mkdir -p $(bindir)
 	@mkdir -p $(libdir)
 html:

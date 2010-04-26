@@ -1,11 +1,11 @@
 #
 # makefile
-#     Builds the Traits module.
+#     Builds the Base module.
 # 
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-MODULE = traits
+MODULE = base
 CHILDREN = data
 FILTER = 
 GANDER = ../..
