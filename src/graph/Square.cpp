@@ -1,27 +1,27 @@
 /*
- * SquareVBO.cpp
+ * Square.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "SquareVBO.hpp"
-bool SquareVBO::loaded = false;
-GLfloat SquareVBO::coords[4][3], SquareVBO::normals[4][3], SquareVBO::points[4][3];
-GLint SquareVBO::coordsOffset, SquareVBO::normalsOffset, SquareVBO::pointsOffset;
-GLuint SquareVBO::dataBuffer, SquareVBO::indicesBuffer;
-GLushort SquareVBO::indices[4];
+#include "Square.hpp"
+bool Square::loaded = false;
+GLfloat Square::coords[4][3], Square::normals[4][3], Square::points[4][3];
+GLint Square::coordsOffset, Square::normalsOffset, Square::pointsOffset;
+GLuint Square::dataBuffer, Square::indicesBuffer;
+GLushort Square::indices[4];
 
 
 /**
- * Creates a new %SquareVBO from an XML tag.
+ * Creates a new %Square from an XML tag.
  * 
  * @param tag XML tag with "size" attribute.
  */
-SquareVBO::SquareVBO(const Tag &tag) :
-                     Shape(tag) {
+Square::Square(const Tag &tag) :
+               Shape(tag) {
 	
 	// Basics
-	className = "SquareVBO";
+	className = "Square";
 	style = GL_TEXTURE_2D;
 	
 	// Initialize vertices
@@ -39,11 +39,11 @@ SquareVBO::SquareVBO(const Tag &tag) :
 /**
  * Finds the shader Program to bind attributes to.
  */
-void SquareVBO::associate() {
+void Square::associate() {
 	
 	program = Program::find(parent);
 	if (program == NULL) {
-		throw "[SquareVBO] No shader program found to bind attributes to.";
+		throw "[Square] No shader program found to bind attributes to.";
 	}
 }
 
@@ -51,7 +51,7 @@ void SquareVBO::associate() {
 /**
  * Draws the square.
  */
-void SquareVBO::draw() const {
+void Square::draw() const {
 	
 	// Enable buffers and arrays
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
@@ -78,7 +78,7 @@ void SquareVBO::draw() const {
 /**
  * Finds positions of attributes in the shader Program.
  */
-void SquareVBO::finalize() {
+void Square::finalize() {
 	
 	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
 	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
@@ -86,7 +86,7 @@ void SquareVBO::finalize() {
 }
 
 
-void SquareVBO::initBuffers() {
+void Square::initBuffers() {
 	
 	int dataSize;
 	
@@ -111,7 +111,7 @@ void SquareVBO::initBuffers() {
 }
 
 
-void SquareVBO::initCoords() {
+void Square::initCoords() {
 	
 	GLfloat coords[4][3] = {{1.0, 1.0, 0.0},
 	                        {0.0, 1.0, 0.0},
@@ -128,7 +128,7 @@ void SquareVBO::initCoords() {
 /**
  * Initializes the indices used to draw the square's faces.
  */
-void SquareVBO::initIndices() {
+void Square::initIndices() {
 	
 	// Copy to class
 	for (int i=0; i<4; i++)
@@ -136,7 +136,7 @@ void SquareVBO::initIndices() {
 }
 
 
-void SquareVBO::initNormals() {
+void Square::initNormals() {
 	
 	for (int i=0; i<4; ++i) {
 		this->normals[i][0] = 0.0;
@@ -149,7 +149,7 @@ void SquareVBO::initNormals() {
 /**
  * Initializes the static points array of the class.
  */
-void SquareVBO::initPoints() {
+void Square::initPoints() {
 	
 	GLfloat points[4][3] = {{+0.5, +0.5, 0.0},
 	                        {-0.5, +0.5, 0.0},

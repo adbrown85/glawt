@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Painter.hpp"
-Box Painter::outline(1.0);
+Cube Painter::outline(1.0);
 
 
 /**
@@ -137,7 +137,7 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->remove();
 	Texture::pause();
-	Light::pause();
+	/* Light::pause(); */
 	
 	// Draw outline
 	glPushAttrib(GL_CURRENT_BIT);
@@ -170,6 +170,6 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->apply();
 	Texture::restart();
-	Light::restart();
+	/* Light::restart(); */
 }
 

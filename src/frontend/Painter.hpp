@@ -11,7 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "Applicable.hpp"          // Apply modifications to scene
-#include "Box.hpp"                 // Outline selected items
+#include "Cube.hpp"                // Outline selected items
 #include "Drawable.hpp"            // Drawing items in scene
 #include "Framebuffer.hpp"         // Disable manipulators
 #include "Manipulator.hpp"         // Drawing manipulators for selection
@@ -43,7 +43,7 @@ class Painter {
 	
 	private :
 		
-		static Box outline;
+		static Cube outline;
 		
 		static void disableTexturing();
 		static void paintChildren(Node *node,

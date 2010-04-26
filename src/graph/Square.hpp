@@ -1,11 +1,11 @@
 /*
- * SquareVBO.hpp
+ * Square.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef SQUAREVBO_HPP
-#define SQUAREVBO_HPP
+#ifndef SQUARE_HPP
+#define SQUARE_HPP
 #include <iostream>
 #include <GL/glut.h>
 #include <sstream>
@@ -20,11 +20,11 @@ using namespace std;
  * @brief
  *     2D square shape that can be drawn by %Display.
  */
-class SquareVBO : public Shape {
+class Square : public Shape {
 	
 	public:
 		
-		SquareVBO(const Tag &tag);
+		Square(const Tag &tag);
 		virtual void associate();
 		virtual void finalize();
 		virtual void draw() const;

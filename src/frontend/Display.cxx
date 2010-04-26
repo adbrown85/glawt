@@ -4,7 +4,6 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Box.hpp"
 #include "Display.hpp"
 #include "Interpreter.hpp"
 #include "Keyboard.hpp"

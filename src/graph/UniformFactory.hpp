@@ -31,7 +31,8 @@ class UniformFactory : public Factory {
 	public:
 		
 		UniformFactory();
-		Node* create(const Tag &tag);
+		virtual Node* create(const Tag &tag);
+		virtual set<string> getClasses();
 	
 	private:
 		

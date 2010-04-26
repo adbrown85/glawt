@@ -30,8 +30,14 @@ void Tester::display(void) {
 /**
  * Initializes the GLUT display.
  */
-void Tester::initialize(int argc,
-                        char *argv[]) {
+void Tester::init(int argc,
+                  char *argv[]) {
+	
+	// Handle arguments
+	if (argc != 2) {
+		cerr << "Usage: " << argv[0] << " <file>" << endl;
+		exit(1);
+	}
 	
 	// Print
 	cout << endl;
@@ -52,6 +58,17 @@ void Tester::initialize(int argc,
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(30.0, 1.0, 1.0, 100.0);
+	
+	// Open and prepare
+	scene.open(argv[1]);
+	scene.prepare();
+	scene.print();
+}
+
+
+void Tester::install(Factory *factory) {
+	
+	scene.install(factory);
 }
 
 
@@ -66,17 +83,6 @@ void Tester::keyboard(unsigned char key,
 	case 27:
 		exit(0);
 	}
-}
-
-
-/**
- * Opens a scene.
- */
-void Tester::open(string filename) {
-	
-	scene.open(filename);
-	scene.prepare();
-	scene.print();
 }
 
 

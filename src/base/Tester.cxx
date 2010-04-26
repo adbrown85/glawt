@@ -13,21 +13,12 @@
 int main(int argc,
          char *argv[]) {
 	
-	// Handle arguments
-	if (argc != 2) {
-		cerr << "Usage: " << argv[0] << " <file>" << endl;
-		exit(1);
-	}
-	
 	// Start
 	try {
-		Tester::initialize(argc, argv);
-		Tester::open(argv[1]);
+		Tester::init(argc, argv);
 		Tester::start();
-	}
-	catch (const char *e) {
+	} catch (const char *e) {
 		cerr << e << endl;
-		exit(1);
 	}
 	
 	// Finish

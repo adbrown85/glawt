@@ -28,9 +28,15 @@ using namespace std;
 
 class GeneralFactory : public Factory {
 	
-	public :
+	public:
 		
-		Node *create(const Tag &tag);
+		GeneralFactory();
+		virtual Node *create(const Tag &tag);
+		virtual set<string> getClasses();
+	
+	private:
+		
+		set<string> classes;
 };
 
 

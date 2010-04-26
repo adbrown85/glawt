@@ -15,23 +15,17 @@ GLuint Cube::indicesBuffer=0, Cube::dataBuffer=0;
 GLushort Cube::indices[24];
 
 
+Cube::Cube(float size) :
+           Shape(size) {
+	
+	init();
+}
+
+
 Cube::Cube(const Tag &tag) :
            Shape(tag) {
 	
-	// Class name
-	className = "Cube";
-	
-	// Attributes
-	if (!loaded) {
-		initIndices();
-		initMap();
-		initPoints();
-		initNormals();
-		initCoords2d();
-		initCoords3d();
-		initBuffers();
-		loaded = true;
-	}
+	init();
 }
 
 
@@ -76,6 +70,25 @@ void Cube::finalize() {
 	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
 	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
 	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
+}
+
+
+void Cube::init() {
+	
+	// Class name
+	className = "Cube";
+	
+	// Attributes
+	if (!loaded) {
+		initIndices();
+		initMap();
+		initPoints();
+		initNormals();
+		initCoords2d();
+		initCoords3d();
+		initBuffers();
+		loaded = true;
+	}
 }
 
 

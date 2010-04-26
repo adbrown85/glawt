@@ -5,10 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "UniformFactory.hpp"
-bool UniformFactory::loaded=false;
-set<string> UniformFactory::matrices,
-            UniformFactory::samplers,
-            UniformFactory::vectors;
 
 
 UniformFactory::UniformFactory() {
@@ -45,15 +41,8 @@ Node* UniformFactory::create(const Tag &tag) {
 	
 	string type;
 	
-	// Lazy load
-	if (!loaded)
-		init();
-	loaded = true;
-	
-	// Get type
-	tag.get("type", type);
-	
 	// Create based on type
+	tag.get("type", type);
 	if (type == "int")
 		return new UniformInt(tag);
 	else if (type == "float")
@@ -70,6 +59,21 @@ Node* UniformFactory::create(const Tag &tag) {
 		    << "' not supported.";
 		throw msg.str().c_str();
 	}
+}
+
+
+set<string> UniformFactory::getClasses() {
+	
+	set<string> classes;
+	set<string>::iterator it;
+	
+	for (it=matrices.begin(); it!=matrices.end(); ++it)
+		classes.insert(*it);
+	for (it=samplers.begin(); it!=samplers.end(); ++it)
+		classes.insert(*it);
+	for (it=vectors.begin(); it!=vectors.end(); ++it)
+		classes.insert(*it);
+	return classes;
 }
 
 

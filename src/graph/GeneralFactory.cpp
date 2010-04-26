@@ -7,6 +7,24 @@
 #include "GeneralFactory.hpp"
 
 
+GeneralFactory::GeneralFactory() {
+	
+	classes.insert("cull");
+	classes.insert("cube");
+	classes.insert("framebuffer");
+	classes.insert("fullscreen");
+	classes.insert("octree");
+	classes.insert("program");
+	classes.insert("scale");
+	classes.insert("shader");
+	classes.insert("square");
+	classes.insert("target");
+	classes.insert("texture2d");
+	classes.insert("texture3d");
+	classes.insert("translate");
+}
+
+
 /**
  * Creates a %Node based on the tag's name.
  * 
@@ -32,8 +50,8 @@ Node* GeneralFactory::create(const Tag &tag) {
 		return new Scale(tag);
 	else if (tag.name == "shader")
 		return new Shader(tag);
-	else if (tag.name == "squarevbo")
-		return new SquareVBO(tag);
+	else if (tag.name == "square")
+		return new Square(tag);
 	else if (tag.name == "target")
 		return new Target(tag);
 	else if (tag.name == "texture2d")
@@ -42,5 +60,13 @@ Node* GeneralFactory::create(const Tag &tag) {
 		return new Texture3D(tag);
 	else if (tag.name == "translate")
 		return new Translation(tag);
+	else
+		throw "[GeneralFactory] Tag not supported by this factory.";
+}
+
+
+set<string> GeneralFactory::getClasses() {
+	
+	return classes;
 }
 
