@@ -14,7 +14,7 @@
 
 /**
  * @interface Transformation
- * @ingroup graph
+ * @ingroup base
  * @brief
  *     Operation that changes the size, position, or orientation of objects.
  */

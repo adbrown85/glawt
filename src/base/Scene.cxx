@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Scene.hpp"
 #include "Shape.hpp"
-#include "Translation.hpp"
+//#include "Translation.hpp"
 #define NUM_OF_ITEMS 3
 using namespace std;
 
@@ -47,7 +47,7 @@ int main() {
 	cout << "\nBuilding scene..." << endl;
 	srand(time(NULL));
 	for (int i=0; i<NUM_OF_ITEMS; ++i) {
-		sceneA.addToRoot(new Translation(0, 0, rand()%10));
+		//sceneA.addToRoot(new Translation(0, 0, rand()%10));
 		sceneA.addToLast(new FakeShape(1.0));
 		sceneA.backup();
 		sceneA.addToLast(new FakeShape(2.0));

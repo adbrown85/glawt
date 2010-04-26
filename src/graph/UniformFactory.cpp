@@ -11,6 +11,29 @@ set<string> UniformFactory::matrices,
             UniformFactory::vectors;
 
 
+UniformFactory::UniformFactory() {
+	
+	// Matrices
+	matrices.insert("mat3");
+	matrices.insert("mat4");
+	
+	// Samplers
+	samplers.insert("sampler1d");
+	samplers.insert("sampler2d");
+	samplers.insert("sampler3d");
+	samplers.insert("isampler1d");
+	samplers.insert("isampler2d");
+	samplers.insert("isampler3d");
+	samplers.insert("usampler1d");
+	samplers.insert("usampler2d");
+	samplers.insert("usampler3d");
+	
+	// Vectors
+	vectors.insert("vec3");
+	vectors.insert("vec4");
+}
+
+
 /**
  * Creates a uniform variable from a tag.
  * 
@@ -18,7 +41,7 @@ set<string> UniformFactory::matrices,
  * @return pointer to a uniform variable.
  * @throws const_char* if type is not supported.
  */
-Uniform* UniformFactory::create(const Tag &tag) {
+Node* UniformFactory::create(const Tag &tag) {
 	
 	string type;
 	
@@ -47,29 +70,6 @@ Uniform* UniformFactory::create(const Tag &tag) {
 		    << "' not supported.";
 		throw msg.str().c_str();
 	}
-}
-
-
-void UniformFactory::init() {
-	
-	// Matrices
-	matrices.insert("mat3");
-	matrices.insert("mat4");
-	
-	// Samplers
-	samplers.insert("sampler1d");
-	samplers.insert("sampler2d");
-	samplers.insert("sampler3d");
-	samplers.insert("isampler1d");
-	samplers.insert("isampler2d");
-	samplers.insert("isampler3d");
-	samplers.insert("usampler1d");
-	samplers.insert("usampler2d");
-	samplers.insert("usampler3d");
-	
-	// Vectors
-	vectors.insert("vec3");
-	vectors.insert("vec4");
 }
 
 

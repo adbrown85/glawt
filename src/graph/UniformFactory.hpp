@@ -11,6 +11,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include "Factory.hpp"
 #include "Uniform.hpp"
 #include "UniformInt.hpp"
 #include "UniformFloat.hpp"
@@ -25,21 +26,20 @@ using namespace std;
  * @brief
  *     Factory for creating different types of Uniform variables.
  */
-class UniformFactory {
+class UniformFactory : public Factory {
 	
 	public:
 		
-		static Uniform* create(const Tag &tag);
+		UniformFactory();
+		Node* create(const Tag &tag);
 	
 	private:
 		
-		static bool loaded;
-		static set<string> matrices, samplers, vectors;
+		set<string> matrices, samplers, vectors;
 		
-		static void init();
-		static bool isMatrix(const string &type);
-		static bool isSampler(const string &type);
-		static bool isVector(const string &type);
+		bool isMatrix(const string &type);
+		bool isSampler(const string &type);
+		bool isVector(const string &type);
 };
 
 

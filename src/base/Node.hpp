@@ -18,7 +18,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup base
  * @brief
  *     Basic element of the scene graph.
  */

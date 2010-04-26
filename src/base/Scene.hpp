@@ -9,11 +9,15 @@
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
+#include "Factory.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Factory.hpp"
+#include "FileUtility.hpp"
+#include "Parser.hpp"
 #include "Quaternion.hpp"
 #include "Selection.hpp"
 #include "Vector.hpp"
@@ -21,13 +25,13 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup base
  * @brief
  *     Collection of items that also stores selection and camera information.
  */
 class Scene {
 	
-	public :
+	public:
 		
 		Node *last, root;
 		Selection selection;
@@ -38,8 +42,9 @@ class Scene {
 		void addToLast(Node *node);
 		void addToRoot(Node *node);
 		void backup();
-		void prepare();
+		void install(Factory *factory);
 		void open(const string &filename);
+		void prepare();
 		void print();
 		void reset();
 		void rotate(float angle,
@@ -58,13 +63,17 @@ class Scene {
 		                 float y,
 		                 float z);
 	
-	private :
+	private:
 		
 		int height, width;
-		string filename;
+		map<string,Factory*> factories;
+		Parser parser;
 		Quaternion rotation;
+		string filename;
 		
+		Node* create(const Tag &tag);
 		void destroy(Node *node);
+		void parse();
 };
 
 

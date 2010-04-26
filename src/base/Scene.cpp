@@ -48,6 +48,19 @@ void Scene::addToRoot(Node *node) {
 }
 
 
+Node* Scene::create(const Tag &tag) {
+	
+	map<string,Factory*>::iterator it;
+	
+	it = factories.find(tag.name );
+	if (it != factories.end()) {
+		return it->second->create(tag);
+	} else {
+		throw "[Scene] Cannot find factory for tag.";
+	}
+}
+
+
 /**
  * Changes the last node to its parent.
  */
@@ -69,6 +82,18 @@ Matrix Scene::getRotationMatrix() const {
 }
 
 
+void Scene::install(Factory *factory) {
+	
+	set<string> classes;
+	set<string>::iterator it;
+	
+	classes = factory->getClasses();
+	for (it=classes.begin(); it!=classes.end(); ++it) {
+		factories[*it] = factory;
+	}
+}
+
+
 /**
  * Opens a scene from a file.
  * 
@@ -76,16 +101,51 @@ Matrix Scene::getRotationMatrix() const {
  */
 void Scene::open(const string &filename) {
 	
-	Factory factory(&root, filename);
-	
 	// Parse and process tags
 	try {
 		cerr << "[Scene] Opening '" << filename << "'..." << endl;
-		factory.start();
+		this->filename = filename;
+		parse();
 	}
 	catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
+	}
+}
+
+
+void Scene::parse() {
+	
+	Node *current, *node;
+	map<string,string>::const_iterator ai;
+	string path;
+	vector<Tag>::iterator ti;
+	
+	// Initialize
+	current = &root;
+	parser.open(filename);
+	
+	// Look through tags
+	for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
+		
+		// Step back on closing tags
+		if (ti->closing) {
+			current = current->getParent();
+			continue;
+		}
+		
+		// Make "file" attributes relative to scene file
+		ai = ti->attributes.find("file");
+		if (ai != ti->attributes.end()) {
+			path = FileUtility::getRelativePath(filename, ai->second);
+			ti->attributes["file"] = path;
+		}
+		
+		// Create node and update current
+		node = create(*ti);
+		current->addChild(node);
+		if (!ti->empty)
+			current = node;
 	}
 }
 
