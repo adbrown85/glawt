@@ -244,30 +244,30 @@ void updateTimes(in float t0x, in float t0y, in float t0z,
 void updateTimes() {
 	
 	switch (node[c].name) {
-		case 0:
-			updateTimes(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
-			break;
-		case 1:
-			updateTimes(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
-			break;
-		case 2:
-			updateTimes(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
-			break;
-		case 3:
-			updateTimes(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
-			break;
-		case 4:
-			updateTimes(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
-			break;
-		case 5:
-			updateTimes(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
-			break;
-		case 6:
-			updateTimes(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
-			break;
-		case 7:
-			updateTimes(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
-			break;
+	case 0:
+		updateTimes(t0[d].x, t0[d].y, t0[d].z, th[d].x, th[d].y, th[d].z);
+		break;
+	case 1:
+		updateTimes(th[d].x, t0[d].y, t0[d].z, t1[d].x, th[d].y, th[d].z);
+		break;
+	case 2:
+		updateTimes(t0[d].x, th[d].y, t0[d].z, th[d].x, t1[d].y, th[d].z);
+		break;
+	case 3:
+		updateTimes(th[d].x, th[d].y, t0[d].z, t1[d].x, t1[d].y, th[d].z);
+		break;
+	case 4:
+		updateTimes(t0[d].x, t0[d].y, th[d].z, th[d].x, th[d].y, t1[d].z);
+		break;
+	case 5:
+		updateTimes(th[d].x, t0[d].y, th[d].z, t1[d].x, th[d].y, t1[d].z);
+		break;
+	case 6:
+		updateTimes(t0[d].x, th[d].y, th[d].z, th[d].x, t1[d].y, t1[d].z);
+		break;
+	case 7:
+		updateTimes(th[d].x, th[d].y, th[d].z, t1[d].x, t1[d].y, t1[d].z);
+		break;
 	}
 }
 
