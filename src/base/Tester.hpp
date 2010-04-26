@@ -29,7 +29,7 @@ class Tester {
 		static void keyboard(unsigned char key,
 		                     int x,
 		                     int y);
-		static void open(string filename);
+		static void open(const string &filename);
 		static void traverse(Node *node);
 		static void traverseChildren(Node *node);
 		static void start();

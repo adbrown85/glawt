@@ -56,7 +56,9 @@ Node* Scene::create(const Tag &tag) {
 	if (it != factories.end()) {
 		return it->second->create(tag);
 	} else {
-		throw "[Scene] Cannot find factory for tag.";
+		ostringstream msg;
+		msg << "[Scene] Cannot find factory for '" << tag.name << "'.";
+		throw msg.str().c_str();
 	}
 }
 

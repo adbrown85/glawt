@@ -65,14 +65,8 @@ Node* UniformFactory::create(const Tag &tag) {
 set<string> UniformFactory::getClasses() {
 	
 	set<string> classes;
-	set<string>::iterator it;
 	
-	for (it=matrices.begin(); it!=matrices.end(); ++it)
-		classes.insert(*it);
-	for (it=samplers.begin(); it!=samplers.end(); ++it)
-		classes.insert(*it);
-	for (it=vectors.begin(); it!=vectors.end(); ++it)
-		classes.insert(*it);
+	classes.insert("uniform");
 	return classes;
 }
 

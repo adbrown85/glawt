@@ -13,7 +13,7 @@
 		<octree name="octree" link="chunk" threshold="80">
 			<uniform type="sampler1d" name="octree" link="octree" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-			<squarevbo />
+			<square />
 		</octree>
 	</texture3d>
 </program>

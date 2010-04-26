@@ -33,19 +33,6 @@ void Tester::display(void) {
 void Tester::init(int argc,
                   char *argv[]) {
 	
-	// Handle arguments
-	if (argc != 2) {
-		cerr << "Usage: " << argv[0] << " <file>" << endl;
-		exit(1);
-	}
-	
-	// Print
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << argv[0] << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
 	// Create window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE);
@@ -58,11 +45,6 @@ void Tester::init(int argc,
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(30.0, 1.0, 1.0, 100.0);
-	
-	// Open and prepare
-	scene.open(argv[1]);
-	scene.prepare();
-	scene.print();
 }
 
 
@@ -83,6 +65,22 @@ void Tester::keyboard(unsigned char key,
 	case 27:
 		exit(0);
 	}
+}
+
+
+void Tester::open(const string &filename) {
+	
+	// Print
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << filename << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+	// Open and prepare
+	scene.open(filename);
+	scene.prepare();
+	scene.print();
 }
 
 

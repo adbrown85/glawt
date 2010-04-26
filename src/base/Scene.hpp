@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "Factory.hpp"

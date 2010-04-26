@@ -11,15 +11,18 @@
 	<framebuffer>
 		<target link="mytexture" />
 		<program>
-			<shader type="fragment" file="../../input/coordinates.frag" />
-			<square style="2d"/>
+			<shader file="../../input/coordinates.vert" />
+			<shader file="../../input/coordinates.frag" />
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<square />
 		</program>
 	</framebuffer>
 	<program>
-		<shader type="fragment" file="../../input/texture.frag" />
-		<uniform type="int" name="texture" link="mytexture">
-			<square />
-		</uniform>
+		<shader file="../../input/texture.vert" />
+		<shader file="../../input/texture.frag" />
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="sampler2D" name="unit" link="mytexture" />
+		<square />
 	</program>
 </texture2d>
  
