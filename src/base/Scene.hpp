@@ -16,7 +16,6 @@
 #include "Factory.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"
-#include "Factory.hpp"
 #include "FileUtility.hpp"
 #include "Parser.hpp"
 #include "Quaternion.hpp"

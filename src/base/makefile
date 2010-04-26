@@ -13,19 +13,21 @@ include $(GANDER)/globals.mak
 include $(GANDER)/src/module.mak
 
 
-# Altering
+# Applicable
 Applicable.hpp:
 Transformation.hpp: Applicable.hpp Node.o
 
-# Drawing
+# Drawable
 Identifiable.o: 
 Drawable.o: Identifiable.o
 Selectable.o: Drawable.o
-Texture.o: Applicable.hpp Node.o
+Shape.o: Node.o Selectable.o
 
 # Basics
 Node.o:
-Shape.o: Node.o Selectable.o
-
-# Collections
 Selection.o: Selectable.o
+Scene.o: Factory.hpp Node.o Selection.o
+
+# Testing
+Scene: Shape.o
+Tester.o: Applicable.hpp Drawable.o Node.o Scene.o

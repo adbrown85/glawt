@@ -55,34 +55,16 @@ int main() {
 		exit(1);
 	}
 	
-/*
 	// Print
 	cout << "\nBuilding tree... " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		root.addChild(&trans[i]);
-		trans[i].addChild(&shapes[i]);
+		root.addChild(&shapes[i]);
 	}
 	root.printTree();
-*/
 	
 	// Style
 	cout << "\nSetting style of first shape..." << endl;
 	shapes[0].setStyle(GL_TEXTURE_3D);
-	root.printTree();
-	
-/*
-	// Randomize
-	cout << "\nRandomizing..." << endl;
-	srand(time(NULL));
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		randomNum = rand() % 10;
-		trans[i].set(randomNum, randomNum, randomNum);
-	}
-*/
-	
-	// Sort by depth
-	cout << "\nSorting by depth..." << endl;
-	root.sortByDepth(rotMatrix);
 	root.printTree();
 	
 	// Finish
@@ -91,5 +73,28 @@ int main() {
 	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
+	
+/*
+	// Print
+	cout << "\nBuilding tree... " << endl;
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		root.addChild(&trans[i]);
+		trans[i].addChild(&shapes[i]);
+	}
+	root.printTree();
+	
+	// Randomize
+	cout << "\nRandomizing..." << endl;
+	srand(time(NULL));
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		randomNum = rand() % 10;
+		trans[i].set(randomNum, randomNum, randomNum);
+	}
+	* 
+	// Sort by depth
+	cout << "\nSorting by depth..." << endl;
+	root.sortByDepth(rotMatrix);
+	root.printTree();
+*/
 }
 

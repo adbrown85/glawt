@@ -18,9 +18,9 @@ Translation.o:
 Scale.o: 
 
 # Textures
-Texture2D.o: 
-Texture3D.o: 
-Octree.o: Texture3D.o
+Texture2D.o: Texture.o
+Texture3D.o: Texture.o
+Octree.o: Texture.o Texture3D.o
 
 # Rendering
 Cull.o: 
@@ -30,8 +30,8 @@ Target.o: Framebuffer.o Texture2D.o
 # Shaders
 Program.o: 
 Shader.o: Program.o
+Uniform.o: Program.o Shader.o Texture.o
 UNIFORMS = ${filter-out Uniform.o UniformFactory.o, ${wildcard Uniform*.o}}
-Uniform.o: Program.o Shader.o Texture2D.o Texture3D.o
 $(UNIFORMS): Uniform.o
 UniformFactory.o: $(UNIFORMS)
 check: checkUniforms

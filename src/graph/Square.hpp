@@ -9,8 +9,8 @@
 #include <iostream>
 #include <GL/glut.h>
 #include <sstream>
-#include "Shape.hpp"
 #include "Program.hpp"
+#include "Shape.hpp"
 #include "Tag.hpp"
 using namespace std;
 

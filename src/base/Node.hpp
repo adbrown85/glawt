@@ -39,9 +39,10 @@ class Node {
 		friend bool compare(Node *A, Node *B);
 		
 		vector<Node*> getChildren() const;
-		float getDepth() const;
 		string getClassName() const;
+		float getDepth() const;
 		Node* getParent() const;
+		void setClassName(const string &className);
 	
 	protected :
 		
@@ -63,6 +64,9 @@ inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
 inline string Node::getClassName() const {return className;}
 inline Node* Node::getParent() const {return parent;}
+inline void Node::setClassName(const string &className) {
+	this->className = className;
+}
 
 
 #endif

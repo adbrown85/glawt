@@ -5,10 +5,8 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include <ctime>
-#include <iostream>
 #include "Scene.hpp"
 #include "Shape.hpp"
-//#include "Translation.hpp"
 #define NUM_OF_ITEMS 3
 using namespace std;
 
@@ -19,7 +17,25 @@ using namespace std;
 class FakeShape : public Shape {
 	public:
 		FakeShape(float size=1.0) : Shape(size) {}
-		void draw() const {};
+		virtual void draw() const {};
+};
+
+
+class FakeFactory : public Factory {
+	public:
+		Node* create(const Tag &tag) {
+			Node* node = new Node();
+			node->setClassName(tag.name);
+			return node;
+		}
+		set<string> getClasses() {
+			set<string> classes;
+			classes.insert("program");
+			classes.insert("shader");
+			classes.insert("translate");
+			classes.insert("cube");
+			return classes;
+		}
 };
 
 
@@ -28,8 +44,7 @@ class FakeShape : public Shape {
  */
 int main() {
 	
-	float rotation;
-	Scene sceneA, sceneB;
+	Scene scene;
 	
 	// Start
 	cout << endl;
@@ -40,8 +55,19 @@ int main() {
 	
 	// Test open
 	cout << "Testing open..." << endl;
-	sceneB.open("Scene.xml");
-	sceneB.print();
+	scene.install(new FakeFactory());
+	scene.open("Scene.xml");
+	scene.print();
+	
+	// Finish
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "Scene" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+/*
+	float rotation;
 	
 	// Build scene
 	cout << "\nBuilding scene..." << endl;
@@ -67,12 +93,7 @@ int main() {
 		cin >> rotation;
 	}
 	cout << endl;
+*/
 	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Scene" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
 }
 
