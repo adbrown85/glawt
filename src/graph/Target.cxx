@@ -9,6 +9,7 @@
 #include "RenderFactory.hpp"
 #include "ShaderFactory.hpp"
 #include "ShapeFactory.hpp"
+#include "TextureFactory.hpp"
 
 
 int main(int argc,
@@ -19,6 +20,7 @@ int main(int argc,
 		Tester::install(new RenderFactory());
 		Tester::install(new ShaderFactory());
 		Tester::install(new ShapeFactory());
+		Tester::install(new TextureFactory());
 		Tester::open("Target.xml");
 		Tester::start();
 	} catch (const char *e) {
