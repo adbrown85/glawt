@@ -6,8 +6,9 @@
  */
 #include "Octree.hpp"
 #include "Tester.hpp"
-#include "GeneralFactory.hpp"
-#include "UniformFactory.hpp"
+#include "ShaderFactory.hpp"
+#include "ShapeFactory.hpp"
+#include "TextureFactory.hpp"
 
 
 int main(int argc,
@@ -15,8 +16,9 @@ int main(int argc,
 	
 	try {
 		Tester::init(argc, argv);
-		Tester::install(new GeneralFactory());
-		Tester::install(new UniformFactory());
+		Tester::install(new ShaderFactory());
+		Tester::install(new ShapeFactory());
+		Tester::install(new TextureFactory());
 		Tester::open("Octree.xml");
 		Tester::start();
 	} catch (const char *e) {

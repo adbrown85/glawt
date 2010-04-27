@@ -6,8 +6,9 @@
  */
 #include "Cull.hpp"
 #include "Tester.hpp"
-#include "GeneralFactory.hpp"
-#include "UniformFactory.hpp"
+#include "RenderFactory.hpp"
+#include "ShaderFactory.hpp"
+#include "ShapeFactory.hpp"
 
 
 int main(int argc,
@@ -15,8 +16,9 @@ int main(int argc,
 	
 	try {
 		Tester::init(argc, argv);
-		Tester::install(new GeneralFactory());
-		Tester::install(new UniformFactory());
+		Tester::install(new RenderFactory());
+		Tester::install(new ShaderFactory());
+		Tester::install(new ShapeFactory());
 		Tester::open("Cull.xml");
 		Tester::start();
 	} catch (const char *e) {

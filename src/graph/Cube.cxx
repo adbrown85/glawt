@@ -6,8 +6,8 @@
  */
 #include "Cube.hpp"
 #include "Tester.hpp"
-#include "GeneralFactory.hpp"
-#include "UniformFactory.hpp"
+#include "ShapeFactory.hpp"
+#include "ShaderFactory.hpp"
 
 
 int main(int argc,
@@ -15,8 +15,8 @@ int main(int argc,
 	
 	try {
 		Tester::init(argc, argv);
-		Tester::install(new GeneralFactory());
-		Tester::install(new UniformFactory());
+		Tester::install(new ShaderFactory());
+		Tester::install(new ShapeFactory());
 		Tester::open("Cube.xml");
 		Tester::start();
 	} catch (const char *e) {

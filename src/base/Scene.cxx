@@ -11,9 +11,6 @@
 using namespace std;
 
 
-/**
- * Fake shape node.
- */
 class FakeShape : public Shape {
 	public:
 		FakeShape(float size=1.0) : Shape(size) {}
@@ -23,20 +20,27 @@ class FakeShape : public Shape {
 
 class FakeFactory : public Factory {
 	public:
-		Node* create(const Tag &tag) {
-			Node* node = new Node();
-			node->setClassName(tag.name);
-			return node;
-		}
-		set<string> getClasses() {
-			set<string> classes;
-			classes.insert("program");
-			classes.insert("shader");
-			classes.insert("translate");
-			classes.insert("cube");
-			return classes;
-		}
+		FakeFactory();
+		Node* create(const Tag &tag) const;
 };
+
+
+FakeFactory::FakeFactory() {
+	
+	tags.insert("program");
+	tags.insert("shader");
+	tags.insert("translate");
+	tags.insert("cube");
+}
+
+
+Node* FakeFactory::create(const Tag &tag) const {
+	
+	Node *node = new Node();
+	
+	node->setClassName(tag.name);
+	return node;
+}
 
 
 /**

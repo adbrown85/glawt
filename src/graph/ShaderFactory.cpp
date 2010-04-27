@@ -1,13 +1,18 @@
 /*
- * UniformFactory.cpp
+ * ShaderFactory.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "UniformFactory.hpp"
+#include "ShaderFactory.hpp"
 
 
-UniformFactory::UniformFactory() {
+ShaderFactory::ShaderFactory() {
+	
+	// Tags
+	tags.insert("program");
+	tags.insert("shader");
+	tags.insert("uniform");
 	
 	// Matrices
 	matrices.insert("mat3");
@@ -30,6 +35,20 @@ UniformFactory::UniformFactory() {
 }
 
 
+Node* ShaderFactory::create(const Tag &tag) const {
+	
+	if (tag.name == "program")
+		return new Program(tag);
+	else if (tag.name == "shader")
+		return new Shader(tag);
+	else if (tag.name == "uniform")
+		return createUniform(tag);
+	else {
+		throw "[ShaderFactory] Tag not supported by this factory.";
+	}
+}
+
+
 /**
  * Creates a uniform variable from a tag.
  * 
@@ -37,7 +56,7 @@ UniformFactory::UniformFactory() {
  * @return pointer to a uniform variable.
  * @throws const_char* if type is not supported.
  */
-Node* UniformFactory::create(const Tag &tag) {
+Node* ShaderFactory::createUniform(const Tag &tag) const {
 	
 	string type;
 	
@@ -47,31 +66,22 @@ Node* UniformFactory::create(const Tag &tag) {
 		return new UniformInt(tag);
 	else if (type == "float")
 		return new UniformFloat(tag);
-	else if (isMatrix(type))
+	else if (isUniformMatrix(type))
 		return new UniformMatrix(tag);
-	else if (isSampler(type))
+	else if (isUniformSampler(type))
 		return new UniformSampler(tag);
-	else if (isVector(type))
+	else if (isUniformVector(type))
 		return new UniformVector(tag);
 	else {
 		ostringstream msg;
-		msg << "[UniformFactory] Type '" << type
+		msg << "[ShaderFactory] Uniform type '" << type
 		    << "' not supported.";
 		throw msg.str().c_str();
 	}
 }
 
 
-set<string> UniformFactory::getClasses() {
-	
-	set<string> classes;
-	
-	classes.insert("uniform");
-	return classes;
-}
-
-
-bool UniformFactory::isMatrix(const string &type) {
+bool ShaderFactory::isUniformMatrix(const string &type) const {
 	
 	set<string>::iterator it;
 	
@@ -80,7 +90,7 @@ bool UniformFactory::isMatrix(const string &type) {
 }
 
 
-bool UniformFactory::isSampler(const string &type) {
+bool ShaderFactory::isUniformSampler(const string &type) const {
 	
 	set<string>::iterator it;
 	
@@ -89,7 +99,7 @@ bool UniformFactory::isSampler(const string &type) {
 }
 
 
-bool UniformFactory::isVector(const string &type) {
+bool ShaderFactory::isUniformVector(const string &type) const {
 	
 	set<string>::iterator it;
 	

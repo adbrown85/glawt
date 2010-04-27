@@ -16,29 +16,41 @@ include $(GANDER)/src/module.mak
 # Transformations
 Translation.o: 
 Scale.o: 
+TransformFactory.o: Scale.o Translation.o
 
 # Textures
 Texture2D.o: Texture.o
 Texture3D.o: Texture.o
 Octree.o: Texture.o Texture3D.o
+TextureFactory.o: Texture2D.o Texture3D.o Octree.o
 
 # Rendering
 Cull.o: 
 Framebuffer.o: 
 Target.o: Framebuffer.o Texture2D.o
+RenderFactory.o: Cull.o Framebuffer.o Target.o
 
 # Shaders
 Program.o: 
 Shader.o: Program.o
 Uniform.o: Program.o Shader.o Texture.o
-UNIFORMS = ${filter-out Uniform.o UniformFactory.o, ${wildcard Uniform*.o}}
+UNIFORMS = ${filter-out Uniform.o, ${patsubst %.cpp,%.o,${wildcard Uniform*.cpp}}}
 $(UNIFORMS): Uniform.o
-UniformFactory.o: $(UNIFORMS)
-check: checkUniforms
-checkUniforms:
-	@echo "  UNIFORMS = $(UNIFORMS)"
+ShaderFactory.o: Program.o Shader.o $(UNIFORMS)
 
 # Shapes
 Fullscreen.o: 
 Cube.o: Program.o
 Square.o: Program.o
+ShapeFactory.o: Cube.o Fullscreen.o Square.o
+
+# Testing
+FACTORIES = ${patsubst %.cpp,%.o,${wildcard *Factory.cpp}}
+$(BINARIES): $(FACTORIES)
+
+# Checks
+check: checkUniforms checkFactories
+checkUniforms:
+	@echo "  UNIFORMS = $(UNIFORMS)"
+checkFactories:
+	@echo "  FACTORIES = $(FACTORIES)"

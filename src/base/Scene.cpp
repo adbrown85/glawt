@@ -86,11 +86,11 @@ Matrix Scene::getRotationMatrix() const {
 
 void Scene::install(Factory *factory) {
 	
-	set<string> classes;
+	set<string> tags;
 	set<string>::iterator it;
 	
-	classes = factory->getClasses();
-	for (it=classes.begin(); it!=classes.end(); ++it) {
+	tags = factory->getTags();
+	for (it=tags.begin(); it!=tags.end(); ++it) {
 		factories[*it] = factory;
 	}
 }

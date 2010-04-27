@@ -7,21 +7,40 @@
 #include "Tester.hpp"
 
 
-/**
- * Simple GLUT application for testing nodes with XML files.
- */
+
+class FakeFactory : public Factory {
+	public:
+		FakeFactory();
+		Node* create(const Tag &tag) const;
+};
+
+
+FakeFactory::FakeFactory() {
+	
+	tags.insert("program");
+	tags.insert("shader");
+	tags.insert("translate");
+	tags.insert("cube");
+}
+
+
+Node* FakeFactory::create(const Tag &tag) const {
+	
+	Node *node = new Node();
+	
+	node->setClassName(tag.name);
+	return node;
+}
+
+
 int main(int argc,
          char *argv[]) {
-	
-	// Handle arguments
-	if (argc != 2) {
-		cerr << "Usage: " << argv[0] << " <file>" << endl;
-		exit(1);
-	}
 	
 	// Start
 	try {
 		Tester::init(argc, argv);
+		Tester::install(new FakeFactory());
+		Tester::open("Tester.xml");
 		Tester::start();
 	} catch (const char *e) {
 		cerr << e << endl;

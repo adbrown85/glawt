@@ -24,9 +24,16 @@ class Factory {
 	
 	public:
 		
-		virtual Node* create(const Tag &tag) = 0;
-		virtual set<string> getClasses() = 0;
+		virtual Node* create(const Tag &tag) const = 0;
+		virtual set<string> getTags() const;
+	
+	protected:
+		
+		set<string> tags;
 };
+
+
+inline set<string> Factory::getTags() const {return tags;}
 
 
 #endif
