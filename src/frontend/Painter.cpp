@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Painter.hpp"
-Cube Painter::outline(1.0);
+//Cube Painter::outline(1.0);
 
 
 /**
@@ -140,16 +140,17 @@ void Painter::paintUIElements(Selectable *selectable,
 	/* Light::pause(); */
 	
 	// Draw outline
+/*
 	glPushAttrib(GL_CURRENT_BIT);
 		glColor3f(1.0, 1.0, 0.0);
 		glPushAttrib(GL_POLYGON_BIT);
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
 			glPolygonMode(GL_FRONT, GL_LINE);
-			outline.copySizeOf(*selectable);
 			outline.draw();
 		glPopAttrib();
 	glPopAttrib();
+*/
 	
 	// Draw manipulators
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);

@@ -43,7 +43,7 @@ class Painter {
 	
 	private :
 		
-		static Cube outline;
+		//static Cube outline;
 		
 		static void disableTexturing();
 		static void paintChildren(Node *node,
