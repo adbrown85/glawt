@@ -72,7 +72,6 @@ class Scene {
 		string filename;
 		
 		Node* create(const Tag &tag);
-		void destroy(Node *node);
 		void parse();
 };
 

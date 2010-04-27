@@ -77,6 +77,18 @@ void Node::computeDepth(Matrix &matrix) {
 }
 
 
+void Node::destroy(Node *node) {
+	
+	vector<Node*>::iterator it;
+	
+	for (it=node->children.begin(); it!=node->children.end(); ++it)
+		destroy(*it);
+	
+	if (node != NULL)
+		delete node;
+}
+
+
 /**
  * Allow nodes to finish preparing themselves after associating with others.
  */

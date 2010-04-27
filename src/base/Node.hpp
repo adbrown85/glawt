@@ -35,6 +35,7 @@ class Node {
 		virtual void sortByDepth(Matrix &matrix);
 		virtual string toString() const;
 		
+		static void destroy(Node *node);
 		static void print(const Node *node);
 		friend bool compare(Node *A, Node *B);
 		
