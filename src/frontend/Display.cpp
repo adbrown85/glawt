@@ -14,6 +14,17 @@ vector<Control*> Display::controls;
 vector<Manipulator*> Display::manipulators;
 
 
+void Display::checkError() {
+	
+	GLenum error;
+	
+	error = glGetError();
+	if (error != GL_NO_ERROR) {
+		cerr << gluErrorString(error) << endl;
+	}
+}
+
+
 /**
  * Draws the scene in the window.
  */

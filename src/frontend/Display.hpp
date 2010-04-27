@@ -57,6 +57,7 @@ class Display {
 		static vector<Manipulator*> manipulators;
 		
 		static void overlay();
+		static void checkError();
 };
 
 
