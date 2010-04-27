@@ -10,8 +10,8 @@
 <texture2d name="crate" file="../../textures/crate.jpg">
 <texture2d name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader file="../../input/texture.vert" />
-		<shader file="../../input/texture.frag" />
+		<shader file="../../glsl/texture.vert" />
+		<shader file="../../glsl/texture.frag" />
 		<translate z="2.0">
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="sampler2D" name="unit" link="crate" />

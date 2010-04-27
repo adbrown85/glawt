@@ -7,8 +7,8 @@
 
 
 <program>
-	<shader file="../../input/basic.vert" />
-	<shader file="../../input/basic.frag" />
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
 	<uniform type="mat4" name="MVMatrix" link="modelview" />
 	<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 	<uniform type="mat3" name="NormalMatrix" link="normal" />

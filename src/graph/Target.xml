@@ -11,15 +11,15 @@
 	<framebuffer>
 		<target link="mytexture" />
 		<program>
-			<shader file="../../input/coordinates.vert" />
-			<shader file="../../input/coordinates.frag" />
+			<shader file="../../glsl/coordinates.vert" />
+			<shader file="../../glsl/coordinates.frag" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<square />
 		</program>
 	</framebuffer>
 	<program>
-		<shader file="../../input/texture.vert" />
-		<shader file="../../input/texture.frag" />
+		<shader file="../../glsl/texture.vert" />
+		<shader file="../../glsl/texture.frag" />
 		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 		<uniform type="sampler2D" name="unit" link="mytexture" />
 		<square />

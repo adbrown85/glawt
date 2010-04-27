@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #version 130
-#include "../../input/Colors.glsl"
+#include "../../glsl/Colors.glsl"
 uniform usampler1D octree;
 in vec3 TexCoord;
 out vec4 FragColor;

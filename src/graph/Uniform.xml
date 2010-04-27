@@ -11,8 +11,8 @@
 <texture2d name="crate" file="../../textures/crate.jpg">
 <texture2d name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader type="vertex" file="../../input/basic.vert" />
-		<shader type="fragment" file="../../input/basic.frag" />
+		<shader type="vertex" file="../../glsl/basic.vert" />
+		<shader type="fragment" file="../../glsl/basic.frag" />
 			<uniform type="mat4" name="MVMatrix" link="modelview" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="mat3" name="NormalMatrix" link="normal" />

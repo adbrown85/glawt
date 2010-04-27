@@ -8,8 +8,8 @@
 
 <cull faces="back">
 	<program>
-		<shader type="vertex" file="../../input/coordinates.vert"/>
-		<shader type="fragment" file="../../input/coordinates.frag"/>
+		<shader type="vertex" file="../../glsl/coordinates.vert"/>
+		<shader type="fragment" file="../../glsl/coordinates.frag"/>
 		<!-- <translate x="+0.5" z="-2" y="+0.5"> -->
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<cube />
