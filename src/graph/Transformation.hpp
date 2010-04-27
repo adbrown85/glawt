@@ -18,8 +18,8 @@
  * @brief
  *     Operation that changes the size, position, or orientation of objects.
  */
-class Transformation : public Applicable,
-                       public Node {
+class Transformation : public Node,
+                       public Applicable {
 	
 	public :
 		

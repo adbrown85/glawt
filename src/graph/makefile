@@ -14,8 +14,8 @@ include $(GANDER)/src/module.mak
 
 
 # Transformations
-Translation.o: 
-Scale.o: 
+Translation.o: Transformation.hpp
+Scale.o: Transformation.hpp
 TransformFactory.o: Scale.o Translation.o
 
 # Textures
