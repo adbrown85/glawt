@@ -17,6 +17,7 @@
 int main(int argc,
          char *argv[]) {
 	
+	Display *display;
 	Scene scene(640, 480);
 	Interpreter interpreter(&scene);
 	Keyboard keyboard(&interpreter);
@@ -32,10 +33,11 @@ int main(int argc,
 	
 	// Test
 	scene.setFilename("Display.xml");
-	Display::install(&menu);
-	Display::install(&keyboard);
-	Display::install(&mouse);
-	Display::start(argc, argv, "Display", &scene, &interpreter);
+	display = new Display(&scene, &interpreter);
+	display->install(&menu);
+	display->install(&keyboard);
+	display->install(&mouse);
+	display->start(argc, argv, "Display");
 	
 	// Finish
 	return 0;

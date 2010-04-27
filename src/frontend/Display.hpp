@@ -35,27 +35,28 @@ class Display {
 	
 	public :
 		
+		Display(Scene *scene,
+		        Interpreter *interpreter);
 		static void display(void);
 		static void idle(void);
-		static void install(Control *control);
-		static void start(int argc,
-		                  char *argv[],
-		                  string title,
-		                  Scene *scene,
-		                  Interpreter *interpreter);
+		void install(Control *control);
+		void start(int argc,
+		           char *argv[],
+		           const string &title);
 		static void toggleOverlay();
 	
 	private :
 		
-		static bool useOverlay;
-		static Interpreter *interpreter;
-		static unsigned long timeStarted;
-		static int frames, framesPerSecond;
-		static Scene *scene;
-		static vector<Control*> controls;
-		static vector<Manipulator*> manipulators;
+		static Display *obj;
+		bool useOverlay;
+		Interpreter *interpreter;
+		unsigned long timeStarted;
+		int frames, framesPerSecond;
+		Scene *scene;
+		vector<Control*> controls;
+		vector<Manipulator*> manipulators;
 		
-		static void overlay();
+		void overlay();
 		static void checkError();
 };
 

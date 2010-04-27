@@ -5,13 +5,25 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-bool Display::useOverlay=false;
-Interpreter *Display::interpreter=NULL;
-unsigned long Display::timeStarted=0;
-int Display::frames=0, Display::framesPerSecond=0;
-Scene *Display::scene=NULL;
-vector<Control*> Display::controls;
-vector<Manipulator*> Display::manipulators;
+Display *Display::obj=NULL;
+
+
+Display::Display(Scene *scene,
+                 Interpreter *interpreter) {
+	
+	// Copy inputs
+	this->interpreter = interpreter;
+	this->scene = scene;
+	
+	// Initialize others
+	this->useOverlay = false;
+	timeStarted = 0;
+	frames = 0;
+	framesPerSecond = 0;
+	
+	// Store this instance
+	Display::obj = this;
+}
 
 
 void Display::checkError() {
@@ -34,9 +46,9 @@ void Display::display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// Paint scene and overlay
-	Painter::paint(*scene, manipulators);
-	if (useOverlay)
-		overlay();
+	Painter::paint(*(obj->scene), obj->manipulators);
+	if (obj->useOverlay)
+		obj->overlay();
 	
 	// Refresh
 	glutSwapBuffers();
@@ -117,9 +129,7 @@ void Display::overlay() {
  */
 void Display::start(int argc,
                     char *argv[],
-                    string title,
-                    Scene *scene,
-                    Interpreter *interpreter) {
+                    const string &title) {
 	
 	int width, height, x=100, y=100;
 	vector<Manipulator*> manipulators;
@@ -127,8 +137,6 @@ void Display::start(int argc,
 	// Copy
 	height = scene->getHeight();
 	width = scene->getWidth();
-	Display::scene = scene;
-	Display::interpreter = interpreter;
 	
 	// Initialize window
 	glutInit(&argc, argv);
@@ -159,8 +167,7 @@ void Display::start(int argc,
 		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
 		scene->prepare();
 		scene->print();
-	}
-	catch (char const *e) {
+	} catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
 	}
@@ -170,7 +177,7 @@ void Display::start(int argc,
 	for (size_t i=0; i<controls.size(); i++) {
 		manipulators = controls[i]->install(scene);
 		for (size_t j=0; j<manipulators.size(); j++)
-			Display::manipulators.push_back(manipulators[j]);
+			this->manipulators.push_back(manipulators[j]);
 	}
 	
 	// Start
@@ -180,8 +187,8 @@ void Display::start(int argc,
 
 void Display::toggleOverlay() {
 	
-	useOverlay = !useOverlay;
-	if (useOverlay)
+	obj->useOverlay = !obj->useOverlay;
+	if (obj->useOverlay)
 		glutIdleFunc(Display::idle);
 	else
 		glutIdleFunc(NULL);
