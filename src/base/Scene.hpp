@@ -33,12 +33,13 @@ class Scene {
 	
 	public:
 		
-		Node *last, root;
+		Node *last, *root;
 		Selection selection;
 		Vector position;
 		
 		Scene(int width=512,
 		      int height=512);
+		virtual ~Scene();
 		void addToLast(Node *node);
 		void addToRoot(Node *node);
 		void backup();
@@ -55,9 +56,11 @@ class Scene {
 		
 		string getFilename() const;
 		int getHeight() const;
+		Node* getRoot() const;
 		Matrix getRotationMatrix() const;
 		int getWidth() const;
 		void setFilename(const string &filename);
+		void setRoot(Node *node);
 		void setRotation(float angle,
 		                 float x,
 		                 float y,
@@ -82,6 +85,10 @@ inline string Scene::getFilename() const {
 
 inline int Scene::getHeight() const {
 	return height;
+}
+
+inline Node* Scene::getRoot() const {
+	return root;
 }
 
 inline int Scene::getWidth() const {

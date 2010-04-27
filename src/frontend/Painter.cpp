@@ -45,7 +45,7 @@ void Painter::paint() {
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	paintNode(&(scene->root));
+	paintNode(scene->getRoot());
 }
 
 

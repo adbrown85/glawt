@@ -20,7 +20,7 @@ void Tester::display(void) {
 	glTranslatef(0.0, 0.0, -4.0);
 	
 	// Draw
-	traverse(&scene.root);
+	traverse(scene.getRoot());
 	
 	// Finish
 	glFlush();

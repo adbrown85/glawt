@@ -20,7 +20,16 @@ Scene::Scene(int width,
 	this->width = width;
 	this->height = height;
 	reset();
-	last = &root;
+	root = new Node();
+	last = root;
+}
+
+
+Scene::~Scene() {
+	
+	if (root != NULL) {
+		Node::destroy(root);
+	}
 }
 
 
@@ -43,8 +52,19 @@ void Scene::addToLast(Node *node) {
  */
 void Scene::addToRoot(Node *node) {
 	
-	root.addChild(node);
+	root->addChild(node);
 	last = node;
+}
+
+
+/**
+ * Changes the last node to its parent.
+ */
+void Scene::backup() {
+	
+	if (last == root)
+		return;
+	last = last->getParent();
 }
 
 
@@ -60,17 +80,6 @@ Node* Scene::create(const Tag &tag) {
 		msg << "[Scene] Cannot find factory for '" << tag.name << "'.";
 		throw msg.str().c_str();
 	}
-}
-
-
-/**
- * Changes the last node to its parent.
- */
-void Scene::backup() {
-	
-	if (last == &root)
-		return;
-	last = last->getParent();
 }
 
 
@@ -124,7 +133,7 @@ void Scene::parse() {
 	vector<Tag>::iterator ti;
 	
 	// Initialize
-	current = &root;
+	current = root;
 	parser.open(filename);
 	
 	// Look through tags
@@ -157,8 +166,8 @@ void Scene::parse() {
  */
 void Scene::prepare() {
 	
-	root.associateTree();
-	root.finalizeTree();
+	root->associateTree();
+	root->finalizeTree();
 }
 
 
@@ -167,7 +176,7 @@ void Scene::prepare() {
  */
 void Scene::print() {
 	
-	root.printTree();
+	root->printTree();
 }
 
 
@@ -198,6 +207,21 @@ void Scene::rotate(float angle,
 }
 
 
+void Scene::setRoot(Node *node) {
+	
+	// Check for bad input
+	if (node == NULL)
+		return;
+	
+	if (root == NULL) {
+		root = node;
+	} else {
+		Node::destroy(root);
+		root = node;
+	}
+}
+
+
 /**
  * Sets the rotation of the scene using axis/angle.
  */
@@ -220,6 +244,6 @@ void Scene::sortByDepth() {
 	
 	// Sort by depth using rotation matrix
 	rotMatrix = getRotationMatrix();
-	root.sortByDepth(rotMatrix);
+	root->sortByDepth(rotMatrix);
 }
 

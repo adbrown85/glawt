@@ -48,7 +48,7 @@ void Compositor::hide(Scene *scene,
 void Compositor::showAll(Scene *scene,
                          int cmd) {
 	
-	showAll(&(scene->root));
+	showAll(scene->getRoot());
 }
 
 
