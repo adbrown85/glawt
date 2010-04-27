@@ -15,42 +15,78 @@ GLuint Cube::indicesBuffer=0, Cube::dataBuffer=0;
 GLushort Cube::indices[24];
 
 
+/*
 Cube::Cube(float size) :
            Shape(size) {
 	
 	init();
 }
+*/
 
 
 Cube::Cube(const Tag &tag) :
            Shape(tag) {
 	
-	init();
+	// Class name
+	className = "Cube";
+	
+	// Attributes
+	if (!loaded) {
+		initIndices();
+		initMap();
+		initPoints();
+		initNormals();
+		initCoords2d();
+		initCoords3d();
+		initBuffers();
+		loaded = true;
+	}
+}
+
+
+void Cube::associate() {
+	
+	// Find program
+	program = Program::find(parent);
+	if (program == NULL) {
+		throw "[Cube] No shader program found to bind attributes to.";
+	}
 }
 
 
 void Cube::draw() const {
 	
-	// Enable buffers and arrays
+	// Enable buffers
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
-	glEnableVertexAttribArray(pointsLoc);
-	glEnableVertexAttribArray(normalsLoc);
-	glEnableVertexAttribArray(coordsLoc);
 	
-	// Draw
+	// Enable attributes
+	glEnableVertexAttribArray(pointsLoc);
 	glVertexAttribPointer(pointsLoc, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
-	glVertexAttribPointer(normalsLoc, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
-	if (style == GL_TEXTURE_2D)
-		glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
-	else
-		glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords3dOffset);
+	if (normalsLoc != -1) {
+		glEnableVertexAttribArray(normalsLoc);
+		glVertexAttribPointer(normalsLoc, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
+	}
+	if (coordsLoc != -1) {
+		glEnableVertexAttribArray(coordsLoc);
+		switch (style) {
+		case GL_TEXTURE_2D:
+			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
+		case GL_TEXTURE_3D:
+			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords3dOffset);
+		}
+	}
+	
 	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, 0);
 	
-	// Disable buffers and arrays
+	// Disable attributes
 	glDisableVertexAttribArray(pointsLoc);
-	glDisableVertexAttribArray(normalsLoc);
-	glDisableVertexAttribArray(coordsLoc);
+	if (coordsLoc != -1)
+		glDisableVertexAttribArray(coordsLoc);
+	if (normalsLoc != -1)
+		glDisableVertexAttribArray(normalsLoc);
+	
+	// Disable buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -63,16 +99,18 @@ void Cube::draw() const {
  */
 void Cube::finalize() {
 	
-	Program *program;
-	
 	// Find locations in program
-	program = Program::find(parent);
 	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
 	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
 	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
+	
+	// Check
+	if (pointsLoc == -1)
+		throw "[Cube] Could not find location for 'MCVertex'";
 }
 
 
+/*
 void Cube::init() {
 	
 	// Class name
@@ -90,6 +128,7 @@ void Cube::init() {
 		loaded = true;
 	}
 }
+*/
 
 
 void Cube::initBuffers() {
