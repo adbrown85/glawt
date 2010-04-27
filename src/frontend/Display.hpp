@@ -44,7 +44,6 @@ class Display {
 		                  Scene *scene,
 		                  Interpreter *interpreter);
 		static void toggleOverlay();
-		static void visibility(int visible);
 	
 	private :
 		

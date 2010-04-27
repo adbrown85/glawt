@@ -167,7 +167,6 @@ void Display::start(int argc,
 	
 	// Register functions
 	glutDisplayFunc(Display::display);
-	glutVisibilityFunc(Display::visibility);
 	for (size_t i=0; i<controls.size(); i++) {
 		manipulators = controls[i]->install(scene);
 		for (size_t j=0; j<manipulators.size(); j++)
@@ -186,14 +185,5 @@ void Display::toggleOverlay() {
 		glutIdleFunc(Display::idle);
 	else
 		glutIdleFunc(NULL);
-}
-
-
-void Display::visibility(int visible) {
-	
-	if (!visible) {
-		useOverlay = false;
-		glutIdleFunc(NULL);
-	}
 }
 
