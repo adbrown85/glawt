@@ -17,6 +17,7 @@
 #include "Delegate.hpp"
 #include "Scene.hpp"
 #include "Tag.hpp"
+#include "Translation.hpp"
 using namespace std;
 
 

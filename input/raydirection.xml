@@ -12,9 +12,7 @@
 	<shader file="world.vert" />
 	<uniform type="int" name="width" value="640">
 	<uniform type="int" name="height" value="480">
-		<translate x="0.0" y="0.0" z="0.0">
-			<box size="2.0" style="3D" />
-		</translate>
+		<box size="2.0" style="3D" />
 	</uniform>
 	</uniform>
 </program>

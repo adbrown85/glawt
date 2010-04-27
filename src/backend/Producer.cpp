@@ -60,6 +60,7 @@ void Producer::open(Scene *scene,
                     int command,
                     string filename) {
 	
+	scene->setRoot(new Translation());
 	scene->open(filename);
 }
 
