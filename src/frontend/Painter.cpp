@@ -137,7 +137,6 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->remove();
 	Texture::pause();
-	/* Light::pause(); */
 	
 	// Draw outline
 /*
@@ -171,6 +170,5 @@ void Painter::paintUIElements(Selectable *selectable,
 	if (program != NULL)
 		program->apply();
 	Texture::restart();
-	/* Light::restart(); */
 }
 
