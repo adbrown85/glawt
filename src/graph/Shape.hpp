@@ -14,13 +14,14 @@
 #include <string>
 #include "Matrix.hpp"
 #include "Node.hpp"
+#include "Program.hpp"
 #include "Selectable.hpp"
 #include "Tag.hpp"
 using namespace std;
 
 
 /**
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Base class for a 3D object in the scene.
  */
@@ -29,16 +30,19 @@ class Shape : public Node,
 	
 	public :
 		
-		Shape(float size=1.0);
 		Shape(const Tag &tag);
+		virtual void associate();
+		virtual void finalize();
+		virtual GLenum getStyle() const;
+		virtual void setStyle(GLenum style);
 		virtual string toString() const;
 		
-		GLenum getStyle() const;
-		void setStyle(GLenum style);
 	
 	protected : 
 		
 		GLenum style;
+		GLint coordsLoc, pointsLoc, normalsLoc;
+		Program *program;
 		
 		virtual void computeDepth(Matrix &matrx);
 };

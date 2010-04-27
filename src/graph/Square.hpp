@@ -25,14 +25,10 @@ class Square : public Shape {
 	public:
 		
 		Square(const Tag &tag);
-		virtual void associate();
-		virtual void finalize();
 		virtual void draw() const;
 	
 	protected:
 		
-		Program *program;
-		GLint coordsLoc, normalsLoc, pointsLoc;
 		static bool loaded;
 		static GLfloat coords[4][3], normals[4][3], points[4][3];
 		static GLint coordsOffset, normalsOffset, pointsOffset;

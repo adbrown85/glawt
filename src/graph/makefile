@@ -39,9 +39,10 @@ $(UNIFORMS): Uniform.o
 ShaderFactory.o: Program.o Shader.o $(UNIFORMS)
 
 # Shapes
-Fullscreen.o: 
-Cube.o: Program.o
-Square.o: Program.o
+Shape.o: Program.o
+Fullscreen.o: Shape.o
+Cube.o: Shape.o
+Square.o: Shape.o
 ShapeFactory.o: Cube.o Fullscreen.o Square.o
 
 # Testing

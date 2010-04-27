@@ -20,14 +20,9 @@ class Cube : public Shape {
 		
 		//Cube(float size=1.0);
 		Cube(const Tag &tag);
-		virtual void associate();
-		virtual void finalize();
 		virtual void draw() const;
 	
 	private:
-		
-		GLint coordsLoc, pointsLoc, normalsLoc;
-		Program *program;
 		
 		static bool loaded;
 		static GLfloat coords2d[24][3], coords3d[24][3];
@@ -46,7 +41,6 @@ class Cube : public Shape {
 		void initMap();
 		void initNormals();
 		void initPoints();
-		
 };
 
 

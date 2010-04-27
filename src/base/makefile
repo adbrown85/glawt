@@ -21,7 +21,6 @@ Transformation.hpp: Applicable.hpp Node.o
 Identifiable.o: 
 Drawable.o: Identifiable.o
 Selectable.o: Drawable.o
-Shape.o: Node.o Selectable.o
 
 # Basics
 Node.o:
@@ -29,5 +28,4 @@ Selection.o: Selectable.o
 Scene.o: Factory.hpp Node.o Selection.o
 
 # Testing
-Scene: Shape.o
 Tester.o: Applicable.hpp Drawable.o Node.o Scene.o

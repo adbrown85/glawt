@@ -17,7 +17,6 @@ using namespace std;
  */
 class FakeShape : public Shape {
 	public:
-		FakeShape() : Shape() {}
 		FakeShape(const Tag &tag) : Shape(tag) {}
 		void draw() const {};
 };
@@ -28,7 +27,7 @@ class FakeShape : public Shape {
  */
 int main() {
 	
-	FakeShape shapes[NUMBER_OF_ITEMS], *shape;
+	FakeShape *shape;
 	/* int randomNum; */
 	Matrix rotMatrix;
 	Tag tag;
@@ -58,13 +57,9 @@ int main() {
 	// Print
 	cout << "\nBuilding tree... " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		root.addChild(&shapes[i]);
+		shape = new FakeShape(tag);
+		root.addChild(shape);
 	}
-	root.printTree();
-	
-	// Style
-	cout << "\nSetting style of first shape..." << endl;
-	shapes[0].setStyle(GL_TEXTURE_3D);
 	root.printTree();
 	
 	// Finish

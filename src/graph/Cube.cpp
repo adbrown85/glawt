@@ -44,16 +44,6 @@ Cube::Cube(const Tag &tag) :
 }
 
 
-void Cube::associate() {
-	
-	// Find program
-	program = Program::find(parent);
-	if (program == NULL) {
-		throw "[Cube] No shader program found to bind attributes to.";
-	}
-}
-
-
 void Cube::draw() const {
 	
 	// Enable buffers
@@ -90,45 +80,6 @@ void Cube::draw() const {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-
-
-/**
- * Finds vertex attribute locations in the current shader program.
- * 
- * @note Does not throw an error in case shaders do not use an attribute.
- */
-void Cube::finalize() {
-	
-	// Find locations in program
-	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
-	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
-	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
-	
-	// Check
-	if (pointsLoc == -1)
-		throw "[Cube] Could not find location for 'MCVertex'";
-}
-
-
-/*
-void Cube::init() {
-	
-	// Class name
-	className = "Cube";
-	
-	// Attributes
-	if (!loaded) {
-		initIndices();
-		initMap();
-		initPoints();
-		initNormals();
-		initCoords2d();
-		initCoords3d();
-		initBuffers();
-		loaded = true;
-	}
-}
-*/
 
 
 void Cube::initBuffers() {

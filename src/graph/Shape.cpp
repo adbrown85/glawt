@@ -8,19 +8,6 @@
 
 
 /**
- * Creates a shape.
- * 
- * @param size Size of the shape.
- */
-Shape::Shape(float size) : Selectable(size) {
-	
-	// Initialize
-	className = "Shape";
-	style = GL_TEXTURE_2D;
-}
-
-
-/**
  * Creates a shape from an XML tag.
  * 
  * @param tag XML tag with "size" attribute.
@@ -50,6 +37,21 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 
 
 /**
+ * Finds a program to bind the shape's vertex attributes to.
+ * 
+ * @throws const_char* if a program cannot be found.
+ */
+void Shape::associate() {
+	
+	// Find program
+	program = Program::find(parent);
+	if (program == NULL) {
+		throw "[Shape] No shader program found to bind attributes to.";
+	}
+}
+
+
+/**
  * Computes the shape's depth using the matrix.
  */
 void Shape::computeDepth(Matrix &matrix) {
@@ -59,6 +61,25 @@ void Shape::computeDepth(Matrix &matrix) {
 	// Multiply position by matrix
 	pos = matrix * pos;
 	depth = pos.z;
+}
+
+
+/**
+ * Finds vertex attribute locations in the current shader program.
+ * 
+ * @throws const_char* if a location for the vertex points cannot be found.
+ * @note Does not throw an error in case shaders do not use an attribute.
+ */
+void Shape::finalize() {
+	
+	// Find locations in program
+	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
+	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
+	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
+	
+	// Check
+	if (pointsLoc == -1)
+		throw "[Shape] Could not find location for 'MCVertex'";
 }
 
 

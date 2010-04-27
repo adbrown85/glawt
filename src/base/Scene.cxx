@@ -6,16 +6,8 @@
  */
 #include <ctime>
 #include "Scene.hpp"
-#include "Shape.hpp"
 #define NUM_OF_ITEMS 3
 using namespace std;
-
-
-class FakeShape : public Shape {
-	public:
-		FakeShape(float size=1.0) : Shape(size) {}
-		virtual void draw() const {};
-};
 
 
 class FakeFactory : public Factory {

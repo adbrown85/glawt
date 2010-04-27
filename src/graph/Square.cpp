@@ -37,18 +37,6 @@ Square::Square(const Tag &tag) :
 
 
 /**
- * Finds the shader Program to bind attributes to.
- */
-void Square::associate() {
-	
-	program = Program::find(parent);
-	if (program == NULL) {
-		throw "[Square] No shader program found to bind attributes to.";
-	}
-}
-
-
-/**
  * Draws the square.
  */
 void Square::draw() const {
@@ -72,17 +60,6 @@ void Square::draw() const {
 	glDisableVertexAttribArray(coordsLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-
-/**
- * Finds positions of attributes in the shader Program.
- */
-void Square::finalize() {
-	
-	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
-	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
-	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
 }
 
 
