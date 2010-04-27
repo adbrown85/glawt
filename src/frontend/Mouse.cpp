@@ -8,38 +8,34 @@
 Mouse *Mouse::obj=NULL;
 
 
+Mouse::Mouse(Delegate *delegate,
+             Scene *scene) :
+             Control(delegate, scene),
+             clickHelper(delegate, scene),
+             dragHelper(delegate, scene) {
+	
+	Mouse::obj = this;
+	this->type = "Mouse";
+	initBindings();
+	initData();
+	initManipulators();
+}
+
+
 /**
  * Installs the control into the current context.
  * 
  * @param scene Makes the Control use this scene;
  */
-vector<Manipulator*> Mouse::install(Scene *scene) {
+void Mouse::install() {
 	
-	MouseHelper *helpers[2];
+	// Register callbacks
+	glutMouseFunc(Mouse::onClick);
+	glutMotionFunc(Mouse::onDrag);
 	
-	// Initialize attributes
-	Mouse::obj = this;
-	this->scene = scene;
-	this->type = "Mouse";
-	
-	// Install
-	installBindings();
-	installCallbacks();
-	installManipulators();
-	
-	// Copy to helpers
-	helpers[0] = &clickHelper;
-	helpers[1] = &dragHelper;
-	for (int i=0; i<2; ++i) {
-		helpers[i]->install(scene);
-		helpers[i]->initialize(bindings);
-		helpers[i]->initialize(manipulators);
-		helpers[i]->initialize(&data);
-	}
-	
-	// Finish
-	print();
-	return manipulators;
+	// Install helpers
+	clickHelper.install();
+	dragHelper.install();
 }
 
 
@@ -48,7 +44,7 @@ vector<Manipulator*> Mouse::install(Scene *scene) {
  * 
  * @see Binding
  */
-void Mouse::installBindings() {
+void Mouse::initBindings() {
 	
 	// Add bindings for mouse wheel
 	add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
@@ -86,19 +82,17 @@ void Mouse::installBindings() {
 	            Command::BOOM,
 	            1.0f,
 	            'y'));
+	
+	// Copy to helpers
+	clickHelper.setBindings(bindings);
+	dragHelper.setBindings(bindings);
 }
 
 
-/**
- * Installs the GLUT callbacks for the mouse.
- * 
- * Will register the callback functions for both clicks and drags with GLUT.
- */
-void Mouse::installCallbacks() {
+void Mouse::initData() {
 	
-	// Register clicks and drags
-	glutMouseFunc(Mouse::onClick);
-	glutMotionFunc(Mouse::onDrag);
+	clickHelper.setData(&data);
+	dragHelper.setData(&data);
 }
 
 
@@ -108,7 +102,7 @@ void Mouse::installCallbacks() {
  * A class that uses the control should draw these manipulators for selected 
  * items.
  */
-void Mouse::installManipulators() {
+void Mouse::initManipulators() {
 	
 	// Add translators
 	add(new Translator(1.0, 0.0, 0.0));
@@ -119,6 +113,10 @@ void Mouse::installManipulators() {
 	for (size_t i=0; i<manipulators.size(); ++i) {
 		manipulators[i]->setDelegate(delegate);
 	}
+	
+	// Copy to helpers
+	clickHelper.setManipulators(manipulators);
+	dragHelper.setManipulators(manipulators);
 }
 
 

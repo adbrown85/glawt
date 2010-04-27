@@ -8,32 +8,24 @@
 Keyboard *Keyboard::obj=NULL;
 
 
-Keyboard::Keyboard(Delegate *delegate) : 
-                   Control(delegate) {
+Keyboard::Keyboard(Delegate *delegate,
+                   Scene *scene) : 
+                   Control(delegate, scene) {
 	
 	Keyboard::obj = this;
+	type = "Keyboard";
+	initBindings();
 }
 
 
 /**
  * Installs the controls into the current context.
  */
-vector<Manipulator*> Keyboard::install(Scene *scene) {
+void Keyboard::install() {
 	
-	// Initialize attributes
-	type = "Keyboard";
-	this->scene = scene;
-	
-	// Install bindings
-	installBindings();
-	print();
-	
-	// Register functions
+	// Register callbacks
 	glutKeyboardFunc(Keyboard::character);
 	glutSpecialFunc(Keyboard::special);
-	
-	// Finish
-	return manipulators;
 }
 
 
@@ -43,6 +35,7 @@ vector<Manipulator*> Keyboard::install(Scene *scene) {
 void Keyboard::character(unsigned char key,
                          int x,
                          int y) {
+	
 	obj->trigger(static_cast<int>(toupper(key)));
 }
 
@@ -83,6 +76,7 @@ Binding* Keyboard::lookup(int key,
 void Keyboard::special(int key,
                        int x,
                        int y) {
+	
 	obj->trigger(key);
 }
 

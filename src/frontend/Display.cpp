@@ -176,7 +176,8 @@ void Display::start(int argc,
 	// Register functions
 	glutDisplayFunc(Display::display);
 	for (size_t i=0; i<controls.size(); i++) {
-		manipulators = controls[i]->install(scene);
+		controls[i]->install();
+		manipulators = controls[i]->getManipulators();
 		for (size_t j=0; j<manipulators.size(); j++)
 			painter->addManipulator(manipulators[j]);
 	}

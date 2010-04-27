@@ -20,9 +20,9 @@ int main(int argc,
 	Display *display;
 	Scene scene(640, 480);
 	Interpreter interpreter(&scene);
-	Keyboard keyboard(&interpreter);
-	Menu menu(&interpreter);
-	Mouse mouse(&interpreter);
+	Keyboard keyboard(&interpreter, &scene);
+	Menu menu(&interpreter, &scene);
+	Mouse mouse(&interpreter, &scene);
 	
 	// Start
 	cout << endl;

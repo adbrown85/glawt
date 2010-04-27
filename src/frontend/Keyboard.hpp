@@ -28,25 +28,28 @@ using namespace std;
  */
 class Keyboard : public Control {
 	
-	public :
+	public:
 		
-		Keyboard(Delegate *delegate);
-		vector<Manipulator*> install(Scene *scene);
+		Keyboard(Delegate *delegate,
+		         Scene *scene);
+		static void character(unsigned char key, int x, int y);
+		static void special(int key, int x, int y);
+		virtual void install();
 		Binding* lookup(int key, int mod);
 		void trigger(int key);
 		
-		static void character(unsigned char key, int x, int y);
-		static void special(int key, int x, int y);
 	
-	private :
+	protected:
 		
-		void installBindings();
+		void initBindings();
+	
+	private:
 		
 		static Keyboard *obj;
 };
 
 
-inline void Keyboard::installBindings() {
+inline void Keyboard::initBindings() {
 	
 	add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
 	add(Binding(GLUT_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));

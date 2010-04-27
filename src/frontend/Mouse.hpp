@@ -38,14 +38,11 @@ using namespace std;
  */
 class Mouse : public Control {
 	
-	public :
+	public:
 		
-		Mouse(Delegate *delegate) :
-		      Control(delegate),
-		      clickHelper(delegate),
-		      dragHelper(delegate) {}
-		vector<Manipulator*> install(Scene *scene);
-		
+		Mouse(Delegate *delegate,
+		      Scene *scene);
+		virtual void install();
 		static void onClick(int button,
 		                    int action,
 		                    int x,
@@ -53,16 +50,18 @@ class Mouse : public Control {
 		static void onDrag(int x,
 		                   int y);
 	
-	private :
+	protected:
+		
+		void initBindings();
+		void initData();
+		void initManipulators();
+	
+	private:
 		
 		MouseClickHelper clickHelper;
 		MouseData data;
 		MouseDragHelper dragHelper;
 		static Mouse *obj;
-		
-		void installBindings();
-		void installCallbacks();
-		void installManipulators();
 };
 
 

@@ -29,14 +29,14 @@ class MouseClickHelper : public MouseHelper {
 	
 	public:
 		
-		MouseClickHelper(Delegate *delegate);
-		virtual void initialize(multimap<int,Binding> bindings);
-		virtual void initialize(vector<Manipulator*> manipulators);
-		virtual vector<Manipulator*> install(Scene *scene);
+		MouseClickHelper(Delegate *delegate,
+		                 Scene *scene);
 		virtual void onClick(int button,
 		                     int state,
 		                     int x,
 		                     int y);
+		virtual void setBindings(multimap<int,Binding> bindings);
+		virtual void setManipulators(vector<Manipulator*> manipulators);
 	
 	protected:
 		
@@ -46,7 +46,7 @@ class MouseClickHelper : public MouseHelper {
 	
 	private:
 		
-		Picker *picker;
+		Picker picker;
 };
 
 

@@ -11,47 +11,14 @@
  * Creates a new MouseClickHelper control.
  * 
  * @param delegate Delegate to send commands to.
+ * @param scene Scene to work with.
  */
-MouseClickHelper::MouseClickHelper(Delegate *delegate) :
-                                   MouseHelper(delegate) {
+MouseClickHelper::MouseClickHelper(Delegate *delegate,
+                                   Scene *scene) :
+                                   MouseHelper(delegate, scene),
+                                   picker(scene) {
 	
 	type = "MouseClickHelper";
-	picker = NULL;
-}
-
-
-/**
- * Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
- * 
- * @param bindings Bindings from %Mouse.
- */
-void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
-	
-	Binding *binding;
-	multimap<int,Binding>::iterator pi;
-	
-	// Add bindings without drag
-	for (pi=bindings.begin(); pi!=bindings.end(); ++pi) {
-		binding = &(pi->second);
-		if (!binding->hasDrag())
-			add(*binding);
-	}
-}
-
-
-void MouseClickHelper::initialize(vector<Manipulator*> manipulators) {
-	
-	MouseHelper::initialize(manipulators);
-	if (picker != NULL)
-		picker->addManipulators(manipulators);
-}
-
-
-vector<Manipulator*> MouseClickHelper::install(Scene *scene) {
-	
-	MouseHelper::install(scene);
-	picker = new Picker(scene);
-	return manipulators;
 }
 
 
@@ -110,7 +77,7 @@ void MouseClickHelper::pickItem() {
 	      || data->button == GLUT_RIGHT_BUTTON) {
 		
 		// Pick the item
-		result = picker->pick(data->x, data->y);
+		result = picker.pick(data->x, data->y);
 		data->itemID = result.first;
 		data->shapeID = result.second;
 		
@@ -119,6 +86,32 @@ void MouseClickHelper::pickItem() {
 		if (identifiable != NULL)
 			data->manipulator = dynamic_cast<Manipulator*>(identifiable);
 	}
+}
+
+
+/**
+ * Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
+ * 
+ * @param bindings Bindings from %Mouse.
+ */
+void MouseClickHelper::setBindings(multimap<int,Binding> bindings) {
+	
+	Binding *binding;
+	multimap<int,Binding>::iterator pi;
+	
+	// Add bindings without drag
+	for (pi=bindings.begin(); pi!=bindings.end(); ++pi) {
+		binding = &(pi->second);
+		if (!binding->hasDrag())
+			add(*binding);
+	}
+}
+
+
+void MouseClickHelper::setManipulators(vector<Manipulator*> manipulators) {
+	
+	Control::setManipulators(manipulators);
+	picker.addManipulators(manipulators);
 }
 
 

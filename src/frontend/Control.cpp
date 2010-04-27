@@ -12,11 +12,12 @@
  * 
  * @param delegate Pointer to a Delegate that runs 
  */
-Control::Control(Delegate *delegate) {
+Control::Control(Delegate *delegate,
+                 Scene *scene) {
 	
 	// Initialize
 	this->delegate = delegate;
-	this->scene = NULL;
+	this->scene = scene;
 }
 
 
@@ -38,9 +39,7 @@ Control::~Control() {
  */
 void Control::add(const Binding &binding) {
 	
-	// Insert the binding with its trigger
-	bindings.insert(pair<int,Binding>(binding.getTrigger(),
-	                                  binding));
+	bindings.insert(pair<int,Binding>(binding.getTrigger(), binding));
 }
 
 
@@ -49,8 +48,13 @@ void Control::add(const Binding &binding) {
  */
 void Control::add(Manipulator *manipulator) {
 	
-	// Add the manipulator
 	manipulators.push_back(manipulator);
+}
+
+
+vector<Manipulator*> Control::getManipulators() const {
+	
+	return manipulators;
 }
 
 
@@ -69,5 +73,11 @@ void Control::print() {
 	cout << "Bindings:" << endl;
 	for (bi=bindings.begin(); bi!=bindings.end(); bi++)
 		cout << "  " << bi->second << endl;
+}
+
+
+void Control::setManipulators(vector<Manipulator*> manipulators) {
+	
+	this->manipulators = manipulators;
 }
 

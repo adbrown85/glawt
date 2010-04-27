@@ -28,13 +28,15 @@ class Control {
 	
 	public :
 		
-		Control(Delegate *delegate);
-		~Control();
-		
-		void add(const Binding &binding);
-		void add(Manipulator *manipulator);
-		virtual vector<Manipulator*> install(Scene *scene) = 0;
-		void print();
+		Control(Delegate *delegate,
+		        Scene *scene);
+		virtual ~Control();
+		virtual void add(const Binding &binding);
+		virtual void add(Manipulator *manipulator);
+		virtual vector<Manipulator*> getManipulators() const;
+		virtual void install() = 0;
+		virtual void print();
+		virtual void setManipulators(vector<Manipulator*> manipulators);
 	
 	protected :
 		

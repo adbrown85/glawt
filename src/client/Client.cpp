@@ -38,9 +38,9 @@ void Client::display() {
 	
 	Display *display;
 	Interpreter interpreter(&scene);
-	Keyboard keyboard(&interpreter);
-	Menu menu(&interpreter);
-	Mouse mouse(&interpreter);
+	Keyboard keyboard(&interpreter, &scene);
+	Menu menu(&interpreter, &scene);
+	Mouse mouse(&interpreter, &scene);
 	
 	// Initialize scene
 	scene.setFilename(inFilename);

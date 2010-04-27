@@ -26,20 +26,17 @@ class Menu : public Control {
 	
 	public :
 		
-		Menu(Delegate *delegate) : Control(delegate) {
-			Menu::menu = this;
-		}
-		
-		static void handler(GLint option);
-		vector<Manipulator*> install(Scene *scene);
-		void menuItem();
-		void menuMain();
-		void print();
+		Menu(Delegate *delegate,
+		     Scene *scene);
+		virtual void install();
+		void installItemMenu();
+		void installMainMenu();
+		static void onClick(GLint option);
 	
 	private:
 		
 		static Menu *menu;
-		int menuMainID, menuItemID;
+		int mainMenuID, itemMenuID;
 };
 
 

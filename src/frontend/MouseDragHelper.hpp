@@ -27,22 +27,25 @@ using namespace std;
  */
 class MouseDragHelper : public MouseHelper {
 	
-	public :
+	public:
 		
-		MouseDragHelper(Delegate *delegate);
-		void initialize(multimap<int,Binding> bindings);
+		MouseDragHelper(Delegate *delegate,
+		                Scene *scene);
 		void onDrag(int x,
 		            int y);
+		void setBindings(multimap<int,Binding> bindings);
 	
-	private:
-		
-		Vector axis, direction, movement;
-		static char directions[2];
+	protected:
 		
 		void decideAxis();
 		void tryBinding(Binding *binding);
 		void tryBindings();
 		bool useConstrained();
+	
+	private:
+		
+		Vector axis, direction, movement;
+		static char directions[2];
 };
 
 

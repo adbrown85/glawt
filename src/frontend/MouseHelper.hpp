@@ -27,12 +27,11 @@ class MouseHelper : public Control {
 	
 	public:
 		
-		MouseHelper(Delegate *delegate);
+		MouseHelper(Delegate *delegate,
+		            Scene *scene);
 		virtual int getModifier();
-		virtual void initialize(MouseData *data);
-		virtual void initialize(multimap<int,Binding> bindings) = 0;
-		virtual void initialize(vector<Manipulator*> manipulators);
-		virtual vector<Manipulator*> install(Scene *scene);
+		virtual void install() {};
+		virtual void setData(MouseData *data);
 		virtual void updateCurrentData(int x, int y);
 		virtual void updateLastData();
 	

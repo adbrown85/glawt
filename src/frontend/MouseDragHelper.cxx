@@ -67,13 +67,13 @@ int main(int argc,
 	// Initialize
 	scene = new Scene();
 	interpreter = new Interpreter(scene);
-	mdh = new MouseDragHelper(interpreter);
+	mdh = new MouseDragHelper(interpreter, scene);
 	addBindings(bins);
 	
 	// Test install
 	glutInit(&argc, argv);
-	mdh->initialize(bins);
-	mdh->install(scene);
+	mdh->setBindings(bins);
+	mdh->install();
 	mdh->print();
 	
 	// Finish

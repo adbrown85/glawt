@@ -7,8 +7,9 @@
 #include "MouseHelper.hpp"
 
 
-MouseHelper::MouseHelper(Delegate *delegate) :
-                         Control(delegate) {
+MouseHelper::MouseHelper(Delegate *delegate,
+                         Scene *scene) :
+                         Control(delegate, scene) {
 	
 	type = "MouseHelper";
 	data = NULL;
@@ -27,22 +28,9 @@ int MouseHelper::getModifier() {
 }
 
 
-void MouseHelper::initialize(vector<Manipulator*> manipulators) {
-	
-	this->manipulators = manipulators;
-}
-
-
-void MouseHelper::initialize(MouseData *data) {
+void MouseHelper::setData(MouseData *data) {
 	
 	this->data = data;
-}
-
-
-vector<Manipulator*> MouseHelper::install(Scene *scene) {
-	
-	this->scene = scene;
-	return manipulators;
 }
 
 

@@ -89,7 +89,7 @@ Binding::Binding(int trigger,
  * @param modifier Modifier key held while pressing trigger (0 if none).
  * @param command Enumeration of a command.
  * @param argument Pointer to unsigned integer to pass to command as argument.
- * @param state State of the button pressed.  -1 if none.
+ * @param state State of the button pressed (-1 if none).
  */
 Binding::Binding(int trigger,
                  int modifier,

@@ -11,8 +11,10 @@ char MouseDragHelper::directions[2] = {'x', 'y'};
 /**
  * Creates a new MouseDragHelper control.
  */
-MouseDragHelper::MouseDragHelper(Delegate *delegate) :
-                                 MouseHelper(delegate) {
+MouseDragHelper::MouseDragHelper(Delegate *delegate,
+                                 Scene *scene) :
+                                 MouseHelper(delegate, scene) {
+	
 	type = "MouseDragHelper";
 }
 
@@ -53,23 +55,6 @@ void MouseDragHelper::decideAxis() {
 
 
 /**
- * Copies bindings from %Mouse that use drag into %MouseDragHelper.
- */
-void MouseDragHelper::initialize(multimap<int,Binding> bindings) {
-	
-	Binding *binding;
-	multimap<int,Binding>::iterator pi;
-	
-	// Copy bindings with drag
-	for (pi=bindings.begin(); pi!=bindings.end(); ++pi) {
-		binding = &(pi->second);
-		if (binding->hasDrag())
-			add(*binding);
-	}
-}
-
-
-/**
  * Manipulates the scene when the mouse is dragged.
  * 
  * @param x Current horizontal coordinate of mouse while it's being dragged.
@@ -97,6 +82,23 @@ void MouseDragHelper::onDrag(int x,
 	// Finish
 	updateLastData();
 	glutPostRedisplay();
+}
+
+
+/**
+ * Copies bindings from %Mouse that use drag into %MouseDragHelper.
+ */
+void MouseDragHelper::setBindings(multimap<int,Binding> bindings) {
+	
+	Binding *binding;
+	multimap<int,Binding>::iterator pi;
+	
+	// Copy bindings with drag
+	for (pi=bindings.begin(); pi!=bindings.end(); ++pi) {
+		binding = &(pi->second);
+		if (binding->hasDrag())
+			add(*binding);
+	}
 }
 
 
