@@ -17,9 +17,10 @@ Display::Display(Scene *scene,
 	
 	// Initialize others
 	this->useOverlay = false;
-	timeStarted = 0;
-	frames = 0;
-	framesPerSecond = 0;
+	this->timeStarted = 0;
+	this->frames = 0;
+	this->framesPerSecond = 0;
+	this->painter = new Painter(scene);
 	
 	// Store this instance
 	Display::obj = this;
@@ -46,7 +47,7 @@ void Display::display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// Paint scene and overlay
-	Painter::paint(*(obj->scene), obj->manipulators);
+	obj->painter->paint();
 	if (obj->useOverlay)
 		obj->overlay();
 	
@@ -177,7 +178,7 @@ void Display::start(int argc,
 	for (size_t i=0; i<controls.size(); i++) {
 		manipulators = controls[i]->install(scene);
 		for (size_t j=0; j<manipulators.size(); j++)
-			this->manipulators.push_back(manipulators[j]);
+			painter->addManipulator(manipulators[j]);
 	}
 	
 	// Start

@@ -16,6 +16,7 @@ Control::Control(Delegate *delegate) {
 	
 	// Initialize
 	this->delegate = delegate;
+	this->scene = NULL;
 }
 
 

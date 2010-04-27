@@ -10,10 +10,8 @@
 /**
  * Creates a %Client.
  * 
- * @param argc
- *     Number of arguments.
- * @param argv
- *     Array of arguments as C-strings.
+ * @param argc Number of arguments.
+ * @param argv Array of arguments as C-strings.
  */
 Client::Client(int argc,
                char *argv[]) {
@@ -38,21 +36,25 @@ void Client::banner() {
  */
 void Client::display() {
 	
+	Display *display;
 	Interpreter interpreter(&scene);
 	Keyboard keyboard(&interpreter);
 	Menu menu(&interpreter);
 	Mouse mouse(&interpreter);
 	
+	// Initialize scene
+	scene.setFilename(inFilename);
+	
 	// Install controls
-	Display::install(&keyboard);
-	Display::install(&menu);
-	Display::install(&mouse);
+	display = new Display(&scene, &interpreter);
+	display->install(&keyboard);
+	display->install(&menu);
+	display->install(&mouse);
 	
 	// Start display
-	scene.setFilename(inFilename);
 	title = "Gander [";
 	title += inFilename + "]";
-	Display::start(argc, argv, title, &scene, &interpreter);
+	display->start(argc, argv, title);
 }
 
 

@@ -31,22 +31,25 @@ using namespace std;
  */
 class Picker {
 	
-	public :
+	public:
 		
-		static pair<GLuint,GLuint> pick(Scene *scene,
-		                           vector<Manipulator*> &manipulators,
-		                           int x,
-		                           int y);
+		Picker(Scene *scene);
+		void addManipulators(vector<Manipulator*> manipulators);
+		pair<GLuint,GLuint> pick(int x, int y);
+	
+	protected:
+		
+		pair<GLuint,GLuint> chooseItem();
+		void finish();
+		void initialize(int x, int y);
+		void storeIDsOfItems();
 	
 	private:
 		
-		static GLuint buf[PICK_BUFFER_SIZE];
-		static map<GLuint,GLuint> ids;
-		
-		static pair<GLuint,GLuint> chooseItem(Scene *scene);
-		static void finish();
-		static void initialize(int x, int y);
-		static void storeIDsOfItems();
+		GLuint buf[PICK_BUFFER_SIZE];
+		map<GLuint,GLuint> ids;
+		Painter *painter;
+		Scene *scene;
 };
 
 

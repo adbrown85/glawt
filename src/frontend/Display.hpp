@@ -52,9 +52,9 @@ class Display {
 		Interpreter *interpreter;
 		unsigned long timeStarted;
 		int frames, framesPerSecond;
+		Painter *painter;
 		Scene *scene;
 		vector<Control*> controls;
-		vector<Manipulator*> manipulators;
 		
 		void overlay();
 		static void checkError();

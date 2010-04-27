@@ -27,20 +27,26 @@ using namespace std;
  */
 class MouseClickHelper : public MouseHelper {
 	
-	public :
+	public:
 		
 		MouseClickHelper(Delegate *delegate);
-		void initialize(multimap<int,Binding> bindings);
-		void onClick(int button,
-		             int state,
-		             int x,
-		             int y);
+		virtual void initialize(multimap<int,Binding> bindings);
+		virtual void initialize(vector<Manipulator*> manipulators);
+		virtual vector<Manipulator*> install(Scene *scene);
+		virtual void onClick(int button,
+		                     int state,
+		                     int x,
+		                     int y);
 	
-	private:
+	protected:
 		
 		void pickItem();
 		void tryBindings();
 		void tryBinding(Binding *binding);
+	
+	private:
+		
+		Picker *picker;
 };
 
 

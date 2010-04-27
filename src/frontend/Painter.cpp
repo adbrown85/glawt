@@ -8,6 +8,14 @@
 //Cube Painter::outline(1.0);
 
 
+Painter::Painter(Scene *scene,
+                 GLenum mode) {
+	
+	this->scene = scene;
+	this->mode = mode;
+}
+
+
 /**
  * Paints all the items in a scene.
  * 
@@ -15,9 +23,7 @@
  * @param manipulators UI elements used to manipulate selected items.
  * @param renderMode Either GL_RENDER or GL_SELECT.
  */
-void Painter::paint(Scene &scene,
-                    vector<Manipulator*> &manipulators,
-                    GLenum renderMode) {
+void Painter::paint() {
 	
 	float rotationMatrixArray[16];
 	Matrix rotationMatrix;
@@ -31,15 +37,15 @@ void Painter::paint(Scene &scene,
 */
 	
 	// Transform
-	glTranslatef(scene.position.x,
-	             scene.position.y,
-	             scene.position.z);
-	rotationMatrix = scene.getRotationMatrix();
+	glTranslatef(scene->position.x,
+	             scene->position.y,
+	             scene->position.z);
+	rotationMatrix = scene->getRotationMatrix();
 	rotationMatrix.toArray(rotationMatrixArray);
 	glMultMatrixf(rotationMatrixArray);
 	
 	// Draw
-	paintNode(&scene.root, renderMode, manipulators);
+	paintNode(&(scene->root));
 }
 
 
@@ -54,9 +60,7 @@ void Painter::paint(Scene &scene,
  * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
  * @param manipulators UI elements used to manipulate selected items.
  */
-void Painter::paintChildren(Node *node,
-                            GLenum renderMode,
-                            vector<Manipulator*> &manipulators) {
+void Painter::paintChildren(Node *node) {
 	
 	int numberOfChildren;
 	vector<Node*> children;
@@ -65,7 +69,7 @@ void Painter::paintChildren(Node *node,
 	children = node->getChildren();
 	numberOfChildren = children.size();
 	for (int i=0; i<numberOfChildren; ++i) {
-		paintNode(children[i], renderMode, manipulators);
+		paintNode(children[i]);
 	}
 }
 
@@ -80,9 +84,7 @@ void Painter::paintChildren(Node *node,
  * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
  * @param manipulators UI elements used to manipulate selected items.
  */
-void Painter::paintNode(Node *node,
-                        GLenum renderMode,
-                        vector<Manipulator*> &manipulators) {
+void Painter::paintNode(Node *node) {
 	
 	Applicable *applicable;
 	Drawable *drawable;
@@ -93,7 +95,7 @@ void Painter::paintNode(Node *node,
 	      && drawable->isVisible()) {
 		
 		// Draw the node
-		if (renderMode == GL_SELECT)
+		if (mode == GL_SELECT)
 			glLoadName(drawable->getID());
 		drawable->draw();
 		
@@ -101,33 +103,31 @@ void Painter::paintNode(Node *node,
 		if ((selectable = dynamic_cast<Selectable*>(node))
 		      && selectable->isSelected()
 		      && !Framebuffer::isActive())
-			paintUIElements(selectable, renderMode, manipulators);
+			paintUIElements(selectable);
 		
 		// Paint children
-		paintChildren(node, renderMode, manipulators);
+		paintChildren(node);
 	}
 	
 	// Node is applicable
 	else if ((applicable = dynamic_cast<Applicable*>(node))) {
 		applicable->apply();
-		if (!(renderMode == GL_SELECT && Framebuffer::isActive())) {
-			paintChildren(node, renderMode, manipulators);
+		if (!(mode == GL_SELECT && Framebuffer::isActive())) {
+			paintChildren(node);
 		}
 		applicable->remove();
 	}
 	
 	// Regular node
 	else
-		paintChildren(node, renderMode, manipulators);
+		paintChildren(node);
 }
 
 
 /**
  * Paints manipulators and an outline for a selected shape.
  */
-void Painter::paintUIElements(Selectable *selectable,
-                              GLenum renderMode,
-                              vector<Manipulator*> &manipulators) {
+void Painter::paintUIElements(Selectable *selectable) {
 	
 	Program *program;
 	vector<Manipulator*>::iterator mi;
@@ -158,7 +158,7 @@ void Painter::paintUIElements(Selectable *selectable,
 		glPushAttrib(GL_POLYGON_BIT);
 			glPolygonMode(GL_FRONT, GL_FILL);
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-				if (renderMode == GL_SELECT)
+				if (mode == GL_SELECT)
 					glPushName((*mi)->getID());
 				(*mi)->copySizeOf(*selectable);
 				(*mi)->draw();

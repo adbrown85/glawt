@@ -14,7 +14,9 @@
  */
 MouseClickHelper::MouseClickHelper(Delegate *delegate) :
                                    MouseHelper(delegate) {
+	
 	type = "MouseClickHelper";
+	picker = NULL;
 }
 
 
@@ -34,6 +36,22 @@ void MouseClickHelper::initialize(multimap<int,Binding> bindings) {
 		if (!binding->hasDrag())
 			add(*binding);
 	}
+}
+
+
+void MouseClickHelper::initialize(vector<Manipulator*> manipulators) {
+	
+	MouseHelper::initialize(manipulators);
+	if (picker != NULL)
+		picker->addManipulators(manipulators);
+}
+
+
+vector<Manipulator*> MouseClickHelper::install(Scene *scene) {
+	
+	MouseHelper::install(scene);
+	picker = new Picker(scene);
+	return manipulators;
 }
 
 
@@ -61,10 +79,8 @@ void MouseClickHelper::onClick(int button,
 	data->iteration = 0;
 	updateCurrentData(x, y);
 	
-	// Pick the item under the cursor
+	// Pick item and try bindings
 	pickItem();
-	
-	// Try bindings for this button
 	tryBindings();
 	
 	// Store positions for next time
@@ -83,23 +99,20 @@ void MouseClickHelper::onClick(int button,
 void MouseClickHelper::pickItem() {
 	
 	Identifiable *identifiable;
-	pair<GLuint,GLuint> pickResult;
+	pair<GLuint,GLuint> result;
 	
 	// Initialize
 	data->manipulator = NULL;
 	
 	// For normal clicks
-	if (data->button == GLUT_LEFT_BUTTON ||
-	    data->button == GLUT_MIDDLE_BUTTON ||
-	    data->button == GLUT_RIGHT_BUTTON) {
+	if (data->button == GLUT_LEFT_BUTTON
+	      || data->button == GLUT_MIDDLE_BUTTON
+	      || data->button == GLUT_RIGHT_BUTTON) {
 		
 		// Pick the item
-		pickResult = Picker::pick(scene,
-		                          manipulators,
-		                          data->x,
-		                          data->y);
-		data->itemID = pickResult.first;
-		data->shapeID = pickResult.second;
+		result = picker->pick(data->x, data->y);
+		data->itemID = result.first;
+		data->shapeID = result.second;
 		
 		// Check if a manipulator
 		identifiable = Identifiable::findByID(data->itemID);

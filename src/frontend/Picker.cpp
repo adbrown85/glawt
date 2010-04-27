@@ -5,8 +5,22 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Picker.hpp"
-GLuint Picker::buf[PICK_BUFFER_SIZE];
-map<GLuint,GLuint> Picker::ids;
+
+
+Picker::Picker(Scene *scene) {
+	
+	// Initialize fields
+	this->scene = scene;
+	this->painter = new Painter(scene, GL_SELECT);
+}
+
+
+void Picker::addManipulators(vector<Manipulator*> manipulators) {
+	
+	for (size_t i=0; i<manipulators.size(); ++i) {
+		painter->addManipulator(manipulators[i]);
+	}
+}
 
 
 /**
@@ -15,7 +29,7 @@ map<GLuint,GLuint> Picker::ids;
  * Manipulators are returned before shapes, and if more than one shape is 
  * picked, the closest one to the camera is chosen.
  */
-pair<GLuint,GLuint> Picker::chooseItem(Scene *scene) {
+pair<GLuint,GLuint> Picker::chooseItem() {
 	
 	float depth, closestDepth;
 	Identifiable *identifiable;
@@ -63,7 +77,7 @@ void Picker::finish() {
  */
 void Picker::initialize(int x, int y) {
 	
-	GLint width, height, viewport[4];
+	GLint height, width, viewport[4];
 	
 	// Get size of render viewport
 	glGetIntegerv(GL_VIEWPORT, viewport);
@@ -91,16 +105,13 @@ void Picker::initialize(int x, int y) {
 /**
  * Picks an item from a scene
  * 
- * @return ID number of the item picked.  UINT_MAX if nothing.
+ * @return ID number of the item picked (UINT_MAX if nothing).
  */
-pair<GLuint,GLuint> Picker::pick(Scene *scene,
-                                 vector<Manipulator*> &manipulators,
-                                 int x,
-                                 int y) {
+pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
 	// Pick an item
 	initialize(x, y);
-	Painter::paint(*scene, manipulators, GL_SELECT);
+	painter->paint();
 	finish();
 	storeIDsOfItems();
 	
@@ -110,7 +121,7 @@ pair<GLuint,GLuint> Picker::pick(Scene *scene,
 	else if (ids.size() == 1)
 		return *(ids.begin());
 	else
-		return chooseItem(scene);
+		return chooseItem();
 }
 
 
@@ -151,7 +162,7 @@ void Picker::storeIDsOfItems() {
 		// Get number of IDs in name stack
 		numOfIDs = *ptr;
 		if (numOfIDs == 0)
-			throw "Picker: Hit record with 0 item IDs detected!";
+			throw "[Picker] Hit record with 0 item IDs detected!";
 		
 		// Find ID of shape that was drawn
 		ptr += 3;

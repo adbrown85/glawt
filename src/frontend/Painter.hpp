@@ -35,27 +35,42 @@ using namespace std;
  */
 class Painter {
 	
-	public :
+	public:
 		
-		static void paint(Scene &scene,
-		                  vector<Manipulator*> &manipulators,
-		                  GLenum renderMode=GL_RENDER);
+		Painter(Scene *scene,
+		        GLenum mode=GL_RENDER);
+		void addManipulator(Manipulator *manipulator);
+		void paint();
+		void setMode(GLenum mode);
 	
-	private :
+	protected:
 		
-		//static Cube outline;
+		void disableTexturing();
+		void paintChildren(Node *node);
+		void paintNode(Node *node);
+		void paintUIElements(Selectable *selectable);
 		
-		static void disableTexturing();
-		static void paintChildren(Node *node,
-		                          GLenum renderMode,
-		                          vector<Manipulator*> &manipulators);
-		static void paintNode(Node *node,
-		                      GLenum renderMode,
-		                      vector<Manipulator*> &manipulators);
-		static void paintUIElements(Selectable *selectable,
-		                            GLenum renderMode,
-		                            vector<Manipulator*> &manipulators);
+	private:
+		
+		Scene *scene;
+		vector<Manipulator*> manipulators;
+		GLenum mode;
 };
+
+
+/**
+ * Stores a manipulator to paint for selected items.
+ */
+inline void Painter::addManipulator(Manipulator *manipulator) {
+	
+	manipulators.push_back(manipulator);
+}
+
+
+/**
+ * Sets the rendering mode.
+ */
+inline void Painter::setMode(GLenum mode) {this->mode = mode;}
 
 
 #endif

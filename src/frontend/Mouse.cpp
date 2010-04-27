@@ -31,10 +31,10 @@ vector<Manipulator*> Mouse::install(Scene *scene) {
 	helpers[0] = &clickHelper;
 	helpers[1] = &dragHelper;
 	for (int i=0; i<2; ++i) {
+		helpers[i]->install(scene);
 		helpers[i]->initialize(bindings);
 		helpers[i]->initialize(manipulators);
 		helpers[i]->initialize(&data);
-		helpers[i]->install(scene);
 	}
 	
 	// Finish
