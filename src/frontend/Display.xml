@@ -6,6 +6,11 @@
 -->
 
 
-<translate x="3.0" y="0.0" z="0.0">
-	<box />
-</translate>
+<program>
+	<shader file="../../input/coordinates.vert" />
+	<shader file="../../input/coordinates.frag" />
+	<translate x="3.0" y="0.0" z="0.0">
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<cube />
+	</translate>
+</program>

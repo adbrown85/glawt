@@ -139,8 +139,11 @@ void Display::start(int argc,
 	
 	// Open and prepare scene
 	try {
-		scene->install(new GeneralFactory());
-		scene->install(new UniformFactory());
+		scene->install(new RenderFactory());
+		scene->install(new ShaderFactory());
+		scene->install(new ShapeFactory());
+		scene->install(new TextureFactory());
+		scene->install(new TransformFactory());
 		interpreter->run(Command::OPEN, scene->getFilename());
 		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
 		scene->prepare();
