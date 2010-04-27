@@ -11,6 +11,7 @@
 #include <string>
 #include "Applicable.hpp"
 #include "Drawable.hpp"
+#include "FileUtility.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"
 using namespace std;
