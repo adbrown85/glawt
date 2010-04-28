@@ -18,6 +18,19 @@ void print(const string &result) {
 }
 
 
+void testExtension(const string &path,
+                   const string &answer) {
+	
+	string result;
+	
+	cout << "Testing extension..." << endl;
+	print(path);
+	result = FileUtility::getExtension(path);
+	print(result);
+	assert(result == answer);
+}
+
+
 /**
  * Tests relative path function.
  */
@@ -61,6 +74,9 @@ int main() {
 	print(FileUtility::getDirname("input/scene.xml"));
 	print(FileUtility::getDirname("scene.xml"));
 	print(FileUtility::getDirname("/scene.xml"));
+	
+	// Extension
+	testExtension("scene.xml", "xml");
 	
 	// Internals
 	cout << "\nTesting getInternals" << endl;

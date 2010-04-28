@@ -29,6 +29,7 @@ class FileUtility {
 		                    vector<string> &parts);
 		static string getBasename(const string &path);
 		static string getDirname(const string &path);
+		static string getExtension(const string &path);
 		static string getInternals(const string &path);
 		static string getRelativePath(const string &base,
 		                              const string &filename);

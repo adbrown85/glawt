@@ -77,6 +77,15 @@ string FileUtility::getDirname(const string& path) {
 }
 
 
+string FileUtility::getExtension(const string &path) {
+	
+	size_t pos;
+	
+	pos = path.rfind('.');
+	return path.substr(pos + 1);
+}
+
+
 /**
  * @return directories between root and filename.
  */
