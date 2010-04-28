@@ -29,6 +29,7 @@ class Tag {
 		string name;
 		
 		Tag();
+		Tag(const string &name);
 		void add(const string &key,
 		         const string &value);
 		void clear();

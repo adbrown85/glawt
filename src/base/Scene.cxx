@@ -10,23 +10,7 @@
 using namespace std;
 
 
-class FakeFactory : public Factory {
-	public:
-		FakeFactory();
-		Node* create(const Tag &tag) const;
-};
-
-
-FakeFactory::FakeFactory() {
-	
-	tags.insert("program");
-	tags.insert("shader");
-	tags.insert("translate");
-	tags.insert("cube");
-}
-
-
-Node* FakeFactory::create(const Tag &tag) const {
+Node* createNode(const Tag &tag) {
 	
 	Node *node = new Node();
 	
@@ -49,9 +33,14 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Install tags
+	Factory::install("program", &createNode);
+	Factory::install("shader", &createNode);
+	Factory::install("translate", &createNode);
+	Factory::install("cube", &createNode);
+	
 	// Test open
 	cout << "Testing open..." << endl;
-	scene.install(new FakeFactory());
 	scene.open("Scene.xml");
 	scene.print();
 	

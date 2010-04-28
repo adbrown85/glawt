@@ -16,7 +16,7 @@ string Parser::findAttribute(stringstream &stream) {
 	stream >> token;
 	while (stream) {
 		buffer << token;
-		count += Text::count(token, '"');
+		count += Text::count(token, '"') + Text::count(token, '\'');
 		if (count >= 2)
 			break;
 		buffer << ' ';
@@ -43,19 +43,6 @@ string Parser::findTagString() {
 		character = file.get();
 	}
 	return tagString;
-}
-
-
-string Parser::findTagName(const string &text,
-                           size_t &pos) {
-	
-	size_t beg, end;
-	
-	// Return up to first space
-	beg = text.find_first_not_of(' ');
-	end = text.find(' ', beg);
-	pos = end;
-	return text.substr(beg, end-beg);
 }
 
 
@@ -89,7 +76,7 @@ bool Parser::isComment(string comment) {
 void Parser::open(string filename) {
 	
 	char character;
-	string line, tagString;
+	string line, text;
 	Tag tag;
 	
 	// Open file
@@ -107,9 +94,9 @@ void Parser::open(string filename) {
 			if (isComment("!--"))
 				skipComment();
 			else {
-				tagString = findTagString();
+				text = findTagString();
 				tag.clear();
-				parseTag(tagString, tag);
+				tag = parseTag(text);
 				tags.push_back(tag);
 			}
 		}
@@ -152,11 +139,11 @@ void Parser::parseAttribute(string attribute,
  * @param tagText Raw text for the tag from the file.
  * @param tag Tag object to store the attributes in.
  */
-void Parser::parseTag(string text,
-                      Tag &tag) {
+Tag Parser::parseTag(string text) {
 	
 	string token;
 	stringstream stream;
+	Tag tag;
 	
 	// Remove ending slash and put text in stream
 	if (Text::endsWith(text, '/')) {
@@ -180,6 +167,9 @@ void Parser::parseTag(string text,
 		parseAttribute(token, tag);
 		token = findAttribute(stream);
 	}
+	
+	// Finish
+	return tag;
 }
 
 

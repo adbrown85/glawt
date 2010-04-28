@@ -17,6 +17,13 @@ Tag::Tag() {
 }
 
 
+Tag::Tag(const string &name) {
+	
+	clear();
+	this->name = name;
+}
+
+
 /**
  * Adds an attribute to the tag.
  * 

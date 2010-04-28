@@ -48,12 +48,6 @@ void Tester::init(int argc,
 }
 
 
-void Tester::install(Factory *factory) {
-	
-	scene.install(factory);
-}
-
-
 /**
  * Exits the %Tester on Escape key.
  */

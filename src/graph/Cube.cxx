@@ -6,17 +6,15 @@
  */
 #include "Cube.hpp"
 #include "Tester.hpp"
-#include "ShapeFactory.hpp"
-#include "ShaderFactory.hpp"
+#include "BasicFactory.hpp"
 
 
 int main(int argc,
          char *argv[]) {
 	
 	try {
+		BasicFactory::install();
 		Tester::init(argc, argv);
-		Tester::install(new ShaderFactory());
-		Tester::install(new ShapeFactory());
 		Tester::open("Cube.xml");
 		Tester::start();
 	} catch (const char *e) {

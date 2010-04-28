@@ -13,6 +13,8 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
+#include "AdvancedFactory.hpp"
+#include "BasicFactory.hpp"
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Scene.hpp"

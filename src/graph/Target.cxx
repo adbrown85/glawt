@@ -6,21 +6,17 @@
  */
 #include "Target.hpp"
 #include "Tester.hpp"
-#include "RenderFactory.hpp"
-#include "ShaderFactory.hpp"
-#include "ShapeFactory.hpp"
-#include "TextureFactory.hpp"
+#include "BasicFactory.hpp"
+#include "AdvancedFactory.hpp"
 
 
 int main(int argc,
          char *argv[]) {
 	
 	try {
+		BasicFactory::install();
+		AdvancedFactory::install();
 		Tester::init(argc, argv);
-		Tester::install(new RenderFactory());
-		Tester::install(new ShaderFactory());
-		Tester::install(new ShapeFactory());
-		Tester::install(new TextureFactory());
 		Tester::open("Target.xml");
 		Tester::start();
 	} catch (const char *e) {

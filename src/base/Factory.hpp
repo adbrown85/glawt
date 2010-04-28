@@ -8,11 +8,18 @@
 #define FACTORY_HPP
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <set>
 #include <string>
 #include "Node.hpp"
 #include "Tag.hpp"
 using namespace std;
+
+
+/**
+ * Creator function.
+ */
+typedef Node* (*creator_t)(const Tag &tag);
 
 
 /**
@@ -24,16 +31,14 @@ class Factory {
 	
 	public:
 		
-		virtual Node* create(const Tag &tag) const = 0;
-		virtual set<string> getTags() const;
+		static Node* create(const Tag &tag);
+		static void install(const string &name,
+		                    creator_t creator);
 	
 	protected:
 		
-		set<string> tags;
+		static map<string,creator_t> creators;
 };
-
-
-inline set<string> Factory::getTags() const {return tags;}
 
 
 #endif

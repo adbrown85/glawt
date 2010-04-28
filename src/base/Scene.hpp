@@ -43,7 +43,6 @@ class Scene {
 		void addToLast(Node *node);
 		void addToRoot(Node *node);
 		void backup();
-		void install(Factory *factory);
 		void open(const string &filename);
 		void prepare();
 		void print();
@@ -69,7 +68,6 @@ class Scene {
 	private:
 		
 		int height, width;
-		map<string,Factory*> factories;
 		Parser parser;
 		Quaternion rotation;
 		string filename;

@@ -68,21 +68,6 @@ void Scene::backup() {
 }
 
 
-Node* Scene::create(const Tag &tag) {
-	
-	map<string,Factory*>::iterator it;
-	
-	it = factories.find(tag.name );
-	if (it != factories.end()) {
-		return it->second->create(tag);
-	} else {
-		ostringstream msg;
-		msg << "[Scene] Cannot find factory for '" << tag.name << "'.";
-		throw msg.str().c_str();
-	}
-}
-
-
 /**
  * Returns the scene's rotation as a matrix.
  */
@@ -90,18 +75,6 @@ Matrix Scene::getRotationMatrix() const {
 	
 	// Return matrix
 	return rotation.getMatrix();
-}
-
-
-void Scene::install(Factory *factory) {
-	
-	set<string> tags;
-	set<string>::iterator it;
-	
-	tags = factory->getTags();
-	for (it=tags.begin(); it!=tags.end(); ++it) {
-		factories[*it] = factory;
-	}
 }
 
 
@@ -153,7 +126,7 @@ void Scene::parse() {
 		}
 		
 		// Create node and update current
-		node = create(*ti);
+		node = Factory::create(*ti);
 		current->addChild(node);
 		if (!ti->empty)
 			current = node;

@@ -18,11 +18,6 @@
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
-#include "RenderFactory.hpp"
-#include "ShapeFactory.hpp"
-#include "ShaderFactory.hpp"
-#include "TextureFactory.hpp"
-#include "TransformFactory.hpp"
 using namespace std;
 
 

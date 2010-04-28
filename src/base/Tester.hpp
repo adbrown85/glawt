@@ -26,7 +26,6 @@ class Tester {
 		static void display(void);
 		static void init(int argc,
 		                 char *argv[]);
-		static void install(Factory *factory);
 		static void keyboard(unsigned char key,
 		                     int x,
 		                     int y);
