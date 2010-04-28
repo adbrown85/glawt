@@ -32,3 +32,9 @@ Node* Factory::create(const Tag &tag) {
 	}
 }
 
+
+Node* Factory::create(const string &text) {
+	
+	return create(Parser::create(text));
+}
+

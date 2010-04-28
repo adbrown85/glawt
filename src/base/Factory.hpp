@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include "Node.hpp"
+#include "Parser.hpp"
 #include "Tag.hpp"
 using namespace std;
 
@@ -32,6 +33,7 @@ class Factory {
 	public:
 		
 		static Node* create(const Tag &tag);
+		static Node* create(const string &text);
 		static void install(const string &name,
 		                    creator_t creator);
 	
