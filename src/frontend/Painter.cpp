@@ -22,7 +22,6 @@ Painter::Painter(Scene *scene,
 		outline->addChild(Factory::create("uniform type='mat4' name='MVPMatrix' link='modelviewprojection' /"));
 		outline->addChild(Factory::create("cube /"));
 		outline->prepare();
-		outline->printTree();
 	}
 }
 
