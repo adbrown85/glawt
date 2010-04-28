@@ -39,7 +39,7 @@ Node* Factory::create(const string &text) {
 }
 
 
-Node* Factory::open(const string &filename) {
+Node* Factory::open(string filename) {
 	
 	Node *current, *node, *root;
 	map<string,string>::const_iterator ai;
@@ -50,6 +50,7 @@ Node* Factory::open(const string &filename) {
 	// Initialize
 	root = new Node();
 	current = root;
+	filename = FileUtility::replaceEnvironmentVariable(filename);
 	parser.open(filename);
 	
 	// Look through tags

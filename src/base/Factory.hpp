@@ -36,7 +36,7 @@ class Factory {
 		
 		static Node* create(const Tag &tag);
 		static Node* create(const string &text);
-		static Node* open(const string &filename);
+		static Node* open(string filename);
 		static void install(const string &name,
 		                    creator_t creator);
 	
