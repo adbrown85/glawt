@@ -8,11 +8,11 @@
 
 
 <program>
-	<shader file="raydirection.frag" />
 	<shader file="world.vert" />
-	<uniform type="int" name="width" value="640">
-	<uniform type="int" name="height" value="480">
-		<box size="2.0" style="3D" />
-	</uniform>
-	</uniform>
+	<shader file="raydirection.frag" />
+	<uniform type="int" name="width" value="640" />
+	<uniform type="int" name="height" value="480" />
+	<scale value="2.0">
+		<cube />
+	</scale>
 </program>

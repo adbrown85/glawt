@@ -4,12 +4,16 @@
 <program>
 	<shader file="halfmoon.frag" />
 	<translate x="5.0">
-		<box size="2.0" style="2d" />
+	<scale value="2.0">
+		<cube style="2D" />
+	</scale>
 	</translate>
 </program>
 <program>
 	<shader file="coordinates.frag" />
 	<translate x="-5.0" z="-1.0">
-		<box size="4.0" />
+	<scale value="4.0">
+		<cube />
+	</scale>
 	</translate>
 </program>

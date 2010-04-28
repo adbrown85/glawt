@@ -39,7 +39,8 @@ int main(int argc,
 		testCreate("scale");
 		testCreate("shader file='../../glsl/basic.frag'");
 		testCreate("square");
-		testCreate("texture type='2D' name='foo'");
+		testCreate("texture name='crate' file='../../textures/crate.jpg'");
+		testCreate("texture file='../../textures/chunk.vlb'");
 		testCreate("translate");
 		testCreate("uniform type='int' name='bar'");
 	} catch (const char *e) {

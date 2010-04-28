@@ -7,7 +7,7 @@
 
 
 
-<texture2d name="target" size="512">
+<texture name="target" size="512">
 	
 	<!-- Render back faces into offscreen buffer -->
 	<framebuffer>
@@ -26,7 +26,7 @@
 	<program>
 		<shader file="kruger.vert" />
 		<shader file="kruger.frag" />
-		<texture3d file="../textures/bear.vlb" name="volume">
+		<texture file="../textures/bear.vlb" name="volume">
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="sampler2d" name="Target" link="target" />
 			<uniform type="sampler3d" name="Volume" link="volume" />
@@ -36,6 +36,6 @@
 			<cull faces="back">
 				<cube />
 			</cull>
-		</texture3d>
+		</texture>
 	</program>
-</texture2d>
+</texture>

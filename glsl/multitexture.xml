@@ -8,8 +8,8 @@
 
 
 
-<texture2d file="../textures/crate.jpg" name="crate">
-<texture2d file="../textures/stone.jpg" name="stone">
+<texture file="../textures/crate.jpg" name="crate">
+<texture file="../textures/stone.jpg" name="stone">
 	<program>
 		<shader file="multitexture.vert" />
 		<shader file="multitexture.frag" />
@@ -34,5 +34,5 @@
 		</scale>
 		</translate>
 	</program>
-</texture2d>
-</texture2d>
+</texture>
+</texture>

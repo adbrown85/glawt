@@ -6,7 +6,7 @@
 -->
 
 
-<texture2d name="buffer" size="512">
+<texture name="buffer" size="512">
 	<framebuffer>
 		<target link="buffer"/>
 		<program>
@@ -18,7 +18,7 @@
 			</cull>
 		</program>
 	</framebuffer>
-	<texture3d file="../textures/chunk.vlb" name="volume">
+	<texture file="../textures/chunk.vlb" name="volume">
 	<octree name="octree" link="volume" threshold="80">
 		<program>
 			<shader file="octree.vert"/>
@@ -31,5 +31,5 @@
 			<cube />
 		</program>
 	</octree>
-	</texture3d>
-</texture2d>
+	</texture>
+</texture>

@@ -8,5 +8,5 @@
 
 <program>
 	<shader file="version.frag" />
-	<box />
+	<cube />
 </program>

@@ -10,5 +10,5 @@
 <program>
 	<shader file="world.vert" />
 	<shader file="raydirection-new.frag" />
-		<box />
+	<cube />
 </program>

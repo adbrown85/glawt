@@ -10,5 +10,5 @@
 <program>
 	<shader file="world.vert" />
 	<shader file="world.frag" />
-	<box size="2.0" />
+	<cube />
 </program>

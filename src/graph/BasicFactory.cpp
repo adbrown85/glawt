@@ -55,23 +55,15 @@ Node* BasicFactory::createSquare(const Tag &tag) {
 
 Node* BasicFactory::createTexture(const Tag &tag) {
 	
-	string type;
+	string extension, filename;
 	
-	// Initialize
-	load();
-	tag.get("type", type);
-	
-	// Create based on kind
-	switch (kinds.find(type)->second) {
-	case TWO_DIM:
-		return new Texture2D(tag);
-	case THREE_DIM:
+	// Create based on file extension
+	tag.get("file", filename, false, false);
+	extension = FileUtility::getExtension(filename);
+	if (Text::toLower(extension) == "vlb") {
 		return new Texture3D(tag);
-	default:
-		ostringstream msg;
-		msg << "[BasicFactory] Texture type '" << type
-		    << "' not supported.";
-		throw msg.str().c_str();
+	} else {
+		return new Texture2D(tag);
 	}
 }
 
@@ -131,7 +123,5 @@ void BasicFactory::load() {
 	kinds["usampler3d"] = SAMPLER;
 	kinds["vec3"] = VECTOR;
 	kinds["vec4"] = VECTOR;
-	kinds["2d"] = TWO_DIM;
-	kinds["3d"] = THREE_DIM;
 }
 

@@ -7,7 +7,7 @@
 -->
 
 
-<texture2d name="mytexture" size="512">
+<texture name="mytexture" size="512">
 	<framebuffer>
 		<target link="mytexture" />
 		<program>
@@ -24,5 +24,5 @@
 		<uniform type="sampler2D" name="unit" link="mytexture" />
 		<square />
 	</program>
-</texture2d>
+</texture>
  

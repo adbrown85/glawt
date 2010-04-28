@@ -54,7 +54,7 @@ class BasicFactory {
 	
 	private:
 		
-		enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR, TWO_DIM, THREE_DIM};
+		enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
 		
 		static bool loaded;
 		static map<string,kind_t> kinds;

@@ -7,8 +7,8 @@
 -->
 
 
-<texture2d name="crate" file="../../textures/crate.jpg">
-<texture2d name="stone" file="../../textures/stone.jpg">
+<texture name="crate" file="../../textures/crate.jpg">
+<texture name="stone" file="../../textures/stone.jpg">
 	<program>
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
@@ -18,5 +18,5 @@
 			<square/>
 		</translate>
 	</program>
-</texture2d>
-</texture2d>
+</texture>
+</texture>

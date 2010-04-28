@@ -9,11 +9,11 @@
 <program>
 	<shader file="Octree.vert" />
 	<shader file="Octree.frag" />
-	<texture3d file="../../textures/chunk.vlb" name="chunk">
+	<texture file="../../textures/chunk.vlb" name="chunk">
 		<octree name="octree" link="chunk" threshold="80">
 			<uniform type="sampler1d" name="octree" link="octree" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<square />
 		</octree>
-	</texture3d>
+	</texture>
 </program>

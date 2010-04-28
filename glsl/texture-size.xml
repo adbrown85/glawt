@@ -10,9 +10,9 @@
 	<shader file="texture-size.vert" />
 	<shader file="texture-size.frag" />
 	
-	<texture2d name="crate" file="../textures/crate.jpg">
+	<texture name="crate" file="../textures/crate.jpg">
 		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 		<uniform type="sampler2D" name="unit" link="crate" />
 		<cube style="2D" />
-	</texture2d>
+	</texture>
 </program>

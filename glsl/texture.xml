@@ -10,24 +10,24 @@
 	<shader file="texture.frag" />
 	
 	<!-- Left cube -->
-	<texture2d name="crate" file="../textures/crate.jpg">
+	<texture name="crate" file="../textures/crate.jpg">
 		<translate x="+5.0">
 		<scale value="4.0">
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="sampler2d" name="unit" link="crate" />
-			<cube style="2d" />
+			<cube style="2D" />
 		</scale>
 		</translate>
-	</texture2d>
+	</texture>
 
 	<!-- Right cube -->
-	<texture2d name="stone" file="../textures/stone.jpg">
+	<texture name="stone" file="../textures/stone.jpg">
 		<translate x="-5.0">
 		<scale value="4.0">
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="sampler2d" name="unit" link="stone" />
-			<cube style="2d" />
+			<cube style="2D" />
 		</scale>
 		</translate>
-	</texture2d>
+	</texture>
 </program>
