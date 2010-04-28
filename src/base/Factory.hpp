@@ -11,6 +11,8 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <vector>
+#include "FileUtility.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"
 #include "Tag.hpp"
@@ -34,6 +36,7 @@ class Factory {
 		
 		static Node* create(const Tag &tag);
 		static Node* create(const string &text);
+		static Node* open(const string &filename);
 		static void install(const string &name,
 		                    creator_t creator);
 	

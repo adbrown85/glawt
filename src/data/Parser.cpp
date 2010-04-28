@@ -128,6 +128,7 @@ void Parser::open(string filename) {
 	}
 	
 	// Read and process tags
+	tags.clear();
 	character = file.get();
 	while (file) {
 		if (character == '<') {
@@ -141,6 +142,7 @@ void Parser::open(string filename) {
 		}
 		character = file.get();
 	}
+	file.close();
 }
 
 

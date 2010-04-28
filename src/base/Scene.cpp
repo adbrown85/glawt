@@ -89,47 +89,11 @@ void Scene::open(const string &filename) {
 	try {
 		cerr << "[Scene] Opening '" << filename << "'..." << endl;
 		this->filename = filename;
-		parse();
+		root = Factory::open(filename);
 	}
 	catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
-	}
-}
-
-
-void Scene::parse() {
-	
-	Node *current, *node;
-	map<string,string>::const_iterator ai;
-	string path;
-	vector<Tag>::iterator ti;
-	
-	// Initialize
-	current = root;
-	parser.open(filename);
-	
-	// Look through tags
-	for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
-		
-		// Step back on closing tags
-		if (ti->closing) {
-			current = current->getParent();
-			continue;
-		}
-		
-		// Make "file" attributes relative to scene file
-		ai = ti->attributes.find("file");
-		if (ai != ti->attributes.end()) {
-			path = FileUtility::getRelativePath(filename, ai->second);
-			ti->attributes["file"] = path;
-		}
-		
-		// Create node and update current
-		node = Factory::create(*ti);
-		current->addChild(node);
-		if (!ti->empty)
-			current = node;
 	}
 }
 
@@ -188,7 +152,7 @@ void Scene::setRoot(Node *node) {
 	if (root == NULL) {
 		root = node;
 	} else {
-		Node::destroy(root);
+		node->setChildren(root->getChildren());
 		root = node;
 	}
 }

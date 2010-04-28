@@ -23,7 +23,7 @@ using namespace std;
  */
 class Parser {
 	
-	public :
+	public:
 		
 		static Tag create(string text);
 		static string findAttribute(stringstream &stream);
@@ -36,7 +36,7 @@ class Parser {
 		
 		vector<Tag> tags;
 	
-	private :
+	private:
 		
 		char buffer[8];
 		ifstream file;
