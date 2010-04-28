@@ -37,24 +37,20 @@ void Client::banner() {
 void Client::display() {
 	
 	Display *display;
-	Interpreter interpreter(&scene);
-	Keyboard keyboard(&interpreter, &scene);
-	Menu menu(&interpreter, &scene);
-	Mouse mouse(&interpreter, &scene);
 	
 	// Initialize scene
 	scene.setFilename(inFilename);
 	
-	// Install controls
-	display = new Display(&scene, &interpreter);
-	display->install(&keyboard);
-	display->install(&menu);
-	display->install(&mouse);
-	
-	// Start display
+	// Form title
 	title = "Gander [";
 	title += inFilename + "]";
-	display->start(argc, argv, title);
+	
+	// Create and start display
+	display = new Display(&scene, "Gander", argc, argv);
+	display->install(new Keyboard(display->getInterpreter(), &scene));
+	display->install(new Menu(display->getInterpreter(), &scene));
+	display->install(new Mouse(display->getInterpreter(), &scene));
+	display->start();
 }
 
 
