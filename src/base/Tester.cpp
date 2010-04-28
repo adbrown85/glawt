@@ -6,6 +6,7 @@
  */
 #include "Tester.hpp"
 Scene Tester::scene;
+map<string,callback_t> Tester::callbacks;
 
 
 /**
@@ -27,6 +28,25 @@ void Tester::display(void) {
 }
 
 
+callback_t Tester::findCallback(const string &name) {
+	
+	map<string,callback_t>::iterator it;
+	
+	it = callbacks.find(name);
+	if (it != callbacks.end()) {
+		return it->second;
+	} else {
+		return NULL;
+	}
+}
+
+
+Scene* Tester::getScene() {
+	
+	return &scene;
+}
+
+
 /**
  * Initializes the GLUT display.
  */
@@ -39,6 +59,9 @@ void Tester::init(int argc,
 	glutInitWindowPosition(50, 300);
 	glutInitWindowSize(512, 512);
 	glutCreateWindow(argv[0]);
+	
+	// Enable options
+	glEnable(GL_CULL_FACE);
 	
 	// Set up viewport
 	glViewport(0, 0, 512, 512);
@@ -78,12 +101,26 @@ void Tester::open(const string &filename) {
 }
 
 
+void Tester::setCallback(const string &name,
+                         callback_t callback) {
+	
+	callbacks[name] = callback;
+}
+
+
 /**
  * Starts the GLUT display.
  */
 void Tester::start() {
 	
-	glutDisplayFunc(Tester::display);
+	callback_t callback;
+	
+	callback = findCallback("display");
+	if (callback == NULL) {
+		glutDisplayFunc(Tester::display);
+	} else {
+		glutDisplayFunc(callback);
+	}
 	glutKeyboardFunc(Tester::keyboard);
 	glutMainLoop();
 }
