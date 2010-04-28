@@ -16,14 +16,14 @@ Wireframe::Wireframe(const Tag &tag) {
 void Wireframe::apply() {
 	
 	glPushAttrib(GL_POLYGON_BIT);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glPolygonMode(GL_FRONT, GL_LINE);
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 
 void Wireframe::remove() {
 	
+	glEnable(GL_CULL_FACE);
 	glPopAttrib();
 }
 
