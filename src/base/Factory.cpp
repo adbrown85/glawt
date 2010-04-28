@@ -25,7 +25,10 @@ Node* Factory::create(const Tag &tag) {
 		creator = it->second;
 		return (*creator)(tag);
 	} else {
-		throw "[Factory] Could not find creator function.";
+		ostringstream msg;
+		msg << "[Factory] Could not find creator function for '"
+		    << tag.name << "'.";
+		throw msg.str().c_str();
 	}
 }
 
