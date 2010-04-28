@@ -15,6 +15,7 @@
 #include "Fullscreen.hpp"
 #include "Octree.hpp"
 #include "Target.hpp"
+#include "Wireframe.hpp"
 using namespace std;
 
 
@@ -33,6 +34,7 @@ class AdvancedFactory : public Factory {
 		static Node* createFullscreen(const Tag &tag);
 		static Node* createOctree(const Tag &tag);
 		static Node* createTarget(const Tag &tag);
+		static Node* createWireframe(const Tag &tag);
 	
 	private:
 		

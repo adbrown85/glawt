@@ -40,6 +40,7 @@ int main(int argc,
 		testCreate("fullscreen");
 		testCreate("octree name='octree' link='volume'");
 		testCreate("target link='buffer'");
+		testCreate("wireframe");
 	} catch (const char *e) {
 		cerr << e << endl;
 	}

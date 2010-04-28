@@ -17,7 +17,7 @@ UNIFORMS = ${filter-out Uniform.o, ${patsubst %.cpp,%.o,${wildcard Uniform*.cpp}
 TEXTURES = ${patsubst %.cpp,%.o,${wildcard Texture*D.cpp}}
 FACTORIES = ${patsubst %.cpp,%.o,${wildcard *Factory.cpp}}
 BASIC = Cube Program Scale Shader Square Texture Translation Uniform
-ADVANCED = Cull Framebuffer Fullscreen Octree Target
+ADVANCED = Cull Framebuffer Fullscreen Octree Target Wireframe
 
 # Basic
 BasicFactory.o: ${addsuffix .o,$(BASIC)} $(TEXTURES) $(UNIFORMS)
@@ -39,6 +39,7 @@ Framebuffer.o:
 Fullscreen.o: Shape.o
 Octree.o: Texture.o Texture3D.o
 Target.o: Framebuffer.o Texture2D.o
+Wireframe.o:
 
 # Testing
 $(BINARIES): $(FACTORIES)

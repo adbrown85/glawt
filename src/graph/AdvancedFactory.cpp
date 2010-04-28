@@ -21,6 +21,7 @@ void AdvancedFactory::install() {
 	Factory::install("fullscreen", &createFullscreen);
 	Factory::install("octree", &createOctree);
 	Factory::install("target", &createTarget);
+	Factory::install("wireframe", &createWireframe);
 }
 
 
@@ -51,5 +52,11 @@ Node* AdvancedFactory::createOctree(const Tag &tag) {
 Node* AdvancedFactory::createTarget(const Tag &tag) {
 	
 	return new Target(tag);
+}
+
+
+Node* AdvancedFactory::createWireframe(const Tag &tag) {
+	
+	return new Wireframe(tag);
 }
 
