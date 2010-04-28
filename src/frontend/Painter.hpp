@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
+#include "AdvancedFactory.hpp"     // Outline selected items
 #include "BasicFactory.hpp"        // Outline selected items
 #include "Applicable.hpp"          // Apply modifications to scene
 #include "Drawable.hpp"            // Drawing items in scene

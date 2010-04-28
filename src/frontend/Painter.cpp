@@ -15,6 +15,7 @@ Painter::Painter(Scene *scene,
 	this->mode = mode;
 	
 	if (outline == NULL) {
+		AdvancedFactory::install();
 		BasicFactory::install();
 		outline = Factory::open("${GANDER}/glsl/outline.xml");
 		outline->prepare();
@@ -145,12 +146,7 @@ void Painter::paintUIElements(Selectable *selectable) {
 	Texture::pause();
 	
 	// Draw outline
-	glPushAttrib(GL_POLYGON_BIT);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
-		glPolygonMode(GL_FRONT, GL_LINE);
-		paintNode(outline);
-	glPopAttrib();
+	paintNode(outline);
 	
 	// Draw manipulators
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
