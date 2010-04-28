@@ -62,8 +62,8 @@ void Producer::open(Scene *scene,
 	
 	BasicFactory::install();
 	AdvancedFactory::install();
-	scene->setRoot(new Translation());
 	scene->open(filename);
+	scene->setRoot(new Translation());
 	scene->prepare();
 	scene->print();
 }
