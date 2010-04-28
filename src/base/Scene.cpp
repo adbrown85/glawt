@@ -145,6 +145,9 @@ void Scene::rotate(float angle,
 
 void Scene::setRoot(Node *node) {
 	
+	vector<Node*> children;
+	vector<Node*>::iterator it;
+	
 	// Check for bad input
 	if (node == NULL)
 		return;
@@ -152,7 +155,11 @@ void Scene::setRoot(Node *node) {
 	if (root == NULL) {
 		root = node;
 	} else {
-		node->setChildren(root->getChildren());
+		children = root->getChildren();
+		node->setChildren(children);
+		for (it=children.begin(); it!=children.end(); ++it) {
+			(*it)->setParent(node);
+		}
 		root = node;
 	}
 }

@@ -46,6 +46,7 @@ class Node {
 		Node* getParent() const;
 		void setClassName(const string &className);
 		void setChildren(const vector<Node*> children);
+		void setParent(Node *parent);
 	
 	protected :
 		
@@ -72,6 +73,9 @@ inline void Node::setClassName(const string &className) {
 }
 inline void Node::setChildren(const vector<Node*> children) {
 	this->children = children;
+}
+inline void Node::setParent(Node *parent) {
+	this->parent = parent;
 }
 
 
