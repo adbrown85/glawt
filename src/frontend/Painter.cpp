@@ -16,11 +16,7 @@ Painter::Painter(Scene *scene,
 	
 	if (outline == NULL) {
 		BasicFactory::install();
-		outline = Factory::create("program");
-		outline->addChild(Factory::create("shader file='${GANDER}/glsl/outline.vert' /"));
-		outline->addChild(Factory::create("shader file='${GANDER}/glsl/outline.frag' /"));
-		outline->addChild(Factory::create("uniform type='mat4' name='MVPMatrix' link='modelviewprojection' /"));
-		outline->addChild(Factory::create("cube /"));
+		outline = Factory::open("${GANDER}/glsl/outline.xml");
 		outline->prepare();
 	}
 }
@@ -149,14 +145,11 @@ void Painter::paintUIElements(Selectable *selectable) {
 	Texture::pause();
 	
 	// Draw outline
-	glPushAttrib(GL_CURRENT_BIT);
-		glColor3f(1.0, 1.0, 0.0);
-		glPushAttrib(GL_POLYGON_BIT);
-			glEnable(GL_CULL_FACE);
-			glCullFace(GL_BACK);
-			glPolygonMode(GL_FRONT, GL_LINE);
-			paintNode(outline);
-		glPopAttrib();
+	glPushAttrib(GL_POLYGON_BIT);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		paintNode(outline);
 	glPopAttrib();
 	
 	// Draw manipulators
