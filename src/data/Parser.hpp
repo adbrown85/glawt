@@ -25,12 +25,12 @@ class Parser {
 	
 	public :
 		
-		bool isComment(string comment);
+		static Tag create(string text);
 		static string findAttribute(stringstream &stream);
 		string findTagString();
+		bool isComment(string comment);
 		void open(string filename);
 		static void parseAttribute(string attributeString, Tag &tag);
-		static Tag parseTag(string text);
 		void print();
 		void skipComment();
 		

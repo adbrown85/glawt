@@ -7,6 +7,46 @@
 #include "Parser.hpp"
 
 
+/**
+ * Creates a tag from text with name and attributes.
+ * 
+ * @param text Raw text for the tag from the file.
+ * @return Tag object to store the attributes in.
+ */
+Tag Parser::create(string text) {
+	
+	string token;
+	stringstream stream;
+	Tag tag;
+	
+	// Remove ending slash and put text in stream
+	if (Text::endsWith(text, '/')) {
+		text = text.substr(0, text.length()-1);
+		tag.empty = true;
+	}
+	stream.str(text);
+	
+	// Name
+	stream >> token;
+	if (token[0] == '/') {
+		tag.setName(token.substr(1));
+		tag.closing = true;
+	} else {
+		tag.setName(token);
+	}
+	
+	// Attributes
+	token = findAttribute(stream);
+	while (stream) {
+		parseAttribute(token, tag);
+		token = findAttribute(stream);
+	}
+	
+	// Finish
+	return tag;
+}
+
+
 string Parser::findAttribute(stringstream &stream) {
 	
 	int count=0;
@@ -95,8 +135,7 @@ void Parser::open(string filename) {
 				skipComment();
 			else {
 				text = findTagString();
-				tag.clear();
-				tag = parseTag(text);
+				tag = create(text);
 				tags.push_back(tag);
 			}
 		}
@@ -130,46 +169,6 @@ void Parser::parseAttribute(string attribute,
 	key = attribute.substr(0, equalsIndex);
 	value = attribute.substr(equalsIndex+2, length-equalsIndex-3);
 	tag.add(key, value);
-}
-
-
-/**
- * Parses a tag.
- * 
- * @param tagText Raw text for the tag from the file.
- * @param tag Tag object to store the attributes in.
- */
-Tag Parser::parseTag(string text) {
-	
-	string token;
-	stringstream stream;
-	Tag tag;
-	
-	// Remove ending slash and put text in stream
-	if (Text::endsWith(text, '/')) {
-		text = text.substr(0, text.length()-1);
-		tag.empty = true;
-	}
-	stream.str(text);
-	
-	// Name
-	stream >> token;
-	if (token[0] == '/') {
-		tag.setName(token.substr(1));
-		tag.closing = true;
-	} else {
-		tag.setName(token);
-	}
-	
-	// Attributes
-	token = findAttribute(stream);
-	while (stream) {
-		parseAttribute(token, tag);
-		token = findAttribute(stream);
-	}
-	
-	// Finish
-	return tag;
 }
 
 
