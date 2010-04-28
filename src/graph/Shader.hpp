@@ -29,10 +29,10 @@ using namespace std;
  */
 class Shader : public Node {
 	
-	public :
+	public:
 		
-		Shader(string type,
-		       string filename);
+		Shader(const string &filename,
+		       const string &type="");
 		Shader(const Tag &tag);
 		~Shader();
 		void associate();
@@ -44,7 +44,7 @@ class Shader : public Node {
 		void log() const;
 		string toString() const;
 	
-	private :
+	private:
 		
 		const char **source;
 		GLuint handle;
@@ -55,8 +55,8 @@ class Shader : public Node {
 		Shader();
 		void compile();
 		void create();
-		void init();
-		void initType();
+		void init(const string &filename,
+		          const string &type);
 		void load();
 };
 

@@ -10,13 +10,10 @@
 /**
  * Initializes an empty %Shader object.
  */
-Shader::Shader(string type,
-               string filename) {
+Shader::Shader(const string &filename,
+               const string &type) {
 	
-	// Initialize
-	init();
-	this->type = type;
-	this->filename = filename;
+	init(filename, type);
 }
 
 
@@ -27,11 +24,9 @@ Shader::Shader(string type,
  */
 Shader::Shader(const Tag &tag) {
 	
-	// Initialize
-	init();
 	tag.get("file", filename, true, false);
-	if (!tag.get("type", type, false))
-		initType();
+	tag.get("type", type, false);
+	init(filename, type);
 }
 
 
@@ -108,37 +103,35 @@ void Shader::create() {
 /**
  * Initializes the %Shader's attributes.
  */
-void Shader::init() {
+void Shader::init(const string &filename,
+                  const string &type) {
 	
+	string extension;
+	
+	// Basics
 	className = "Shader";
 	this->length = 0;
 	this->handle = 0;
 	this->source = NULL;
-}
-
-
-/**
- * Initializes the type by guessing from the file's extension.
- */
-void Shader::initType() {
+	this->filename = FileUtility::replaceEnvironmentVariable(filename);
 	
-	int pos;
-	string extension;
-	
-	// Check extension for ".frag" or ".vert"
-	pos = filename.find_last_of('.');
-	extension = filename.substr(pos);
-	if (extension == ".frag")
-		type = "fragment";
-	else if (extension == ".vert")
-		type = "vertex";
-	else {
-		ostringstream message;
-		message << "[Shader] Extension '"
-		        << extension << "' not recognized as type.\n";
-		message << "[Shader] Use '.frag' or '.vert', "
-		        << "or declare 'type' as 'fragment' or 'vertex'.";
-		throw message.str().c_str();
+	// Type
+	if (type != "") {
+		this->type = Text::toLower(type);
+	} else {
+		extension = Text::toLower(FileUtility::getExtension(filename));
+		if (extension == "frag")
+			this->type = "fragment";
+		else if (extension == "vert")
+			this->type = "vertex";
+		else {
+			ostringstream msg;
+			msg << "[Shader] Extension '"
+			    << extension << "' not recognized as type.\n";
+			msg << "[Shader] Use '.frag' or '.vert', "
+			    << "or declare 'type' as 'fragment' or 'vertex'.";
+			throw msg.str().c_str();
+		}
 	}
 }
 

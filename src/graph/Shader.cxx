@@ -30,14 +30,15 @@ int main(int argc,
 		
 		// Test
 		program = new Program();
-		shader = new Shader("fragment", "Shader.glsl");
+		shader = new Shader("Shader.frag");
+		cout << "Shader type: " << shader->getType() << endl;
 		program->addChild(shader);
 		program->associateTree();
+		shader->list();
 	}
 	catch (const char *e) {
 		cerr << e << endl;
 	}
-	shader->list();
 	
 	// Finish
 	cout << endl;
