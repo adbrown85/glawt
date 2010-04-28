@@ -18,26 +18,30 @@ int main(int argc,
          char *argv[]) {
 	
 	Display *display;
-	Scene scene(640, 480);
-	Interpreter interpreter(&scene);
-	Keyboard keyboard(&interpreter, &scene);
-	Menu menu(&interpreter, &scene);
-	Mouse mouse(&interpreter, &scene);
+	Scene *scene;
 	
-	// Start
+	// Banner
 	cout << endl;
 	cout << "****************************************" << endl;
 	cout << "Display" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Test
-	scene.setFilename("Display.xml");
-	display = new Display(&scene, &interpreter);
-	display->install(&menu);
-	display->install(&keyboard);
-	display->install(&mouse);
-	display->start(argc, argv, "Display");
+	try {
+		
+		// Create scene
+		scene = new Scene(512, 512);
+		scene->setFilename("Display.xml");
+		
+		// Start display
+		display = new Display(scene, "Display", argc, argv);
+		display->install(new Keyboard(display->getInterpreter(), scene));
+		display->install(new Menu(display->getInterpreter(), scene));
+		display->install(new Mouse(display->getInterpreter(), scene));
+		display->start();
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	return 0;

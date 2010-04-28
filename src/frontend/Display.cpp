@@ -9,21 +9,38 @@ Display *Display::obj=NULL;
 
 
 Display::Display(Scene *scene,
-                 Interpreter *interpreter) {
+                 const string &title,
+                 int argc,
+                 char *argv[]) :
+                 interpreter(scene) {
 	
-	// Copy inputs
-	this->interpreter = interpreter;
+	// Initialize attributes
 	this->scene = scene;
-	
-	// Initialize others
 	this->useOverlay = false;
 	this->timeStarted = 0;
 	this->frames = 0;
 	this->framesPerSecond = 0;
-	this->painter = new Painter(scene);
-	
-	// Store this instance
+	this->painter = NULL;
+	this->height = scene->getHeight();
+	this->width = scene->getWidth();
+	this->title = title;
 	Display::obj = this;
+	
+	// Initialize window
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+	glutInitWindowPosition(DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y);
+	glutInitWindowSize(width, height);
+	glutCreateWindow(title.c_str());
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	
+	// Initialize view
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 50.0);
+	painter = new Painter(scene);
 }
 
 
@@ -121,50 +138,14 @@ void Display::overlay() {
 
 /**
  * Starts the display.
- * 
- * @param argc Number of arguments.
- * @param argv Array of argument values.
- * @param title Text to be shown on the window's title bar.
- * @param scene Pointer to a Scene with items (needs to be constructed first).
- * @param interpreter Delegate that opens scene.
  */
-void Display::start(int argc,
-                    char *argv[],
-                    const string &title) {
+void Display::start() {
 	
-	int width, height, x=100, y=100;
 	vector<Manipulator*> manipulators;
 	
-	// Copy
-	height = scene->getHeight();
-	width = scene->getWidth();
-	
-	// Initialize window
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(x, y);
-	glutInitWindowSize(width, height);
-	glutCreateWindow(title.c_str());
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_BLEND);
-	//glDepthFunc(GL_ALWAYS);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-	// Initialize view
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 50.0);
-	
 	// Open and prepare scene
-	try {
-		interpreter->run(Command::OPEN, scene->getFilename());
-		interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
-	} catch (char const *e) {
-		cerr << e << endl;
-		exit(1);
-	}
+	interpreter.run(Command::OPEN, scene->getFilename());
+	interpreter.addListener(Command::INFORMATION, &Display::toggleOverlay);
 	
 	// Register functions
 	glutDisplayFunc(Display::display);

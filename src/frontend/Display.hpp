@@ -18,6 +18,8 @@
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
+#define DEFAULT_WINDOW_X 100
+#define DEFAULT_WINDOW_Y 100
 using namespace std;
 
 
@@ -28,32 +30,42 @@ using namespace std;
  */
 class Display {
 	
-	public :
+	public:
 		
 		Display(Scene *scene,
-		        Interpreter *interpreter);
+		        const string &title,
+		        int argc,
+		        char *argv[]);
 		static void display(void);
+		Interpreter* getInterpreter();
 		static void idle(void);
 		void install(Control *control);
-		void start(int argc,
-		           char *argv[],
-		           const string &title);
+		void start();
 		static void toggleOverlay();
 	
-	private :
+	protected:
+		
+		static void checkError();
+		void overlay();
+	
+	private:
 		
 		static Display *obj;
 		bool useOverlay;
-		Interpreter *interpreter;
+		Interpreter interpreter;
 		unsigned long timeStarted;
-		int frames, framesPerSecond;
+		int frames, framesPerSecond, width, height;
 		Painter *painter;
 		Scene *scene;
+		string title;
 		vector<Control*> controls;
-		
-		void overlay();
-		static void checkError();
 };
+
+
+inline Interpreter* Display::getInterpreter() {
+	
+	return &interpreter;
+}
 
 
 #endif
