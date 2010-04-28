@@ -229,6 +229,29 @@ string FileUtility::mergePaths(const string &root,
 }
 
 
+string FileUtility::replaceEnvironmentVariable(const string &path) {
+	
+	char *value;
+	size_t beg, end;
+	string name, copy(path);
+	
+	// Find name
+	beg = path.find("${");
+	end = path.find('}', beg);
+	if (beg > path.length() || end > path.length())
+		return path;
+	name = path.substr(beg+2, end-beg-2);
+	
+	// Get value
+	value = getenv(name.c_str());
+	if (value == NULL) {
+		return copy.replace(beg, end-beg+1, "");
+	} else {
+		return copy.replace(beg, end-beg+1, value);
+	}
+}
+
+
 /**
  * Removes the top-most directory from a path.
  */

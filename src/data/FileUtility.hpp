@@ -22,28 +22,28 @@ using namespace std;
  *     Utility for working with file paths.
  */
 class FileUtility {
+public:
 	
-	public:
-		
-		static string build(const string &root,
-		                    vector<string> &parts);
-		static string getBasename(const string &path);
-		static string getDirname(const string &path);
-		static string getExtension(const string &path);
-		static string getInternals(const string &path);
-		static string getRelativePath(const string &base,
-		                              const string &filename);
-		static string getRoot(const string &path);
-		static bool hasWindowsRoot(const string& token);
-		static bool isAbsolutePath(const string& filename);
-		static bool isSeparator(char character);
-		static bool isWindowsRoot(const string& token);
-		static string mergePaths(const string &root,
-		                         vector<string> &base,
-		                         vector<string> &change);
-		static string stripRoot(const string &path);
-		static void tokenize(const string &filename,
-		                     vector<string> &tokens);
+	static string build(const string &root,
+	                    vector<string> &parts);
+	static string getBasename(const string &path);
+	static string getDirname(const string &path);
+	static string getExtension(const string &path);
+	static string getInternals(const string &path);
+	static string getRelativePath(const string &base,
+	                              const string &filename);
+	static string getRoot(const string &path);
+	static bool hasWindowsRoot(const string& token);
+	static bool isAbsolutePath(const string& filename);
+	static bool isSeparator(char character);
+	static bool isWindowsRoot(const string& token);
+	static string mergePaths(const string &root,
+	                         vector<string> &base,
+	                         vector<string> &change);
+	static string replaceEnvironmentVariable(const string &path);
+	static string stripRoot(const string &path);
+	static void tokenize(const string &filename,
+	                     vector<string> &tokens);
 };
 
 

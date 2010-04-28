@@ -23,11 +23,19 @@ void testExtension(const string &path,
 	
 	string result;
 	
-	cout << "Testing extension..." << endl;
 	print(path);
 	result = FileUtility::getExtension(path);
 	print(result);
 	assert(result == answer);
+}
+
+
+void testEnvironmentVariable(const string &path) {
+	
+	string result;
+	
+	result = FileUtility::replaceEnvironmentVariable(path);
+	print(result);
 }
 
 
@@ -75,7 +83,13 @@ int main() {
 	print(FileUtility::getDirname("scene.xml"));
 	print(FileUtility::getDirname("/scene.xml"));
 	
+	// Environment variables
+	cout << "\nTesting environment variable" << endl;
+	testEnvironmentVariable("${GANDER}/glsl/outline.glsl");
+	testEnvironmentVariable("/usr/local/gander/glsl/outline.glsl");
+	
 	// Extension
+	cout << "\nTesting extension" << endl;
 	testExtension("scene.xml", "xml");
 	
 	// Internals
