@@ -139,8 +139,7 @@ void Scene::parse() {
  */
 void Scene::prepare() {
 	
-	root->associateTree();
-	root->finalizeTree();
+	root->prepare();
 }
 
 

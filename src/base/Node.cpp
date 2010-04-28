@@ -104,6 +104,13 @@ void Node::finalizeTree() {
 }
 
 
+void Node::prepare() {
+	
+	associateTree();
+	finalizeTree();
+}
+
+
 /**
  * Prints important attributes to standard out with a small indent.
  */

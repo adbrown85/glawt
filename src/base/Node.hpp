@@ -30,6 +30,7 @@ class Node {
 		void addChild(Node *child);
 		virtual void associateTree();
 		virtual void finalizeTree();
+		virtual void prepare();
 		virtual void print() const;
 		virtual void printTree() const;
 		virtual void sortByDepth(Matrix &matrix);
