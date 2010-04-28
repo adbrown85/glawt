@@ -12,46 +12,46 @@ GANDER = ../..
 include $(GANDER)/globals.mak
 include $(GANDER)/src/module.mak
 
-
-# Transformations
-Translation.o: Transformation.hpp
-Scale.o: Transformation.hpp
-TransformFactory.o: Scale.o Translation.o
-
-# Textures
-Texture2D.o: Texture.o
-Texture3D.o: Texture.o
-Octree.o: Texture.o Texture3D.o
-TextureFactory.o: Texture2D.o Texture3D.o Octree.o
-
-# Rendering
-Cull.o: 
-Framebuffer.o: 
-Target.o: Framebuffer.o Texture2D.o
-RenderFactory.o: Cull.o Framebuffer.o Target.o
-
-# Shaders
-Program.o: 
-Shader.o: Program.o
-Uniform.o: Program.o Shader.o Texture.o
+# Variables
 UNIFORMS = ${filter-out Uniform.o, ${patsubst %.cpp,%.o,${wildcard Uniform*.cpp}}}
-$(UNIFORMS): Uniform.o
-ShaderFactory.o: Program.o Shader.o $(UNIFORMS)
+TEXTURES = ${patsubst %.cpp,%.o,${wildcard Texture*D.cpp}}
+FACTORIES = ${patsubst %.cpp,%.o,${wildcard *Factory.cpp}}
+BASIC = Cube Program Scale Shader Square Texture Translation Uniform
+ADVANCED = Cull Framebuffer Fullscreen Octree Target
 
-# Shapes
-Shape.o: Program.o
-Fullscreen.o: Shape.o
+# Basic
+BasicFactory.o: ${addsuffix .o,$(BASIC)} $(TEXTURES) $(UNIFORMS)
 Cube.o: Shape.o
+Program.o: 
+Scale.o: Transformation.hpp
+Shader.o: Program.o
+Shape.o: Program.o
 Square.o: Shape.o
-ShapeFactory.o: Cube.o Fullscreen.o Square.o
+$(TEXTURES): Texture.o
+Translation.o: Transformation.hpp
+Uniform.o: Program.o Shader.o Texture.o
+$(UNIFORMS): Uniform.o
+
+# Advanced
+AdvancedFactory.o: ${addsuffix .o,$(ADVANCED)}
+Cull.o:
+Framebuffer.o:
+Fullscreen.o: Shape.o
+Octree.o: Texture.o Texture3D.o
+Target.o: Framebuffer.o Texture2D.o
 
 # Testing
-FACTORIES = ${patsubst %.cpp,%.o,${wildcard *Factory.cpp}}
 $(BINARIES): $(FACTORIES)
 
 # Checks
-check: checkUniforms checkFactories
+check: checkUniforms checkFactories checkBasic checkAdvanced checkTextures
 checkUniforms:
 	@echo "  UNIFORMS = $(UNIFORMS)"
 checkFactories:
 	@echo "  FACTORIES = $(FACTORIES)"
+checkTextures:
+	@echo "  TEXTURES = $(TEXTURES)"
+checkBasic:
+	@echo "  BASIC    = $(BASIC)"
+checkAdvanced:
+	@echo "  ADVANCED = $(ADVANCED)"
