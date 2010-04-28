@@ -5,10 +5,17 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "AdvancedFactory.hpp"
+bool AdvancedFactory::installed=false;
 
 
 void AdvancedFactory::install() {
 	
+	// Check if already called
+	if (installed)
+		return;
+	installed = true;
+	
+	// Tags
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);

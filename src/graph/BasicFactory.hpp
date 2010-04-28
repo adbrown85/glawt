@@ -48,15 +48,11 @@ class BasicFactory {
 		static Node* createTranslate(const Tag &tag);
 		static Node* createUniform(const Tag &tag);
 	
-	protected:
-		
-		static void load();
-	
 	private:
 		
 		enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
 		
-		static bool loaded;
+		static bool installed;
 		static map<string,kind_t> kinds;
 };
 

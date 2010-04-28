@@ -5,11 +5,16 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "BasicFactory.hpp"
-bool BasicFactory::loaded=false;
+bool BasicFactory::installed=false;
 map<string,BasicFactory::kind_t> BasicFactory::kinds;
 
 
 void BasicFactory::install() {
+	
+	// Check if already called
+	if (installed)
+		return;
+	installed = true;
 	
 	// Tags
 	Factory::install("cube", &createCube);
@@ -20,6 +25,20 @@ void BasicFactory::install() {
 	Factory::install("texture", &createTexture);
 	Factory::install("translate", &createTranslate);
 	Factory::install("uniform", &createUniform);
+	
+	// Map uniform types back to kinds
+	kinds["int"] = INT;
+	kinds["float"] = FLOAT;
+	kinds["mat3"] = MATRIX;
+	kinds["mat4"] = MATRIX;
+	kinds["sampler1d"] = SAMPLER;
+	kinds["sampler2d"] = SAMPLER;
+	kinds["sampler3d"] = SAMPLER;
+	kinds["usampler1d"] = SAMPLER;
+	kinds["usampler2d"] = SAMPLER;
+	kinds["usampler3d"] = SAMPLER;
+	kinds["vec3"] = VECTOR;
+	kinds["vec4"] = VECTOR;
 }
 
 
@@ -78,11 +97,8 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	
 	string type;
 	
-	// Initialize
-	load();
-	tag.get("type", type);
-	
 	// Create based on kind
+	tag.get("type", type);
 	switch (kinds.find(type)->second) {
 	case INT:
 		return new UniformInt(tag);
@@ -100,28 +116,5 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 		    << "' not supported.";
 		throw msg.str().c_str();
 	}
-}
-
-
-void BasicFactory::load() {
-	
-	// Check if already loaded
-	if (loaded)
-		return;
-	loaded = true;
-	
-	// Map types back to kinds
-	kinds["int"] = INT;
-	kinds["float"] = FLOAT;
-	kinds["mat3"] = MATRIX;
-	kinds["mat4"] = MATRIX;
-	kinds["sampler1d"] = SAMPLER;
-	kinds["sampler2d"] = SAMPLER;
-	kinds["sampler3d"] = SAMPLER;
-	kinds["usampler1d"] = SAMPLER;
-	kinds["usampler2d"] = SAMPLER;
-	kinds["usampler3d"] = SAMPLER;
-	kinds["vec3"] = VECTOR;
-	kinds["vec4"] = VECTOR;
 }
 

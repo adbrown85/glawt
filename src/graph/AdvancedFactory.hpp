@@ -33,6 +33,10 @@ class AdvancedFactory : public Factory {
 		static Node* createFullscreen(const Tag &tag);
 		static Node* createOctree(const Tag &tag);
 		static Node* createTarget(const Tag &tag);
+	
+	private:
+		
+		static bool installed;
 };
 
 

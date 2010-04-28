@@ -15,7 +15,7 @@ void testCreate(const string &text) {
 	Node *node;
 	Tag tag;
 	
-	tag = Parser::parseTag(text);
+	tag = Parser::create(text);
 	node = Factory::create(tag);
 	node->print();
 	assert(tag.name == Text::toLower(node->getClassName()));
