@@ -23,7 +23,7 @@ Node* Factory::create(const Tag &tag) {
 	it = creators.find(tag.name);
 	if (it != creators.end()) {
 		creator = it->second;
-		return (*creator)(tag);
+		return (*creator)(replace(tag));
 	} else {
 		ostringstream msg;
 		msg << "[Factory] Could not find creator function for '"
@@ -62,7 +62,7 @@ Node* Factory::open(string filename) {
 			continue;
 		}
 		
-		// Make "file" attributes relative to scene file
+		// Make "file" attributes relative to XML file
 		ai = ti->attributes.find("file");
 		if (ai != ti->attributes.end()) {
 			path = FileUtility::getRelativePath(filename, ai->second);
@@ -78,5 +78,20 @@ Node* Factory::open(string filename) {
 	
 	// Finish
 	return root;
+}
+
+
+Tag Factory::replace(const Tag &tag) {
+	
+	map<string,string>::iterator ai;
+	string path;
+	Tag copy(tag);
+	
+	ai = copy.attributes.find("file");
+	if (ai != copy.attributes.end()) {
+		path = FileUtility::replaceEnvironmentVariable(ai->second);
+		ai->second = path;
+	}
+	return copy;
 }
 

@@ -10,6 +10,15 @@
 Node* createShape(const Tag &tag) {
 	
 	cout << "createShape()" << endl;
+	cout << tag << endl;
+	return new Node();
+}
+
+
+Node* createTexture(const Tag &tag) {
+	
+	cout << "createTexture()" << endl;
+	cout << tag << endl;
 	return new Node();
 }
 
@@ -17,6 +26,7 @@ Node* createShape(const Tag &tag) {
 Node* createTransform(const Tag &tag) {
 	
 	cout << "createTransform()" << endl;
+	cout << tag << endl;
 	return new Node();
 }
 
@@ -34,10 +44,17 @@ int main(int argc,
 	cout << endl;
 	
 	// Test
-	Factory::install("shape", &createShape);
-	Factory::install("transform", &createTransform);
-	node = Factory::create(Tag("shape"));
-	node = Factory::create(Tag("transform"));
+	try {
+		Factory::install("shape", &createShape);
+		Factory::install("texture", &createTexture);
+		Factory::install("transform", &createTransform);
+		node = Factory::create("shape");
+		node = Factory::create("texture file='crate.jpg'");
+		node = Factory::create("texture file='${GANDER}/textures/crate.jpg'");
+		node = Factory::create("transform");
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// End
 	cout << endl;

@@ -113,7 +113,7 @@ void Shader::init(const string &filename,
 	this->length = 0;
 	this->handle = 0;
 	this->source = NULL;
-	this->filename = FileUtility::replaceEnvironmentVariable(filename);
+	this->filename = filename;
 	
 	// Type
 	if (type != "") {

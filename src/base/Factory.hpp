@@ -39,6 +39,7 @@ class Factory {
 		static Node* open(string filename);
 		static void install(const string &name,
 		                    creator_t creator);
+		static Tag replace(const Tag &tag);
 	
 	protected:
 		
