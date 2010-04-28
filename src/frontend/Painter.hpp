@@ -10,8 +10,8 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
+#include "BasicFactory.hpp"        // Outline selected items
 #include "Applicable.hpp"          // Apply modifications to scene
-#include "Cube.hpp"                // Outline selected items
 #include "Drawable.hpp"            // Drawing items in scene
 #include "Framebuffer.hpp"         // Disable manipulators
 #include "Manipulator.hpp"         // Drawing manipulators for selection
@@ -52,9 +52,10 @@ class Painter {
 		
 	private:
 		
+		GLenum mode;
+		static Node *outline;
 		Scene *scene;
 		vector<Manipulator*> manipulators;
-		GLenum mode;
 };
 
 

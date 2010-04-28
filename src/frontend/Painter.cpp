@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Painter.hpp"
-//Cube Painter::outline(1.0);
+Node* Painter::outline=NULL;
 
 
 Painter::Painter(Scene *scene,
@@ -13,6 +13,17 @@ Painter::Painter(Scene *scene,
 	
 	this->scene = scene;
 	this->mode = mode;
+	
+	if (outline == NULL) {
+		BasicFactory::install();
+		outline = Factory::create("program");
+		outline->addChild(Factory::create("shader file='${GANDER}/glsl/outline.vert' /"));
+		outline->addChild(Factory::create("shader file='${GANDER}/glsl/outline.frag' /"));
+		outline->addChild(Factory::create("uniform type='mat4' name='MVPMatrix' link='modelviewprojection' /"));
+		outline->addChild(Factory::create("cube /"));
+		outline->prepare();
+		outline->printTree();
+	}
 }
 
 
@@ -139,17 +150,15 @@ void Painter::paintUIElements(Selectable *selectable) {
 	Texture::pause();
 	
 	// Draw outline
-/*
 	glPushAttrib(GL_CURRENT_BIT);
 		glColor3f(1.0, 1.0, 0.0);
 		glPushAttrib(GL_POLYGON_BIT);
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
 			glPolygonMode(GL_FRONT, GL_LINE);
-			outline.draw();
+			paintNode(outline);
 		glPopAttrib();
 	glPopAttrib();
-*/
 	
 	// Draw manipulators
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
