@@ -34,16 +34,19 @@ class Factory {
 	
 	public:
 		
-		static Node* create(const Tag &tag);
-		static Node* create(const string &text);
-		static Node* open(string filename);
+		static Node* create(const Tag &tag,
+		                    const string &xmlFilename="");
+		static Node* create(const string &text,
+		                    const string &xmlFilename="");
+		static Node* open(string xmlFilename);
 		static void install(const string &name,
 		                    creator_t creator);
-		static Tag replace(const Tag &tag);
 	
 	protected:
 		
 		static map<string,creator_t> creators;
+		static Tag filter(Tag tag,
+		                  const string &xmlFilename);
 };
 
 

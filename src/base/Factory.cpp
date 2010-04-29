@@ -15,31 +15,50 @@ void Factory::install(const string &name,
 }
 
 
-Node* Factory::create(const Tag &tag) {
+Node* Factory::create(const Tag &tag,
+                      const string &xmlFilename) {
 	
 	creator_t creator;
 	map<string,creator_t>::iterator it;
 	
-	it = creators.find(tag.name);
+	it = creators.find(tag.getName());
 	if (it != creators.end()) {
 		creator = it->second;
-		return (*creator)(replace(tag));
+		return (*creator)(filter(tag, xmlFilename));
 	} else {
 		ostringstream msg;
 		msg << "[Factory] Could not find creator function for '"
-		    << tag.name << "'.";
+		    << tag.getName() << "'.";
 		throw msg.str().c_str();
 	}
 }
 
 
-Node* Factory::create(const string &text) {
+Node* Factory::create(const string &text,
+                      const string &xmlFilename) {
 	
-	return create(Parser::create(text));
+	return create(Parser::create(text), xmlFilename);
 }
 
 
-Node* Factory::open(string filename) {
+Tag Factory::filter(Tag tag,
+                    const string &xmlFilename) {
+	
+	string path;
+	
+	if (tag.hasAttribute("file")) {
+		path = tag.getAttribute("file");
+		path = FileUtility::replaceEnvironmentVariable(path);
+		if (!xmlFilename.empty()) {
+			path = FileUtility::getRelativePath(xmlFilename, path);
+		}
+		tag.setAttribute("file", path);
+	}
+	return tag;
+}
+
+
+Node* Factory::open(string xmlFilename) {
 	
 	Node *current, *node, *root;
 	Parser parser;
@@ -50,8 +69,8 @@ Node* Factory::open(string filename) {
 	// Initialize
 	root = new Node();
 	current = root;
-	filename = FileUtility::replaceEnvironmentVariable(filename);
-	parser.open(filename);
+	xmlFilename = FileUtility::replaceEnvironmentVariable(xmlFilename);
+	parser.open(xmlFilename);
 	
 	// Look through tags
 	tags = parser.getTags();
@@ -64,7 +83,7 @@ Node* Factory::open(string filename) {
 		}
 		
 		// Create node and update current
-		node = create(*it);
+		node = create(*it, xmlFilename);
 		current->addChild(node);
 		if (!it->isLeaf())
 			current = node;
@@ -72,20 +91,5 @@ Node* Factory::open(string filename) {
 	
 	// Finish
 	return root;
-}
-
-
-Tag Factory::replace(const Tag &tag) {
-	
-	map<string,string>::iterator ai;
-	string path;
-	Tag copy(tag);
-	
-	ai = copy.attributes.find("file");
-	if (ai != copy.attributes.end()) {
-		path = FileUtility::replaceEnvironmentVariable(ai->second);
-		ai->second = path;
-	}
-	return copy;
 }
 
