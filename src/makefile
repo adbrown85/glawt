@@ -23,6 +23,6 @@ client: frontend
 frontend: backend
 backend: advanced
 advanced: basic
-basic: base
-base: data
+basic: graph
+graph: data
 data:
