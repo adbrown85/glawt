@@ -20,7 +20,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     Factory for creating more esoteric nodes not used by many files.
  */

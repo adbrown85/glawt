@@ -20,7 +20,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     1D texture holding empty-space skipping information.
  */

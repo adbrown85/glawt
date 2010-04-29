@@ -21,7 +21,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     Base class for a 3D object in the scene.
  */

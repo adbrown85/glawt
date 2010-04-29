@@ -21,7 +21,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     OpenGL texture node.
  * 

@@ -29,7 +29,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     Factory for creating nodes used by most files.
  */

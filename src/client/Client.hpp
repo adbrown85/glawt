@@ -45,8 +45,9 @@ using namespace std;
  * @defgroup client Client
  * @defgroup frontend Frontend
  * @defgroup backend Backend
+ * @defgroup advanced Advanced
+ * @defgroup basic Basic
  * @defgroup graph Graph
- * @defgroup traits Traits
  * @defgroup data Data
  */
 /**

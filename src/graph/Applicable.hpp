@@ -12,7 +12,7 @@
 
 /**
  * @interface Applicable
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Interface for something that can be applied, and then removed.
  */

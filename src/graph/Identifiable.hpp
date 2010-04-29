@@ -14,7 +14,7 @@ using namespace std;
 
 /**
  * @interface Identifiable
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Interface for an object that has a unique ID number.
  */

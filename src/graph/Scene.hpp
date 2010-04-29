@@ -25,7 +25,7 @@ using namespace std;
 
 
 /**
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Collection of items that also stores selection and camera information.
  */

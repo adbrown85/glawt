@@ -16,6 +16,11 @@
 using namespace std;
 
 
+/**
+ * @ingroup advanced
+ * @brief
+ *     Causes only the edges of shapes to be drawn.
+ */
 class Wireframe : public Node,
                   public Applicable {
 	

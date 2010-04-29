@@ -16,7 +16,7 @@
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     %Texture node for images.
  */

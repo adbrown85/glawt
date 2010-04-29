@@ -23,9 +23,9 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
- *     Container for GLSL uniform variables.
+ *     Abstract base class for GLSL uniform variables.
  */
 class Uniform : public Node,
                 public Applicable {

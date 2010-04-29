@@ -23,7 +23,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     GLSL shader with loading and compiling capabilities.
  */

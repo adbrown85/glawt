@@ -18,7 +18,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     Offscreen render location backed by a texture.
  */

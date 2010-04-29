@@ -17,7 +17,7 @@
 
 
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     Container for offscreen rendering targets.
  */

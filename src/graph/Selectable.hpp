@@ -17,7 +17,7 @@ using namespace std;
 
 /**
  * @interface Selectable
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Interface for an object that can be part of a selection.
  */

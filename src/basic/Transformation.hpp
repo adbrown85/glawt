@@ -14,7 +14,7 @@
 
 /**
  * @interface Transformation
- * @ingroup base
+ * @ingroup basic
  * @brief
  *     Operation that changes the size, position, or orientation of objects.
  */

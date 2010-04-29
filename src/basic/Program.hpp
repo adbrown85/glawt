@@ -20,7 +20,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
  */

@@ -17,9 +17,8 @@
 using namespace std;
 
 
-/// @defgroup graph
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     Removes back or front-facing polygons.
  */

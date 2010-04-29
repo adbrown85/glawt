@@ -17,7 +17,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     %Texture node for volumes.
  */

@@ -26,7 +26,7 @@ typedef Node* (*creator_t)(const Tag &tag);
 
 
 /**
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Creates items from XML tags and adds them to the scene.
  */

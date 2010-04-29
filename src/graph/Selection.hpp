@@ -16,7 +16,7 @@ using namespace std;
 
 
 /**
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Collection of selected items.
  */

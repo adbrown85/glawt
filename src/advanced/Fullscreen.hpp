@@ -15,7 +15,7 @@
 
 
 /**
- * @ingroup graph
+ * @ingroup advanced
  * @brief
  *     Polygon that takes up the entire window.
  */

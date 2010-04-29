@@ -18,7 +18,7 @@ using namespace std;
 
 /**
  * @interface Drawable
- * @ingroup base
+ * @ingroup graph
  * @brief
  *     Interface for something that can be drawn.
  */

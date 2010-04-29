@@ -23,6 +23,11 @@ using namespace std;
 typedef void (*callback_t)(void);
 
 
+/**
+ * @ingroup graph
+ * @brief
+ *     Utility for testing nodes.
+ */
 class Tester {
 	
 	public :

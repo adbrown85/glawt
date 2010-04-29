@@ -16,7 +16,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     2D square shape that can be drawn by %Display.
  */

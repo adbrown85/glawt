@@ -1,11 +1,11 @@
 #
 # makefile
-#     Builds the Base module.
+#     Builds the Graph module.
 # 
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-MODULE := base
+MODULE := graph
 GANDER := ../..
 include $(GANDER)/src/module.mak
 

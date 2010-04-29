@@ -13,6 +13,11 @@
 using namespace std;
 
 
+/**
+ * @ingroup graph
+ * @brief
+ *     Utility for manipulating the transformation stack.
+ */
 class Transform {
 	
 	public :

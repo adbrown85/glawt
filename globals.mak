@@ -8,7 +8,7 @@
 include $(GANDER)/functions.mak
 
 # List modules
-MODULES := data base basic advanced backend frontend client
+MODULES := data graph basic advanced backend frontend client
 
 # Resolve directories
 bindir := $(GANDER)/bin

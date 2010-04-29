@@ -19,7 +19,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     %Node that moves items in the scene.
  */

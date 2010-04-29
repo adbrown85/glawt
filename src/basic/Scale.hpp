@@ -18,7 +18,7 @@ using namespace std;
 
 
 /**
- * @ingroup graph
+ * @ingroup basic
  * @brief
  *     %Node that resizes items in the scene.
  */
