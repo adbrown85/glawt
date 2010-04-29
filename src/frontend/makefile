@@ -5,11 +5,8 @@
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-MODULE = frontend
-CHILDREN = backend graph base data
-FILTER = 
-GANDER = ../..
-include $(GANDER)/globals.mak
+MODULE := frontend
+GANDER := ../..
 include $(GANDER)/src/module.mak
 
 # Utilities

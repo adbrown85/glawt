@@ -5,28 +5,24 @@
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
+include $(GANDER)/functions.mak
 
+# List modules
+MODULES := data base basic advanced backend frontend client
 
 # Resolve directories
-bindir = $(GANDER)/bin
-docdir = $(GANDER)/doc
-libdir = $(GANDER)/lib
-srcdir = $(GANDER)/src
-VPATH = $(bindir) $(libdir) $(srcdir)
-
-
-# Resolve modules and archives
-MODULES = data base graph backend frontend client
-ARCHIVES = frontend.a backend.a graph.a traits.a data.a
-ARCHIVES_FULL = ${addprefix $(libdir)/,$(ARCHIVES)}
-
+bindir := $(GANDER)/bin
+docdir := $(GANDER)/doc
+libdir := $(GANDER)/lib
+srcdir := $(GANDER)/src
+VPATH := $(bindir) $(libdir) $(srcdir)
 
 # Options for archiver, compiler, and linker
-ARFLAGS = cr
-DEFINES = GL_GLEXT_PROTOTYPES ILUT_USE_OPENGL
-CXXFLAGS = -Wall -Werror -ggdb ${addprefix -I$(srcdir)/,$(MODULES)} ${addprefix -D,$(DEFINES)}
-LDFLAGS = -lm -lglut -lIL -lILU -lILUT
-
+ARFLAGS := cr
+DEFINES := GL_GLEXT_PROTOTYPES ILUT_USE_OPENGL
+INCLUDES := ${addprefix -I$(srcdir)/,$(MODULES)}
+CXXFLAGS := -Wall -Werror -ggdb  $(INCLUDES) ${addprefix -D,$(DEFINES)}
+LDFLAGS := -lm -lglut -lIL -lILU -lILUT
 
 # Phony targets for directing make
 .PHONY: all html tests FORCE

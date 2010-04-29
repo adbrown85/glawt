@@ -5,11 +5,8 @@
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-MODULE = data
-CHILDREN = 
-FILTER = 
-GANDER = ../..
-include $(GANDER)/globals.mak
+MODULE := data
+GANDER := ../..
 include $(GANDER)/src/module.mak
 
 # Math

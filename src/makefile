@@ -21,7 +21,8 @@ $(MODULES):
 # Dependencies
 client: frontend
 frontend: backend
-backend: graph
-graph: base
+backend: advanced
+advanced: basic
+basic: base
 base: data
 data:

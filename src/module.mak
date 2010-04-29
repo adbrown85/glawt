@@ -19,33 +19,34 @@
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-
+include $(GANDER)/globals.mak
 
 # Resolve file paths for module
-SOURCES = ${filter-out ${addsuffix .cpp,$(FILTER)}, ${wildcard *.cpp}}
-OBJECTS = ${patsubst %.cpp,%.o,$(SOURCES)}
-TESTS = ${wildcard *.cxx}
-BINARIES = ${patsubst %.cxx,%,$(TESTS)}
-ARCHIVE = $(libdir)/$(MODULE).a
-ARCHIVES = ${foreach C,$(CHILDREN),$(libdir)/$(C).a}
-
+SOURCES := ${wildcard *.cpp}
+OBJECTS := ${patsubst %.cpp,%.o,$(SOURCES)}
+MAINS := ${wildcard *.cxx}
+BINARIES := ${patsubst %.cxx,%,$(MAINS)}
+ARCHIVE := $(MODULE).a
+LIBRARY := $(libdir)/$(ARCHIVE)
+CHILDREN := ${call before,$(MODULE),$(MODULES)}
+ARCHIVES := ${addsuffix .a,${call reverse,$(CHILDREN)}}
+LIBRARIES := ${addprefix $(libdir)/,$(ARCHIVES)}
 
 # Phony targets for directing make
 .PHONY: all check clean mostlyclean tests
 all: $(OBJECTS) $(BINARIES)
 check: 
-	@echo "  FILTER   = $(FILTER)"
 	@echo "  SOURCES  = $(SOURCES)"
 	@echo "  OBJECTS  = $(OBJECTS)"
-	@echo "  TESTS    = $(TESTS)"
+	@echo "  MAINS    = $(MAINS)"
 	@echo "  BINARIES = $(BINARIES)"
 	@echo "  ARCHIVE  = $(ARCHIVE)"
 	@echo "  ARCHIVES = $(ARCHIVES)"
 clean: 
 	@echo "  Removing $(OBJECTS)"
 	@$(RM) $(OBJECTS) 
-	@echo "  Removing $(ARCHIVE)"
-	@$(RM) $(ARCHIVE)
+	@echo "  Removing $(LIBRARY)"
+	@$(RM) $(LIBRARY)
 	@echo "  Removing $(BINARIES)"
 	@$(RM) $(BINARIES)
 mostlyclean: 
@@ -54,18 +55,16 @@ mostlyclean:
 install: all
 tests: $(OBJECTS) $(BINARIES)
 
-
 # Build objects from their source files, copy to archive
 $(OBJECTS):
-%.o : %.cpp %.hpp $(addsuffix .a,$(CHILDREN))
+%.o : %.cpp %.hpp $(ARCHIVES)
 	@echo "  $<"
 	@$(CXX) -c $(CXXFLAGS) $<
-	@$(AR) -$(ARFLAGS) $(ARCHIVE) $@
-	@ranlib $(ARCHIVE)
-
+	@$(AR) -$(ARFLAGS) $(LIBRARY) $@
+	@ranlib $(LIBRARY)
 
 # Build executables from their tests and objects
 $(BINARIES): 
-%: %.cxx %.o $(addsuffix .a,$(CHILDREN))
+%: %.cxx %.o $(ARCHIVES)
 	@echo "  $< --> $@"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(ARCHIVE) $(ARCHIVES)
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(LIBRARY) $(LIBRARIES)

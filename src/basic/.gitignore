@@ -1,19 +1,12 @@
-AdvancedFactory
 BasicFactory
 Cube
-Cull
-Framebuffer
-Fullscreen
-Octree
 Program
 Shader
 Shape
 Square
-Target
 Texture
 Texture2D
 Texture3D
 Translation
 Uniform
-Wireframe
 

@@ -5,13 +5,9 @@
 # Author
 #     Andrew Brown <adb1413@rit.edu>
 #
-MODULE = base
-CHILDREN = data
-FILTER = 
-GANDER = ../..
-include $(GANDER)/globals.mak
+MODULE := base
+GANDER := ../..
 include $(GANDER)/src/module.mak
-
 
 # Applicable
 Applicable.hpp:
