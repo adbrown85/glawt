@@ -31,7 +31,7 @@ using namespace std;
 /**
  * @ingroup basic
  * @brief
- *     Factory for creating nodes used by most files.
+ *     %Factory for creating nodes used by most files.
  */
 class BasicFactory {
 	

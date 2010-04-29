@@ -24,8 +24,6 @@ Mouse::Mouse(Delegate *delegate,
 
 /**
  * Installs the control into the current context.
- * 
- * @param scene Makes the Control use this scene;
  */
 void Mouse::install() {
 	

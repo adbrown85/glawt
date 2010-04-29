@@ -10,7 +10,8 @@
 /**
  * Creates a new control using the specified Delegate to run commands.
  * 
- * @param delegate Pointer to a Delegate that runs 
+ * @param delegate Pointer to a Delegate that runs
+ * @param scene Pointer to the collection of nodes
  */
 Control::Control(Delegate *delegate,
                  Scene *scene) {

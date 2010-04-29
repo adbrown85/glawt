@@ -22,7 +22,7 @@ using namespace std;
 /**
  * @ingroup advanced
  * @brief
- *     Factory for creating more esoteric nodes not used by many files.
+ *     %Factory for creating more esoteric nodes not used by many files.
  */
 class AdvancedFactory : public Factory {
 	

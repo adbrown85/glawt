@@ -25,10 +25,6 @@ Painter::Painter(Scene *scene,
 
 /**
  * Paints all the items in a scene.
- * 
- * @param scene Collection of items and camera information.
- * @param manipulators UI elements used to manipulate selected items.
- * @param renderMode Either GL_RENDER or GL_SELECT.
  */
 void Painter::paint() {
 	
@@ -64,8 +60,6 @@ void Painter::paint() {
  * paint their children at different times.
  * 
  * @param node Pointer to the parent node.
- * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators UI elements used to manipulate selected items.
  */
 void Painter::paintChildren(Node *node) {
 	
@@ -88,8 +82,6 @@ void Painter::paintChildren(Node *node) {
  * type of interfaces the node supports.
  * 
  * @param node Pointer to the Node to paint.
- * @param renderMode If GL_SELECT, will push IDs of items into pick buffer.
- * @param manipulators UI elements used to manipulate selected items.
  */
 void Painter::paintNode(Node *node) {
 	

@@ -260,7 +260,6 @@ bool Tag::hasAttribute(const string &name) const {
  * Gets and sets an attribute in the tag.
  * 
  * @param key Reference to the name of the attribute.
- * @param value Reference to the value of the attribute.
  */
 string& Tag::operator[](const string &key) {
 	

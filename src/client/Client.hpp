@@ -42,13 +42,13 @@ using namespace std;
  * target="_blank">Git repository</a>.
  * </td></tr></table>
  * 
- * @defgroup client Client
- * @defgroup frontend Frontend
- * @defgroup backend Backend
- * @defgroup advanced Advanced
- * @defgroup basic Basic
- * @defgroup graph Graph
  * @defgroup data Data
+ * @defgroup graph Graph
+ * @defgroup basic Basic
+ * @defgroup advanced Advanced
+ * @defgroup backend Backend
+ * @defgroup frontend Frontend
+ * @defgroup client Client
  */
 /**
  * @brief
