@@ -22,7 +22,7 @@ Tag Parser::create(string text) {
 	// Remove ending slash and put text in stream
 	if (Text::endsWith(text, '/')) {
 		text = text.substr(0, text.length()-1);
-		tag.empty = true;
+		tag.setLeaf(true);
 	}
 	stream.str(text);
 	
@@ -30,7 +30,7 @@ Tag Parser::create(string text) {
 	stream >> token;
 	if (token[0] == '/') {
 		tag.setName(token.substr(1));
-		tag.closing = true;
+		tag.setClosing(true);;
 	} else {
 		tag.setName(token);
 	}
@@ -132,9 +132,9 @@ void Parser::open(string filename) {
 	character = file.get();
 	while (file) {
 		if (character == '<') {
-			if (isComment("!--"))
+			if (isComment("!--")) {
 				skipComment();
-			else {
+			} else {
 				text = findTagString();
 				tag = create(text);
 				tags.push_back(tag);
@@ -170,7 +170,7 @@ void Parser::parseAttribute(string attribute,
 	// Store key and value
 	key = attribute.substr(0, equalsIndex);
 	value = attribute.substr(equalsIndex+2, length-equalsIndex-3);
-	tag.add(key, value);
+	tag.setAttribute(key, value);
 }
 
 

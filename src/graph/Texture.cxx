@@ -37,8 +37,8 @@ int main() {
 	
 	// Test tag
 	cout << "\nTesting tag..." << endl;
-	tag.attributes["name"] = "foo";
-	tag.attributes["file"] = "glsl/bar.frag";
+	tag.setAttribute("name", "foo");
+	tag.setAttribute("file", "glsl/bar.frag");
 	texture = new FakeTexture(tag);
 	texture->print();
 	

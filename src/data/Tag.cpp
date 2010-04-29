@@ -12,7 +12,6 @@
  */
 Tag::Tag() {
 	
-	// Initialze
 	clear();
 }
 
@@ -25,29 +24,13 @@ Tag::Tag(const string &name) {
 
 
 /**
- * Adds an attribute to the tag.
- * 
- * @param key Reference to the name of the attribute.
- * @param value Reference to the value of the attribute.
- */
-void Tag::add(const string &key,
-              const string &value) {
-	
-	string keyLower;
-	
-	keyLower = Text::toLower(key);
-	attributes[keyLower] = value;
-}
-
-
-/**
  * Resets the tag to an empty state.
  */
 void Tag::clear() {
 	
 	// Reset attributes
 	closing = false;
-	empty = false;
+	leaf = false;
 	name = "";
 	attributes.clear();
 }
@@ -264,12 +247,41 @@ bool Tag::get(const string &key,
 }
 
 
-/**
- * Sets the name of this tag.
- */
-void Tag::setName(const string &name) {
+string Tag::getAttribute(const string &name) const {
 	
-	this->name = Text::toLower(name);
+	map<string,string>::const_iterator it;
+	
+	it = attributes.find(name);
+	if (it != attributes.end()) {
+		return it->second;
+	} else {
+		return "";
+	}
+}
+
+
+bool Tag::hasAttribute(const string &name) const {
+	
+	map<string,string>::const_iterator it;
+	
+	it = attributes.find(name);
+	return it != attributes.end();
+}
+
+
+/**
+ * Sets an attribute in the tag.
+ * 
+ * @param key Reference to the name of the attribute.
+ * @param value Reference to the value of the attribute.
+ */
+void Tag::setAttribute(const string &key,
+                       const string &value) {
+	
+	string keyLower;
+	
+	keyLower = Text::toLower(key);
+	attributes[keyLower] = value;
 }
 
 
@@ -288,8 +300,8 @@ ostream& operator<<(ostream &stream,
 	stream << tag.name;
 	if (tag.closing)
 		stream << " {closing}";
-	if (tag.empty)
-		stream << " {empty}";
+	if (tag.leaf)
+		stream << " {leaf}";
 	for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai) {
 		stream << " [" 
 		       << ai->first << "," 

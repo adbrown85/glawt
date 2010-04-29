@@ -37,8 +37,8 @@ int main(int argc,
 		
 		// Test tag
 		cout << "\nTesting tag..." << endl;
-		tag.attributes["file"] = filename;
-		tag.attributes["name"] = "bear";
+		tag.setAttribute("file", filename);
+		tag.setAttribute("name", "bear");
 		texture = new Texture3D(tag);
 		texture->print();
 		

@@ -42,10 +42,10 @@ Node* Factory::create(const string &text) {
 Node* Factory::open(string filename) {
 	
 	Node *current, *node, *root;
-	map<string,string>::const_iterator ai;
 	Parser parser;
 	string path;
-	vector<Tag>::iterator ti;
+	vector<Tag> tags;
+	vector<Tag>::iterator it;
 	
 	// Initialize
 	root = new Node();
@@ -54,25 +54,19 @@ Node* Factory::open(string filename) {
 	parser.open(filename);
 	
 	// Look through tags
-	for (ti=parser.tags.begin(); ti!=parser.tags.end(); ++ti) {
+	tags = parser.getTags();
+	for (it=tags.begin(); it!=tags.end(); ++it) {
 		
 		// Step back on closing tags
-		if (ti->closing) {
+		if (it->isClosing()) {
 			current = current->getParent();
 			continue;
 		}
 		
-		// Make "file" attributes relative to XML file
-		ai = ti->attributes.find("file");
-		if (ai != ti->attributes.end()) {
-			path = FileUtility::getRelativePath(filename, ai->second);
-			ti->attributes["file"] = path;
-		}
-		
 		// Create node and update current
-		node = create(*ti);
+		node = create(*it);
 		current->addChild(node);
-		if (!ti->empty)
+		if (!it->isLeaf())
 			current = node;
 	}
 	
