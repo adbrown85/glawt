@@ -44,8 +44,8 @@ int main() {
 	// Tag
 	try {
 		cout << "Testing tag..." << endl;
-		tag.setAttribute("size", "5.5");
-		tag.setAttribute("style", "3D");
+		tag["size"] = "5.5";
+		tag["style"] = "3D";
 		shape = new FakeShape(tag);
 		shape->print();
 	}

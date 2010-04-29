@@ -40,7 +40,7 @@ int main() {
 	
 	// Test tag
 	cout << "\nTag:" << endl;
-	tag.setAttribute("size", "8.0");
+	tag["size"] = "8.0";
 	drawable = new FakeDrawable(tag);
 	print(*drawable);
 	

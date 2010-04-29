@@ -247,19 +247,6 @@ bool Tag::get(const string &key,
 }
 
 
-string Tag::getAttribute(const string &name) const {
-	
-	map<string,string>::const_iterator it;
-	
-	it = attributes.find(name);
-	if (it != attributes.end()) {
-		return it->second;
-	} else {
-		return "";
-	}
-}
-
-
 bool Tag::hasAttribute(const string &name) const {
 	
 	map<string,string>::const_iterator it;
@@ -270,18 +257,14 @@ bool Tag::hasAttribute(const string &name) const {
 
 
 /**
- * Sets an attribute in the tag.
+ * Gets and sets an attribute in the tag.
  * 
  * @param key Reference to the name of the attribute.
  * @param value Reference to the value of the attribute.
  */
-void Tag::setAttribute(const string &key,
-                       const string &value) {
+string& Tag::operator[](const string &key) {
 	
-	string keyLower;
-	
-	keyLower = Text::toLower(key);
-	attributes[keyLower] = value;
+	return attributes[Text::toLower(key)];
 }
 
 

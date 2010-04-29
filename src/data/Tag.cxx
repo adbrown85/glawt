@@ -25,8 +25,8 @@ void TagTest::testCreate() {
 	
 	cout << "Creating..." << endl;
 	tag.setName("Foo");
-	tag.setAttribute("fOO", "bAr");
-	tag.setAttribute("fIle", "/foo/Bar");
+	tag["fOO"] = "bAr";
+	tag["fIle"] = "/foo/Bar";
 	cout << "  " << tag << endl;
 }
 
@@ -36,7 +36,7 @@ void TagTest::testGetArray() {
 	float value[4];
 	
 	cout << "\nGetting array..." << endl;
-	tag.setAttribute("value", "0.4 2.1 4.5 -5.9");
+	tag["value"] = "0.4 2.1 4.5 -5.9";
 	tag.get("value", value);
 	for (int i=0; i<4; ++i)
 		cout << "  value[" << i << "] is " << value[i] << endl;

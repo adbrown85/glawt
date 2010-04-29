@@ -170,7 +170,7 @@ void Parser::parseAttribute(string attribute,
 	// Store key and value
 	key = attribute.substr(0, equalsIndex);
 	value = attribute.substr(equalsIndex+2, length-equalsIndex-3);
-	tag.setAttribute(key, value);
+	tag[key] = value;
 }
 
 

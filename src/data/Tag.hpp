@@ -46,13 +46,11 @@ class Tag {
 		         string &value,
 		         bool required=true,
 		         bool lowercase=true) const;
-		string getAttribute(const string &name) const;
 		string getName() const;
 		bool hasAttribute(const string &name) const;
 		bool isClosing() const;
 		bool isLeaf() const;
-		void setAttribute(const string &key,
-		                  const string &value);
+		string& operator[](const string &key);
 		void setClosing(bool leaf);
 		void setLeaf(bool leaf);
 		void setName(const string &name);

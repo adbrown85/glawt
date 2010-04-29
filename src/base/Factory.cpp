@@ -47,12 +47,12 @@ Tag Factory::filter(Tag tag,
 	string path;
 	
 	if (tag.hasAttribute("file")) {
-		path = tag.getAttribute("file");
+		path = tag["file"];
 		path = FileUtility::replaceEnvironmentVariable(path);
 		if (!xmlFilename.empty()) {
 			path = FileUtility::getRelativePath(xmlFilename, path);
 		}
-		tag.setAttribute("file", path);
+		tag["file"] = path;
 	}
 	return tag;
 }

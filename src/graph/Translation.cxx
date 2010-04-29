@@ -43,9 +43,9 @@ int main() {
 	
 	// Test tag
 	cout << "Testing tag..." << endl;
-	tag.setAttribute("x", "10.0");
-	tag.setAttribute("y", "20.0");
-	tag.setAttribute("z", "30.0");
+	tag["x"] = "10.0";
+	tag["y"] = "20.0";
+	tag["z"] = "30.0";
 	translation = new Translation(tag);
 	translation->print();
 	
