@@ -28,26 +28,13 @@ Painter::Painter(Scene *scene,
  */
 void Painter::paint() {
 	
-	float rotationMatrixArray[16];
-	Matrix rotationMatrix;
-	
-	// Initialize
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 /*
 	if (renderMode != GL_SELECT)
 		scene.sortByDepth();
 */
 	
-	// Transform
-	glTranslatef(scene->position.x,
-	             scene->position.y,
-	             scene->position.z);
-	rotationMatrix = scene->getRotationMatrix();
-	rotationMatrix.toArray(rotationMatrixArray);
-	glMultMatrixf(rotationMatrixArray);
-	
 	// Draw
+	Window::applyView();
 	paintNode(scene->getRoot());
 }
 

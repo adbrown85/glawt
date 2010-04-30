@@ -10,18 +10,12 @@
 /**
  * Creates and initializes a new scene.
  * 
- * @param width Width of the window for the scene.
- * @param height Height of the window for the scene.
+ * @param filename
  */
-Scene::Scene(int width,
-             int height) {
+Scene::Scene(const string &filename) {
 	
-	// Initialize
-	this->width = width;
-	this->height = height;
-	reset();
-	root = new Node();
-	last = root;
+	this->filename = filename;
+	this->root = NULL;
 }
 
 
@@ -30,51 +24,6 @@ Scene::~Scene() {
 	if (root != NULL) {
 		Node::destroy(root);
 	}
-}
-
-
-/**
- * Adds a node as a child of the scene's last node.
- * 
- * @param node Node to add.
- */
-void Scene::addToLast(Node *node) {
-	
-	last->addChild(node);
-	last = node;
-}
-
-
-/**
- * Adds a node as a child of the scene's root.
- * 
- * @param node Node to add.
- */
-void Scene::addToRoot(Node *node) {
-	
-	root->addChild(node);
-	last = node;
-}
-
-
-/**
- * Changes the last node to its parent.
- */
-void Scene::backup() {
-	
-	if (last == root)
-		return;
-	last = last->getParent();
-}
-
-
-/**
- * Returns the scene's rotation as a matrix.
- */
-Matrix Scene::getRotationMatrix() const {
-	
-	// Return matrix
-	return rotation.getMatrix();
 }
 
 
@@ -103,7 +52,9 @@ void Scene::open(const string &filename) {
  */
 void Scene::prepare() {
 	
-	root->prepare();
+	if (root != NULL) {
+		root->prepare();
+	}
 }
 
 
@@ -112,34 +63,9 @@ void Scene::prepare() {
  */
 void Scene::print() {
 	
-	root->printTree();
-}
-
-
-/**
- * Resets the scene's camera information.
- */
-void Scene::reset() {
-	
-	// Reset transformations
-	position.set(0.0, 0.0, -10);
-	rotation.set(0.0, 0.0, 0.0, 1.0);
-}
-
-
-/**
- * Rotates the scene by axis/angle.
- */
-void Scene::rotate(float angle,
-                   float x,
-                   float y,
-                   float z) {
-	
-	Quaternion rotation;
-	
-	// Combine quaternion with current rotation
-	rotation.set(angle, x, y, z);
-	this->rotation = rotation * this->rotation;
+	if (root != NULL) {
+		root->printTree();
+	}
 }
 
 
@@ -148,45 +74,25 @@ void Scene::setRoot(Node *node) {
 	vector<Node*> children;
 	vector<Node*>::iterator it;
 	
-	// Check for bad input
-	if (node == NULL)
-		return;
-	
-	if (root == NULL) {
-		root = node;
-	} else {
-		children = root->getChildren();
-		node->setChildren(children);
-		for (it=children.begin(); it!=children.end(); ++it) {
-			(*it)->setParent(node);
-		}
-		root = node;
+	// Test for bad input
+	if (node == NULL) {
+		throw "[Scene] Cannot replace root with NULL node.";
+	} else if (node->getChildrenSize() > 0) {
+		throw "[Scene] Node replacing root cannot have children.";
+	} else if (root == NULL) {
+		throw "[Scene] Scene should be opened before replacing root";
 	}
+	
+	// Move root's children to node's children
+	children = root->getChildren();
+	node->setChildren(children);
+	for (it=children.begin(); it!=children.end(); ++it) {
+		(*it)->setParent(node);
+	}
+	
+	// Make node new root
+	delete root;
+	root = node;
 }
 
-
-/**
- * Sets the rotation of the scene using axis/angle.
- */
-void Scene::setRotation(float angle,
-                        float x,
-                        float y,
-                        float z) {
-	
-	// Set rotation
-	rotation.set(angle, x, y, z);
-}
-
-
-/**
- * Sorts the scene by depth using the rotation matrix.
- */
-void Scene::sortByDepth() {
-	
-	Matrix rotMatrix;
-	
-	// Sort by depth using rotation matrix
-	rotMatrix = getRotationMatrix();
-	root->sortByDepth(rotMatrix);
-}
 

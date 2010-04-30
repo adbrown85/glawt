@@ -120,7 +120,7 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 		// Determine amount to drag
 		amount = movement.get(i) * 
 		         axis.get(i) *
-		         (fabs(scene->position.z) / 45 * 1.75 + 1.0) *
+		         (fabs(Window::getPosition().z) / 45 * 1.75 + 1.0) *
 		         binding->getArgument();
 		
 		// Run the command

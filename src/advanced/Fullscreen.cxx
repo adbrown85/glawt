@@ -16,7 +16,7 @@ int main(int argc,
 	try {
 		BasicFactory::install();
 		AdvancedFactory::install();
-		Tester::init(argc, argv);
+		Window::init(argc, argv);
 		Tester::open("Fullscreen.xml");
 		Tester::start();
 	} catch (const char *e) {

@@ -41,6 +41,7 @@ class Node {
 		friend bool compare(Node *A, Node *B);
 		
 		vector<Node*> getChildren() const;
+		int getChildrenSize() const;
 		string getClassName() const;
 		float getDepth() const;
 		Node* getParent() const;
@@ -65,6 +66,7 @@ class Node {
 
 
 inline vector<Node*> Node::getChildren() const {return children;}
+inline int Node::getChildrenSize() const {return children.size();}
 inline float Node::getDepth() const {return depth;}
 inline string Node::getClassName() const {return className;}
 inline Node* Node::getParent() const {return parent;}

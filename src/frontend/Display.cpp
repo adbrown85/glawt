@@ -9,49 +9,22 @@ Display *Display::obj=NULL;
 
 
 Display::Display(Scene *scene,
-                 const string &title,
-                 int argc,
-                 char *argv[]) :
+                 const string &title) :
                  interpreter(scene) {
+	
+	// Initialize window
+	Window::create(title);
 	
 	// Initialize attributes
 	this->scene = scene;
+	this->painter = new Painter(scene);
+	Display::obj = this;
+	
+	// Initialize overlay attributes
 	this->useOverlay = false;
 	this->timeStarted = 0;
 	this->frames = 0;
 	this->framesPerSecond = 0;
-	this->painter = NULL;
-	this->height = scene->getHeight();
-	this->width = scene->getWidth();
-	this->title = title;
-	Display::obj = this;
-	
-	// Initialize window
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(DEFAULT_WINDOW_X, DEFAULT_WINDOW_Y);
-	glutInitWindowSize(width, height);
-	glutCreateWindow(title.c_str());
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-	
-	// Initialize view
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 50.0);
-	painter = new Painter(scene);
-}
-
-
-void Display::checkError() {
-	
-	GLenum error;
-	
-	error = glGetError();
-	if (error != GL_NO_ERROR) {
-		cerr << gluErrorString(error) << endl;
-	}
 }
 
 
@@ -60,16 +33,16 @@ void Display::checkError() {
  */
 void Display::display(void) {
 	
-	// Initialize
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	// Clear
+	Window::clear();
 	
 	// Paint scene and overlay
 	obj->painter->paint();
 	if (obj->useOverlay)
 		obj->overlay();
 	
-	// Refresh
-	glutSwapBuffers();
+	// Flush
+	Window::flush();
 }
 
 
@@ -78,7 +51,7 @@ void Display::display(void) {
  */
 void Display::idle(void) {
 	
-	glutPostRedisplay();
+	Window::refresh();
 }
 
 
@@ -89,7 +62,6 @@ void Display::idle(void) {
  */
 void Display::install(Control *control) {
 	
-	// Add to vector
 	controls.push_back(control);
 }
 
@@ -148,7 +120,7 @@ void Display::start() {
 	interpreter.addListener(Command::INFORMATION, &Display::toggleOverlay);
 	
 	// Register functions
-	glutDisplayFunc(Display::display);
+	Window::setDisplay(&Display::display);
 	for (size_t i=0; i<controls.size(); i++) {
 		controls[i]->install();
 		manipulators = controls[i]->getManipulators();
@@ -157,7 +129,7 @@ void Display::start() {
 	}
 	
 	// Start
-	glutMainLoop();
+	Window::start();
 }
 
 
@@ -165,8 +137,8 @@ void Display::toggleOverlay() {
 	
 	obj->useOverlay = !obj->useOverlay;
 	if (obj->useOverlay)
-		glutIdleFunc(Display::idle);
+		Window::setIdle(&Display::idle);
 	else
-		glutIdleFunc(NULL);
+		Window::setIdle(NULL);
 }
 

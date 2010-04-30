@@ -78,7 +78,7 @@ float Translator::findPixelFactor(Scene *scene,
 	
 	// Get depth
 	node = dynamic_cast<Node*>(Identifiable::findByID(shapeID));
-	viewDepth = node->getDepth() + scene->position.z;
+	viewDepth = node->getDepth() + Window::getPosition().z;
 	
 	// Get projection matrix
 	glGetFloatv(GL_PROJECTION_MATRIX, projMatArr);
@@ -90,8 +90,8 @@ float Translator::findPixelFactor(Scene *scene,
 	clipVec = projVec / projVec.w;
 	
 	// Calculate pixels per unit
-	screenX = ((clipVec.x + 1.0) * 0.5) * scene->getWidth();
-	pixelsPerUnit = screenX - (scene->getWidth() * 0.5);
+	screenX = ((clipVec.x + 1.0) * 0.5) * Window::getWidth();
+	pixelsPerUnit = screenX - (Window::getWidth() * 0.5);
 	return 1 / pixelsPerUnit;
 }
 
@@ -108,14 +108,12 @@ void Translator::use(Scene *scene,
                      GLuint shapeID) {
 	
 	float dotProduct, pixelFactor, translateAmount;
-	Matrix rotationMatrix;
 	Vector viewAxis;
 	
 	// Calculate translate amount
 	pixelFactor = findPixelFactor(scene, shapeID);
-	rotationMatrix = scene->getRotationMatrix();
-	viewAxis = rotationMatrix * axis;
-	dotProduct = movement.getNormalized().dotProduct(viewAxis.getNormalized());
+	viewAxis = Window::getRotationMatrix() * axis;
+	dotProduct = dot(normalize(movement), normalize(viewAxis));
 	translateAmount = movement.length() * dotProduct * pixelFactor;
 	
 	// Translate selection

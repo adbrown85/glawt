@@ -73,8 +73,8 @@ void Grip::translate(Scene *scene,
                      float argument) {
 	
 	Node *node;
-	Selection *selection;
-	Selection::iterator si;
+	Selection selection;
+	Selection::iterator it;
 	Translation *translation;
 	Vector change;
 	
@@ -92,9 +92,9 @@ void Grip::translate(Scene *scene,
 	}
 	
 	// Apply change
-	selection = &(scene->selection);
-	for (si=selection->begin(); si!=selection->end(); ++si) {
-		node = dynamic_cast<Node*>(*si);
+	selection = scene->getSelection();
+	for (it=selection.begin(); it!=selection.end(); ++it) {
+		node = dynamic_cast<Node*>(*it);
 		if (node != NULL) {
 			translation = findTranslation(node);
 			if (translation != NULL)

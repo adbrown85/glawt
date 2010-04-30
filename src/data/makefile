@@ -29,3 +29,6 @@ Parser.o : Tag.o
 # Files
 FileUtility.o: 
 Preprocessor.o: FileUtility.o Text.o
+
+# OpenGL
+Window.o: Matrix.o Quaternion.o Vector.o

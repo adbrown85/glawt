@@ -25,13 +25,15 @@ class Quaternion {
 	public:
 		
 		Quaternion();
+		Quaternion(float angle,
+		           const Vector &axis);
 		Matrix getMatrix() const;
 		Quaternion operator*(const Quaternion &B);
 		void print();
 		void set(float angle,
-		         float x,
-		         float y,
-		         float z);
+		         const Vector &axis);
+		void rotate(float angle,
+		            const Vector &axis);
 		string toString();
 	
 	private :
@@ -44,5 +46,12 @@ class Quaternion {
 		void normalize();
 		static float radians(float degrees);
 };
+
+
+inline float Quaternion::radians(float degrees) {
+	
+	return degrees * PI / 180;
+}
+
 
 #endif

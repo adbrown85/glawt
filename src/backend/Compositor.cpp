@@ -30,12 +30,14 @@ Compositor::Compositor() {
 void Compositor::hide(Scene *scene,
                       int cmd) {
 	
-	Selection::iterator si;
+	Selection selection;
+	Selection::iterator it;
 	
 	// Hide and clear the selection
-	for (si=scene->selection.begin(); si!=scene->selection.end(); ++si)
-		(*si)->hide();
-	scene->selection.clear();
+	selection = scene->getSelection();
+	for (it=selection.begin(); it!=selection.end(); ++it)
+		(*it)->hide();
+	scene->removeAllFromSelection();
 }
 
 

@@ -12,34 +12,30 @@ Painter *painter;
 
 void display(void) {
 	
-	// Reset
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glTranslatef(0.0, 0.0, -4.0);
+	// Clear
+	Window::clear();
 	
 	// Paint
 	painter->paint();
-	glFlush();
+	
+	// Flush
+	Window::flush();
 }
 
 
 int main(int argc,
          char *argv[]) {
 	
-	Scene *scene;
-	
 	try {
 		
 		// Initialize
+		Window::init(argc, argv);
 		BasicFactory::install();
-		Tester::init(argc, argv);
-		Tester::setCallback("display", &display);
 		Tester::open("Painter.xml");
+		Window::setDisplay(&display);
 		
 		// Start
-		scene = Tester::getScene();
-		painter = new Painter(scene);
+		painter = new Painter(Tester::getScene());
 		Tester::start();
 	} catch (const char *e) {
 		cerr << e << endl;

@@ -22,7 +22,7 @@ int main() {
 	// Test getMatrix
 	cout << "Testing 'set' and 'getMatrix'..." << endl;
 	cout << "Using 45 degrees..." << endl;
-	quaA.set(45, 0, 1, 0);
+	quaA.set(45, Vector(0,1,0));
 	quaA.print();
 	mat = quaA.getMatrix();
 	mat.print();
@@ -30,8 +30,8 @@ int main() {
 	// Test multiplication
 	cout << "\nTesting 'operator*'..." << endl;
 	cout << "Using 45 and 30 degrees..." << endl;
-	quaA.set(45, 0, 1, 0);
-	quaB.set(30, 0, 1, 0);
+	quaA.set(45, Vector(0,1,0));
+	quaB.set(30, Vector(0,1,0));
 	quaC = quaA * quaB;
 	mat = quaC.getMatrix();
 	mat.print();

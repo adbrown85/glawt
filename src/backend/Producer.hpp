@@ -30,7 +30,7 @@ using namespace std;
  */
 class Producer : public Delegate {
 	
-	public :
+	public:
 		
 		Producer();
 		

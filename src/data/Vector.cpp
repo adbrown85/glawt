@@ -16,7 +16,7 @@ Vector::Vector() {
 	x = 0.0;
 	y = 0.0;
 	z = 0.0;
-	w = 0.0;
+	w = 1.0;
 	size = 4;
 }
 
@@ -81,6 +81,96 @@ Vector& Vector::operator=(const Vector &B) {
 	z = B.z;
 	w = B.w;
 	size = B.size;
+	return *this;
+}
+
+
+Vector& Vector::operator+=(const Vector &B) {
+	
+	// Add components
+	x += B.x;
+	y += B.y;
+	z += B.z;
+	w += B.w;
+	return *this;
+}
+
+
+Vector& Vector::operator-=(const Vector &B) {
+	
+	// Subtract components
+	x -= B.x;
+	y -= B.y;
+	z -= B.z;
+	w -= B.w;
+	return *this;
+}
+
+
+Vector& Vector::operator*=(const Vector &B) {
+	
+	// Multiply components
+	x *= B.x;
+	y *= B.y;
+	z *= B.z;
+	w *= B.w;
+	return *this;
+}
+
+
+Vector& Vector::operator/=(const Vector &B) {
+	
+	// Multiply components
+	x /= B.x;
+	y /= B.y;
+	z /= B.z;
+	w /= B.w;
+	return *this;
+}
+
+
+Vector& Vector::operator+=(float b) {
+	
+	// Add components
+	x += b;
+	y += b;
+	z += b;
+	w += b;
+	return *this;
+}
+
+
+Vector& Vector::operator-=(float b) {
+	
+	// Subtract components
+	x += b;
+	y += b;
+	z += b;
+	w += b;
+	return *this;
+}
+
+
+Vector& Vector::operator*=(float b) {
+	
+	// Multiple components
+	x *= b;
+	y *= b;
+	z *= b;
+	w *= b;
+	return *this;
+}
+
+
+Vector& Vector::operator/=(float b) {
+	
+	float bInv=1/b;
+	
+	// Multiple components
+	x *= bInv;
+	y *= bInv;
+	z *= bInv;
+	w *= bInv;
 	return *this;
 }
 
@@ -235,17 +325,16 @@ float Vector::operator[](int i) const {
 /**
  * @return vector perpendicular to the plane formed by two vectors.
  */
-Vector Vector::crossProduct(const Vector &B) const {
+Vector cross(const Vector &A,
+             const Vector &B) {
 	
 	Vector C;
 	
 	// Calculate
-	C.x = (y * B.z) - (z * B.y);
-	C.y = (z * B.x) - (x * B.z);
-	C.z = (x * B.y) - (y * B.x);
+	C.x = (A.y * B.z) - (A.z * B.y);
+	C.y = (A.z * B.x) - (A.x * B.z);
+	C.z = (A.x * B.y) - (A.y * B.x);
 	C.w = 1.0;
-	
-	// Finish
 	return C;
 }
 
@@ -253,13 +342,14 @@ Vector Vector::crossProduct(const Vector &B) const {
 /**
  * @return projection of one vector onto another.
  */
-float Vector::dotProduct(const Vector &B) const {
+float dot(const Vector &A,
+          const Vector &B) {
 	
 	// Calculate
-	if (size == 2)
-		return x*B.x + y*B.y;
+	if (A.size == 2)
+		return A.x*B.x + A.y*B.y;
 	else
-		return x*B.x + y*B.y + z*B.z;
+		return A.x*B.x + A.y*B.y + A.z*B.z;
 }
 
 
@@ -280,33 +370,6 @@ float Vector::get(int i) const {
 
 
 /**
- * @return Normalized version of this vector.
- */
-Vector Vector::getNormalized() const {
-	
-	float len;
-	Vector C;
-	
-	// Divide by length
-	len = this->length();
-	if (len == 0.0) {
-		C.x = 0.0;
-		C.y = 0.0;
-		C.z = 0.0;
-		C.w = 1.0;
-	}
-	else {
-		C.x = x / len;
-		C.y = y / len;
-		C.z = z / len;
-		C.w = 1.0;
-	}
-	C.size = size;
-	return C;
-}
-
-
-/**
  * @return Length of the vector.
  */
 float Vector::length() const {
@@ -316,6 +379,25 @@ float Vector::length() const {
 		return sqrt(x*x + y*y);
 	else
 		return sqrt(x*x + y*y + z*z);
+}
+
+
+/**
+ * @return Normalized version of this vector.
+ */
+Vector normalize(Vector vector) {
+	
+	float len;
+	
+	// Divide by length
+	len = vector.length();
+	if (len == 0.0) {
+		vector = Vector();
+	} else {
+		vector /= len;
+		vector.w = 1.0;
+	}
+	return vector;
 }
 
 

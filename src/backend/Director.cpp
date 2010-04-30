@@ -42,9 +42,9 @@ void Director::grab(Scene *scene,
 		selectable = dynamic_cast<Selectable*>(identifiable);
 		if (selectable != NULL) {
 			if (selectable->isSelected())
-				scene->selection.remove(selectable);
+				scene->removeFromSelection(selectable);
 			else
-				scene->selection.add(selectable);
+				scene->addToSelection(selectable);
 		}
 	}
 }
@@ -72,10 +72,10 @@ void Director::select(Scene *scene,
 	
 	switch (cmd) {
 		case Command::SELECT_ALL :
-			scene->selection.addAll(scene->getRoot());
+			scene->addAllToSelection();
 			break;
 		case Command::DESELECT :
-			scene->selection.clear();
+			scene->removeAllFromSelection();
 			break;
 		default :
 			break;

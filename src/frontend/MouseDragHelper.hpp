@@ -17,6 +17,7 @@
 #include "MouseData.hpp"
 #include "MouseHelper.hpp"
 #include "Vector.hpp"
+#include "Window.hpp"
 using namespace std;
 
 

@@ -54,8 +54,7 @@ void Cameraman::fit(Scene *scene,
 void Cameraman::reset(Scene *scene,
                       int cmd) {
 	
-	// Resets rotation
-	scene->setRotation(0.0, 0.0, 1.0, 0.0);
+	Window::reset();
 }
 
 
@@ -72,18 +71,18 @@ void Cameraman::rotate(Scene *scene,
 	
 	// Rotate according to command
 	switch (cmd) {
-		case Command::CIRCLE_X :
-			scene->rotate( amt, 1.0, 0.0, 0.0); break;
-		case Command::CIRCLE_Y :
-			scene->rotate(-amt, 0.0, 1.0, 0.0); break;
-		case Command::CIRCLE_LEFT :
-			scene->rotate(-fabs(amt), 0.0, 1.0, 0.0); break;
-		case Command::CIRCLE_RIGHT :
-			scene->rotate( fabs(amt), 0.0, 1.0, 0.0); break;
-		case Command::CIRCLE_UP :
-			scene->rotate(-fabs(amt), 1.0, 0.0, 0.0); break;
-		case Command::CIRCLE_DOWN :
-			scene->rotate( fabs(amt), 1.0, 0.0, 0.0); break;
+	case Command::CIRCLE_X :
+		Window::rotate( amt, Vector(1.0,0.0,0.0)); break;
+	case Command::CIRCLE_Y :
+		Window::rotate(-amt, Vector(0.0,1.0,0.0)); break;
+	case Command::CIRCLE_LEFT :
+		Window::rotate(-fabs(amt), Vector(0.0,1.0,0.0)); break;
+	case Command::CIRCLE_RIGHT :
+		Window::rotate( fabs(amt), Vector(0.0,1.0,0.0)); break;
+	case Command::CIRCLE_UP :
+		Window::rotate(-fabs(amt), Vector(1.0,0.0,0.0)); break;
+	case Command::CIRCLE_DOWN :
+		Window::rotate( fabs(amt), Vector(1.0,0.0,0.0)); break;
 	}
 }
 
@@ -100,22 +99,30 @@ void Cameraman::translate(Scene *scene,
                           float amt) {
 	
 	switch (cmd) {
-		case Command::BOOM :
-			scene->position.y += amt * 0.011; break;
-		case Command::BOOM_DOWN :
-			scene->position.y -= fabs(amt) * 0.011; break;
-		case Command::BOOM_UP :
-			scene->position.y += fabs(amt) * 0.011; break;
-		case Command::TRACK :
-			scene->position.x -= amt * 0.011; break;
-		case Command::TRACK_LEFT :
-			scene->position.x += fabs(amt) * 0.011; break;
-		case Command::TRACK_RIGHT :
-			scene->position.x -= fabs(amt) * 0.011; break;
-		case Command::ZOOM_IN :
-			scene->position.z += amt; break;
-		case Command::ZOOM_OUT :
-			scene->position.z -= amt; break;
+	case Command::BOOM :
+		Window::translate(0.0,       amt *0.011, 0.0);
+		break;
+	case Command::BOOM_DOWN :
+		Window::translate(0.0, -fabs(amt)*0.011, 0.0);
+		break;
+	case Command::BOOM_UP :
+		Window::translate(0.0, +fabs(amt)*0.011, 0.0);
+		break;
+	case Command::TRACK :
+		Window::translate(     -amt *0.011, 0.0, 0.0);
+		break;
+	case Command::TRACK_LEFT :
+		Window::translate(+fabs(amt)*0.011, 0.0, 0.0);
+		break;
+	case Command::TRACK_RIGHT :
+		Window::translate(-fabs(amt)*0.011, 0.0, 0.0);
+		break;
+	case Command::ZOOM_IN :
+		Window::translate(0.0, 0.0, +amt);
+		break;
+	case Command::ZOOM_OUT :
+		Window::translate(0.0, 0.0, -amt);
+		break;
 	}
 }
 

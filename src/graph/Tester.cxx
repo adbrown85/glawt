@@ -27,8 +27,8 @@ int main(int argc,
 		Factory::install("translate", &createNode);
 		Factory::install("cube", &createNode);
 		
-		// Start factory
-		Tester::init(argc, argv);
+		// Start
+		Window::init(argc, argv);
 		Tester::open("Tester.xml");
 		Tester::start();
 	}

@@ -30,11 +30,11 @@ int main(int argc,
 	try {
 		
 		// Create scene
-		scene = new Scene(512, 512);
-		scene->setFilename("Display.xml");
+		scene = new Scene("Display.xml");
 		
 		// Start display
-		display = new Display(scene, "Display", argc, argv);
+		Window::init(argc, argv);
+		display = new Display(scene, "Display");
 		display->install(new Keyboard(display->getInterpreter(), scene));
 		display->install(new Menu(display->getInterpreter(), scene));
 		display->install(new Mouse(display->getInterpreter(), scene));

@@ -46,7 +46,8 @@ void Client::display() {
 	title += inFilename + "]";
 	
 	// Create and start display
-	display = new Display(&scene, "Gander", argc, argv);
+	Window::init(argc, argv);
+	display = new Display(&scene, title);
 	display->install(new Keyboard(display->getInterpreter(), &scene));
 	display->install(new Menu(display->getInterpreter(), &scene));
 	display->install(new Mouse(display->getInterpreter(), &scene));

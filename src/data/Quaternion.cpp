@@ -16,6 +16,13 @@ Quaternion::Quaternion() {
 }
 
 
+Quaternion::Quaternion(float angle,
+                       const Vector &axis) {
+	
+	set(angle, axis);
+}
+
+
 /**
  * Returns a matrix representing the rotation.
  */
@@ -56,34 +63,19 @@ void Quaternion::normalize() {
 	// Divide by magnitude
 	mag = sqrt(s*s + v.x*v.x + v.y*v.y + v.z*v.z);
 	s /= mag;
-	v.x /= mag;
-	v.y /= mag;
-	v.z /= mag;
+	v /= mag;
 }
 
 
-float Quaternion::radians(float degrees) {
-	
-	// Convert
-	return degrees * PI / 180;
-}
-
-
+//C.s = s * B.s - v.dotProduct(B.v);
+//C.v = (B.v * s) + (v * B.s) + v.crossProduct(B.v);
 Quaternion Quaternion::operator*(const Quaternion& B) {
 	
-	float dotProduct;
 	Quaternion C;
-	Vector crossProduct;
 	
-	// Calculate scalar
-	dotProduct = v.dotProduct(B.v);
-	C.s = s * B.s - dotProduct;
-	
-	// Calculate vector
-	crossProduct = v.crossProduct(B.v);
-	C.v = (B.v * s) + (v * B.s) + crossProduct;
-	
-	// Finish
+	// Calculate scalar and vector
+	C.s = s * B.s - dot(v,B.v);
+	C.v = (B.v * s) + (v * B.s) + cross(v,B.v);
 	return C;
 }
 
@@ -94,27 +86,33 @@ void Quaternion::print() {
 }
 
 
-void Quaternion::set(float theta,
-                     float x,
-                     float y,
-                     float z) {
+void Quaternion::rotate(float angle,
+                        const Vector &axis) {
 	
-	float cosThetaHalved,
-	      sinThetaHalved,
-	      thetaHalved,
-	      thetaHalvedInRadians;
+	Quaternion B(angle, axis);
+	
+	// Combine with current rotation
+	*this = B * (*this);
+}
+
+
+void Quaternion::set(float angle,
+                     const Vector &axis) {
+	
+	float cosAngleHalved,
+	      sinAngleHalved,
+	      angleHalved,
+	      angleHalvedInRadians;
 	
 	// Initialize
-	thetaHalved = theta / 2;
-	thetaHalvedInRadians = radians(thetaHalved);
-	cosThetaHalved = cos(thetaHalvedInRadians);
-	sinThetaHalved = sin(thetaHalvedInRadians);
+	angleHalved = angle * 0.5;
+	angleHalvedInRadians = radians(angleHalved);
+	cosAngleHalved = cos(angleHalvedInRadians);
+	sinAngleHalved = sin(angleHalvedInRadians);
 	
 	// Set
-	s = cosThetaHalved;
-	v.x = sinThetaHalved * x;
-	v.y = sinThetaHalved * y;
-	v.z = sinThetaHalved * z;
+	s = cosAngleHalved;
+	v = axis * sinAngleHalved;
 	
 	// Normalize
 	normalize();

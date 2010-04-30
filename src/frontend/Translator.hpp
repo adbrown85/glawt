@@ -20,6 +20,7 @@
 #include "Shape.hpp"
 #include "Translation.hpp"
 #include "Vector.hpp"
+#include "Window.hpp"
 using namespace std;
 
 

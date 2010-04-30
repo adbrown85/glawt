@@ -14,7 +14,7 @@ int main(int argc,
 	
 	try {
 		BasicFactory::install();
-		Tester::init(argc, argv);
+		Window::init(argc, argv);
 		Tester::open("Uniform.xml");
 		Tester::start();
 	} catch (const char *e) {
