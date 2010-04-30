@@ -12,6 +12,7 @@
 #include <string>
 #include "Drawable.hpp"
 #include "Tag.hpp"
+#include "Selectable.hpp"
 using namespace std;
 
 
@@ -25,8 +26,10 @@ class Selectable : public Drawable {
 	
 	public:
 		
-		Selectable(float size=1.0);
-		Selectable(const Tag &tag);
+		Selectable(const string &className,
+		           float size=1.0);
+		Selectable(const string &className,
+		           const Tag &tag);
 		virtual void deselect();
 		virtual bool isSelected() const;
 		virtual void select();

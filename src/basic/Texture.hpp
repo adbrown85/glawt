@@ -15,7 +15,6 @@
 #include <string>
 #include <typeinfo>
 #include "Applicable.hpp"
-#include "Node.hpp"
 #include "Tag.hpp"
 using namespace std;
 
@@ -33,42 +32,36 @@ using namespace std;
  * @see Texture2D
  * @see Texture3D
  */
-class Texture : public Node,
-                public Applicable {
+class Texture : public Applicable {
+public:
 	
-	public:
-		
-		Texture(GLenum type,
-		        const string &name,
-		        const string &filename="");
-		Texture(GLenum type,
-		        const Tag &tag);
-		virtual void apply();
-		virtual void associate();
-		virtual string getFilename() const;
-		virtual GLuint getHandle() const;
-		virtual string getName() const;
-		virtual GLenum getType() const;
-		virtual int getUnit() const;
-		virtual void remove();
-		virtual string toString() const;
-		
-		static int getNumberOfActiveUnits();
-		static void pause();
-		static void restart();
+	Texture(const string &className,
+	        GLenum type,
+	        const Tag &tag);
+	virtual void apply();
+	virtual void associate();
+	virtual string getFilename() const;
+	virtual GLuint getHandle() const;
+	virtual string getName() const;
+	virtual GLenum getType() const;
+	virtual int getUnit() const;
+	virtual void remove();
+	virtual string toString() const;
 	
-	protected:
-		
-		GLenum type;
-		GLuint handle;
-		int unit;
-		string filename, name;
+	static int getNumberOfActiveUnits();
+	static void pause();
+	static void restart();
 	
-	private:
-		
-		static vector<GLenum> active_units;
-		
-		virtual void init(GLenum type);
+protected:
+	
+	GLenum type;
+	GLuint handle;
+	int unit;
+	string filename, name;
+
+private:
+	
+	static vector<GLenum> active_units;
 };
 
 

@@ -8,9 +8,8 @@
 
 
 UniformInt::UniformInt(const Tag &tag) :
-                       Uniform(tag) {
+                       Uniform("UniformInt", tag) {
 	
-	className = "UniformInt";
 	tag.get("value", value, false);
 }
 
@@ -18,11 +17,6 @@ UniformInt::UniformInt(const Tag &tag) :
 void UniformInt::apply() {
 	
 	glUniform1i(location, value);
-}
-
-
-void UniformInt::remove() {
-	
 }
 
 

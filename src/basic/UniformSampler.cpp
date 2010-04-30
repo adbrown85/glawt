@@ -8,9 +8,8 @@
 
 
 UniformSampler::UniformSampler(const Tag &tag) :
-                               Uniform(tag) {
+                               Uniform("UniformSampler", tag) {
 	
-	className = "UniformSampler";
 	tag.get("value", value, false);
 	if (link.empty())
 		throw "[UniformSampler] Sampler types require link to texture.";
@@ -46,11 +45,6 @@ void UniformSampler::associate() {
 		throw msg.str().c_str();
 	}
 	value = texture->getUnit();
-}
-
-
-void UniformSampler::remove() {
-	
 }
 
 

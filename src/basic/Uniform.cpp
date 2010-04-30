@@ -12,13 +12,11 @@
  * 
  * @param tag XML tag with "type", "name", "value", and "link" information.
  */
-Uniform::Uniform(const Tag &tag) {
-	
-	// Basics
-	className = "Uniform";
-	program = NULL;
+Uniform::Uniform(const string &className,
+                 const Tag &tag) : Applicable(className) {
 	
 	// Initialize
+	program = NULL;
 	tag.get("type", type);
 	tag.get("name", name, true, false);
 	tag.get("link", link, false, false);

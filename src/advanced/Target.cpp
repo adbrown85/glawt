@@ -8,22 +8,12 @@
 
 
 /**
- * Creates a new %Target linked to a %Texture2D.
- * 
- * @param link Name of the %Texture2D object.
- */
-Target::Target(const string &link) {
-	
-	// Initialize
-	className = "Target";
-	this->link = link;
-}
-
-
-/**
  * Creates a new %Target from an XML tag.
+ * 
+ * @param XML tag with "link" attribute.
  */
-Target::Target(const Tag &tag) {
+Target::Target(const Tag &tag) : 
+               Node("Target") {
 	
 	// Initialize
 	className = "Target";

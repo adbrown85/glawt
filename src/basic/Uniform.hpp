@@ -27,23 +27,22 @@ using namespace std;
  * @brief
  *     Abstract base class for GLSL uniform variables.
  */
-class Uniform : public Node,
-                public Applicable {
+class Uniform : public Applicable {
+public:
 	
-	public:
-		
-		Uniform(const Tag &tag);
-		virtual void associate();
-		virtual void apply() = 0;
-		virtual void finalize();
-		virtual void remove() = 0;
-		virtual string toString() const;
+	Uniform(const string &className,
+	        const Tag &tag);
+	virtual void associate();
+	virtual void apply() = 0;
+	virtual void finalize();
+	virtual void remove() {};
+	virtual string toString() const;
 	
-	protected:
-		
-		GLint location;
-		Program *program;
-		string link, name, type;
+protected:
+	
+	GLint location;
+	Program *program;
+	string link, name, type;
 };
 
 

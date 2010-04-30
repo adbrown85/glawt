@@ -8,9 +8,10 @@
 #include "Selection.hpp"
 
 
-class SelectableTester : public Selectable {
-	public:
-		void draw() const {};
+class FakeSelectable : public Selectable {
+public:
+	FakeSelectable() : Selectable("Selectable",1.0) {}
+	void draw() const {}
 };
 
 
@@ -21,7 +22,7 @@ int main() {
 	
 	using namespace std;
 	int id;
-	SelectableTester *item, items[4];
+	FakeSelectable *item, items[4];
 	Selection selection;
 	Selection::iterator si;
 	

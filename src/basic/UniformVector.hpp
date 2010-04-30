@@ -16,18 +16,16 @@ using namespace std;
  *     Container for GLSL vector uniform variables.
  */
 class UniformVector : public Uniform {
+public:
 	
-	public:
-		
-		UniformVector(const Tag &tag);
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
+	UniformVector(const Tag &tag);
+	virtual void apply();
+	virtual string toString() const;
 	
-	private:
-		
-		GLfloat value[4];
-		GLint size;
+private:
+	
+	GLfloat value[4];
+	GLint size;
 };
 
 

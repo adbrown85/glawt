@@ -16,17 +16,15 @@ using namespace std;
  *     Container for GLSL floating-point uniform variables.
  */
 class UniformFloat : public Uniform {
+public:
 	
-	public:
-		
-		UniformFloat(const Tag &tag);
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
+	UniformFloat(const Tag &tag);
+	virtual void apply();
+	virtual string toString() const;
 	
-	private:
-		
-		GLfloat value;
+private:
+	
+	GLfloat value;
 };
 
 

@@ -9,25 +9,13 @@ bool Framebuffer::active=false;
 
 
 /**
- * Creates a new %Framebuffer.
- */
-Framebuffer::Framebuffer() {
-	
-	// Initialize
-	className = "Framebuffer";
-	this->handle = 0;
-}
-
-
-/**
  * Creates a new %Framebuffer from an XML tag.
  * 
  * @param tag XML tag.
  */
-Framebuffer::Framebuffer(const Tag &tag) {
+Framebuffer::Framebuffer(const Tag &tag) : 
+                         Applicable("Framebuffer")  {
 	
-	// Initialize
-	className = "Framebuffer";
 	this->handle = 0;
 }
 

@@ -10,12 +10,12 @@
 /**
  * Creates a new node with no parent.
  */
-Node::Node() {
+Node::Node(const string &className) {
 	
 	// Initialize
-	className = "Node";
-	depth = 0.0;
-	parent = NULL;
+	this->className = className;
+	this->depth = 0.0;
+	this->parent = NULL;
 }
 
 

@@ -19,26 +19,22 @@
  * @brief
  *     Polygon that takes up the entire window.
  */
-class Fullscreen : public Node,
-                   public Drawable {
+class Fullscreen : public Drawable {
+public:
 	
-	public:
-		
-		Fullscreen();
-		Fullscreen(const Tag &tag);
-		virtual void draw() const;
+	Fullscreen(const Tag &tag);
+	virtual void draw() const;
 	
-	protected:
-		
-		static bool loaded;
-		static GLfloat coordinates[4][3];
-		static GLfloat points[4][3];
-		static GLubyte indices[4];
-		
-		virtual void init();
-		virtual void initCoordinates();
-		virtual void initIndices();
-		virtual void initPoints();
+protected:
+	
+	static bool loaded;
+	static GLfloat coordinates[4][3];
+	static GLfloat points[4][3];
+	static GLubyte indices[4];
+	
+	virtual void initCoordinates();
+	virtual void initIndices();
+	virtual void initPoints();
 };
 
 

@@ -8,13 +8,10 @@
 
 
 UniformVector::UniformVector(const Tag &tag) :
-                             Uniform(tag) {
+                             Uniform("UniformVector", tag) {
 	
-	// Basics
-	className = "UniformVector";
+	// Initialize
 	tag.get("value", value, true);
-	
-	// Size
 	if (type == "vec3") {
 		size = 3;
 	} else if (type == "vec4") {
@@ -30,16 +27,11 @@ UniformVector::UniformVector(const Tag &tag) :
 void UniformVector::apply() {
 	
 	switch (size) {
-		case 3: glUniform3fv(location, 1, value); break;
-		case 4: glUniform4fv(location, 1, value); break;
-		default:
-			throw "[UniformVector] Unexpected size found while applying.";
+	case 3: glUniform3fv(location, 1, value); break;
+	case 4: glUniform4fv(location, 1, value); break;
+	default:
+		throw "[UniformVector] Unexpected size found while applying.";
 	}
-}
-
-
-void UniformVector::remove() {
-	
 }
 
 

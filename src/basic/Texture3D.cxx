@@ -35,21 +35,17 @@ int main(int argc,
 	
 	try {
 		
-		// Test tag
+		// Create texture
 		cout << "\nTesting tag..." << endl;
 		tag["file"] = filename;
 		tag["name"] = "bear";
 		texture = new Texture3D(tag);
 		texture->print();
-		
-		// Create texture
-		cout << "\nCreating texture..." << endl;
-		Texture3D texture("bear", filename);
-		texture.associate();
+		texture->associate();
 		
 		// Print
 		cout << "\nAttributes:" << endl;
-		texture.print();
+		texture->print();
 	}
 	catch (char const *e) {
 		cerr << e << endl;

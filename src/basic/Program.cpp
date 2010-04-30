@@ -9,25 +9,12 @@ Program *Program::current=NULL;
 
 
 /**
- * Initializes the program's attributes.
- */
-Program::Program() {
-	
-	// Initialize
-	className = "Program";
-	handle = 0;
-}
-
-
-/**
  * Creates a new %Program from an XML tag.
  * 
  * @param tag XML tag.
  */
-Program::Program(const Tag& tag) {
+Program::Program(const Tag& tag) : Applicable("Program") {
 	
-	// Initialize
-	className = "Program";
 	handle = 0;
 }
 

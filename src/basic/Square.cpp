@@ -17,11 +17,9 @@ GLushort Square::indices[4];
  * 
  * @param tag XML tag with "size" attribute.
  */
-Square::Square(const Tag &tag) :
-               Shape(tag) {
+Square::Square(const Tag &tag) : Shape("Square", tag) {
 	
 	// Basics
-	className = "Square";
 	style = GL_TEXTURE_2D;
 	
 	// Initialize vertices

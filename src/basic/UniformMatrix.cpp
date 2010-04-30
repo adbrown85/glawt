@@ -8,10 +8,7 @@
 
 
 UniformMatrix::UniformMatrix(const Tag &tag) :
-                             Uniform(tag) {
-	
-	// Basices
-	className = "UniformMatrix";
+                             Uniform("UniformMatrix", tag) {
 	
 	// Find link
 	if (link == "modelview") {
@@ -48,11 +45,5 @@ void UniformMatrix::apply() {
 		glUniformMatrix3fv(location, 1, false, value);
 		break;
 	}
-}
-
-
-void UniformMatrix::remove() {
-	
-	
 }
 

@@ -9,10 +9,7 @@
 
 Node* createNode(const Tag &tag) {
 	
-	Node *node = new Node();
-	
-	node->setClassName(tag.getName());
-	return node;
+	return new Node(tag.getName());
 }
 
 

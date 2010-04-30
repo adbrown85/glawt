@@ -10,8 +10,9 @@ using namespace std;
 
 
 class FakeSelectable : public Selectable {
-	public:
-		void draw() const {}
+public:
+	FakeSelectable() : Selectable("Selectable",1.0) {}
+	void draw() const {}
 };
 
 

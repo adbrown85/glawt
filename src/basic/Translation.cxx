@@ -12,13 +12,11 @@
  * Fake leaf node that computes its depth from the matrix.
  */
 class FakeLeaf : public Node {
-	public :
-		FakeLeaf() : Node() {
-			className = "Leaf";
-		}
-		virtual void computeDepth(Matrix &matrix) {
-			depth = matrix(2,3);
-		}
+public :
+	FakeLeaf() : Node("Leaf") {}
+	virtual void computeDepth(Matrix &matrix) {
+		depth = matrix(2,3);
+	}
 };
 
 
@@ -30,9 +28,9 @@ int main() {
 	FakeLeaf leafs[4];
 	float randomNum;
 	Matrix rotMatrix;
-	Node root;
+	Node root("Node");
 	Tag tag;
-	Translation *translation, trans[4];
+	Translation *translation, *trans[4];
 	
 	// Start
 	cout << endl;
@@ -51,9 +49,13 @@ int main() {
 	
 	// Build tree
 	cout << "\nBuilding tree..." << endl;
+	tag["x"] = "0.0";
+	tag["y"] = "0.0";
+	tag["z"] = "0.0";
 	for (int i=0; i<4; ++i) {
-		root.addChild(&trans[i]);
-		trans[i].addChild(&leafs[i]);
+		trans[i] = new Translation(tag);
+		root.addChild(trans[i]);
+		trans[i]->addChild(&leafs[i]);
 	}
 	root.printTree();
 	
@@ -62,7 +64,7 @@ int main() {
 	srand(time(NULL));
 	for (int i=0; i<4; ++i) {
 		randomNum = rand() % 10;
-		trans[i].set(randomNum, randomNum, randomNum);
+		trans[i]->set(randomNum, randomNum, randomNum);
 	}
 	root.printTree();
 	

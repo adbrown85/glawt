@@ -9,36 +9,21 @@ vector<GLenum> Texture::active_units;
 
 
 /**
- * Initializes a texture.
- * 
- * @param [in] type 1D, 2D, or 3D.
- * @param [in] name Name of the texture.
- * @param [in] filename Path to a file containing the texture.
- */
-Texture::Texture(GLenum type,
-                 const string &name,
-                 const string &filename) {
-	
-	// Initialize
-	Texture::init(type);
-	this->name = name;
-	this->filename = filename;
-}
-
-
-/**
  * Creates a new texture from an XML tag.
  * 
  * @param [in] type 1D, 2D, or 3D.
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
-Texture::Texture(GLenum type,
-                 const Tag &tag) {
+Texture::Texture(const string &className,
+                 GLenum type,
+                 const Tag &tag) : Applicable(className) {
 	
 	// Initialize
-	Texture::init(type);
-	tag.get("name", name, false, false);
+	this->unit = 0;
+	this->handle = 0;
+	this->type = type;
 	tag.get("file", filename, false, false);
+	tag.get("name", name, false, false);
 }
 
 
@@ -75,19 +60,6 @@ void Texture::associate() {
 	// Change unit
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
-}
-
-
-/**
- * Initializes attributes common to all constructors.
- */
-void Texture::init(GLenum type) {
-	
-	// Defaults
-	className = "Texture";
-	this->unit = 0;
-	this->handle = 0;
-	this->type = type;
 }
 
 

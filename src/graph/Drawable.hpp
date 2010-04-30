@@ -13,6 +13,7 @@
 #include <string>
 #include "Identifiable.hpp"
 #include "Tag.hpp"
+#include "Node.hpp"
 using namespace std;
 
 
@@ -22,12 +23,15 @@ using namespace std;
  * @brief
  *     Interface for something that can be drawn.
  */
-class Drawable : public Identifiable {
+class Drawable : public Node,
+                 public Identifiable {
 	
 	public:
 		
-		Drawable(float size=1.0);
-		Drawable(const Tag &tag);
+		Drawable(const string &className,
+		         float size=1.0);
+		Drawable(const string &className,
+		         const Tag &tag);
 		virtual void copySizeOf(const Drawable &other);
 		virtual void draw() const = 0;
 		virtual void hide();

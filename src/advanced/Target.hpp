@@ -23,23 +23,21 @@ using namespace std;
  *     Offscreen render location backed by a texture.
  */
 class Target : public Node {
+public:
 	
-	public:
-		
-		Target(const string &link);
-		Target(const Tag &tag);
-		string toString() const;
+	Target(const Tag &tag);
+	string toString() const;
 	
-	protected:
-		
-		void associate();
-		void finalize();
+protected:
 	
-	private:
-		
-		GLuint framebufferHandle, textureHandle;
-		int size;
-		string link;
+	void associate();
+	void finalize();
+	
+private:
+	
+	GLuint framebufferHandle, textureHandle;
+	int size;
+	string link;
 };
 
 

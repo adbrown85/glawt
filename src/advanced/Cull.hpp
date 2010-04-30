@@ -22,8 +22,7 @@ using namespace std;
  * @brief
  *     Removes back or front-facing polygons.
  */
-class Cull : public Node,
-             public Applicable {
+class Cull : public Applicable {
 	
 	public :
 		

@@ -21,32 +21,27 @@
  * @brief
  *     Container for offscreen rendering targets.
  */
-class Framebuffer : public Node,
-                    public Applicable {
+class Framebuffer : public Applicable {
+public :
 	
-	public :
-		
-		Framebuffer();
-		Framebuffer(const Tag &tag);
-		~Framebuffer();
-		virtual void apply();
-		virtual GLuint getHandle() const;
-		virtual void remove();
-		virtual string toString() const;
-		
-		static void find(Node *node,
-		                 Framebuffer *&pointer);
-		static bool isActive();
+	Framebuffer(const Tag &tag);
+	~Framebuffer();
+	virtual void apply();
+	static void find(Node *node,
+	                 Framebuffer *&pointer);
+	virtual GLuint getHandle() const;
+	static bool isActive();
+	virtual void remove();
+	virtual string toString() const;
 	
-	protected:
-		
-		virtual void associate();
+protected:
 	
-	private:
-		
-		GLuint depthBuffer, handle;
-		
-		static bool active;
+	virtual void associate();
+	
+private:
+	
+	static bool active;
+	GLuint depthBuffer, handle;
 };
 
 

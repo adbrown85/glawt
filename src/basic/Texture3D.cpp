@@ -8,32 +8,14 @@
 
 
 /**
- * Creates a new 3D texture.
- * 
- * @param name Name another node can reference.
- * @param filename Path to the file.
- */
-Texture3D::Texture3D(const string &name,
-                     const string &filename) : 
-                     Texture(GL_TEXTURE_3D, name, filename),
-                     dataset(filename) {
-	
-	// Initialize
-	Texture3D::init();
-}
-
-
-/**
  * Creates a new 3D texture from an XML tag.
  * 
  * @param tag XML tag with "name" and "filename" attributes.
  */
 Texture3D::Texture3D(const Tag &tag) : 
-                     Texture(GL_TEXTURE_3D, tag),
+                     Texture("Texture3D", GL_TEXTURE_3D, tag),
                      dataset(tag) {
 	
-	// Initialize
-	Texture3D::init();
 }
 
 
@@ -64,16 +46,6 @@ Texture3D* Texture3D::find(Node *node,
 		}
 	}
 	return NULL;
-}
-
-
-/**
- * Initializes attributes common to all constructors.
- */
-void Texture3D::init() {
-	
-	// Initialize
-	className = "Texture3D";
 }
 
 

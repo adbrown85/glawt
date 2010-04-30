@@ -8,9 +8,8 @@
 
 
 UniformFloat::UniformFloat(const Tag &tag) :
-                           Uniform(tag) {
+                           Uniform("UniformFloat", tag) {
 	
-	className = "UniformFloat";
 	tag.get("value", value, false);
 }
 
@@ -18,11 +17,6 @@ UniformFloat::UniformFloat(const Tag &tag) :
 void UniformFloat::apply() {
 	
 	glUniform1f(location, value);
-}
-
-
-void UniformFloat::remove() {
-	
 }
 
 

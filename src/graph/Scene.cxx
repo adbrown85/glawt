@@ -10,12 +10,9 @@
 using namespace std;
 
 
-Node* createNode(const Tag &tag) {
+Node* create(const Tag &tag) {
 	
-	Node *node = new Node();
-	
-	node->setClassName(tag.getName());
-	return node;
+	return new Node(tag.getName());
 }
 
 
@@ -34,10 +31,10 @@ int main() {
 	cout << endl;
 	
 	// Install tags
-	Factory::install("program", &createNode);
-	Factory::install("shader", &createNode);
-	Factory::install("translate", &createNode);
-	Factory::install("cube", &createNode);
+	Factory::install("program", &create);
+	Factory::install("shader", &create);
+	Factory::install("translate", &create);
+	Factory::install("cube", &create);
 	
 	// Test open
 	cout << "Testing open..." << endl;

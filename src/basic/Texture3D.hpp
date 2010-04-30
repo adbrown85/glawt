@@ -22,27 +22,24 @@ using namespace std;
  *     %Texture node for volumes.
  */
 class Texture3D : public Texture {
+public:
 	
-	public :
-		
-		Texture3D(const string &name,
-		          const string &filename);
-		Texture3D(const Tag &tag);
-		virtual void associate();
-		virtual Dataset* getDataset();
-		virtual int getDepth() const;
-		virtual int getHeight() const;
-		virtual int getWidth() const;
-		
-		static Texture3D* find(Node *node,
-		                       const string &name);
+	Texture3D(const Tag &tag);
+	virtual void associate();
+	static Texture3D* find(Node *node,
+	                       const string &name);
+	virtual Dataset* getDataset();
+	virtual int getDepth() const;
+	virtual int getHeight() const;
+	virtual int getWidth() const;
 	
-	private:
-		
-		Dataset dataset;
-		
-		virtual void init();
-		virtual void load();
+protected:
+	
+	virtual void load();
+	
+private:
+	
+	Dataset dataset;
 };
 
 

@@ -12,27 +12,21 @@ GLfloat Fullscreen::points[4][3];
 
 
 /**
- * Creates a new Fullscreen.
- */
-Fullscreen::Fullscreen() : 
-                       Drawable(2.0) {
-	
-	// Initialize
-	Fullscreen::init();
-}
-
-
-/**
  * Creates a new %Fullscreen from an XML tag.
  * 
  * @param tag XML tag.
  */
 Fullscreen::Fullscreen(const Tag &tag) :
-                       Drawable(tag) {
+                       Drawable("Fullscreen",tag) {
 	
 	// Initialize
-	Fullscreen::init();
 	this->size = 2.0;
+	if (!loaded) {
+		initCoordinates();
+		initIndices();
+		initPoints();
+		loaded = true;
+	}
 }
 
 
@@ -63,24 +57,6 @@ void Fullscreen::draw() const {
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
-}
-
-
-/**
- * Initializes attributes common to all constructors.
- */
-void Fullscreen::init() {
-	
-	// Name
-	className = "Fullscreen";
-	
-	// Initialize vertices
-	if (!loaded) {
-		initCoordinates();
-		initIndices();
-		initPoints();
-		loaded = true;
-	}
 }
 
 

@@ -7,24 +7,15 @@
 #include "Translation.hpp"
 
 
-Translation::Translation(float x,
-                         float y,
-                         float z) : Vector(x,y,z) {
-	
-	// Initialize
-	className = "Translation";
-}
-
-
 /**
  * Creates a new %Translation from an XML tag.
  * 
  * @param tag XML tag with "x", "y", and "z" values.
  */
-Translation::Translation(const Tag &tag) {
+Translation::Translation(const Tag &tag) : 
+                         Transformation("Translation") {
 	
 	// Initialize
-	className = "Translation";
 	tag.get("x", x, false);
 	tag.get("y", y, false);
 	tag.get("z", z, false);

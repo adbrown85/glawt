@@ -21,38 +21,27 @@
  *     %Texture node for images.
  */
 class Texture2D : public Texture {
+public:
 	
-	public :
-		
-		Texture2D(const string &name,
-		          const string &filename);
-		Texture2D(const string &name,
-		          int size);
-		Texture2D(const Tag &tag);
-		virtual void associate();
-		virtual int getSize() const;
-		virtual string toString() const;
+	Texture2D(const Tag &tag);
+	virtual void associate();
+	static void find(Node *node,
+	                 Texture2D *&pointer,
+	                 const string &name);
+	virtual int getSize() const;
+	virtual string toString() const;
 	
-	private:
-		
-		ILuint image;
-		int size;
-		
-		virtual void generate();
-		virtual void init();
-		virtual void load();
+protected:
 	
-	public: 
-		
-		static void find(Node *node,
-		                 Texture2D *&pointer,
-		                 const string &name);
+	virtual void generate();
+	static void initLibraries();
+	virtual void load();
 	
-	private:
-		
-		static bool librariesLoaded;
-		
-		static void initLibraries();
+private:
+	
+	static bool librariesLoaded;
+	ILuint image;
+	int size;
 };
 
 

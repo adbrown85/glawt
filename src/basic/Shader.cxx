@@ -5,13 +5,14 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Shader.hpp"
+#include "Window.hpp"
+#include "BasicFactory.hpp"
+Node *program, *shader;
 
 
 int main(int argc,
          char *argv[]) {
 	
-	Program *program;
-	Shader *shader;
 	
 	// Start
 	cout << endl;
@@ -20,23 +21,20 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Create window
+	Window::init(argc, argv);
+	Window::create("Shader");
+	
+	// Test
 	try {
-		
-		// Create window
-		glutInit(&argc, argv);
-		glutInitDisplayMode(GLUT_SINGLE);
-		glutInitWindowSize(512, 512);
-		glutCreateWindow("Shader");
-		
-		// Test
-		program = new Program();
-		shader = new Shader("Shader.frag");
-		cout << "Shader type: " << shader->getType() << endl;
+		BasicFactory::install();
+		program = Factory::create("program");
+		shader = Factory::create("shader file='Shader.frag'");
 		program->addChild(shader);
 		program->associateTree();
-		shader->list();
-	}
-	catch (const char *e) {
+		cout << "Shader type: " << ((Shader*)shader)->getType() << endl;
+		((Shader*)shader)->list();
+	} catch (const char *e) {
 		cerr << e << endl;
 	}
 	

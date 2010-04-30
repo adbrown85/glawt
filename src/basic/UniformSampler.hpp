@@ -16,18 +16,16 @@ using namespace std;
  *     Container for GLSL sampler uniform variables.
  */
 class UniformSampler : public Uniform {
+public:
 	
-	public :
-		
-		UniformSampler(const Tag &tag);
-		virtual void associate();
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
+	UniformSampler(const Tag &tag);
+	virtual void associate();
+	virtual void apply();
+	virtual string toString() const;
 	
-	private:
-		
-		GLint value;
+private:
+	
+	GLint value;
 };
 
 

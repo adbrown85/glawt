@@ -26,7 +26,7 @@ class Node {
 	
 	public :
 		
-		Node();
+		Node(const string &className);
 		void addChild(Node *child);
 		virtual void associateTree();
 		virtual void finalizeTree();

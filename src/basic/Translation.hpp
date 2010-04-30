@@ -25,23 +25,18 @@ using namespace std;
  */
 class Translation : public Transformation,
                     public Vector {
+public:
 	
-	public:
-		
-		Translation(float x=0.0,
-		            float y=0.0,
-		            float z=0.0);
-		Translation(const Tag &tag);
-		
-		void add(const Vector &B);
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
+	Translation(const Tag &tag);
+	void add(const Vector &B);
+	virtual void apply();
+	virtual void remove();
+	virtual string toString() const;
 	
-	protected:
-		
-		virtual void sortByDepthBeg(Matrix &matrix);
-		virtual void sortByDepthEnd(Matrix &matrix);
+protected:
+	
+	virtual void sortByDepthBeg(Matrix &matrix);
+	virtual void sortByDepthEnd(Matrix &matrix);
 };
 
 

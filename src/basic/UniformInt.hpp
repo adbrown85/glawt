@@ -16,17 +16,15 @@ using namespace std;
  *     Container for GLSL integer uniform variables.
  */
 class UniformInt : public Uniform {
+public:
 	
-	public:
-		
-		UniformInt(const Tag &tag);
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
+	UniformInt(const Tag &tag);
+	virtual void apply();
+	virtual string toString() const;
 	
-	private:
-		
-		GLint value;
+private:
+	
+	GLint value;
 };
 
 

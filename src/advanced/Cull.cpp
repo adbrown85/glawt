@@ -13,10 +13,8 @@
  * @param tag XML tag containing "faces" attribute.
  * @throws const_char* if value for "faces" attribute not supported.
  */
-Cull::Cull(const Tag &tag) {
-	
-	// Name
-	className = "Cull";
+Cull::Cull(const Tag &tag) :
+           Applicable("Cull") {
 	
 	// Handle faces and enabled
 	tag.get("faces", facesString, true);

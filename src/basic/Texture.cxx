@@ -10,9 +10,7 @@
 
 class FakeTexture : public Texture {
 	public:
-		FakeTexture(string name,
-		            string filename) : Texture(GL_TEXTURE_2D, name,filename) {}
-		FakeTexture(const Tag &tag) : Texture(GL_TEXTURE_2D, tag) {}
+		FakeTexture(const Tag &tag) : Texture("Texture",GL_TEXTURE_2D, tag) {}
 	protected:
 		void initType() {type = GL_TEXTURE_2D;}
 };
@@ -44,12 +42,15 @@ int main() {
 	
 	// Create textures
 	cout << "\nCreating textures..." << endl;
-	root = new Node();
+	root = new Node("Node");
 	last = root;
 	for (int i=0; i<4; ++i) {
 		name.str("");
 		name << "crate" << i+1;
-		texture = new FakeTexture(name.str(), "../../input/crate.jpg");
+		tag.clear();
+		tag["name"] = name.str();
+		tag["file"] = "../../input/crate.jpg";
+		texture = new FakeTexture(tag);
 		last->addChild(texture);
 		last = texture;
 	}

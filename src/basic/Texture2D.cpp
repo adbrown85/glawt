@@ -9,46 +9,15 @@ bool Texture2D::librariesLoaded=false;
 
 
 /**
- * Creates a new 2D texture from a file that can be referenced by name.
- * 
- * @param name Name another node can reference.
- * @param filename Path to a file containing the texture.
- */
-Texture2D::Texture2D(const string &name,
-                     const string &filename) :
-                     Texture(GL_TEXTURE_2D, name, filename) {
-	
-	// Initialize
-	Texture2D::init();
-}
-
-
-/**
- * Creates a new 2D texture that can be referenced by name.
- * 
- * @param name Name another node can reference.
- * @param size Size of the texture's width or height in pixels.
- */
-Texture2D::Texture2D(const string &name,
-                     int size) :
-                     Texture(GL_TEXTURE_2D, name) {
-	
-	// Initialize
-	Texture2D::init();
-	this->size = size;
-}
-
-
-/**
  * Creates a new 2D texture from an XML tag.
  * 
  * @param tag XML tag with "size" attributes.
  */
 Texture2D::Texture2D(const Tag &tag) :
-                     Texture(GL_TEXTURE_2D, tag) {
+                     Texture("Texture2D", GL_TEXTURE_2D, tag) {
 	
 	// Initialize
-	Texture2D::init();
+	this->image = 0;
 	tag.get("size", size, false);
 }
 
@@ -125,18 +94,6 @@ void Texture2D::generate() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-}
-
-
-/**
- * Initializes attributes common to all constructors.
- */
-void Texture2D::init() {
-	
-	// Attributes
-	className = "Texture2D";
-	this->image = 0;
-	this->size = 0;
 }
 
 

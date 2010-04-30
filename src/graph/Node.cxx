@@ -10,12 +10,18 @@
 using namespace std;
 
 
+class FakeNode : public Node {
+public:
+	FakeNode() : Node("Node") {}
+};
+
+
 /**
  * Unit test for Node.
  */
 int main() {
 	
-	Node nodes[NUMBER_OF_ITEMS], root;
+	FakeNode nodes[NUMBER_OF_ITEMS], root;
 	Matrix rotMatrix;
 	
 	// Start

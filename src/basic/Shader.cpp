@@ -11,7 +11,7 @@
  * Initializes an empty %Shader object.
  */
 Shader::Shader(const string &filename,
-               const string &type) {
+               const string &type) : Node("Shader") {
 	
 	init(filename, type);
 }
@@ -22,7 +22,7 @@ Shader::Shader(const string &filename,
  * 
  * @param tag XML tag with "type" and "file" attributes.
  */
-Shader::Shader(const Tag &tag) {
+Shader::Shader(const Tag &tag) : Node("Shader") {
 	
 	tag.get("file", filename, true, false);
 	tag.get("type", type, false);

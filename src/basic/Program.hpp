@@ -24,12 +24,10 @@ using namespace std;
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
  */
-class Program : public Node,
-                public Applicable {
+class Program : public Applicable {
 	
 	public :
 		
-		Program();
 		Program(const Tag& tag);
 		virtual void addCode(int handle,
 		                     const Preprocessor *preprocessor);
