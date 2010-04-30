@@ -14,6 +14,7 @@
 #include <sstream>
 #include <string>
 #include <typeinfo>
+#include "Node.hpp"
 #include "Applicable.hpp"
 #include "Tag.hpp"
 using namespace std;
@@ -32,7 +33,8 @@ using namespace std;
  * @see Texture2D
  * @see Texture3D
  */
-class Texture : public Applicable {
+class Texture : public Node,
+                public Applicable {
 public:
 	
 	Texture(const string &className,

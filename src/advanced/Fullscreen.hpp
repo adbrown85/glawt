@@ -19,7 +19,8 @@
  * @brief
  *     Polygon that takes up the entire window.
  */
-class Fullscreen : public Drawable {
+class Fullscreen : public Node,
+                   public Drawable {
 public:
 	
 	Fullscreen(const Tag &tag);

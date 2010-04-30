@@ -19,15 +19,14 @@ using namespace std;
  *     Utility for manipulating the transformation stack.
  */
 class Transform {
+public :
 	
-	public :
-		
-		static Matrix getModelViewMatrix();
-		static Matrix getModelViewProjectionMatrix();
-		static void getModelViewProjectionMatrix(GLfloat array[16]);
-		static Matrix getNormalMatrix();
-		static void getNormalMatrix(GLfloat array[9]);
-		static Matrix getProjectionMatrix();
+	static Matrix getModelViewMatrix();
+	static Matrix getModelViewProjectionMatrix();
+	static void getModelViewProjectionMatrix(GLfloat array[16]);
+	static Matrix getNormalMatrix();
+	static void getNormalMatrix(GLfloat array[9]);
+	static Matrix getProjectionMatrix();
 };
 
 

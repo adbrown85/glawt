@@ -12,9 +12,8 @@
  * 
  * @param size Size of the object.
  */
-Selectable::Selectable(const string &className,
-                       float size) : 
-                       Drawable(className, size) {
+Selectable::Selectable(float size) : 
+                       Drawable(size) {
 	
 	selected = false;
 }
@@ -25,9 +24,8 @@ Selectable::Selectable(const string &className,
  * 
  * @param tag XML tag with size information.
  */
-Selectable::Selectable(const string &className,
-                       const Tag &tag) : 
-                       Drawable(className, tag) {
+Selectable::Selectable(const Tag &tag) : 
+                       Drawable(tag) {
 	
 	selected = false;
 }

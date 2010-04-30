@@ -22,20 +22,20 @@ using namespace std;
  * @brief
  *     Removes back or front-facing polygons.
  */
-class Cull : public Applicable {
+class Cull : public Node,
+             public Applicable {
+public:
 	
-	public :
-		
-		Cull(const Tag &tag);
-		void apply();
-		void remove();
-		string toString() const;
+	Cull(const Tag &tag);
+	void apply();
+	void remove();
+	string toString() const;
+
+private:
 	
-	private:
-		
-		bool enabled;
-		GLenum faces;
-		string facesString;
+	bool enabled;
+	GLenum faces;
+	string facesString;
 };
 
 

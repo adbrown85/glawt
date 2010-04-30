@@ -21,7 +21,8 @@
  * @brief
  *     Container for offscreen rendering targets.
  */
-class Framebuffer : public Applicable {
+class Framebuffer : public Node,
+                    public Applicable {
 public :
 	
 	Framebuffer(const Tag &tag);

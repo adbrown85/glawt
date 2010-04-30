@@ -13,8 +13,8 @@ using namespace std;
 class FakeDrawable : public Drawable {
 	
 	public: 
-		FakeDrawable() : Drawable("Drawable",1.0) {}
-		FakeDrawable(const Tag &tag) : Drawable("Drawable",tag) {}
+		FakeDrawable() : Drawable(1.0) {}
+		FakeDrawable(const Tag &tag) : Drawable(tag) {}
 		void draw() const {}
 };
 

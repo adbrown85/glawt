@@ -27,7 +27,8 @@ using namespace std;
  * @brief
  *     Abstract base class for GLSL uniform variables.
  */
-class Uniform : public Applicable {
+class Uniform : public Node,
+                public Applicable {
 public:
 	
 	Uniform(const string &className,

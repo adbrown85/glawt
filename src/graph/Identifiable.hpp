@@ -19,34 +19,39 @@ using namespace std;
  *     Interface for an object that has a unique ID number.
  */
 class Identifiable {
+public:
 	
-	public:
-		
-		Identifiable();
-		virtual unsigned int getID() const;
-		string toString() const;
-		
-		static Identifiable* findByID(unsigned int id);
-		
-		class Comparator {
-			public :
-				bool operator()(const Identifiable &a,
-				                const Identifiable &b) {
-					return a.getID() < b.getID();
-				}
-				bool operator()(const Identifiable *a,
-				                const Identifiable *b) {
-					return a->getID() < b->getID();
-				}
-		};
+	Identifiable();
+	static Identifiable* findByID(unsigned int id);
+	virtual unsigned int getID() const;
+	string toString() const;
 	
-	private:
-		
-		unsigned int id;
-		
-		static unsigned int count;
-		static vector<Identifiable*> ids;
+	class Comparator {
+	public :
+		bool operator()(const Identifiable &a,
+		                const Identifiable &b);
+		bool operator()(const Identifiable *a,
+		                const Identifiable *b);
+	};
+	
+private:
+	
+	unsigned int id;
+	static unsigned int count;
+	static vector<Identifiable*> ids;
 };
+
+
+inline bool Identifiable::Comparator::operator()(const Identifiable &a,
+                                                 const Identifiable &b) {
+	
+	return a.getID() < b.getID();
+}
+inline bool Identifiable::Comparator::operator()(const Identifiable *a,
+                                                 const Identifiable *b) {
+	
+	return a->getID() < b->getID();
+}
 
 
 #endif

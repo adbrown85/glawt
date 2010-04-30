@@ -24,9 +24,7 @@ using namespace std;
  *     Utility for testing nodes.
  */
 class Tester {
-public :
-	
-	static Scene scene;
+public:
 	
 	static void display(void);
 	static Scene* getScene();
@@ -37,6 +35,10 @@ public :
 	static void traverse(Node *node);
 	static void traverseChildren(Node *node);
 	static void start();
+	
+private:
+	
+	static Scene scene;
 };
 
 

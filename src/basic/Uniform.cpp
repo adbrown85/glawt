@@ -13,7 +13,7 @@
  * @param tag XML tag with "type", "name", "value", and "link" information.
  */
 Uniform::Uniform(const string &className,
-                 const Tag &tag) : Applicable(className) {
+                 const Tag &tag) : Node(className) {
 	
 	// Initialize
 	program = NULL;

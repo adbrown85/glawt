@@ -11,7 +11,7 @@ using namespace std;
 
 class FakeSelectable : public Selectable {
 public:
-	FakeSelectable() : Selectable("Selectable",1.0) {}
+	FakeSelectable() : Selectable(1.0) {}
 	void draw() const {}
 };
 

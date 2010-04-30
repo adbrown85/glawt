@@ -21,19 +21,18 @@ using namespace std;
  *     Collection of selected items.
  */
 class Selection {
+public :
 	
-	public :
-		
-		typedef set<Selectable*,Identifiable::Comparator>::iterator iterator;
-		
-		void add(Selectable *item);
-		void addAll(Node *node);
-		iterator begin();
-		void clear();
-		iterator end();
-		void remove(Selectable *item);
-		
-		set<Selectable*,Identifiable::Comparator> items;
+	typedef set<Selectable*,Identifiable::Comparator>::iterator iterator;
+	
+	void add(Selectable *item);
+	void addAll(Node *node);
+	iterator begin();
+	void clear();
+	iterator end();
+	void remove(Selectable *item);
+	
+	set<Selectable*,Identifiable::Comparator> items;
 };
 
 

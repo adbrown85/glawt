@@ -12,9 +12,7 @@
  * 
  * @param size Size of the object.
  */
-Drawable::Drawable(const string &className,
-                   float size) :
-                   Node(className) {
+Drawable::Drawable(float size) {
 	
 	this->visible = true;
 	this->size = size;
@@ -26,9 +24,7 @@ Drawable::Drawable(const string &className,
  * 
  * @param tag XML tag with "size" attribute.
  */
-Drawable::Drawable(const string &className,
-                   const Tag &tag) :
-                   Node(className) {
+Drawable::Drawable(const Tag &tag) {
 	
 	// Initialize attributes
 	this->visible = true;

@@ -16,7 +16,7 @@ vector<GLenum> Texture::active_units;
  */
 Texture::Texture(const string &className,
                  GLenum type,
-                 const Tag &tag) : Applicable(className) {
+                 const Tag &tag) : Node(className) {
 	
 	// Initialize
 	this->unit = 0;

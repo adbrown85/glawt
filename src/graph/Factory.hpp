@@ -31,22 +31,21 @@ typedef Node* (*creator_t)(const Tag &tag);
  *     Creates items from XML tags and adds them to the scene.
  */
 class Factory {
+public:
 	
-	public:
-		
-		static Node* create(const Tag &tag,
-		                    const string &xmlFilename="");
-		static Node* create(const string &text,
-		                    const string &xmlFilename="");
-		static Node* open(string xmlFilename);
-		static void install(const string &name,
-		                    creator_t creator);
+	static Node* create(const Tag &tag,
+	                    const string &xmlFilename="");
+	static Node* create(const string &text,
+	                    const string &xmlFilename="");
+	static Node* open(string xmlFilename);
+	static void install(const string &name,
+	                    creator_t creator);
 	
-	protected:
-		
-		static map<string,creator_t> creators;
-		static Tag filter(Tag tag,
-		                  const string &xmlFilename);
+protected:
+	
+	static map<string,creator_t> creators;
+	static Tag filter(Tag tag,
+	                  const string &xmlFilename);
 };
 
 

@@ -23,22 +23,19 @@ using namespace std;
  *     Interface for an object that can be part of a selection.
  */
 class Selectable : public Drawable {
+public:
 	
-	public:
-		
-		Selectable(const string &className,
-		           float size=1.0);
-		Selectable(const string &className,
-		           const Tag &tag);
-		virtual void deselect();
-		virtual bool isSelected() const;
-		virtual void select();
-		virtual void toggleSelected();
-		virtual string toString() const;
+	Selectable(float size=1.0);
+	Selectable(const Tag &tag);
+	virtual void deselect();
+	virtual bool isSelected() const;
+	virtual void select();
+	virtual void toggleSelected();
+	virtual string toString() const;
 	
-	protected:
-		
-		bool selected;
+protected:
+	
+	bool selected;
 };
 
 

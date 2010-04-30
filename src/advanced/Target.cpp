@@ -12,8 +12,7 @@
  * 
  * @param XML tag with "link" attribute.
  */
-Target::Target(const Tag &tag) : 
-               Node("Target") {
+Target::Target(const Tag &tag) : Node("Target") {
 	
 	// Initialize
 	className = "Target";

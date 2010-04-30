@@ -24,7 +24,8 @@ using namespace std;
  * @brief
  *     Base class for a 3D object in the scene.
  */
-class Shape : public Selectable {
+class Shape : public Node,
+              public Selectable {
 	
 public:
 	

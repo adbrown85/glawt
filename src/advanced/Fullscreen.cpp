@@ -16,8 +16,8 @@ GLfloat Fullscreen::points[4][3];
  * 
  * @param tag XML tag.
  */
-Fullscreen::Fullscreen(const Tag &tag) :
-                       Drawable("Fullscreen",tag) {
+Fullscreen::Fullscreen(const Tag &tag) : Node("Fullscreen"),
+                                         Drawable(tag) {
 	
 	// Initialize
 	this->size = 2.0;

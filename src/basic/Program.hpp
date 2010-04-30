@@ -24,7 +24,8 @@ using namespace std;
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
  */
-class Program : public Applicable {
+class Program : public Node,
+                public Applicable {
 	
 	public :
 		

@@ -30,30 +30,29 @@ using namespace std;
  *     Collection of nodes opened from a file.
  */
 class Scene {
+public:
 	
-	public:
-		
-		Scene(const string &filename="");
-		~Scene();
-		void addAllToSelection();
-		void addToSelection(Selectable *selectable);
-		void open(const string &filename);
-		void prepare();
-		void print();
-		void removeAllFromSelection();
-		void removeFromSelection(Selectable *selectable);
-		
-		string getFilename() const;
-		Node* getRoot() const;
-		Selection getSelection() const;
-		void setFilename(const string &filename);
-		void setRoot(Node *node);
+	Scene(const string &filename="");
+	~Scene();
+	void addAllToSelection();
+	void addToSelection(Selectable *selectable);
+	void open(const string &filename);
+	void prepare();
+	void print();
+	void removeAllFromSelection();
+	void removeFromSelection(Selectable *selectable);
 	
-	private:
-		
-		Node *root;
-		Selection selection;
-		string filename;
+	string getFilename() const;
+	Node* getRoot() const;
+	Selection getSelection() const;
+	void setFilename(const string &filename);
+	void setRoot(Node *node);
+	
+private:
+	
+	Node *root;
+	Selection selection;
+	string filename;
 };
 
 
