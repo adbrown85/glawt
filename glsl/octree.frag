@@ -20,7 +20,7 @@
 #define ROOT_KEY 0
 
 // Constants
-int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745);
+uniform int jump[MAX_HEIGHT]=int[MAX_HEIGHT](1,9,73,585,4681,37449,299593,2396745);
 
 // Uniforms
 uniform sampler2D buffer;
