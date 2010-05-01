@@ -19,6 +19,7 @@ int main(int argc,
 	
 	Display *display;
 	Scene *scene;
+	Interpreter *interpreter;
 	
 	// Banner
 	cout << endl;
@@ -29,17 +30,25 @@ int main(int argc,
 	
 	try {
 		
-		// Create scene
-		scene = new Scene("Display.xml");
-		
-		// Start display
+		// Create window
 		Window::init(argc, argv);
-		display = new Display(scene, "Display");
-		display->install(new Keyboard(display->getInterpreter(), scene));
-		display->install(new Menu(display->getInterpreter(), scene));
-		display->install(new Mouse(display->getInterpreter(), scene));
-		display->start();
-	} catch (const char *e) {
+		Window::create("Display");
+		
+		// Open scene
+		scene = new Scene();
+		interpreter = new Interpreter(scene);
+		interpreter->run(Command::OPEN, "Display.xml");
+		
+		// Add display and controls
+		display = new Display(interpreter);
+		display->add(new Keyboard(interpreter));
+		display->add(new Menu(interpreter));
+		display->add(new Mouse(interpreter));
+		
+		// Start
+		Window::start();
+	}
+	catch (const char *e) {
 		cerr << e << endl;
 	}
 	

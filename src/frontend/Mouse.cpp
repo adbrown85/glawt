@@ -8,13 +8,12 @@
 Mouse *Mouse::obj=NULL;
 
 
-Mouse::Mouse(Delegate *delegate,
-             Scene *scene) :
-             Control(delegate, scene),
-             clickHelper(delegate, scene),
-             dragHelper(delegate, scene) {
+Mouse::Mouse(Interpreter *interpreter) : Control(interpreter),
+                                         clickHelper(interpreter),
+                                         dragHelper(interpreter) {
 	
 	Mouse::obj = this;
+	
 	this->type = "Mouse";
 	initBindings();
 	initData();
@@ -109,7 +108,7 @@ void Mouse::initManipulators() {
 	
 	// Set delegates
 	for (size_t i=0; i<manipulators.size(); ++i) {
-		manipulators[i]->setDelegate(delegate);
+		manipulators[i]->setDelegate(interpreter);
 	}
 	
 	// Copy to helpers

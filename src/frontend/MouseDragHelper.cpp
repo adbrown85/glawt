@@ -11,9 +11,8 @@ char MouseDragHelper::directions[2] = {'x', 'y'};
 /**
  * Creates a new MouseDragHelper control.
  */
-MouseDragHelper::MouseDragHelper(Delegate *delegate,
-                                 Scene *scene) :
-                                 MouseHelper(delegate, scene) {
+MouseDragHelper::MouseDragHelper(Interpreter *interpreter) :
+                                 MouseHelper(interpreter) {
 	
 	type = "MouseDragHelper";
 }
@@ -125,7 +124,7 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 		
 		// Run the command
 		if (amount != 0.0)
-			delegate->run(binding->getCommand(), amount);
+			interpreter->run(binding->getCommand(), amount);
 	}
 }
 
@@ -160,7 +159,7 @@ bool MouseDragHelper::useConstrained() {
 	for (pi=range.first; pi!=range.second; ++pi) {
 		binding = &(pi->second);
 		if (binding->getCommand() == Command::CIRCLE_X
-		    || binding->getCommand() == Command::CIRCLE_Y) {
+		      || binding->getCommand() == Command::CIRCLE_Y) {
 			return true;
 		}
 	}

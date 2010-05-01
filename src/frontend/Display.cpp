@@ -8,23 +8,39 @@
 Display *Display::obj=NULL;
 
 
-Display::Display(Scene *scene,
-                 const string &title) :
-                 interpreter(scene) {
+Display::Display(Interpreter *interpreter) {
 	
-	// Initialize window
-	Window::create(title);
+	Display::obj = this;
 	
 	// Initialize attributes
-	this->scene = scene;
-	this->painter = new Painter(scene);
-	Display::obj = this;
+	this->interpreter = interpreter;
+	this->painter = new Painter(interpreter->getScene());
 	
 	// Initialize overlay attributes
 	this->useOverlay = false;
 	this->timeStarted = 0;
 	this->frames = 0;
 	this->framesPerSecond = 0;
+	
+	// Register functions
+	interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
+	Window::setDisplay(&Display::display);
+}
+
+
+/**
+ * Installs a control into the display.
+ * 
+ * @param control Pointer to an object implementing the Control interface.
+ */
+void Display::add(Control *control) {
+	
+	vector<Manipulator*> manipulators;
+	
+	control->install();
+	manipulators = control->getManipulators();
+	for (size_t j=0; j<manipulators.size(); j++)
+		painter->addManipulator(manipulators[j]);
 }
 
 
@@ -52,17 +68,6 @@ void Display::display(void) {
 void Display::idle(void) {
 	
 	Window::refresh();
-}
-
-
-/**
- * Installs a control into the display.
- * 
- * @param control Pointer to an object implementing the Control interface.
- */
-void Display::install(Control *control) {
-	
-	controls.push_back(control);
 }
 
 
@@ -105,31 +110,6 @@ void Display::overlay() {
 	sprintf(buffer, "fps: %d", framesPerSecond);
 	for (size_t i=0; i<strlen(buffer); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, buffer[i]);
-}
-
-
-/**
- * Starts the display.
- */
-void Display::start() {
-	
-	vector<Manipulator*> manipulators;
-	
-	// Open and prepare scene
-	interpreter.run(Command::OPEN, scene->getFilename());
-	interpreter.addListener(Command::INFORMATION, &Display::toggleOverlay);
-	
-	// Register functions
-	Window::setDisplay(&Display::display);
-	for (size_t i=0; i<controls.size(); i++) {
-		controls[i]->install();
-		manipulators = controls[i]->getManipulators();
-		for (size_t j=0; j<manipulators.size(); j++)
-			painter->addManipulator(manipulators[j]);
-	}
-	
-	// Start
-	Window::start();
 }
 
 

@@ -24,20 +24,15 @@ using namespace std;
  *     Generic handler for a mouse action.
  */
 class MouseHelper : public Control {
-	
-	public:
-		
-		MouseHelper(Delegate *delegate,
-		            Scene *scene);
-		virtual int getModifier();
-		virtual void install() {};
-		virtual void setData(MouseData *data);
-		virtual void updateCurrentData(int x, int y);
-		virtual void updateLastData();
-	
-	protected:
-		
-		MouseData *data;
+public:
+	MouseHelper(Interpreter *interpreter);
+	virtual int getModifier();
+	virtual void install() {};
+	virtual void setData(MouseData *data);
+	virtual void updateCurrentData(int x, int y);
+	virtual void updateLastData();
+protected:
+	MouseData *data;
 };
 
 

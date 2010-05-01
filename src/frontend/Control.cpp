@@ -10,15 +10,14 @@
 /**
  * Creates a new control using the specified Delegate to run commands.
  * 
- * @param delegate Pointer to a Delegate that runs
+ * @param interpreter Class that will run commands
  * @param scene Pointer to the collection of nodes
  */
-Control::Control(Delegate *delegate,
-                 Scene *scene) {
+Control::Control(Interpreter *interpreter) {
 	
 	// Initialize
-	this->delegate = delegate;
-	this->scene = scene;
+	this->interpreter = interpreter;
+	this->scene = interpreter->getScene();
 }
 
 

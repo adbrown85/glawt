@@ -7,9 +7,7 @@
 #include "MouseHelper.hpp"
 
 
-MouseHelper::MouseHelper(Delegate *delegate,
-                         Scene *scene) :
-                         Control(delegate, scene) {
+MouseHelper::MouseHelper(Interpreter *interpreter) : Control(interpreter) {
 	
 	type = "MouseHelper";
 	data = NULL;

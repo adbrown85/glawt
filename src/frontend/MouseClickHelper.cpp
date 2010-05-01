@@ -13,9 +13,8 @@
  * @param delegate Delegate to send commands to.
  * @param scene Scene to work with.
  */
-MouseClickHelper::MouseClickHelper(Delegate *delegate,
-                                   Scene *scene) :
-                                   MouseHelper(delegate, scene),
+MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
+                                   MouseHelper(interpreter),
                                    picker(scene) {
 	
 	type = "MouseClickHelper";
@@ -148,10 +147,9 @@ void MouseClickHelper::tryBinding(Binding *binding) {
 	
 	// Issue the command
 	if (binding->hasArgument()) {
-		delegate->run(binding->getCommand(),
-		              binding->getArgument());
+		interpreter->run(binding->getCommand(), binding->getArgument());
 	} else {
-		delegate->run(binding->getCommand());
+		interpreter->run(binding->getCommand());
 	}
 	glutPostRedisplay();
 }

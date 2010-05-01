@@ -67,7 +67,7 @@ int main(int argc,
 	// Initialize
 	scene = new Scene();
 	interpreter = new Interpreter(scene);
-	mdh = new MouseDragHelper(interpreter, scene);
+	mdh = new MouseDragHelper(interpreter);
 	addBindings(bins);
 	
 	// Test install

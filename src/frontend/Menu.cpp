@@ -5,14 +5,12 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Menu.hpp"
-Menu *Menu::menu=NULL;
+Menu *Menu::instance=NULL;
 
 
-Menu::Menu(Delegate *delegate,
-           Scene *scene) :
-           Control(delegate, scene) {
+Menu::Menu(Interpreter *interpreter) : Control(interpreter) {
 	
-	Menu::menu = this;
+	Menu::instance = this;
 	type = "Menu";
 }
 
@@ -83,7 +81,7 @@ void Menu::installMainMenu() {
  */
 void Menu::onClick(GLint option) {
 	
-	menu->delegate->run(option);
-	glutPostRedisplay();
+	instance->interpreter->run(option);
+	Window::refresh();
 }
 

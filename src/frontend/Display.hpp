@@ -28,41 +28,27 @@ using namespace std;
  *     3D display for items in a scene.
  */
 class Display {
-	
-	public:
-		
-		Display(Scene *scene,
-		        const string &title);
-		static void display(void);
-		Interpreter* getInterpreter();
-		static void idle(void);
-		static void init(int argc,
-		                 char *argv[]);
-		void install(Control *control);
-		void start();
-		static void toggleOverlay();
-	
-	protected:
-		
-		void overlay();
-	
-	private:
-		
-		static Display *obj;
-		bool useOverlay;
-		Interpreter interpreter;
-		unsigned long timeStarted;
-		int frames, framesPerSecond;
-		Painter *painter;
-		Scene *scene;
-		vector<Control*> controls;
+public:
+	Display(Interpreter *interpreter);
+	void add(Control *control);
+	static void display(void);
+	Interpreter* getInterpreter();
+	static void idle(void);
+	static void toggleOverlay();
+protected:
+	void overlay();
+private:
+	static Display *obj;
+	bool useOverlay;
+	Interpreter *interpreter;
+	unsigned long timeStarted;
+	int frames, framesPerSecond;
+	Painter *painter;
+	vector<Control*> controls;
 };
 
 
-inline Interpreter* Display::getInterpreter() {
-	
-	return &interpreter;
-}
+inline Interpreter* Display::getInterpreter() {return interpreter;}
 
 
 #endif

@@ -17,7 +17,7 @@
 #include "Binding.hpp"
 #include "Command.hpp"
 #include "Control.hpp"
-#include "Delegate.hpp"
+#include "Interpreter.hpp"
 #include "Manipulator.hpp"
 #include "MouseClickHelper.hpp"
 #include "MouseData.hpp"
@@ -30,38 +30,29 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     %Mouse control for the %Display.
+ * @brief %Mouse control for the %Display.
  * 
- * @todo
- *     Need to deallocate manipulators.
+ * @todo Need to deallocate manipulators.
  */
 class Mouse : public Control {
-	
-	public:
-		
-		Mouse(Delegate *delegate,
-		      Scene *scene);
-		virtual void install();
-		static void onClick(int button,
-		                    int action,
-		                    int x,
-		                    int y);
-		static void onDrag(int x,
-		                   int y);
-	
-	protected:
-		
-		void initBindings();
-		void initData();
-		void initManipulators();
-	
-	private:
-		
-		MouseClickHelper clickHelper;
-		MouseData data;
-		MouseDragHelper dragHelper;
-		static Mouse *obj;
+public:
+	Mouse(Interpreter *interpreter);
+	virtual void install();
+	static void onClick(int button,
+	                    int action,
+	                    int x,
+	                    int y);
+	static void onDrag(int x,
+	                   int y);
+protected:
+	void initBindings();
+	void initData();
+	void initManipulators();
+private:
+	MouseClickHelper clickHelper;
+	MouseData data;
+	MouseDragHelper dragHelper;
+	static Mouse *obj;
 };
 
 

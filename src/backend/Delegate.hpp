@@ -27,54 +27,46 @@ using namespace std;
  * @see Producer
  */
 class Delegate {
-	
-	public :
-		
-		virtual void run(int command) = 0;
-		virtual void run(int command, float argument) = 0;
-		virtual void run(int command, string argument) = 0;
-		
-		map<int,void(*)(Scene*,int)> getHandlersZero();
-		map<int,void(*)(Scene*,int,float)> getHandlersFloat();
-		map<int,void(*)(Scene*,int,string)> getHandlersString();
-		string getType() const;
-		void setScene(Scene *scene);
-	
-	protected :
-		
-		Scene *scene;
-		string type;
-		map<int,void(*)(Scene*,int)> handlersZero;
-		map<int,void(*)(Scene*,int,float)> handlersFloat;
-		map<int,void(*)(Scene*,int,string)> handlersString;
+public:
+	map<int,void(*)(Scene*,int)> getHandlersZero();
+	map<int,void(*)(Scene*,int,float)> getHandlersFloat();
+	map<int,void(*)(Scene*,int,string)> getHandlersString();
+	Scene* getScene() const;
+	string getType() const;
+	virtual void run(int command) = 0;
+	virtual void run(int command, float argument) = 0;
+	virtual void run(int command, string argument) = 0;
+	void setScene(Scene *scene);
+protected:
+	Scene *scene;
+	string type;
+	map<int,void(*)(Scene*,int)> handlersZero;
+	map<int,void(*)(Scene*,int,float)> handlersFloat;
+	map<int,void(*)(Scene*,int,string)> handlersString;
 };
 
 
 inline map<int,void(*)(Scene*,int)> Delegate::getHandlersZero() {
-	
 	return handlersZero;
 }
 
 inline map<int,void(*)(Scene*,int,float)> Delegate::getHandlersFloat() {
-	
 	return handlersFloat;
 }
 
-
 inline map<int,void(*)(Scene*,int,string)> Delegate::getHandlersString() {
-	
 	return handlersString;
 }
 
+inline Scene* Delegate::getScene() const {
+	return scene;
+}
 
 inline string Delegate::getType() const {
-	
 	return type;
 }
 
-
 inline void Delegate::setScene(Scene *scene) {
-	
 	this->scene = scene;
 }
 

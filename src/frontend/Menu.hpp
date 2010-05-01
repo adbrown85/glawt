@@ -23,20 +23,16 @@ using namespace std;
  *     Right-click menu for the %Display.
  */
 class Menu : public Control {
-	
-	public :
-		
-		Menu(Delegate *delegate,
-		     Scene *scene);
-		virtual void install();
-		void installItemMenu();
-		void installMainMenu();
-		static void onClick(GLint option);
-	
-	private:
-		
-		static Menu *menu;
-		int mainMenuID, itemMenuID;
+public:
+	Menu(Interpreter *interpreter);
+	virtual void install();
+	static void onClick(GLint option);
+protected:
+	void installItemMenu();
+	void installMainMenu();
+private:
+	static Menu *instance;
+	int mainMenuID, itemMenuID;
 };
 
 

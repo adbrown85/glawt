@@ -8,9 +8,8 @@
 Keyboard *Keyboard::obj=NULL;
 
 
-Keyboard::Keyboard(Delegate *delegate,
-                   Scene *scene) : 
-                   Control(delegate, scene) {
+Keyboard::Keyboard(Interpreter *interpreter) : 
+                   Control(interpreter) {
 	
 	Keyboard::obj = this;
 	type = "Keyboard";
@@ -99,9 +98,9 @@ void Keyboard::trigger(int key) {
 	
 	// Run command with argument if it has one
 	if (binding->hasArgument())
-		delegate->run(binding->getCommand(), binding->getArgument());
+		interpreter->run(binding->getCommand(), binding->getArgument());
 	else
-		delegate->run(binding->getCommand());
+		interpreter->run(binding->getCommand());
 	glutPostRedisplay();
 }
 

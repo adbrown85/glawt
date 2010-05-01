@@ -35,24 +35,17 @@ using namespace std;
  * @see Producer
  */
 class Interpreter : public Delegate {
-	
-	public :
-		
-		Interpreter(Scene *scene);
-		~Interpreter();
-		
-		virtual void addListener(int command, void(*)());
-		void print();
-		virtual void run(int command);
-		virtual void run(int command, float argument);
-		virtual void run(int command, string argument);
-	
-	private:
-		
-		Interpreter();
-		
-		map<int,void(*)()> listeners;
-		vector<Delegate*> delegates;
+public:
+	Interpreter(Scene *scene);
+	~Interpreter();
+	virtual void addListener(int command, void(*)());
+	void print();
+	virtual void run(int command);
+	virtual void run(int command, float argument);
+	virtual void run(int command, string argument);
+private:
+	map<int,void(*)()> listeners;
+	vector<Delegate*> delegates;
 };
 
 

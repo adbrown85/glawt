@@ -26,27 +26,20 @@ using namespace std;
  *     Handles mouse clicking actions for %Mouse.
  */
 class MouseClickHelper : public MouseHelper {
-	
-	public:
-		
-		MouseClickHelper(Delegate *delegate,
-		                 Scene *scene);
-		virtual void onClick(int button,
-		                     int state,
-		                     int x,
-		                     int y);
-		virtual void setBindings(multimap<int,Binding> bindings);
-		virtual void setManipulators(vector<Manipulator*> manipulators);
-	
-	protected:
-		
-		void pickItem();
-		void tryBindings();
-		void tryBinding(Binding *binding);
-	
-	private:
-		
-		Picker picker;
+public:
+	MouseClickHelper(Interpreter *interpreter);
+	virtual void onClick(int button,
+	                     int state,
+	                     int x,
+	                     int y);
+	virtual void setBindings(multimap<int,Binding> bindings);
+	virtual void setManipulators(vector<Manipulator*> manipulators);
+protected:
+	void pickItem();
+	void tryBindings();
+	void tryBinding(Binding *binding);
+private:
+	Picker picker;
 };
 
 

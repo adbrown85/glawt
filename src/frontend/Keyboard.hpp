@@ -27,25 +27,17 @@ using namespace std;
  *     %Keyboard control for the %Display.
  */
 class Keyboard : public Control {
-	
-	public:
-		
-		Keyboard(Delegate *delegate,
-		         Scene *scene);
-		static void character(unsigned char key, int x, int y);
-		static void special(int key, int x, int y);
-		virtual void install();
-		Binding* lookup(int key, int mod);
-		void trigger(int key);
-		
-	
-	protected:
-		
-		void initBindings();
-	
-	private:
-		
-		static Keyboard *obj;
+public:
+	Keyboard(Interpreter *interpreter);
+	static void character(unsigned char key, int x, int y);
+	static void special(int key, int x, int y);
+	virtual void install();
+	Binding* lookup(int key, int mod);
+	void trigger(int key);
+protected:
+	void initBindings();
+private:
+	static Keyboard *obj;
 };
 
 

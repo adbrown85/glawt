@@ -67,7 +67,7 @@ int main(int argc,
 	// Initialize
 	scene = new Scene();
 	interpreter = new Interpreter(scene);
-	mch = new MouseClickHelper(interpreter, scene);
+	mch = new MouseClickHelper(interpreter);
 	addBindings(bins);
 	
 	// Test install

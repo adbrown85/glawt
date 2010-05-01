@@ -27,26 +27,19 @@ using namespace std;
  *     Handles mouse dragging actions for %Mouse.
  */
 class MouseDragHelper : public MouseHelper {
-	
-	public:
-		
-		MouseDragHelper(Delegate *delegate,
-		                Scene *scene);
-		void onDrag(int x,
-		            int y);
-		void setBindings(multimap<int,Binding> bindings);
-	
-	protected:
-		
-		void decideAxis();
-		void tryBinding(Binding *binding);
-		void tryBindings();
-		bool useConstrained();
-	
-	private:
-		
-		Vector axis, direction, movement;
-		static char directions[2];
+public:
+	MouseDragHelper(Interpreter *interpreter);
+	void onDrag(int x,
+	            int y);
+	void setBindings(multimap<int,Binding> bindings);
+protected:
+	void decideAxis();
+	void tryBinding(Binding *binding);
+	void tryBindings();
+	bool useConstrained();
+private:
+	Vector axis, direction, movement;
+	static char directions[2];
 };
 
 
