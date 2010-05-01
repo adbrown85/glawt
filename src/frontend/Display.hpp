@@ -10,6 +10,7 @@
 #include <GL/glut.h>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "Command.hpp"             // Open the scene

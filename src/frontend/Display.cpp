@@ -76,9 +76,8 @@ void Display::idle(void) {
  */
 void Display::overlay() {
 	
-	char buffer[32];
-	float x, y;
-	int time, viewport[4];
+	int time;
+	ostringstream stream;
 	
 	// Update values
 	++frames;
@@ -89,27 +88,9 @@ void Display::overlay() {
 		timeStarted = time;
 	}
 	
-	// Calculate position
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	x = ((float)viewport[2] - 15) / viewport[2];
-	y = ((float)viewport[3] - 30) / viewport[3];
-	
-	// Set position
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-		glLoadIdentity();
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-			glLoadIdentity();
-			glRasterPos2f(-x, y);
-		glPopMatrix();
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	
 	// Draw text
-	sprintf(buffer, "fps: %d", framesPerSecond);
-	for (size_t i=0; i<strlen(buffer); ++i)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, buffer[i]);
+	stream << "fps: " << framesPerSecond;
+	Window::write(stream.str());
 }
 
 
