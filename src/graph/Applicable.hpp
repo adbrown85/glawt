@@ -13,7 +13,7 @@
 
 /**
  * @ingroup graph
- * @brief Node that can be applied, and then removed.
+ * @brief %Node that can be applied, and then removed.
  */
 class Applicable : public Node {
 public:

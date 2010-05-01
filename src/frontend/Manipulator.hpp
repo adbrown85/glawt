@@ -45,7 +45,7 @@ inline Manipulator::Manipulator() {
 /**
  * Makes the manipulator the same size as a drawable object.
  * 
- * @param other Reference to a drawable object.
+ * @param drawable Reference to a drawable object.
  */
 inline void Manipulator::copySizeOf(const Drawable &drawable) {
 	this->size = drawable.getSize();

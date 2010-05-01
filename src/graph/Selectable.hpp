@@ -18,7 +18,7 @@ using namespace std;
 
 /**
  * @ingroup graph
- * @brief Drawable node that can also be selected.
+ * @brief %Drawable node that can also be selected.
  */
 class Selectable : public Drawable {
 public:

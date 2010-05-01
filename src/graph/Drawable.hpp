@@ -19,7 +19,7 @@ using namespace std;
 
 /**
  * @ingroup graph
- * @brief Node that can be drawn and identified on screen.
+ * @brief %Node that can be drawn and identified on screen.
  */
 class Drawable : public Node,
                  public Identifiable {

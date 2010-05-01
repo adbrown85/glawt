@@ -10,7 +10,7 @@
 /**
  * Creates a new %Target from an XML tag.
  * 
- * @param XML tag with "link" attribute.
+ * @param tag XML tag with "link" attribute.
  */
 Target::Target(const Tag &tag) {
 	
