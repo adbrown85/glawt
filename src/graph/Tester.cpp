@@ -20,6 +20,7 @@ void Tester::display(void) {
 	// Draw
 	Window::applyView();
 	traverser->start();
+	Window::write(scene.getFilename());
 	
 	// Finish
 	Window::flush();
@@ -43,62 +44,12 @@ void Tester::open(const string &filename) {
 	scene.open(filename);
 	scene.prepare();
 	scene.print();
+	traverser = new Traverser(&scene);
 }
 
 
 void Tester::start() {
 	
-	traverser = new Traverser(&scene);
 	Window::start();
 }
-
-
-/**
- * Applies and draws nodes.
- */
-/*
-void Tester::traverse(Node *node) {
-	
-	Applicable *applicable;
-	Drawable *drawable;
-	
-	// Drawable
-	drawable = dynamic_cast<Drawable*>(node);
-	if (drawable != NULL) {
-		drawable->draw();
-		traverser->traverseChildren(node);
-		return;
-	}
-	
-	// Applicable
-	applicable = dynamic_cast<Applicable*>(node);
-	if (applicable != NULL) {
-		applicable->apply();
-		traverser->traverseChildren(node);
-		applicable->remove();
-		return;
-	}
-	
-	// Node
-	traverser->traverseChildren(node);
-}
-*/
-
-
-/**
- * Traverses the children of a node.
- */
-/*
-void Tester::traverseChildren(Node *node) {
-	
-	int count;
-	vector<Node*> children;
-	
-	// Traverse each child
-	children = node->getChildren();
-	count = children.size();
-	for (int i=0; i<count; ++i)
-		traverse(children[i]);
-}
-*/
 

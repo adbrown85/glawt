@@ -26,19 +26,12 @@ using namespace std;
  */
 class Tester {
 public:
-	
 	static void display(void);
 	static Scene* getScene();
-	static void keyboard(unsigned char key,
-	                     int x,
-	                     int y);
+	static void keyboard(unsigned char key, int x, int y);
 	static void open(const string &filename);
-	//static void traverse(Node *node);
-	//static void traverseChildren(Node *node);
 	static void start();
-	
 private:
-	
 	static Traverser *traverser;
 	static Scene scene;
 };
