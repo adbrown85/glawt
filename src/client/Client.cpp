@@ -31,10 +31,21 @@ void Client::banner() {
 }
 
 
+void Client::onCompile() {
+	
+	Display *display;
+	
+	// Create and start display
+	Window::init(argc, argv);
+	display = new Display(&scene, title);
+	display->getInterpreter()->run(Command::OPEN, inFilename);
+}
+
+
 /**
  * Starts the display for a scene.
  */
-void Client::display() {
+void Client::onDisplay() {
 	
 	Display *display;
 	
@@ -42,8 +53,6 @@ void Client::display() {
 	scene.setFilename(inFilename);
 	
 	// Form title
-	title = "Gander [";
-	title += inFilename + "]";
 	
 	// Create and start display
 	Window::init(argc, argv);
@@ -107,16 +116,22 @@ void Client::parse() {
  */
 void Client::start() {
 	
+	// Initialize
 	parse();
+	title = string("Gander [") + inFilename + "]";
+	
+	// Handle option
 	if (option == "--preprocess") {
 		onPreprocess();
 	} else if (option == "--vlb") {
 		onVlb();
 	} else if (option == "--header") {
 		onHeader();
+	} else if (option == "--compile") {
+		onCompile();
 	} else {
 		banner();
-		display();
+		onDisplay();
 		banner();
 	}
 }
@@ -130,6 +145,8 @@ void Client::usage() {
 	cerr << "Usage: " << argv[0] << " [OPTION] INPUT [OUTPUT]" << endl;
 	cerr << endl;
 	cerr << "Options: " << endl;
+	cerr << "  --display        Display a scene (the default)" << endl;
+	cerr << "  --compile        Compile but do not display scene" << endl;
 	cerr << "  --preprocess     Preprocess GLSL file" << endl;
 	cerr << "  --vlb            Make VLB volume file" << endl;
 	cerr << "  --header         Print header of VLB file" << endl;

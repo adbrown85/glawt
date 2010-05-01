@@ -56,29 +56,24 @@ using namespace std;
  * @ingroup client
  */
 class Client {
-	
-	public:
-		
-		Client(int argc,
-		       char *argv[]);
-		void start();
-	
-	protected:
-		
-		void banner();
-		void display();
-		void onHeader();
-		void onPreprocess();
-		void onVlb();
-		void parse();
-		void usage();
-	
-	private:
-		
-		int argc;
-		char **argv;
-		Scene scene;
-		string inFilename, option, outFilename, title;
+public:
+	Client(int argc,
+	       char *argv[]);
+	void start();
+protected:
+	void banner();
+	void onCompile();
+	void onDisplay();
+	void onHeader();
+	void onPreprocess();
+	void onVlb();
+	void parse();
+	void usage();
+private:
+	int argc;
+	char **argv;
+	Scene scene;
+	string inFilename, option, outFilename, title;
 };
 
 
