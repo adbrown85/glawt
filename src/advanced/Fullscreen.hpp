@@ -16,26 +16,21 @@
 
 /**
  * @ingroup advanced
- * @brief
- *     Polygon that takes up the entire window.
+ * @brief Polygon that takes up the entire window.
  */
-class Fullscreen : public Node,
-                   public Drawable {
+class Fullscreen : public Drawable {
 public:
-	
 	Fullscreen(const Tag &tag);
 	virtual void draw() const;
-	
 protected:
-	
+	virtual void initCoordinates();
+	virtual void initIndices();
+	virtual void initPoints();
+private:
 	static bool loaded;
 	static GLfloat coordinates[4][3];
 	static GLfloat points[4][3];
 	static GLubyte indices[4];
-	
-	virtual void initCoordinates();
-	virtual void initIndices();
-	virtual void initPoints();
 };
 
 

@@ -23,7 +23,6 @@ using namespace std;
  */
 class Texture3D : public Texture {
 public:
-	
 	Texture3D(const Tag &tag);
 	virtual void associate();
 	static Texture3D* find(Node *node,
@@ -32,13 +31,9 @@ public:
 	virtual int getDepth() const;
 	virtual int getHeight() const;
 	virtual int getWidth() const;
-	
 protected:
-	
 	virtual void load();
-	
 private:
-	
 	Dataset dataset;
 };
 

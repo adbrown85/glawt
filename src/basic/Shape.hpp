@@ -24,25 +24,18 @@ using namespace std;
  * @brief
  *     Base class for a 3D object in the scene.
  */
-class Shape : public Node,
-              public Selectable {
-	
+class Shape : public Selectable {
 public:
-	
-	Shape(const string &className,
-	      const Tag &tag);
+	Shape(const Tag &tag);
 	virtual void associate();
 	virtual void finalize();
 	virtual GLenum getStyle() const;
 	virtual void setStyle(GLenum style);
 	virtual string toString() const;
-	
 protected: 
-	
 	GLenum style;
 	GLint coordsLoc, pointsLoc, normalsLoc;
 	Program *program;
-	
 	virtual void computeDepth(Matrix &matrx);
 };
 

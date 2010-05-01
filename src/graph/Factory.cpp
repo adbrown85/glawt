@@ -67,7 +67,7 @@ Node* Factory::open(string xmlFilename) {
 	vector<Tag>::iterator it;
 	
 	// Initialize
-	root = new Node("Node");
+	root = new Node();
 	current = root;
 	xmlFilename = FileUtility::replaceEnvironmentVariable(xmlFilename);
 	parser.open(xmlFilename);

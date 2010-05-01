@@ -14,9 +14,8 @@ vector<GLenum> Texture::active_units;
  * @param [in] type 1D, 2D, or 3D.
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
-Texture::Texture(const string &className,
-                 GLenum type,
-                 const Tag &tag) : Node(className) {
+Texture::Texture(GLenum type,
+                 const Tag &tag) {
 	
 	// Initialize
 	this->unit = 0;

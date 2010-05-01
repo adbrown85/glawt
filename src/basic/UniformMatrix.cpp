@@ -8,7 +8,7 @@
 
 
 UniformMatrix::UniformMatrix(const Tag &tag) :
-                             Uniform("UniformMatrix", tag) {
+                             Uniform(tag) {
 	
 	// Find link
 	if (link == "modelview") {

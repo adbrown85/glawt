@@ -26,15 +26,12 @@ using namespace std;
 class Translation : public Transformation,
                     public Vector {
 public:
-	
 	Translation(const Tag &tag);
 	void add(const Vector &B);
 	virtual void apply();
 	virtual void remove();
 	virtual string toString() const;
-	
 protected:
-	
 	virtual void sortByDepthBeg(Matrix &matrix);
 	virtual void sortByDepthEnd(Matrix &matrix);
 };

@@ -7,8 +7,7 @@
 #include "Octree.hpp"
 
 
-Octree::Octree(const Tag &tag):
-               Texture("Octree", GL_TEXTURE_1D, tag) {
+Octree::Octree(const Tag &tag) : Texture(GL_TEXTURE_1D, tag) {
 	
 	textureData = NULL;
 	dataset = NULL;

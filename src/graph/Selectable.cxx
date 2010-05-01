@@ -11,20 +11,69 @@ using namespace std;
 
 class FakeSelectable : public Selectable {
 public:
-	FakeSelectable() : Selectable(1.0) {}
+	FakeSelectable(const Tag &tag) : Selectable(tag) {}
 	void draw() const {}
 };
 
 
-void print(const FakeSelectable &item) {
+class SelectableTest {
+public:
+	void before();
+	void testDeselect();
+	void testSelect();
+	void testToggle();
+	void after();
+private:
+	FakeSelectable *node;
+};
+
+
+void SelectableTest::before() {
 	
-	cout << "  " << item.toString() << endl;
+	Tag tag;
+	
+	tag["selected"] = "false";
+	node = new FakeSelectable(tag);
 }
+
+
+void SelectableTest::testDeselect() {
+	
+	cout << "Deselecting... " << endl;
+	node->deselect();
+	node->print();
+}
+
+
+void SelectableTest::testSelect() {
+	
+	cout << "Selecting... " << endl;
+	node->select();
+	node->print();
+}
+
+
+void SelectableTest::testToggle() {
+	
+	// Toggle
+	cout << "Toggling... " << endl;
+	for (int i=0; i<5; ++i) {
+		node->toggleSelected();
+		node->print();
+	}
+}
+
+
+void SelectableTest::after() {
+	
+	delete node;
+}
+
 
 
 int main() {
 	
-	FakeSelectable item;
+	SelectableTest test;
 	
 	// Start
 	cout << endl;
@@ -34,24 +83,11 @@ int main() {
 	cout << endl;
 	
 	// Initialize
-	cout << boolalpha;
-	cout << "Original: " << endl;
-	print(item);
-	
-	// Select, deselect
-	cout << "Select: " << endl;
-	item.select();
-	print(item);
-	cout << "Deselect: " << endl;
-	item.deselect();
-	print(item);
-	
-	// Toggle
-	cout << "Toggle: " << endl;
-	for (int i=0; i<5; ++i) {
-		item.toggleSelected();
-		print(item);
-	}
+	test.before();
+	test.testSelect();
+	test.testDeselect();
+	test.testToggle();
+	test.after();
 	
 	// Finish
 	cout << endl;

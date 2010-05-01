@@ -37,7 +37,7 @@ void Display::display(void) {
 	Window::clear();
 	
 	// Paint scene and overlay
-	obj->painter->paint();
+	obj->painter->start();
 	if (obj->useOverlay)
 		obj->overlay();
 	

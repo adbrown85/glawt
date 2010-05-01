@@ -18,11 +18,8 @@
  * @brief
  *     Operation that changes the size, position, or orientation of objects.
  */
-class Transformation : public Node,
-                       public Applicable {
+class Transformation : public Applicable {
 public:
-	
-	Transformation(const string &className) : Node(className) {};
 	virtual void apply() = 0;
 	virtual void remove() = 0;
 };

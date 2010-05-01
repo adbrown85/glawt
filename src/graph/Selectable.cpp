@@ -8,26 +8,13 @@
 
 
 /**
- * Initializes the items as deselected.
- * 
- * @param size Size of the object.
- */
-Selectable::Selectable(float size) : 
-                       Drawable(size) {
-	
-	selected = false;
-}
-
-
-/**
  * Creates a new %Selectable from an XML tag.
  * 
  * @param tag XML tag with size information.
  */
-Selectable::Selectable(const Tag &tag) : 
-                       Drawable(tag) {
+Selectable::Selectable(const Tag &tag) : Drawable(tag) {
 	
-	selected = false;
+	tag.get("selected", selected, false);
 }
 
 
@@ -73,15 +60,11 @@ void Selectable::toggleSelected() {
 
 string Selectable::toString() const {
 	
-	char selectedChar;
 	stringstream stream;
-	
-	// Format
-	selectedChar = selected ? 'T' : 'F';
 	
 	// Make string
 	stream << Drawable::toString();
-	stream << " sel='" << selectedChar << "'";
+	stream << " selected='" << (selected?'T':'F') << "'";
 	return stream.str();
 }
 

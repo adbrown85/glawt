@@ -66,7 +66,7 @@ void Producer::open(Scene *scene,
 	scene->open(filename);
 	
 	// Prepare it
-	scene->setRoot(new Translation());
+	scene->setRoot(Factory::create("translate"));
 	scene->prepare();
 	scene->print();
 }

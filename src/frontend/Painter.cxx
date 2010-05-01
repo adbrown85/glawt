@@ -16,7 +16,7 @@ void display(void) {
 	Window::clear();
 	
 	// Paint
-	painter->paint();
+	painter->start();
 	
 	// Flush
 	Window::flush();

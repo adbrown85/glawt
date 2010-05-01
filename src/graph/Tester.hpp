@@ -14,6 +14,7 @@
 #include "FileUtility.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"
+#include "Traverser.hpp"
 #include "Window.hpp"
 using namespace std;
 
@@ -32,14 +33,18 @@ public:
 	                     int x,
 	                     int y);
 	static void open(const string &filename);
-	static void traverse(Node *node);
-	static void traverseChildren(Node *node);
+	//static void traverse(Node *node);
+	//static void traverseChildren(Node *node);
 	static void start();
 	
 private:
 	
+	static Traverser *traverser;
 	static Scene scene;
 };
+
+
+inline Scene* Tester::getScene() {return &scene;}
 
 
 #endif

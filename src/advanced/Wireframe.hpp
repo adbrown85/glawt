@@ -18,12 +18,10 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief
- *     Causes only the edges of shapes to be drawn.
+ * @brief Causes only the edges of shapes to be drawn.
  */
-class Wireframe : public Node {
+class Wireframe : public Applicable {
 public:
-	
 	Wireframe(const Tag &tag);
 	virtual void apply();
 	virtual void remove();

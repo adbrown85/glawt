@@ -8,7 +8,7 @@
 
 
 UniformVector::UniformVector(const Tag &tag) :
-                             Uniform("UniformVector", tag) {
+                             Uniform(tag) {
 	
 	// Initialize
 	tag.get("value", value, true);

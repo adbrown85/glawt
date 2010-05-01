@@ -28,36 +28,27 @@ using namespace std;
  *     GLSL shader with loading and compiling capabilities.
  */
 class Shader : public Node {
-	
-	public:
-		
-		Shader(const string &filename,
-		       const string &type="");
-		Shader(const Tag &tag);
-		~Shader();
-		void associate();
-		void finalize() {}
-		string getFilename() const {return filename;}
-		GLuint getHandle() const {return handle;}
-		string getType() const {return type;}
-		void list() const;
-		void log() const;
-		string toString() const;
-	
-	private:
-		
-		const char **source;
-		GLuint handle;
-		int length;
-		Preprocessor preprocessor;
-		string filename, type;
-		
-		Shader();
-		void compile();
-		void create();
-		void init(const string &filename,
-		          const string &type);
-		void load();
+public:
+	Shader(const Tag &tag);
+	~Shader();
+	void associate();
+	void finalize() {}
+	string getFilename() const {return filename;}
+	GLuint getHandle() const {return handle;}
+	string getType() const {return type;}
+	void list() const;
+	void log() const;
+	string toString() const;
+protected:
+	void compile();
+	void create();
+	void load();
+private:
+	const char **source;
+	GLuint handle;
+	int length;
+	Preprocessor preprocessor;
+	string filename, type;
 };
 
 

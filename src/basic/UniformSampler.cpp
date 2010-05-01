@@ -8,7 +8,7 @@
 
 
 UniformSampler::UniformSampler(const Tag &tag) :
-                               Uniform("UniformSampler", tag) {
+                               Uniform(tag) {
 	
 	tag.get("value", value, false);
 	if (link.empty())

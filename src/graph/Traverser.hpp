@@ -19,20 +19,15 @@ using namespace std;
 
 class Traverser {
 public:
-	
 	Traverser(Scene *scene);
 	virtual void start();
-	
 protected:
-	
-	virtual void onApplicable(Node *node);
-	virtual void onDrawable(Node *node);
-	virtual void onSelectable(Node *node);
+	virtual void onApplicable(Applicable *node);
+	virtual void onDrawable(Drawable *node);
+	virtual void onSelectable(Selectable *node);
 	void traverseChildren(Node *node);
 	void traverseNode(Node *node);
-	
 private:
-	
 	Scene *scene;
 };
 

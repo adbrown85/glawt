@@ -15,7 +15,7 @@ GLuint Cube::indicesBuffer=0, Cube::dataBuffer=0;
 GLushort Cube::indices[24];
 
 
-Cube::Cube(const Tag &tag) : Shape("Cube", tag) {
+Cube::Cube(const Tag &tag) : Shape(tag) {
 	
 	// Attributes
 	if (!loaded) {

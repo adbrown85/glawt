@@ -12,8 +12,7 @@
  * 
  * @param tag XML tag with "type", "name", "value", and "link" information.
  */
-Uniform::Uniform(const string &className,
-                 const Tag &tag) : Node(className) {
+Uniform::Uniform(const Tag &tag) {
 	
 	// Initialize
 	program = NULL;

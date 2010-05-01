@@ -24,29 +24,24 @@ using namespace std;
  * @brief
  *     GLSL program that %Shaders and %Uniform variables are connected to.
  */
-class Program : public Node,
-                public Applicable {
-	
-	public :
-		
-		Program(const Tag& tag);
-		virtual void addCode(int handle,
-		                     const Preprocessor *preprocessor);
-		virtual void apply();
-		virtual void associate();
-		virtual void finalize();
-		static Program* find(Node* node);
-		static Program* getCurrent();
-		virtual GLuint getHandle() const;
-		virtual void log() const;
-		virtual void remove();
-		virtual string toString() const;
-	
-	private:
-		
-		GLuint handle;
-		map<int,const Preprocessor*> code;
-		static Program* current;
+class Program : public Applicable {
+public:
+	Program(const Tag& tag);
+	virtual void addCode(int handle,
+	                     const Preprocessor *preprocessor);
+	virtual void apply();
+	virtual void associate();
+	virtual void finalize();
+	static Program* find(Node* node);
+	static Program* getCurrent();
+	virtual GLuint getHandle() const;
+	virtual void log() const;
+	virtual void remove();
+	virtual string toString() const;
+private:
+	GLuint handle;
+	map<int,const Preprocessor*> code;
+	static Program* current;
 };
 
 

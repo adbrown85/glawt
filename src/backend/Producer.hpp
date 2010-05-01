@@ -17,6 +17,7 @@
 #include "BasicFactory.hpp"
 #include "Command.hpp"
 #include "Delegate.hpp"
+#include "Factory.hpp"
 #include "Scene.hpp"
 #include "Tag.hpp"
 #include "Translation.hpp"

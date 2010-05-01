@@ -8,7 +8,7 @@
 
 
 UniformInt::UniformInt(const Tag &tag) :
-                       Uniform("UniformInt", tag) {
+                       Uniform(tag) {
 	
 	tag.get("value", value, false);
 }

@@ -13,7 +13,7 @@
  */
 class FakeLeaf : public Node {
 public :
-	FakeLeaf() : Node("Leaf") {}
+	FakeLeaf() {}
 	virtual void computeDepth(Matrix &matrix) {
 		depth = matrix(2,3);
 	}
@@ -28,7 +28,7 @@ int main() {
 	FakeLeaf leafs[4];
 	float randomNum;
 	Matrix rotMatrix;
-	Node root("Node");
+	Node root;
 	Tag tag;
 	Translation *translation, *trans[4];
 	

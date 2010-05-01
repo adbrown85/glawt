@@ -17,14 +17,11 @@ using namespace std;
  */
 class UniformSampler : public Uniform {
 public:
-	
 	UniformSampler(const Tag &tag);
 	virtual void associate();
 	virtual void apply();
 	virtual string toString() const;
-	
 private:
-	
 	GLint value;
 };
 

@@ -13,7 +13,7 @@
  * @param tag XML tag with "name" and "filename" attributes.
  */
 Texture3D::Texture3D(const Tag &tag) : 
-                     Texture("Texture3D", GL_TEXTURE_3D, tag),
+                     Texture(GL_TEXTURE_3D, tag),
                      dataset(tag) {
 	
 }

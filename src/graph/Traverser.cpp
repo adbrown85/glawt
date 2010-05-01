@@ -13,30 +13,24 @@ Traverser::Traverser(Scene *scene) {
 }
 
 
-void Traverser::onApplicable(Node *node) {
-	
-	Applicable *applicable=((Applicable*)node);
+void Traverser::onApplicable(Applicable *node) {
 	
 	// Apply, do children, then remove
-	applicable->apply();
+	node->apply();
 	traverseChildren(node);
-	applicable->remove();
+	node->remove();
 }
 
 
-void Traverser::onDrawable(Node *node) {
+void Traverser::onDrawable(Drawable *node) {
 	
-	Drawable *drawable=((Drawable*)node);
 	Selectable *selectable;
 	
-	// Check if not visible
-	if (!drawable->isVisible())
-		return;
-	
 	// Draw the node and check if also selectable
-	drawable->draw();
-	if ((selectable = dynamic_cast<Selectable*>(drawable))) {
-		onSelectable(node);
+	node->draw();
+	if ((selectable = dynamic_cast<Selectable*>(node))) {
+		if (selectable->isSelected())
+			onSelectable(selectable);
 	}
 	
 	// Children
@@ -44,14 +38,8 @@ void Traverser::onDrawable(Node *node) {
 }
 
 
-void Traverser::onSelectable(Node *node) {
+void Traverser::onSelectable(Selectable *node) {
 	
-	Selectable *selectable=((Selectable*)node);
-	
-	// Check if not selected
-	if (!selectable->isSelected()) {
-		return;
-	}
 }
 
 
@@ -67,6 +55,15 @@ void Traverser::start() {
 }
 
 
+/**
+ * Recursively traverses the children of a node.
+ * 
+ * This functionality is implemented as a separate function, as opposed to 
+ * incorporating it directly into <i>paint</i>, because some nodes need to 
+ * traverse their children at different times.
+ * 
+ * @param node Pointer to the parent node.
+ */
 void Traverser::traverseChildren(Node *node) {
 	
 	vector<Node*> children;
@@ -80,6 +77,14 @@ void Traverser::traverseChildren(Node *node) {
 }
 
 
+/**
+ * Recursively traverses a node.
+ * 
+ * Automatically takes care of performing different actions depending on what 
+ * type of interfaces the node supports.
+ * 
+ * @param node Pointer to the Node to paint.
+ */
 void Traverser::traverseNode(Node *node) {
 	
 	Applicable *applicable;
@@ -87,9 +92,10 @@ void Traverser::traverseNode(Node *node) {
 	
 	// Determine if node is applicable or drawable
 	if ((applicable = dynamic_cast<Applicable*>(node))) {
-		onApplicable(node);
+		onApplicable(applicable);
 	} else if ((drawable = dynamic_cast<Drawable*>(node))) {
-		onDrawable(node);
+		if (drawable->isVisible())
+			onDrawable(drawable);
 	} else {
 		traverseChildren(node);
 	}

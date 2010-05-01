@@ -10,7 +10,7 @@
 
 class FakeTexture : public Texture {
 	public:
-		FakeTexture(const Tag &tag) : Texture("Texture",GL_TEXTURE_2D, tag) {}
+		FakeTexture(const Tag &tag) : Texture(GL_TEXTURE_2D, tag) {}
 	protected:
 		void initType() {type = GL_TEXTURE_2D;}
 };
@@ -42,7 +42,7 @@ int main() {
 	
 	// Create textures
 	cout << "\nCreating textures..." << endl;
-	root = new Node("Node");
+	root = new Node();
 	last = root;
 	for (int i=0; i<4; ++i) {
 		name.str("");

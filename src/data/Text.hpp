@@ -22,11 +22,11 @@ class Text {
 		static bool endsWith(const string &text,
 		                     char character);
 		static int findFirstNotWordCharacter(const string &text,
-		                                     int pos);
+		                                     int pos=0);
 		static pair<int,int> findFirstWord(const string &text,
-		                                   int pos);
+		                                   int pos=0);
 		static int findFirstWordCharacter(const string &text,
-		                                  int pos);
+		                                  int pos=0);
 		static string replace(const string &text,
 		                      map<string,string> &dictionary);
 		static string toLower(const string &original);

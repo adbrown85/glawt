@@ -17,7 +17,7 @@ using namespace std;
  */
 class FakeShape : public Shape {
 	public:
-		FakeShape(const Tag &tag) : Shape("Shape",tag) {}
+		FakeShape(const Tag &tag) : Shape(tag) {}
 		void draw() const {};
 };
 
@@ -32,7 +32,7 @@ int main() {
 	Matrix rotMatrix;
 	Tag tag;
 	/* Translation trans[NUMBER_OF_ITEMS]; */
-	Node root("Node");
+	Node root;
 	
 	// Start
 	cout << endl;

@@ -10,10 +10,9 @@
 /**
  * Creates a new node with no parent.
  */
-Node::Node(const string &className) {
+Node::Node() {
 	
 	// Initialize
-	this->className = className;
 	this->depth = 0.0;
 	this->parent = NULL;
 }
@@ -104,6 +103,17 @@ void Node::finalizeTree() {
 }
 
 
+string Node::getClassName() const {
+	
+	string className;
+	int pos;
+	
+	className = typeid(*this).name();
+	pos = Text::findFirstWordCharacter(className);
+	return className.substr(pos);
+}
+
+
 void Node::prepare() {
 	
 	associateTree();
@@ -191,7 +201,7 @@ string Node::toString() const {
 	ostringstream stream;
 	
 	// Make string
-	stream << className;
+	stream << getClassName();
 	return stream.str();
 }
 

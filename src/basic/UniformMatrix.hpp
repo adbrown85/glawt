@@ -17,12 +17,9 @@ using namespace std;
  */
 class UniformMatrix : public Uniform {
 public:
-	
 	UniformMatrix(const Tag &tag);
 	virtual void apply();
-	
 private:
-	
 	GLfloat value[16];
 	enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION, NORMAL};
 	MatrixType matrixType;

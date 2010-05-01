@@ -36,7 +36,7 @@ void Compositor::hide(Scene *scene,
 	// Hide and clear the selection
 	selection = scene->getSelection();
 	for (it=selection.begin(); it!=selection.end(); ++it)
-		(*it)->hide();
+		(*it)->setVisible(false);
 	scene->removeAllFromSelection();
 }
 
@@ -67,7 +67,7 @@ void Compositor::showAll(Node *node) {
 	// Show node
 	drawable = dynamic_cast<Drawable*>(node);
 	if (drawable != NULL)
-		drawable->show();
+		drawable->setVisible(true);
 	
 	// Show children
 	children = node->getChildren();

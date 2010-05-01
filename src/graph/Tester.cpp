@@ -6,6 +6,7 @@
  */
 #include "Tester.hpp"
 Scene Tester::scene;
+Traverser *Tester::traverser;
 
 
 /**
@@ -18,16 +19,10 @@ void Tester::display(void) {
 	
 	// Draw
 	Window::applyView();
-	traverse(scene.getRoot());
+	traverser->start();
 	
 	// Finish
 	Window::flush();
-}
-
-
-Scene* Tester::getScene() {
-	
-	return &scene;
 }
 
 
@@ -53,6 +48,7 @@ void Tester::open(const string &filename) {
 
 void Tester::start() {
 	
+	traverser = new Traverser(&scene);
 	Window::start();
 }
 
@@ -60,6 +56,7 @@ void Tester::start() {
 /**
  * Applies and draws nodes.
  */
+/*
 void Tester::traverse(Node *node) {
 	
 	Applicable *applicable;
@@ -69,7 +66,7 @@ void Tester::traverse(Node *node) {
 	drawable = dynamic_cast<Drawable*>(node);
 	if (drawable != NULL) {
 		drawable->draw();
-		traverseChildren(node);
+		traverser->traverseChildren(node);
 		return;
 	}
 	
@@ -77,19 +74,21 @@ void Tester::traverse(Node *node) {
 	applicable = dynamic_cast<Applicable*>(node);
 	if (applicable != NULL) {
 		applicable->apply();
-		traverseChildren(node);
+		traverser->traverseChildren(node);
 		applicable->remove();
 		return;
 	}
 	
 	// Node
-	traverseChildren(node);
+	traverser->traverseChildren(node);
 }
+*/
 
 
 /**
  * Traverses the children of a node.
  */
+/*
 void Tester::traverseChildren(Node *node) {
 	
 	int count;
@@ -101,4 +100,5 @@ void Tester::traverseChildren(Node *node) {
 	for (int i=0; i<count; ++i)
 		traverse(children[i]);
 }
+*/
 

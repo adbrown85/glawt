@@ -21,25 +21,21 @@ using namespace std;
  *     2D square shape that can be drawn by %Display.
  */
 class Square : public Shape {
-	
-	public:
-		
-		Square(const Tag &tag);
-		virtual void draw() const;
-	
-	protected:
-		
-		static bool loaded;
-		static GLfloat coords[4][3], normals[4][3], points[4][3];
-		static GLint coordsOffset, normalsOffset, pointsOffset;
-		static GLuint dataBuffer, indicesBuffer;
-		static GLushort indices[4];
-		
-		virtual void initBuffers();
-		virtual void initCoords();
-		virtual void initIndices();
-		virtual void initNormals();
-		virtual void initPoints();
+public:
+	Square(const Tag &tag);
+	virtual void draw() const;
+protected:
+	virtual void initBuffers();
+	virtual void initCoords();
+	virtual void initIndices();
+	virtual void initNormals();
+	virtual void initPoints();
+private:
+	static bool loaded;
+	static GLfloat coords[4][3], normals[4][3], points[4][3];
+	static GLint coordsOffset, normalsOffset, pointsOffset;
+	static GLuint dataBuffer, indicesBuffer;
+	static GLushort indices[4];
 };
 
 

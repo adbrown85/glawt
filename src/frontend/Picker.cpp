@@ -111,7 +111,7 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
 	// Pick an item
 	initialize(x, y);
-	painter->paint();
+	painter->start();
 	finish();
 	storeIDsOfItems();
 	

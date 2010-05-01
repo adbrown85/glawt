@@ -33,36 +33,28 @@ using namespace std;
  * @see Texture2D
  * @see Texture3D
  */
-class Texture : public Node,
-                public Applicable {
+class Texture : public Applicable {
 public:
-	
-	Texture(const string &className,
-	        GLenum type,
+	Texture(GLenum type,
 	        const Tag &tag);
 	virtual void apply();
 	virtual void associate();
 	virtual string getFilename() const;
 	virtual GLuint getHandle() const;
 	virtual string getName() const;
+	static int getNumberOfActiveUnits();
 	virtual GLenum getType() const;
 	virtual int getUnit() const;
-	virtual void remove();
-	virtual string toString() const;
-	
-	static int getNumberOfActiveUnits();
 	static void pause();
+	virtual void remove();
 	static void restart();
-	
+	virtual string toString() const;
 protected:
-	
 	GLenum type;
 	GLuint handle;
 	int unit;
 	string filename, name;
-
 private:
-	
 	static vector<GLenum> active_units;
 };
 

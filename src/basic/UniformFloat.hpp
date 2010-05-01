@@ -17,13 +17,10 @@ using namespace std;
  */
 class UniformFloat : public Uniform {
 public:
-	
 	UniformFloat(const Tag &tag);
 	virtual void apply();
 	virtual string toString() const;
-	
 private:
-	
 	GLfloat value;
 };
 

@@ -44,8 +44,6 @@ class Translator : public Manipulator {
 	
 	private:
 		
-		Translator();
-		
 		GLUquadricObj *cone, *disk;
 };
 

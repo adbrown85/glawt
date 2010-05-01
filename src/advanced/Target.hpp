@@ -19,22 +19,16 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief
- *     Offscreen render location backed by a texture.
+ * @brief Offscreen render location backed by a texture.
  */
 class Target : public Node {
 public:
-	
 	Target(const Tag &tag);
 	string toString() const;
-	
 protected:
-	
 	void associate();
 	void finalize();
-	
 private:
-	
 	GLuint framebufferHandle, textureHandle;
 	int size;
 	string link;

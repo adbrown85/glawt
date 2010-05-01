@@ -24,17 +24,13 @@ using namespace std;
  */
 class Scale : public Transformation,
               public Vector {
-	
-	public:
-		
-		Scale(const Tag &tag);
-		virtual void apply();
-		virtual void remove();
-		virtual string toString() const;
-	
-	private:
-		
-		float value;
+public:
+	Scale(const Tag &tag);
+	virtual void apply();
+	virtual void remove();
+	virtual string toString() const;
+private:
+	float value;
 };
 
 

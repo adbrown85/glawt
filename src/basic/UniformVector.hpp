@@ -17,13 +17,10 @@ using namespace std;
  */
 class UniformVector : public Uniform {
 public:
-	
 	UniformVector(const Tag &tag);
 	virtual void apply();
 	virtual string toString() const;
-	
 private:
-	
 	GLfloat value[4];
 	GLint size;
 };

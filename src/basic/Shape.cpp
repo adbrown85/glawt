@@ -12,9 +12,7 @@
  * 
  * @param tag XML tag with "size" attribute.
  */
-Shape::Shape(const string &className,
-             const Tag &tag) : Node(className),
-                               Selectable(tag) {
+Shape::Shape(const Tag &tag) : Selectable(tag) {
 	
 	string style;
 	

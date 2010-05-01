@@ -12,8 +12,7 @@
  * 
  * @param tag XML tag with "x", "y", and "z" values.
  */
-Translation::Translation(const Tag &tag) : 
-                         Transformation("Translation") {
+Translation::Translation(const Tag &tag) {
 	
 	// Initialize
 	tag.get("x", x, false);

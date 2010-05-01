@@ -8,25 +8,37 @@
 
 
 /**
- * Initializes an empty %Shader object.
- */
-Shader::Shader(const string &filename,
-               const string &type) : Node("Shader") {
-	
-	init(filename, type);
-}
-
-
-/**
  * Creates a new %Shader from an XML tag.
  * 
  * @param tag XML tag with "type" and "file" attributes.
  */
-Shader::Shader(const Tag &tag) : Node("Shader") {
+Shader::Shader(const Tag &tag) {
 	
+	// Initialize attributes
+	length = 0;
+	handle = 0;
+	source = NULL;
 	tag.get("file", filename, true, false);
 	tag.get("type", type, false);
-	init(filename, type);
+	
+	// Check type or try to guess from extension
+	if (type != "") {
+		type = Text::toLower(type);
+	} else {
+		string extension = Text::toLower(FileUtility::getExtension(filename));
+		if (extension == "frag")
+			this->type = "fragment";
+		else if (extension == "vert")
+			this->type = "vertex";
+		else {
+			ostringstream msg;
+			msg << "[Shader] Extension '"
+			    << extension << "' not recognized as type.\n";
+			msg << "[Shader] Use '.frag' or '.vert', "
+			    << "or declare 'type' as 'fragment' or 'vertex'.";
+			throw msg.str().c_str();
+		}
+	}
 }
 
 
@@ -97,42 +109,6 @@ void Shader::create() {
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	else
 		throw "[Shader] Type not supported.";
-}
-
-
-/**
- * Initializes the %Shader's attributes.
- */
-void Shader::init(const string &filename,
-                  const string &type) {
-	
-	string extension;
-	
-	// Basics
-	className = "Shader";
-	this->length = 0;
-	this->handle = 0;
-	this->source = NULL;
-	this->filename = filename;
-	
-	// Type
-	if (type != "") {
-		this->type = Text::toLower(type);
-	} else {
-		extension = Text::toLower(FileUtility::getExtension(filename));
-		if (extension == "frag")
-			this->type = "fragment";
-		else if (extension == "vert")
-			this->type = "vertex";
-		else {
-			ostringstream msg;
-			msg << "[Shader] Extension '"
-			    << extension << "' not recognized as type.\n";
-			msg << "[Shader] Use '.frag' or '.vert', "
-			    << "or declare 'type' as 'fragment' or 'vertex'.";
-			throw msg.str().c_str();
-		}
-	}
 }
 
 

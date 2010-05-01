@@ -22,6 +22,7 @@
 #include "Selectable.hpp"          // Drawing manipulators for selection
 #include "Texture.hpp"             // Pausing and restarting texturing
 #include "Transformation.hpp"      // Drawing manipulators for selection
+#include "Traverser.hpp"
 #include "Scene.hpp"               // Rotating camera and accessing root node
 #include "Vector.hpp"
 #include "Window.hpp"
@@ -35,29 +36,21 @@ using namespace std;
  * 
  * @warning Does not flush to the buffer.
  */
-class Painter {
-	
-	public:
-		
-		Painter(Scene *scene,
-		        GLenum mode=GL_RENDER);
-		void addManipulator(Manipulator *manipulator);
-		void paint();
-		void setMode(GLenum mode);
-	
-	protected:
-		
-		void disableTexturing();
-		void paintChildren(Node *node);
-		void paintNode(Node *node);
-		void paintUIElements(Selectable *selectable);
-		
-	private:
-		
-		GLenum mode;
-		static Node *outline;
-		Scene *scene;
-		vector<Manipulator*> manipulators;
+class Painter : public Traverser {
+public:
+	Painter(Scene *scene,
+	        GLenum mode=GL_RENDER);
+	void addManipulator(Manipulator *manipulator);
+	virtual void start();
+	void setMode(GLenum mode);
+protected:
+	virtual void onApplicable(Applicable *node);
+	virtual void onDrawable(Drawable *node);
+	virtual void onSelectable(Selectable *node);
+private:
+	GLenum mode;
+	static Node *outline;
+	vector<Manipulator*> manipulators;
 };
 
 

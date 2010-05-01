@@ -17,13 +17,10 @@ using namespace std;
  */
 class UniformInt : public Uniform {
 public:
-	
 	UniformInt(const Tag &tag);
 	virtual void apply();
 	virtual string toString() const;
-	
 private:
-	
 	GLint value;
 };
 

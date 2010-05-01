@@ -17,24 +17,18 @@ using namespace std;
 
 
 /**
- * @interface Selectable
  * @ingroup graph
- * @brief
- *     Interface for an object that can be part of a selection.
+ * @brief Drawable node that can also be selected.
  */
 class Selectable : public Drawable {
 public:
-	
-	Selectable(float size=1.0);
 	Selectable(const Tag &tag);
 	virtual void deselect();
 	virtual bool isSelected() const;
 	virtual void select();
 	virtual void toggleSelected();
 	virtual string toString() const;
-	
 protected:
-	
 	bool selected;
 };
 

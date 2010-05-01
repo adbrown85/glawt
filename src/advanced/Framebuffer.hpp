@@ -18,13 +18,10 @@
 
 /**
  * @ingroup advanced
- * @brief
- *     Container for offscreen rendering targets.
+ * @brief Container for offscreen rendering targets.
  */
-class Framebuffer : public Node,
-                    public Applicable {
+class Framebuffer : public Applicable {
 public :
-	
 	Framebuffer(const Tag &tag);
 	~Framebuffer();
 	virtual void apply();
@@ -34,13 +31,9 @@ public :
 	static bool isActive();
 	virtual void remove();
 	virtual string toString() const;
-	
 protected:
-	
 	virtual void associate();
-	
 private:
-	
 	static bool active;
 	GLuint depthBuffer, handle;
 };

@@ -12,7 +12,7 @@ using namespace std;
 
 Node* create(const Tag &tag) {
 	
-	return new Node(tag.getName());
+	return new Node();
 }
 
 

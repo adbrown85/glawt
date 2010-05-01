@@ -14,7 +14,7 @@ bool Texture2D::librariesLoaded=false;
  * @param tag XML tag with "size" attributes.
  */
 Texture2D::Texture2D(const Tag &tag) :
-                     Texture("Texture2D", GL_TEXTURE_2D, tag) {
+                     Texture(GL_TEXTURE_2D, tag) {
 	
 	// Initialize
 	this->image = 0;

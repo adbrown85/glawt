@@ -19,20 +19,15 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief
- *     Removes back or front-facing polygons.
+ * @brief Removes back or front-facing polygons.
  */
-class Cull : public Node,
-             public Applicable {
+class Cull : public Applicable {
 public:
-	
 	Cull(const Tag &tag);
 	void apply();
 	void remove();
 	string toString() const;
-
 private:
-	
 	bool enabled;
 	GLenum faces;
 	string facesString;

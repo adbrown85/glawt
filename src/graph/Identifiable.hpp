@@ -20,7 +20,6 @@ using namespace std;
  */
 class Identifiable {
 public:
-	
 	Identifiable();
 	static Identifiable* findByID(unsigned int id);
 	virtual unsigned int getID() const;
@@ -33,9 +32,7 @@ public:
 		bool operator()(const Identifiable *a,
 		                const Identifiable *b);
 	};
-	
 private:
-	
 	unsigned int id;
 	static unsigned int count;
 	static vector<Identifiable*> ids;

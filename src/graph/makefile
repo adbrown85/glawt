@@ -28,4 +28,4 @@ Scene.o: Factory.hpp Node.o Selection.o
 Traverser.o: Applicable.hpp Drawable.o Selectable.o Node.o Scene.o
 
 # Testing
-Tester.o: Applicable.hpp Drawable.o Selectable.o Node.o Scene.o
+Tester.o: Applicable.hpp Drawable.o Selectable.o Node.o Scene.o Traverser.o

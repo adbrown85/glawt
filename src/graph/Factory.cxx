@@ -11,7 +11,7 @@ Node* createShape(const Tag &tag) {
 	
 	cout << "createShape()" << endl;
 	cout << tag << endl;
-	return new Node(tag.getName());
+	return new Node();
 }
 
 
@@ -19,7 +19,7 @@ Node* createTexture(const Tag &tag) {
 	
 	cout << "createTexture()" << endl;
 	cout << tag << endl;
-	return new Node(tag.getName());
+	return new Node();
 }
 
 
@@ -27,7 +27,7 @@ Node* createTransform(const Tag &tag) {
 	
 	cout << "createTransform()" << endl;
 	cout << tag << endl;
-	return new Node(tag.getName());
+	return new Node();
 }
 
 
