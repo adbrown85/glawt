@@ -59,6 +59,7 @@ class Client {
 public:
 	Client(int argc,
 	       char *argv[]);
+	~Client();
 	void start();
 protected:
 	void banner();
@@ -72,7 +73,9 @@ protected:
 private:
 	int argc;
 	char **argv;
-	Scene scene;
+	Display *display;
+	Interpreter *interpreter;
+	Scene *scene;
 	string inFilename, option, outFilename, title;
 };
 

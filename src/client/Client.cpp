@@ -18,6 +18,20 @@ Client::Client(int argc,
 	
 	this->argc = argc;
 	this->argv = argv;
+	this->display = NULL;
+	this->interpreter = NULL;
+	this->scene = NULL;
+}
+
+
+Client::~Client() {
+	
+	if (display != NULL)
+		delete display;
+	if (interpreter != NULL)
+		delete interpreter;
+	if (scene != NULL)
+		delete scene;
 }
 
 
@@ -33,34 +47,41 @@ void Client::banner() {
 
 void Client::onCompile() {
 	
-	Display *display;
-	
-	// Create and start display
+	// Create window
 	Window::init(argc, argv);
-	display = new Display(&scene, title);
-	display->getInterpreter()->run(Command::OPEN, inFilename);
+	Window::create(title);
+	
+	// Open scene
+	scene = new Scene();
+	interpreter = new Interpreter(scene);
+	interpreter->run(Command::OPEN, inFilename);
 }
 
 
 /**
  * Starts the display for a scene.
+ * 
+ * @note Controls are not deleted.
  */
 void Client::onDisplay() {
 	
-	Display *display;
-	
-	// Initialize scene
-	scene.setFilename(inFilename);
-	
-	// Form title
-	
-	// Create and start display
+	// Create window
 	Window::init(argc, argv);
-	display = new Display(&scene, title);
-	display->install(new Keyboard(display->getInterpreter(), &scene));
-	display->install(new Menu(display->getInterpreter(), &scene));
-	display->install(new Mouse(display->getInterpreter(), &scene));
-	display->start();
+	Window::create(title);
+	
+	// Open scene
+	scene = new Scene();
+	interpreter = new Interpreter(scene);
+	interpreter->run(Command::OPEN, inFilename);
+	
+	// Add display and controls
+	display = new Display(interpreter);
+	display->add(new Keyboard(interpreter));
+	display->add(new Menu(interpreter));
+	display->add(new Mouse(interpreter));
+	
+	// Start
+	Window::start();
 }
 
 
