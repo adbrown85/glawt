@@ -30,7 +30,6 @@ typedef void (*idle_callback_t)(void);
 
 class Window {
 public :
-	
 	static void init(int argc,
 	                 char *argv[]);
 	static void applyView();
@@ -47,30 +46,20 @@ public :
 	static void quit();
 	static void refresh();
 	static void reset();
-	static void rotate(float angle,
-	                   const Vector &axis);
+	static void rotate(float angle, const Vector &axis);
 	static void setDisplay(display_callback_t display);
 	static void setKeyboard(keyboard_callback_t keyboard);
 	static void setIdle(idle_callback_t idle);
 	static void setSpecial(special_callback_t special);
 	static void start();
 	static void translate(const Vector &move);
-	static void translate(float x,
-	                      float y,
-	                      float z);
-	
+	static void translate(float x, float y, float z);
+	static void write(const string &text, int x=15, int y=30);
 protected:
-	
 	static void display(void);
-	static void keyboard(unsigned char key,
-	                     int x,
-	                     int y);
-	static void special(int key,
-	                    int x,
-	                    int y);
-	
+	static void keyboard(unsigned char key, int x, int y);
+	static void special(int key, int x, int y);
 private:
-	
 	static int height, width;
 	static Quaternion rotation;
 	static Vector position;

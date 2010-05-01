@@ -82,6 +82,7 @@ void Window::display(void) {
 		glVertex2f(-0.5, -0.5);
 		glVertex2f(+0.5, -0.5);
 	glEnd();
+	Window::write("Window");
 	
 	// Flush
 	Window::flush();
@@ -162,5 +163,35 @@ void Window::translate(const Vector &move) {
 	
 	position += move;
 	refresh();
+}
+
+
+void Window::write(const string &text,
+                   int x,
+                   int y) {
+	
+	float xf, yf;
+	int viewport[4];
+	
+	// Calculate position
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	xf = ((float)viewport[2] - x) / viewport[2];
+	yf = ((float)viewport[3] - y) / viewport[3];
+	
+	// Set position
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+			glLoadIdentity();
+			glRasterPos2f(-xf, yf);
+		glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	
+	// Draw text
+	for (size_t i=0; i<text.length(); ++i)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, text[i]);
 }
 
