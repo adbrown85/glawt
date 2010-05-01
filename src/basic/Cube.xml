@@ -10,7 +10,7 @@
 	<shader file="../../glsl/basic.vert" />
 	<shader file="../../glsl/basic.frag" />
 	<translate x="1.0">
-		<cube>
+		<cube style="2D">
 			<uniform type="mat4" name="MVMatrix" link="modelview" />
 			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<uniform type="mat3" name="NormalMatrix" link="normal" />

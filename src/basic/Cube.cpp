@@ -49,8 +49,10 @@ void Cube::draw() const {
 		switch (style) {
 		case GL_TEXTURE_2D:
 			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
+			break;
 		case GL_TEXTURE_3D:
 			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords3dOffset);
+			break;
 		}
 	}
 	
