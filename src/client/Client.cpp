@@ -73,6 +73,7 @@ void Client::onDisplay() {
 	scene = new Scene();
 	interpreter = new Interpreter(scene);
 	interpreter->run(Command::OPEN, inFilename);
+	interpreter->run(Command::LIST);
 	
 	// Add display and controls
 	display = new Display(interpreter);

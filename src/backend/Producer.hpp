@@ -42,6 +42,7 @@ class Producer : public Delegate {
 		static void copy(Scene *scene, int command);
 		static void cut(Scene *scene, int command);
 		static void duplicate(Scene *scene, int command);
+		static void list(Scene *scene, int command);
 		static void open(Scene *scene, int command, string filename);
 		static void paste(Scene *scene, int command);
 		static void quit(Scene *scene, int command);

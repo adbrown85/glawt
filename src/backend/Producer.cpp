@@ -22,9 +22,17 @@ Producer::Producer() {
 	handlersZero[Command::EXIT] = &Producer::quit;
 	handlersZero[Command::PASTE] = &Producer::paste;
 	handlersZero[Command::SAVE] = &Producer::save;
+	handlersZero[Command::LIST] = &Producer::list;
 	
 	// Add string-argument handlers
 	handlersString[Command::OPEN] = &Producer::open;
+}
+
+
+void Producer::list(Scene *scene,
+                    int command) {
+	
+	scene->print();
 }
 
 
@@ -68,7 +76,6 @@ void Producer::open(Scene *scene,
 	// Prepare it
 	scene->setRoot(Factory::create("translate"));
 	scene->prepare();
-	scene->print();
 }
 
 

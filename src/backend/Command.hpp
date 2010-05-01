@@ -14,68 +14,35 @@ using namespace std;
 
 /**
  * @ingroup backend
- * @brief
- *     %Commands passed to %Delegates to change the %Scene or %Items.
+ * @brief %Commands passed to work with the %Scene.
  */
 class Command {
-	
-	public:
-		
-		static void print();
-		static string getName(int command);
-		
-		enum {
-			BOOM,
-			BOOM_DOWN,
-			BOOM_UP,
-			CIRCLE_X,
-			CIRCLE_Y,
-			CIRCLE_LEFT,
-			CIRCLE_RIGHT,
-			CIRCLE_DOWN,
-			CIRCLE_UP,
-			FIT_SELECTED,
-			FIT_ALL,
-			TRACK,
-			TRACK_LEFT,
-			TRACK_RIGHT,
-			ZOOM_IN,
-			ZOOM_OUT,
-			RESET,
-			ROTATE_X,
-			ROTATE_Y,
-			ROTATE_Z,
-			SCALE_X,
-			SCALE_Y,
-			SCALE_Z,
-			TRANSLATE_X,
-			TRANSLATE_Y,
-			TRANSLATE_Z,
-			COPY,
-			CUT,
-			PASTE,
-			DUPLICATE,
-			EXIT,
-			OPEN,
-			SAVE,
-			HIDE,
-			SHOW_ALL,
-			INFORMATION,
-			DESELECT,
-			GRAB,
-			NEXT,
-			PREVIOUS,
-			SELECT_ALL,
-			MANIPULATE
-		};
-	
-	private :
-		
-		static bool loaded;
-		static map<int,string> names;
-		
-		static void initialize();
-		static void setNames();
+public:
+	static void print();
+	static string getName(int command);
+	enum {
+		BOOM, BOOM_DOWN, BOOM_UP,
+		CIRCLE_X, CIRCLE_Y, CIRCLE_LEFT, CIRCLE_RIGHT, CIRCLE_DOWN, CIRCLE_UP,
+		FIT_SELECTED, FIT_ALL,
+		TRACK, TRACK_LEFT, TRACK_RIGHT,
+		ZOOM_IN, ZOOM_OUT,
+		RESET,
+		ROTATE_X, ROTATE_Y, ROTATE_Z,
+		SCALE_X, SCALE_Y, SCALE_Z,
+		TRANSLATE_X, TRANSLATE_Y, TRANSLATE_Z,
+		COPY, CUT, PASTE, DUPLICATE,
+		OPEN, LIST, SAVE, EXIT,
+		HIDE, SHOW_ALL,
+		INFORMATION,
+		GRAB, DESELECT, SELECT_ALL,
+		NEXT, PREVIOUS,
+		MANIPULATE
+	};
+private :
+	static bool loaded;
+	static map<int,string> names;
+	static void initialize();
+	static void setNames();
 };
 
 
@@ -113,6 +80,7 @@ inline void Command::setNames() {
 	names[DUPLICATE] = "Duplicate";
 	names[EXIT] = "Quit";
 	names[OPEN] = "Open";
+	names[LIST] = "List";
 	names[SAVE] = "Save";
 	names[HIDE] = "Hide";
 	names[SHOW_ALL] = "Show All";
