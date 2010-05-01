@@ -1,6 +1,11 @@
 <program>
+	<shader file="window.vert"/>
 	<shader file="window.frag"/>
-	<translate x="1.0">
-		<box/>
-	</translate>
+	<uniform type="int" name="WindowSize" value="512" />
+		<translate x="1.0">
+			<cube>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			</cube>
+		</translate>
+	</uniform>
 </program>

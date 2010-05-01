@@ -12,9 +12,10 @@
 		<program>
 			<shader file="coordinates.vert" />
 			<shader file="coordinates.frag" />
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 			<cull faces="front">
-				<cube />
+				<cube>
+					<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				</cube>
 			</cull>
 		</program>
 	</framebuffer>
@@ -23,12 +24,13 @@
 		<program>
 			<shader file="octree.vert"/>
 			<shader file="octree.frag"/>
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-			<uniform type="sampler2D" name="buffer" link="buffer" />
-			<uniform type="sampler3D" name="volume" link="volume" />
-			<uniform type="usampler1D" name="octree" link="octree" />
-			<uniform type="int" name="height" value="1" />
-			<cube />
+			<cube>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="sampler2D" name="buffer" link="buffer" />
+				<uniform type="sampler3D" name="volume" link="volume" />
+				<uniform type="usampler1D" name="octree" link="octree" />
+				<uniform type="int" name="height" value="1" />
+			</cube>
 		</program>
 	</octree>
 	</texture>

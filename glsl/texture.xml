@@ -13,20 +13,22 @@
 	<texture name="crate" file="../textures/crate.jpg">
 		<translate x="+5.0">
 		<scale value="4.0">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-			<uniform type="sampler2d" name="unit" link="crate" />
-			<cube style="2D" />
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="sampler2d" name="unit" link="crate" />
+			</cube>
 		</scale>
 		</translate>
 	</texture>
-
+	
 	<!-- Right cube -->
 	<texture name="stone" file="../textures/stone.jpg">
 		<translate x="-5.0">
 		<scale value="4.0">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-			<uniform type="sampler2d" name="unit" link="stone" />
-			<cube style="2D" />
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="sampler2d" name="unit" link="stone" />
+			</cube>
 		</scale>
 		</translate>
 	</texture>

@@ -6,15 +6,20 @@
 -->
 
 <program>
+	<shader file="coordinates.vert"/>
 	<shader file="coordinates.frag"/>
 	<cull faces="front">
 		<translate x="-2">
-			<box size="2"/>
+			<cube>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			</cube>
 		</translate>
 	</cull>
 	<cull faces="back">
 		<translate x="+2">
-			<box size="2"/>
+			<cube>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			</cube>
 		</translate>
 	</cull>
 </program>

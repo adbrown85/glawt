@@ -9,9 +9,10 @@
 <program>
 	<shader file="outline.vert" />
 	<shader file="outline.frag" />
-	<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
 	<wireframe>
-		<cube />
+		<cube>
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		</cube>
 	</wireframe>
 </program>
 

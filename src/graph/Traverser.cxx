@@ -64,7 +64,7 @@ Node* create(const Tag &tag) {
 		return new FakeSelectable(tag);
 	} else if (name=="fullscreen") {
 		return new FakeDrawable(tag);
-	} else if (name=="program" || name=="translate") {
+	} else if (name=="program" || name=="translate" || name=="uniform") {
 		return new FakeApplicable(tag);
 	} else {
 		return new Node();
@@ -91,6 +91,7 @@ void TraverserTest::before() {
 	Factory::install("shader", &create);
 	Factory::install("translate", &create);
 	Factory::install("cube", &create);
+	Factory::install("uniform", &create);
 	scene = new Scene();
 	scene->open("Traverser.xml");
 	traverser = new FakeTraverser(scene);

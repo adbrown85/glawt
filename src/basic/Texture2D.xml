@@ -12,10 +12,11 @@
 	<program>
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
-		<translate z="2.0">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-			<uniform type="sampler2D" name="unit" link="crate" />
-			<square/>
+		<translate x="0.5">
+			<square>
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="sampler2D" name="unit" link="crate" />
+			</square>
 		</translate>
 	</program>
 </texture>

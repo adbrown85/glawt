@@ -9,6 +9,7 @@
 <program>
 	<shader file="coordinates.vert" />
 	<shader file="coordinates.frag" />
-	<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-	<cube />
+	<cube>
+		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+	</cube>
 </program>

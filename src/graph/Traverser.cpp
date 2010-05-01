@@ -26,15 +26,15 @@ void Traverser::onDrawable(Drawable *node) {
 	
 	Selectable *selectable;
 	
+	// Children should be drawn first
+	traverseChildren(node);
+	
 	// Draw the node and check if also selectable
 	node->draw();
 	if ((selectable = dynamic_cast<Selectable*>(node))) {
 		if (selectable->isSelected())
 			onSelectable(selectable);
 	}
-	
-	// Children
-	traverseChildren(node);
 }
 
 

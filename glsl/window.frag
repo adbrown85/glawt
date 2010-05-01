@@ -4,11 +4,15 @@
  * Author
  *     Andrew Brown
  */
+#version 130
+uniform int WindowSize;
+in vec2 TexCoord;
+out vec4 FragColor;
 
 
 void main() {
 	
-	gl_FragColor.rg = gl_FragCoord.xy / 512;
-	gl_FragColor.a = 1.0;
+	FragColor.rg = gl_FragCoord.xy / WindowSize;
+	FragColor.a = 1.0;
 }
 

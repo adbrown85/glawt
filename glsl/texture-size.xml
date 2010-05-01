@@ -11,8 +11,9 @@
 	<shader file="texture-size.frag" />
 	
 	<texture name="crate" file="../textures/crate.jpg">
-		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-		<uniform type="sampler2D" name="unit" link="crate" />
-		<cube style="2D" />
+		<cube style="2D">
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="sampler2D" name="unit" link="crate" />
+		</cube>
 	</texture>
 </program>

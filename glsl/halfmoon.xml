@@ -8,12 +8,16 @@
 
 
 <program>
+	<shader file="halfmoon.vert" />
 	<shader file="halfmoon.frag" />
-		<translate x="+3.0">
-			<box size="2.0" style="2d" />
-		</translate>
-		<translate x="-3.0">
-			<box size="2.0" style="2d" />
-		</translate>
-	</uniform>
+	<translate x="+3.0">
+		<cube style="2d">
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		</cube>
+	</translate>
+	<translate x="-3.0">
+		<cube style="2d">
+			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		</cube>
+	</translate>
 </program>
