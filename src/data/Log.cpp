@@ -94,8 +94,8 @@ void Log::printLine(const string &line,
 	preprocessor = it->second;
 	
 	// Print line substituting file and line number
-	cerr << preprocessor->getFileForLine(lineNum) << "(" 
-	     << preprocessor->getRealLineNumber(lineNum) << "):"
+	cerr << preprocessor->getFileForLine(lineNum) << ":" 
+	     << preprocessor->getRealLineNumber(lineNum) << ":"
 	     << findMessage(line)
 	     << endl;
 }
