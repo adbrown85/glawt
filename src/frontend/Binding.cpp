@@ -251,6 +251,7 @@ void Binding::init(int trigger,
  */
 void Binding::initTriggerNames() {
 	
+	triggerNames[27] = "Esc";
 	triggerNames[GLUT_KEY_LEFT] = "Left";
 	triggerNames[GLUT_KEY_RIGHT] = "Right";
 	triggerNames[GLUT_KEY_UP] = "Up";

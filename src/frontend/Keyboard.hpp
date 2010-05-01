@@ -56,6 +56,7 @@ inline void Keyboard::initBindings() {
 	add(Binding(GLUT_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
 	add(Binding(GLUT_KEY_UP, 0, Command::CIRCLE_UP, 5.0f));
 	add(Binding(GLUT_KEY_HOME, 0, Command::RESET));
+	add(Binding(27, 0, Command::EXIT));
 	add(Binding('Q', GLUT_ACTIVE_ALT, Command::EXIT));
 	add(Binding('A', 0, Command::SELECT_ALL));
 	add(Binding('D', 0, Command::DESELECT));

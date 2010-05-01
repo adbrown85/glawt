@@ -33,6 +33,7 @@ int main(int argc,
 	// Check constructors
 	cout << endl;
 	cout << "Checking constructors:" << endl;
+	bins.push_back(Binding(27, 0, Command::EXIT));
 	bins.push_back(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT));
 	bins.push_back(Binding(GLUT_KEY_RIGHT, GLUT_ACTIVE_ALT, Command::CIRCLE_RIGHT));
 	bins.push_back(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT, Command::CIRCLE_UP));
