@@ -39,8 +39,7 @@ void Scene::open(const string &filename) {
 		cerr << "[Scene] Opening '" << filename << "'..." << endl;
 		this->filename = filename;
 		root = Factory::open(filename);
-	}
-	catch (char const *e) {
+	} catch (char const *e) {
 		cerr << e << endl;
 		exit(1);
 	}
@@ -52,8 +51,38 @@ void Scene::open(const string &filename) {
  */
 void Scene::prepare() {
 	
-	if (root != NULL) {
-		root->prepare();
+	Node* node;
+	queue<Node*> q;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
+	
+	// Check for bad input
+	if (root == NULL) {
+		throw "[Scene] Cannot prepare empty scene.";
+	}
+	
+	// Associate all the nodes
+	q.push(root);
+	while (!q.empty()) {
+		node = q.front();
+		node->associate();
+		children = node->getChildren();
+		for (it=children.begin(); it!=children.end(); ++it) {
+			q.push(*it);
+		}
+		q.pop();
+	}
+	
+	// Finalize all the nodes
+	q.push(root);
+	while (!q.empty()) {
+		node = q.front();
+		node->finalize();
+		children = node->getChildren();
+		for (it=children.begin(); it!=children.end(); ++it) {
+			q.push(*it);
+		}
+		q.pop();
 	}
 }
 
@@ -61,11 +90,23 @@ void Scene::prepare() {
 /**
  * Prints the list of items stored.
  */
-void Scene::print() {
+void Scene::print(const Node *node,
+                  string indent) {
 	
-	if (root != NULL) {
-		root->printTree();
-	}
+	vector<Node*>::const_iterator it;
+	vector<Node*> children;
+	
+	// Check for bad input
+	if (node == NULL)
+		return;
+	
+	// Print node
+	cout << indent << node << endl;
+	
+	// Print each child
+	children = node->getChildren();
+	for (it=children.begin(); it!=children.end(); ++it)
+		print((*it), indent+"  ");
 }
 
 

@@ -32,8 +32,8 @@ int main() {
 		nodes[i].addChild(&nodes[i+1]);
 	
 	// Print tree
-	cout << "Printing tree:" << endl;
-	root.printTree();
+	//cout << "Printing tree:" << endl;
+	//root.printTree();
 	
 	// Finish
 	cout << endl;

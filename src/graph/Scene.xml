@@ -10,7 +10,10 @@
 <program>
 	<shader file="../../input/coordinates.vert" />
 	<shader file="../../input/coordinates.frag" />
-	<translate x="0.5" y="0.5">
+	<translate x="+0.5" y="+0.5">
+		<cube />
+	</translate>
+	<translate x="-0.5" -y="0.5">
 		<cube />
 	</translate>
 </program>

@@ -7,11 +7,13 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
-#include <map>
-#include <sstream>
 #include <string>
+#include <GL/glut.h>
+#include <map>
+#include <queue>
+#include <stack>
+#include <sstream>
 #include <vector>
 #include "Factory.hpp"
 #include "Matrix.hpp"
@@ -31,25 +33,23 @@ using namespace std;
  */
 class Scene {
 public:
-	
 	Scene(const string &filename="");
 	~Scene();
 	void addAllToSelection();
 	void addToSelection(Selectable *selectable);
-	void open(const string &filename);
-	void prepare();
-	void print();
-	void removeAllFromSelection();
-	void removeFromSelection(Selectable *selectable);
-	
 	string getFilename() const;
 	Node* getRoot() const;
 	Selection getSelection() const;
+	void open(const string &filename);
+	void prepare();
+	void removeAllFromSelection();
+	void removeFromSelection(Selectable *selectable);
+	void print();
 	void setFilename(const string &filename);
 	void setRoot(Node *node);
-	
+protected:
+	void print(const Node *node, string indent="");
 private:
-	
 	Node *root;
 	Selection selection;
 	string filename;
@@ -76,8 +76,8 @@ inline Selection Scene::getSelection() const {
 	return selection;
 }
 
-inline void Scene::setFilename(const string &filename) {
-	this->filename = filename;
+inline void Scene::print() {
+	print(root, "");
 }
 
 inline void Scene::removeAllFromSelection() {
@@ -86,6 +86,10 @@ inline void Scene::removeAllFromSelection() {
 
 inline void Scene::removeFromSelection(Selectable *selectable) {
 	selection.remove(selectable);
+}
+
+inline void Scene::setFilename(const string &filename) {
+	this->filename = filename;
 }
 
 #endif

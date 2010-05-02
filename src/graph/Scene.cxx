@@ -9,10 +9,46 @@
 #define NUM_OF_ITEMS 3
 using namespace std;
 
+class FakeNode : public Node {
+public:
+	virtual void associate() {cout << "Associate " << getClassName() << endl;}
+	virtual void finalize() {cout << "Finalize " << getClassName() << endl;}
+};
+
+class FakeProgram : public FakeNode {
+public:
+	FakeProgram() {}
+};
+class FakeShader : public FakeNode {
+public:
+	FakeShader() {}
+};
+class FakeTranslate : public FakeNode {
+public:
+	FakeTranslate() {}
+};
+class FakeCube : public FakeNode {
+public:
+	FakeCube() {}
+};
+
 
 Node* create(const Tag &tag) {
 	
-	return new Node();
+	string name;
+	
+	name = tag.getName();
+	if (name == "program") {
+		return new FakeProgram();
+	} else if (name == "shader") {
+		return new FakeShader();
+	} else if (name == "translate") {
+		return new FakeTranslate();
+	} else if (name == "cube") {
+		return new FakeCube();
+	} else {
+		throw "Could not create node.";
+	}
 }
 
 
@@ -39,6 +75,7 @@ int main() {
 	// Test open
 	cout << "Testing open..." << endl;
 	scene.open("Scene.xml");
+	scene.prepare();
 	scene.print();
 	
 	// Finish
@@ -47,35 +84,5 @@ int main() {
 	cout << "Scene" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
-	
-/*
-	float rotation;
-	
-	// Build scene
-	cout << "\nBuilding scene..." << endl;
-	srand(time(NULL));
-	for (int i=0; i<NUM_OF_ITEMS; ++i) {
-		//sceneA.addToRoot(new Translation(0, 0, rand()%10));
-		sceneA.addToLast(new FakeShape(1.0));
-		sceneA.backup();
-		sceneA.addToLast(new FakeShape(2.0));
-	}
-	sceneA.print();
-	
-	// Sort by depth
-	cout << "\nEnter rotation:  ";
-	cin >> rotation;
-	while (cin) {
-		sceneA.setRotation(rotation, 0, 1, 0);
-		cout << "Sorting by depth..." << endl;
-		sceneA.sortByDepth();
-		sceneA.print();
-		cout << endl;
-		cout << "Enter rotation:  ";
-		cin >> rotation;
-	}
-	cout << endl;
-*/
-	
 }
 
