@@ -36,7 +36,7 @@ void Node::addChild(Node *child) {
  */
 void Node::associateTree() {
 	
-	list<Node*>::iterator it;
+	vector<Node*>::iterator it;
 	
 	// Associate self and children
 	associate();
@@ -48,8 +48,8 @@ void Node::associateTree() {
 /**
  * Compares two Node pointers by depth.
  */
-bool compare(Node *A,
-             Node *B) {
+bool Node::compare(Node *A,
+                   Node *B) {
 	
 	return A->depth < B->depth;
 }
@@ -62,7 +62,7 @@ bool compare(Node *A,
 void Node::computeDepth(Matrix &matrix) {
 	
 	float avg=0.0, tot=0.0;
-	list<Node*>::iterator it;
+	vector<Node*>::iterator it;
 	int numOfChildren;
 	
 	// Sum depths of children
@@ -80,7 +80,7 @@ void Node::computeDepth(Matrix &matrix) {
 
 void Node::destroy(Node *node) {
 	
-	list<Node*>::iterator it;
+	vector<Node*>::iterator it;
 	
 	for (it=node->children.begin(); it!=node->children.end(); ++it)
 		destroy(*it);
@@ -95,7 +95,7 @@ void Node::destroy(Node *node) {
  */
 void Node::finalizeTree() {
 	
-	list<Node*>::iterator it;
+	vector<Node*>::iterator it;
 	
 	// Associate self and children
 	finalize();
@@ -159,7 +159,7 @@ void Node::printTree() const {
  */
 void Node::printTree(int level) const {
 	
-	list<Node*>::const_iterator it;
+	vector<Node*>::const_iterator it;
 	string indent;
 	
 	// Print self
@@ -177,7 +177,7 @@ void Node::printTree(int level) const {
 /*
 void Node::sortByDepth(Matrix &matrix) {
 	
-	list<Node*>::iterator it;
+	vector<Node*>::iterator it;
 	
 	// Start
 	sortByDepthBeg(matrix);

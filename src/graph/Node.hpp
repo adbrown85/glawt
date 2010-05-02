@@ -8,11 +8,11 @@
 #define NODE_HPP
 #include <algorithm>
 #include <cstdlib>
-#include <list>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <typeinfo>
+#include <vector>
 #include "Matrix.hpp"
 #include "Text.hpp"
 using namespace std;
@@ -28,10 +28,10 @@ public:
 	virtual ~Node() {};
 	void addChild(Node *child);
 	virtual void associateTree();
-	friend bool compare(Node *A, Node *B);
+	static bool compare(Node *A, Node *B);
 	static void destroy(Node *node);
 	virtual void finalizeTree();
-	virtual list<Node*> getChildren() const;
+	virtual vector<Node*> getChildren() const;
 	int getChildrenSize() const;
 	string getClassName() const;
 	float getDepth() const;
@@ -40,7 +40,7 @@ public:
 	static void print(const Node *node);
 	virtual void print() const;
 	virtual void printTree() const;
-	void setChildren(const list<Node*> children);
+	void setChildren(const vector<Node*> children);
 	void setDepth(float depth);
 	void setParent(Node *parent);
 	//virtual void sortByDepth(Matrix &matrix);
@@ -48,7 +48,7 @@ public:
 protected:
 	float depth;
 	Node *parent;
-	list<Node*> children;
+	vector<Node*> children;
 	virtual void associate() {}
 	//virtual void computeDepth(Matrix &matrix);
 	virtual void finalize() {}
@@ -58,11 +58,11 @@ protected:
 };
 
 
-inline list<Node*> Node::getChildren() const {return children;}
+inline vector<Node*> Node::getChildren() const {return children;}
 inline int Node::getChildrenSize() const {return children.size();}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
-inline void Node::setChildren(const list<Node*> children) {
+inline void Node::setChildren(const vector<Node*> children) {
 	this->children = children;
 }
 inline void Node::setDepth(float depth) {

@@ -62,8 +62,8 @@ void Compositor::showAll(Scene *scene,
 void Compositor::showAll(Node *node) {
 	
 	Drawable *drawable;
-	list<Node*> children;
-	list<Node*>::iterator it;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
 	
 	// Show node
 	drawable = dynamic_cast<Drawable*>(node);

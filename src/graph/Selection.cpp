@@ -22,8 +22,8 @@ void Selection::add(Selectable *item) {
  */
 void Selection::addAll(Node *node) {
 	
-	list<Node*> children;
-	list<Node*>::iterator it;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
 	Selectable *selectable;
 	
 	// Add item if selectable

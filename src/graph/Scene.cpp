@@ -71,8 +71,8 @@ void Scene::print() {
 
 void Scene::setRoot(Node *node) {
 	
-	list<Node*> children;
-	list<Node*>::iterator it;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
 	
 	// Test for bad input
 	if (node == NULL) {

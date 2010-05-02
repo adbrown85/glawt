@@ -66,8 +66,8 @@ void Traverser::start() {
  */
 void Traverser::traverseChildren(Node *node) {
 	
-	list<Node*> children;
-	list<Node*>::iterator it;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
 	
 	// Traverse each child
 	children = node->getChildren();
