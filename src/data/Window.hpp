@@ -17,8 +17,8 @@
 #define DEFAULT_SCREEN_Y 300
 #define DEFAULT_WIDTH 512
 #define DEFAULT_HEIGHT 512
-#define DEFAULT_ZOOM -5.0
-#define DEFAULT_ROTATE_AMOUNT 15.0
+#define DEFAULT_ZOOM -10.0
+#define DEFAULT_ROTATE_AMOUNT 5.0
 using namespace std;
 
 
