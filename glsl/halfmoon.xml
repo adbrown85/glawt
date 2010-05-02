@@ -10,14 +10,16 @@
 <program>
 	<shader file="halfmoon.vert" />
 	<shader file="halfmoon.frag" />
-	<translate x="+3.0">
-		<cube style="2D">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-		</cube>
-	</translate>
-	<translate x="-3.0">
-		<cube style="2D">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
-		</cube>
-	</translate>
+	<blend>
+		<translate x="+3.0">
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			</cube>
+		</translate>
+		<translate x="-3.0">
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			</cube>
+		</translate>
+	</blend>
 </program>

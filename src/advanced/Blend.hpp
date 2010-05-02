@@ -6,6 +6,7 @@
  */
 #ifndef BLEND_HPP
 #define BLEND_HPP
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <list>
@@ -14,6 +15,7 @@
 #include "Applicable.hpp"
 #include "Tag.hpp"
 #include "Translation.hpp"
+#include "Window.hpp"
 using namespace std;
 
 
@@ -24,8 +26,10 @@ public:
 	virtual void associate();
 	//virtual list<Node*> getChildren() const;
 	virtual void remove();
+protected:
+	void sortChildren();
 private:
-	list<Node*> translates;
+	list<Translation*> translates;
 };
 
 
