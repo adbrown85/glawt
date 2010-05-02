@@ -14,6 +14,7 @@
 #include <sstream>
 #include <string>
 #include <typeinfo>
+#include <vector>
 #include "Node.hpp"
 #include "Applicable.hpp"
 #include "Tag.hpp"

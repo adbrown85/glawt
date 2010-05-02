@@ -36,13 +36,12 @@ void Node::addChild(Node *child) {
  */
 void Node::associateTree() {
 	
-	int numberOfChildren;
+	list<Node*>::iterator it;
 	
 	// Associate self and children
 	associate();
-	numberOfChildren = children.size();
-	for (int i=0; i<numberOfChildren; ++i)
-		children[i]->associateTree();
+	for (it=children.begin(); it!=children.end(); ++it)
+		(*it)->associateTree();
 }
 
 
@@ -59,9 +58,11 @@ bool compare(Node *A,
 /**
  * Computes the node's depth by averaging its children's depths.
  */
+/*
 void Node::computeDepth(Matrix &matrix) {
 	
 	float avg=0.0, tot=0.0;
+	list<Node*>::iterator it;
 	int numOfChildren;
 	
 	// Sum depths of children
@@ -74,11 +75,12 @@ void Node::computeDepth(Matrix &matrix) {
 		avg = tot / numOfChildren;
 	depth = avg;
 }
+*/
 
 
 void Node::destroy(Node *node) {
 	
-	vector<Node*>::iterator it;
+	list<Node*>::iterator it;
 	
 	for (it=node->children.begin(); it!=node->children.end(); ++it)
 		destroy(*it);
@@ -93,13 +95,12 @@ void Node::destroy(Node *node) {
  */
 void Node::finalizeTree() {
 	
-	int numberOfChildren;
+	list<Node*>::iterator it;
 	
 	// Associate self and children
 	finalize();
-	numberOfChildren = children.size();
-	for (int i=0; i<numberOfChildren; ++i)
-		children[i]->finalizeTree();
+	for (it=children.begin(); it!=children.end(); ++it)
+		(*it)->finalizeTree();
 }
 
 
@@ -158,7 +159,7 @@ void Node::printTree() const {
  */
 void Node::printTree(int level) const {
 	
-	int count;
+	list<Node*>::const_iterator it;
 	string indent;
 	
 	// Print self
@@ -168,21 +169,20 @@ void Node::printTree(int level) const {
 	print(this);
 	
 	// Print each child
-	count = children.size();
-	for (int i=0; i<count; ++i)
-		children[i]->printTree(level+1);
+	for (it=children.begin(); it!=children.end(); ++it)
+		(*it)->printTree(level+1);
 }
 
 
+/*
 void Node::sortByDepth(Matrix &matrix) {
 	
-	int numOfChildren;
+	list<Node*>::iterator it;
 	
 	// Start
 	sortByDepthBeg(matrix);
 	
 	// Sort children
-	numOfChildren = children.size();
 	for (int i=0; i<numOfChildren; ++i)
 		children[i]->sortByDepth(matrix);
 	if (numOfChildren > 1)
@@ -194,6 +194,7 @@ void Node::sortByDepth(Matrix &matrix) {
 	// Finish
 	sortByDepthEnd(matrix);
 }
+*/
 
 
 string Node::toString() const {

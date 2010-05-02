@@ -31,10 +31,6 @@ int main() {
 	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
 		nodes[i].addChild(&nodes[i+1]);
 	
-	// Sort by depth
-	cout << "Sorting by depth..." << endl;
-	root.sortByDepth(rotMatrix);
-	
 	// Print tree
 	cout << "Printing tree:" << endl;
 	root.printTree();

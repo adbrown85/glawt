@@ -68,10 +68,12 @@ int main() {
 	}
 	root.printTree();
 	
+/*
 	// Sort by depth
 	cout << "\nSorting by depth..." << endl;
 	root.sortByDepth(rotMatrix);
 	root.printTree();
+*/
 	
 	// Finish
 	cout << endl;

@@ -22,18 +22,19 @@ void Selection::add(Selectable *item) {
  */
 void Selection::addAll(Node *node) {
 	
+	list<Node*> children;
+	list<Node*>::iterator it;
 	Selectable *selectable;
-	vector<Node*> children;
 	
-	// Add item if 
+	// Add item if selectable
 	selectable = dynamic_cast<Selectable*>(node);
 	if (selectable != NULL)
 		add(selectable);
 	
 	// Add children
 	children = node->getChildren();
-	for (size_t i=0; i<children.size(); ++i)
-		addAll(children[i]);
+	for (it=children.begin(); it!=children.end(); ++it)
+		addAll(*it);
 }
 
 

@@ -8,6 +8,7 @@
 #define SELECTION_HPP
 #include <cstdlib>
 #include <iostream>
+#include <list>
 #include <set>
 #include "Identifiable.hpp"
 #include "Node.hpp"
