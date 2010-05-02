@@ -35,6 +35,7 @@ int main(int argc,
 	// Test
 	try {
 		AdvancedFactory::install();
+		testCreate("blend");
 		testCreate("cull faces='front'");
 		testCreate("framebuffer");
 		testCreate("fullscreen");

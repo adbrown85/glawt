@@ -16,12 +16,19 @@ void AdvancedFactory::install() {
 	installed = true;
 	
 	// Tags
+	Factory::install("blend", &createBlend);
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
 	Factory::install("octree", &createOctree);
 	Factory::install("target", &createTarget);
 	Factory::install("wireframe", &createWireframe);
+}
+
+
+Node* AdvancedFactory::createBlend(const Tag &tag) {
+	
+	return new Blend(tag);
 }
 
 

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include "Factory.hpp"
+#include "Blend.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
@@ -25,20 +26,17 @@ using namespace std;
  *     %Factory for creating more esoteric nodes not used by many files.
  */
 class AdvancedFactory : public Factory {
-	
-	public:
-		
-		static void install();
-		static Node* createCull(const Tag &tag);
-		static Node* createFramebuffer(const Tag &tag);
-		static Node* createFullscreen(const Tag &tag);
-		static Node* createOctree(const Tag &tag);
-		static Node* createTarget(const Tag &tag);
-		static Node* createWireframe(const Tag &tag);
-	
-	private:
-		
-		static bool installed;
+public:
+	static void install();
+	static Node* createBlend(const Tag &tag);
+	static Node* createCull(const Tag &tag);
+	static Node* createFramebuffer(const Tag &tag);
+	static Node* createFullscreen(const Tag &tag);
+	static Node* createOctree(const Tag &tag);
+	static Node* createTarget(const Tag &tag);
+	static Node* createWireframe(const Tag &tag);
+private:
+	static bool installed;
 };
 
 
