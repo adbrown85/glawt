@@ -36,6 +36,7 @@ public:
 	float getDepth() const;
 	Node* getParent() const;
 	bool hasChildren() const;
+	virtual bool isSealed() const;
 	friend ostream& operator<<(ostream &stream, const Node *node);
 	void setDepth(float depth);
 	virtual string toString() const;
@@ -50,6 +51,7 @@ inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
 inline bool Node::hasChildren() const {return !children.empty();}
+inline bool Node::isSealed() const {return false;}
 inline void Node::setDepth(float depth) {this->depth = depth;}
 
 

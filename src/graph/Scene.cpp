@@ -76,9 +76,11 @@ void Scene::prepare() {
 	while (!q.empty()) {
 		node = q.front();
 		node->associate();
-		children = node->getChildren();
-		for (it=children.begin(); it!=children.end(); ++it) {
-			q.push(*it);
+		if (!node->isSealed()) {
+			children = node->getChildren();
+			for (it=children.begin(); it!=children.end(); ++it) {
+				q.push(*it);
+			}
 		}
 		q.pop();
 	}
@@ -88,9 +90,11 @@ void Scene::prepare() {
 	while (!q.empty()) {
 		node = q.front();
 		node->finalize();
-		children = node->getChildren();
-		for (it=children.begin(); it!=children.end(); ++it) {
-			q.push(*it);
+		if (!node->isSealed()) {
+			children = node->getChildren();
+			for (it=children.begin(); it!=children.end(); ++it) {
+				q.push(*it);
+			}
 		}
 		q.pop();
 	}

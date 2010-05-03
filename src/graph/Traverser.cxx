@@ -15,12 +15,14 @@ class FakeDrawable : public Drawable {
 public: 
 	FakeDrawable(const Tag &tag) : Drawable(tag) {name = tag.getName();}
 	virtual void draw() const {cout << "  " << name << endl;}
+	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };
 class FakeSelectable : public Selectable {
 public: 
 	FakeSelectable(const Tag &tag) : Selectable(tag) {name = tag.getName();}
 	virtual void draw() const {cout << "  " << name << endl;}
+	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };
 class FakeApplicable : public Applicable {
@@ -28,6 +30,14 @@ public:
 	FakeApplicable(const Tag &tag) {name = tag.getName();}
 	virtual void apply() {cout << "  " << name << endl;}
 	virtual void remove() {cout << "  " << name << endl;}
+	virtual string toString() const {return Node::toString() + " " + name;}
+	string name;
+};
+class FakeSealed : public Node {
+public:
+	FakeSealed(const Tag &tag) {name = tag.getName();}
+	virtual bool isSealed() const {return true;}
+	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };
 
@@ -60,10 +70,12 @@ Node* create(const Tag &tag) {
 	
 	string name=tag.getName();
 	
-	if (name=="cube") {
+	if (name=="cube" || name=="square") {
 		return new FakeSelectable(tag);
 	} else if (name=="fullscreen") {
 		return new FakeDrawable(tag);
+	} else if (name=="group") {
+		return new FakeSealed(tag);
 	} else if (name=="program" || name=="translate" || name=="uniform") {
 		return new FakeApplicable(tag);
 	} else {
@@ -74,16 +86,16 @@ Node* create(const Tag &tag) {
 
 class TraverserTest {
 public:
-	void before();
+	void setUp();
+	void tearDown();
 	void testStart();
-	void after();
 private:
 	Scene *scene;
 	Traverser *traverser;
 };
 
 
-void TraverserTest::before() {
+void TraverserTest::setUp() {
 	
 	// Open scene
 	cout << "Creating..." << endl;
@@ -91,10 +103,22 @@ void TraverserTest::before() {
 	Factory::install("shader", &create);
 	Factory::install("translate", &create);
 	Factory::install("cube", &create);
+	Factory::install("square", &create);
 	Factory::install("uniform", &create);
+	Factory::install("group", &create);
 	scene = new Scene();
 	scene->open("Traverser.xml");
+	scene->print();
 	traverser = new FakeTraverser(scene);
+}
+
+
+void TraverserTest::tearDown() {
+	
+	// Clean up
+	cout << "\nCleaning up..." << endl;
+	delete traverser;
+	delete scene;
 }
 
 
@@ -103,15 +127,6 @@ void TraverserTest::testStart() {
 	// Start
 	cout << "\nStarting..." << endl;
 	traverser->start();
-}
-
-
-void TraverserTest::after() {
-	
-	// Clean up
-	cout << "\nCleaning up..." << endl;
-	delete traverser;
-	delete scene;
 }
 
 
@@ -130,9 +145,9 @@ int main(int argc,
 	
 	// Test
 	try {
-		test.before();
+		test.setUp();
 		test.testStart();
-		test.after();
+		test.tearDown();
 	} catch (const char *e) {
 		cerr << e << endl;
 	}

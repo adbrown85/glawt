@@ -1,12 +1,16 @@
 <!--
- * Scene.xml
- *     Test for Scene.
+ * Traverser.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
 -->
 
 
+<group>
+	<translate>
+		<square/>
+	</translate>
+</group>
 <program>
 	<shader file="../../input/coordinates.vert" />
 	<shader file="../../input/coordinates.frag" />
