@@ -15,36 +15,92 @@ Instance::Instance(const Tag &tag) {
 
 void Instance::apply() {
 	
+	assignPrograms();
+	assignLocations();
+}
+
+
+void Instance::assignLocations() {
+	
 	int location;
-	map<Uniform*,Program*>::iterator pi;
-	map<Uniform*,int>::iterator li;
+	map<Uniform*,int>::iterator it;
+	Uniform *uniform;
+	
+	// Set each uniform to its location
+	for (it=locations.begin(); it!=locations.end(); ++it) {
+		uniform = it->first;
+		location = it->second;
+		uniform->setLocation(location);
+	}
+}
+
+
+void Instance::assignParents() {
+	
+	Node::iterator ni;
+	
+	// Make sure children's parents point to this instance
+	for (ni=begin(); ni!=end(); ++ni) {
+		(*ni)->setParent(this);
+	}
+}
+
+
+void Instance::assignPrograms() {
+	
+	map<Uniform*,Program*>::iterator it;
 	Program *program;
 	Uniform *uniform;
 	
 	// Set programs
-	for (pi=programs.begin(); pi!=programs.end(); ++pi) {
-		uniform = pi->first;
-		program = pi->second;
-		cout << "Setting " << uniform << " to " << program << endl;
+	for (it=programs.begin(); it!=programs.end(); ++it) {
+		uniform = it->first;
+		program = it->second;
 		uniform->setProgram(program);
-	}
-	
-	// Set locations
-	for (li=locations.begin(); li!=locations.end(); ++li) {
-		uniform = li->first;
-		location = li->second;
-		cout << "Setting " << uniform << " to " << location << endl;
-		uniform->setLocation(location);
 	}
 }
 
 
 void Instance::associate() {
 	
+	findGroup();
+	findChildren();
+	findUniforms();
+}
+
+
+void Instance::associateAfter() {
+	
+	findPrograms();
+}
+
+
+void Instance::finalize() {
+	
+	// Reset uniforms for this instance
+	assignParents();
+	assignPrograms();
+}
+
+
+void Instance::finalizeAfter() {
+	
+	findLocations();
+}
+
+
+void Instance::findChildren() {
+	
 	Node::iterator it;
-	Node *node;
-	queue<Node*> q;
-	Uniform *uniform;
+	
+	// Get children from group
+	for (it=group->begin(); it!=group->end(); ++it) {
+		addChild(*it);
+	}
+}
+
+
+void Instance::findGroup() {
 	
 	// Find the group
 	group = Group::find(this, of);
@@ -53,11 +109,37 @@ void Instance::associate() {
 		msg << "[Instance] Could not find group with name '" << of << "'";
 		throw msg.str().c_str();
 	}
+}
+
+
+void Instance::findLocations() {
 	
-	// Get children from group
-	for (it=group->begin(); it!=group->end(); ++it) {
-		addChild(*it);
+	list<Uniform*>::iterator it;
+	
+	// Get locations from uniforms
+	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
+		locations[(*it)] = (*it)->getLocation();
 	}
+}
+
+
+void Instance::findPrograms() {
+	
+	list<Uniform*>::iterator ui;
+	
+	// Get programs from the uniforms
+	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
+		programs[(*ui)] = (*ui)->getProgram();
+	}
+}
+
+
+void Instance::findUniforms() {
+	
+	Node::iterator it;
+	Node *node;
+	queue<Node*> q;
+	Uniform *uniform;
 	
 	// Search subtree for uniforms
 	q.push(this);
@@ -69,49 +151,6 @@ void Instance::associate() {
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
-	}
-}
-
-
-void Instance::associateAfter() {
-	
-	list<Uniform*>::iterator ui;
-	
-	// Get programs from the uniforms
-	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
-		programs[(*ui)] = (*ui)->getProgram();
-	}
-}
-
-
-void Instance::finalize() {
-	
-	map<Uniform*,Program*>::iterator pi;
-	Node::iterator ni;
-	Program *program;
-	Uniform *uniform;
-	
-	// Make sure children's parents point to this instance
-	for (ni=begin(); ni!=end(); ++ni) {
-		(*ni)->setParent(this);
-	}
-	
-	// Set programs in uniforms
-	for (pi=programs.begin(); pi!=programs.end(); ++pi) {
-		uniform = pi->first;
-		program = pi->second;
-		uniform->setProgram(program);
-	}
-}
-
-
-void Instance::finalizeAfter() {
-	
-	list<Uniform*>::iterator ui;
-	
-	// Get locations from uniforms
-	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
-		locations[(*ui)] = (*ui)->getLocation();
 	}
 }
 

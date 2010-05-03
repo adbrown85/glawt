@@ -37,6 +37,15 @@ public:
 	virtual void finalizeAfter();
 	virtual void remove();
 	virtual string toString() const;
+protected:
+	void assignLocations();
+	void assignParents();
+	void assignPrograms();
+	void findChildren();
+	void findGroup();
+	void findLocations();
+	void findPrograms();
+	void findUniforms();
 private:
 	Group *group;
 	string of;
