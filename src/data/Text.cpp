@@ -97,6 +97,16 @@ pair<int,int> Text::findFirstWord(const string &text,
 }
 
 
+string Text::indent(int times) {
+	
+	ostringstream stream;
+	for (int i=0; i<times; ++i) {
+		stream << "  ";
+	}
+	return stream.str();
+}
+
+
 /**
  * Replaces occurences of tokens in a string with their replacements.
  * 
