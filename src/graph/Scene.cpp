@@ -98,25 +98,30 @@ void Scene::prepare() {
 
 
 /**
- * Prints the list of items stored.
+ * Prints all the nodes in the scene.
  */
-void Scene::print(const Node *node,
-                  string indent) {
+void Scene::print() {
 	
-	vector<Node*>::const_iterator it;
+	typedef pair<Node*,int> NodeLevel;
+	int level;
+	Node *node;
+	stack<NodeLevel> s;
+	vector<Node*>::const_reverse_iterator it;
 	vector<Node*> children;
+	string indent;
 	
-	// Check for bad input
-	if (node == NULL)
-		return;
-	
-	// Print node
-	cout << indent << node << endl;
-	
-	// Print each child
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it)
-		print((*it), indent+"  ");
+	// Print
+	s.push(NodeLevel(root,0));
+	while (!s.empty()) {
+		node = s.top().first;
+		level = s.top().second;
+		s.pop();
+		cout << Text::indent(level) << node << endl;
+		children = node->getChildren();
+		for (it=children.rbegin(); it!=children.rend(); ++it) {
+			s.push(NodeLevel(*it, level+1));
+		}
+	}
 }
 
 

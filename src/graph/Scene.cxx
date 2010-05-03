@@ -66,16 +66,20 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Install tags
+	// Test open
+	cout << "Opening..." << endl;
 	Factory::install("program", &create);
 	Factory::install("shader", &create);
 	Factory::install("translate", &create);
 	Factory::install("cube", &create);
-	
-	// Test open
-	cout << "Testing open..." << endl;
 	scene.open("Scene.xml");
+	
+	// Test prepare
+	cout << "\nPreparing..." << endl;
 	scene.prepare();
+	
+	// Test print
+	cout << "\nPrinting..." << endl;
 	scene.print();
 	
 	// Finish

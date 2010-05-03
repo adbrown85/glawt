@@ -45,8 +45,6 @@ public:
 	void removeFromSelection(Selectable *selectable);
 	void print();
 	void setRoot(Node *node);
-protected:
-	void print(const Node *node, string indent="");
 private:
 	Node *root;
 	Selection selection;
@@ -72,10 +70,6 @@ inline Node* Scene::getRoot() const {
 
 inline Selection Scene::getSelection() const {
 	return selection;
-}
-
-inline void Scene::print() {
-	print(root, "");
 }
 
 inline void Scene::removeAllFromSelection() {
