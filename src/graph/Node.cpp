@@ -65,9 +65,9 @@ string Node::getClassName() const {
 
 
 ostream& operator<<(ostream &stream,
-                    const Node *node) {
+                    const Node &node) {
 	
-	stream << node->toString();
+	stream << node.toString();
 	return stream;
 }
 

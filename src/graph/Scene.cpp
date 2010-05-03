@@ -120,7 +120,7 @@ void Scene::print() {
 		node = s.top().first;
 		level = s.top().second;
 		s.pop();
-		cout << Text::indent(level) << node << endl;
+		cout << Text::indent(level) << *node << endl;
 		children = node->getChildren();
 		for (it=children.rbegin(); it!=children.rend(); ++it) {
 			s.push(NodeLevel(*it, level+1));

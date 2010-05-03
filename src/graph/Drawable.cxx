@@ -36,7 +36,7 @@ void DrawableTest::before() {
 	tag["size"] = "1.0";
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		items[i] = new FakeDrawable(tag);
-		cout << "  " << items[i] << endl;
+		cout << "  " << *items[i] << endl;
 	}
 }
 
@@ -47,14 +47,14 @@ void DrawableTest::testSetVisible() {
 	cout << "\nShowing..." << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		items[i]->setVisible(true);
-		cout << "  " << items[i] << endl;
+		cout << "  " << *items[i] << endl;
 	}
 	
 	// Hide
 	cout << "Hiding..." << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		items[i]->setVisible(false);
-		cout << "  " << items[i] << endl;
+		cout << "  " << *items[i] << endl;
 	}
 }
 
@@ -65,7 +65,7 @@ void DrawableTest::testSetSize() {
 	cout << "\nSetting sizes... " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 		items[i]->setSize(i+1);
-		cout << "  " << items[i] << endl;
+		cout << "  " << *items[i] << endl;
 	}
 }
 
@@ -78,7 +78,7 @@ void DrawableTest::testToggleVisible() {
 			cout << "  ---------------------" << endl;
 		for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
 			items[i]->toggleVisible();
-			cout << "  " << items[i] << endl;
+			cout << "  " << *items[i] << endl;
 		}
 	}
 }

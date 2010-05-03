@@ -41,7 +41,7 @@ void SelectableTest::testDeselect() {
 	
 	cout << "Deselecting... " << endl;
 	node->deselect();
-	cout << "  " << node << endl;
+	cout << "  " << *node << endl;
 }
 
 
@@ -49,7 +49,7 @@ void SelectableTest::testSelect() {
 	
 	cout << "Selecting... " << endl;
 	node->select();
-	cout << "  " << node << endl;
+	cout << "  " << *node << endl;
 }
 
 
@@ -59,7 +59,7 @@ void SelectableTest::testToggle() {
 	cout << "Toggling... " << endl;
 	for (int i=0; i<5; ++i) {
 		node->toggleSelected();
-		cout << "  " << node << endl;
+		cout << "  " << *node << endl;
 	}
 }
 

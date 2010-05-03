@@ -37,7 +37,7 @@ public:
 	Node* getParent() const;
 	bool hasChildren() const;
 	virtual bool isSealed() const;
-	friend ostream& operator<<(ostream &stream, const Node *node);
+	friend ostream& operator<<(ostream &stream, const Node &node);
 	void setDepth(float depth);
 	virtual string toString() const;
 protected:

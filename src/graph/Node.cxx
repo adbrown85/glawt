@@ -4,10 +4,67 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include <iostream>
+#include <cassert>
 #include "Node.hpp"
+#include "Text.hpp"
 #define NUMBER_OF_ITEMS 4
 using namespace std;
+
+
+void print(Node *node,
+           int level=0) {
+	
+	vector<Node*>::iterator it;
+	vector<Node*> children;
+	
+	if (node == NULL)
+		return;
+	
+	cout << Text::indent(level) << *node << " " << node << endl;
+	children = node->getChildren();
+	for (it=children.begin(); it!=children.end(); ++it) {
+		print(*it, level+1);
+	}
+}
+
+
+class NodeTest {
+public:
+	void setUp();
+	void tearDown();
+	void testAddChild();
+private:
+	Node *nodes[NUMBER_OF_ITEMS], *root;
+};
+
+
+void NodeTest::setUp() {
+	
+	// Set up
+	cout << "Setting up..." << endl;
+	root = new Node();
+	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
+		nodes[i] = new Node();
+	}
+}
+
+
+void NodeTest::tearDown() {
+	
+	cout << "\nTearing down..." << endl;
+	Node::destroy(root);
+}
+
+
+void NodeTest::testAddChild() {
+	
+	// Add children
+	cout << "\nAdding children..." << endl;
+	root->addChild(nodes[0]);
+	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
+		nodes[i]->addChild(nodes[i+1]);
+	print(root);
+}
 
 
 /**
@@ -15,8 +72,7 @@ using namespace std;
  */
 int main() {
 	
-	Node nodes[NUMBER_OF_ITEMS], root;
-	Matrix rotMatrix;
+	NodeTest test;
 	
 	// Start
 	cout << endl;
@@ -25,15 +81,14 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Build tree
-	cout << "Building tree..." << endl;
-	root.addChild(&nodes[0]);
-	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
-		nodes[i].addChild(&nodes[i+1]);
-	
-	// Print tree
-	//cout << "Printing tree:" << endl;
-	//root.printTree();
+	// Test
+	try {
+		test.setUp();
+		test.testAddChild();
+		test.tearDown();
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	cout << endl;
