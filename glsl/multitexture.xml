@@ -18,7 +18,7 @@
 		<translate x="-2.0">
 		<scale value="2.0">
 			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 				<uniform type="sampler2d" name="left" link="crate" />
 				<uniform type="sampler2d" name="right" link="stone" />
 			</cube>
@@ -29,7 +29,7 @@
 		<translate x="+2.0">
 		<scale value="2.0">
 			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 				<uniform type="sampler2d" name="left" link="stone" />
 				<uniform type="sampler2d" name="right" link="crate" />
 			</cube>

@@ -9,4 +9,5 @@ Texture2D
 Texture3D
 Translation
 Uniform
+UniformMatrix
 

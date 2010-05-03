@@ -11,13 +11,14 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
                              Uniform(tag) {
 	
 	// Find link
-	if (link == "modelview") {
+	tag.get("as", as);
+	if (as == "modelview") {
 		matrixType = MODELVIEW;
-	} else if (link == "projection") {
+	} else if (as == "projection") {
 		matrixType = PROJECTION;
-	} else if (link == "modelviewprojection") {
+	} else if (as == "modelviewprojection") {
 		matrixType = MODELVIEW_PROJECTION;
-	} else if (link == "normal") {
+	} else if (as == "normal") {
 		matrixType = NORMAL;
 	} else {
 		throw "[UniformMatrix] Matrix not supported.";
@@ -45,5 +46,15 @@ void UniformMatrix::apply() {
 		glUniformMatrix3fv(location, 1, false, value);
 		break;
 	}
+}
+
+
+string UniformMatrix::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Uniform::toString();
+	stream << " as='" << as << "'";
+	return stream.str();
 }
 

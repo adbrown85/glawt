@@ -10,7 +10,7 @@
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
 	<translate x="1.0" y="1.0" z="1.0">
-		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube>
 	</translate>
 </program>

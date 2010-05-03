@@ -12,7 +12,7 @@
 	
 	<texture name="crate" file="../textures/crate.jpg">
 		<cube style="2D">
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<uniform type="sampler2D" name="unit" link="crate" />
 		</cube>
 	</texture>

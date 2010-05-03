@@ -12,7 +12,7 @@
 	<texture file="../../textures/chunk.vlb" name="chunk">
 		<octree name="octree" link="chunk" threshold="80">
 			<uniform type="sampler1d" name="octree" link="octree" />
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<square />
 		</octree>
 	</texture>

@@ -19,10 +19,12 @@ class UniformMatrix : public Uniform {
 public:
 	UniformMatrix(const Tag &tag);
 	virtual void apply();
+	virtual string toString() const;
 private:
 	GLfloat value[16];
 	enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION, NORMAL};
 	MatrixType matrixType;
+	string as;
 };
 
 

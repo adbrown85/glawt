@@ -13,14 +13,14 @@
 		<program>
 			<shader file="../../glsl/coordinates.vert" />
 			<shader file="../../glsl/coordinates.frag" />
-			<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<square />
 		</program>
 	</framebuffer>
 	<program>
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
-		<uniform type="mat4" name="MVPMatrix" link="modelviewprojection" />
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<uniform type="sampler2D" name="unit" link="mytexture" />
 		<square />
 	</program>
