@@ -31,6 +31,7 @@ public:
 	static bool compare(Node *A, Node *B);
 	static void destroy(Node *node);
 	virtual void finalize() {}
+	static Node* findRoot(Node *node);
 	vector<Node*> getChildren() const;
 	string getClassName() const;
 	float getDepth() const;

@@ -53,6 +53,20 @@ void Node::destroy(Node *node) {
 }
 
 
+Node* Node::findRoot(Node *node) {
+	
+	Node *curr, *prev;
+	
+	prev = node;
+	curr = node->getParent();
+	while (curr != NULL) {
+		prev = curr;
+		curr = curr->getParent();
+	}
+	return prev;
+}
+
+
 string Node::getClassName() const {
 	
 	string className;

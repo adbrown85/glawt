@@ -33,6 +33,7 @@ public:
 	void setUp();
 	void tearDown();
 	void testAddChild();
+	void testFindRoot();
 private:
 	Node *nodes[NUMBER_OF_ITEMS], *root;
 };
@@ -67,6 +68,21 @@ void NodeTest::testAddChild() {
 }
 
 
+void NodeTest::testFindRoot() {
+	
+	Node *from, *result;
+	
+	// Find root
+	cout << "\nFinding root..." << endl;
+	from = nodes[NUMBER_OF_ITEMS-1];
+	result = Node::findRoot(from);
+	cout << "  From   = " << from << endl;
+	cout << "  Root   = " << root << endl;
+	cout << "  Result = " << result << endl;
+	assert(result == root);
+}
+
+
 /**
  * Unit test for Node.
  */
@@ -85,6 +101,7 @@ int main() {
 	try {
 		test.setUp();
 		test.testAddChild();
+		test.testFindRoot();
 		test.tearDown();
 	} catch (const char *e) {
 		cerr << e << endl;
