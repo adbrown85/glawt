@@ -11,8 +11,8 @@ using namespace std;
 
 class FakeNode : public Node {
 public:
-	virtual void associate() {cout << "Associate " << getClassName() << endl;}
-	virtual void finalize() {cout << "Finalize " << getClassName() << endl;}
+	virtual void associate() {cout << "  Associate " << getClassName() << endl;}
+	virtual void finalize() {cout << "  Finalize " << getClassName() << endl;}
 };
 
 class FakeProgram : public FakeNode {
@@ -31,10 +31,23 @@ class FakeCube : public FakeNode {
 public:
 	FakeCube() {}
 };
+class FakeSquare : public FakeNode {
+public:
+	FakeSquare() {}
+};
 class FakeGroup: public FakeNode {
 public:
 	FakeGroup() {}
 	virtual bool isSealed() const {return true;}
+};
+class FakeInstance: public FakeNode {
+public:
+	FakeInstance() {
+		addChild(new FakeSquare());
+		addChild(new FakeSquare());
+		addChild(new FakeSquare());
+	}
+	virtual bool areChildrenPrintable() const {return false;}
 };
 
 
@@ -53,6 +66,8 @@ Node* create(const Tag &tag) {
 		return new FakeCube();
 	} else if (name == "group") {
 		return new FakeGroup();
+	} else if (name == "instance") {
+		return new FakeInstance();
 	} else {
 		throw "Could not create node.";
 	}
@@ -88,6 +103,7 @@ void SceneTest::testOpen() {
 	Factory::install("translate", &create);
 	Factory::install("cube", &create);
 	Factory::install("group", &create);
+	Factory::install("instance", &create);
 	scene->open("Scene.xml");
 }
 

@@ -121,9 +121,11 @@ void Scene::print() {
 		level = s.top().second;
 		s.pop();
 		cout << Text::indent(level) << *node << endl;
-		children = node->getChildren();
-		for (it=children.rbegin(); it!=children.rend(); ++it) {
-			s.push(NodeLevel(*it, level+1));
+		if (node->areChildrenPrintable()) {
+			children = node->getChildren();
+			for (it=children.rbegin(); it!=children.rend(); ++it) {
+				s.push(NodeLevel(*it, level+1));
+			}
 		}
 	}
 }
