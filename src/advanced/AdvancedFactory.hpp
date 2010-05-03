@@ -35,7 +35,10 @@ public:
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
 	static Node* createGroup(const Tag &tag);
+<<<<<<< HEAD
 	static Node* createInstance(const Tag &tag);
+=======
+>>>>>>> 974f7851788dd0ff73b08e7eb8d8240ec9621935
 	static Node* createOctree(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
 	static Node* createWireframe(const Tag &tag);
