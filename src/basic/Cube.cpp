@@ -38,32 +38,27 @@ void Cube::draw() const {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
 	
 	// Enable attributes
-	glEnableVertexAttribArray(pointsLoc);
-	glVertexAttribPointer(pointsLoc, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
-	if (normalsLoc != -1) {
-		glEnableVertexAttribArray(normalsLoc);
-		glVertexAttribPointer(normalsLoc, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
-	}
-	if (coordsLoc != -1) {
-		glEnableVertexAttribArray(coordsLoc);
-		switch (style) {
-		case GL_TEXTURE_2D:
-			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
-			break;
-		case GL_TEXTURE_3D:
-			glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coords3dOffset);
-			break;
-		}
+	glEnableVertexAttribArray(POINT_LOCATION);
+	glVertexAttribPointer(POINT_LOCATION, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
+	glEnableVertexAttribArray(NORMAL_LOCATION);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
+	glEnableVertexAttribArray(COORD_LOCATION);
+	switch (style) {
+	case GL_TEXTURE_2D:
+		glVertexAttribPointer(COORD_LOCATION, 3, GL_FLOAT, false, 0, (void*)coords2dOffset);
+		break;
+	case GL_TEXTURE_3D:
+		glVertexAttribPointer(COORD_LOCATION, 3, GL_FLOAT, false, 0, (void*)coords3dOffset);
+		break;
 	}
 	
+	// Draw
 	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, 0);
 	
 	// Disable attributes
-	glDisableVertexAttribArray(pointsLoc);
-	if (coordsLoc != -1)
-		glDisableVertexAttribArray(coordsLoc);
-	if (normalsLoc != -1)
-		glDisableVertexAttribArray(normalsLoc);
+	glDisableVertexAttribArray(POINT_LOCATION);
+	glDisableVertexAttribArray(COORD_LOCATION);
+	glDisableVertexAttribArray(NORMAL_LOCATION);
 	
 	// Disable buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

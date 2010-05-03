@@ -21,8 +21,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     Base class for a 3D object in the scene.
+ * @brief Base class for a 3D object in the scene.
  */
 class Shape : public Selectable {
 public:
@@ -34,9 +33,7 @@ public:
 	virtual string toString() const;
 protected: 
 	GLenum style;
-	GLint coordsLoc, pointsLoc, normalsLoc;
 	Program *program;
-	virtual void computeDepth(Matrix &matrx);
 };
 
 

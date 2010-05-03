@@ -42,20 +42,20 @@ void Square::draw() const {
 	// Enable buffers and arrays
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
-	glEnableVertexAttribArray(pointsLoc);
-	glEnableVertexAttribArray(normalsLoc);
-	glEnableVertexAttribArray(coordsLoc);
+	glEnableVertexAttribArray(POINT_LOCATION);
+	glEnableVertexAttribArray(NORMAL_LOCATION);
+	glEnableVertexAttribArray(COORD_LOCATION);
 	
 	// Draw
-	glVertexAttribPointer(pointsLoc, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
-	glVertexAttribPointer(normalsLoc, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
-	glVertexAttribPointer(coordsLoc, 3, GL_FLOAT, false, 0, (void*)coordsOffset);
+	glVertexAttribPointer(POINT_LOCATION, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
+	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
+	glVertexAttribPointer(COORD_LOCATION, 3, GL_FLOAT, false, 0, (void*)coordsOffset);
 	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_SHORT, 0);
 	
 	// Disable buffers and arrays
-	glDisableVertexAttribArray(pointsLoc);
-	glDisableVertexAttribArray(normalsLoc);
-	glDisableVertexAttribArray(coordsLoc);
+	glDisableVertexAttribArray(POINT_LOCATION);
+	glDisableVertexAttribArray(NORMAL_LOCATION);
+	glDisableVertexAttribArray(COORD_LOCATION);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

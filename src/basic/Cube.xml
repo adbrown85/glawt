@@ -10,11 +10,18 @@
 	<shader file="../../glsl/basic.vert" />
 	<shader file="../../glsl/basic.frag" />
 	<translate x="1.0">
-		<cube style="2D">
-			<uniform type="mat4" name="MVMatrix" as="modelview" />
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<uniform type="mat3" name="NormalMatrix" as="normal" />
-			<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
-		</cube>
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<uniform type="mat4" name="MVMatrix" as="modelview" />
+		<uniform type="mat3" name="NormalMatrix" as="normal" />
+		<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
+		<cube style="2D" />
 	</translate>
+<!--
+	<shader file="../../glsl/coordinates.vert" />
+	<shader file="../../glsl/coordinates.frag" />
+	<translate x="1.0">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube style="2D"/>
+	</translate>
+-->
 </program>

@@ -49,34 +49,18 @@ void Shape::associate() {
 
 
 /**
- * Computes the shape's depth using the matrix.
- */
-void Shape::computeDepth(Matrix &matrix) {
-	
-	Vector pos(0,0,0,1);
-	
-	// Multiply position by matrix
-	pos = matrix * pos;
-	depth = pos.z;
-}
-
-
-/**
- * Finds vertex attribute locations in the current shader program.
- * 
- * @throws const_char* if a location for the vertex points cannot be found.
- * @note Does not throw an error in case shaders do not use an attribute.
+ * @warning if a location for the shape's points are not found.
  */
 void Shape::finalize() {
 	
-	// Find locations in program
-	pointsLoc = glGetAttribLocation(program->getHandle(), "MCVertex");
-	normalsLoc = glGetAttribLocation(program->getHandle(), "MCNormal");
-	coordsLoc = glGetAttribLocation(program->getHandle(), "TexCoord0");
+	GLint location;
 	
-	// Check
-	if (pointsLoc == -1)
-		throw "[Shape] Could not find location for 'MCVertex'";
+	// Check point location in program
+	location = program->getAttributeLocation(POINT_NAME);
+	if (location == -1) {
+		cerr << "[Shape] Could not find attribute location for '"
+		     << POINT_NAME << "'" << endl;
+	}
 }
 
 

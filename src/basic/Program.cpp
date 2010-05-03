@@ -43,6 +43,9 @@ void Program::associate() {
 	
 	// Create program
 	handle = glCreateProgram();
+	setAttributeLocation(POINT_LOCATION, POINT_NAME);
+	setAttributeLocation(NORMAL_LOCATION, NORMAL_NAME);
+	setAttributeLocation(COORD_LOCATION, COORD_NAME);
 }
 
 
@@ -84,6 +87,12 @@ Program* Program::find(Node* node) {
 }
 
 
+GLint Program::getAttributeLocation(const string &name) {
+	
+	return glGetAttribLocation(handle, name.c_str());
+}
+
+
 /**
  * Prints the log for this program.
  */
@@ -114,6 +123,13 @@ void Program::remove() {
 	// Restore fixed functionality
 	glUseProgram(0);
 	current = NULL;
+}
+
+
+void Program::setAttributeLocation(GLuint index,
+                                   const string &name) {
+	
+	glBindAttribLocation(handle, index, name.c_str());
 }
 
 
