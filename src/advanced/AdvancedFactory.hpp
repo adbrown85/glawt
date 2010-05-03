@@ -14,6 +14,7 @@
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
+#include "Group.hpp"
 #include "Octree.hpp"
 #include "Target.hpp"
 #include "Wireframe.hpp"
@@ -32,6 +33,7 @@ public:
 	static Node* createCull(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
+	static Node* createGroup(const Tag &tag);
 	static Node* createOctree(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
 	static Node* createWireframe(const Tag &tag);
