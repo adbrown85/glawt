@@ -17,6 +17,8 @@ $(BINARIES): AdvancedFactory.o
 Cull.o:
 Framebuffer.o:
 Fullscreen.o: 
+Group.o:
+Instance.o: Group.o
 Octree.o: 
 Target.o: Framebuffer.o
 Wireframe.o:

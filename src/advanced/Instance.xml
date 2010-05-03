@@ -1,0 +1,28 @@
+<!--
+ * Instance.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu></adb1413>
+-->
+
+
+<group name="cubes">
+	<translate x="-2.0">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<uniform type="mat4" name="NormalMatrix" as="normal" />
+		<uniform type="mat4" name="MVMatrix" as="modelview" />
+		<uniform type="vec3" name="LightPosition" value="10 10 10" />
+		<uniform type="Ambient" name="Ambient" value="0.2" />
+		<cube />
+	</translate>
+	<translate x="+2.0">
+		<cube />
+	</translate>
+</group>
+
+
+<program>
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
+	<instance of="cubes" />
+</program>

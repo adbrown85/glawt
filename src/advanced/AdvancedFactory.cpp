@@ -21,6 +21,7 @@ void AdvancedFactory::install() {
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
 	Factory::install("group", &createGroup);
+	Factory::install("instance", &createInstance);
 	Factory::install("octree", &createOctree);
 	Factory::install("target", &createTarget);
 	Factory::install("wireframe", &createWireframe);
@@ -54,6 +55,12 @@ Node* AdvancedFactory::createFullscreen(const Tag &tag) {
 Node* AdvancedFactory::createGroup(const Tag &tag) {
 	
 	return new Group(tag);
+}
+
+
+Node* AdvancedFactory::createInstance(const Tag &tag) {
+	
+	return new Instance(tag);
 }
 
 
