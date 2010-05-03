@@ -34,8 +34,10 @@ public:
 	virtual void apply() = 0;
 	virtual void finalize();
 	GLint getLocation() const;
+	Program* getProgram() const;
 	virtual void remove() {};
 	void setLocation(GLint location);
+	void setProgram(Program *program);
 	virtual string toString() const;
 protected:
 	GLint location;
@@ -45,7 +47,9 @@ protected:
 
 
 inline GLint Uniform::getLocation() const {return location;}
+inline Program* Uniform::getProgram() const {return program;}
 inline void Uniform::setLocation(GLint location) {this->location = location;}
+inline void Uniform::setProgram(Program *program) {this->program = program;}
 
 
 #endif
