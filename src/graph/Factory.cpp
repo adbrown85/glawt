@@ -57,39 +57,3 @@ Tag Factory::filter(Tag tag,
 	return tag;
 }
 
-
-Node* Factory::open(string xmlFilename) {
-	
-	Node *current, *node, *root;
-	Parser parser;
-	string path;
-	vector<Tag> tags;
-	vector<Tag>::iterator it;
-	
-	// Initialize
-	root = new Node();
-	current = root;
-	xmlFilename = FileUtility::replaceEnvironmentVariable(xmlFilename);
-	parser.open(xmlFilename);
-	
-	// Look through tags
-	tags = parser.getTags();
-	for (it=tags.begin(); it!=tags.end(); ++it) {
-		
-		// Step back on closing tags
-		if (it->isClosing()) {
-			current = current->getParent();
-			continue;
-		}
-		
-		// Create node and update current
-		node = create(*it, xmlFilename);
-		current->addChild(node);
-		if (!it->isLeaf())
-			current = node;
-	}
-	
-	// Finish
-	return root;
-}
-

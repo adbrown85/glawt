@@ -68,13 +68,18 @@ void Producer::open(Scene *scene,
                     int command,
                     string filename) {
 	
-	// Open the scene
+	// Check for bad input
+	if (scene == NULL) {
+		throw "[Producer] Cannot open file when scene is NULL.";
+	}
+	
+	// Initialize
 	BasicFactory::install();
 	AdvancedFactory::install();
-	scene->open(filename);
-	
-	// Prepare it
 	scene->setRoot(Factory::create("translate"));
+	
+	// Open and prepare it
+	scene->open(filename);
 	scene->prepare();
 }
 

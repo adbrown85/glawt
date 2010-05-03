@@ -28,24 +28,22 @@ using namespace std;
 
 /**
  * @ingroup graph
- * @brief
- *     Collection of nodes opened from a file.
+ * @brief Collection of nodes opened from a file.
  */
 class Scene {
 public:
-	Scene(const string &filename="");
+	Scene();
 	~Scene();
 	void addAllToSelection();
 	void addToSelection(Selectable *selectable);
 	string getFilename() const;
 	Node* getRoot() const;
 	Selection getSelection() const;
-	void open(const string &filename);
+	void open(string filename);
 	void prepare();
 	void removeAllFromSelection();
 	void removeFromSelection(Selectable *selectable);
 	void print();
-	void setFilename(const string &filename);
 	void setRoot(Node *node);
 protected:
 	void print(const Node *node, string indent="");
@@ -86,10 +84,6 @@ inline void Scene::removeAllFromSelection() {
 
 inline void Scene::removeFromSelection(Selectable *selectable) {
 	selection.remove(selectable);
-}
-
-inline void Scene::setFilename(const string &filename) {
-	this->filename = filename;
 }
 
 #endif

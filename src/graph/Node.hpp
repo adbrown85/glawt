@@ -31,15 +31,13 @@ public:
 	static bool compare(Node *A, Node *B);
 	static void destroy(Node *node);
 	virtual void finalize() {}
-	virtual vector<Node*> getChildren() const;
-	int getChildrenSize() const;
+	vector<Node*> getChildren() const;
 	string getClassName() const;
 	float getDepth() const;
 	Node* getParent() const;
+	bool hasChildren() const;
 	friend ostream& operator<<(ostream &stream, const Node *node);
-	void setChildren(const vector<Node*> children);
 	void setDepth(float depth);
-	void setParent(Node *parent);
 	virtual string toString() const;
 protected:
 	float depth;
@@ -49,18 +47,10 @@ protected:
 
 
 inline vector<Node*> Node::getChildren() const {return children;}
-inline int Node::getChildrenSize() const {return children.size();}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
-inline void Node::setChildren(const vector<Node*> children) {
-	this->children = children;
-}
-inline void Node::setDepth(float depth) {
-	this->depth = depth;
-}
-inline void Node::setParent(Node *parent) {
-	this->parent = parent;
-}
+inline bool Node::hasChildren() const {return !children.empty();}
+inline void Node::setDepth(float depth) {this->depth = depth;}
 
 
 #endif

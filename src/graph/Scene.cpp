@@ -9,21 +9,19 @@
 
 /**
  * Creates and initializes a new scene.
- * 
- * @param filename
  */
-Scene::Scene(const string &filename) {
+Scene::Scene() {
 	
-	this->filename = filename;
-	this->root = NULL;
+	this->root = new Node();
 }
 
 
+/**
+ * Destroys all the nodes in the scene.
+ */
 Scene::~Scene() {
 	
-	if (root != NULL) {
-		Node::destroy(root);
-	}
+	Node::destroy(root);
 }
 
 
@@ -32,16 +30,33 @@ Scene::~Scene() {
  * 
  * @param filename Path to the file.
  */
-void Scene::open(const string &filename) {
+void Scene::open(string filename) {
 	
-	// Parse and process tags
-	try {
-		cerr << "[Scene] Opening '" << filename << "'..." << endl;
-		this->filename = filename;
-		root = Factory::open(filename);
-	} catch (char const *e) {
-		cerr << e << endl;
-		exit(1);
+	Node *current=root, *node;
+	Parser parser;
+	vector<Tag> tags;
+	vector<Tag>::iterator it;
+	
+	// Parse file
+	this->filename = filename;
+	filename = FileUtility::replaceEnvironmentVariable(filename);
+	parser.open(filename);
+	
+	// Look through tags
+	tags = parser.getTags();
+	for (it=tags.begin(); it!=tags.end(); ++it) {
+		
+		// Step back on closing tags
+		if (it->isClosing()) {
+			current = current->getParent();
+			continue;
+		}
+		
+		// Create node and update current
+		node = Factory::create(*it, filename);
+		current->addChild(node);
+		if (!it->isLeaf())
+			current = node;
 	}
 }
 
@@ -55,11 +70,6 @@ void Scene::prepare() {
 	queue<Node*> q;
 	vector<Node*> children;
 	vector<Node*>::iterator it;
-	
-	// Check for bad input
-	if (root == NULL) {
-		throw "[Scene] Cannot prepare empty scene.";
-	}
 	
 	// Associate all the nodes
 	q.push(root);
@@ -110,25 +120,16 @@ void Scene::print(const Node *node,
 }
 
 
+/**
+ * Replaces the root of the scene with a new node.
+ */
 void Scene::setRoot(Node *node) {
 	
-	vector<Node*> children;
-	vector<Node*>::iterator it;
-	
 	// Test for bad input
-	if (node == NULL) {
-		throw "[Scene] Cannot replace root with NULL node.";
-	} else if (node->getChildrenSize() > 0) {
-		throw "[Scene] Node replacing root cannot have children.";
-	} else if (root == NULL) {
-		throw "[Scene] Scene should be opened before replacing root";
-	}
-	
-	// Move root's children to node's children
-	children = root->getChildren();
-	node->setChildren(children);
-	for (it=children.begin(); it!=children.end(); ++it) {
-		(*it)->setParent(node);
+	if (root->hasChildren()) {
+		throw "[Scene] Cannot set root when it already has children.";
+	} else if (node == NULL) {
+		throw "[Scene] Cannot set root to NULL.";
 	}
 	
 	// Make node new root
