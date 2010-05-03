@@ -28,11 +28,7 @@ class FakeShape : public Shape {
 int main() {
 	
 	FakeShape *shape;
-	/* int randomNum; */
-	Matrix rotMatrix;
 	Tag tag;
-	/* Translation trans[NUMBER_OF_ITEMS]; */
-	Node root;
 	
 	// Start
 	cout << endl;
@@ -47,20 +43,11 @@ int main() {
 		tag["size"] = "5.5";
 		tag["style"] = "3D";
 		shape = new FakeShape(tag);
-		shape->print();
-	}
-	catch (const char *e) {
+		cout << "  " << shape << endl;
+	} catch (const char *e) {
 		cerr << e << endl;
 		exit(1);
 	}
-	
-	// Print
-	cout << "\nBuilding tree... " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		shape = new FakeShape(tag);
-		root.addChild(shape);
-	}
-	root.printTree();
 	
 	// Finish
 	cout << endl;
@@ -68,28 +55,5 @@ int main() {
 	cout << "Shape" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
-	
-/*
-	// Print
-	cout << "\nBuilding tree... " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		root.addChild(&trans[i]);
-		trans[i].addChild(&shapes[i]);
-	}
-	root.printTree();
-	
-	// Randomize
-	cout << "\nRandomizing..." << endl;
-	srand(time(NULL));
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		randomNum = rand() % 10;
-		trans[i].set(randomNum, randomNum, randomNum);
-	}
-	* 
-	// Sort by depth
-	cout << "\nSorting by depth..." << endl;
-	root.sortByDepth(rotMatrix);
-	root.printTree();
-*/
 }
 

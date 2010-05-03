@@ -37,8 +37,6 @@ public:
 	float getDepth() const;
 	Node* getParent() const;
 	friend ostream& operator<<(ostream &stream, const Node *node);
-	//static void print(const Node *node);
-	//virtual void print() const;
 	void setChildren(const vector<Node*> children);
 	void setDepth(float depth);
 	void setParent(Node *parent);

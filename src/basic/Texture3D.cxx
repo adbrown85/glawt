@@ -40,12 +40,12 @@ int main(int argc,
 		tag["file"] = filename;
 		tag["name"] = "bear";
 		texture = new Texture3D(tag);
-		texture->print();
+		cout << "  " << texture << endl;
 		texture->associate();
 		
 		// Print
 		cout << "\nAttributes:" << endl;
-		texture->print();
+		cout << "  " << texture << endl;
 	}
 	catch (char const *e) {
 		cerr << e << endl;

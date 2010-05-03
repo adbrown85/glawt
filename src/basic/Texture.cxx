@@ -6,14 +6,20 @@
  */
 #include <sstream>
 #include "Texture.hpp"
+#include "Scene.hpp"
 
 
 class FakeTexture : public Texture {
-	public:
-		FakeTexture(const Tag &tag) : Texture(GL_TEXTURE_2D, tag) {}
-	protected:
-		void initType() {type = GL_TEXTURE_2D;}
+public:
+	FakeTexture(const Tag &tag) : Texture(GL_TEXTURE_2D, tag) {}
+protected:
+	void initType() {type = GL_TEXTURE_2D;}
 };
+
+
+Node* create(const Tag &tag) {
+	return new FakeTexture(tag);
+}
 
 
 /**
@@ -21,10 +27,7 @@ class FakeTexture : public Texture {
  */
 int main() {
 	
-	ostringstream name;
-	Node *root, *last;
-	Tag tag;
-	Texture *texture;
+	Scene scene;
 	
 	// Start
 	cout << endl;
@@ -33,33 +36,11 @@ int main() {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Test tag
-	cout << "\nTesting tag..." << endl;
-	tag["name"] = "foo";
-	tag["file"] = "glsl/bar.frag";
-	texture = new FakeTexture(tag);
-	texture->print();
-	
-	// Create textures
-	cout << "\nCreating textures..." << endl;
-	root = new Node();
-	last = root;
-	for (int i=0; i<4; ++i) {
-		name.str("");
-		name << "crate" << i+1;
-		tag.clear();
-		tag["name"] = name.str();
-		tag["file"] = "../../input/crate.jpg";
-		texture = new FakeTexture(tag);
-		last->addChild(texture);
-		last = texture;
-	}
-	
-	// Prepare nodes
-	cout << "\nPreparing nodes..." << endl;
-	root->associateTree();
-	root->finalizeTree();
-	root->printTree();
+	// Open scene
+	Factory::install("texture", &create);
+	scene.open("Texture.xml");
+	scene.prepare();
+	scene.print();
 	
 	// Print types (,,32879)
 	cout << "\nPrinting types..." << endl;

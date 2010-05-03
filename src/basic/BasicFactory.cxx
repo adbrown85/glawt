@@ -17,7 +17,7 @@ void testCreate(const string &text) {
 	
 	tag = Parser::create(text);
 	node = Factory::create(tag);
-	node->print();
+	cout << "  " << node << endl;
 }
 
 
