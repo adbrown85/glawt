@@ -33,6 +33,7 @@ public:
 	void setUp();
 	void tearDown();
 	void testAddChild();
+	void testIterator();
 	void testFindRoot();
 private:
 	Node *nodes[NUMBER_OF_ITEMS], *root;
@@ -64,7 +65,7 @@ void NodeTest::testAddChild() {
 	root->addChild(nodes[0]);
 	for (int i=0; i<NUMBER_OF_ITEMS-1; ++i)
 		nodes[i]->addChild(nodes[i+1]);
-	print(root);
+	print(root, 1);
 }
 
 
@@ -80,6 +81,18 @@ void NodeTest::testFindRoot() {
 	cout << "  Root   = " << root << endl;
 	cout << "  Result = " << result << endl;
 	assert(result == root);
+}
+
+
+void NodeTest::testIterator() {
+	
+	Node::iterator it;
+	
+	// Iterate
+	cout << "\nIterating through root..." << endl;
+	for (it=root->begin(); it!=root->end(); ++it) {
+		cout << "  " << *(*it) << " " << (*it) << endl;
+	}
 }
 
 
@@ -102,6 +115,7 @@ int main() {
 		test.setUp();
 		test.testAddChild();
 		test.testFindRoot();
+		test.testIterator();
 		test.tearDown();
 	} catch (const char *e) {
 		cerr << e << endl;
