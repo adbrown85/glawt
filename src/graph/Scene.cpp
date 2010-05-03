@@ -26,6 +26,56 @@ Scene::~Scene() {
 
 
 /**
+ * Associate all the nodes in the scene.
+ */
+void Scene::associate(Node *node) {
+	
+	bool after;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
+	
+	// Check if sealed
+	if (node->isSealed())
+		return;
+	
+	// Finalize nodes in correct order
+	after = node->areChildrenAssociatedAfter();
+	if (after)
+		node->associate();
+	children = node->getChildren();
+	for (it=children.begin(); it!=children.end(); ++it)
+		associate(*it);
+	if (!after)
+		node->associate();
+}
+
+
+/**
+ * Finalize all the nodes in the scene.
+ */
+void Scene::finalize(Node *node) {
+	
+	bool after;
+	vector<Node*> children;
+	vector<Node*>::iterator it;
+	
+	// Check if sealed
+	if (node->isSealed())
+		return;
+	
+	// Finalize nodes in correct order
+	after = node->areChildrenFinalizedAfter();
+	if (after)
+		node->finalize();
+	children = node->getChildren();
+	for (it=children.begin(); it!=children.end(); ++it)
+		finalize(*it);
+	if (!after)
+		node->finalize();
+}
+
+
+/**
  * Opens a scene from a file.
  * 
  * @param filename Path to the file.
@@ -66,38 +116,8 @@ void Scene::open(string filename) {
  */
 void Scene::prepare() {
 	
-	Node* node;
-	queue<Node*> q;
-	vector<Node*> children;
-	vector<Node*>::iterator it;
-	
-	// Associate all the nodes
-	q.push(root);
-	while (!q.empty()) {
-		node = q.front();
-		node->associate();
-		if (!node->isSealed()) {
-			children = node->getChildren();
-			for (it=children.begin(); it!=children.end(); ++it) {
-				q.push(*it);
-			}
-		}
-		q.pop();
-	}
-	
-	// Finalize all the nodes
-	q.push(root);
-	while (!q.empty()) {
-		node = q.front();
-		node->finalize();
-		if (!node->isSealed()) {
-			children = node->getChildren();
-			for (it=children.begin(); it!=children.end(); ++it) {
-				q.push(*it);
-			}
-		}
-		q.pop();
-	}
+	associate(root);
+	finalize(root);
 }
 
 

@@ -45,6 +45,9 @@ public:
 	void removeFromSelection(Selectable *selectable);
 	void print();
 	void setRoot(Node *node);
+protected:
+	void associate(Node *node);
+	void finalize(Node *node);
 private:
 	Node *root;
 	Selection selection;
