@@ -49,7 +49,7 @@ void Instance::associate() {
 }
 
 
-void Instance::finalize() {
+void Instance::finalizeAfter() {
 	
 	Node *node;
 	queue<Node*> q;

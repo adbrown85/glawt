@@ -30,7 +30,6 @@ Scene::~Scene() {
  */
 void Scene::associate(Node *node) {
 	
-	bool after;
 	vector<Node*> children;
 	vector<Node*>::iterator it;
 	
@@ -39,14 +38,11 @@ void Scene::associate(Node *node) {
 		return;
 	
 	// Finalize nodes in correct order
-	after = node->areChildrenAssociatedAfter();
-	if (after)
-		node->associate();
+	node->associate();
 	children = node->getChildren();
 	for (it=children.begin(); it!=children.end(); ++it)
 		associate(*it);
-	if (!after)
-		node->associate();
+	node->associateAfter();
 }
 
 
@@ -55,7 +51,6 @@ void Scene::associate(Node *node) {
  */
 void Scene::finalize(Node *node) {
 	
-	bool after;
 	vector<Node*> children;
 	vector<Node*>::iterator it;
 	
@@ -64,14 +59,11 @@ void Scene::finalize(Node *node) {
 		return;
 	
 	// Finalize nodes in correct order
-	after = node->areChildrenFinalizedAfter();
-	if (after)
-		node->finalize();
+	node->finalize();
 	children = node->getChildren();
 	for (it=children.begin(); it!=children.end(); ++it)
 		finalize(*it);
-	if (!after)
-		node->finalize();
+	node->finalizeAfter();
 }
 
 

@@ -30,9 +30,8 @@ public:
 	virtual void apply();
 	virtual bool areChildrenDestroyable() const;
 	virtual bool areChildrenPrintable() const;
-	virtual bool areChildrenFinalizedAfter() const;
 	virtual void associate();
-	virtual void finalize();
+	virtual void finalizeAfter();
 	virtual void remove();
 	virtual string toString() const;
 private:
@@ -42,7 +41,6 @@ private:
 };
 
 
-inline bool Instance::areChildrenFinalizedAfter() const {return false;}
 inline bool Instance::areChildrenDestroyable() const {return false;}
 inline bool Instance::areChildrenPrintable() const {return false;}
 

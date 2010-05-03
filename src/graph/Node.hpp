@@ -32,9 +32,11 @@ public:
 	virtual bool areChildrenAssociatedAfter() const;
 	virtual bool areChildrenFinalizedAfter() const;
 	virtual void associate() {}
+	virtual void associateAfter() {}
 	static bool compare(Node *A, Node *B);
 	static void destroy(Node *node);
 	virtual void finalize() {}
+	virtual void finalizeAfter() {}
 	static Node* findRoot(Node *node);
 	vector<Node*> getChildren() const;
 	string getClassName() const;
