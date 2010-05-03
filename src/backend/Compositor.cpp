@@ -62,8 +62,7 @@ void Compositor::showAll(Scene *scene,
 void Compositor::showAll(Node *node) {
 	
 	Drawable *drawable;
-	vector<Node*> children;
-	vector<Node*>::iterator it;
+	Node::iterator it;
 	
 	// Show node
 	drawable = dynamic_cast<Drawable*>(node);
@@ -71,8 +70,7 @@ void Compositor::showAll(Node *node) {
 		drawable->setVisible(true);
 	
 	// Show children
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it)
+	for (it=node->begin(); it!=node->end(); ++it)
 		showAll(*it);
 }
 

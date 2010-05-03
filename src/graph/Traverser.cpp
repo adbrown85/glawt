@@ -66,16 +66,14 @@ void Traverser::start() {
  */
 void Traverser::traverseChildren(Node *node) {
 	
-	vector<Node*> children;
-	vector<Node*>::iterator it;
+	Node::iterator it;
 	
 	// Stop if sealed
 	if (node->isSealed())
 		return;
 	
 	// Traverse each child
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it) {
+	for (it=node->begin(); it!=node->end(); ++it) {
 		traverseNode(*it);
 	}
 }

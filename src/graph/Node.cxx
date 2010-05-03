@@ -14,15 +14,13 @@ using namespace std;
 void print(Node *node,
            int level=0) {
 	
-	vector<Node*>::iterator it;
-	vector<Node*> children;
+	Node::iterator it;
 	
 	if (node == NULL)
 		return;
 	
 	cout << Text::indent(level) << *node << " " << node << endl;
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it) {
+	for (it=node->begin(); it!=node->end(); ++it) {
 		print(*it, level+1);
 	}
 }

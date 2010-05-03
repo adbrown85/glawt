@@ -30,8 +30,7 @@ Scene::~Scene() {
  */
 void Scene::associate(Node *node) {
 	
-	vector<Node*> children;
-	vector<Node*>::iterator it;
+	Node::iterator it;
 	
 	// Check if sealed
 	if (node->isSealed())
@@ -39,8 +38,7 @@ void Scene::associate(Node *node) {
 	
 	// Finalize nodes in correct order
 	node->associate();
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it)
+	for (it=node->begin(); it!=node->end(); ++it)
 		associate(*it);
 	node->associateAfter();
 }
@@ -51,8 +49,7 @@ void Scene::associate(Node *node) {
  */
 void Scene::finalize(Node *node) {
 	
-	vector<Node*> children;
-	vector<Node*>::iterator it;
+	Node::iterator it;
 	
 	// Check if sealed
 	if (node->isSealed())
@@ -60,8 +57,7 @@ void Scene::finalize(Node *node) {
 	
 	// Finalize nodes in correct order
 	node->finalize();
-	children = node->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it)
+	for (it=node->begin(); it!=node->end(); ++it)
 		finalize(*it);
 	node->finalizeAfter();
 }

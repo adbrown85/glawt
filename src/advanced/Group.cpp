@@ -18,13 +18,11 @@ Group* Group::find(Node *node,
 	
 	Group *group;
 	Node *root;
-	vector<Node*> children;
-	vector<Node*>::iterator it;
+	Node::iterator it;
 	
 	// Look through
 	root = Node::findRoot(node);
-	children = root->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it) {
+	for (it=root->begin(); it!=root->end(); ++it) {
 		group = dynamic_cast<Group*>(*it);
 		if (group == NULL)
 			continue;

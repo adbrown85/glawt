@@ -30,8 +30,7 @@ void Instance::apply() {
 
 void Instance::associate() {
 	
-	vector<Node*>::iterator it;
-	vector<Node*> children;
+	Node::iterator it;
 	
 	// Find group
 	group = Group::find(this, of);
@@ -41,9 +40,8 @@ void Instance::associate() {
 		throw msg.str().c_str();
 	}
 	
-	// Get children
-	children = group->getChildren();
-	for (it=children.begin(); it!=children.end(); ++it) {
+	// Get children from group
+	for (it=group->begin(); it!=group->end(); ++it) {
 		addChild(*it);
 	}
 }
@@ -52,10 +50,9 @@ void Instance::associate() {
 void Instance::finalizeAfter() {
 	
 	Node *node;
+	Node::iterator it;
 	queue<Node*> q;
 	Uniform *uniform;
-	vector<Node*>::iterator it;
-	vector<Node*> children;
 	
 	// Search all children for uniforms
 	q.push(this);
@@ -63,8 +60,7 @@ void Instance::finalizeAfter() {
 		node = q.front();
 		if ((uniform = dynamic_cast<Uniform*>(node)))
 			locations[uniform] = uniform->getLocation();
-		children = node->getChildren();
-		for (it=children.begin(); it!=children.end(); ++it)
+		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
 	}

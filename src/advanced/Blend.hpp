@@ -24,7 +24,6 @@ public:
 	Blend(const Tag &tag);
 	virtual void apply();
 	virtual void associate();
-	//virtual list<Node*> getChildren() const;
 	virtual void remove();
 protected:
 	void sortChildren();
