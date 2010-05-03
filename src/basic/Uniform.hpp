@@ -33,13 +33,19 @@ public:
 	virtual void associate();
 	virtual void apply() = 0;
 	virtual void finalize();
+	GLint getLocation() const;
 	virtual void remove() {};
+	void setLocation(GLint location);
 	virtual string toString() const;
 protected:
 	GLint location;
 	Program *program;
 	string link, name, type;
 };
+
+
+inline GLint Uniform::getLocation() const {return location;}
+inline void Uniform::setLocation(GLint location) {this->location = location;}
 
 
 #endif
