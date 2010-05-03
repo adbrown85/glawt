@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Painter.hpp"
-Node* Painter::outline=NULL;
+Scene *Painter::outline=NULL;
 
 
 Painter::Painter(Scene *scene,
@@ -16,7 +16,8 @@ Painter::Painter(Scene *scene,
 	if (outline == NULL) {
 		BasicFactory::install();
 		AdvancedFactory::install();
-		outline = Factory::open("${GANDER}/glsl/outline.xml");
+		outline = new Scene();
+		outline->open("${GANDER}/glsl/outline.xml");
 		outline->prepare();
 	}
 }
@@ -56,15 +57,11 @@ void Painter::onSelectable(Selectable *node) {
 		program->remove();
 	Texture::pause();
 	
-	// Draw outline
-	if (outline != NULL) {
-		Traverser::traverseNode(outline);
-	}
-	
-	// Draw manipulators
+	// Draw outline and manipulators
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
+		Traverser::traverseNode(outline->getRoot());
 		glPushAttrib(GL_POLYGON_BIT);
 			glPolygonMode(GL_FRONT, GL_FILL);
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {

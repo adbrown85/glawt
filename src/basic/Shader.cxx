@@ -31,7 +31,8 @@ int main(int argc,
 		program = Factory::create("program");
 		shader = Factory::create("shader file='Shader.frag'");
 		program->addChild(shader);
-		program->associateTree();
+		program->associate();
+		shader->associate();
 		cout << "Shader type: " << ((Shader*)shader)->getType() << endl;
 		((Shader*)shader)->list();
 	} catch (const char *e) {

@@ -31,8 +31,7 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Paints all the items to the screen or pick buffer.
+ * @brief Paints all the items to the screen or pick buffer.
  * 
  * @warning Does not flush to the buffer.
  */
@@ -49,7 +48,7 @@ protected:
 	virtual void onSelectable(Selectable *node);
 private:
 	GLenum mode;
-	static Node *outline;
+	static Scene *outline;
 	vector<Manipulator*> manipulators;
 };
 
