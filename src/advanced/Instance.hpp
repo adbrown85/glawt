@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <list>
 #include <map>
 #include <queue>
 #include <GL/glut.h>
@@ -31,13 +32,17 @@ public:
 	virtual bool areChildrenDestroyable() const;
 	virtual bool areChildrenPrintable() const;
 	virtual void associate();
+	virtual void associateAfter();
+	virtual void finalize();
 	virtual void finalizeAfter();
 	virtual void remove();
 	virtual string toString() const;
 private:
 	Group *group;
 	string of;
+	list<Uniform*> uniforms;
 	map<Uniform*,int> locations;
+	map<Uniform*,Program*> programs;
 };
 
 
