@@ -27,6 +27,7 @@ public:
 	Node();
 	virtual ~Node() {};
 	void addChild(Node *child);
+	virtual bool areChildrenDestroyable() const;
 	virtual bool areChildrenPrintable() const;
 	virtual void associate() {}
 	static bool compare(Node *A, Node *B);
@@ -49,6 +50,7 @@ protected:
 };
 
 
+inline bool Node::areChildrenDestroyable() const {return true;}
 inline bool Node::areChildrenPrintable() const {return true;}
 inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
