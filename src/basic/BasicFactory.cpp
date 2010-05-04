@@ -95,11 +95,24 @@ Node* BasicFactory::createTranslate(const Tag &tag) {
 
 Node* BasicFactory::createUniform(const Tag &tag) {
 	
+	kind_t kind;
+	map<string,kind_t>::iterator it;
 	string type;
 	
-	// Create based on kind
+	// Get type
 	tag.get("type", type);
-	switch (kinds.find(type)->second) {
+	it = kinds.find(type);
+	if (it == kinds.end()) {
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[BasicFactory] Uniform type '" << type
+		  << "' not supported.";
+		throw e;
+	}
+	
+	// Create based on kind
+	kind = it->second;
+	switch (kind) {
 	case INT:
 		return new UniformInt(tag);
 	case FLOAT:
@@ -111,10 +124,7 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	case VECTOR:
 		return new UniformVector(tag);
 	default:
-		Exception e;
-		e << "[BasicFactory] Uniform type '" << type
-		  << "' not supported.";
-		throw e;
+		throw Exception("[BasicFactory] Unexpected error making uniform.");
 	}
 }
 
