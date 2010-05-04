@@ -12,6 +12,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include "Exception.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Program.hpp"
@@ -24,8 +25,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     Abstract base class for GLSL uniform variables.
+ * @brief Abstract base class for GLSL uniform variables.
  */
 class Uniform : public Applicable {
 public:

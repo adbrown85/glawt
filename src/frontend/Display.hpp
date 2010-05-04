@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Exception.hpp"
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
 #include "Interpreter.hpp"         // Send commands
@@ -25,8 +26,7 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     3D display for items in a scene.
+ * @brief 3D display for items in a scene.
  */
 class Display {
 public:

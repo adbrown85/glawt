@@ -24,10 +24,10 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 	} else if (as == "normal") {
 		matrixType = NORMAL;
 	} else {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[UniformMatrix] Matrix '" << as << "' not supported.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[UniformMatrix] Matrix '" << as << "' not supported.";
+		throw e;
 	}
 }
 

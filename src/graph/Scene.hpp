@@ -15,6 +15,7 @@
 #include <stack>
 #include <sstream>
 #include <vector>
+#include "Exception.hpp"
 #include "Factory.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"

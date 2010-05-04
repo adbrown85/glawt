@@ -9,13 +9,13 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include "Exception.hpp"
 using namespace std;
 
 
 /**
  * @ingroup data
- * @brief
- *     Four-component vector with dot and cross product capabilities.
+ * @brief Four-component vector with dot and cross product capabilities.
  */
 class Vector {
 public:

@@ -104,7 +104,7 @@ void OctreeBuilder::buildNodeAsLeaf(const Index &center,
 					return;
 				break;
 			default:
-				throw "[OctreeBuilder] Dataset type not supported.";
+				throw Exception("[OctreeBuilder] Dataset type not supported.");
 		}
 	}
 	node->setEmpty(true);
@@ -144,7 +144,8 @@ Index OctreeBuilder::offsetCenter(const Index &center,
 		case 5: return center + Index(-offset,+offset,+offset);
 		case 6: return center + Index(+offset,-offset,+offset);
 		case 7: return center + Index(+offset,+offset,+offset);
-		default: throw "[OctreeBuilder] Index out of bounds.";
+		default:
+			throw Exception("[OctreeBuilder] Index out of bounds.");
 	}
 }
 
@@ -161,7 +162,8 @@ Index OctreeBuilder::offsetSample(const Index &center,
 		case 5: return center + Index(-1, 0, 0);
 		case 6: return center + Index( 0,-1, 0);
 		case 7: return center + Index( 0, 0, 0);
-		default: throw "[OctreeBuilder] Index out of bounds.";
+		default:
+			throw Exception("[OctreeBuilder] Index out of bounds.");
 	}
 }
 

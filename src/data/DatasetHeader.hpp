@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Exception.hpp"
 #include "Tag.hpp"
 using namespace std;
 

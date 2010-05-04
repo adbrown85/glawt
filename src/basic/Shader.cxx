@@ -35,7 +35,7 @@ int main(int argc,
 		shader->associate();
 		cout << "Shader type: " << ((Shader*)shader)->getType() << endl;
 		((Shader*)shader)->list();
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

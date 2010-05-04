@@ -26,10 +26,10 @@ Node* Factory::create(const Tag &tag,
 		creator = it->second;
 		return (*creator)(filter(tag, xmlFilename));
 	} else {
-		ostringstream msg;
-		msg << "[Factory] Could not find creator function for '"
-		    << tag.getName() << "'.";
-		throw msg.str().c_str();
+		Exception e;
+		e << "[Factory] Could not find creator function for '"
+		  << tag.getName() << "'.";
+		throw e;
 	}
 }
 

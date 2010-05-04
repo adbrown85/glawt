@@ -8,19 +8,16 @@
 
 
 class OctreeBuilderTester : public OctreeBuilder {
-	
-	public:
-		
-		OctreeBuilderTester(Dataset *dataset) : 
-		                    OctreeBuilder(dataset) {}
-		void print();
-		void printOffsets();
-		
-		static void print(OctreeNode *node);
-		static void indent(int times);
-		static void printRecursive(OctreeNode *node,
-		                           int depth,
-		                           int maximumDepth);
+public:
+	OctreeBuilderTester(Dataset *dataset) : 
+	                    OctreeBuilder(dataset) {}
+	static void indent(int times);
+	void print();
+	static void print(OctreeNode *node);
+	void printOffsets();
+	static void printRecursive(OctreeNode *node,
+	                           int depth,
+	                           int maximumDepth);
 };
 
 
@@ -116,7 +113,7 @@ int main(int argc,
 		cout << "\nTotal Nodes: " << endl;
 		cout << "  " << builder->getTotalNodes() << endl;
 	}
-	catch (const char *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

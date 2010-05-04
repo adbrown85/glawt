@@ -117,7 +117,7 @@ int main() {
 		test.testFindRoot();
 		test.testIterator();
 		test.tearDown();
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

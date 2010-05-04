@@ -44,13 +44,13 @@ void Tag::clear() {
  */
 void Tag::error(string key) const {
 	
-	ostringstream msg;
+	Exception e;
 	
 	// Build and throw message
-	msg << "[Tag] Tag named '" << name
-	    << "' does not have necessary '" << key
-	    << "' attribute.";
-	throw msg.str().c_str();
+	e << "[Tag] Tag named '" << name
+	  << "' does not have necessary '" << key
+	  << "' attribute.";
+	throw e;
 }
 
 
@@ -63,14 +63,14 @@ void Tag::error(string key) const {
 void Tag::error(string key,
                 string type) const {
 	
-	ostringstream msg;
+	Exception e;
 	
 	// Build and throw message
-	msg << "[Tag] In tag named '" << name
-	    << "', attribute '" << key
-	    << "' cannot be parsed as '" << type
-	    << ".";
-	throw msg.str().c_str();
+	e << "[Tag] In tag named '" << name
+	  << "', attribute '" << key
+	  << "' cannot be parsed as '" << type
+	  << ".";
+	throw e;
 }
 
 

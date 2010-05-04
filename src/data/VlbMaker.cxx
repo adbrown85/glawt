@@ -32,14 +32,12 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	// Test
 	try {
-		
-		// Test
 		cout << "Making VLB file..." << endl;
 		vlbMaker = new VlbMaker(inFilePath, outFilePath);
 		vlbMaker->start();
-	}
-	catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

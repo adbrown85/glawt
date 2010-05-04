@@ -150,7 +150,7 @@ int main() {
 		                 "../glsl/file.frag",
 		                 "/glsl/file.frag");
 		assert(false);
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	try {
@@ -158,7 +158,7 @@ int main() {
 		                 "../glsl/file.frag",
 		                 "C:\\glsl/file.frag");
 		assert(false);
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

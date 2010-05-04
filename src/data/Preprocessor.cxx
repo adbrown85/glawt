@@ -58,7 +58,7 @@ int main(int argc,
 		testRealLineNumber(15);
 		testRealLineNumber(31);
 	}
-	catch (const char *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

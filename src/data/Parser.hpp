@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Exception.hpp"
 #include "Tag.hpp"
 #include "Text.hpp"
 using namespace std;

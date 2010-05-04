@@ -63,6 +63,8 @@ void Producer::cut(Scene *scene,
  * @param scene
  * @param command
  * @param filename
+ * 
+ * @throws Exception if scene is NULL.
  */
 void Producer::open(Scene *scene,
                     int command,
@@ -70,7 +72,7 @@ void Producer::open(Scene *scene,
 	
 	// Check for bad input
 	if (scene == NULL) {
-		throw "[Producer] Cannot open file when scene is NULL.";
+		throw Exception("[Producer] Cannot open file when scene is NULL.");
 	}
 	
 	// Initialize

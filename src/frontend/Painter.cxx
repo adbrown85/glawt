@@ -49,22 +49,19 @@ void display(void) {
 int main(int argc,
          char *argv[]) {
 	
-	try {
-		
-		// Initialize
-		Window::init(argc, argv);
-		BasicFactory::install();
-		Tester::open("Painter.xml");
-		Window::setDisplay(&display);
-		Window::setKeyboard(&keyboard);
-		
-		// Start
-		scene = Tester::getScene();
-		painter = new Painter(scene);
-		Tester::start();
-	} catch (const char *e) {
-		cerr << e << endl;
-	}
+	// Install tags
+	BasicFactory::install();
+	
+	// Open
+	Tester::init(argc, argv);
+	Tester::open("Painter.xml");
+	Window::setDisplay(&display);
+	Window::setKeyboard(&keyboard);
+	
+	// Start
+	scene = Tester::getScene();
+	painter = new Painter(scene);
+	Tester::start();
 	
 	// Finish
 	return 0;

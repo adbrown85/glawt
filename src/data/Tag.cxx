@@ -9,15 +9,11 @@
 
 
 class TagTest {
-	
-	public:
-		
-		void testCreate();
-		void testGetArray();
-	
-	private:
-		
-		Tag tag;
+public:
+	void testCreate();
+	void testGetArray();
+private:
+	Tag tag;
 };
 
 

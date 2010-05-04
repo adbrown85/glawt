@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include "Text.hpp"
+#include "Exception.hpp"
 using namespace std;
 
 

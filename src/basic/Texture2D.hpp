@@ -12,17 +12,16 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "Exception.hpp"
 #include "Texture.hpp"
 
 
 /**
  * @ingroup basic
- * @brief
- *     %Texture node for images.
+ * @brief %Texture node for images.
  */
 class Texture2D : public Texture {
 public:
-	
 	Texture2D(const Tag &tag);
 	virtual void associate();
 	static void find(Node *node,
@@ -30,15 +29,11 @@ public:
 	                 const string &name);
 	virtual int getSize() const;
 	virtual string toString() const;
-	
 protected:
-	
 	virtual void generate();
 	static void initLibraries();
 	virtual void load();
-	
 private:
-	
 	static bool librariesLoaded;
 	ILuint image;
 	int size;

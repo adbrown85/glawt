@@ -301,7 +301,8 @@ float& Vector::operator[](int i) {
 		case 1: return y;
 		case 2: return z;
 		case 3: return w;
-		default: throw "[Vector] Index out of bounds.";
+		default:
+			throw Exception("[Vector] Index out of bounds.");
 	}
 }
 
@@ -317,7 +318,8 @@ float Vector::operator[](int i) const {
 		case 1: return y;
 		case 2: return z;
 		case 3: return w;
-		default: throw "[Vector] Index out of bounds.";
+		default:
+			throw Exception("[Vector] Index out of bounds.");
 	}
 }
 
@@ -364,7 +366,8 @@ float Vector::get(int i) const {
 		case 1: return y;
 		case 2: return z;
 		case 3: return w;
-		default: throw "[Vector] Index out of bounds.";
+		default:
+			throw Exception("[Vector] Index out of bounds.");
 	}
 }
 

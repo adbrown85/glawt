@@ -148,7 +148,7 @@ int main(int argc,
 		test.setUp();
 		test.testStart();
 		test.tearDown();
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

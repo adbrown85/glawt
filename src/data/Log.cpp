@@ -89,8 +89,11 @@ void Log::printLine(const string &line,
 	// Find preprocessor
 	handle = findHandle(line);
 	it = code.find(0);
-	if (it == code.end())
-		throw "[Log] Could not find code of handle.";
+	if (it == code.end()) {
+		Exception e;
+		e << "[Log] Could not find code of handle '" << handle << "'.";
+		throw e;
+	}
 	preprocessor = it->second;
 	
 	// Print line substituting file and line number

@@ -12,6 +12,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Exception.hpp"
 #include "FileUtility.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"

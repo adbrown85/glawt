@@ -13,17 +13,16 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Exception.hpp"
 using namespace std;
 
 
 /**
  * @ingroup data
- * @brief
- *     Utility for working with file paths.
+ * @brief Utility for working with file paths.
  */
 class FileUtility {
 public:
-	
 	static string build(const string &root,
 	                    vector<string> &parts);
 	static string getBasename(const string &path);

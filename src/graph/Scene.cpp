@@ -141,14 +141,17 @@ void Scene::print() {
 
 /**
  * Replaces the root of the scene with a new node.
+ * 
+ * @throws Exception if the root has children already
+ * @throws Exception if node is NULL
  */
 void Scene::setRoot(Node *node) {
 	
 	// Test for bad input
 	if (root->hasChildren()) {
-		throw "[Scene] Cannot set root when it already has children.";
+		throw Exception("[Scene] Cannot set root when it has children.");
 	} else if (node == NULL) {
-		throw "[Scene] Cannot set root to NULL.";
+		throw Exception("[Scene] Cannot set root to NULL.");
 	}
 	
 	// Make node new root

@@ -106,7 +106,7 @@ void Texture2D::generate() {
  * libraries used to compile Gander.  If they are, warnings are issued.  Either
  * way DevIL is initialized by calling 'ilInit'.
  * 
- * @throws const_char* if DevIL version is incorrect.
+ * @throws Exception if DevIL version is incorrect.
  */
 void Texture2D::initLibraries() {
 	
@@ -119,24 +119,24 @@ void Texture2D::initLibraries() {
 	// Check DevIL components
 	ilVersion = ilGetInteger(IL_VERSION_NUM);
 	if (ilVersion < IL_VERSION) {
-		ostringstream msg;
-		msg << "[Texture2D] DevIL (IL) compiled with " << IL_VERSION
-		    << " but running " << ilVersion << ".";
-		throw msg.str().c_str();
+		Exception e;
+		e << "[Texture2D] DevIL (IL) compiled with " << IL_VERSION
+		  << " but running " << ilVersion << ".";
+		throw e;
 	}
 	iluVersion = iluGetInteger(ILU_VERSION_NUM);
 	if (iluVersion < ILU_VERSION) {
-		ostringstream msg;
-		msg << "[Texture2D] DevIL (ILU) compiled with " << ILU_VERSION
-		    << " but running " << iluVersion << ".";
-		throw msg.str().c_str();
+		Exception e;
+		e << "[Texture2D] DevIL (ILU) compiled with " << ILU_VERSION
+		  << " but running " << iluVersion << ".";
+		throw e;
 	}
 	ilutVersion = ilutGetInteger(ILUT_VERSION_NUM);
 	if (ilutVersion < ILUT_VERSION) {
-		ostringstream msg;
-		msg << "[Texture2D] DevIL (ILUT) compiled with " << ILUT_VERSION
-		    << " but running " << ilutVersion << ".";
-		throw msg.str().c_str();
+		Exception e;
+		e << "[Texture2D] DevIL (ILUT) compiled with " << ILUT_VERSION
+		  << " but running " << ilutVersion << ".";
+		throw e;
 	}
 	
 	// Initialize DevIL
@@ -158,25 +158,23 @@ void Texture2D::load() {
 	// Initialize DevIL
 	try {
 		initLibraries();
-	} catch (const char *e) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << e;
-		throw msg.str().c_str();
+	} catch (Exception &ex) {
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << ex;
+		throw e;
 	}
 	
 	// Load image
 	ilGenImages(1, &image);
 	ilBindImage(image);
-	if (ilLoadImage(filename.c_str()))
-		cerr << "[Texture2D] DevIL loaded '" << filename
-		     << "'." << endl;
-	else {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Texture2D] DevIL could not load '" << filename 
-		    << "'.";
-		throw msg.str().c_str();
+	if (ilLoadImage(filename.c_str())) {
+		cerr << "[Texture2D] DevIL loaded '" << filename << "'." << endl;
+	} else {
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[Texture2D] DevIL could not load '" << filename << "'.";
+		throw e;
 	}
 	size = ilGetInteger(IL_IMAGE_WIDTH);
 	
@@ -184,10 +182,10 @@ void Texture2D::load() {
 	ilBindImage(image);
 	handle = ilutGLBindTexImage();
 	if (handle == 0) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Texture2D] DevIL did not bind image to texture.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[Texture2D] DevIL did not bind image to texture.";
+		throw e;
 	}
 }
 

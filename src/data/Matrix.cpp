@@ -169,9 +169,9 @@ float& Matrix::operator()(int i,
                           int j) {
 	
 	if (i < 0 || i >= size)
-		throw "[Matrix] Index out of bounds.";
+		throw Exception("[Matrix] Index out of bounds.");
 	if (j < 0 || j >= size)
-		throw "[Matrix] Index out of bounds.";
+		throw Exception("[Matrix] Index out of bounds.");
 	return arr[i][j];
 }
 
@@ -186,9 +186,9 @@ float Matrix::operator()(int i,
                          int j) const {
 	
 	if (i < 0 || i >= size)
-		throw "[Matrix] Index out of bounds.";
+		throw Exception("[Matrix] Index out of bounds.");
 	if (j < 0 || j >= size)
-		throw "[Matrix] Index out of bounds.";
+		throw Exception("[Matrix] Index out of bounds.");
 	return arr[i][j];
 }
 
@@ -207,7 +207,7 @@ Matrix operator*(const Matrix &A,
 	
 	// Check if matrices can't be multiplied
 	if (A.getColumns() != B.getRows())
-		throw "[Matrix] Matrices cannot be multiplied.";
+		throw Exception("[Matrix] Matrices cannot be multiplied.");
 	
 	// Multiply rows of A with columns in B
 	for (int i=0; i<C.getRows(); ++i) {

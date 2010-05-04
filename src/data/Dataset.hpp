@@ -39,44 +39,40 @@ using namespace std;
  * getData() and @c getType().
  */
 class Dataset {
-	
-	public:
-		
-		Dataset(string filename);
-		Dataset(const Tag &tag);
-		virtual ~Dataset();
-		virtual unsigned char getAsByte(const Index &I) const;
-		virtual float getAsFloat(const Index &I) const;
-		virtual short getAsShort(const Index &I) const;
-		virtual int getBlock() const;
-		virtual void* getData();
-		virtual int getDepth() const;
-		virtual int getHeight() const;
-		virtual int getMaximumDimension() const;
-		virtual GLenum getType() const;
-		virtual int getWidth() const;
-		virtual void print() const;
-		virtual void print(Index I);
-		virtual void set(const Index &I,
-		                 const void *value,
-		                 GLenum type);
-	
-	private:
-		
-		DatasetHeader header;
-		GLenum type;
-		int block, length;
-		int width, height, depth, widthTimesHeight;
-		void *data;
-		
-		virtual char* findPosition(const Index &I) const;
-		virtual void get(const Index &I,
-		                 void *&value) const;
-		virtual void init();
-		virtual void initDimensions();
-		virtual void initTypeBlock();
-		virtual void readData();
-		virtual void checkIndex(const Index &I) const;
+public:
+	Dataset(string filename);
+	Dataset(const Tag &tag);
+	virtual ~Dataset();
+	virtual unsigned char getAsByte(const Index &I) const;
+	virtual float getAsFloat(const Index &I) const;
+	virtual short getAsShort(const Index &I) const;
+	virtual int getBlock() const;
+	virtual void* getData();
+	virtual int getDepth() const;
+	virtual int getHeight() const;
+	virtual int getMaximumDimension() const;
+	virtual GLenum getType() const;
+	virtual int getWidth() const;
+	virtual void print() const;
+	virtual void print(Index I);
+	virtual void set(const Index &I,
+	                 const void *value,
+	                 GLenum type);
+protected:
+	virtual char* findPosition(const Index &I) const;
+	virtual void get(const Index &I,
+	                 void *&value) const;
+	virtual void init();
+	virtual void initDimensions();
+	virtual void initTypeBlock();
+	virtual void readData();
+	virtual void checkIndex(const Index &I) const;
+private:
+	DatasetHeader header;
+	GLenum type;
+	int block, length;
+	int width, height, depth, widthTimesHeight;
+	void *data;
 };
 
 

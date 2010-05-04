@@ -17,10 +17,10 @@ UniformVector::UniformVector(const Tag &tag) :
 	} else if (type == "vec4") {
 		size = 4;
 	} else {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[UniformVector] '" << type << "' not supported.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[UniformVector] '" << type << "' not supported.";
+		throw e;
 	}
 }
 
@@ -31,7 +31,7 @@ void UniformVector::apply() {
 	case 3: glUniform3fv(location, 1, value); break;
 	case 4: glUniform4fv(location, 1, value); break;
 	default:
-		throw "[UniformVector] Unexpected size found while applying.";
+		throw Exception("[UniformVector] Unexpected size while applying.");
 	}
 }
 

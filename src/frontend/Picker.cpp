@@ -146,6 +146,8 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
  *   | ids       |
  *   |    ...    |
  *   -------------
+ * 
+ * @throws Exception if a hit record with 0 item IDs was detected.
  */
 void Picker::storeIDsOfItems() {
 	
@@ -162,7 +164,7 @@ void Picker::storeIDsOfItems() {
 		// Get number of IDs in name stack
 		numOfIDs = *ptr;
 		if (numOfIDs == 0)
-			throw "[Picker] Hit record with 0 item IDs detected!";
+			throw Exception("[Picker] Hit record with 0 item IDs detected!");
 		
 		// Find ID of shape that was drawn
 		ptr += 3;

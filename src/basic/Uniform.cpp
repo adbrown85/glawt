@@ -32,11 +32,11 @@ void Uniform::associate() {
 	// Look for a Program ancestor
 	program = Program::find(parent);
 	if (program == NULL) {
-		ostringstream msg;
-		msg << tag.getLine() << ": "
-		    << "Program for uniform named '" << name
-		    << "' cannot be found.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "Program for uniform named '" << name
+		  << "' cannot be found.";
+		throw e;
 	}
 }
 
@@ -51,11 +51,11 @@ void Uniform::finalize() {
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
 	if (location == -1) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Uniform] Location for uniform '" << name
-		    << "' cannot be found.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[Uniform] Location for uniform '" << name
+		  << "' cannot be found.";
+		throw e;
 	}
 }
 

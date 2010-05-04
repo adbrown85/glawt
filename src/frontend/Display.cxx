@@ -48,7 +48,7 @@ int main(int argc,
 		// Start
 		Window::start();
 	}
-	catch (const char *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

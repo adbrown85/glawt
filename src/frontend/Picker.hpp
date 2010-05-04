@@ -15,6 +15,7 @@
 #include <typeinfo>
 #include <utility>
 #include <vector>
+#include "Exception.hpp"
 #include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
 #include "Node.hpp"                // Checking depth

@@ -15,6 +15,7 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include "Exception.hpp"
 #include "FileUtility.hpp"
 #include "Text.hpp"
 using namespace std;

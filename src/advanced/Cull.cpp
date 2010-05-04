@@ -27,11 +27,10 @@ Cull::Cull(const Tag &tag) : Applicable(tag) {
 	else if (facesString == "none")
 		enabled = false;
 	else {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Cull] Value '" << facesString 
-		    << "' for 'faces' attributes not supported.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[Cull] Value '" << facesString << "' for 'faces' not supported.";
+		throw e;
 	}
 }
 

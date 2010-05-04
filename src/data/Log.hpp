@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include <GL/glut.h>
+#include "Exception.hpp"
 #include "Preprocessor.hpp"
 using namespace std;
 

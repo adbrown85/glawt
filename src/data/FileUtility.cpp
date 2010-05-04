@@ -100,6 +100,7 @@ string FileUtility::getInternals(const string& path) {
  * 
  * @param primary Path used as the base.
  * @param secondary Relative path to modify primary.
+ * @throws Exception if either of the paths are empty.
  */
 string FileUtility::getRelativePath(const string &primary,
                                     const string &secondary) {
@@ -108,8 +109,9 @@ string FileUtility::getRelativePath(const string &primary,
 	vector<string> path, change;
 	
 	// Check for empty strings
-	if (primary.empty() || secondary.empty())
-		throw "[FileUtility] Cannot use an empty string.";
+	if (primary.empty() || secondary.empty()) {
+		throw Exception("[FileUtility] Cannot use an empty string.");
+	}
 	
 	// Handle absolute paths
 	if (isAbsolutePath(secondary))
@@ -197,6 +199,7 @@ bool FileUtility::isSeparator(char character) {
  * @param root Top-most directory
  * @param path Base path
  * @param change Relative path 
+ * @throws Exception if the relative path goes above root.
  */
 string FileUtility::mergePaths(const string &root,
                                vector<string> &path,
@@ -216,7 +219,7 @@ string FileUtility::mergePaths(const string &root,
 	if (!root.empty()
 	      && path.empty()
 	      && *it == "..") {
-		throw "[FileUtility] Relative path cannot go above root.";
+		throw Exception("[FileUtility] Relative path cannot go above root.");
 	}
 	
 	// After that just add each change to path

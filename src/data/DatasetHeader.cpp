@@ -66,10 +66,9 @@ void DatasetHeader::check() {
 	// Open file and check it
 	file.open(filename.c_str());
 	if (!file) {
-		ostringstream message;
-		message << "[DatasetHeader] Could not open '"
-		        << filename << "'." << endl;
-		throw message.str().c_str();
+		Exception e;
+		e << "[DatasetHeader] Could not open '" << filename << "'";
+		throw e;
 	}
 	check(file);
 	file.close();
@@ -100,8 +99,9 @@ void DatasetHeader::check(istream &stream) {
 	
 	// Look for descriptor
 	getline(stream, line);
-	if (line != "VLIB.1")
-		throw "[DatasetHeader] First line of stream is not 'VLIB.1'.";
+	if (line != "VLIB.1") {
+		throw Exception("[DatasetHeader] First line of stream is not 'VLIB.1'.");
+	}
 	beginning = 1;
 	
 	// Skip comments

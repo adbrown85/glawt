@@ -42,7 +42,7 @@ int main(int argc,
 		testCreate("octree name='octree' link='volume'");
 		testCreate("target link='buffer'");
 		testCreate("wireframe");
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

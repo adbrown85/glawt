@@ -43,7 +43,7 @@ int main(int argc,
 		testCreate("texture file='../../textures/chunk.vlb'");
 		testCreate("translate");
 		testCreate("uniform type='int' name='bar'");
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	

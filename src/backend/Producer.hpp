@@ -13,6 +13,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
+#include "Exception.hpp"
 #include "AdvancedFactory.hpp"
 #include "BasicFactory.hpp"
 #include "Command.hpp"

@@ -11,6 +11,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include "Exception.hpp"
 #include "Factory.hpp"
 #include "Cube.hpp"
 #include "Program.hpp"
@@ -30,8 +31,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     %Factory for creating nodes used by most files.
+ * @brief %Factory for creating nodes used by most files.
  */
 class BasicFactory {
 public:

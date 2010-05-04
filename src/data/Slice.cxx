@@ -47,7 +47,7 @@ int main(int argc,
 		init(argc, argv, "Slice");
 		dataset->print();
 	}
-	catch (char const *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

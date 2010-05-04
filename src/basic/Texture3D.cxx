@@ -47,7 +47,7 @@ int main(int argc,
 		cout << "\nAttributes:" << endl;
 		cout << "  " << texture << endl;
 	}
-	catch (char const *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

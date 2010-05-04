@@ -175,9 +175,9 @@ void Preprocessor::load(const string &filename) {
 	// Open file
 	file.open(filename.c_str());
 	if (!file) {
-		ostringstream message;
-		message << "[Preprocessor] Could not open '" << filename << "'.";
-		throw message.str().c_str();
+		Exception e;
+		e << "[Preprocessor] Could not open '" << filename << "'.";
+		throw e;
 	}
 	
 	// Load into vector
@@ -206,9 +206,9 @@ void Preprocessor::onDefine(const string &line) {
 	if (it == defines.end()) {
 		defines[key] = value;
 	} else {
-		ostringstream message;
-		message << "[Preprocessor] Token '" << key << "' already defined.";
-		throw message.str().c_str();
+		Exception e;
+		e << "[Preprocessor] Token '" << key << "' already defined.";
+		throw e;
 	}
 }
 

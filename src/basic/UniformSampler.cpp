@@ -15,10 +15,10 @@ UniformSampler::UniformSampler(const Tag &tag) :
 	
 	tag.get("value", value, false);
 	if (link.empty()) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[UniformSampler] Sampler types require link to texture.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[UniformSampler] Sampler types require link to texture.";
+		throw e;
 	}
 }
 
@@ -46,11 +46,11 @@ void UniformSampler::associate() {
 		current = current->getParent();
 	}
 	if (texture == NULL) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[UniformSampler] Could not find texture with '" << link
-		    << "'as name.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[UniformSampler] Could not find texture with '" << link
+		  << "'as name.";
+		throw e;
 	}
 	value = texture->getUnit();
 }

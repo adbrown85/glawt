@@ -49,7 +49,7 @@ void Traverser::start() {
 	
 	root = scene->getRoot();
 	if (root == NULL) {
-		throw "[Traverser] Scene's root is NULL.";
+		throw Exception("[Traverser] Scene's root is NULL.");
 	}
 	traverseNode(root);
 }

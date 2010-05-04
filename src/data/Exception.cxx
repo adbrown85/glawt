@@ -1,44 +1,37 @@
 /*
- * Producer.cxx
+ * Exception.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include <iostream>
-#include "Producer.hpp"
-#include "Scene.hpp"
-using namespace std;
+#include "Exception.hpp"
 
 
-/**
- * Simple test program.
- */
 int main(int argc,
          char *argv[]) {
 	
-	Producer producer;
-	Scene scene;
+	int line=45;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Producer" << endl;
+	cout << "Exception" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
 	// Test
 	try {
-		producer.open(&scene, Command::OPEN, "Producer.xml");
-		scene.print();
+		Exception e;
+		e << "[Gander] This is an exception from " << line << ".";
+		throw e;
 	} catch (Exception &e) {
-		cerr << e << endl;
+		cout << e << endl;
 	}
-	
 	
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Producer" << endl;
+	cout << "Exception" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;

@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
+#include "Exception.hpp"
 #include "Applicable.hpp"
 #include "Log.hpp"
 #include "Node.hpp"

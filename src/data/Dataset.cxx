@@ -66,7 +66,7 @@ int main(int argc,
 		}
 		dataset.print(index);
 	}
-	catch (char const *e) {
+	catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

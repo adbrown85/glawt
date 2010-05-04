@@ -32,11 +32,11 @@ Shader::Shader(const Tag &tag) : Node(tag) {
 		else if (extension == "vert")
 			this->type = "vertex";
 		else {
-			ostringstream msg;
-			msg << tag.getLine() << ": ";
-			msg << "[Shader] Extension '"
-			    << extension << "' not recognized as type.";
-			throw msg.str().c_str();
+			Exception e;
+			e << tag.getFilename() << ":" << tag.getLine() << ": ";;
+			e << "[Shader] Extension '"
+			  << extension << "' not recognized as type.";
+			throw e;
 		}
 	}
 }
@@ -90,10 +90,10 @@ void Shader::compile() {
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	log();
 	if (!compiled) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Shader] '" << filename << "' did not compile." << endl;
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";;
+		e << "[Shader] '" << filename << "' did not compile." << endl;
+		throw e;
 	}
 }
 
@@ -115,10 +115,10 @@ void Shader::create() {
 	else if (type == "vertex")
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	else {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Shader] Type not supported.";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";;
+		e << "[Shader] Type not supported.";
+		throw e;
 	}
 }
 
@@ -148,11 +148,11 @@ void Shader::load() {
 		preprocessor.setFilename(filename);
 		preprocessor.start();
 		lines = preprocessor.getLines();
-	} catch (const char *e) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << e;
-		throw msg.str().c_str();
+	} catch (Exception &ex) {
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << ex;
+		throw e;
 	}
 	
 	// Copy to source array

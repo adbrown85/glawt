@@ -70,7 +70,7 @@ Node* create(const Tag &tag) {
 	} else if (name == "instance") {
 		return new FakeInstance(tag);
 	} else {
-		throw "Could not create node.";
+		throw Exception("Could not create node.");
 	}
 }
 
@@ -142,7 +142,7 @@ int main() {
 		test.testPrepare();
 		test.testPrint();
 		test.tearDown();
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

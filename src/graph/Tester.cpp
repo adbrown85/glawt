@@ -46,8 +46,8 @@ void Tester::open(const string &filename) {
 		scene.prepare();
 		scene.print();
 		traverser = new Traverser(&scene);
-	} catch (const char *e) {
-		cerr << getFilename() << ":" << e << endl;
+	} catch (Exception &e) {
+		cerr << e << endl;
 		exit(1);
 	}
 }
@@ -57,8 +57,8 @@ void Tester::start() {
 	
 	try {
 		Window::start();
-	} catch (const char *e) {
-		cerr << getFilename() << ":" << e << endl;
+	} catch (Exception &e) {
+		cerr << e << endl;
 		exit(1);
 	}
 }

@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include "Exception.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"
 #include "Applicable.hpp"          // Apply modifications to scene

@@ -44,7 +44,7 @@ int main() {
 		tag["style"] = "3D";
 		shape = new FakeShape(tag);
 		cout << "  " << *shape << endl;
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

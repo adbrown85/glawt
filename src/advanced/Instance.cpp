@@ -105,10 +105,10 @@ void Instance::findGroup() {
 	// Find the group
 	group = Group::find(this, of);
 	if (group == NULL) {
-		ostringstream msg;
-		msg << tag.getLine() << ": ";
-		msg << "[Instance] Could not find group with name '" << of << "'";
-		throw msg.str().c_str();
+		Exception e;
+		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		e << "[Instance] Could not find group with name '" << of << "'";
+		throw e;
 	}
 }
 

@@ -111,10 +111,10 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	case VECTOR:
 		return new UniformVector(tag);
 	default:
-		ostringstream msg;
-		msg << "[BasicFactory] Uniform type '" << type
-		    << "' not supported.";
-		throw msg.str().c_str();
+		Exception e;
+		e << "[BasicFactory] Uniform type '" << type
+		  << "' not supported.";
+		throw e;
 	}
 }
 

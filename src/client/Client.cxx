@@ -14,7 +14,7 @@ int main(int argc,
 	
 	try {
 		client.start();
-	} catch (const char *e) {
+	} catch (Exception &e) {
 		cerr << e << endl;
 	}
 	return 0;

@@ -9,16 +9,19 @@ MODULE := data
 GANDER := ../..
 include $(GANDER)/src/module.mak
 
+# Exception
+${filter-out Exception.o,$(OBJECTS)}: Exception.o
+
 # Math
-Vector.o:
+Vector.o: 
 Matrix.o: Vector.o
 Quaternion.o: Matrix.o Vector.o
 
 # Volume
 DatasetHeader.o: Tag.o
 Dataset.o: DatasetHeader.o Tag.o
-OctreeBuilder.o: 
-OctreeNode.o: 
+OctreeBuilder.o:
+OctreeNode.o:
 Slice.o: Dataset.o
 VlbMaker.o: DatasetHeader.o
 
@@ -27,7 +30,7 @@ Tag.o : Text.o
 Parser.o : Tag.o Text.o
 
 # Files
-FileUtility.o: 
+FileUtility.o:
 Preprocessor.o: FileUtility.o Text.o
 
 # OpenGL
