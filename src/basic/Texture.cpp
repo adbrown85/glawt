@@ -15,7 +15,7 @@ vector<GLenum> Texture::active_units;
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
 Texture::Texture(GLenum type,
-                 const Tag &tag) {
+                 const Tag &tag) : Applicable(tag) {
 	
 	// Initialize
 	this->unit = 0;

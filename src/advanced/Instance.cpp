@@ -7,7 +7,7 @@
 #include "Instance.hpp"
 
 
-Instance::Instance(const Tag &tag) {
+Instance::Instance(const Tag &tag) : Applicable(tag) {
 	
 	tag.get("of", of);
 }

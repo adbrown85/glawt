@@ -21,7 +21,7 @@ using namespace std;
 
 class Blend : public Applicable {
 public:
-	Blend(const Tag &tag);
+	Blend(const Tag &tag) : Applicable(tag) {}
 	virtual void apply();
 	virtual void associate();
 	virtual void remove();

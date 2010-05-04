@@ -9,7 +9,7 @@
 
 Node* createNode(const Tag &tag) {
 	
-	return new Node();
+	return new Node(tag);
 }
 
 
@@ -30,7 +30,7 @@ int main(int argc,
 		Tester::start();
 	}
 	catch (const char *e) {
-		cerr << e << endl;
+		cerr << Tester::getFilename() << ":" << e << endl;
 	}
 	
 	// Finish

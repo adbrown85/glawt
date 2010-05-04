@@ -20,6 +20,7 @@
  */
 class Transformation : public Applicable {
 public:
+	Transformation(const Tag &tag) : Applicable(tag) {}
 	virtual void apply() = 0;
 	virtual void remove() = 0;
 };

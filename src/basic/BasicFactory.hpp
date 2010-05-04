@@ -34,26 +34,20 @@ using namespace std;
  *     %Factory for creating nodes used by most files.
  */
 class BasicFactory {
-	
-	
-	public:
-		
-		static void install();
-		static Node* createCube(const Tag &tag);
-		static Node* createProgram(const Tag &tag);
-		static Node* createScale(const Tag &tag);
-		static Node* createShader(const Tag &tag);
-		static Node* createSquare(const Tag &tag);
-		static Node* createTexture(const Tag &tag);
-		static Node* createTranslate(const Tag &tag);
-		static Node* createUniform(const Tag &tag);
-	
-	private:
-		
-		enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
-		
-		static bool installed;
-		static map<string,kind_t> kinds;
+public:
+	static void install();
+	static Node* createCube(const Tag &tag);
+	static Node* createProgram(const Tag &tag);
+	static Node* createScale(const Tag &tag);
+	static Node* createShader(const Tag &tag);
+	static Node* createSquare(const Tag &tag);
+	static Node* createTexture(const Tag &tag);
+	static Node* createTranslate(const Tag &tag);
+	static Node* createUniform(const Tag &tag);
+private:
+	enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
+	static bool installed;
+	static map<string,kind_t> kinds;
 };
 
 

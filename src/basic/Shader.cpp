@@ -12,7 +12,7 @@
  * 
  * @param tag XML tag with "type" and "file" attributes.
  */
-Shader::Shader(const Tag &tag) {
+Shader::Shader(const Tag &tag) : Node(tag) {
 	
 	// Initialize attributes
 	length = 0;

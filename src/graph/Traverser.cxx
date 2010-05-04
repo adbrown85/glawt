@@ -27,7 +27,7 @@ public:
 };
 class FakeApplicable : public Applicable {
 public:
-	FakeApplicable(const Tag &tag) {name = tag.getName();}
+	FakeApplicable(const Tag &tag) : Applicable(tag) {name = tag.getName();}
 	virtual void apply() {cout << "  " << name << endl;}
 	virtual void remove() {cout << "  " << name << endl;}
 	virtual string toString() const {return Node::toString() + " " + name;}
@@ -35,7 +35,7 @@ public:
 };
 class FakeSealed : public Node {
 public:
-	FakeSealed(const Tag &tag) {name = tag.getName();}
+	FakeSealed(const Tag &tag) : Node(tag) {name = tag.getName();}
 	virtual bool isSealed() const {return true;}
 	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
@@ -79,7 +79,7 @@ Node* create(const Tag &tag) {
 	} else if (name=="program" || name=="translate" || name=="uniform") {
 		return new FakeApplicable(tag);
 	} else {
-		return new Node();
+		return new Node(tag);
 	}
 }
 

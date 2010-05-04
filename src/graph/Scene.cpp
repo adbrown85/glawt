@@ -12,7 +12,7 @@
  */
 Scene::Scene() {
 	
-	this->root = new Node();
+	this->root = new Node(Tag());
 }
 
 

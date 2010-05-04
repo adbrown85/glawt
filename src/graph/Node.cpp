@@ -10,11 +10,12 @@
 /**
  * Creates a new node with no parent.
  */
-Node::Node() {
+Node::Node(const Tag &tag) {
 	
 	// Initialize
 	this->depth = 0.0;
 	this->parent = NULL;
+	this->tag = tag;
 }
 
 

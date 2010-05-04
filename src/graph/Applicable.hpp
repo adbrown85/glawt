@@ -17,6 +17,7 @@
  */
 class Applicable : public Node {
 public:
+	Applicable(const Tag &tag) : Node(tag) {}
 	virtual void apply() = 0;
 	virtual void remove() = 0;
 };

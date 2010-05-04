@@ -7,12 +7,6 @@
 #include "Blend.hpp"
 
 
-Blend::Blend(const Tag &tag) {
-	
-	
-}
-
-
 void Blend::apply() {
 	
 	// Enable blending

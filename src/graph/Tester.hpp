@@ -27,6 +27,7 @@ using namespace std;
 class Tester {
 public:
 	static void display(void);
+	static string getFilename();
 	static Scene* getScene();
 	static void keyboard(unsigned char key, int x, int y);
 	static void open(const string &filename);
@@ -38,6 +39,7 @@ private:
 
 
 inline Scene* Tester::getScene() {return &scene;}
+inline string Tester::getFilename() {return scene.getFilename();}
 
 
 #endif

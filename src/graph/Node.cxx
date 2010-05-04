@@ -40,11 +40,13 @@ private:
 
 void NodeTest::setUp() {
 	
+	Tag tag;
+	
 	// Set up
 	cout << "Setting up..." << endl;
-	root = new Node();
+	root = new Node(tag);
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		nodes[i] = new Node();
+		nodes[i] = new Node(tag);
 	}
 }
 

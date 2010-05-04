@@ -18,7 +18,7 @@ int main(int argc,
 		Tester::open("Uniform.xml");
 		Tester::start();
 	} catch (const char *e) {
-		cerr << e << endl;
+		cerr << Tester::getFilename() << ":" << e << endl;
 	}
 	return 0;
 }

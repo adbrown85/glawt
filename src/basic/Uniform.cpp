@@ -12,7 +12,7 @@
  * 
  * @param tag XML tag with "type", "name", "value", and "link" information.
  */
-Uniform::Uniform(const Tag &tag) {
+Uniform::Uniform(const Tag &tag) : Applicable(tag) {
 	
 	// Initialize
 	program = NULL;
@@ -32,10 +32,11 @@ void Uniform::associate() {
 	// Look for a Program ancestor
 	program = Program::find(parent);
 	if (program == NULL) {
-		ostringstream message;
-		message << "[Uniform] Program for uniform named '" << name
-		        << "' cannot be found.";
-		throw message.str().c_str();
+		ostringstream msg;
+		msg << tag.getLine() << ": "
+		    << "Program for uniform named '" << name
+		    << "' cannot be found.";
+		throw msg.str().c_str();
 	}
 }
 

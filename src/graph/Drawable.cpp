@@ -12,7 +12,7 @@
  * 
  * @param tag XML tag with "size" attribute.
  */
-Drawable::Drawable(const Tag &tag) {
+Drawable::Drawable(const Tag &tag) : Node(tag) {
 	
 	// Initialize attributes
 	this->visible = true;

@@ -7,7 +7,7 @@
 #include "Group.hpp"
 
 
-Group::Group(const Tag &tag) {
+Group::Group(const Tag &tag) : Node(tag) {
 	
 	tag.get("name", name);
 }

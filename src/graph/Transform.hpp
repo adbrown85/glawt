@@ -20,7 +20,6 @@ using namespace std;
  */
 class Transform {
 public :
-	
 	static Matrix getModelViewMatrix();
 	static Matrix getModelViewProjectionMatrix();
 	static void getModelViewProjectionMatrix(GLfloat array[16]);

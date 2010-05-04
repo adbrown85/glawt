@@ -13,7 +13,7 @@ Program *Program::current=NULL;
  * 
  * @param tag XML tag.
  */
-Program::Program(const Tag& tag) {
+Program::Program(const Tag& tag) : Applicable(tag) {
 	
 	handle = 0;
 }

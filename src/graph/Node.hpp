@@ -14,6 +14,7 @@
 #include <typeinfo>
 #include <vector>
 #include "Matrix.hpp"
+#include "Tag.hpp"
 #include "Text.hpp"
 using namespace std;
 
@@ -25,7 +26,7 @@ using namespace std;
 class Node {
 public:
 	typedef vector<Node*>::iterator iterator;
-	Node();
+	Node(const Tag &tag);
 	virtual ~Node() {};
 	void addChild(Node *child);
 	virtual bool areChildrenDestroyable() const;
@@ -54,6 +55,7 @@ public:
 protected:
 	float depth;
 	Node *parent;
+	Tag tag;
 	vector<Node*> children;
 };
 

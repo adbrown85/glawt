@@ -7,7 +7,7 @@
 #include "Wireframe.hpp"
 
 
-Wireframe::Wireframe(const Tag &tag) {
+Wireframe::Wireframe(const Tag &tag) : Applicable(tag) {
 	
 }
 

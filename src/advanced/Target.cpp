@@ -12,7 +12,7 @@
  * 
  * @param tag XML tag with "link" attribute.
  */
-Target::Target(const Tag &tag) {
+Target::Target(const Tag &tag) : Node(tag) {
 	
 	// Initialize
 	tag.get("link", link, true, false);

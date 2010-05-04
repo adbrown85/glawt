@@ -13,7 +13,7 @@ bool Framebuffer::active=false;
  * 
  * @param tag XML tag.
  */
-Framebuffer::Framebuffer(const Tag &tag) {
+Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
 	
 	this->handle = 0;
 }
