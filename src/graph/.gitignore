@@ -2,6 +2,7 @@ Drawable
 Factory
 Identifiable
 Node
+NodeException
 Scene
 Selectable
 Selection
