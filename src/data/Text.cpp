@@ -155,3 +155,14 @@ string Text::toLower(const string &original) {
 	return temp;
 }
 
+
+string Text::trim(const string &text,
+                  const string &characters) {
+	
+	size_t beg, end;
+	
+	beg = text.find_first_not_of(characters);
+	end = text.find_last_not_of(characters);
+	return text.substr(beg, end-beg+1);
+}
+

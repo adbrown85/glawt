@@ -34,6 +34,8 @@ public:
 	static string replace(const string &text,
 	                      map<string,string> &dictionary);
 	static string toLower(const string &original);
+	static string trim(const string &text,
+	                   const string &characters=" ");
 };
 
 

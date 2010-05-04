@@ -73,6 +73,13 @@ int main(int argc,
 	text = Text::replace("4*SOME_CONSTANT + ALSO_CONSTANT BLAH", dictionary);
 	cout << text << endl;
 	
+	// Trim
+	cout << "\nTrim" << endl;
+	text = Text::trim("  blah blah blah  ");
+	cout << "'" << text << "'" << endl;
+	text = Text::trim("  \"blah blah blah\"  ", "'\" ");
+	cout << "'" << text << "'" << endl;
+	
 	// End
 	cout << endl;
 	cout << "****************************************" << endl;
