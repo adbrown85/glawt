@@ -86,6 +86,7 @@ void Scene::open(string filename) {
 		
 		// Step back on closing tags
 		if (it->isClosing()) {
+			Factory::check(*it);
 			current = current->getParent();
 			continue;
 		}

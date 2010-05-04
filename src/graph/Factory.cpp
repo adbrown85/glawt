@@ -8,6 +8,14 @@
 map<string,creator_t> Factory::creators;
 
 
+void Factory::check(const Tag &tag) {
+	
+	if (!isInstalled(tag.getName())) {
+		error(tag);
+	}
+}
+
+
 void Factory::install(const string &name,
                       creator_t creator) {
 	
@@ -26,10 +34,8 @@ Node* Factory::create(const Tag &tag,
 		creator = it->second;
 		return (*creator)(filter(tag, xmlFilename));
 	} else {
-		Exception e;
-		e << "[Factory] Could not find creator function for '"
-		  << tag.getName() << "'.";
-		throw e;
+		error(tag);
+		return NULL;
 	}
 }
 
@@ -38,6 +44,17 @@ Node* Factory::create(const string &text,
                       const string &xmlFilename) {
 	
 	return create(Parser::create(text), xmlFilename);
+}
+
+
+void Factory::error(const Tag &tag) {
+	
+	Exception e;
+	
+	e << tag.getFilename() << ":" << tag.getLine() << ":";
+	e << "[Factory] Could not find creator function for '"
+	  << tag.getName() << "'.";
+	throw e;
 }
 
 
@@ -55,5 +72,14 @@ Tag Factory::filter(Tag tag,
 		tag["file"] = path;
 	}
 	return tag;
+}
+
+
+bool Factory::isInstalled(const string &name) {
+	
+	map<string,creator_t>::iterator it;
+	
+	it = creators.find(name);
+	return (it != creators.end());
 }
 

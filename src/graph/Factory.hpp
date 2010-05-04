@@ -32,12 +32,15 @@ typedef Node* (*creator_t)(const Tag &tag);
  */
 class Factory {
 public:
+	static void check(const Tag &tag);
 	static Node* create(const Tag &tag,
 	                    const string &xmlFilename="");
 	static Node* create(const string &text,
 	                    const string &xmlFilename="");
+	static void error(const Tag &tag);
 	static void install(const string &name,
 	                    creator_t creator);
+	static bool isInstalled(const string &name);
 protected:
 	static Tag filter(Tag tag,
 	                  const string &xmlFilename);
