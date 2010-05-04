@@ -16,6 +16,7 @@ void AdvancedFactory::install() {
 	installed = true;
 	
 	// Tags
+	BasicFactory::install();
 	Factory::install("blend", &createBlend);
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);

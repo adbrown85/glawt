@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include "BasicFactory.hpp"
 #include "Factory.hpp"
 #include "Blend.hpp"
 #include "Cull.hpp"
