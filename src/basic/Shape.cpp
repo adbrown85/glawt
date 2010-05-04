@@ -62,8 +62,9 @@ void Shape::finalize() {
 	// Check point location in program
 	location = program->getAttributeLocation(POINT_NAME);
 	if (location == -1) {
+		cerr << tag.getFilename() << ":" << tag.getLine() << ": ";
 		cerr << "[Shape] Could not find attribute location for '"
-		     << POINT_NAME << "'" << endl;
+		     << POINT_NAME << "'." << endl;
 	}
 }
 

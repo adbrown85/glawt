@@ -8,7 +8,7 @@
 
 <group name="cubes">
 	<uniform type="vec3" name="LightPosition" value="10 10 10" />
-	<uniform type="Ambient" name="Ambient" value="0.2" />
+	<uniform type="float" name="Ambient" value="0.2" />
 	<translate x="-2.0">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<uniform type="mat4" name="NormalMatrix" as="normal" />
@@ -25,11 +25,16 @@
 
 
 <program>
-	<shader file="../../glsl/basic.vert" />
-	<shader file="../../glsl/basic.frag" />
+	<shader file="../../glsl/coordinates.vert" />
+	<shader file="../../glsl/coordinates.frag" />
 	<translate y="+2.0">
 		<instance of="cubes" />
 	</translate>
+</program>
+
+<program>
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
 	<translate y="-2.0">
 		<instance of="cubes" />
 	</translate>

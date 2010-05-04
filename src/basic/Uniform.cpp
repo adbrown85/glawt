@@ -51,11 +51,12 @@ void Uniform::finalize() {
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
 	if (location == -1) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
-		e << "[Uniform] Location for uniform '" << name
-		  << "' cannot be found.";
-		throw e;
+		//Exception e;
+		cerr << tag.getFilename() << ":" << tag.getLine() << ": ";
+		cerr << "[Uniform] Location for uniform '" << name
+		     << "' cannot be found.";
+		cerr << endl;
+		//throw e;
 	}
 }
 

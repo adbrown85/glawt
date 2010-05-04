@@ -16,7 +16,8 @@ UniformFloat::UniformFloat(const Tag &tag) :
 
 void UniformFloat::apply() {
 	
-	glUniform1f(location, value);
+	if (location != -1)
+		glUniform1f(location, value);
 }
 
 

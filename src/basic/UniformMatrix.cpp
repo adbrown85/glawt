@@ -34,6 +34,9 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 
 void UniformMatrix::apply() {
 	
+	if (location == -1)
+		return;
+	
 	switch (matrixType) {
 	case MODELVIEW:
 		glGetFloatv(GL_MODELVIEW_MATRIX, value);

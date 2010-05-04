@@ -27,6 +27,9 @@ UniformVector::UniformVector(const Tag &tag) :
 
 void UniformVector::apply() {
 	
+	if (location == -1)
+		return;
+	
 	switch (size) {
 	case 3: glUniform3fv(location, 1, value); break;
 	case 4: glUniform4fv(location, 1, value); break;
