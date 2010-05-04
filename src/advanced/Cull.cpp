@@ -28,6 +28,7 @@ Cull::Cull(const Tag &tag) : Applicable(tag) {
 		enabled = false;
 	else {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[Cull] Value '" << facesString 
 		    << "' for 'faces' attributes not supported.";
 		throw msg.str().c_str();

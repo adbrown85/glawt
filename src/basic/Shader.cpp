@@ -11,6 +11,7 @@
  * Creates a new %Shader from an XML tag.
  * 
  * @param tag XML tag with "type" and "file" attributes.
+ * @throws const_char* if extension not recognized as a type.
  */
 Shader::Shader(const Tag &tag) : Node(tag) {
 	
@@ -32,10 +33,9 @@ Shader::Shader(const Tag &tag) : Node(tag) {
 			this->type = "vertex";
 		else {
 			ostringstream msg;
+			msg << tag.getLine() << ": ";
 			msg << "[Shader] Extension '"
-			    << extension << "' not recognized as type.\n";
-			msg << "[Shader] Use '.frag' or '.vert', "
-			    << "or declare 'type' as 'fragment' or 'vertex'.";
+			    << extension << "' not recognized as type.";
 			throw msg.str().c_str();
 		}
 	}
@@ -55,6 +55,10 @@ Shader::~Shader() {
 
 /**
  * Attaches the shader to a program and compiles the shader.
+ * 
+ * @throws const_char* from create
+ * @throws const_char* from load
+ * @throws const_char* from compile
  */
 void Shader::associate() {
 	
@@ -87,6 +91,7 @@ void Shader::compile() {
 	log();
 	if (!compiled) {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[Shader] '" << filename << "' did not compile." << endl;
 		throw msg.str().c_str();
 	}
@@ -95,6 +100,8 @@ void Shader::compile() {
 
 /**
  * Creates a GLSL shader.
+ * 
+ * @throws const_char* if shader type not supported.
  */
 void Shader::create() {
 	
@@ -107,8 +114,12 @@ void Shader::create() {
 		handle = glCreateShader(GL_FRAGMENT_SHADER);
 	else if (type == "vertex")
 		handle = glCreateShader(GL_VERTEX_SHADER);
-	else
-		throw "[Shader] Type not supported.";
+	else {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Shader] Type not supported.";
+		throw msg.str().c_str();
+	}
 }
 
 
@@ -126,16 +137,23 @@ void Shader::list() const {
 /**
  * Loads a file into the Shader's source array and passes it to OpenGL.
  * 
- * @throws const_char* from load()
+ * @throws const_char* from Preprocessor::start()
  */
 void Shader::load() {
 	
 	vector<string> lines;
 	
 	// Load file
-	preprocessor.setFilename(filename);
-	preprocessor.start();
-	lines = preprocessor.getLines();
+	try {
+		preprocessor.setFilename(filename);
+		preprocessor.start();
+		lines = preprocessor.getLines();
+	} catch (const char *e) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << e;
+		throw msg.str().c_str();
+	}
 	
 	// Copy to source array
 	length = lines.size();

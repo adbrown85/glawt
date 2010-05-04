@@ -7,6 +7,9 @@
 #include "UniformMatrix.hpp"
 
 
+/**
+ * @throws const_char* if matrix type not supported.
+ */
 UniformMatrix::UniformMatrix(const Tag &tag) :
                              Uniform(tag) {
 	
@@ -21,7 +24,10 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 	} else if (as == "normal") {
 		matrixType = NORMAL;
 	} else {
-		throw "[UniformMatrix] Matrix not supported.";
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[UniformMatrix] Matrix '" << as << "' not supported.";
+		throw msg.str().c_str();
 	}
 }
 

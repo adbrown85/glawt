@@ -16,8 +16,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     %Shape with six sides.
+ * @brief %Shape with six sides.
  */
 class Cube : public Shape {
 public:

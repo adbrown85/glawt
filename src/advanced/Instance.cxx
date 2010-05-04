@@ -14,15 +14,11 @@ int main(int argc,
          char *argv[]) {
 	
 	// Test
-	try {
-		BasicFactory::install();
-		AdvancedFactory::install();
-		Window::init(argc, argv);
-		Tester::open("Instance.xml");
-		Tester::start();
-	} catch (const char *e) {
-		cerr << e << endl;
-	}
+	BasicFactory::install();
+	AdvancedFactory::install();
+	Window::init(argc, argv);
+	Tester::open("Instance.xml");
+	Tester::start();
 	return 0;
 }
 

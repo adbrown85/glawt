@@ -67,7 +67,10 @@ void Program::finalize() {
 	if (linked) {
 		glUseProgram(handle);
 	} else {
-		throw "[Program] Could not link the shader program.";
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Program] Could not link the shader program.";
+		throw msg.str().c_str();
 	}
 }
 

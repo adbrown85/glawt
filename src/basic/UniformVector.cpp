@@ -18,6 +18,7 @@ UniformVector::UniformVector(const Tag &tag) :
 		size = 4;
 	} else {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[UniformVector] '" << type << "' not supported.";
 		throw msg.str().c_str();
 	}

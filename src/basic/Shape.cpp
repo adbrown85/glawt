@@ -24,6 +24,7 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 			this->style = GL_TEXTURE_2D;
 		} else {
 			ostringstream msg;
+			msg << tag.getLine() << ": ";
 			msg << "[Shape] Style '" << style << "' not supported.";
 			throw msg.str().c_str();
 		}
@@ -43,7 +44,10 @@ void Shape::associate() {
 	// Find program
 	program = Program::find(parent);
 	if (program == NULL) {
-		throw "[Shape] No shader program found to bind attributes to.";
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Shape] No shader program found to bind attributes to.";
+		throw msg.str().c_str();
 	}
 }
 

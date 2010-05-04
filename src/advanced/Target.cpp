@@ -32,14 +32,19 @@ void Target::associate() {
 	
 	// Find the framebuffer
 	Framebuffer::find(this, framebuffer);
-	if (framebuffer == NULL)
-		throw "[Target] Could not find framebuffer.";
+	if (framebuffer == NULL) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Target] Could not find framebuffer.";
+		throw msg.str().c_str();
+	}
 	framebufferHandle = framebuffer->getHandle();
 	
 	// Find the texture
 	Texture2D::find(this, texture, link);
 	if (texture == NULL) {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[Target] Could not find texture with name '" << link
 		    << "'.";
 		throw msg.str().c_str();
@@ -67,8 +72,12 @@ void Target::finalize() {
 	                       0);
 	
 	// Check status
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		throw "[Target] Framebuffer is not complete!";
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Target] Framebuffer is not complete!";
+		throw msg.str().c_str();
+	}
 }
 
 

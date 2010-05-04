@@ -27,6 +27,8 @@ Texture2D::Texture2D(const Tag &tag) :
  * 
  * Is done here rather than @c finalize() because other nodes might need to get 
  * the texture's handle.
+ * 
+ * @throws const_char* from load()
  */
 void Texture2D::associate() {
 	
@@ -119,7 +121,7 @@ void Texture2D::initLibraries() {
 	if (ilVersion < IL_VERSION) {
 		ostringstream msg;
 		msg << "[Texture2D] DevIL (IL) compiled with " << IL_VERSION
-		     << " but running " << ilVersion << ".";
+		    << " but running " << ilVersion << ".";
 		throw msg.str().c_str();
 	}
 	iluVersion = iluGetInteger(ILU_VERSION_NUM);
@@ -147,12 +149,21 @@ void Texture2D::initLibraries() {
 /**
  * Loads an image into the texture.
  * 
- * @throws const_char* if the image cannot be loaded or bound.
+ * @throws const_char* from initLibraries()
+ * @throws const_char* if the image cannot be loaded
+ * @throws const_char* if the image cannot be bound as a texture
  */
 void Texture2D::load() {
 	
 	// Initialize DevIL
-	initLibraries();
+	try {
+		initLibraries();
+	} catch (const char *e) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << e;
+		throw msg.str().c_str();
+	}
 	
 	// Load image
 	ilGenImages(1, &image);
@@ -162,6 +173,7 @@ void Texture2D::load() {
 		     << "'." << endl;
 	else {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[Texture2D] DevIL could not load '" << filename 
 		    << "'.";
 		throw msg.str().c_str();
@@ -171,8 +183,12 @@ void Texture2D::load() {
 	// Load into texture
 	ilBindImage(image);
 	handle = ilutGLBindTexImage();
-	if (handle == 0)
-		throw "[Texture2D] DevIL did not bind image to texture.";
+	if (handle == 0) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Texture2D] DevIL did not bind image to texture.";
+		throw msg.str().c_str();
+	}
 }
 
 

@@ -44,11 +44,12 @@ void Octree::associate() {
 	// Find texture3d
 	texture3d = Texture3D::find(this, link);
 	if (texture3d == NULL) {
-		ostringstream message;
-		message << "[Octree] Could not find "
-		        << link
-		        << " texture.";
-		throw message.str().c_str();
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[Octree] Could not find "
+		    << link
+		    << " texture.";
+		throw msg.str().c_str();
 	}
 	
 	// Get dataset

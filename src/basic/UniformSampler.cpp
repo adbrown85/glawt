@@ -7,12 +7,19 @@
 #include "UniformSampler.hpp"
 
 
+/**
+ * @throws const_char* if "link" attribute is not specified.
+ */
 UniformSampler::UniformSampler(const Tag &tag) :
                                Uniform(tag) {
 	
 	tag.get("value", value, false);
-	if (link.empty())
-		throw "[UniformSampler] Sampler types require link to texture.";
+	if (link.empty()) {
+		ostringstream msg;
+		msg << tag.getLine() << ": ";
+		msg << "[UniformSampler] Sampler types require link to texture.";
+		throw msg.str().c_str();
+	}
 }
 
 
@@ -40,6 +47,7 @@ void UniformSampler::associate() {
 	}
 	if (texture == NULL) {
 		ostringstream msg;
+		msg << tag.getLine() << ": ";
 		msg << "[UniformSampler] Could not find texture with '" << link
 		    << "'as name.";
 		throw msg.str().c_str();
