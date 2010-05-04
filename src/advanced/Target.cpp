@@ -22,8 +22,8 @@ Target::Target(const Tag &tag) : Node(tag) {
 /**
  * Finds the texture to use for the color buffer.
  * 
- * @throws const_char* if cannot find framebuffer node.
- * @throws const_char* if cannot find texture with correct name.
+ * @throws NodeException if cannot find framebuffer node.
+ * @throws NodeException if cannot find texture with correct name.
  */
 void Target::associate() {
 	
@@ -33,8 +33,7 @@ void Target::associate() {
 	// Find the framebuffer
 	Framebuffer::find(this, framebuffer);
 	if (framebuffer == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Target] Could not find framebuffer.";
 		throw e;
 	}
@@ -43,10 +42,8 @@ void Target::associate() {
 	// Find the texture
 	Texture2D::find(this, texture, link);
 	if (texture == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
-		e << "[Target] Could not find texture with name '" << link
-		    << "'.";
+		NodeException e(tag);
+		e << "[Target] Could not find texture with name '" << link << "'.";
 		throw e;
 	}
 	textureHandle = texture->getHandle();
@@ -57,7 +54,7 @@ void Target::associate() {
 /**
  * Attaches the target to the Framebuffer.
  * 
- * @throws const_char* if Framebuffer is not complete.
+ * @throws NodeException if Framebuffer is not complete.
  */
 void Target::finalize() {
 	
@@ -73,8 +70,7 @@ void Target::finalize() {
 	
 	// Check status
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Target] Framebuffer is not complete!";
 		throw e;
 	}

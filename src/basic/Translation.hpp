@@ -20,8 +20,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     %Node that moves items in the scene.
+ * @brief %Node that moves items in the scene.
  */
 class Translation : public Transformation,
                     public Vector {

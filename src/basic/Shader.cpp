@@ -11,7 +11,7 @@
  * Creates a new %Shader from an XML tag.
  * 
  * @param tag XML tag with "type" and "file" attributes.
- * @throws const_char* if extension not recognized as a type.
+ * @throws NodeException if extension not recognized as a type.
  */
 Shader::Shader(const Tag &tag) : Node(tag) {
 	
@@ -32,10 +32,9 @@ Shader::Shader(const Tag &tag) : Node(tag) {
 		else if (extension == "vert")
 			this->type = "vertex";
 		else {
-			Exception e;
-			e << tag.getFilename() << ":" << tag.getLine() << ": ";;
-			e << "[Shader] Extension '"
-			  << extension << "' not recognized as type.";
+			NodeException e(tag);
+			e << "[Shader] Extension '" << extension
+			  << "' not recognized as type.";
 			throw e;
 		}
 	}
@@ -56,9 +55,9 @@ Shader::~Shader() {
 /**
  * Attaches the shader to a program and compiles the shader.
  * 
- * @throws const_char* from create
- * @throws const_char* from load
- * @throws const_char* from compile
+ * @throws NodeException from create()
+ * @throws NodeException from load()
+ * @throws NodeException from compile()
  */
 void Shader::associate() {
 	
@@ -79,7 +78,7 @@ void Shader::associate() {
 /**
  * Compiles the shader.  Prints the log and exits if unsuccessful.
  * 
- * @throws const_char* if the shader doesn't compile.
+ * @throws NodeException if the shader doesn't compile.
  */
 void Shader::compile() {
 	
@@ -90,8 +89,7 @@ void Shader::compile() {
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	log();
 	if (!compiled) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";;
+		NodeException e(tag);
 		e << "[Shader] '" << filename << "' did not compile." << endl;
 		throw e;
 	}
@@ -101,7 +99,7 @@ void Shader::compile() {
 /**
  * Creates a GLSL shader.
  * 
- * @throws const_char* if shader type not supported.
+ * @throws NodeException if <i>type</i> is not supported.
  */
 void Shader::create() {
 	
@@ -115,8 +113,7 @@ void Shader::create() {
 	else if (type == "vertex")
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";;
+		NodeException e(tag);
 		e << "[Shader] Type not supported.";
 		throw e;
 	}
@@ -137,7 +134,7 @@ void Shader::list() const {
 /**
  * Loads a file into the Shader's source array and passes it to OpenGL.
  * 
- * @throws const_char* from Preprocessor::start()
+ * @throws NodeException if Preprocessor threw an exception.
  */
 void Shader::load() {
 	
@@ -149,8 +146,7 @@ void Shader::load() {
 		preprocessor.start();
 		lines = preprocessor.getLines();
 	} catch (Exception &ex) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << ex;
 		throw e;
 	}

@@ -8,15 +8,14 @@
 
 
 /**
- * @throws const_char* if "link" attribute is not specified.
+ * @throws NodeException if <i>link</i> attribute is not specified.
  */
 UniformSampler::UniformSampler(const Tag &tag) :
                                Uniform(tag) {
 	
 	tag.get("value", value, false);
 	if (link.empty()) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[UniformSampler] Sampler types require link to texture.";
 		throw e;
 	}
@@ -49,8 +48,7 @@ void UniformSampler::associate() {
 		current = current->getParent();
 	}
 	if (texture == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[UniformSampler] Could not find texture with '" << link
 		  << "'as name.";
 		throw e;

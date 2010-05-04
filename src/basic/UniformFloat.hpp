@@ -12,8 +12,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     Container for GLSL floating-point uniform variables.
+ * @brief Container for GLSL floating-point uniform variables.
  */
 class UniformFloat : public Uniform {
 public:

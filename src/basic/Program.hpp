@@ -11,7 +11,6 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-#include "Exception.hpp"
 #include "Applicable.hpp"
 #include "Log.hpp"
 #include "Node.hpp"
@@ -28,8 +27,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     GLSL program that %Shaders and %Uniform variables are connected to.
+ * @brief GLSL program that %Shaders and %Uniform variables are connected to.
  */
 class Program : public Applicable {
 public:

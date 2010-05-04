@@ -19,8 +19,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     %Node that resizes items in the scene.
+ * @brief %Node that resizes items in the scene.
  */
 class Scale : public Transformation,
               public Vector {

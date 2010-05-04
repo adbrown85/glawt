@@ -12,7 +12,6 @@
 #include <set>
 #include <sstream>
 #include <string>
-#include "Exception.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Program.hpp"

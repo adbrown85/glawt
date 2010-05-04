@@ -11,6 +11,7 @@
  * Creates a shape from an XML tag.
  * 
  * @param tag XML tag with "size" attribute.
+ * @throws NodeException if <i>style</i> not supported.
  */
 Shape::Shape(const Tag &tag) : Selectable(tag) {
 	
@@ -23,8 +24,7 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 		} else if (style == "2d") {
 			this->style = GL_TEXTURE_2D;
 		} else {
-			Exception e;
-			e << tag.getFilename() << ":" << tag.getLine() << ": ";
+			NodeException e(tag);
 			e << "[Shape] Style '" << style << "' not supported.";
 			throw e;
 		}
@@ -37,15 +37,14 @@ Shape::Shape(const Tag &tag) : Selectable(tag) {
 /**
  * Finds a program to bind the shape's vertex attributes to.
  * 
- * @throws const_char* if a program cannot be found.
+ * @throws NodeException if a program cannot be found.
  */
 void Shape::associate() {
 	
 	// Find program
 	program = Program::find(parent);
 	if (program == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Shape] No shader program found to bind attributes to.";
 		throw e;
 	}

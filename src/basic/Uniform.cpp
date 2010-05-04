@@ -25,17 +25,15 @@ Uniform::Uniform(const Tag &tag) : Applicable(tag) {
 /**
  * Finds a Program node that is an ancestor of this node.
  * 
- * @throws const_char* if program cannot be found.
+ * @throws NodeException if program cannot be found.
  */
 void Uniform::associate() {
 	
 	// Look for a Program ancestor
 	program = Program::find(parent);
 	if (program == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
-		e << "Program for uniform named '" << name
-		  << "' cannot be found.";
+		NodeException e(tag);
+		e << "Program for uniform named '" << name << "' cannot be found.";
 		throw e;
 	}
 }
@@ -44,19 +42,16 @@ void Uniform::associate() {
 /**
  * Finds the variable's location in the program.
  * 
- * @throws const_char* if location for uniform cannot be found
+ * @warning if location for uniform cannot be found
  */
 void Uniform::finalize() {
 	
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
 	if (location == -1) {
-		//Exception e;
 		cerr << tag.getFilename() << ":" << tag.getLine() << ": ";
 		cerr << "[Uniform] Location for uniform '" << name
-		     << "' cannot be found.";
-		cerr << endl;
-		//throw e;
+		     << "' cannot be found." << endl;
 	}
 }
 

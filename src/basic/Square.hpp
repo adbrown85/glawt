@@ -17,8 +17,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     2D square shape that can be drawn by %Display.
+ * @brief 2D square shape that can be drawn by %Display.
  */
 class Square : public Shape {
 public:

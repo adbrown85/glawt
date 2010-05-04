@@ -52,7 +52,7 @@ void Program::associate() {
 /**
  * Links the program once other nodes have associated with it.
  * 
- * @throw const_char* if the program cannot be linked.
+ * @throw NodeException if the program cannot be linked.
  */
 void Program::finalize() {
 	
@@ -67,8 +67,7 @@ void Program::finalize() {
 	if (linked) {
 		glUseProgram(handle);
 	} else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Program] Could not link the shader program.";
 		throw e;
 	}

@@ -13,7 +13,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include "Matrix.hpp"
+#include "NodeException.hpp"
 #include "Tag.hpp"
 #include "Text.hpp"
 using namespace std;

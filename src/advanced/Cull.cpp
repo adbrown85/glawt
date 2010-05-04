@@ -11,7 +11,8 @@
  * Creates a new %Cull object from a tag.
  * 
  * @param tag XML tag containing "faces" attribute.
- * @throws const_char* if value for "faces" attribute not supported.
+ * @throws Exception if @e faces attribute not supported.
+ * @throws NodeException if value for @e faces attribute not supported.
  */
 Cull::Cull(const Tag &tag) : Applicable(tag) {
 	
@@ -27,8 +28,7 @@ Cull::Cull(const Tag &tag) : Applicable(tag) {
 	else if (facesString == "none")
 		enabled = false;
 	else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Cull] Value '" << facesString << "' for 'faces' not supported.";
 		throw e;
 	}

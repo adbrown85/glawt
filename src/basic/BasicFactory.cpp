@@ -103,8 +103,7 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	tag.get("type", type);
 	it = kinds.find(type);
 	if (it == kinds.end()) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[BasicFactory] Uniform type '" << type
 		  << "' not supported.";
 		throw e;
@@ -124,7 +123,9 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	case VECTOR:
 		return new UniformVector(tag);
 	default:
-		throw Exception("[BasicFactory] Unexpected error making uniform.");
+		NodeException e(tag);
+		e << "[BasicFactory] Unexpected error making uniform.";
+		throw e;
 	}
 }
 

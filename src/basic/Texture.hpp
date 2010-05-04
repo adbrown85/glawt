@@ -23,8 +23,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     OpenGL texture node.
+ * @brief OpenGL texture node.
  * 
  * Abstract base class for textures of various dimensions.  Provides some
  * basic texture capability, including finding an open texture unit and binding

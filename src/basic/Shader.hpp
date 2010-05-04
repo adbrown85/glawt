@@ -24,8 +24,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     GLSL shader with loading and compiling capabilities.
+ * @brief GLSL shader with loading and compiling capabilities.
  */
 class Shader : public Node {
 public:

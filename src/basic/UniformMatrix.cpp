@@ -8,7 +8,7 @@
 
 
 /**
- * @throws const_char* if matrix type not supported.
+ * @throws NodeException if matrix type not supported.
  */
 UniformMatrix::UniformMatrix(const Tag &tag) :
                              Uniform(tag) {
@@ -24,8 +24,7 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 	} else if (as == "normal") {
 		matrixType = NORMAL;
 	} else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[UniformMatrix] Matrix '" << as << "' not supported.";
 		throw e;
 	}

@@ -52,6 +52,7 @@ int main(int argc,
 		node = Factory::create("texture file='crate.jpg'");
 		node = Factory::create("texture file='${GANDER}/textures/crate.jpg'");
 		node = Factory::create("transform");
+		node = Factory::create("transformation");
 	} catch (Exception &e) {
 		cerr << e << endl;
 	}

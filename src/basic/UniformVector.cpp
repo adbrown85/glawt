@@ -7,6 +7,9 @@
 #include "UniformVector.hpp"
 
 
+/**
+ * @throws NodeException if the <i>type</i> is not supported.
+ */
 UniformVector::UniformVector(const Tag &tag) :
                              Uniform(tag) {
 	
@@ -17,14 +20,16 @@ UniformVector::UniformVector(const Tag &tag) :
 	} else if (type == "vec4") {
 		size = 4;
 	} else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[UniformVector] '" << type << "' not supported.";
 		throw e;
 	}
 }
 
 
+/**
+ * @throws NodeException if unexpeted size is encountered.
+ */
 void UniformVector::apply() {
 	
 	if (location == -1)
@@ -34,7 +39,9 @@ void UniformVector::apply() {
 	case 3: glUniform3fv(location, 1, value); break;
 	case 4: glUniform4fv(location, 1, value); break;
 	default:
-		throw Exception("[UniformVector] Unexpected size while applying.");
+		NodeException e(tag);
+		e << "[UniformVector] Unexpected size while applying.";
+		throw e;
 	}
 }
 

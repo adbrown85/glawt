@@ -47,11 +47,13 @@ Node* Factory::create(const string &text,
 }
 
 
+/**
+ * @throws NodeException if Factory could not find a creator function.
+ */
 void Factory::error(const Tag &tag) {
 	
-	Exception e;
+	NodeException e(tag);
 	
-	e << tag.getFilename() << ":" << tag.getLine() << ":";
 	e << "[Factory] Could not find creator function for '"
 	  << tag.getName() << "'.";
 	throw e;

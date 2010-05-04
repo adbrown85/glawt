@@ -12,7 +12,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "Exception.hpp"
 #include "Texture.hpp"
 
 

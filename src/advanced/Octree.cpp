@@ -32,7 +32,7 @@ Octree::~Octree() {
 /**
  * Finds the 3D texture the octree should generate itself from.
  * 
- * @throws const_char* if the octree could not find the 3D texture.
+ * @throws NodeException if the octree could not find the 3D texture.
  */
 void Octree::associate() {
 	
@@ -44,8 +44,7 @@ void Octree::associate() {
 	// Find texture3d
 	texture3d = Texture3D::find(this, link);
 	if (texture3d == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Octree] Could not find " << link << " texture.";
 		throw e;
 	}

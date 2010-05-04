@@ -100,13 +100,15 @@ void Instance::findChildren() {
 }
 
 
+/**
+ * @throws NodeException if the group cannot be found
+ */
 void Instance::findGroup() {
 	
 	// Find the group
 	group = Group::find(this, of);
 	if (group == NULL) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Instance] Could not find group with name '" << of << "'";
 		throw e;
 	}

@@ -12,8 +12,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     Container for GLSL sampler uniform variables.
+ * @brief Container for GLSL sampler uniform variables.
  */
 class UniformSampler : public Uniform {
 public:

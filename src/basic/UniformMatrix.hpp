@@ -12,8 +12,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     Container for GLSL matrix uniform variables.
+ * @brief Container for GLSL matrix uniform variables.
  */
 class UniformMatrix : public Uniform {
 public:

@@ -28,7 +28,7 @@ Texture2D::Texture2D(const Tag &tag) :
  * Is done here rather than @c finalize() because other nodes might need to get 
  * the texture's handle.
  * 
- * @throws const_char* from load()
+ * @throws NodeException from load()
  */
 void Texture2D::associate() {
 	
@@ -149,9 +149,9 @@ void Texture2D::initLibraries() {
 /**
  * Loads an image into the texture.
  * 
- * @throws const_char* from initLibraries()
- * @throws const_char* if the image cannot be loaded
- * @throws const_char* if the image cannot be bound as a texture
+ * @throws NodeException if the libraries could not be loaded
+ * @throws NodeException if the image cannot be loaded
+ * @throws NodeException if the image cannot be bound as a texture
  */
 void Texture2D::load() {
 	
@@ -159,8 +159,7 @@ void Texture2D::load() {
 	try {
 		initLibraries();
 	} catch (Exception &ex) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << ex;
 		throw e;
 	}
@@ -171,8 +170,7 @@ void Texture2D::load() {
 	if (ilLoadImage(filename.c_str())) {
 		cerr << "[Texture2D] DevIL loaded '" << filename << "'." << endl;
 	} else {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Texture2D] DevIL could not load '" << filename << "'.";
 		throw e;
 	}
@@ -182,8 +180,7 @@ void Texture2D::load() {
 	ilBindImage(image);
 	handle = ilutGLBindTexImage();
 	if (handle == 0) {
-		Exception e;
-		e << tag.getFilename() << ":" << tag.getLine() << ": ";
+		NodeException e(tag);
 		e << "[Texture2D] DevIL did not bind image to texture.";
 		throw e;
 	}
