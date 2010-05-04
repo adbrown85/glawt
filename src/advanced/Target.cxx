@@ -6,22 +6,21 @@
  */
 #include "Target.hpp"
 #include "Tester.hpp"
-#include "BasicFactory.hpp"
 #include "AdvancedFactory.hpp"
 
 
 int main(int argc,
          char *argv[]) {
 	
-	try {
-		BasicFactory::install();
-		AdvancedFactory::install();
-		Window::init(argc, argv);
-		Tester::open("Target.xml");
-		Tester::start();
-	} catch (const char *e) {
-		cerr << e << endl;
-	}
+	// Install tags
+	AdvancedFactory::install();
+	
+	// Start
+	Tester::init(argc, argv);
+	Tester::open("Target.xml");
+	Tester::start();
+	
+	// Finish
 	return 0;
 }
 

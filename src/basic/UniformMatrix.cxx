@@ -12,14 +12,15 @@
 int main(int argc,
          char *argv[]) {
 	
-	try {
-		BasicFactory::install();
-		Window::init(argc, argv);
-		Tester::open("UniformMatrix.xml");
-		Tester::start();
-	} catch (const char *e) {
-		cerr << e << endl;
-	}
+	// Install tags
+	BasicFactory::install();
+	
+	// Start
+	Tester::init(argc, argv);
+	Tester::open("UniformMatrix.xml");
+	Tester::start();
+	
+	// Finish
 	return 0;
 }
 

@@ -29,6 +29,7 @@ public:
 	static string getFilename();
 	static Scene* getScene();
 	static void keyboard(unsigned char key, int x, int y);
+	static void init(int argc, char *argv[]);
 	static void open(const string &filename);
 	static void start();
 private:
@@ -39,6 +40,7 @@ private:
 
 inline Scene* Tester::getScene() {return &scene;}
 inline string Tester::getFilename() {return scene.getFilename();}
+inline void Tester::init(int argc, char *argv[]) {Window::init(argc, argv);}
 
 
 #endif

@@ -6,19 +6,21 @@
  */
 #include "Instance.hpp"
 #include "Tester.hpp"
-#include "BasicFactory.hpp"
 #include "AdvancedFactory.hpp"
 
 
 int main(int argc,
          char *argv[]) {
 	
-	// Test
-	BasicFactory::install();
+	// Install tags
 	AdvancedFactory::install();
-	Window::init(argc, argv);
+	
+	// Start
+	Tester::init(argc, argv);
 	Tester::open("Instance.xml");
 	Tester::start();
+	
+	// Finish
 	return 0;
 }
 

@@ -16,9 +16,9 @@ using namespace std;
  * Fake class for testing Shape.
  */
 class FakeShape : public Shape {
-	public:
-		FakeShape(const Tag &tag) : Shape(tag) {}
-		void draw() const {};
+public:
+	FakeShape(const Tag &tag) : Shape(tag) {}
+	void draw() const {};
 };
 
 

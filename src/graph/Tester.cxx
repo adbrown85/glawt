@@ -16,22 +16,16 @@ Node* createNode(const Tag &tag) {
 int main(int argc,
          char *argv[]) {
 	
-	try {
-		
-		// Install tags
-		Factory::install("program", &createNode);
-		Factory::install("shader", &createNode);
-		Factory::install("translate", &createNode);
-		Factory::install("cube", &createNode);
-		
-		// Start
-		Window::init(argc, argv);
-		Tester::open("Tester.xml");
-		Tester::start();
-	}
-	catch (const char *e) {
-		cerr << Tester::getFilename() << ":" << e << endl;
-	}
+	// Install tags
+	Factory::install("program", &createNode);
+	Factory::install("shader", &createNode);
+	Factory::install("translate", &createNode);
+	Factory::install("cube", &createNode);
+	
+	// Start
+	Tester::init(argc, argv);
+	Tester::open("Tester.xml");
+	Tester::start();
 	
 	// Finish
 	return 0;

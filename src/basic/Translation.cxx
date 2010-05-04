@@ -17,28 +17,15 @@
 int main(int argc,
          char *argv[]) {
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Translation" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
+	// Install tags
+	BasicFactory::install();
 	
-	// Test
-	try {
-		BasicFactory::install();
-		Window::init(argc, argv);
-		Tester::open("Translation.xml");
-		Tester::start();
-	} catch (const char *e) {
-		cerr << e << endl;
-	}
+	// Start
+	Tester::init(argc, argv);
+	Tester::open("Translation.xml");
+	Tester::start();
 	
 	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Translation" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
+	return 0;
 }
 
