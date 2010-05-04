@@ -41,15 +41,25 @@ void Tester::open(const string &filename) {
 	Window::setDisplay(&display);
 	
 	// Open and prepare
-	scene.open(filename);
-	scene.prepare();
-	scene.print();
-	traverser = new Traverser(&scene);
+	try {
+		scene.open(filename);
+		scene.prepare();
+		scene.print();
+		traverser = new Traverser(&scene);
+	} catch (const char *e) {
+		cerr << getFilename() << ":" << e << endl;
+		exit(1);
+	}
 }
 
 
 void Tester::start() {
 	
-	Window::start();
+	try {
+		Window::start();
+	} catch (const char *e) {
+		cerr << getFilename() << ":" << e << endl;
+		exit(1);
+	}
 }
 

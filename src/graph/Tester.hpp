@@ -21,8 +21,7 @@ using namespace std;
 
 /**
  * @ingroup graph
- * @brief
- *     Utility for testing nodes.
+ * @brief Utility for testing nodes.
  */
 class Tester {
 public:
