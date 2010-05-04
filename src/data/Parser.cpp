@@ -175,6 +175,7 @@ bool Parser::match(const string &text) {
 void Parser::open(string filename) {
 	
 	// Open file
+	this->filename = filename;
 	file.open(filename.c_str(), ios_base::binary);
 	if (!file) {
 		ostringstream msg;
@@ -202,6 +203,7 @@ void Parser::parse() {
 			skip("-->");
 		} else {
 			tag = create(findTag());
+			tag.setFilename(filename);
 			tag.setLine(lineNumber);
 			tags.push_back(tag);
 		}

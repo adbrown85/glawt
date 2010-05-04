@@ -46,6 +46,7 @@ private:
 	ifstream file;
 	int lineNumber;
 	ostringstream buffer;
+	string filename;
 	vector<Tag> tags;
 };
 

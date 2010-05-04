@@ -17,8 +17,7 @@ using namespace std;
 
 /**
  * @ingroup data
- * @brief
- *     XML tag holding a map of attributes and their values.
+ * @brief XML tag holding a map of attributes and their values.
  */
 class Tag {
 public:
@@ -45,6 +44,7 @@ public:
 	         bool required=true,
 	         bool lowercase=true) const;
 	int getLine() const;
+	string getFilename() const;
 	string getName() const;
 	bool hasAttribute(const string &name) const;
 	bool isClosing() const;
@@ -55,6 +55,7 @@ public:
 	void setLeaf(bool leaf);
 	void setLine(int line);
 	void setName(const string &name);
+	void setFilename(const string &filename);
 protected:
 	void error(string key) const;
 	void error(string key,
@@ -63,59 +64,27 @@ private:
 	bool closing, leaf;
 	int line;
 	map<string,string> attributes;
-	string name;
+	string filename, name;
 };
 
 
+inline string Tag::getFilename() const {return filename;}
 inline int Tag::getLine() const {return line;}
-
-
-inline string Tag::getName() const {
-	
-	return name;
-}
-
-
-inline bool Tag::isClosing() const {
-	
-	return closing;
-}
+inline string Tag::getName() const {return name;}
+inline bool Tag::isClosing() const {return closing;}
 
 
 /**
  * Indicates if the tag was created with a trailing slash.
  */
-inline bool Tag::isLeaf() const {
-	
-	return leaf;
-}
+inline bool Tag::isLeaf() const {return leaf;}
 
 
-inline void Tag::setClosing(bool closing) {
-	
-	this->closing = closing;
-}
-
-
-inline void Tag::setLeaf(bool leaf) {
-	
-	this->leaf = leaf;
-}
-
-
-inline void Tag::setLine(int line) {
-	
-	this->line = line;
-}
-
-
-/**
- * Sets the name of the tag.
- */
-inline void Tag::setName(const string &name) {
-	
-	this->name = Text::toLower(name);
-}
+inline void Tag::setClosing(bool closing) {this->closing = closing;}
+inline void Tag::setFilename(const string &filename) {this->filename = filename;}
+inline void Tag::setLeaf(bool leaf) {this->leaf = leaf;}
+inline void Tag::setLine(int line) {this->line = line;}
+inline void Tag::setName(const string &name) {this->name = Text::toLower(name);}
 
 
 #endif
