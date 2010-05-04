@@ -31,6 +31,7 @@ void Tag::clear() {
 	// Reset attributes
 	closing = false;
 	leaf = false;
+	line = 0;
 	name = "";
 	attributes.clear();
 }
@@ -280,10 +281,13 @@ ostream& operator<<(ostream &stream,
 	
 	// Print name and attributes
 	stream << tag.name;
-	if (tag.closing)
-		stream << " {closing}";
-	if (tag.leaf)
-		stream << " {leaf}";
+	stream << " {";
+		stream << tag.line;
+		if (tag.closing)
+			stream << ",closing";
+		if (tag.leaf)
+			stream << ",leaf";
+	stream << "}";
 	for (ai=tag.attributes.begin(); ai!=tag.attributes.end(); ++ai) {
 		stream << " [" 
 		       << ai->first << "," 

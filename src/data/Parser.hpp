@@ -13,40 +13,45 @@
 #include <string>
 #include <vector>
 #include "Tag.hpp"
+#include "Text.hpp"
 using namespace std;
 
 
 /**
  * @ingroup data
- * @brief
- *     Reads an XML file, breaking it up into tags and attributes.
+ * @brief Reads an XML file, breaking it up into tags.
  */
 class Parser {
-	
-	public:
-		
-		static Tag create(string text);
-		static string findAttribute(stringstream &stream);
-		string findTagString();
-		vector<Tag> getTags() const;
-		bool isComment(string comment);
-		void open(string filename);
-		static void parseAttribute(string attributeString, Tag &tag);
-		void print();
-		void skipComment();
-	
-	private:
-		
-		char buffer[8];
-		ifstream file;
-		vector<Tag> tags;
+public:
+	static Tag create(string text);
+	int getLineNumber() const;
+	vector<Tag> getTags() const;
+	void open(string filename);
+	void print();
+protected:
+	void advance();
+	void advance(int times);
+	static string findAttribute(stringstream &stream);
+	static void findKeyValue(const string &text, Tag &tag);
+	static string findKeyIn(const string &text);
+	static string findValueIn(const string &text);
+	string findTag();
+	bool match(const string &text);
+	void parse();
+	string peek(int length);
+	void skip(const string &text);
+	void skipWhitespace();
+private:
+	char character;
+	ifstream file;
+	int lineNumber;
+	ostringstream buffer;
+	vector<Tag> tags;
 };
 
 
-inline vector<Tag> Parser::getTags() const {
-	
-	return tags;
-}
+inline int Parser::getLineNumber() const {return lineNumber;}
+inline vector<Tag> Parser::getTags() const {return tags;}
 
 
 #endif

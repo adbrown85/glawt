@@ -24,8 +24,13 @@ int main(int argc, char **argv) {
 	cout << endl;
 	
 	// Test
-	parser.open("Parser.xml");
-	parser.print();
+	try {
+		parser.open("Parser.xml");
+		parser.print();
+		cout << "Line number: " << parser.getLineNumber() << endl;
+	} catch (const char *e) {
+		cerr << e << endl;
+	}
 	
 	// Finish
 	cout << endl;

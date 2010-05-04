@@ -21,55 +21,53 @@ using namespace std;
  *     XML tag holding a map of attributes and their values.
  */
 class Tag {
-	
-	public:
-		
-		Tag();
-		Tag(const string &name);
-		void clear();
-		bool get(const string &key,
-		         bool &value,
-		         bool required=true) const;
-		bool get(const string &key,
-		         char &value,
-		         bool required=true) const;
-		bool get(const string &key,
-		         float &value,
-		         bool required=true) const;
-		bool get(const string &key,
-		         float value[4],
-		         bool required=true) const;
-		bool get(const string &key,
-		         int &value,
-		         bool required=true) const;
-		bool get(const string &key,
-		         string &value,
-		         bool required=true,
-		         bool lowercase=true) const;
-		string getName() const;
-		bool hasAttribute(const string &name) const;
-		bool isClosing() const;
-		bool isLeaf() const;
-		string& operator[](const string &key);
-		void setClosing(bool leaf);
-		void setLeaf(bool leaf);
-		void setName(const string &name);
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Tag &tag);
-	
-	protected:
-		
-		void error(string key) const;
-		void error(string key,
-		           string type) const;
-	
-	private:
-		
-		bool closing, leaf;
-		map<string,string> attributes;
-		string name;
+public:
+	Tag();
+	Tag(const string &name);
+	void clear();
+	bool get(const string &key,
+	         bool &value,
+	         bool required=true) const;
+	bool get(const string &key,
+	         char &value,
+	         bool required=true) const;
+	bool get(const string &key,
+	         float &value,
+	         bool required=true) const;
+	bool get(const string &key,
+	         float value[4],
+	         bool required=true) const;
+	bool get(const string &key,
+	         int &value,
+	         bool required=true) const;
+	bool get(const string &key,
+	         string &value,
+	         bool required=true,
+	         bool lowercase=true) const;
+	int getLine() const;
+	string getName() const;
+	bool hasAttribute(const string &name) const;
+	bool isClosing() const;
+	bool isLeaf() const;
+	friend ostream& operator<<(ostream &stream, const Tag &tag);
+	string& operator[](const string &key);
+	void setClosing(bool leaf);
+	void setLeaf(bool leaf);
+	void setLine(int line);
+	void setName(const string &name);
+protected:
+	void error(string key) const;
+	void error(string key,
+	           string type) const;
+private:
+	bool closing, leaf;
+	int line;
+	map<string,string> attributes;
+	string name;
 };
+
+
+inline int Tag::getLine() const {return line;}
 
 
 inline string Tag::getName() const {
@@ -102,6 +100,12 @@ inline void Tag::setClosing(bool closing) {
 inline void Tag::setLeaf(bool leaf) {
 	
 	this->leaf = leaf;
+}
+
+
+inline void Tag::setLine(int line) {
+	
+	this->line = line;
 }
 
 

@@ -7,6 +7,23 @@
 #include "Parser.hpp"
 
 
+void Parser::advance() {
+	
+	character = file.get();
+	if (character == '\n') {
+		++lineNumber;
+	}
+}
+
+
+void Parser::advance(int times) {
+	
+	for (int i=0; i<times; ++i) {
+		advance();
+	}
+}
+
+
 /**
  * Creates a tag from text with name and attributes.
  * 
@@ -15,31 +32,35 @@
  */
 Tag Parser::create(string text) {
 	
-	string token;
+	string key, value;
 	stringstream stream;
 	Tag tag;
 	
-	// Remove ending slash and put text in stream
+	// Remove ending slash
 	if (Text::endsWith(text, '/')) {
 		text = text.substr(0, text.length()-1);
 		tag.setLeaf(true);
 	}
+	
+	// Put text in stream
 	stream.str(text);
 	
 	// Name
-	stream >> token;
-	if (token[0] == '/') {
-		tag.setName(token.substr(1));
+	stream >> text;
+	if (text[0] == '/') {
+		tag.setName(text.substr(1));
 		tag.setClosing(true);;
 	} else {
-		tag.setName(token);
+		tag.setName(text);
 	}
 	
 	// Attributes
-	token = findAttribute(stream);
+	text = findAttribute(stream);
 	while (stream) {
-		parseAttribute(token, tag);
-		token = findAttribute(stream);
+		key = findKeyIn(text);
+		value = findValueIn(text);
+		tag[key] = value;
+		text = findAttribute(stream);
 	}
 	
 	// Finish
@@ -50,7 +71,7 @@ Tag Parser::create(string text) {
 string Parser::findAttribute(stringstream &stream) {
 	
 	int count=0;
-	stringstream buffer;
+	ostringstream buffer;
 	string token;
 	
 	stream >> token;
@@ -67,93 +88,13 @@ string Parser::findAttribute(stringstream &stream) {
 
 
 /**
- * Finds the next tag in the file.
- * 
- * @return %Tag string without '<' and '>'.
- */
-string Parser::findTagString() {
-	
-	char character;
-	string tagString;
-	
-	// Read until end of tag
-	character = file.get();
-	while (character != '>') {
-		tagString += character;
-		character = file.get();
-	}
-	return tagString;
-}
-
-
-/**
- * Checks if the next few characters indicate a comment.
- * 
- * @param comment Characters that start or end a comment.
- * @return True if the characters indicate a comment.
- */
-bool Parser::isComment(string comment) {
-	
-	int length=comment.length();
-	
-	// Get next three characters
-	for (int i=0; i<length && file; ++i)
-		buffer[i] = file.get();
-	buffer[length] = '\0';
-	file.seekg(-length, ios_base::cur);
-	
-	// Check if matches comment
-	return comment.compare(buffer) == 0;
-}
-
-
-/**
- * Opens a file and starts parsing it.
- * 
- * @param filename Path of the file to open.
- * @throws const_char* if file cannot be opened.
- */
-void Parser::open(string filename) {
-	
-	char character;
-	string line, text;
-	Tag tag;
-	
-	// Open file
-	file.open(filename.c_str(), ios_base::binary);
-	if (!file) {
-		ostringstream msg;
-		msg << "[Parser] Could not open file '" << filename << "'.";
-		throw msg.str().c_str();
-	}
-	
-	// Read and process tags
-	tags.clear();
-	character = file.get();
-	while (file) {
-		if (character == '<') {
-			if (isComment("!--")) {
-				skipComment();
-			} else {
-				text = findTagString();
-				tag = create(text);
-				tags.push_back(tag);
-			}
-		}
-		character = file.get();
-	}
-	file.close();
-}
-
-
-/**
  * Parses an attribute into a key and value, and then stores it.
  * 
  * @param attribute Attribute as a raw string from the file.
  * @param tag Tag object to store the attribute in.
  */
-void Parser::parseAttribute(string attribute,
-                            Tag &tag) {
+void Parser::findKeyValue(const string &attribute,
+                          Tag &tag) {
 	
 	int equalsIndex, length;
 	string key, value;
@@ -174,6 +115,118 @@ void Parser::parseAttribute(string attribute,
 }
 
 
+string Parser::findKeyIn(const string &text) {
+	
+	size_t index;
+	
+	// Return up to equals sign
+	index = text.find('=');
+	return Text::trim(text.substr(0, index));
+}
+
+
+string Parser::findValueIn(const string &text) {
+	
+	size_t index;
+	
+	// Return after equals sign
+	index = text.find('=');
+	return Text::trim(text.substr(index+1), " '\"");
+}
+
+
+/**
+ * Finds the next tag in the file.
+ * 
+ * @return %Tag string without '<' and '>'.
+ */
+string Parser::findTag() {
+	
+	// Read until end of tag
+	buffer.str("");
+	advance();
+	while (character != '>') {
+		buffer << character;
+		advance();
+	}
+	return buffer.str();
+}
+
+
+/**
+ * Checks if the next few characters indicate a comment.
+ * 
+ * @param comment Characters that start or end a comment.
+ * @return True if the characters indicate a comment.
+ */
+bool Parser::match(const string &text) {
+	
+	// Check if peek matches
+	return peek(text.length()) == text;
+}
+
+
+/**
+ * Opens a file and starts parsing it.
+ * 
+ * @param filename Path of the file to open.
+ * @throws const_char* if file cannot be opened.
+ */
+void Parser::open(string filename) {
+	
+	// Open file
+	file.open(filename.c_str(), ios_base::binary);
+	if (!file) {
+		ostringstream msg;
+		msg << "[Parser] Could not open file '" << filename << "'.";
+		throw msg.str().c_str();
+	}
+	lineNumber = 1;
+	
+	// Parse it
+	parse();
+}
+
+
+void Parser::parse() {
+	
+	Tag tag;
+	
+	// Read and process tags
+	tags.clear();
+	skipWhitespace();
+	while (file) {
+		if (character != '<') {
+			throw "[Parser] Tags must start with '<'.";
+		} else if (match("<!--")) {
+			skip("-->");
+		} else {
+			tag = create(findTag());
+			tag.setLine(lineNumber);
+			tags.push_back(tag);
+		}
+		skipWhitespace();
+	}
+	file.close();
+}
+
+
+string Parser::peek(int length) {
+	
+	// Clear the buffer
+	buffer.str("");
+	
+	// Put characters into buffer
+	buffer << character;
+	for (int i=1; i<length; ++i)
+		buffer << (char)file.get();
+	
+	// Backup and return the string in the buffer
+	file.seekg(-(length-1), ios_base::cur);
+	return buffer.str();
+}
+
+
 /**
  * Prints all the tags in the Parser.
  */
@@ -188,18 +241,19 @@ void Parser::print() {
 /**
  * Skips a comment.
  */
-void Parser::skipComment() {
+void Parser::skip(const string &text) {
 	
-	bool found=false;
-	char character;
-	
-	while (!found) {
-		character = file.get();
-		if (character == '-' && isComment("->")) {
-			for (int i=0; i<2; ++i)
-				file.get();
-			found = true;
-		}
+	while (!match(text)) {
+		advance();
 	}
+	advance(text.length());
+}
+
+
+void Parser::skipWhitespace() {
+	
+	advance();
+	while (isspace(character))
+		advance();
 }
 

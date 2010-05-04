@@ -22,9 +22,9 @@ OctreeNode.o:
 Slice.o: Dataset.o
 VlbMaker.o: DatasetHeader.o
 
-# XML
+# XML and text
 Tag.o : Text.o
-Parser.o : Tag.o
+Parser.o : Tag.o Text.o
 
 # Files
 FileUtility.o: 
