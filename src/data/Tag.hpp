@@ -44,6 +44,7 @@ public:
 	         string &value,
 	         bool required=true,
 	         bool lowercase=true) const;
+	string getLocation() const;
 	int getLine() const;
 	string getFilename() const;
 	string getName() const;

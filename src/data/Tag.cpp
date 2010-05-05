@@ -47,6 +47,7 @@ void Tag::error(string key) const {
 	Exception e;
 	
 	// Build and throw message
+	e << getLocation();
 	e << "[Tag] Tag named '" << name
 	  << "' does not have necessary '" << key
 	  << "' attribute.";
@@ -66,6 +67,7 @@ void Tag::error(string key,
 	Exception e;
 	
 	// Build and throw message
+	e << getLocation();
 	e << "[Tag] In tag named '" << name
 	  << "', attribute '" << key
 	  << "' cannot be parsed as '" << type
@@ -245,6 +247,15 @@ bool Tag::get(const string &key,
 	else
 		error(key);
 	return false;
+}
+
+
+string Tag::getLocation() const {
+	
+	ostringstream stream;
+	
+	stream << filename << ":" << line << ": ";
+	return stream.str();
 }
 
 

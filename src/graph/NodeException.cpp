@@ -9,6 +9,6 @@
 
 NodeException::NodeException(const Tag &tag) {
 	
-	(*this) << tag.getFilename() << ":" << tag.getLine() << ": ";
+	(*this) << tag.getLocation();
 }
 
