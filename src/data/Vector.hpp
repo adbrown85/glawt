@@ -24,6 +24,7 @@ public:
 	float x, y, z, w;
 	
 	Vector();
+	Vector(float value);
 	Vector(float x, float y);
 	Vector(float x, float y, float z);
 	Vector(float x, float y, float z, float w);
@@ -36,12 +37,15 @@ public:
 	Vector& operator-=(float b);
 	Vector& operator*=(float b);
 	Vector& operator/=(float b);
-	friend Vector operator*(const Vector &A, float b);
-	friend Vector operator*(const Vector &A, const Vector &B);
-	friend Vector operator/(const Vector &A, float b);
-	friend Vector operator/(const Vector &A, const Vector &B);
+	friend bool operator==(const Vector &A, const Vector &B);
 	friend Vector operator+(const Vector &A, const Vector &B);
 	friend Vector operator-(const Vector &A, const Vector &B);
+	friend Vector operator*(const Vector &A, const Vector &B);
+	friend Vector operator/(const Vector &A, const Vector &B);
+	friend Vector operator+(const Vector &A, float b);
+	friend Vector operator-(const Vector &A, float b);
+	friend Vector operator*(const Vector &A, float b);
+	friend Vector operator/(const Vector &A, float b);
 	friend ostream& operator<<(ostream& out, const Vector& A);
 	float& operator[](int i);
 	float operator[](int i) const;

@@ -7,10 +7,9 @@
 #include "Vector.hpp"
 
 
-/** Creates a four-component vector initialized to all zeroes. */
+/** Four-component vector initialized to all zeroes (except w=1.0). */
 Vector::Vector() {
 	
-	// Set components
 	x = 0.0;
 	y = 0.0;
 	z = 0.0;
@@ -19,11 +18,20 @@ Vector::Vector() {
 }
 
 
-/** Creates a two-component vector. */
-Vector::Vector(float x,
-               float y) {
+/** Four-component vector initialized to one value. */
+Vector::Vector(float value) {
 	
-	// Set components
+	x = value;
+	y = value;
+	z = value;
+	w = value;
+	size = 4;
+}
+
+
+/** Two-component vector. */
+Vector::Vector(float x, float y) {
+	
 	this->x = x;
 	this->y = y;
 	this->z = 0.0;
@@ -32,12 +40,9 @@ Vector::Vector(float x,
 }
 
 
-/** Creates a three-component vector. */
-Vector::Vector(float x,
-               float y,
-               float z) {
+/** Three-component vector. */
+Vector::Vector(float x, float y, float z) {
 	
-	// Set components
 	this->x = x;
 	this->y = y;
 	this->z = z;
@@ -46,13 +51,9 @@ Vector::Vector(float x,
 }
 
 
-/** Creates a four-component vector. */
-Vector::Vector(float x,
-               float y,
-               float z,
-               float w) {
+/** Four-component vector. */
+Vector::Vector(float x, float y, float z, float w) {
 	
-	// Set components
 	this->x = x;
 	this->y = y;
 	this->z = z;
@@ -167,23 +168,41 @@ Vector& Vector::operator/=(float b) {
 }
 
 
-Vector operator*(const Vector &A,
-                 float b) {
+bool operator==(const Vector &A, const Vector &B) {
+	
+	return (A.x==B.x) && (A.y==B.y) && (A.z==B.z) && (A.w==B.w);
+}
+
+
+Vector operator+(const Vector &A, const Vector &B) {
 	
 	Vector C;
 	
-	// Multiply components
-	C.x = A.x * b;
-	C.y = A.y * b;
-	C.z = A.z * b;
-	C.w = A.w * b;
+	// Add components
+	C.x = A.x + B.x;
+	C.y = A.y + B.y;
+	C.z = A.z + B.z;
+	C.w = A.w + B.w;
 	C.size = A.size;
 	return C;
 }
 
 
-Vector operator*(const Vector &A,
-                 const Vector &B) {
+Vector operator-(const Vector &A, const Vector &B) {
+	
+	Vector C;
+	
+	// Subtract components
+	C.x = A.x - B.x;
+	C.y = A.y - B.y;
+	C.z = A.z - B.z;
+	C.w = A.w - B.w;
+	C.size = A.size;
+	return C;
+}
+
+
+Vector operator*(const Vector &A, const Vector &B) {
 	
 	Vector C;
 	
@@ -197,25 +216,7 @@ Vector operator*(const Vector &A,
 }
 
 
-Vector operator/(const Vector &A,
-                 float b) {
-	
-	Vector C;
-	
-	// Divide components
-	if (b != 0) {
-		C.x = A.x / b;
-		C.y = A.y / b;
-		C.z = A.z / b;
-		C.w = A.w / b;
-	}
-	C.size = A.size;
-	return C;
-}
-
-
-Vector operator/(const Vector &A,
-                 const Vector &B) {
+Vector operator/(const Vector &A, const Vector &B) {
 	
 	Vector C;
 	
@@ -233,38 +234,49 @@ Vector operator/(const Vector &A,
 }
 
 
-Vector operator+(const Vector &A,
-                 const Vector &B) {
+Vector operator+(const Vector &A, float b) {
+	
+	return Vector(A.x+b, A.y+b, A.z+b, A.w+b);
+}
+
+
+Vector operator-(const Vector &A, float b) {
+	
+	return Vector(A.x-b, A.y-b, A.z-b, A.w-b);
+}
+
+
+Vector operator*(const Vector &A, float b) {
 	
 	Vector C;
 	
-	// Add components
-	C.x = A.x + B.x;
-	C.y = A.y + B.y;
-	C.z = A.z + B.z;
-	C.w = A.w + B.w;
+	// Multiply components
+	C.x = A.x * b;
+	C.y = A.y * b;
+	C.z = A.z * b;
+	C.w = A.w * b;
 	C.size = A.size;
 	return C;
 }
 
 
-Vector operator-(const Vector &A,
-                 const Vector &B) {
+Vector operator/(const Vector &A, float b) {
 	
 	Vector C;
 	
-	// Subtract components
-	C.x = A.x - B.x;
-	C.y = A.y - B.y;
-	C.z = A.z - B.z;
-	C.w = A.w - B.w;
+	// Divide components
+	if (b != 0) {
+		C.x = A.x / b;
+		C.y = A.y / b;
+		C.z = A.z / b;
+		C.w = A.w / b;
+	}
 	C.size = A.size;
 	return C;
 }
 
 
-ostream& operator<<(ostream &out,
-                    const Vector &A) {
+ostream& operator<<(ostream &out, const Vector &A) {
 	
 	float com[] = {A.x, A.y, A.z, A.w};
 	
@@ -313,8 +325,7 @@ float Vector::operator[](int i) const {
 
 
 /** @return vector perpendicular to the plane formed by two vectors. */
-Vector cross(const Vector &A,
-             const Vector &B) {
+Vector cross(const Vector &A, const Vector &B) {
 	
 	Vector C;
 	
@@ -328,8 +339,7 @@ Vector cross(const Vector &A,
 
 
 /** @return projection of one vector onto another. */
-float dot(const Vector &A,
-          const Vector &B) {
+float dot(const Vector &A, const Vector &B) {
 	
 	// Calculate
 	if (A.size == 2)
@@ -366,16 +376,14 @@ float Vector::length() const {
 
 
 /** @return component-wise maximum of the two vectors */
-Vector max(const Vector &A,
-           const Vector &B) {
+Vector max(const Vector &A, const Vector &B) {
 	
 	return Vector(max(A.x,B.x), max(A.y,B.y), max(A.z,B.z), max(A.w,B.w));
 }
 
 
 /** @return component-wise minimum of the two vectors */
-Vector min(const Vector &A,
-           const Vector &B) {
+Vector min(const Vector &A, const Vector &B) {
 	
 	return Vector(min(A.x,B.x), min(A.y,B.y), min(A.z,B.z), min(A.w,B.w));
 }
@@ -398,8 +406,7 @@ Vector normalize(Vector vector) {
 }
 
 
-void Vector::set(float x,
-                 float y) {
+void Vector::set(float x, float y) {
 	
 	// Set components
 	this->x = x;
@@ -408,9 +415,7 @@ void Vector::set(float x,
 }
 
 
-void Vector::set(float x,
-                 float y,
-                 float z) {
+void Vector::set(float x, float y, float z) {
 	
 	// Set components
 	this->x = x;
@@ -420,10 +425,7 @@ void Vector::set(float x,
 }
 
 
-void Vector::set(float x,
-                 float y,
-                 float z,
-                 float w) {
+void Vector::set(float x, float y, float z, float w) {
 	
 	// Set components
 	this->x = x;
