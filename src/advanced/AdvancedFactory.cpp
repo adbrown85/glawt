@@ -17,6 +17,7 @@ void AdvancedFactory::install() {
 	
 	// Tags
 	BasicFactory::install();
+	Factory::install("boolean", &createBoolean);
 	Factory::install("blend", &createBlend);
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);
@@ -32,6 +33,12 @@ void AdvancedFactory::install() {
 Node* AdvancedFactory::createBlend(const Tag &tag) {
 	
 	return new Blend(tag);
+}
+
+
+Node* AdvancedFactory::createBoolean(const Tag &tag) {
+	
+	return new Boolean(tag);
 }
 
 

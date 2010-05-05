@@ -1,0 +1,27 @@
+<!--
+ * Boolean.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<group name="cubes">
+	<translate x="-2">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube />
+	</translate>
+	<translate x="+2">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube />
+	</translate>
+</group>
+
+
+
+<program>
+	<shader file="../../glsl/coordinates.vert" />
+	<shader file="../../glsl/coordinates.frag" />
+	<boolean operation="AND" of="cubes" />
+	<instance of="cubes" />
+</program>

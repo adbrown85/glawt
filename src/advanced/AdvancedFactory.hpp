@@ -9,8 +9,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "BasicFactory.hpp"
 #include "Factory.hpp"
+#include "BasicFactory.hpp"
+#include "Boolean.hpp"
 #include "Blend.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
@@ -25,11 +26,12 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief %Factory for creating more esoteric nodes not used by many files.
+ * @brief %Factory for creating more esoteric nodes not used by all files.
  */
 class AdvancedFactory : public Factory {
 public:
 	static void install();
+	static Node* createBoolean(const Tag &tag);
 	static Node* createBlend(const Tag &tag);
 	static Node* createCull(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
