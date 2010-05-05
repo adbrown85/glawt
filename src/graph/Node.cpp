@@ -7,9 +7,7 @@
 #include "Node.hpp"
 
 
-/**
- * Creates a new node with no parent.
- */
+/** Creates a new node with no parent. */
 Node::Node(const Tag &tag) {
 	
 	// Initialize
@@ -19,11 +17,7 @@ Node::Node(const Tag &tag) {
 }
 
 
-/**
- * Adds a child to this node.
- * 
- * @param child Child node.
- */
+/** Adds a child to this node. */
 void Node::addChild(Node *child) {
 	
 	// Link nodes together
@@ -32,11 +26,8 @@ void Node::addChild(Node *child) {
 }
 
 
-/**
- * Compares two Node pointers by depth.
- */
-bool Node::compare(Node *A,
-                   Node *B) {
+/** Compares two Node pointers by depth. */
+bool Node::compare(Node *A, Node *B) {
 	
 	return A->depth < B->depth;
 }
@@ -82,8 +73,7 @@ string Node::getClassName() const {
 }
 
 
-ostream& operator<<(ostream &stream,
-                    const Node &node) {
+ostream& operator<<(ostream &stream, const Node &node) {
 	
 	stream << node.toString();
 	return stream;
