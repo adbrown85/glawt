@@ -21,11 +21,11 @@
 class Transformation : public Applicable {
 public:
 	Transformation(const Tag &tag) : Applicable(tag) {}
-	void addListener(NodeListener *listener);
+	virtual void addListener(NodeListener *listener);
 	virtual void apply() = 0;
 	virtual void remove() = 0;
 protected:
-	void fireUpdate();
+	virtual void fireUpdate();
 private:
 	list<NodeListener*> listeners;
 };
