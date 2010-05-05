@@ -25,7 +25,6 @@ public:
 protected:
 	virtual void onApplicable(Applicable *node);
 	virtual void onDrawable(Drawable *node);
-	virtual void onSelectable(Selectable *node);
 	void traverseChildren(Node *node);
 	void traverseNode(Node *node);
 private:

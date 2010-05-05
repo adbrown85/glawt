@@ -36,20 +36,21 @@ void Painter::onApplicable(Applicable *node) {
 
 void Painter::onDrawable(Drawable *node) {
 	
+	Program *program;
+	vector<Manipulator*>::iterator mi;
+	
+	// Stop if not visible
+	if (!node->isVisible())
+		return;
+	
 	// Load the name if selecting then draw
 	if (mode == GL_SELECT)
 		glLoadName(node->getID());
 	Traverser::onDrawable(node);
-}
-
-
-/**
- * Paints manipulators and an outline for a selected shape.
- */
-void Painter::onSelectable(Selectable *node) {
 	
-	Program *program;
-	vector<Manipulator*>::iterator mi;
+	// Stop if not selected
+	if (!node->isSelected())
+		return;
 	
 	// Disable shading and texture
 	program = Program::getCurrent();
@@ -80,9 +81,7 @@ void Painter::onSelectable(Selectable *node) {
 }
 
 
-/**
- * Paints all the items in a scene.
- */
+/** Paints all the items in a scene. */
 void Painter::start() {
 	
 	Window::applyView();

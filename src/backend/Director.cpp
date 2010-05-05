@@ -7,9 +7,7 @@
 #include "Director.hpp"
 
 
-/**
- * Adds the commands this delegate supports and sets up handlers.
- */
+/** Adds the commands this delegate supports and sets up handlers. */
 Director::Director() {
 	
 	// Set type
@@ -26,35 +24,29 @@ Director::Director() {
 }
 
 
-/**
- * Picks an item in the scene by its ID number.
- */
+/** Picks an item in the scene by its ID number. */
 void Director::grab(Scene *scene,
                     int cmd,
                     float id) {
 	
 	Identifiable *identifiable;
-	Selectable *selectable;
+	Drawable *drawable;
 	
 	// Find item and set selected
 	identifiable = Identifiable::findByID(static_cast<int>(id));
 	if (identifiable != NULL) {
-		selectable = dynamic_cast<Selectable*>(identifiable);
-		if (selectable != NULL) {
-			if (selectable->isSelected())
-				scene->removeFromSelection(selectable);
+		drawable = dynamic_cast<Drawable*>(identifiable);
+		if (drawable != NULL) {
+			if (drawable->isSelected())
+				scene->removeFromSelection(drawable);
 			else
-				scene->addToSelection(selectable);
+				scene->addToSelection(drawable);
 		}
 	}
 }
 
 
-/**
- * Iterates through the items in the scene.
- * 
- * @bug Probably needs Scene to store lastSelectedShape.
- */
+/** Iterates through the items in the scene. */
 void Director::iterate(Scene *scene,
                        int cmd) {
 	
@@ -62,23 +54,19 @@ void Director::iterate(Scene *scene,
 }
 
 
-/**
- * Selects all or none.
- * 
- * @bug Wait for Selectable interface.
- */
+/** Selects all or none. */
 void Director::select(Scene *scene,
                       int cmd) {
 	
 	switch (cmd) {
-		case Command::SELECT_ALL :
-			scene->addAllToSelection();
-			break;
-		case Command::DESELECT :
-			scene->removeAllFromSelection();
-			break;
-		default :
-			break;
+	case Command::SELECT_ALL :
+		scene->addAllToSelection();
+		break;
+	case Command::DESELECT :
+		scene->removeAllFromSelection();
+		break;
+	default :
+		break;
 	}
 	glutPostRedisplay();
 }

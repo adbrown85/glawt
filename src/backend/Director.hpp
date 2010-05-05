@@ -11,32 +11,24 @@
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Identifiable.hpp"
-#include "Node.hpp"
+#include "Drawable.hpp"
 #include "Scene.hpp"
-#include "Shape.hpp"
-#include "Selectable.hpp"
-#include "Selection.hpp"
 using namespace std;
 
 
 /**
  * @ingroup backend
- * @brief
- *     %Delegate responsible for selecting items in the scene.
+ * @brief %Delegate responsible for selecting items in the scene.
  */
 class Director : public Delegate {
-	
-	public :
-		
-		Director();
-		
-		virtual void run(int command) {}
-		virtual void run(int command, float argument) {}
-		virtual void run(int command, string argument) {}
-		
-		static void grab(Scene *scene, int cmd, float id);
-		static void iterate(Scene *scene, int cmd);
-		static void select(Scene *scene, int cmd);
+public:
+	Director();
+	virtual void run(int command) {}
+	virtual void run(int command, float argument) {}
+	virtual void run(int command, string argument) {}
+	static void grab(Scene *scene, int cmd, float id);
+	static void iterate(Scene *scene, int cmd);
+	static void select(Scene *scene, int cmd);
 };
 
 

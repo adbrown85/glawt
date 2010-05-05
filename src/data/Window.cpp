@@ -10,6 +10,7 @@ Quaternion Window::rotation;
 Vector Window::position(0.0,0.0,DEFAULT_ZOOM,1.0);
 
 
+/** Applies the camera position and rotation to the OpenGL modelview matrix. */
 void Window::applyView() {
 	
 	float rotationArray[16];
@@ -27,6 +28,7 @@ void Window::applyView() {
 }
 
 
+/** Checks if there were any OpenGL errors. */
 void Window::check() {
 	
 	GLenum error;
@@ -38,9 +40,8 @@ void Window::check() {
 }
 
 
-void Window::create(const string &title,
-                    int width,
-                    int height) {
+/** Allocates resources for the window and initializes OpenGL. */
+void Window::create(const string &title, int width, int height) {
 	
 	// Store
 	Window::width = width;
@@ -55,6 +56,7 @@ void Window::create(const string &title,
 	// Load default callbacks
 	setDisplay(&display);
 	setKeyboard(&keyboard);
+	setMouse(&mouse);
 	setSpecial(&special);
 	
 	// Enable options
@@ -69,6 +71,7 @@ void Window::create(const string &title,
 }
 
 
+/** Default display callback. */
 void Window::display(void) {
 	
 	// Clear
@@ -89,9 +92,8 @@ void Window::display(void) {
 }
 
 
-void Window::keyboard(unsigned char key,
-                      int x,
-                      int y) {
+/** Default callback for keyboard presses. */
+void Window::keyboard(unsigned char key, int x, int y) {
 	
 	switch (toupper(key)) {
 	case 'R':
@@ -104,9 +106,15 @@ void Window::keyboard(unsigned char key,
 }
 
 
-void Window::special(int key,
-                     int x,
-                     int y) {
+/** Default callback for mouse clicks. */
+void Window::mouse(int button, int state, int x, int y) {
+	
+	cerr << "Clicked at (" << x << "," << y << ")." << endl;
+}
+
+
+/** Default callback for special key presses. */
+void Window::special(int key, int x, int y) {
 	
 	switch(key) {
 	case GLUT_KEY_UP:
@@ -125,9 +133,7 @@ void Window::special(int key,
 }
 
 
-/**
- * Resets the window's rotation and position.
- */
+/** Resets the window's rotation and position. */
 void Window::reset() {
 	
 	// Reset transformations
@@ -137,28 +143,15 @@ void Window::reset() {
 }
 
 
-/**
- * Rotates the camera by axis/angle.
- */
-void Window::rotate(float angle,
-                    const Vector &axis) {
+/** Rotates the camera by axis/angle. */
+void Window::rotate(float angle, const Vector &axis) {
 	
 	rotation.rotate(angle, axis);
 	refresh();
 }
 
 
-void Window::translate(float x,
-                       float y,
-                       float z) {
-	
-	translate(Vector(x, y, z));
-}
-
-
-/**
- * Moves the camera.
- */
+/** Moves the camera. */
 void Window::translate(const Vector &move) {
 	
 	position += move;
@@ -166,9 +159,8 @@ void Window::translate(const Vector &move) {
 }
 
 
-void Window::write(const string &text,
-                   int x,
-                   int y) {
+/** Writes a message onto the screen. */
+void Window::write(const string &text, int x, int y) {
 	
 	float xf, yf;
 	int viewport[4];

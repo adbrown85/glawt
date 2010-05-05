@@ -23,8 +23,7 @@ void Picker::addManipulators(vector<Manipulator*> manipulators) {
 }
 
 
-/**
- * Choose the item to return.
+/** Choose the item to return.
  * 
  * Manipulators are returned before shapes, and if more than one shape is 
  * picked, the closest one to the camera is chosen.
@@ -61,9 +60,7 @@ pair<GLuint,GLuint> Picker::chooseItem() {
 }
 
 
-/**
- * Restores the original projection matrix.
- */
+/** Restores the original projection matrix. */
 void Picker::finish() {
 	
 	// Restore
@@ -72,9 +69,7 @@ void Picker::finish() {
 }
 
 
-/**
- * Initializes the viewport, pick buffer, and projection matrix.
- */
+/** Initializes the viewport, pick buffer, and projection matrix. */
 void Picker::initialize(int x, int y) {
 	
 	GLint height, width, viewport[4];
@@ -102,11 +97,7 @@ void Picker::initialize(int x, int y) {
 }
 
 
-/**
- * Picks an item from a scene
- * 
- * @return ID number of the item picked (UINT_MAX if nothing).
- */
+/** @return ID of item picked and shape it belongs to (UINT_MAX if nothing). */
 pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
 	// Pick an item
@@ -125,8 +116,7 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 }
 
 
-/**
- * Stores the IDs of the items picked.
+/** Stores the IDs of the items picked.
  * 
  * A hit record is made up of at least four unsigned integers in the 
  * selection buffer, as shown below.  There will be one hit record for each 

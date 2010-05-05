@@ -47,7 +47,6 @@ public:
 	FakeTraverser(Scene *scene) : Traverser(scene) {};
 	virtual void onApplicable(Applicable *applicable);
 	virtual void onDrawable(Drawable *drawable);
-	virtual void onSelectable(Selectable *selectable);
 };
 void FakeTraverser::onApplicable(Applicable *node) {
 	cout << "  FakeTraverser::onApplicable" << endl;
@@ -59,11 +58,6 @@ void FakeTraverser::onDrawable(Drawable *node) {
 	cout << "  " << node->getClassName() << endl;
 	Traverser::onDrawable(node);
 }
-void FakeTraverser::onSelectable(Selectable *node) {
-	cout << "  FakeTraverser::onSelectable" << endl;
-	cout << "  " << node->getClassName() << endl;
-	Traverser::onSelectable(node);
-}
 
 
 Node* create(const Tag &tag) {
@@ -71,8 +65,6 @@ Node* create(const Tag &tag) {
 	string name=tag.getName();
 	
 	if (name=="cube" || name=="square") {
-		return new FakeSelectable(tag);
-	} else if (name=="fullscreen") {
 		return new FakeDrawable(tag);
 	} else if (name=="group") {
 		return new FakeSealed(tag);

@@ -14,7 +14,7 @@
 #include <string>
 #include "Matrix.hpp"
 #include "Program.hpp"
-#include "Selectable.hpp"
+#include "Drawable.hpp"
 #include "Tag.hpp"
 using namespace std;
 
@@ -23,7 +23,7 @@ using namespace std;
  * @ingroup basic
  * @brief Base class for a 3D object in the scene.
  */
-class Shape : public Selectable {
+class Shape : public Drawable {
 public:
 	Shape(const Tag &tag);
 	virtual void associate();

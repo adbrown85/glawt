@@ -13,7 +13,7 @@
  * @param tag XML tag with "size" attribute.
  * @throws NodeException if <i>style</i> not supported.
  */
-Shape::Shape(const Tag &tag) : Selectable(tag) {
+Shape::Shape(const Tag &tag) : Drawable(tag) {
 	
 	string style;
 	
@@ -73,16 +73,12 @@ void Shape::finalize() {
  */
 string Shape::toString() const {
 	
-	string styleStr;
 	ostringstream stream;
-	
-	// Format
-	styleStr = style==GL_TEXTURE_2D ? "2D" : "3D";
 	
 	// Make stream
 	stream << Node::toString();
-	stream << " " << Selectable::toString();
-	stream << " sty='" << styleStr << "'";
+	stream << " " << Drawable::toString();
+	stream << " style='" << (GL_TEXTURE_2D?"2D":"3D") << "'";
 	return stream.str();
 }
 

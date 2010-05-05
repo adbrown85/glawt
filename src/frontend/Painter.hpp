@@ -45,26 +45,16 @@ public:
 protected:
 	virtual void onApplicable(Applicable *node);
 	virtual void onDrawable(Drawable *node);
-	virtual void onSelectable(Selectable *node);
 private:
 	GLenum mode;
 	static Scene *outline;
 	vector<Manipulator*> manipulators;
 };
 
+/** Stores a manipulator to paint for selected items. */
+inline void Painter::addManipulator(Manipulator *m) {manipulators.push_back(m);}
 
-/**
- * Stores a manipulator to paint for selected items.
- */
-inline void Painter::addManipulator(Manipulator *manipulator) {
-	
-	manipulators.push_back(manipulator);
-}
-
-
-/**
- * Sets the rendering mode.
- */
+/** Sets the rendering mode. */
 inline void Painter::setMode(GLenum mode) {this->mode = mode;}
 
 

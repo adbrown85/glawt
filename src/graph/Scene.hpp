@@ -36,14 +36,14 @@ public:
 	Scene();
 	~Scene();
 	void addAllToSelection();
-	void addToSelection(Selectable *selectable);
+	void addToSelection(Drawable *drawable);
 	string getFilename() const;
 	Node* getRoot() const;
 	Selection getSelection() const;
 	void open(string filename);
 	void prepare();
 	void removeAllFromSelection();
-	void removeFromSelection(Selectable *selectable);
+	void removeFromSelection(Drawable *drawable);
 	void print();
 	void setRoot(Node *node);
 protected:
@@ -55,33 +55,25 @@ private:
 	string filename;
 };
 
+/** Selects all the nodes in the scene. */
+inline void Scene::addAllToSelection() {selection.addAll(root);}
 
-inline void Scene::addAllToSelection() {
-	selection.addAll(root);
-}
+/** Selects a single item in the scene. */
+inline void Scene::addToSelection(Drawable *d) {selection.add(d);}
 
-inline void Scene::addToSelection(Selectable *selectable) {
-	selection.add(selectable);
-}
+/** @return file the scene was opened from */
+inline string Scene::getFilename() const {return filename;}
 
-inline string Scene::getFilename() const {
-	return filename;
-}
+/** @return top-most node in the scene */
+inline Node* Scene::getRoot() const {return root;}
 
-inline Node* Scene::getRoot() const {
-	return root;
-}
+/** @return pointers to all the selected nodes in the scene */
+inline Selection Scene::getSelection() const {return selection;}
 
-inline Selection Scene::getSelection() const {
-	return selection;
-}
+/** Deselects all the nodes in the scene. */
+inline void Scene::removeAllFromSelection() {selection.clear();}
 
-inline void Scene::removeAllFromSelection() {
-	selection.clear();
-}
-
-inline void Scene::removeFromSelection(Selectable *selectable) {
-	selection.remove(selectable);
-}
+/** Deselects a single node in the scene */
+inline void Scene::removeFromSelection(Drawable *d) {selection.remove(d);}
 
 #endif

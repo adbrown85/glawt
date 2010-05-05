@@ -1,6 +1,6 @@
 <!--
- * Painter.xml
- *
+ * Picker.xml
+ * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
 -->
@@ -9,7 +9,11 @@
 <program>
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
-	<translate x="1.0">
+	<translate x="-2">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube />
+	</translate>
+	<translate x="+2">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube />
 	</translate>

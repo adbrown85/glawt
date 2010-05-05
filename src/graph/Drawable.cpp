@@ -7,14 +7,14 @@
 #include "Drawable.hpp"
 
 
-/**
- * Creates a new Drawable from an XML tag.
+/** Creates a new Drawable from an XML tag.
  * 
- * @param tag XML tag with "size" attribute.
+ * @param tag XML tag with @e size attribute.
  */
 Drawable::Drawable(const Tag &tag) : Node(tag) {
 	
 	// Initialize attributes
+	this->selected = false;
 	this->visible = true;
 	if (!tag.get("size", size, false))
 		size = 1.0;
@@ -23,16 +23,13 @@ Drawable::Drawable(const Tag &tag) : Node(tag) {
 
 string Drawable::toString() const {
 	
-	char visibleChar;
 	stringstream stream;
-	
-	// Format
-	visibleChar = visible ? 'T' : 'F';
 	
 	// Make string
 	stream << Identifiable::toString();
-	stream << " vis='" << visibleChar << "'"
-	       << " siz='" << size << "'";
+	stream << " visible='" << (visible?'T':'F') << "'"
+	       << " size='" << size << "'"
+	       << " selected='" << (selected?'T':'F') << "'";
 	return stream.str();
 }
 

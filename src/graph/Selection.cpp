@@ -7,28 +7,23 @@
 #include "Selection.hpp"
 
 
-/**
- * Adds a selectable item to the selection.
- */
-void Selection::add(Selectable *item) {
+/** Adds a single item to the selection. */
+void Selection::add(Drawable *item) {
 	
-	item->select();
+	item->setSelected(true);
 	items.insert(item);
 }
 
 
-/**
- * Recursively adds all the children of a node.
- */
+/** Recursively adds all the children of a node.*/
 void Selection::addAll(Node *node) {
 	
 	Node::iterator it;
-	Selectable *selectable;
+	Drawable *drawable;
 	
 	// Add item if selectable
-	selectable = dynamic_cast<Selectable*>(node);
-	if (selectable != NULL)
-		add(selectable);
+	if ((drawable = dynamic_cast<Drawable*>(node)))
+		add(drawable);
 	
 	// Add children
 	for (it=node->begin(); it!=node->end(); ++it)
@@ -36,49 +31,27 @@ void Selection::addAll(Node *node) {
 }
 
 
-/**
- * Returns an iterator to the beginning of the selection.
- */
-Selection::iterator Selection::begin() {
-	
-	return items.begin();
-}
-
-
-/**
- * Removes all the items from the selection.
- */
+/** Removes all the items from the selection. */
 void Selection::clear() {
 	
 	iterator si;
 	
 	// Deselect and clear
 	for (si=items.begin(); si!=items.end(); ++si)
-		(*si)->deselect();
+		(*si)->setSelected(false);
 	items.clear();
 }
 
 
-/**
- * Returns an iterator to the beginning of the selection.
- */
-Selection::iterator Selection::end() {
-	
-	return items.end();
-}
-
-
-/**
- * Removes a selectable item from the selection.
- */
-void Selection::remove(Selectable *item) {
+/** Removes a single item from the selection. */
+void Selection::remove(Drawable *item) {
 	
 	iterator si;
 	
 	// Find and erase the item
 	si = items.find(item);
 	if (si != items.end()) {
-		item->deselect();
+		item->setSelected(false);
 		items.erase(si);
 	}
 }

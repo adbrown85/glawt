@@ -27,30 +27,23 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Determines which item is under the mouse cursor.
+ * @brief Determines which item is under the mouse cursor.
  */
 class Picker {
-	
-	public:
-		
-		Picker(Scene *scene);
-		void addManipulators(vector<Manipulator*> manipulators);
-		pair<GLuint,GLuint> pick(int x, int y);
-	
-	protected:
-		
-		pair<GLuint,GLuint> chooseItem();
-		void finish();
-		void initialize(int x, int y);
-		void storeIDsOfItems();
-	
-	private:
-		
-		GLuint buf[PICK_BUFFER_SIZE];
-		map<GLuint,GLuint> ids;
-		Painter *painter;
-		Scene *scene;
+public:
+	Picker(Scene *scene);
+	void addManipulators(vector<Manipulator*> manipulators);
+	pair<GLuint,GLuint> pick(int x, int y);
+protected:
+	pair<GLuint,GLuint> chooseItem();
+	void finish();
+	void initialize(int x, int y);
+	void storeIDsOfItems();
+private:
+	GLuint buf[PICK_BUFFER_SIZE];
+	map<GLuint,GLuint> ids;
+	Painter *painter;
+	Scene *scene;
 };
 
 

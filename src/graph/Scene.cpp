@@ -7,27 +7,21 @@
 #include "Scene.hpp"
 
 
-/**
- * Creates and initializes a new scene.
- */
+/** Creates and initializes a new scene. */
 Scene::Scene() {
 	
 	this->root = new Node(Tag());
 }
 
 
-/**
- * Destroys all the nodes in the scene.
- */
+/** Destroys all the nodes in the scene. */
 Scene::~Scene() {
 	
 	Node::destroy(root);
 }
 
 
-/**
- * Associate all the nodes in the scene.
- */
+/** Associate all the nodes in the scene. */
 void Scene::associate(Node *node) {
 	
 	Node::iterator it;
@@ -44,8 +38,9 @@ void Scene::associate(Node *node) {
 }
 
 
-/**
- * Finalize all the nodes in the scene.
+/** Finalize all the nodes in the scene.
+ * 
+ * @param node Pointer to current node
  */
 void Scene::finalize(Node *node) {
 	
@@ -63,8 +58,7 @@ void Scene::finalize(Node *node) {
 }
 
 
-/**
- * Opens a scene from a file.
+/** Opens a scene from a file.
  * 
  * @param filename Path to the file.
  */
@@ -100,9 +94,7 @@ void Scene::open(string filename) {
 }
 
 
-/**
- * Allows nodes in graph to associate and finalize themselves.
- */
+/** Allows nodes in graph to associate and finalize themselves. */
 void Scene::prepare() {
 	
 	associate(root);
@@ -110,9 +102,7 @@ void Scene::prepare() {
 }
 
 
-/**
- * Prints all the nodes in the scene.
- */
+/** Prints all the nodes in the scene. */
 void Scene::print() {
 	
 	typedef pair<Node*,int> NodeLevel;
@@ -140,8 +130,7 @@ void Scene::print() {
 }
 
 
-/**
- * Replaces the root of the scene with a new node.
+/** Replaces the root of the scene with a new node.
  * 
  * @throws Exception if the root has children already
  * @throws Exception if node is NULL

@@ -9,37 +9,47 @@
 #define NUMBER_OF_NODES 4
 
 
-class FakeSelectable : public Selectable {
+class FakeDrawable : public Drawable {
 public:
-	FakeSelectable(const Tag &tag) : Selectable(tag) {}
+	FakeDrawable(const Tag &tag) : Drawable(tag) {}
 	void draw() const {}
 };
 
 
 class SelectionTest {
 public:
-	void before();
+	void setUp();
+	void tearDown();
 	void testAdd();
 	void testIterator();
 	void testRemove();
-	void after();
 private:
 	Selection selection;
-	FakeSelectable *nodes[NUMBER_OF_NODES];
+	FakeDrawable *nodes[NUMBER_OF_NODES];
 };
 
 
-void SelectionTest::before() {
+void SelectionTest::setUp() {
 	
 	Tag tag;
 	
 	// Create nodes
-	cout << "Creating nodes..." << endl;
+	cout << "Setting up..." << endl;
 	tag["selected"] = "false";
 	for (int i=0; i<NUMBER_OF_NODES; ++i) {
-		nodes[i] = new FakeSelectable(tag);
+		nodes[i] = new FakeDrawable(tag);
 		cout << "  " << nodes[i]->getID() << ": "
 		             << nodes[i]->isSelected() << endl;
+	}
+}
+
+
+void SelectionTest::tearDown() {
+	
+	// Delete nodes
+	cout << "\nTearing down..." << endl;
+	for (int i=0; i<NUMBER_OF_NODES; ++i) {
+		delete nodes[i];
 	}
 }
 
@@ -47,7 +57,7 @@ void SelectionTest::before() {
 void SelectionTest::testAdd() {
 	
 	// Add to selection
-	cout << "Adding to selection..." << endl;
+	cout << "\nAdding to selection..." << endl;
 	for (int i=0; i<NUMBER_OF_NODES; ++i)
 		selection.add(nodes[i]);
 }
@@ -58,7 +68,7 @@ void SelectionTest::testIterator() {
 	Selection::iterator si;
 	
 	// Print selection
-	cout << "Selection:" << endl;
+	cout << "\nTesting iterator..." << endl;
 	for (si=selection.begin(); si!=selection.end(); ++si)
 		cout << "  " << (*si)->getID() << ": " << (*si)->isSelected() << endl;
 }
@@ -67,29 +77,17 @@ void SelectionTest::testIterator() {
 void SelectionTest::testRemove() {
 	
 	int id=3;
-	Selectable *node;
+	Drawable *node;
 	
 	// Remove a node
-	cout << "Removing node " << id << "..." << endl;
+	cout << "\nRemoving node " << id << "..." << endl;
 	node = nodes[id-1];
 	selection.remove(node);
 	cout << "  " << node->getID() << ": " << node->isSelected() << endl;
 }
 
 
-void SelectionTest::after() {
-	
-	// Delete nodes
-	cout << "Deleting nodes..." << endl;
-	for (int i=0; i<NUMBER_OF_NODES; ++i) {
-		delete nodes[i];
-	}
-}
-
-
-/**
- * Unit test for Selection.
- */
+/** Run unit test for Selection. */
 int main() {
 	
 	SelectionTest test;
@@ -102,11 +100,11 @@ int main() {
 	cout << endl;
 	
 	// Test
-	test.before();
+	test.setUp();
 	test.testAdd();
-	test.testIterator();
 	test.testRemove();
-	test.after();
+	test.testIterator();
+	test.tearDown();
 	
 	// Finish
 	cout << endl;
