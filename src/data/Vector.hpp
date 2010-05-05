@@ -59,6 +59,10 @@ Vector cross(const Vector& A,
              const Vector& B);
 float dot(const Vector& A,
           const Vector &B);
+Vector min(const Vector &A,
+           const Vector &B);
+Vector max(const Vector &A,
+           const Vector &B);
 Vector normalize(Vector vector);
 
 

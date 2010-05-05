@@ -7,9 +7,7 @@
 #include "Vector.hpp"
 
 
-/**
- * Creates a four-component vector initialized to all zeroes.
- */
+/** Creates a four-component vector initialized to all zeroes. */
 Vector::Vector() {
 	
 	// Set components
@@ -21,9 +19,7 @@ Vector::Vector() {
 }
 
 
-/**
- * Creates a two-component vector.
- */
+/** Creates a two-component vector. */
 Vector::Vector(float x,
                float y) {
 	
@@ -36,9 +32,7 @@ Vector::Vector(float x,
 }
 
 
-/**
- * Creates a three-component vector.
- */
+/** Creates a three-component vector. */
 Vector::Vector(float x,
                float y,
                float z) {
@@ -52,9 +46,7 @@ Vector::Vector(float x,
 }
 
 
-/**
- * Creates a four-component vector.
- */
+/** Creates a four-component vector. */
 Vector::Vector(float x,
                float y,
                float z,
@@ -290,9 +282,7 @@ ostream& operator<<(ostream &out,
 }
 
 
-/**
- * @throws const_char* if the index is out of bounds.
- */
+/** @throws const_char* if the index is out of bounds. */
 float& Vector::operator[](int i) {
 	
 	// Return correct component
@@ -307,9 +297,7 @@ float& Vector::operator[](int i) {
 }
 
 
-/**
- * @throws const_char* if the index is out of bounds.
- */
+/** @throws const_char* if the index is out of bounds. */
 float Vector::operator[](int i) const {
 	
 	// Return correct component
@@ -324,9 +312,7 @@ float Vector::operator[](int i) const {
 }
 
 
-/**
- * @return vector perpendicular to the plane formed by two vectors.
- */
+/** @return vector perpendicular to the plane formed by two vectors. */
 Vector cross(const Vector &A,
              const Vector &B) {
 	
@@ -341,9 +327,7 @@ Vector cross(const Vector &A,
 }
 
 
-/**
- * @return projection of one vector onto another.
- */
+/** @return projection of one vector onto another. */
 float dot(const Vector &A,
           const Vector &B) {
 	
@@ -355,9 +339,7 @@ float dot(const Vector &A,
 }
 
 
-/**
- * @throws const_char* if index out of bounds.
- */
+/** @throws const_char* if index out of bounds. */
 float Vector::get(int i) const {
 	
 	// Return correct component
@@ -372,9 +354,7 @@ float Vector::get(int i) const {
 }
 
 
-/**
- * @return Length of the vector.
- */
+/** @return length of the vector. */
 float Vector::length() const {
 	
 	// Return root of sum of squares
@@ -385,9 +365,23 @@ float Vector::length() const {
 }
 
 
-/**
- * @return Normalized version of this vector.
- */
+/** @return component-wise maximum of the two vectors */
+Vector max(const Vector &A,
+           const Vector &B) {
+	
+	return Vector(max(A.x,B.x), max(A.y,B.y), max(A.z,B.z), max(A.w,B.w));
+}
+
+
+/** @return component-wise minimum of the two vectors */
+Vector min(const Vector &A,
+           const Vector &B) {
+	
+	return Vector(min(A.x,B.x), min(A.y,B.y), min(A.z,B.z), min(A.w,B.w));
+}
+
+
+/** @return Unit length version of the vector. */
 Vector normalize(Vector vector) {
 	
 	float len;
