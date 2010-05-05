@@ -7,8 +7,7 @@
 #include "Interpreter.hpp"
 
 
-/**
- * Initializes the scene, loads the delegates, and adds commands from each.
+/** Initializes the scene, loads the delegates, and adds commands from each.
  * 
  * @param scene Pointer to the Scene to work with.
  */
@@ -47,9 +46,7 @@ Interpreter::Interpreter(Scene *scene) {
 }
 
 
-/**
- * Cleans up the delegates.
- */
+/** Cleans up the delegates. */
 Interpreter::~Interpreter() {
 	
 	// Clean up
@@ -58,6 +55,7 @@ Interpreter::~Interpreter() {
 }
 
 
+/** Adds a callback that will be called when a command is issued. */
 void Interpreter::addListener(int command,
                               void(*function)()) {
 	
@@ -65,9 +63,7 @@ void Interpreter::addListener(int command,
 }
 
 
-/**
- * Prints the commands.
- */
+/** Prints the commands. */
 void Interpreter::print() {
 	
 	map<int,void(*)(Scene*,int)>::iterator h0;
@@ -88,8 +84,7 @@ void Interpreter::print() {
 }
 
 
-/**
- * Runs a command by calling a delegate's method.
+/** Runs a command by calling a delegate's method.
  * 
  * @param command Enumerated type from 'Command.hpp'.
  */
@@ -110,8 +105,7 @@ void Interpreter::run(int command) {
 }
 
 
-/**
- * Runs a command by handing it off to a delegate.
+/** Runs a command by handing it off to a delegate.
  * 
  * @param command Enumerated type from 'Command.hpp'.
  * @param argument Argument to the command.
@@ -134,8 +128,7 @@ void Interpreter::run(int command,
 }
 
 
-/**
- * Runs a command by handing it off to a delegate.
+/** Runs a command by handing it off to a delegate.
  * 
  * @param command Enumerated type from 'Command.hpp'.
  * @param argument Argument to the command.

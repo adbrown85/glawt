@@ -18,8 +18,7 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief
- *     %Texture node for volumes.
+ * @brief %Texture node for volumes.
  */
 class Texture3D : public Texture {
 public:

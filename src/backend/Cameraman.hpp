@@ -19,31 +19,18 @@ using namespace std;
 
 /**
  * @ingroup backend
- * @brief
- *     %Delegate responsible for moving or rotating the camera.
+ * @brief %Delegate responsible for moving or rotating the camera.
  */
 class Cameraman : public Delegate {
-	
-	public :
-		
-		Cameraman();
-		
-		virtual void run(int command) {}
-		virtual void run(int command,
-		                 float argument) {}
-		virtual void run(int command,
-		                 string argument) {}
-	
-		static void fit(Scene *scene,
-		                int command);
-		static void reset(Scene *scene,
-		                  int command);
-		static void rotate(Scene *scene,
-		                   int command,
-		                   float amount);
-		static void translate(Scene *scene,
-		                      int command,
-		                      float amount);
+public:
+	Cameraman();
+	virtual void run(int command) {}
+	virtual void run(int command, float argument) {}
+	virtual void run(int command, string argument) {}
+	static void fit(Scene *scene, int command);
+	static void reset(Scene *scene, int command);
+	static void rotate(Scene *scene, int command, float amount);
+	static void translate(Scene *scene, int command, float amount);
 };
 
 

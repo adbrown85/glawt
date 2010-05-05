@@ -19,23 +19,17 @@ using namespace std;
 
 /**
  * @ingroup backend
- * @brief
- *     %Delegate responsible for altering the image, including hiding %Items.
+ * @brief %Delegate responsible for hiding and showing items.
  */
 class Compositor : public Delegate {
-	
-	public :
-		
-		Compositor();
-		
-		virtual void run(int command) {}
-		virtual void run(int command, float argument) {}
-		virtual void run(int command, string argument) {}
-		
-		static void hide(Scene *scene, int command);
-		static void info(Scene *scene, int command);
-		static void showAll(Scene *scene, int command);
-		static void showAll(Node *node);
+public :
+	Compositor();
+	virtual void run(int command) {}
+	virtual void run(int command, float argument) {}
+	virtual void run(int command, string argument) {}
+	static void hide(Scene *scene, int command);
+	static void showAll(Scene *scene, int command);
+	static void showAll(Node *node);
 };
 
 

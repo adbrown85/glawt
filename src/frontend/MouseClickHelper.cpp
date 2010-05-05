@@ -7,8 +7,7 @@
 #include "MouseClickHelper.hpp"
 
 
-/**
- * Creates a new MouseClickHelper control.
+/** Creates a new MouseClickHelper control.
  * 
  * @param delegate Delegate to send commands to.
  * @param scene Scene to work with.
@@ -21,8 +20,7 @@ MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
 }
 
 
-/**
- * Handles mouse clicks.
+/** Handles mouse clicks.
  * 
  * Note that because of limitations with GLUT, we treat rotating the mouse 
  * wheel as two separate buttons, defined in %Binding as <i>GLUT_UP_BUTTON</i> 
@@ -54,8 +52,7 @@ void MouseClickHelper::onClick(int button,
 }
 
 
-/**
- * Finds the ID of the item under the cursor and the item it was attached to.
+/** Finds the ID of the item under the cursor and the item it was attached to.
  * 
  * Stores the ID of the item under the cursor as 'data->itemID' and the item 
  * it's attached to as 'data->shapeID'.  Also sets 'data->manipulator' to the 
@@ -88,8 +85,7 @@ void MouseClickHelper::pickItem() {
 }
 
 
-/**
- * Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
+/** Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
  * 
  * @param bindings Bindings from %Mouse.
  */
@@ -114,9 +110,7 @@ void MouseClickHelper::setManipulators(vector<Manipulator*> manipulators) {
 }
 
 
-/**
- * Issue the command for bindings if they match the current conditions.
- */
+/** Issue the command for bindings if they match the current conditions. */
 void MouseClickHelper::tryBindings() {
 	
 	multimap<int,Binding>::iterator bi;
@@ -130,8 +124,7 @@ void MouseClickHelper::tryBindings() {
 }
 
 
-/**
- * Issue the command for a binding if it matches the current conditions.
+/** Issue the command for a binding if it matches the current conditions.
  * 
  * @param binding Pointer to a %Binding.
  */

@@ -50,14 +50,11 @@ private:
 	static Program* current;
 };
 
+/** @return Integer OpenGL identifies the program with. */
+inline GLuint Program::getHandle() const {return handle;}
 
-inline GLuint Program::getHandle() const {
-	return handle;
-}
-
-inline Program* Program::getCurrent() {
-	return current;
-}
+/** @return Pointer to the active program */
+inline Program* Program::getCurrent() {return current;}
 
 
 #endif

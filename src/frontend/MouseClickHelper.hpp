@@ -22,16 +22,12 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Handles mouse clicking actions for %Mouse.
+ * @brief Handles mouse clicking actions for %Mouse.
  */
 class MouseClickHelper : public MouseHelper {
 public:
 	MouseClickHelper(Interpreter *interpreter);
-	virtual void onClick(int button,
-	                     int state,
-	                     int x,
-	                     int y);
+	virtual void onClick(int button, int state, int x, int y);
 	virtual void setBindings(multimap<int,Binding> bindings);
 	virtual void setManipulators(vector<Manipulator*> manipulators);
 protected:

@@ -38,7 +38,7 @@ private:
 	int size;
 };
 
-
+/** @return width of the texture. */
 inline int Texture2D::getSize() const {return size;}
 
 

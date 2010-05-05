@@ -7,9 +7,7 @@
 #include "Cameraman.hpp"
 
 
-/**
- * Adds the commands this delegate supports and sets up handlers.
- */
+/** Adds the commands this delegate supports and sets up handlers. */
 Cameraman::Cameraman() {
 	
 	// Set type
@@ -38,9 +36,7 @@ Cameraman::Cameraman() {
 }
 
 
-/**
- * Fits items in the view.
- */
+/** Fits items in the view. */
 void Cameraman::fit(Scene *scene,
                     int cmd) {
 	
@@ -48,9 +44,7 @@ void Cameraman::fit(Scene *scene,
 }
 
 
-/**
- * Resets the view's rotation.
- */
+/** Resets the view's rotation. */
 void Cameraman::reset(Scene *scene,
                       int cmd) {
 	
@@ -58,8 +52,7 @@ void Cameraman::reset(Scene *scene,
 }
 
 
-/**
- * Rotates the camera around the scene.
+/** Rotates the camera around the scene.
  * 
  * @param scene Pointer to the current scene.
  * @param cmd Command (should be in CIRCLE family).
@@ -87,8 +80,7 @@ void Cameraman::rotate(Scene *scene,
 }
 
 
-/**
- * Moves the camera.
+/** Moves the camera.
  * 
  * @param scene Pointer to the current scene.
  * @param cmd Command (either BOOM, TRACK, or ZOOM family).

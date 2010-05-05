@@ -7,9 +7,7 @@
 #include "Compositor.hpp"
 
 
-/**
- * Adds the commands this delegate supports and sets up handlers.
- */
+/** Adds the commands this delegate supports and sets up handlers. */
 Compositor::Compositor() {
 	
 	// Set type
@@ -21,14 +19,8 @@ Compositor::Compositor() {
 }
 
 
-/**
- * Hides the items currently selected.
- * 
- * @param scene Pointer to a collection of nodes.
- * @param cmd Specific command that was issued.
- */
-void Compositor::hide(Scene *scene,
-                      int cmd) {
+/** Hides the items currently selected. */
+void Compositor::hide(Scene *scene, int cmd) {
 	
 	Selection selection;
 	Selection::iterator it;
@@ -41,24 +33,14 @@ void Compositor::hide(Scene *scene,
 }
 
 
-/**
- * Shows all the %Drawable nodes in the scene.
- * 
- * @param scene Pointer to a collection of nodes.
- * @param cmd Specific command that was issued.
- */
-void Compositor::showAll(Scene *scene,
-                         int cmd) {
+/** Shows all the %Drawable nodes in the scene. */
+void Compositor::showAll(Scene *scene, int cmd) {
 	
 	showAll(scene->getRoot());
 }
 
 
-/**
- * Recursively shows a node and its children.
- * 
- * @param node Pointer to a node.
- */
+/** Recursively shows a node and its children. */
 void Compositor::showAll(Node *node) {
 	
 	Drawable *drawable;

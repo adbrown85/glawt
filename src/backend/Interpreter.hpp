@@ -25,8 +25,7 @@ using namespace std;
 
 /**
  * @ingroup backend
- * @brief
- *     Interprets commands and passes them on to other %Delegates.
+ * @brief Interprets commands and passes them on to other %Delegates.
  * 
  * @see Cameraman
  * @see Compositor

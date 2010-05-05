@@ -9,9 +9,7 @@ map<int,string> Command::names;
 bool Command::loaded=false;
 
 
-/**
- * Initializes the command names.
- */
+/** Initializes the command names. */
 void Command::initialize() {
 	
 	// Set names
@@ -22,9 +20,7 @@ void Command::initialize() {
 }
 
 
-/**
- * Prints the names of all the command names.
- */
+/** Prints the names of all the command names. */
 void Command::print() {
 	
 	map<int,string>::iterator it;
@@ -39,9 +35,7 @@ void Command::print() {
 }
 
 
-/**
- * Returns the name of a command.
- */
+/** @return human-readable name of the command. */
 string Command::getName(int command) {
 	
 	// Return name

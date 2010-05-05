@@ -7,9 +7,7 @@
 #include "Producer.hpp"
 
 
-/**
- * Adds the commands this delegate supports and sets up handlers.
- */
+/** Adds the commands this delegate supports and sets up handlers. */
 Producer::Producer() {
 	
 	// Set type
@@ -29,46 +27,35 @@ Producer::Producer() {
 }
 
 
-void Producer::list(Scene *scene,
-                    int command) {
+void Producer::list(Scene *scene, int command) {
 	
 	scene->print();
 }
 
 
-void Producer::copy(Scene *scene,
-                    int command) {
+void Producer::copy(Scene *scene, int command) {
 	
 	cout << "Producer::cmdCopy(Scene*,int)" << endl;
 }
 
 
-void Producer::duplicate(Scene *scene,
-                         int command) {
+void Producer::duplicate(Scene *scene, int command) {
 	
 	cout << "Producer::cmdDuplicate(Scene*,int)" << endl;
 }
 
 
-void Producer::cut(Scene *scene,
-                   int command) {
+void Producer::cut(Scene *scene, int command) {
 	
 	cout << "Producer::cmdCut(Scene*,int)" << endl;
 }
 
 
-/**
- * Opens a scene from an XML file.
- * 
- * @param scene
- * @param command
- * @param filename
+/** Opens a scene from an XML file.
  * 
  * @throws Exception if scene is NULL.
  */
-void Producer::open(Scene *scene,
-                    int command,
-                    string filename) {
+void Producer::open(Scene *scene, int command, string filename) {
 	
 	// Check for bad input
 	if (scene == NULL) {
@@ -86,22 +73,19 @@ void Producer::open(Scene *scene,
 }
 
 
-void Producer::paste(Scene *scene,
-                     int command) {
+void Producer::paste(Scene *scene, int command) {
 	
 	cout << "Producer::cmdPaste(Scene*,int)" << endl;
 }
 
 
-void Producer::save(Scene *scene,
-                    int command) {
+void Producer::save(Scene *scene, int command) {
 	
 	cout << "Producer::cmdSave(Scene*,int)" << endl;
 }
 
 
-void Producer::quit(Scene *scene,
-                    int command) {
+void Producer::quit(Scene *scene, int command) {
 	
 	exit(0);
 }

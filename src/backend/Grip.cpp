@@ -7,9 +7,7 @@
 #include "Grip.hpp"
 
 
-/**
- * Adds the handlers Grip supports.
- */
+/** Adds the handlers Grip supports. */
 Grip::Grip() {
 	
 	// Set type
@@ -28,9 +26,7 @@ Grip::Grip() {
 }
 
 
-/**
- * Rotates the current selection.
- */
+/** Rotates the current selection. */
 void Grip::rotate(Scene *scene,
                   int command,
                   float argument) {
@@ -39,9 +35,7 @@ void Grip::rotate(Scene *scene,
 }
 
 
-/**
- * Scales the current selection.
- */
+/** Scales the current selection. */
 void Grip::scale(Scene *scene,
                  int command,
                  float argument) {
@@ -65,9 +59,7 @@ Translation* Grip::findTranslation(Node *node) {
 }
 
 
-/**
- * Translates the current selection.
- */
+/** Translates the current selection. */
 void Grip::translate(Scene *scene,
                      int command,
                      float argument) {

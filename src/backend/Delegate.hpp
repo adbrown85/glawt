@@ -16,8 +16,7 @@ using namespace std;
 /**
  * @interface Delegate
  * @ingroup backend
- * @brief
- *     Interface for a worker that performs %Commands on the %Scene.
+ * @brief Interface for a worker that performs %Commands on the %Scene.
  * 
  * @see Cameraman
  * @see Compositor
