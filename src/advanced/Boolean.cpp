@@ -45,15 +45,45 @@ void Boolean::associate() {
 	// Find nodes
 	findGroup();
 	findShapes();
+	findTransforms();
+}
+
+
+/** Calculates the operation. */
+void Boolean::finalize() {
+	
+	calculate();
 }
 
 
 /** Traverse a subtree and modify extent using each shape. */
-void Boolean::calculate(Node *node,
-                        Vector &upper,
-                        Vector &lower) const {
+void Boolean::calculate() {
 	
-	Matrix mvm;
+	// Reset
+	upper = Vector(+FLT_INF);
+	lower = Vector(-FLT_INF);
+	
+	// Calculate
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	calculate(group);
+	glPopMatrix();
+	
+	// Print
+	cout << "Upper: " << upper << endl;
+	cout << "Lower: " << lower << endl;
+	if (min(upper,lower) == lower) {
+		cout << "Intersection!" << endl;
+	} else {
+		cout << "No intersection." << endl;
+	}
+}
+
+
+/** Traverse a subtree and modify extent using each shape. */
+void Boolean::calculate(Node *node) {
+	
 	Node::iterator it;
 	Transformation *transform;
 	Shape *shape;
@@ -63,7 +93,7 @@ void Boolean::calculate(Node *node,
 	if ((transform = dynamic_cast<Transformation*>(node))) {
 		transform->apply();
 		for (it=transform->begin(); it!=transform->end(); ++it)
-			calculate(*it, upper, lower);
+			calculate(*it);
 		transform->remove();
 	}
 	
@@ -79,7 +109,7 @@ void Boolean::calculate(Node *node,
 	// Just do children
 	else {
 		for (it=node->begin(); it!=node->end(); ++it)
-			calculate(*it, upper, lower);
+			calculate(*it);
 	}
 }
 
@@ -121,23 +151,6 @@ void Boolean::calculate(Node *node,
  */
 void Boolean::draw() const {
 	
-	Vector upper(+FLT_INF), lower(-FLT_INF);
-	
-	// Calculate
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	calculate(group, upper, lower);
-	glPopMatrix();
-	
-	// Print
-	cout << "Upper: " << upper << endl;
-	cout << "Lower: " << lower << endl;
-	if (min(upper,lower) == lower) {
-		cout << "Intersection!" << endl;
-	} else {
-		cout << "No intersection." << endl;
-	}
 }
 
 
@@ -179,6 +192,35 @@ void Boolean::findShapes() {
 		e << "[Boolean] No shapes found in group.";
 		throw e;
 	}
+}
+
+
+/** Finds transforms in the group and adds this as a listener. */
+void Boolean::findTransforms() {
+	
+	Node *node;
+	Node::iterator it;
+	queue<Node*> q;
+	Transformation *transform;
+	
+	// Add listener to each transform
+	q.push(group);
+	while (!q.empty()) {
+		node = q.front();
+		transform = dynamic_cast<Transformation*>(node);
+		if (transform != NULL)
+			transform->addListener(this);
+		for (it=node->begin(); it!=node->end(); ++it)
+			q.push(*it);
+		q.pop();
+	}
+}
+
+
+/** One of the transforms was updated. */
+void Boolean::nodeUpdated() {
+	
+	calculate();
 }
 
 

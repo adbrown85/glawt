@@ -24,21 +24,28 @@ using namespace std;
  * @ingroup advanced
  * @brief Combines shapes in different ways to create a new one.
  */
-class Boolean : public Shape {
+class Boolean : public Shape,
+                public NodeListener {
 public:
 	Boolean(const Tag &tag);
 	virtual void associate();
+	virtual void finalize();
 	virtual void draw() const;
+	virtual void nodeUpdated();
 	virtual string toString() const;
 protected:
-	void calculate(Node *node, Vector &upper, Vector &lower) const;
+	void calculate();
+	void calculate(Node *node);
 	void findGroup();
 	void findShapes();
+	void findTransforms();
 private:
 	Group *group;
 	list<Shape*> shapes;
+	Matrix mvm;
 	string of, operation;
 	static float FLT_INF;
+	Vector upper, lower;
 };
 
 
