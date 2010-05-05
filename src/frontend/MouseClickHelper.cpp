@@ -7,11 +7,7 @@
 #include "MouseClickHelper.hpp"
 
 
-/** Creates a new MouseClickHelper control.
- * 
- * @param delegate Delegate to send commands to.
- * @param scene Scene to work with.
- */
+/** Creates a new MouseClickHelper control. */
 MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
                                    MouseHelper(interpreter),
                                    picker(scene) {
@@ -31,10 +27,7 @@ MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
  * @param x Current horizontal coordinate of mouse when it was clicked.
  * @param y Current vertical coordinate of mouse when it was clicked.
  */
-void MouseClickHelper::onClick(int button,
-                               int state,
-                               int x,
-                               int y) {
+void MouseClickHelper::onClick(int button, int state, int x, int y) {
 	
 	// Update current mouse data
 	data->modifier = getModifier();
@@ -85,10 +78,7 @@ void MouseClickHelper::pickItem() {
 }
 
 
-/** Copies bindings from %Mouse that do not have drag into %MouseClickHelper.
- * 
- * @param bindings Bindings from %Mouse.
- */
+/** Copies bindings from %Mouse that do not have drag. */
 void MouseClickHelper::setBindings(multimap<int,Binding> bindings) {
 	
 	Binding *binding;
@@ -103,6 +93,7 @@ void MouseClickHelper::setBindings(multimap<int,Binding> bindings) {
 }
 
 
+/** Stores the manipulators and passes them to picker. */
 void MouseClickHelper::setManipulators(vector<Manipulator*> manipulators) {
 	
 	Control::setManipulators(manipulators);
@@ -124,10 +115,7 @@ void MouseClickHelper::tryBindings() {
 }
 
 
-/** Issue the command for a binding if it matches the current conditions.
- * 
- * @param binding Pointer to a %Binding.
- */
+/** Issue the command for a binding if it matches the current conditions. */
 void MouseClickHelper::tryBinding(Binding *binding) {
 	
 	// Ignore bindings that don't match current conditions

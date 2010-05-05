@@ -23,6 +23,10 @@
 using namespace std;
 
 
+/** @typedef Function pointer listener to be called on a specific command. */
+typedef void (*interpreter_listener)();
+
+
 /**
  * @ingroup backend
  * @brief Interprets commands and passes them on to other %Delegates.
@@ -37,15 +41,24 @@ class Interpreter : public Delegate {
 public:
 	Interpreter(Scene *scene);
 	~Interpreter();
-	virtual void addListener(int command, void(*)());
+	virtual void addListener(int command, interpreter_listener);
+	Scene* getScene() const;
 	void print();
 	virtual void run(int command);
 	virtual void run(int command, float argument);
 	virtual void run(int command, string argument);
+	void setScene(Scene *scene);
 private:
+	Scene *scene;
 	map<int,void(*)()> listeners;
 	vector<Delegate*> delegates;
 };
+
+
+
+inline Scene* Interpreter::getScene() const {return scene;}
+
+inline void Interpreter::setScene(Scene *scene) {this->scene = scene;}
 
 
 #endif

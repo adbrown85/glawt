@@ -13,6 +13,16 @@
 using namespace std;
 
 
+/** @typedef Function pointer for a command with no arguments. */
+typedef void(*handler_0)(Scene*,int);
+
+/** @typedef Function pointer for a command with a float argument. */
+typedef void(*handler_f)(Scene*,int,float);
+
+/** @typedef Function pointer for a command with a string argument. */
+typedef void(*handler_s)(Scene*,int,string);
+
+
 /**
  * @interface Delegate
  * @ingroup backend
@@ -24,52 +34,33 @@ using namespace std;
  * @see Grip
  * @see Interpreter
  * @see Producer
+ * 
+ * @todo Should not have scene, getScene(), or setScene() here.
  */
 class Delegate {
 public:
-	map<int,void(*)(Scene*,int)> getHandlersZero();
-	map<int,void(*)(Scene*,int,float)> getHandlersFloat();
-	map<int,void(*)(Scene*,int,string)> getHandlersString();
-	Scene* getScene() const;
+	map<int,handler_0> getHandlersZero();
+	map<int,handler_f> getHandlersFloat();
+	map<int,handler_s> getHandlersString();
 	string getType() const;
-	virtual void run(int command) = 0;
-	virtual void run(int command, float argument) = 0;
-	virtual void run(int command, string argument) = 0;
-	void setScene(Scene *scene);
 protected:
-	Scene *scene;
 	string type;
-	map<int,void(*)(Scene*,int)> handlersZero;
-	map<int,void(*)(Scene*,int,float)> handlersFloat;
-	map<int,void(*)(Scene*,int,string)> handlersString;
+	map<int,handler_0> handlersZero;
+	map<int,handler_f> handlersFloat;
+	map<int,handler_s> handlersString;
 };
 
+/** @return All the zero-argument handlers this delegate contains. */
+inline map<int,handler_0> Delegate::getHandlersZero() {return handlersZero;}
 
-inline map<int,void(*)(Scene*,int)> Delegate::getHandlersZero() {
-	return handlersZero;
-}
+/** @return All the float-argument handlers this delegate contains. */
+inline map<int,handler_f> Delegate::getHandlersFloat() {return handlersFloat;}
 
-inline map<int,void(*)(Scene*,int,float)> Delegate::getHandlersFloat() {
-	return handlersFloat;
-}
+/** @return All the string-argument handlers this delegate contains. */
+inline map<int,handler_s> Delegate::getHandlersString() {return handlersString;}
 
-inline map<int,void(*)(Scene*,int,string)> Delegate::getHandlersString() {
-	return handlersString;
-}
-
-inline Scene* Delegate::getScene() const {
-	return scene;
-}
-
-inline string Delegate::getType() const {
-	return type;
-}
-
-inline void Delegate::setScene(Scene *scene) {
-	this->scene = scene;
-}
-
-
+/** @return Name of the delegate */
+inline string Delegate::getType() const {return type;}
 
 
 #endif

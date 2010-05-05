@@ -108,7 +108,7 @@ void Mouse::initManipulators() {
 	
 	// Set delegates
 	for (size_t i=0; i<manipulators.size(); ++i) {
-		manipulators[i]->setDelegate(interpreter);
+		manipulators[i]->setInterpreter(interpreter);
 	}
 	
 	// Copy to helpers

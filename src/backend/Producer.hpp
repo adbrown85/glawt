@@ -32,9 +32,6 @@ using namespace std;
 class Producer : public Delegate {
 public:
 	Producer();
-	virtual void run(int command) {}
-	virtual void run(int command, float argument) {}
-	virtual void run(int command, string argument) {}
 	static void copy(Scene *scene, int command);
 	static void cut(Scene *scene, int command);
 	static void duplicate(Scene *scene, int command);

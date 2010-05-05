@@ -20,8 +20,7 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Generic handler for a mouse action.
+ * @brief Generic helper control for a mouse action.
  */
 class MouseHelper : public Control {
 public:

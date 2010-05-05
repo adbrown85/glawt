@@ -7,8 +7,7 @@
 #include "Control.hpp"
 
 
-/**
- * Creates a new control using the specified Delegate to run commands.
+/** Creates a new control using the specified Delegate to run commands.
  * 
  * @param interpreter Class that will run commands
  * @param scene Pointer to the collection of nodes
@@ -21,9 +20,7 @@ Control::Control(Interpreter *interpreter) {
 }
 
 
-/**
- * Deallocates the manipulators.
- */
+/** Deallocates the manipulators. */
 Control::~Control() {
 	
 	// Delete each manipulator
@@ -32,8 +29,7 @@ Control::~Control() {
 }
 
 
-/**
- * Adds a Binding to the control.
+/** Adds a Binding to the control.
  * 
  * @param binding Binding to add (creates a copy).
  */
@@ -43,9 +39,7 @@ void Control::add(const Binding &binding) {
 }
 
 
-/**
- * Adds a Manipulator to the control.
- */
+/** Adds a Manipulator to the control. */
 void Control::add(Manipulator *manipulator) {
 	
 	manipulators.push_back(manipulator);
@@ -58,9 +52,7 @@ vector<Manipulator*> Control::getManipulators() const {
 }
 
 
-/**
- * Print each Binding attached to the control.
- */
+/** Print each Binding attached to the control. */
 void Control::print() {
 	
 	multimap<int,Binding>::iterator bi;

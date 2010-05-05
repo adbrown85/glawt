@@ -21,8 +21,7 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Interface installed into a %Display that controls the scene.
+ * @brief Interface installed into a %Display that controls the scene.
  */
 class Control {
 public:

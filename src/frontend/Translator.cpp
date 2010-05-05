@@ -7,9 +7,7 @@
 #include "Translator.hpp"
 
 
-/**
- * Creates a new Translator using an axis.
- */
+/** Creates a new Translator using an axis. */
 Translator::Translator(float x, float y, float z) {
 	
 	// Initialize attributes
@@ -24,9 +22,7 @@ Translator::Translator(float x, float y, float z) {
 }
 
 
-/**
- * Draws the Translator.
- */
+/** Draws the Translator. */
 void Translator::draw() const {
 	
 	float half;
@@ -61,8 +57,7 @@ void Translator::draw() const {
 }
 
 
-/**
- * Calculates how a pixel compares to a global unit.
+/** Calculates how a pixel compares to a global unit.
  * 
  * @param scene Graph of nodes.
  * @param shapeID ID of the shape to use for the depth component.
@@ -96,8 +91,7 @@ float Translator::findPixelFactor(Scene *scene,
 }
 
 
-/**
- * Use the Translator.
+/** Use the Translator.
  * 
  * @param scene Graph of nodes.
  * @param movement Difference between current and last cursor positions.
@@ -119,11 +113,11 @@ void Translator::use(Scene *scene,
 	// Translate selection
 	if (fabs(dotProduct) > 0.5) {
 		if (axis.x > 0.9)
-			delegate->run(Command::TRANSLATE_X, translateAmount);
+			interpreter->run(Command::TRANSLATE_X, translateAmount);
 		else if (axis.y > 0.9)
-			delegate->run(Command::TRANSLATE_Y, translateAmount);
+			interpreter->run(Command::TRANSLATE_Y, translateAmount);
 		else
-			delegate->run(Command::TRANSLATE_Z, translateAmount);
+			interpreter->run(Command::TRANSLATE_Z, translateAmount);
 	}
 }
 

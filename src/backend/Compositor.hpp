@@ -24,9 +24,6 @@ using namespace std;
 class Compositor : public Delegate {
 public :
 	Compositor();
-	virtual void run(int command) {}
-	virtual void run(int command, float argument) {}
-	virtual void run(int command, string argument) {}
 	static void hide(Scene *scene, int command);
 	static void showAll(Scene *scene, int command);
 	static void showAll(Node *node);

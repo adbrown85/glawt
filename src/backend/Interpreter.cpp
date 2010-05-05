@@ -13,12 +13,12 @@
  */
 Interpreter::Interpreter(Scene *scene) {
 	
-	map<int,void(*)(Scene*,int)> handlersZero;
-	map<int,void(*)(Scene*,int)>::iterator h0;
-	map<int,void(*)(Scene*,int,float)> handlersFloat;
-	map<int,void(*)(Scene*,int,float)>::iterator hf;
-	map<int,void(*)(Scene*,int,string)> handlersString;
-	map<int,void(*)(Scene*,int,string)>::iterator hs;
+	map<int,handler_0> handlersZero;
+	map<int,handler_0>::iterator h0;
+	map<int,handler_f> handlersFloat;
+	map<int,handler_f>::iterator hf;
+	map<int,handler_s> handlersString;
+	map<int,handler_s>::iterator hs;
 	vector<Delegate*>::iterator di;
 	
 	// Initialize
@@ -66,9 +66,9 @@ void Interpreter::addListener(int command,
 /** Prints the commands. */
 void Interpreter::print() {
 	
-	map<int,void(*)(Scene*,int)>::iterator h0;
-	map<int,void(*)(Scene*,int,float)>::iterator hf;
-	map<int,void(*)(Scene*,int,string)>::iterator hs;
+	map<int,handler_0>::iterator h0;
+	map<int,handler_f>::iterator hf;
+	map<int,handler_s>::iterator hs;
 	string commandName;
 	
 	// Get commands
@@ -90,8 +90,8 @@ void Interpreter::print() {
  */
 void Interpreter::run(int command) {
 	
-	map<int,void(*)()>::iterator li;
-	map<int,void(*)(Scene*,int)>::iterator hi;
+	map<int,interpreter_listener>::iterator li;
+	map<int,handler_0>::iterator hi;
 	
 	// Check for listener
 	li = listeners.find(command);
@@ -113,8 +113,8 @@ void Interpreter::run(int command) {
 void Interpreter::run(int command,
                       float argument) {
 	
-	map<int,void(*)()>::iterator li;
-	map<int,void(*)(Scene*,int,float)>::iterator hi;
+	map<int,interpreter_listener>::iterator li;
+	map<int,handler_f>::iterator hi;
 	
 	// Check for listener
 	li = listeners.find(command);
@@ -136,8 +136,8 @@ void Interpreter::run(int command,
 void Interpreter::run(int command,
                       string argument) {
 	
-	map<int,void(*)()>::iterator li;
-	map<int,void(*)(Scene*,int,string)>::iterator hi;
+	map<int,interpreter_listener>::iterator li;
+	map<int,handler_s>::iterator hi;
 	
 	// Check for listener
 	li = listeners.find(command);

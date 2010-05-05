@@ -28,19 +28,10 @@ using namespace std;
 class Grip : public Delegate {
 public :
 	Grip();
-	virtual void run(int command) {}
-	virtual void run(int command, float argument) {}
-	virtual void run(int command, string argument) {}
 	static Translation* findTranslation(Node *node);
-	static void rotate(Scene *scene,
-	                   int cmd,
-	                   float argument);
-	static void scale(Scene *scene,
-	                  int cmd,
-	                  float argument);
-	static void translate(Scene *scene,
-	                      int cmd,
-	                      float argument);
+	static void rotate(Scene *scene, int cmd, float argument);
+	static void scale(Scene *scene, int cmd, float argument);
+	static void translate(Scene *scene, int cmd, float argument);
 };
 
 

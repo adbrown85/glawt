@@ -26,25 +26,16 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Tool for moving shapes.
+ * @brief Tool for moving shapes.
  */
 class Translator : public Manipulator {
-	
-	public :
-		
-		Translator(float x, float y, float z);
-		
-		void draw() const;
-		float findPixelFactor(Scene *scene,
-		                      GLuint shapeID);
-		void use(Scene *scene,
-		         const Vector &movement,
-		         GLuint shapeID);
-	
-	private:
-		
-		GLUquadricObj *cone, *disk;
+public:
+	Translator(float x, float y, float z);
+	void draw() const;
+	float findPixelFactor(Scene *scene, GLuint shapeID);
+	void use(Scene *scene, const Vector &movement, GLuint shapeID);
+private:
+	GLUquadricObj *cone, *disk;
 };
 
 
