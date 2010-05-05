@@ -34,7 +34,7 @@ LIBRARIES := ${addprefix $(libdir)/,$(ARCHIVES)}
 
 # Phony targets for directing make
 .PHONY: all check clean mostlyclean tests
-all: $(OBJECTS) $(BINARIES)
+all: $(OBJECTS)
 check: 
 	@echo "  SOURCES  = $(SOURCES)"
 	@echo "  OBJECTS  = $(OBJECTS)"
