@@ -7,9 +7,7 @@
 #include "Matrix.hpp"
 
 
-/**
- * Creates the identity matrix.
- */
+/** Creates the identity matrix. */
 Matrix::Matrix() {
 	
 	// Initialize
@@ -24,40 +22,31 @@ Matrix::Matrix() {
 }
 
 
-/**
- * Creates a matrix from several values.
- */
+/** Creates a matrix from several values. */
 Matrix::Matrix(float a0, float a1, float a2, float a3,
                float b0, float b1, float b2, float b3,
                float c0, float c1, float c2, float c3,
                float d0, float d1, float d2, float d3) {
 	
-	// Set sizes
+	// Set size
 	size = 4;
 	
 	// Set positions
-	arr[0][0] = a0;
-	arr[0][1] = a1;
-	arr[0][2] = a2;
-	arr[0][3] = a3;
-	arr[1][0] = b0;
-	arr[1][1] = b1;
-	arr[1][2] = b2;
-	arr[1][3] = b3;
-	arr[2][0] = c0;
-	arr[2][1] = c1;
-	arr[2][2] = c2;
-	arr[2][3] = c3;
-	arr[3][0] = d0;
-	arr[3][1] = d1;
-	arr[3][2] = d2;
-	arr[3][3] = d3;
+	arr[0][0] = a0; arr[0][1] = a1; arr[0][2] = a2; arr[0][3] = a3;
+	arr[1][0] = b0; arr[1][1] = b1; arr[1][2] = b2; arr[1][3] = b3;
+	arr[2][0] = c0; arr[2][1] = c1; arr[2][2] = c2; arr[2][3] = c3;
+	arr[3][0] = d0; arr[3][1] = d1; arr[3][2] = d2; arr[3][3] = d3;
 }
 
 
-/**
- * Calculate the determinant of a part of the matrix.
- */
+/** Creates an uninitialized matrix */
+Matrix::Matrix(int size) {
+	
+	this->size = size;
+}
+
+
+/** Calculate the determinant of a part of the matrix. */
 float Matrix::det(int n) const {
 	
 	float po, rec, ret=0;
@@ -81,32 +70,21 @@ float Matrix::det(int n) const {
 }
 
 
-/**
- * Calculate the determinant of the entire matrix.
- */
-float Matrix::getDeterminant() const {
-	
-	return det(getRows());
-}
-
-
-/**
- * Get the inverse of this matrix.
- */
+/** Get the inverse of this matrix. */
 Matrix Matrix::getInverse() const {
 	
-	float ds, dm, po;
+	float dmInv, ds, po;
 	Matrix b;
 	
 	// Get determinant of entire matrix
-	dm = getDeterminant();
+	dmInv = 1 / getDeterminant();
 	
 	// Calculate
 	for (int i=0; i<size; ++i) {
 		for (int j=0; j<size; ++j) {
 			po = pow(-1, i+j);
 			ds = getSubmatrix(j,i).getDeterminant();
-			b(i,j) = po * ds / dm;
+			b.arr[i][j] = po * ds * dmInv;
 		}
 	}
 	
@@ -116,11 +94,8 @@ Matrix Matrix::getInverse() const {
 }
 
 
-/**
- * Returns a new matrix with row i and column j deleted.
- */
-Matrix Matrix::getSubmatrix(int i,
-                            int j) const {
+/** @return a new matrix with row i and column j deleted. */
+Matrix Matrix::getSubmatrix(int i, int j) const {
 	
 	int bi=0, bj=0;
 	Matrix b;
@@ -145,28 +120,22 @@ Matrix Matrix::getSubmatrix(int i,
 }
 
 
+/** @return matrix with rows and columns switched. */
 Matrix Matrix::getTranspose() const {
 	
-	Matrix B;
+	Matrix B(3);
 	
-	B.size = 3;
 	for (int i=0; i<3; ++i) {
 		for (int j=0; j<3; ++j) {
-			B(i,j) = arr[j][i];
+			B.arr[i][j] = arr[j][i];
 		}
 	}
 	return B;
 }
 
 
-/**
- * Returns one of the elements in the matrix.
- * 
- * @param i Row of the element.
- * @param j Column of the element.
- */
-float& Matrix::operator()(int i,
-                          int j) {
+/** Returns one of the elements in the matrix. */
+float& Matrix::operator()(int i, int j) {
 	
 	if (i < 0 || i >= size)
 		throw Exception("[Matrix] Index out of bounds.");
@@ -176,14 +145,8 @@ float& Matrix::operator()(int i,
 }
 
 
-/**
- * Returns one of the elements in the matrix.
- * 
- * @param i Row of the element.
- * @param j Column of the element.
- */
-float Matrix::operator()(int i,
-                         int j) const {
+/** Returns one of the elements in the matrix. */
+float Matrix::operator()(int i, int j) const {
 	
 	if (i < 0 || i >= size)
 		throw Exception("[Matrix] Index out of bounds.");
@@ -193,43 +156,25 @@ float Matrix::operator()(int i,
 }
 
 
-/**
- * Multiplies two matrices together.
- * 
- * @note Currently the Matrix class is fixed as a 4x4 matrix, but if it was not 
- * and matrices could have variables sizes, Matrix A needs to have the same 
- * number of columns as Matrix B has rows.
- */
-Matrix operator*(const Matrix &A,
-                 const Matrix &B) {
+/** Multiplies two matrices together. */
+Matrix operator*(const Matrix &A, const Matrix &B) {
 	
-	Matrix C;
-	
-	// Check if matrices can't be multiplied
-	if (A.getColumns() != B.getRows())
-		throw Exception("[Matrix] Matrices cannot be multiplied.");
+	Matrix C(4);
 	
 	// Multiply rows of A with columns in B
-	for (int i=0; i<C.getRows(); ++i) {
-		for (int j=0; j<C.getColumns(); ++j) {
-			C(i,j) = 0.0;
-			for (int k=0; k<A.getColumns(); ++k)
-				C(i,j) += A(i,k) * B(k,j);
+	for (int i=0; i<C.size; ++i) {
+		for (int j=0; j<C.size; ++j) {
+			C.arr[i][j] = 0.0;
+			for (int k=0; k<A.size; ++k)
+				C.arr[i][j] += A.arr[i][k] * B.arr[k][j];
 		}
 	}
 	return C;
 }
 
 
-/**
- * Multiplies a matrix with a vector.
- * 
- * Currently the Matrix class is fixed as a 4x4 matrix, but if it was not and 
- * matrices could have variables sizes, Matrix a needs to have the same number 
- * of columns as Matrix b has rows.
- */
-Vector operator*(const Matrix &A,
-                 const Vector &B) {
+/** Multiplies a matrix with a vector.*/
+Vector operator*(const Matrix &A, const Vector &B) {
 	
 	Vector C;
 	
@@ -237,15 +182,13 @@ Vector operator*(const Matrix &A,
 	for (int i=0; i<C.size; ++i) {
 		C[i] = 0.0;
 		for (int k=0; k<C.size; ++k)
-			C[i] += A(i,k) * B[k];
+			C[i] += A.arr[i][k] * B[k];
 	}
 	return C;
 }
 
 
-/**
- * Prints the matrix out.
- */
+/** Pretty prints the matrix to standard out. */
 void Matrix::print() {
 	
 	// Print all entries
@@ -264,11 +207,7 @@ void Matrix::print() {
 }
 
 
-/**
- * Sets the Matrix from values in the array.
- * 
- * @param array 4x4 matrix in single-subscript array in column-major order.
- */
+/** Sets the Matrix from values in the array (column-major order). */
 void Matrix::set(float array[16]) {
 	
 	for (int j=0; j<4; j++)
@@ -277,14 +216,12 @@ void Matrix::set(float array[16]) {
 }
 
 
-/**
- * Puts the matrix into a single-subscript array.  Column-major order.
- */
+/** Puts the matrix into a single-subscript array (column-major order). */
 void Matrix::toArray(float *array) {
 	
 	for (int j=0; j<size; ++j)
 		for (int i=0; i<size; ++i)
-			array[j*size+i] = this->get(i,j);
+			array[j*size+i] = (*this)(i,j);
 }
 
 

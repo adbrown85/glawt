@@ -14,10 +14,12 @@ public:
 	void setUp();
 	void testDeterminant();
 	void testInverse();
+	void testInverseTime();
+	void testMultiplyTime();
 	void testSetFromArray();
 	void testTranspose();
-	void testMultiplyOperatorTime();
 	void testVectorMultiply();
+	void testVectorMultiplyTime();
 private:
 	float TOLERANCE, ITERATIONS;
 	Matrix m1, m2, m3;
@@ -65,20 +67,30 @@ void MatrixTest::testInverse() {
 	}
 }
 
-void MatrixTest::testTranspose() {
+void MatrixTest::testInverseTime() {
 	
-	cout << "\nTesting transpose..." << endl;
-	m3 = m1.getTranspose();
-	m3.print();
+	clock_t beg, end;
+	
+	cout << "\nTesting inverse time..." << endl;
+	beg = clock();
+	for (int i=0; i<ITERATIONS; ++i)
+		m1.getInverse();
+	end = clock();
+	cout << "  " << (end-beg) << " clocks." << endl;
+	cout << "  " << ((double)end-beg) / CLOCKS_PER_SEC << " seconds." << endl;
 }
 
-void MatrixTest::testVectorMultiply() {
+void MatrixTest::testMultiplyTime() {
 	
-	Vector v1(1.0, 1.0, 1.0, 1.0), v2;
+	clock_t beg, end;
 	
-	cout << "\nTesting Vector multiply..." << endl;
-	v2 = m2 * v1;
-	cout << "  " << v2 << endl;
+	cout << "\nTesting operator* time..." << endl;
+	beg = clock();
+	for (int i=0; i<ITERATIONS; ++i)
+		m1 * m2;
+	end = clock();
+	cout << "  " << (end-beg) << " clocks." << endl;
+	cout << "  " << ((double)end-beg) / CLOCKS_PER_SEC << " seconds." << endl;
 }
 
 void MatrixTest::testSetFromArray() {
@@ -98,14 +110,31 @@ void MatrixTest::testSetFromArray() {
 	}
 }
 
-void MatrixTest::testMultiplyOperatorTime() {
+void MatrixTest::testTranspose() {
+	
+	cout << "\nTesting transpose..." << endl;
+	m3 = m1.getTranspose();
+	m3.print();
+}
+
+void MatrixTest::testVectorMultiply() {
+	
+	Vector v1(1.0, 1.0, 1.0, 1.0), v2;
+	
+	cout << "\nTesting Vector multiply..." << endl;
+	v2 = m2 * v1;
+	cout << "  " << v2 << endl;
+}
+
+void MatrixTest::testVectorMultiplyTime() {
 	
 	clock_t beg, end;
+	Vector v;
 	
-	cout << "\nTesting operator* time..." << endl;
+	cout << "\nTesting vector multiply time..." << endl;
 	beg = clock();
 	for (int i=0; i<ITERATIONS; ++i)
-		m1 * m2;
+		m1 * v;
 	end = clock();
 	cout << "  " << (end-beg) << " clocks." << endl;
 	cout << "  " << ((double)end-beg) / CLOCKS_PER_SEC << " seconds." << endl;
@@ -130,7 +159,9 @@ int main() {
 	test.testTranspose();
 	test.testVectorMultiply();
 	test.testSetFromArray();
-	test.testMultiplyOperatorTime();
+	test.testMultiplyTime();
+	test.testVectorMultiplyTime();
+	test.testInverseTime();
 	
 	// Finish
 	cout << endl;
