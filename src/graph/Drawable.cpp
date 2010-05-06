@@ -18,6 +18,8 @@ Drawable::Drawable(const Tag &tag) : Node(tag) {
 	this->visible = true;
 	if (!tag.get("size", size, false))
 		size = 1.0;
+	if (!tag.get("selectable", selectable, false))
+		selectable = true;
 }
 
 
@@ -29,7 +31,8 @@ string Drawable::toString() const {
 	stream << Identifiable::toString();
 	stream << " visible='" << (visible?'T':'F') << "'"
 	       << " size='" << size << "'"
-	       << " selected='" << (selected?'T':'F') << "'";
+	       << " selected='" << (selected?'T':'F') << "'"
+	       << " selectable='" << (selectable?'T':'F') << "'";
 	return stream.str();
 }
 

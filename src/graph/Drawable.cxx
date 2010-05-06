@@ -50,6 +50,8 @@ void DrawableTest::testSetVisible() {
 		cout << "  " << *items[i] << endl;
 	}
 	
+	cout << "  ---------------------" << endl;
+	
 	// Hide
 	cout << "Hiding..." << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
@@ -72,7 +74,7 @@ void DrawableTest::testSetSize() {
 
 void DrawableTest::testToggleVisible() {
 	
-	cout << "Toggling..." << endl;
+	cout << "\nToggling..." << endl;
 	for (int j=0; j<3; ++j) {
 		if (j != 0)
 			cout << "  ---------------------" << endl;
@@ -82,9 +84,6 @@ void DrawableTest::testToggleVisible() {
 		}
 	}
 }
-
-
-
 
 
 int main() {

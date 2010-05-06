@@ -37,13 +37,13 @@ public:
 	virtual void toggleVisible();
 	virtual string toString() const;
 protected:
-	bool selected, visible;
+	bool selectable, selected, visible;
 	float size;
 };
 
 
 inline float Drawable::getSize() const {return size;}
-inline bool Drawable::isSelectable() const {return true;}
+inline bool Drawable::isSelectable() const {return selectable;}
 inline bool Drawable::isSelected() const {return selected;}
 inline bool Drawable::isVisible() const {return visible;}
 inline void Drawable::setSelected(bool selected) {this->selected = selected;}
