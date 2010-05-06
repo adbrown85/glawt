@@ -10,6 +10,11 @@
 /** Adds a single item to the selection. */
 void Selection::add(Drawable *item) {
 	
+	// Make sure selectable and visible
+	if (!item->isSelectable() || !item->isVisible())
+		return;
+	
+	// Select it
 	item->setSelected(true);
 	items.insert(item);
 }
@@ -21,7 +26,7 @@ void Selection::addAll(Node *node) {
 	Node::iterator it;
 	Drawable *drawable;
 	
-	// Add item if selectable
+	// Add item if drawable
 	if ((drawable = dynamic_cast<Drawable*>(node)))
 		add(drawable);
 	
