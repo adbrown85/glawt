@@ -142,9 +142,7 @@ void Cube::initCoords3d() {
 }
 
 
-/**
- * Initializes the indices used to draw the box's faces.
- */
+/** Initializes the indices used to draw the box's faces. */
 void Cube::initIndices() {
 	
 	// Copy to class
@@ -153,19 +151,37 @@ void Cube::initIndices() {
 }
 
 
-/**
- * Determines which points correspond to the standard eight points of a cube.
+/** Determines which points correspond to the standard 8 points of a cube.
+ *
+ * <pre>
+ *       front        left                  top
+ *     1-------0        8-------+        18-----19
+ *    /|      /|       /|      /|       /|      /|
+ *   +-------+ |      9-------+ |      17-----16 |
+ *   | 2-----|-3      | 11----|-+      | +-----|-+
+ *   |/      |/       |/      |/       |/      |/
+ *   +-------+        10------+        +-------+
+ * 
+ *     +-------+        +------13        +-------+
+ *    /|      /|       /|      /|       /|      /|
+ *   4-------5 |      +------12 |      +-------+ |
+ *   | +-----|-+      | +-----|14      | 23----|22
+ *   |/      |/       |/      |/       |/      |/
+ *   7-------6        +------15        20-----21
+ *      back                 right      bottom
+ * </pre>
  */
 void Cube::initMap() {
 	
-	GLubyte map[8][3] = {{1,  8, 18},
-	                     {0, 13, 19},
-	                     {2, 11, 23},
-	                     {3, 14, 22},
-	                     {4,  9, 17},
-	                     {5, 12, 16},
-	                     {7, 10, 20},
-	                     {6, 15, 21}};
+	                   // FB  LR  TB
+	GLubyte map[8][3] = {{ 1,  8, 18},   // 0 top-left (back)
+	                     { 0, 13, 19},   // 1 top-right (back)
+	                     { 2, 11, 23},   // 2 bottom-left (back)
+	                     { 3, 14, 22},   // 3 bottom-right (back)
+	                     { 4,  9, 17},   // 4 top-left (front)
+	                     { 5, 12, 16},   // 5 top-right (front)
+	                     { 7, 10, 20},   // 6 bottom-left (front)
+	                     { 6, 15, 21}};  // 7 bottom-right (front)
 	
 	// Copy to class
 	for (int i=0; i<8; ++i)
@@ -195,19 +211,27 @@ void Cube::initNormals() {
 }
 
 
-/**
- * Initializes the %Cube class's static points array.
+/** Initializes the %Cube class's static points array.
+ * 
+ * <pre>
+ *     0-------1
+ *    /|      /|
+ *   4-------5 |
+ *   | 2-----|-3
+ *   |/      |/
+ *   6-------7
+ * </pre>
  */
 void Cube::initPoints() {
 	
-	GLfloat points[8][3] = {{-0.5, +0.5, +0.5},
-	                        {+0.5, +0.5, +0.5},
-	                        {-0.5, -0.5, +0.5},
-	                        {+0.5, -0.5, +0.5},
-	                        {-0.5, +0.5, -0.5},
-	                        {+0.5, +0.5, -0.5},
-	                        {-0.5, -0.5, -0.5},
-	                        {+0.5, -0.5, -0.5}};
+	GLfloat points[8][3] = {{-0.5, +0.5, +0.5},   // 0 top-left (back)
+	                        {+0.5, +0.5, +0.5},   // 1 top-right (back)
+	                        {-0.5, -0.5, +0.5},   // 2 bottom-left (back)
+	                        {+0.5, -0.5, +0.5},   // 3 bottom-right (back)
+	                        {-0.5, +0.5, -0.5},   // 4 top-left (front)
+	                        {+0.5, +0.5, -0.5},   // 5 top-right (front)
+	                        {-0.5, -0.5, -0.5},   // 6 bottom-left (front)
+	                        {+0.5, -0.5, -0.5}};  // 7 bottom-right (front)
 	int m;
 	
 	// Copy to class
