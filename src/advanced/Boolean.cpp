@@ -52,12 +52,13 @@ void Boolean::associate() {
 /** Calculates the operation. */
 void Boolean::finalize() {
 	
-	calculate();
+	// Initialize
+	initBuffers();
+	initIndices();
 	
 	// Make the shape
-	initPoints();
-	initIndices();
-	initBuffers();
+	calculate();
+	updateData();
 }
 
 
@@ -75,14 +76,8 @@ void Boolean::calculate() {
 	calculate(group);
 	glPopMatrix();
 	
-	// Check if tangible
-	cout << "Upper: " << upper << endl;
-	cout << "Lower: " << lower << endl;
-	if (min(upper,lower) == lower) {
-		tangible = true;
-	} else {
-		tangible = false;
-	}
+	// If tangible update the data
+	tangible = (min(upper,lower) == lower);
 }
 
 
@@ -209,18 +204,16 @@ void Boolean::findTransforms() {
 }
 
 
-/** Initializes the vertex buffers from the points and elements arrays. */
+/** Creates the vertex buffers for the points and elements arrays. */
 void Boolean::initBuffers() {
 	
 	// Points
 	glGenBuffers(1, &dataBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 	
 	// Indices
 	glGenBuffers(1, &indicesBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
 
@@ -228,64 +221,65 @@ void Boolean::initBuffers() {
  *
  * <pre>
  *       front        left                  top
- *     1-------0        8-------+        18-----19
+ *     +-------+        9-------+        17-----16
  *    /|      /|       /|      /|       /|      /|
- *   +-------+ |      9-------+ |      17-----16 |
- *   | 2-----|-3      | 11----|-+      | +-----|-+
+ *   1-------0 |      8-------+ |      18-----19 |
+ *   | +-----|-+      | 10----|-+      | +-----|-+
  *   |/      |/       |/      |/       |/      |/
- *   +-------+        10------+        +-------+
+ *   2-------3        11------+        +-------+
  * 
- *     +-------+        +------13        +-------+
+ *     4-------5        +------12        +-------+
  *    /|      /|       /|      /|       /|      /|
- *   4-------5 |      +------12 |      +-------+ |
- *   | +-----|-+      | +-----|14      | 23----|22
+ *   +-------+ |      +------13 |      +-------+ |
+ *   | 7-----|-6      | +-----|15      | 22----|23
  *   |/      |/       |/      |/       |/      |/
- *   7-------6        +------15        20-----21
+ *   +-------+        +------14        21-----20
  *      back                 right      bottom
  * </pre>
  */
 void Boolean::initIndices() {
 	
 	int v;
-	GLubyte map[8][3] = {{1,  8, 18},
-	                     {0, 13, 19},
-	                     {2, 11, 23},
-	                     {3, 14, 22},
-	                     {4,  9, 17},
-	                     {5, 12, 16},
-	                     {7, 10, 20},
-	                     {6, 15, 21}};
+	GLubyte map[8][3] = {{2, 11, 21},   // 0 bottom-left-front
+	                     {3, 14, 20},   // 1 bottom-right-front
+	                     {1,  8, 18},   // 2 top-left-front
+	                     {0, 13, 19},   // 3 top-right-front
+	                     {7, 10, 22},   // 4 bottom-left-back
+	                     {6, 15, 23},   // 5 bottom-right-back
+	                     {4,  9, 17},   // 6 top-left-back
+	                     {5, 12, 16}};  // 7 top-right-back
 	
 	for (int i=0; i<8; ++i) {
 		for (int j=0; j<3; ++j) {
 			v = map[i][j];
-			this->indices[v] = i;
+			indices[v] = i;
 		}
 	}
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
 
 /** Initializes the points array used in the vertex buffer.
  * 
  * <pre>
- *     0-------1
+ *     6-------7
  *    /|      /|
- *   4-------5 |
- *   | 2-----|-3
+ *   2-------3 |
+ *   | 4-----|-5
  *   |/      |/
- *   6-------7
+ *   0-------1
  * </pre>
  */
 void Boolean::initPoints() {
 	
-	GLfloat points[8][3] = {{-0.5, +0.5, +0.5},   // 0 top-left (back)
-	                        {+0.5, +0.5, +0.5},   // 1 top-right (back)
-	                        {-0.5, -0.5, +0.5},   // 2 bottom-left (back)
-	                        {+0.5, -0.5, +0.5},   // 3 bottom-right (back)
-	                        {-0.5, +0.5, -0.5},   // 4 top-left (front)
-	                        {+0.5, +0.5, -0.5},   // 5 top-right (front)
-	                        {-0.5, -0.5, -0.5},   // 6 bottom-left (front)
-	                        {+0.5, -0.5, -0.5}};  // 7 bottom-right (front)
+	GLfloat points[8][3] = {{-0.5, -0.5, +0.5},   // 0 bottom-left-front
+	                        {+0.5, -0.5, +0.5},   // 1 bottom-right-front
+	                        {-0.5, +0.5, +0.5},   // 2 top-left-front
+	                        {+0.5, +0.5, +0.5},   // 3 top-right-front
+	                        {-0.5, -0.5, -0.5},   // 4 bottom-left-back
+	                        {+0.5, -0.5, -0.5},   // 5 bottom-right-back
+	                        {-0.5, +0.5, -0.5},   // 6 top-left-back
+	                        {+0.5, +0.5, -0.5}};  // 7 top-right-back
 	
 	for (int i=0; i<8; ++i) {
 		for (int j=0; j<8; ++j) {
@@ -299,6 +293,7 @@ void Boolean::initPoints() {
 void Boolean::nodeUpdated() {
 	
 	calculate();
+	updateData();
 }
 
 
@@ -311,5 +306,38 @@ string Boolean::toString() const {
 	stream << " operation='" << operation << "'"
 	       << " of='" << of << "'";
 	return stream.str();
+}
+
+
+/** Updates the points array used in the vertex buffer.
+ * 
+ * <pre>
+ *     6-------7
+ *    /|      /|
+ *   2-------3 |
+ *   | 4-----|-5
+ *   |/      |/
+ *   0-------1
+ * </pre>
+ */
+void Boolean::updateData() {
+	
+	// Stop if not tangible
+	if (!tangible)
+		return;
+	
+	// Update points
+	points[0][0] = lower.x; points[0][1] = lower.y; points[0][2] = upper.z;
+	points[1][0] = upper.x; points[1][1] = lower.y; points[1][2] = upper.z;
+	points[2][0] = lower.x; points[2][1] = upper.y; points[2][2] = upper.z;
+	points[3][0] = upper.x; points[3][1] = upper.y; points[3][2] = upper.z;
+	points[4][0] = lower.x; points[4][1] = lower.y; points[4][2] = lower.z;
+	points[5][0] = upper.x; points[5][1] = lower.y; points[5][2] = lower.z;
+	points[6][0] = lower.x; points[6][1] = upper.y; points[6][2] = lower.z;
+	points[7][0] = upper.x; points[7][1] = upper.y; points[7][2] = lower.z;
+	
+	// Send to buffer
+	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_DYNAMIC_DRAW);
 }
 

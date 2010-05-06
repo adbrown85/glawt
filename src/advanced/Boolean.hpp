@@ -29,8 +29,8 @@ class Boolean : public Shape,
 public:
 	Boolean(const Tag &tag);
 	virtual void associate();
-	virtual void finalize();
 	virtual void draw() const;
+	virtual void finalize();
 	virtual void nodeUpdated();
 	virtual string toString() const;
 protected:
@@ -42,6 +42,7 @@ protected:
 	void initIndices();
 	void initPoints();
 	void initBuffers();
+	void updateData();
 private:
 	bool tangible;
 	GLuint dataBuffer, indicesBuffer;

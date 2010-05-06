@@ -9,20 +9,28 @@
 <group name="cubes">
 	<translate x="-2">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<uniform type="vec4" name="Color" value="1 0 1 1" />
 		<cube />
 	</translate>
 	<translate x="+2">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<uniform type="vec4" name="Color" value="0 1 1 1" />
 		<cube />
 	</translate>
 </group>
 
 
-
 <program>
-	<shader file="../../glsl/outline.vert" />
-	<shader file="../../glsl/outline.frag" />
+	<shader file="../../glsl/color.vert" />
+	<shader file="../../glsl/color.frag" />
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-	<boolean operation="AND" of="cubes" />
+	<uniform type="vec4" name="Color" value="1 1 1 1" />
+	<boolean operation="AND" of="cubes" selectable="false" />
+</program>
+<program>
+	<shader file="../../glsl/wireframe.vert" />
+	<shader file="../../glsl/wireframe.frag" />
+	<wireframe>
 	<instance of="cubes" />
+	</wireframe>
 </program>
