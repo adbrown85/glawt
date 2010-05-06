@@ -20,8 +20,9 @@
 
 
 <program>
-	<shader file="../../glsl/coordinates.vert" />
-	<shader file="../../glsl/coordinates.frag" />
+	<shader file="../../glsl/outline.vert" />
+	<shader file="../../glsl/outline.frag" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 	<boolean operation="AND" of="cubes" />
 	<instance of="cubes" />
 </program>

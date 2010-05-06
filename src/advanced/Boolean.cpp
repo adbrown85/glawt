@@ -53,6 +53,11 @@ void Boolean::associate() {
 void Boolean::finalize() {
 	
 	calculate();
+	
+	// Make the shape
+	initPoints();
+	initIndices();
+	initBuffers();
 }
 
 
@@ -70,13 +75,13 @@ void Boolean::calculate() {
 	calculate(group);
 	glPopMatrix();
 	
-	// Print
+	// Check if tangible
 	cout << "Upper: " << upper << endl;
 	cout << "Lower: " << lower << endl;
 	if (min(upper,lower) == lower) {
-		cout << "Intersection!" << endl;
+		tangible = true;
 	} else {
-		cout << "No intersection." << endl;
+		tangible = false;
 	}
 }
 
@@ -114,43 +119,30 @@ void Boolean::calculate(Node *node) {
 }
 
 
-/**
- * To perform the boolean operation for cubes we first need to find the 
- * positions of their minimum and maximum bounding corners.  Basically that 
- * means for each shape we multiply the model matrix by [-0.5,-0.5,-0.5] and 
- * [+0.5,+0.5,+0.5].  Of course, that means traversing from the start of group 
- * and applying each transformation.  Then when a shape is found we do the 
- * multiplications and compare them to the current ones.
- * 
- * A big problem however is how do you apply the transformations.  Currently 
- * they just call the corresponding OpenGL functions, so they operate directly 
- * on the OpenGL ModelView matrix itself.
- * 
- * One way to do this as is would be to push the modelview matrix and load the 
- * identity before starting.  Then apply each of the transformations 
- * normally.  When a shape is found retrieve a Matrix object using 
- * Transform::getModelViewMatrix() and do the multiplications.
- * 
- * Another way to approach the problem is to have the transformations override 
- * an applyTo(Matrix&) method.  Then for each transformation you would just 
- * pass the current matrix to it and it would perform the mathematical 
- * calculation for it.  There would have to be a corresponding 
- * removeFrom(Matrix&) method though, which is where it starts to get a little 
- * hairy.  We could make the method pass a stack<Matrix>& instead.  That way 
- * you wouldn't have to worry about the inversion.
- * 
- * A third solution might be to implement two new classes.  The first would be 
- * a MatrixStack class that replicates the OpenGL matrix behavior but with my 
- * regular Matrix class and an STL stack.  Then a new Root class would hold 
- * one of those and provide some methods for accessing it.  That way all the 
- * transformations and uniforms could find it and perform their required 
- * operations very easily.
- * 
- * The first might be the quickest solution right now but the last seems like 
- * the best long term.
- */
+/** Draws the boolean shape. */
 void Boolean::draw() const {
 	
+	// Stop if not tangible
+	if (!tangible)
+		return;
+	
+	// Enable buffer
+	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
+	
+	// Enable attributes
+	glEnableVertexAttribArray(POINT_LOCATION);
+	glVertexAttribPointer(POINT_LOCATION, 3, GL_FLOAT, false, 0, (void*)0);
+	
+	// Draw
+	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, 0);
+	
+	// Disable attributes
+	glDisableVertexAttribArray(POINT_LOCATION);
+	
+	// Disable buffers
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 
@@ -213,6 +205,92 @@ void Boolean::findTransforms() {
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
+	}
+}
+
+
+/** Initializes the vertex buffers from the points and elements arrays. */
+void Boolean::initBuffers() {
+	
+	// Points
+	glGenBuffers(1, &dataBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+	
+	// Indices
+	glGenBuffers(1, &indicesBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+}
+
+
+/** Initializes the elements array used in the vertex buffer.
+ *
+ * <pre>
+ *       front        left                  top
+ *     1-------0        8-------+        18-----19
+ *    /|      /|       /|      /|       /|      /|
+ *   +-------+ |      9-------+ |      17-----16 |
+ *   | 2-----|-3      | 11----|-+      | +-----|-+
+ *   |/      |/       |/      |/       |/      |/
+ *   +-------+        10------+        +-------+
+ * 
+ *     +-------+        +------13        +-------+
+ *    /|      /|       /|      /|       /|      /|
+ *   4-------5 |      +------12 |      +-------+ |
+ *   | +-----|-+      | +-----|14      | 23----|22
+ *   |/      |/       |/      |/       |/      |/
+ *   7-------6        +------15        20-----21
+ *      back                 right      bottom
+ * </pre>
+ */
+void Boolean::initIndices() {
+	
+	int v;
+	GLubyte map[8][3] = {{1,  8, 18},
+	                     {0, 13, 19},
+	                     {2, 11, 23},
+	                     {3, 14, 22},
+	                     {4,  9, 17},
+	                     {5, 12, 16},
+	                     {7, 10, 20},
+	                     {6, 15, 21}};
+	
+	for (int i=0; i<8; ++i) {
+		for (int j=0; j<3; ++j) {
+			v = map[i][j];
+			this->indices[v] = i;
+		}
+	}
+}
+
+
+/** Initializes the points array used in the vertex buffer.
+ * 
+ * <pre>
+ *     0-------1
+ *    /|      /|
+ *   4-------5 |
+ *   | 2-----|-3
+ *   |/      |/
+ *   6-------7
+ * </pre>
+ */
+void Boolean::initPoints() {
+	
+	GLfloat points[8][3] = {{-0.5, +0.5, +0.5},   // 0 top-left (back)
+	                        {+0.5, +0.5, +0.5},   // 1 top-right (back)
+	                        {-0.5, -0.5, +0.5},   // 2 bottom-left (back)
+	                        {+0.5, -0.5, +0.5},   // 3 bottom-right (back)
+	                        {-0.5, +0.5, -0.5},   // 4 top-left (front)
+	                        {+0.5, +0.5, -0.5},   // 5 top-right (front)
+	                        {-0.5, -0.5, -0.5},   // 6 bottom-left (front)
+	                        {+0.5, -0.5, -0.5}};  // 7 bottom-right (front)
+	
+	for (int i=0; i<8; ++i) {
+		for (int j=0; j<8; ++j) {
+			this->points[i][j] = points[i][j];
+		}
 	}
 }
 

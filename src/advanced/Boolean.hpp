@@ -39,7 +39,14 @@ protected:
 	void findGroup();
 	void findShapes();
 	void findTransforms();
+	void initIndices();
+	void initPoints();
+	void initBuffers();
 private:
+	bool tangible;
+	GLuint dataBuffer, indicesBuffer;
+	GLfloat points[8][3];
+	GLshort indices[24];
 	Group *group;
 	list<Shape*> shapes;
 	Matrix mvm;
