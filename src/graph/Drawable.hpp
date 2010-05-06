@@ -28,6 +28,7 @@ public:
 	virtual void draw() const = 0;
 	virtual float getSize() const;
 	virtual bool isVisible() const;
+	virtual bool isSelectable() const;
 	virtual bool isSelected() const;
 	virtual void setSelected(bool selected);
 	virtual void setSize(float size);
@@ -42,6 +43,7 @@ protected:
 
 
 inline float Drawable::getSize() const {return size;}
+inline bool Drawable::isSelectable() const {return true;}
 inline bool Drawable::isSelected() const {return selected;}
 inline bool Drawable::isVisible() const {return visible;}
 inline void Drawable::setSelected(bool selected) {this->selected = selected;}
