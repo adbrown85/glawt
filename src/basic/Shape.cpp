@@ -7,8 +7,7 @@
 #include "Shape.hpp"
 
 
-/**
- * Creates a shape from an XML tag.
+/** Creates a shape from an XML tag.
  * 
  * @param tag XML tag with "size" attribute.
  * @throws NodeException if <i>style</i> not supported.
@@ -34,8 +33,7 @@ Shape::Shape(const Tag &tag) : Drawable(tag) {
 }
 
 
-/**
- * Finds a program to bind the shape's vertex attributes to.
+/** Finds a program to bind the shape's vertex attributes to.
  * 
  * @throws NodeException if a program cannot be found.
  */
@@ -51,9 +49,7 @@ void Shape::associate() {
 }
 
 
-/**
- * @warning if a location for the shape's points are not found.
- */
+/** Prints a warning if a location for points are not found. */
 void Shape::finalize() {
 	
 	GLint location;
@@ -68,9 +64,7 @@ void Shape::finalize() {
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Shape::toString() const {
 	
 	ostringstream stream;
