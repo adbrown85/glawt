@@ -1,0 +1,15 @@
+<!--
+ * color.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="color.vert" />
+	<shader file="color.frag" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="vec4" name="Color" value="0 0 1 1" />
+	<cube />
+</program>
