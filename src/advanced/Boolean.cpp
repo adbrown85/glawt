@@ -129,6 +129,7 @@ void Boolean::findShapes() {
 }
 
 
+/** Find texture unit that corresponds with the texture coordinates. */
 UniformSampler* Boolean::findSampler(Shape *shape) {
 	
 	Node::iterator it;

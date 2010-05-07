@@ -40,8 +40,10 @@ void BooleanTest::keyboard(unsigned char key, int x, int y) {
 		instance->move(Vector(0,+0.1,0,0)); break;
 	case 'S':
 		instance->move(Vector(0,-0.1,0,0)); break;
+	case '<':
 	case ',':
 		instance->move(Vector(0,0,-0.1,0)); break;
+	case '>':
 	case '.':
 		instance->move(Vector(0,0,+0.1,0)); break;
 	case 'P':
