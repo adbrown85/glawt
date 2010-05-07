@@ -38,6 +38,7 @@ public:
 	iterator begin();
 	static bool compare(Node *A, Node *B);
 	static void destroy(Node *node);
+	void erase(iterator it);
 	iterator end();
 	virtual void finalize() {}
 	virtual void finalizeAfter() {}
@@ -66,6 +67,7 @@ inline bool Node::areChildrenFinalizedAfter() const {return true;}
 inline bool Node::areChildrenPrintable() const {return true;}
 inline Node::iterator Node::begin() {return children.begin();}
 inline Node::iterator Node::end() {return children.end();}
+inline void Node::erase(Node::iterator it) {children.erase(it);}
 inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
