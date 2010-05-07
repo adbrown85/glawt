@@ -66,8 +66,6 @@ private:
 	GLfloat points[8][3], coords0[8][3], coords1[8][3];
 	GLshort indices[24];
 	Group *group;
-	//list<Shape*> shapes;
-	//map<Shape*,Matrix> inverses;
 	map<Shape*,Extent> extents;
 	map<int,Coordinates> units;
 	Matrix mvm;
