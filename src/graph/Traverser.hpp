@@ -14,10 +14,13 @@
 #include "Scene.hpp"
 #include "Applicable.hpp"          // Apply modifications to scene
 #include "Drawable.hpp"            // Drawing items in scene
-#include "Selectable.hpp"          // Drawing manipulators for selection
 using namespace std;
 
 
+/**
+ * @ingroup graph
+ * @brief Utility to walk through nodes that consolidates rules.
+ */
 class Traverser {
 public:
 	Traverser(Scene *scene);

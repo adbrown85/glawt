@@ -19,7 +19,6 @@
 #include "Matrix.hpp"              // Rotating camera
 #include "Node.hpp"                // Traversing the scene graph
 #include "Program.hpp"             // Disable GLSL for outlines
-#include "Selectable.hpp"          // Drawing manipulators for selection
 #include "Texture.hpp"             // Pausing and restarting texturing
 #include "Transformation.hpp"      // Drawing manipulators for selection
 #include "Traverser.hpp"

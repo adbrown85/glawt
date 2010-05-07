@@ -13,7 +13,6 @@
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Node.hpp"
-#include "Selectable.hpp"
 #include "Selection.hpp"
 #include "Scene.hpp"
 #include "Translation.hpp"
