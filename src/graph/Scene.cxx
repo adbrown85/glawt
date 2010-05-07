@@ -39,7 +39,7 @@ public:
 class FakeGroup: public FakeNode {
 public:
 	FakeGroup(const Tag &tag) : FakeNode(tag) {}
-	virtual bool isSealed() const {return true;}
+	virtual bool areChildrenPreparable() const {return false;}
 };
 class FakeInstance: public FakeNode {
 public:

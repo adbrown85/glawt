@@ -57,7 +57,7 @@ void Traverser::traverseChildren(Node *node) {
 	Node::iterator it;
 	
 	// Stop if sealed
-	if (node->isSealed())
+	if (!node->areChildrenTraversable())
 		return;
 	
 	// Traverse each child

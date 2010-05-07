@@ -27,7 +27,7 @@ void Scene::associate(Node *node) {
 	Node::iterator it;
 	
 	// Check if sealed
-	if (node->isSealed())
+	if (!node->areChildrenPreparable())
 		return;
 	
 	// Finalize nodes in correct order
@@ -47,7 +47,7 @@ void Scene::finalize(Node *node) {
 	Node::iterator it;
 	
 	// Check if sealed
-	if (node->isSealed())
+	if (!node->areChildrenPreparable())
 		return;
 	
 	// Finalize nodes in correct order

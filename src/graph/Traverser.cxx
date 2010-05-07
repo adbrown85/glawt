@@ -36,7 +36,7 @@ public:
 class FakeSealed : public Node {
 public:
 	FakeSealed(const Tag &tag) : Node(tag) {name = tag.getName();}
-	virtual bool isSealed() const {return true;}
+	virtual bool areChildrenTraversable() const {return false;}
 	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };

@@ -30,9 +30,9 @@ public:
 	virtual ~Node() {};
 	void addChild(Node *child);
 	virtual bool areChildrenDestroyable() const;
+	virtual bool areChildrenPreparable() const;
 	virtual bool areChildrenPrintable() const;
-	virtual bool areChildrenAssociatedAfter() const;
-	virtual bool areChildrenFinalizedAfter() const;
+	virtual bool areChildrenTraversable() const;
 	virtual void associate() {}
 	virtual void associateAfter() {}
 	iterator begin();
@@ -48,7 +48,6 @@ public:
 	float getDepth() const;
 	Node* getParent() const;
 	bool hasChildren() const;
-	virtual bool isSealed() const;
 	friend ostream& operator<<(ostream &stream, const Node &node);
 	void setDepth(float depth);
 	void setParent(Node *parent);
@@ -61,10 +60,10 @@ protected:
 };
 
 
-inline bool Node::areChildrenAssociatedAfter() const {return true;}
 inline bool Node::areChildrenDestroyable() const {return true;}
-inline bool Node::areChildrenFinalizedAfter() const {return true;}
+inline bool Node::areChildrenPreparable() const {return true;}
 inline bool Node::areChildrenPrintable() const {return true;}
+inline bool Node::areChildrenTraversable() const {return true;}
 inline Node::iterator Node::begin() {return children.begin();}
 inline Node::iterator Node::end() {return children.end();}
 inline void Node::erase(Node::iterator it) {children.erase(it);}
@@ -72,7 +71,6 @@ inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
 inline bool Node::hasChildren() const {return !children.empty();}
-inline bool Node::isSealed() const {return false;}
 inline void Node::setDepth(float depth) {this->depth = depth;}
 inline void Node::setParent(Node *parent) {this->parent = parent;}
 
