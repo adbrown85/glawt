@@ -28,6 +28,7 @@ public:
 	Translation(const Tag &tag);
 	void add(const Vector &B);
 	virtual void apply();
+	static Translation* find(Node *node);
 	virtual void remove();
 	virtual string toString() const;
 protected:

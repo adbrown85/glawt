@@ -45,6 +45,22 @@ void Translation::apply() {
 }
 
 
+Translation* Translation::find(Node *node) {
+	
+	Node *curr;
+	Translation *translation;
+	
+	curr = node->getParent();
+	while (curr != NULL) {
+		translation = dynamic_cast<Translation*>(curr);
+		if (translation != NULL)
+			return translation;
+		curr = curr->getParent();
+	}
+	return NULL;
+}
+
+
 /**
  * Add the translation to the matrix before sorting.
  */
