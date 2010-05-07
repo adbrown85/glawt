@@ -49,68 +49,13 @@ void Boolean::associate() {
 }
 
 
-/** Calculates the operation. */
+/** Creates the shape. */
 void Boolean::finalize() {
 	
 	// Initialize
 	initBuffers();
 	initIndices();
-	
-	// Make the shape
-	calculate();
-	updatePoints();
-	updateCoords();
-}
-
-
-/** Traverse a subtree and modify extent using each shape. */
-void Boolean::calculate() {
-	
-	// Reset
-	upper = Vector(+FLT_INF);
-	lower = Vector(-FLT_INF);
-	inverses.clear();
-	
-	// Calculate
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	calculate(group);
-	glPopMatrix();
-	
-	// Check if tangible
-	tangible = (min(upper,lower) == lower);
-}
-
-
-/** Traverse a subtree and modify extent using each shape. */
-void Boolean::calculate(Node *node) {
-	
-	Node::iterator it;
-	Transformation *transform;
-	Shape *shape;
-	
-	// Apply and remove transform nodes
-	if ((transform = dynamic_cast<Transformation*>(node))) {
-		transform->apply();
-		for (it=transform->begin(); it!=transform->end(); ++it)
-			calculate(*it);
-		transform->remove();
-	}
-	
-	// Update shapes
-	else if ((shape = dynamic_cast<Shape*>(node))) {
-		mvm = Transform::getModelViewMatrix();
-		upper = min(mvm*Vector(+0.5,+0.5,+0.5,1.0), upper);
-		lower = max(mvm*Vector(-0.5,-0.5,-0.5,1.0), lower);
-		inverses[shape] = mvm.getInverse();
-	}
-	
-	// Just do children
-	else {
-		for (it=node->begin(); it!=node->end(); ++it)
-			calculate(*it);
-	}
+	nodeUpdated();
 }
 
 
@@ -156,29 +101,45 @@ void Boolean::findGroup() {
 /** @throws NodeException if no shapes are in group. */
 void Boolean::findShapes() {
 	
+	int count;
 	Node *node;
 	Node::iterator it;
 	queue<Node*> q;
 	Shape *shape;
 	
 	// Search subtree under group for shapes
+	count = 0;
 	q.push(group);
 	while (!q.empty()) {
 		node = q.front();
 		shape = dynamic_cast<Shape*>(node);
 		if (shape != NULL)
-			shapes.push_back(shape);
+			++count;
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
 	}
 	
 	// Check
-	if (shapes.empty()) {
+	if (count == 0) {
 		NodeException e(tag);
 		e << "[Boolean] No shapes found in group.";
 		throw e;
 	}
+}
+
+
+UniformSampler* Boolean::findSampler(Shape *shape) {
+	
+	Node::iterator it;
+	UniformSampler *sampler;
+	
+	for (it=shape->begin(); it!=shape->end(); ++it) {
+		sampler = dynamic_cast<UniformSampler*>(*it);
+		if (sampler != NULL)
+			return sampler;
+	}
+	return NULL;
 }
 
 
@@ -288,47 +249,99 @@ void Boolean::initPoints() {
 }
 
 
-/** One of the transforms was updated. */
-void Boolean::nodeUpdated() {
-	
-	calculate();
-	updatePoints();
-	updateCoords();
-}
-
-
 /** @return string representing the node. */
 string Boolean::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Shape::toString();
+	stream << getClassName();
 	stream << " operation='" << operation << "'"
 	       << " of='" << of << "'";
 	return stream.str();
 }
 
 
+/** Boolean shape is not correct and must be recalculated. */
+void Boolean::update() {
+	
+	updateExtents();
+	updateUpperLower();
+	updateTangible();
+	if (tangible) {
+		updatePoints();
+		updateCoords();
+	}
+}
+
+
 /** Updates the texture coordinates in the vertex buffer. */
 void Boolean::updateCoords() {
 	
-	int id;
-	map<Shape*,Matrix>::iterator it;
-	Vector v;
-	map<string,Vector*> vectors;
-	map<string,Vector*>::iterator vi;
+	Coordinates coords;
+	map<Shape*,Extent>::iterator it;
+	UniformSampler *sampler;
 	
-	if (!tangible)
-		return;
+	// Calculate texture coords
+	for (it=extents.begin(); it!=extents.end(); ++it) {
+		sampler = findSampler(it->first);
+		coords.upper = (upper - it->second.lower) / it->second.diagonal;
+		coords.upper.z = 1.0 - coords.upper.z;
+		coords.lower = (lower - it->second.lower) / it->second.diagonal;
+		coords.lower.z = 1.0 - coords.lower.z;
+		units[sampler->getValue()] = coords;
+	}
 	
-	vectors["lower"] = &lower;
-	vectors["upper"] = &upper;
-	for (it=inverses.begin(); it!=inverses.end(); ++it) {
-		for (vi=vectors.begin(); vi!=vectors.end(); ++vi) {
-			id = it->first->getID();
-			v = it->second*(*vi->second) + Vector(0.5,0.5,0.5,0);
-			v.z = 1.0 - v.z;
-			cout << id << " " << vi->first << ":" << v << endl;
+	// Print
+	map<int,Coordinates>::iterator ui;
+	for (ui=units.begin(); ui!=units.end(); ++ui) {
+		cout << ui->first << ": "
+		     << ui->second.lower << " - "
+		     << ui->second.upper << endl;
+	}
+}
+
+
+/** Traverse the group and calculate extents for each shape. */
+void Boolean::updateExtents() {
+	
+	// Collect extents of shapes in group
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	updateExtents(group);
+	glPopMatrix();
+}
+
+
+/** Traverse a subtree and calculate extents for each shape. */
+void Boolean::updateExtents(Node *node) {
+	
+	Node::iterator it;
+	Transformation *transform;
+	Shape *shape;
+	
+	// Apply and remove transform nodes
+	if ((transform = dynamic_cast<Transformation*>(node))) {
+		transform->apply();
+		for (it=transform->begin(); it!=transform->end(); ++it)
+			updateExtents(*it);
+		transform->remove();
+	}
+	
+	// Store shapes with extents
+	else if ((shape = dynamic_cast<Shape*>(node))) {
+		Extent extent;
+		mvm = Transform::getModelViewMatrix();
+		extent.upper = mvm * Vector(+0.5,+0.5,+0.5,1.0);
+		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
+		extent.diagonal = extent.upper - extent.lower;
+		extents[shape] = extent;
+	}
+	
+	// Just do children
+	else {
+		for (it=node->begin(); it!=node->end(); ++it) {
+			updateExtents(*it);
 		}
 	}
 }
@@ -347,10 +360,6 @@ void Boolean::updateCoords() {
  */
 void Boolean::updatePoints() {
 	
-	// Stop if not tangible
-	if (!tangible)
-		return;
-	
 	// Update points
 	points[0][0] = lower.x; points[0][1] = lower.y; points[0][2] = upper.z;
 	points[1][0] = upper.x; points[1][1] = lower.y; points[1][2] = upper.z;
@@ -364,5 +373,27 @@ void Boolean::updatePoints() {
 	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_DYNAMIC_DRAW);
+}
+
+
+/** Checks that the shape formed by the operation can be shown. */
+void Boolean::updateTangible() {
+	
+	tangible = (min(upper,lower) == lower);
+}
+
+
+/** Find the extent of the boolean operation. */
+void Boolean::updateUpperLower() {
+	
+	map<Shape*,Extent>::iterator it;
+	
+	// Form shape
+	upper = Vector(+FLT_INF);
+	lower = Vector(-FLT_INF);
+	for (it=extents.begin(); it!=extents.end(); ++it) {
+		upper = min(upper, it->second.upper);
+		lower = max(lower, it->second.lower);
+	}
 }
 
