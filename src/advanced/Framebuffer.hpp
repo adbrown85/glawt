@@ -26,7 +26,7 @@ public :
 	~Framebuffer();
 	virtual bool areChildrenSelectable();
 	virtual void apply();
-	static void find(Node *node, Framebuffer *&pointer);
+	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
 	static bool isActive();
 	virtual void remove();

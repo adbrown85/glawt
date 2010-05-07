@@ -8,8 +8,7 @@
 bool Framebuffer::active=false;
 
 
-/**
- * Creates a new %Framebuffer from an XML tag.
+/** Creates a new %Framebuffer from an XML tag.
  * 
  * @param tag XML tag.
  */
@@ -19,8 +18,7 @@ Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
 }
 
 
-/**
- * Deletes the %Framebuffer.
+/** Deletes the %Framebuffer.
  */
 Framebuffer::~Framebuffer() {
 	
@@ -29,8 +27,7 @@ Framebuffer::~Framebuffer() {
 }
 
 
-/**
- * Binds the %Framebuffer.
+/** Binds the %Framebuffer.
  */
 void Framebuffer::apply() {
 	
@@ -44,8 +41,7 @@ void Framebuffer::apply() {
 }
 
 
-/**
- * Generates the %Framebuffer in OpenGL and binds it.
+/** Generates the %Framebuffer in OpenGL and binds it.
  */
 void Framebuffer::associate() {
 	
@@ -55,28 +51,28 @@ void Framebuffer::associate() {
 }
 
 
-/**
- * Finds a %Framebuffer.
+/** Finds a %Framebuffer.
  * 
  * @param node Node to start looking.
- * @param pointer Pointer to the %Framebuffer.
+ * @return pointer Pointer to the %Framebuffer.
  */
-void Framebuffer::find(Node *node,
-                       Framebuffer *&pointer) {
+Framebuffer* Framebuffer::find(Node *node) {
+	
+	Framebuffer *ptr;
 	
 	// Search
 	node = node->getParent();
 	while (node != NULL) {
-		pointer = dynamic_cast<Framebuffer*>(node);
-		if (pointer != NULL)
-			break;
+		ptr = dynamic_cast<Framebuffer*>(node);
+		if (ptr != NULL)
+			return ptr;
 		node = node->getParent();
 	}
+	return NULL;
 }
 
 
-/**
- * Unbinds the %Framebuffer.
+/** Unbinds the %Framebuffer.
  */
 void Framebuffer::remove() {
 	
@@ -88,8 +84,7 @@ void Framebuffer::remove() {
 }
 
 
-/**
- * Forms a string from the framebuffer's attributes.
+/** Forms a string from the framebuffer's attributes.
  */
 string Framebuffer::toString() const {
 	

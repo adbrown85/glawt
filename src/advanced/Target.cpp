@@ -7,8 +7,7 @@
 #include "Target.hpp"
 
 
-/**
- * Creates a new %Target from an XML tag.
+/** Creates a new %Target from an XML tag.
  * 
  * @param tag XML tag with "link" attribute.
  */
@@ -19,8 +18,7 @@ Target::Target(const Tag &tag) : Node(tag) {
 }
 
 
-/**
- * Finds the texture to use for the color buffer.
+/** Finds the texture to use for the color buffer.
  * 
  * @throws NodeException if cannot find framebuffer node.
  * @throws NodeException if cannot find texture with correct name.
@@ -31,7 +29,7 @@ void Target::associate() {
 	Texture2D *texture;
 	
 	// Find the framebuffer
-	Framebuffer::find(this, framebuffer);
+	framebuffer = Framebuffer::find(this);
 	if (framebuffer == NULL) {
 		NodeException e(tag);
 		e << "[Target] Could not find framebuffer.";
@@ -51,8 +49,7 @@ void Target::associate() {
 }
 
 
-/**
- * Attaches the target to the Framebuffer.
+/** Attaches the target to the Framebuffer.
  * 
  * @throws NodeException if Framebuffer is not complete.
  */
@@ -77,8 +74,7 @@ void Target::finalize() {
 }
 
 
-/**
- * Forms a string from the Target's attributes.
+/** Forms a string from the Target's attributes.
  */
 string Target::toString() const {
 	
