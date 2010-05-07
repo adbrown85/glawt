@@ -1,11 +1,11 @@
 /*
- * Translation.hpp
+ * Translate.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TRANSLATION_HPP
-#define TRANSLATION_HPP
+#ifndef TRANSLATE_HPP
+#define TRANSLATE_HPP
 #include <cstdlib>
 #include <GL/glut.h>
 #include <iostream>
@@ -22,13 +22,13 @@ using namespace std;
  * @ingroup basic
  * @brief %Node that moves items in the scene.
  */
-class Translation : public Transformation,
-                    public Vector {
+class Translate : public Transformation,
+                  public Vector {
 public:
-	Translation(const Tag &tag);
+	Translate(const Tag &tag);
 	void add(const Vector &B);
 	virtual void apply();
-	static Translation* find(Node *node);
+	static Translate* find(Node *node);
 	virtual void remove();
 	virtual string toString() const;
 protected:

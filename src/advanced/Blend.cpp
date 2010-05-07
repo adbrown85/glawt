@@ -22,11 +22,11 @@ void Blend::apply() {
 void Blend::associate() {
 	
 	vector<Node*>::iterator it;
-	Translation *translate;
+	Translate *translate;
 	
 	// Store each translate node for sorting later
 	for (it=children.begin(); it!=children.end(); ++it) {
-		translate = dynamic_cast<Translation*>(*it);
+		translate = dynamic_cast<Translate*>(*it);
 		if (translate != NULL) {
 			translates.push_back(translate);
 		}
@@ -36,7 +36,7 @@ void Blend::associate() {
 
 void Blend::sortChildren() {
 	
-	list<Translation*>::iterator it;
+	list<Translate*>::iterator it;
 	Matrix rotation;
 	Vector position;
 	

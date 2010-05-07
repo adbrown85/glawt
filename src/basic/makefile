@@ -37,4 +37,4 @@ Shape.o: Program.o
 
 # Transforms
 Scale.o: Transformation.hpp
-Translation.o: Transformation.hpp
+Translate.o: Transformation.hpp

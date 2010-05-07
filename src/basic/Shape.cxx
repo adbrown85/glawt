@@ -7,7 +7,7 @@
 #include <ctime>
 #include <iostream>
 #include "Shape.hpp"
-#include "Translation.hpp"
+#include "Translate.hpp"
 #define NUMBER_OF_ITEMS 4
 using namespace std;
 

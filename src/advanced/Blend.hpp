@@ -14,7 +14,7 @@
 #include <GL/glut.h>
 #include "Applicable.hpp"
 #include "Tag.hpp"
-#include "Translation.hpp"
+#include "Translate.hpp"
 #include "Window.hpp"
 using namespace std;
 
@@ -28,7 +28,7 @@ public:
 protected:
 	void sortChildren();
 private:
-	list<Translation*> translates;
+	list<Translate*> translates;
 };
 
 

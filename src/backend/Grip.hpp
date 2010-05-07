@@ -15,7 +15,7 @@
 #include "Node.hpp"
 #include "Selection.hpp"
 #include "Scene.hpp"
-#include "Translation.hpp"
+#include "Translate.hpp"
 #include "Vector.hpp"
 using namespace std;
 
@@ -27,7 +27,7 @@ using namespace std;
 class Grip : public Delegate {
 public :
 	Grip();
-	static Translation* findTranslation(Node *node);
+	static Translate* findTranslate(Node *node);
 	static void rotate(Scene *scene, int cmd, float argument);
 	static void scale(Scene *scene, int cmd, float argument);
 	static void translate(Scene *scene, int cmd, float argument);

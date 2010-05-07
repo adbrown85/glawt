@@ -1,19 +1,17 @@
 /*
- * Translation.cxx
+ * Translate.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include <ctime>
-#include "Translation.hpp"
+#include "Translate.hpp"
 #include "BasicFactory.hpp"
 #include "Tester.hpp"
 #include "Window.hpp"
 
 
-/**
- * Unit test for Translation.
- */
+/** Unit test for Translate. */
 int main(int argc,
          char *argv[]) {
 	
@@ -22,7 +20,7 @@ int main(int argc,
 	
 	// Start
 	Tester::init(argc, argv);
-	Tester::open("Translation.xml");
+	Tester::open("Translate.xml");
 	Tester::start();
 	
 	// Finish

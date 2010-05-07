@@ -1,18 +1,17 @@
 /*
- * Translation.cpp
+ * Translate.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Translation.hpp"
+#include "Translate.hpp"
 
 
-/**
- * Creates a new %Translation from an XML tag.
+/** Creates a new %Translate from an XML tag.
  * 
  * @param tag XML tag with "x", "y", and "z" values.
  */
-Translation::Translation(const Tag &tag) : Transformation(tag) {
+Translate::Translate(const Tag &tag) : Transformation(tag) {
 	
 	// Initialize
 	tag.get("x", x, false);
@@ -21,10 +20,8 @@ Translation::Translation(const Tag &tag) : Transformation(tag) {
 }
 
 
-/**
- * Adds a vector to this translation.
- */
-void Translation::add(const Vector &B) {
+/** Adds a vector to this translation. */
+void Translate::add(const Vector &B) {
 	
 	// Add components
 	x += B.x;
@@ -34,10 +31,8 @@ void Translation::add(const Vector &B) {
 }
 
 
-/**
- * Performs the translation.
- */
-void Translation::apply() {
+/** Performs the translation. */
+void Translate::apply() {
 	
 	// Translate
 	glPushMatrix();
@@ -45,26 +40,25 @@ void Translation::apply() {
 }
 
 
-Translation* Translation::find(Node *node) {
+/** Finds a translate node above another. */
+Translate* Translate::find(Node *node) {
 	
 	Node *curr;
-	Translation *translation;
+	Translate *translate;
 	
 	curr = node->getParent();
 	while (curr != NULL) {
-		translation = dynamic_cast<Translation*>(curr);
-		if (translation != NULL)
-			return translation;
+		translate = dynamic_cast<Translate*>(curr);
+		if (translate != NULL)
+			return translate;
 		curr = curr->getParent();
 	}
 	return NULL;
 }
 
 
-/**
- * Add the translation to the matrix before sorting.
- */
-void Translation::sortByDepthBeg(Matrix &matrix) {
+/** Add the translate to the matrix before sorting. */
+void Translate::sortByDepthBeg(Matrix &matrix) {
 	
 	Matrix transMatrix(1.0, 0.0, 0.0,  +x,
 	                   0.0, 1.0, 0.0,  +y,
@@ -76,10 +70,8 @@ void Translation::sortByDepthBeg(Matrix &matrix) {
 }
 
 
-/**
- * Remove the translation from the matrix after sorting.
- */
-void Translation::sortByDepthEnd(Matrix &matrix) {
+/** Remove the translation from the matrix after sorting. */
+void Translate::sortByDepthEnd(Matrix &matrix) {
 	
 	Matrix transMatrix(1.0, 0.0, 0.0,  -x,
 	                   0.0, 1.0, 0.0,  -y,
@@ -91,20 +83,16 @@ void Translation::sortByDepthEnd(Matrix &matrix) {
 }
 
 
-/**
- * Restores transformation that was in effect before Translation was applied.
- */
-void Translation::remove() {
+/** Restores transformation that was in effect before translate was applied. */
+void Translate::remove() {
 	
 	// Restore
 	glPopMatrix();
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
-string Translation::toString() const {
+/** Forms a string from the object's attributes. */
+string Translate::toString() const {
 	
 	ostringstream stream;
 	

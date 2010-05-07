@@ -18,7 +18,7 @@
 #include "Scene.hpp"
 #include "Selection.hpp"
 #include "Shape.hpp"
-#include "Translation.hpp"
+#include "Translate.hpp"
 #include "Vector.hpp"
 #include "Window.hpp"
 using namespace std;

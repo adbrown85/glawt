@@ -89,7 +89,7 @@ Node* BasicFactory::createTexture(const Tag &tag) {
 
 Node* BasicFactory::createTranslate(const Tag &tag) {
 	
-	return new Translation(tag);
+	return new Translate(tag);
 }
 
 

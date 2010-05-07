@@ -62,14 +62,14 @@ void BooleanTest::keyboard(unsigned char key, int x, int y) {
 
 void BooleanTest::move(const Vector &movement) {
 	
-	Translation *translate;
+	Translate *translate;
 	
 	// Nothing selected
 	if (shape == NULL)
 		return;
 	
 	// Alter translate
-	translate = Translation::find(shape);
+	translate = Translate::find(shape);
 	if (translate != NULL) {
 		translate->add(movement);
 	}
