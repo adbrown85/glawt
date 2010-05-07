@@ -1,32 +1,32 @@
 /*
- * Boolean.cxx
+ * BooleanAnd.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Boolean.hpp"
+#include "BooleanAnd.hpp"
 #include "Tester.hpp"
 #include "AdvancedFactory.hpp"
 
 
-class BooleanTest {
+class BooleanAndTest {
 public:
-	BooleanTest() {instance = this; shape = NULL;}
+	BooleanAndTest() {instance = this; shape = NULL;}
 	static void keyboard(unsigned char key, int x, int y);
 	void move(const Vector &movement);
 	void setScene(Scene *scene) {this->scene = scene;}
 protected:
 	void select(int id);
 private:
-	static BooleanTest *instance;
+	static BooleanAndTest *instance;
 	Scene *scene;
 	Shape *shape;
 };
-BooleanTest *BooleanTest::instance;
+BooleanAndTest *BooleanAndTest::instance;
 
 
 
-void BooleanTest::keyboard(unsigned char key, int x, int y) {
+void BooleanAndTest::keyboard(unsigned char key, int x, int y) {
 	
 	switch (toupper(key)) {
 	case '1':
@@ -60,7 +60,7 @@ void BooleanTest::keyboard(unsigned char key, int x, int y) {
 }
 
 
-void BooleanTest::move(const Vector &movement) {
+void BooleanAndTest::move(const Vector &movement) {
 	
 	Translate *translate;
 	
@@ -77,7 +77,7 @@ void BooleanTest::move(const Vector &movement) {
 }
 
 
-void BooleanTest::select(int id) {
+void BooleanAndTest::select(int id) {
 	
 	int i;
 	Node::iterator it;
@@ -113,16 +113,16 @@ void BooleanTest::select(int id) {
 int main(int argc,
          char *argv[]) {
 	
-	BooleanTest test;
+	BooleanAndTest test;
 	
 	// Initialize
 	Tester::init(argc, argv);
 	AdvancedFactory::install();
-	Tester::open("Boolean.xml");
+	Tester::open("BooleanAnd.xml");
 	
 	// Start
 	test.setScene(Tester::getScene());
-	Window::setKeyboard(&BooleanTest::keyboard);
+	Window::setKeyboard(&BooleanAndTest::keyboard);
 	Tester::start();
 	
 	// Finish

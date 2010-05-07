@@ -41,7 +41,7 @@ class Boolean : public Shape,
 public:
 	Boolean(const Tag &tag);
 	virtual void associate();
-	virtual void draw() const;
+	virtual void draw() const = 0;
 	virtual void finalize();
 	virtual void nodeUpdated();
 	virtual string toString() const;
@@ -51,20 +51,18 @@ protected:
 	void findShapes();
 	void findTransforms();
 	void initBuffers();
-	void initIndices();
-	void initPoints();
+	virtual void initIndices() = 0;
+	virtual void initPoints() = 0;
 	void update();
 	void updateExtents();
 	void updateExtents(Node *node);
-	void updateCoords();
-	void updatePoints();
-	void updateTangible();
+	virtual void updateCoords() = 0;
+	virtual void updatePoints() = 0;
+	virtual void updateTangible() = 0;
 	void updateUpperLower();
-private:
+protected:
 	bool tangible;
 	GLuint dataBuffer, indicesBuffer;
-	GLfloat points[8][3], coords0[8][3], coords1[8][3];
-	GLshort indices[24];
 	Group *group;
 	map<Shape*,Extent> extents;
 	map<int,Coordinates> units;

@@ -36,9 +36,19 @@ Node* AdvancedFactory::createBlend(const Tag &tag) {
 }
 
 
+/** @throws NodeException if boolean operation not supported. */
 Node* AdvancedFactory::createBoolean(const Tag &tag) {
 	
-	return new Boolean(tag);
+	string operation;
+	
+	tag.get("operation", operation);
+	if (operation == "and") {
+		return new BooleanAnd(tag);
+	} else {
+		NodeException e(tag);
+		e << "[AdvancedFactory] Boolean operation not supported.";
+		throw e;
+	}
 }
 
 

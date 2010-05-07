@@ -12,6 +12,7 @@
 #include "Factory.hpp"
 #include "BasicFactory.hpp"
 #include "Boolean.hpp"
+#include "BooleanAnd.hpp"
 #include "Blend.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
