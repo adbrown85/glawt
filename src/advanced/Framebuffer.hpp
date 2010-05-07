@@ -24,9 +24,9 @@ class Framebuffer : public Applicable {
 public :
 	Framebuffer(const Tag &tag);
 	~Framebuffer();
+	virtual bool areChildrenSelectable();
 	virtual void apply();
-	static void find(Node *node,
-	                 Framebuffer *&pointer);
+	static void find(Node *node, Framebuffer *&pointer);
 	virtual GLuint getHandle() const;
 	static bool isActive();
 	virtual void remove();
@@ -39,15 +39,13 @@ private:
 };
 
 
-/**
- * @return true if a Framebuffer is active.
- */
+/** Disable trying to pick children drawn into a Framebuffer. */
+inline bool Framebuffer::areChildrenSelectable() {return false;}
+
+/** @return true if a Framebuffer is active. */
 inline bool Framebuffer::isActive() {return active;}
 
-
-/**
- * @return integer identifying the framebuffer with OpenGL.
- */
+/** @return integer identifying the framebuffer with OpenGL. */
 inline GLuint Framebuffer::getHandle() const {return handle;}
 
 

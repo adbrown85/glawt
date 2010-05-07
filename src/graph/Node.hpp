@@ -32,6 +32,7 @@ public:
 	virtual bool areChildrenDestroyable() const;
 	virtual bool areChildrenPreparable() const;
 	virtual bool areChildrenPrintable() const;
+	virtual bool areChildrenSelectable() const;
 	virtual bool areChildrenTraversable() const;
 	virtual void associate() {}
 	virtual void associateAfter() {}
@@ -63,6 +64,7 @@ protected:
 inline bool Node::areChildrenDestroyable() const {return true;}
 inline bool Node::areChildrenPreparable() const {return true;}
 inline bool Node::areChildrenPrintable() const {return true;}
+inline bool Node::areChildrenSelectable() const {return true;}
 inline bool Node::areChildrenTraversable() const {return true;}
 inline Node::iterator Node::begin() {return children.begin();}
 inline Node::iterator Node::end() {return children.end();}

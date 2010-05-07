@@ -25,10 +25,8 @@ Painter::Painter(Scene *scene,
 
 void Painter::onApplicable(Applicable *node) {
 	
-	Framebuffer *framebuffer;
-	
 	// Only continue if not a framebuffer node
-	if (mode == GL_SELECT && (framebuffer = dynamic_cast<Framebuffer*>(node)))
+	if (mode == GL_SELECT && !node->areChildrenSelectable())
 		return;
 	Traverser::onApplicable(node);
 }
