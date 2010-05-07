@@ -19,10 +19,15 @@ public:
 	UniformSampler(const Tag &tag);
 	virtual void associate();
 	virtual void apply();
+	virtual GLint getValue() const;
 	virtual string toString() const;
 private:
 	GLint value;
 };
+
+
+/** @return texture unit the sampler points to. */
+inline GLint UniformSampler::getValue() const {return value;}
 
 
 #endif
