@@ -58,7 +58,8 @@ void Boolean::finalize() {
 	
 	// Make the shape
 	calculate();
-	updateData();
+	updatePoints();
+	updateCoords();
 }
 
 
@@ -68,6 +69,7 @@ void Boolean::calculate() {
 	// Reset
 	upper = Vector(+FLT_INF);
 	lower = Vector(-FLT_INF);
+	inverses.clear();
 	
 	// Calculate
 	glMatrixMode(GL_MODELVIEW);
@@ -76,7 +78,7 @@ void Boolean::calculate() {
 	calculate(group);
 	glPopMatrix();
 	
-	// If tangible update the data
+	// Check if tangible
 	tangible = (min(upper,lower) == lower);
 }
 
@@ -87,7 +89,6 @@ void Boolean::calculate(Node *node) {
 	Node::iterator it;
 	Transformation *transform;
 	Shape *shape;
-	Vector v;
 	
 	// Apply and remove transform nodes
 	if ((transform = dynamic_cast<Transformation*>(node))) {
@@ -100,10 +101,9 @@ void Boolean::calculate(Node *node) {
 	// Update shapes
 	else if ((shape = dynamic_cast<Shape*>(node))) {
 		mvm = Transform::getModelViewMatrix();
-		v = mvm * Vector(+0.5,+0.5,+0.5,1.0);
-		upper = min(v, upper);
-		v = mvm * Vector(-0.5,-0.5,-0.5,1.0);
-		lower = max(v, lower);
+		upper = min(mvm*Vector(+0.5,+0.5,+0.5,1.0), upper);
+		lower = max(mvm*Vector(-0.5,-0.5,-0.5,1.0), lower);
+		inverses[shape] = mvm.getInverse();
 	}
 	
 	// Just do children
@@ -220,21 +220,20 @@ void Boolean::initBuffers() {
 /** Initializes the elements array used in the vertex buffer.
  *
  * <pre>
- *       front        left                  top
- *     +-------+        9-------+        17-----16
- *    /|      /|       /|      /|       /|      /|
- *   1-------0 |      8-------+ |      18-----19 |
- *   | +-----|-+      | 10----|-+      | +-----|-+
- *   |/      |/       |/      |/       |/      |/
- *   2-------3        11------+        +-------+
- * 
- *     4-------5        +------12        +-------+
- *    /|      /|       /|      /|       /|      /|
- *   +-------+ |      +------13 |      +-------+ |
- *   | 7-----|-6      | +-----|15      | 22----|23
- *   |/      |/       |/      |/       |/      |/
- *   +-------+        +------14        21-----20
- *      back                 right      bottom
+ *     +-------+            9-------+         17-----16
+ *    /|      /|           /|      /|        /|      /|  top
+ *   1-------0 |          8-------+ |       18-----19 |
+ *   | +-----|-+    left  | 10----|-+       | +-----|-+
+ *   |/      |/           |/      |/        |/      |/
+ *   2-------3            11------+         +-------+
+ *     front
+ *        back
+ *     4-------5        +------12             +-------+
+ *    /|      /|       /|      /|            /|      /|
+ *   +-------+ |      +------13 |  right    +-------+ |
+ *   | 7-----|-6      | +-----|15           | 22----|23
+ *   |/      |/       |/      |/            |/      |/  bottom
+ *   +-------+        +------14             21-----20
  * </pre>
  */
 void Boolean::initIndices() {
@@ -293,7 +292,8 @@ void Boolean::initPoints() {
 void Boolean::nodeUpdated() {
 	
 	calculate();
-	updateData();
+	updatePoints();
+	updateCoords();
 }
 
 
@@ -309,6 +309,31 @@ string Boolean::toString() const {
 }
 
 
+/** Updates the texture coordinates in the vertex buffer. */
+void Boolean::updateCoords() {
+	
+	int id;
+	map<Shape*,Matrix>::iterator it;
+	Vector v;
+	map<string,Vector*> vectors;
+	map<string,Vector*>::iterator vi;
+	
+	if (!tangible)
+		return;
+	
+	vectors["lower"] = &lower;
+	vectors["upper"] = &upper;
+	for (it=inverses.begin(); it!=inverses.end(); ++it) {
+		for (vi=vectors.begin(); vi!=vectors.end(); ++vi) {
+			id = it->first->getID();
+			v = it->second*(*vi->second) + Vector(0.5,0.5,0.5,0);
+			v.z = 1.0 - v.z;
+			cout << id << " " << vi->first << ":" << v << endl;
+		}
+	}
+}
+
+
 /** Updates the points array used in the vertex buffer.
  * 
  * <pre>
@@ -320,7 +345,7 @@ string Boolean::toString() const {
  *   0-------1
  * </pre>
  */
-void Boolean::updateData() {
+void Boolean::updatePoints() {
 	
 	// Stop if not tangible
 	if (!tangible)

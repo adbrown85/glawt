@@ -39,10 +39,11 @@ protected:
 	void findGroup();
 	void findShapes();
 	void findTransforms();
+	void initBuffers();
 	void initIndices();
 	void initPoints();
-	void initBuffers();
-	void updateData();
+	void updateCoords();
+	void updatePoints();
 private:
 	bool tangible;
 	GLuint dataBuffer, indicesBuffer;
@@ -50,6 +51,7 @@ private:
 	GLshort indices[24];
 	Group *group;
 	list<Shape*> shapes;
+	map<Shape*,Matrix> inverses;
 	Matrix mvm;
 	string of, operation;
 	static float FLT_INF;

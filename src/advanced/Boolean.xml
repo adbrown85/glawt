@@ -23,14 +23,17 @@
 <program>
 	<shader file="../../glsl/color.vert" />
 	<shader file="../../glsl/color.frag" />
+	
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 	<uniform type="vec4" name="Color" value="1 1 1 1" />
-	<boolean operation="AND" of="cubes" selectable="false" />
+	<wireframe>
+		<boolean operation="AND" of="cubes" selectable="false" />
+	</wireframe>
 </program>
 <program>
-	<shader file="../../glsl/wireframe.vert" />
-	<shader file="../../glsl/wireframe.frag" />
+	<shader file="../../glsl/color.vert" />
+	<shader file="../../glsl/color.frag" />
 	<wireframe>
-	<instance of="cubes" />
+		<instance of="cubes" />
 	</wireframe>
 </program>
