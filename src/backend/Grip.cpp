@@ -44,21 +44,6 @@ void Grip::scale(Scene *scene,
 }
 
 
-Translate* Grip::findTranslate(Node *node) {
-	
-	Node *currentNode=NULL;
-	
-	// Look for a Translate ancestor
-	currentNode = node->getParent();
-	while (currentNode != NULL) {
-		if (typeid(*currentNode) == typeid(Translate))
-			break;
-		currentNode = currentNode->getParent();
-	}
-	return static_cast<Translate*>(currentNode);
-}
-
-
 /** Translates the current selection. */
 void Grip::translate(Scene *scene,
                      int command,
@@ -88,7 +73,7 @@ void Grip::translate(Scene *scene,
 	for (it=selection.begin(); it!=selection.end(); ++it) {
 		node = dynamic_cast<Node*>(*it);
 		if (node != NULL) {
-			translation = findTranslate(node);
+			translation = Translate::find(node);
 			if (translation != NULL)
 				translation->add(change);
 		}

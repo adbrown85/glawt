@@ -27,7 +27,6 @@ using namespace std;
 class Grip : public Delegate {
 public :
 	Grip();
-	static Translate* findTranslate(Node *node);
 	static void rotate(Scene *scene, int cmd, float argument);
 	static void scale(Scene *scene, int cmd, float argument);
 	static void translate(Scene *scene, int cmd, float argument);
