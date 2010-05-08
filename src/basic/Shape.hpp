@@ -12,7 +12,6 @@
 #include <sstream>
 #include <string>
 #include <list>                         // For attributes
-#include <map>                          // For attributes
 #include "Matrix.hpp"
 #include "Program.hpp"
 #include "Drawable.hpp"
@@ -20,10 +19,18 @@
 using namespace std;
 
 
-/** Vertex attribute. */
-struct Attribute {
+/* Vertex attribute. */
+struct VertexAttribute {
 	string name;
 	GLint location, number;
+};
+
+/* Shape parameters. */
+struct ShapeTraits {
+	GLuint count;
+	list<string> attributes;
+	GLenum mode, usage;
+	void addAttribute(const string &name) {attributes.push_back(name);}
 };
 
 
@@ -50,25 +57,22 @@ struct Attribute {
  */
 class Shape : public Drawable {
 public:
-	Shape(const Tag &tag,
-	      GLuint count,
-	      list<string> attributes,
-	      GLenum mode,
-	      GLenum usage=GL_STATIC_DRAW);
+	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
-	virtual void initAttributeValues() = 0;
 protected:
+	virtual void initAttributes() = 0;
 	GLuint offset(int i) const;
 protected: 
-	list<Attribute> attributes;
+	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint buffer, count;
 	Program *program;
 };
 
 
+/** @return position in the buffer for the i'th attribute. */
 inline GLuint Shape::offset(int i) const {return i*count*3*sizeof(GLfloat);}
 
 #endif

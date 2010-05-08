@@ -16,7 +16,7 @@ GLushort Square::indices[4];
  * 
  * @param tag XML tag with "size" attribute.
  */
-Square::Square(const Tag &tag) : Shape(tag,4,getAttributes(),GL_QUADS) {
+Square::Square(const Tag &tag) : Shape(tag,getTraits()) {
 	
 	// Initialize vertices
 	if (!loaded) {
@@ -55,13 +55,17 @@ void Square::draw() const {
 }
 
 
-list<string> Square::getAttributes() {
+ShapeTraits Square::getTraits() {
 	
-	list<string> attributes;
-	attributes.push_back("MCVertex");
-	attributes.push_back("MCNormal");
-	attributes.push_back("TexCoord0");
-	return attributes;
+	ShapeTraits traits;
+	
+	traits.count = 4;
+	traits.mode = GL_QUADS;
+	traits.usage = GL_STATIC_DRAW;
+	traits.addAttribute("MCVertex");
+	traits.addAttribute("MCNormal");
+	traits.addAttribute("TexCoord0");
+	return traits;
 }
 
 

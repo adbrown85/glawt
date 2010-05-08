@@ -43,14 +43,15 @@ using namespace std;
  */
 class Hexahedron : public Shape {
 public:
-	Hexahedron(const Tag &tag);
-	static list<string> getAttributes();
-	virtual void initAttributeValues();
+	Hexahedron(const Tag &tag, ShapeTraits traits);
 protected:
-	virtual void load();
+	static ShapeTraits getTraits();
+	virtual void initAttributes();
 	virtual void initPoints();
 	virtual void initNormals();
 	virtual void initCoords() = 0;
+	static void load();
+	static void toArray(float array[8][3], const Vector &l, const Vector &u);
 protected:
 	static bool loaded;
 	static int indices[8][3];

@@ -19,7 +19,7 @@ using namespace std;
  */
 class Box : public Hexahedron {
 public:
-	Box(const Tag &tag) : Hexahedron(tag) {};
+	Box(const Tag &tag) : Hexahedron(tag,getTraits()) {};
 protected:
 	virtual void initCoords();
 };

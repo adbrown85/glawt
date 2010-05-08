@@ -10,31 +10,24 @@
 /** Creates a shape from an XML tag.
  * 
  * @param tag XML tag with attributes for Drawable.
- * @param count Number of vertices in the shape.
- * @param attributes List of generic vertex attributes.
- * @param mode GL_TRIANGLES or GL_QUADS.
- * @param usage GL_STATIC_DRAW or GL_DYNAMIC_DRAW.
+ * @param traits Structure of shape parameters.
  */
-Shape::Shape(const Tag &tag,
-             GLuint count,
-             list<string> attributes,
-             GLenum mode,
-             GLenum usage) : Drawable(tag) {
+Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 	
 	// Copy
-	this->count = count;
-	this->mode = mode;
-	this->usage = usage;
+	this->count = traits.count;
+	this->mode = traits.mode;
+	this->usage = traits.usage;
 	
 	// Store attributes
 	list<string>::iterator it;
 	int i=0;
-	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		Attribute attribute;
-		attribute.name = *it;
-		attribute.number = i;
-		attribute.location = i;
-		this->attributes.push_back(attribute);
+	for (it=traits.attributes.begin(); it!=traits.attributes.end(); ++it) {
+		VertexAttribute va;
+		va.name = *it;
+		va.number = i;
+		va.location = i;
+		this->attributes.push_back(va);
 		++i;
 	}
 }
@@ -59,7 +52,7 @@ void Shape::associate() {
 /** Renders the shape. */
 void Shape::draw() const {
 	
-	list<Attribute>::const_iterator it;
+	list<VertexAttribute>::const_iterator it;
 	
 	// Enable buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -97,12 +90,12 @@ void Shape::finalize() {
 	glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
 	
 	// Bind attributes
-	list<Attribute>::iterator it;
+	list<VertexAttribute>::iterator it;
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
 		program->setAttributeLocation(it->location, it->name);
 	}
 	
 	// Initialize attributes
-	initAttributeValues();
+	initAttributes();
 }
 
