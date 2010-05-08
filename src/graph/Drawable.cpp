@@ -28,7 +28,8 @@ string Drawable::toString() const {
 	stringstream stream;
 	
 	// Make string
-	stream << Identifiable::toString();
+	stream << Node::toString();
+	stream << " " << Identifiable::toString();
 	stream << " visible='" << (visible?'T':'F') << "'"
 	       << " size='" << size << "'"
 	       << " selected='" << (selected?'T':'F') << "'"
