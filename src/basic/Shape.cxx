@@ -14,9 +14,19 @@ using namespace std;
 
 class FakeShape : public Shape {
 public:
-	FakeShape(const Tag &tag) : Shape(tag) {}
+	FakeShape(const Tag &tag) : Shape(tag,24,getAttributes(),GL_QUADS) {}
+	static list<string> getAttributes();
 	virtual void draw() const {};
+	virtual void initAttributeValues() {};
 };
+
+list<string> FakeShape::getAttributes() {
+	
+	list<string> attributes;
+	
+	attributes.push_back("MCVertex");
+	return attributes;
+}
 
 
 int main() {

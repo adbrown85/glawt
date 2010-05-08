@@ -18,13 +18,6 @@ public:
 	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };
-class FakeSelectable : public Selectable {
-public: 
-	FakeSelectable(const Tag &tag) : Selectable(tag) {name = tag.getName();}
-	virtual void draw() const {cout << "  " << name << endl;}
-	virtual string toString() const {return Node::toString() + " " + name;}
-	string name;
-};
 class FakeApplicable : public Applicable {
 public:
 	FakeApplicable(const Tag &tag) : Applicable(tag) {name = tag.getName();}
