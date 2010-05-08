@@ -23,8 +23,10 @@ class Square : public Shape {
 public:
 	Square(const Tag &tag);
 	virtual void draw() const;
+	static list<string> getAttributes();
 protected:
-	virtual void initBuffers();
+	virtual void initAttributeValues() {};
+	virtual void initBuffer();
 	virtual void initCoords();
 	virtual void initIndices();
 	virtual void initNormals();

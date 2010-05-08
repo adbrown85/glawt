@@ -13,6 +13,7 @@
 #include <string>
 #include "Exception.hpp"
 #include "Factory.hpp"
+#include "Box.hpp"
 #include "Cube.hpp"
 #include "Program.hpp"
 #include "Scale.hpp"
@@ -36,6 +37,7 @@ using namespace std;
 class BasicFactory {
 public:
 	static void install();
+	static Node* createBox(const Tag &tag);
 	static Node* createCube(const Tag &tag);
 	static Node* createProgram(const Tag &tag);
 	static Node* createScale(const Tag &tag);

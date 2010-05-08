@@ -9,26 +9,33 @@
 
 /** Creates a shape from an XML tag.
  * 
- * @param tag XML tag with "size" attribute.
- * @throws NodeException if <i>style</i> not supported.
+ * @param tag XML tag with attributes for Drawable.
+ * @param count Number of vertices in the shape.
+ * @param attributes List of generic vertex attributes.
+ * @param mode GL_TRIANGLES or GL_QUADS.
+ * @param usage GL_STATIC_DRAW or GL_DYNAMIC_DRAW.
  */
-Shape::Shape(const Tag &tag) : Drawable(tag) {
+Shape::Shape(const Tag &tag,
+             GLuint count,
+             list<string> attributes,
+             GLenum mode,
+             GLenum usage) : Drawable(tag) {
 	
-	string style;
+	// Copy
+	this->count = count;
+	this->mode = mode;
+	this->usage = usage;
 	
-	// Style
-	if (tag.get("style", style, false)) {
-		if (style == "3d") {
-			this->style = GL_TEXTURE_3D;
-		} else if (style == "2d") {
-			this->style = GL_TEXTURE_2D;
-		} else {
-			NodeException e(tag);
-			e << "[Shape] Style '" << style << "' not supported.";
-			throw e;
-		}
-	} else {
-		this->style = GL_TEXTURE_3D;
+	// Store attributes
+	list<string>::iterator it;
+	int i=0;
+	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		Attribute attribute;
+		attribute.name = *it;
+		attribute.number = i;
+		attribute.location = i;
+		this->attributes.push_back(attribute);
+		++i;
 	}
 }
 
@@ -49,30 +56,53 @@ void Shape::associate() {
 }
 
 
-/** Prints a warning if a location for points are not found. */
-void Shape::finalize() {
+/** Renders the shape. */
+void Shape::draw() const {
 	
-	GLint location;
+	list<Attribute>::const_iterator it;
 	
-	// Check point location in program
-	location = program->getAttributeLocation(POINT_NAME);
-	if (location == -1) {
-		cerr << tag.getFilename() << ":" << tag.getLine() << ": ";
-		cerr << "[Shape] Could not find attribute location for '"
-		     << POINT_NAME << "'." << endl;
+	// Enable buffer
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	
+	// Enable attributes
+	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		glEnableVertexAttribArray(it->location);
+		glVertexAttribPointer(it->location,
+		                      3,
+		                      GL_FLOAT,
+		                      false,
+		                      0,
+		                      (void*)offset(it->number));
 	}
+	
+	// Draw
+	glDrawArrays(mode, 0, count);
+	
+	// Disable attributes
+	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		glDisableVertexAttribArray(it->location);
+	}
+	
+	// Disable buffer
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 
-/** Forms a string from the object's attributes. */
-string Shape::toString() const {
+/** Loads the vertex data into the vertex buffer so it's ready to render. */
+void Shape::finalize() {
 	
-	ostringstream stream;
+	// Initialize the buffer
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
 	
-	// Make stream
-	stream << Node::toString();
-	stream << " " << Drawable::toString();
-	stream << " style='" << (GL_TEXTURE_2D?"2D":"3D") << "'";
-	return stream.str();
+	// Bind attributes
+	list<Attribute>::iterator it;
+	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		program->setAttributeLocation(it->location, it->name);
+	}
+	
+	// Initialize attributes
+	initAttributeValues();
 }
 

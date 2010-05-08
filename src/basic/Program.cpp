@@ -8,11 +8,7 @@
 Program *Program::current=NULL;
 
 
-/**
- * Creates a new %Program from an XML tag.
- * 
- * @param tag XML tag.
- */
+/** Creates a new %Program from an XML tag. */
 Program::Program(const Tag& tag) : Applicable(tag) {
 	
 	handle = 0;
@@ -26,9 +22,7 @@ void Program::addCode(int handle,
 }
 
 
-/**
- * Installs the program into the current context.
- */
+/** Installs the program into the current context. */
 void Program::apply() {
 	
 	glUseProgram(handle);
@@ -43,14 +37,13 @@ void Program::associate() {
 	
 	// Create program
 	handle = glCreateProgram();
-	setAttributeLocation(POINT_LOCATION, POINT_NAME);
-	setAttributeLocation(NORMAL_LOCATION, NORMAL_NAME);
-	setAttributeLocation(COORD_LOCATION, COORD_NAME);
+	//setAttributeLocation(POINT_LOCATION, POINT_NAME);
+	//setAttributeLocation(NORMAL_LOCATION, NORMAL_NAME);
+	//setAttributeLocation(COORD_LOCATION, COORD_NAME);
 }
 
 
-/**
- * Links the program once other nodes have associated with it.
+/** Links the program once other nodes have associated with it.
  * 
  * @throw NodeException if the program cannot be linked.
  */
@@ -95,9 +88,7 @@ GLint Program::getAttributeLocation(const string &name) {
 }
 
 
-/**
- * Prints the log for this program.
- */
+/** Prints the log for this program. */
 void Program::log() const {
 	
 	GLchar *log;
@@ -117,9 +108,7 @@ void Program::log() const {
 }
 
 
-/**
- * Stops using the program.
- */
+/** Stops using the program. */
 void Program::remove() {
 	
 	// Restore fixed functionality
@@ -135,9 +124,7 @@ void Program::setAttributeLocation(GLuint index,
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Program::toString() const {
 	
 	ostringstream stream;

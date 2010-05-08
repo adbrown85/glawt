@@ -12,19 +12,13 @@
 using namespace std;
 
 
-/**
- * Fake class for testing Shape.
- */
 class FakeShape : public Shape {
 public:
 	FakeShape(const Tag &tag) : Shape(tag) {}
-	void draw() const {};
+	virtual void draw() const {};
 };
 
 
-/**
- * Unit test for Shape.
- */
 int main() {
 	
 	FakeShape *shape;

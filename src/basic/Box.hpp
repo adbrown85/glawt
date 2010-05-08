@@ -1,11 +1,11 @@
 /*
- * Cube.hpp
+ * Box.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CUBE_HPP
-#define CUBE_HPP
+#ifndef BOX_HPP
+#define BOX_HPP
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -15,11 +15,11 @@ using namespace std;
 
 /**
  * @ingroup basic
- * @brief Six-sided shape with 3D texture coordinates.
+ * @brief Six-sided shape with 2D texture coordinates for each face.
  */
-class Cube : public Hexahedron {
+class Box : public Hexahedron {
 public:
-	Cube(const Tag &tag) : Hexahedron(tag) {};
+	Box(const Tag &tag) : Hexahedron(tag) {};
 protected:
 	virtual void initCoords();
 };

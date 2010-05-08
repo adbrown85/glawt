@@ -31,9 +31,11 @@ checkTextures:
 	@echo "  TEXTURES = $(TEXTURES)"
 
 # Shapes
-Cube.o: Shape.o
-Square.o: Shape.o
 Shape.o: Program.o
+Hexahedron.o: Shape.o
+Box.o: Hexahedron.o
+Cube.o: Hexahedron.o
+Square.o: Shape.o
 
 # Transforms
 Scale.o: Transformation.hpp

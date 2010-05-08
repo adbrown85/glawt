@@ -17,6 +17,7 @@ void BasicFactory::install() {
 	installed = true;
 	
 	// Tags
+	Factory::install("box", &createBox);
 	Factory::install("cube", &createCube);
 	Factory::install("program", &createProgram);
 	Factory::install("scale", &createScale);
@@ -42,34 +43,17 @@ void BasicFactory::install() {
 }
 
 
-Node* BasicFactory::createCube(const Tag &tag) {
-	
-	return new Cube(tag);
-}
+Node* BasicFactory::createBox(const Tag &tag) {return new Box(tag);}
 
+Node* BasicFactory::createCube(const Tag &tag) {return new Cube(tag);}
 
-Node* BasicFactory::createProgram(const Tag &tag) {
-	
-	return new Program(tag);
-}
+Node* BasicFactory::createProgram(const Tag &tag) {return new Program(tag);}
 
+Node* BasicFactory::createScale(const Tag &tag) {return new Scale(tag);}
 
-Node* BasicFactory::createScale(const Tag &tag) {
-	
-	return new Scale(tag);
-}
+Node* BasicFactory::createShader(const Tag &tag) {return new Shader(tag);}
 
-
-Node* BasicFactory::createShader(const Tag &tag) {
-	
-	return new Shader(tag);
-}
-
-
-Node* BasicFactory::createSquare(const Tag &tag) {
-	
-	return new Square(tag);
-}
+Node* BasicFactory::createSquare(const Tag &tag) {return new Square(tag);}
 
 
 Node* BasicFactory::createTexture(const Tag &tag) {

@@ -12,15 +12,11 @@ GLuint Square::dataBuffer, Square::indicesBuffer;
 GLushort Square::indices[4];
 
 
-/**
- * Creates a new %Square from an XML tag.
+/** Creates a new %Square from an XML tag.
  * 
  * @param tag XML tag with "size" attribute.
  */
-Square::Square(const Tag &tag) : Shape(tag) {
-	
-	// Basics
-	style = GL_TEXTURE_2D;
+Square::Square(const Tag &tag) : Shape(tag,4,getAttributes(),GL_QUADS) {
 	
 	// Initialize vertices
 	if (!loaded) {
@@ -28,15 +24,13 @@ Square::Square(const Tag &tag) : Shape(tag) {
 		initCoords();
 		initIndices();
 		initNormals();
-		initBuffers();
+		initBuffer();
 		loaded = true;
 	}
 }
 
 
-/**
- * Draws the square.
- */
+/** Draws the square. */
 void Square::draw() const {
 	
 	// Enable buffers and arrays
@@ -61,7 +55,17 @@ void Square::draw() const {
 }
 
 
-void Square::initBuffers() {
+list<string> Square::getAttributes() {
+	
+	list<string> attributes;
+	attributes.push_back("MCVertex");
+	attributes.push_back("MCNormal");
+	attributes.push_back("TexCoord0");
+	return attributes;
+}
+
+
+void Square::initBuffer() {
 	
 	int dataSize;
 	
@@ -100,9 +104,7 @@ void Square::initCoords() {
 }
 
 
-/**
- * Initializes the indices used to draw the square's faces.
- */
+/** Initializes the indices used to draw the square's faces. */
 void Square::initIndices() {
 	
 	// Copy to class
@@ -121,9 +123,7 @@ void Square::initNormals() {
 }
 
 
-/**
- * Initializes the static points array of the class.
- */
+/** Initializes the static points array of the class. */
 void Square::initPoints() {
 	
 	GLfloat points[4][3] = {{+0.5, +0.5, 0.0},
