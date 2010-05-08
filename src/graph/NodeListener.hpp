@@ -14,7 +14,7 @@ using namespace std;
 
 /**
  * @ingroup graph
- * @interface 
+ * @interface NodeListener
  * @brief Object that is notified by a node.
  */
 class NodeListener {
