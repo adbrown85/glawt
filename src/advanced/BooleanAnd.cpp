@@ -18,6 +18,7 @@ ShapeTraits BooleanAnd::getTraits() {
 	traits.addAttribute("MCVertex");
 	traits.addAttribute("MCNormal");
 	traits.addAttribute("TexCoord0");
+	traits.addAttribute("TexCoord1");
 	return traits;
 }
 
@@ -70,6 +71,7 @@ void BooleanAnd::initCoords() {
 	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords[0]), coords[0]);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(3), sizeof(coords[1]), coords[1]);
 }
 
 
