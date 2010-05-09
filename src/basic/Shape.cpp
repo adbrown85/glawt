@@ -58,8 +58,6 @@ void Shape::draw() const {
 	
 	// Enable attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		if (it->location == -1)
-			continue;
 		glEnableVertexAttribArray(it->location);
 		glVertexAttribPointer(it->location,
 		                      3,
@@ -74,8 +72,6 @@ void Shape::draw() const {
 	
 	// Disable attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		if (it->location == -1)
-			continue;
 		glDisableVertexAttribArray(it->location);
 	}
 	
@@ -94,8 +90,12 @@ void Shape::finalize() {
 	
 	// Bind attributes
 	list<VertexAttribute>::iterator it;
-	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+	for (it=attributes.begin(); it!=attributes.end(); ) {
 		it->location = program->getAttributeLocation(it->name);
+		if (it->location == -1)
+			it = attributes.erase(it);
+		else
+			++it;
 	}
 	
 	// Initialize attributes
