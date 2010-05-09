@@ -88,7 +88,7 @@ void Shape::finalize() {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
 	
-	// Bind attributes
+	// Get locations of attributes in program
 	list<VertexAttribute>::iterator it;
 	for (it=attributes.begin(); it!=attributes.end(); ) {
 		it->location = program->getAttributeLocation(it->name);

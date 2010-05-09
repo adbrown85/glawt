@@ -56,22 +56,10 @@ void Hexahedron::initAttributes() {
  */
 void Hexahedron::initPoints() {
 	
-/*
-	GLfloat P[8][3] = {{-0.5, -0.5, +0.5},   // 0 bottom-left-front
-	                   {+0.5, -0.5, +0.5},   // 1 bottom-right-front
-	                   {-0.5, +0.5, +0.5},   // 2 top-left-front
-	                   {+0.5, +0.5, +0.5},   // 3 top-right-front
-	                   {-0.5, -0.5, -0.5},   // 4 bottom-left-back
-	                   {+0.5, -0.5, -0.5},   // 5 bottom-right-back
-	                   {-0.5, +0.5, -0.5},   // 6 top-left-back
-	                   {+0.5, +0.5, -0.5}};  // 7 top-right-back
-*/
 	GLfloat points[24][3];
 	
-	// Fill array from corners
+	// Fill buffer with points array
 	toArray(points, Vector(-0.5,-0.5,-0.5),Vector(+0.5,+0.5,+0.5));
-	
-	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(0), sizeof(points), points);
 }
@@ -148,10 +136,10 @@ void Hexahedron::toArray(float array[24][3],
 	P[6][0] = l.x;  P[6][1] = u.y;  P[6][2] = l.z;
 	P[7][0] = u.x;  P[7][1] = u.y;  P[7][2] = l.z;
 	
-	// Copy each point to indexed points in array
+	// Copy each point to three quads it includes
 	for (int p=0; p<8; ++p) {
-		for (int j=0; j<3; ++j) {
-			index = indices[p][j];
+		for (int q=0; q<3; ++q) {
+			index = indices[p][q];
 			for (int k=0; k<3; ++k) {
 				array[index][k] = P[p][k];
 			}
