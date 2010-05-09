@@ -26,7 +26,6 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 		VertexAttribute va;
 		va.name = *it;
 		va.number = i;
-		va.location = i;
 		this->attributes.push_back(va);
 		++i;
 	}
@@ -59,6 +58,8 @@ void Shape::draw() const {
 	
 	// Enable attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		if (it->location == -1)
+			continue;
 		glEnableVertexAttribArray(it->location);
 		glVertexAttribPointer(it->location,
 		                      3,
@@ -73,6 +74,8 @@ void Shape::draw() const {
 	
 	// Disable attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
+		if (it->location == -1)
+			continue;
 		glDisableVertexAttribArray(it->location);
 	}
 	
@@ -92,7 +95,7 @@ void Shape::finalize() {
 	// Bind attributes
 	list<VertexAttribute>::iterator it;
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		program->setAttributeLocation(it->location, it->name);
+		it->location = program->getAttributeLocation(it->name);
 	}
 	
 	// Initialize attributes
