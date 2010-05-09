@@ -14,8 +14,10 @@ float Boolean::FLT_INF;
  * @throws Exception if @e operation attribute not present
  * @throws NodeException if float is not signed
  */
-Boolean::Boolean(const Tag &tag) : Shape(tag) {
+Boolean::Boolean(const Tag &tag,
+                 ShapeTraits traits) : Hexahedron(tag,traits) {
 	
+	// Get tag attributes
 	tag.get("of", of);
 	tag.get("operation", operation);
 	
@@ -40,7 +42,7 @@ Boolean::Boolean(const Tag &tag) : Shape(tag) {
  */
 void Boolean::associate() {
 	
-	Shape::associate();
+	Hexahedron::associate();
 	
 	// Find nodes
 	findGroup();
@@ -49,14 +51,22 @@ void Boolean::associate() {
 }
 
 
+/** Draws the boolean shape. */
+void Boolean::draw() const {
+	
+	// Only draw if tangible
+	if (tangible) {
+		Hexahedron::draw();
+	}
+}
+
+
 /** Creates the shape. */
 void Boolean::finalize() {
 	
-	// Initialize
-	initBuffers();
-	initIndices();
-	initPoints();
-	nodeUpdated();
+	updateExtents();
+	updateOverlap();
+	Hexahedron::finalize();
 }
 
 
@@ -67,37 +77,6 @@ void Boolean::findGroup() {
 	if (group == NULL) {
 		NodeException e(tag);
 		e << "[Boolean] Could not find group named '" << of << "'.";
-		throw e;
-	}
-}
-
-
-/** @throws NodeException if no shapes are in group. */
-void Boolean::findShapes() {
-	
-	int count;
-	Node *node;
-	Node::iterator it;
-	queue<Node*> q;
-	Shape *shape;
-	
-	// Search subtree under group for shapes
-	count = 0;
-	q.push(group);
-	while (!q.empty()) {
-		node = q.front();
-		shape = dynamic_cast<Shape*>(node);
-		if (shape != NULL)
-			++count;
-		for (it=node->begin(); it!=node->end(); ++it)
-			q.push(*it);
-		q.pop();
-	}
-	
-	// Check
-	if (count == 0) {
-		NodeException e(tag);
-		e << "[Boolean] No shapes found in group.";
 		throw e;
 	}
 }
@@ -115,6 +94,37 @@ UniformSampler* Boolean::findSampler(Shape *shape) {
 			return sampler;
 	}
 	return NULL;
+}
+
+
+/** @throws NodeException if no shapes are in group. */
+void Boolean::findShapes() {
+	
+	int tally;
+	Node *node;
+	Node::iterator it;
+	queue<Node*> q;
+	Shape *shape;
+	
+	// Search subtree under group for shapes
+	tally = 0;
+	q.push(group);
+	while (!q.empty()) {
+		node = q.front();
+		shape = dynamic_cast<Shape*>(node);
+		if (shape != NULL)
+			++tally;
+		for (it=node->begin(); it!=node->end(); ++it)
+			q.push(*it);
+		q.pop();
+	}
+	
+	// Check
+	if (tally == 0) {
+		NodeException e(tag);
+		e << "[Boolean] No shapes found in group.";
+		throw e;
+	}
 }
 
 
@@ -140,16 +150,10 @@ void Boolean::findTransforms() {
 }
 
 
-/** Creates the vertex buffers for the points and elements arrays. */
-void Boolean::initBuffers() {
+/** Determines if the shapes intersect each other using overlap attribute. */
+bool Boolean::isOverlapped() {
 	
-	// Points
-	glGenBuffers(1, &dataBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
-	
-	// Indices
-	glGenBuffers(1, &indicesBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
+	return (min(overlap.upper,overlap.lower) == overlap.lower);
 }
 
 
@@ -169,11 +173,10 @@ string Boolean::toString() const {
 void Boolean::update() {
 	
 	updateExtents();
-	updateUpperLower();
-	updateTangible();
+	updateOverlap();
+	tangible = isTangible();
 	if (tangible) {
-		updatePoints();
-		updateCoords();
+		initAttributes();
 	}
 }
 
@@ -224,17 +227,17 @@ void Boolean::updateExtents(Node *node) {
 }
 
 
-/** Find the extent of the boolean operation. */
-void Boolean::updateUpperLower() {
+/** Find where the shapes overlap. */
+void Boolean::updateOverlap() {
 	
 	map<Shape*,Extent>::iterator it;
 	
 	// Form shape
-	upper = Vector(+FLT_INF);
-	lower = Vector(-FLT_INF);
+	overlap.upper = Vector(+FLT_INF);
+	overlap.lower = Vector(-FLT_INF);
 	for (it=extents.begin(); it!=extents.end(); ++it) {
-		upper = min(upper, it->second.upper);
-		lower = max(lower, it->second.lower);
+		overlap.upper = min(overlap.upper, it->second.upper);
+		overlap.lower = max(overlap.lower, it->second.lower);
 	}
 }
 

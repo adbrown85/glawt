@@ -27,13 +27,11 @@
 <texture name="crate" file="../../textures/crate.jpg">
 <texture name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader file="../../glsl/color.vert" />
-		<shader file="../../glsl/color.frag" />
+		<shader file="../../glsl/coordinates.vert" />
+		<shader file="../../glsl/coordinates.frag" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="vec4" name="Color" value="1 1 1 1" />
-		<wireframe>
-			<boolean operation="AND" of="cubes" selectable="false" />
-		</wireframe>
+		<!-- <uniform type="vec4" name="Color" value="1 1 1 1" /> -->
+		<boolean operation="AND" of="cubes" selectable="false" />
 	</program>
 	<program>
 		<shader file="../../glsl/color.vert" />

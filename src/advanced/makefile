@@ -14,6 +14,8 @@ AdvancedFactory.o: ${filter-out AdvancedFactory.o,$(OBJECTS)}
 $(BINARIES): AdvancedFactory.o
 
 # Nodes
+Boolean.o:
+BooleanAnd.o: Boolean.o
 Cull.o:
 Framebuffer.o:
 Fullscreen.o: 

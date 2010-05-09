@@ -18,15 +18,16 @@
 #include "Transformation.hpp"
 #include "Transform.hpp"
 #include "UniformSampler.hpp"
+#include "Hexahedron.hpp"
 using namespace std;
 
 
-/** Upper and lower boundaries of a shape. */
+/* Upper and lower boundaries of a shape. */
 struct Extent {
 	Vector upper, lower, diagonal;
 };
 
-/** Texture coordinates of a shape. */
+/* Texture coordinates of a shape. */
 struct Coordinates {
 	Vector upper, lower;
 };
@@ -35,13 +36,17 @@ struct Coordinates {
 /**
  * @ingroup advanced
  * @brief Combines shapes in different ways to create a new one.
+ * 
+ * To create a concrete operation, subclass %Boolean and implement 
+ * isTangible() and updateAttributes().  Of course, make sure to pass the 
+ * right number of vertices and all the attribute names in the constructor.
  */
-class Boolean : public Shape,
+class Boolean : public Hexahedron,
                 public NodeListener {
 public:
-	Boolean(const Tag &tag);
+	Boolean(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
-	virtual void draw() const = 0;
+	virtual void draw() const;
 	virtual void finalize();
 	virtual void nodeUpdated();
 	virtual string toString() const;
@@ -50,26 +55,21 @@ protected:
 	UniformSampler* findSampler(Shape *shape);
 	void findShapes();
 	void findTransforms();
-	void initBuffers();
-	virtual void initIndices() = 0;
-	virtual void initPoints() = 0;
+	bool isOverlapped();
+	virtual bool isTangible() = 0;
 	void update();
 	void updateExtents();
 	void updateExtents(Node *node);
-	virtual void updateCoords() = 0;
-	virtual void updatePoints() = 0;
-	virtual void updateTangible() = 0;
-	void updateUpperLower();
+	void updateOverlap();
 protected:
 	bool tangible;
-	GLuint dataBuffer, indicesBuffer;
+	Extent overlap;
 	Group *group;
 	map<Shape*,Extent> extents;
 	map<int,Coordinates> units;
 	Matrix mvm;
 	string of, operation;
 	static float FLT_INF;
-	Vector upper, lower;
 };
 
 

@@ -13,18 +13,19 @@
 using namespace std;
 
 
+/**
+ * @ingroup advanced
+ * @brief Boolean AND operation of two shapes.
+ */
 class BooleanAnd : public Boolean {
 public:
-	BooleanAnd(const Tag &tag);
-	virtual void draw() const;
-	virtual void initIndices();
+	BooleanAnd(const Tag &tag) : Boolean(tag,getTraits()) {};
+	static ShapeTraits getTraits();
 	virtual void initPoints();
-	virtual void updateCoords();
-	virtual void updatePoints();
-	virtual void updateTangible();
+	virtual void initCoords();
+	virtual bool isTangible();
 private:
-	GLfloat points[8][3], coords0[8][3], coords1[8][3];
-	GLshort indices[24];
+	GLfloat points[24][3], coords[2][24][3];
 };
 
 

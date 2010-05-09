@@ -56,6 +56,7 @@ void Hexahedron::initAttributes() {
  */
 void Hexahedron::initPoints() {
 	
+/*
 	GLfloat P[8][3] = {{-0.5, -0.5, +0.5},   // 0 bottom-left-front
 	                   {+0.5, -0.5, +0.5},   // 1 bottom-right-front
 	                   {-0.5, +0.5, +0.5},   // 2 top-left-front
@@ -64,18 +65,11 @@ void Hexahedron::initPoints() {
 	                   {+0.5, -0.5, -0.5},   // 5 bottom-right-back
 	                   {-0.5, +0.5, -0.5},   // 6 top-left-back
 	                   {+0.5, +0.5, -0.5}};  // 7 top-right-back
+*/
 	GLfloat points[24][3];
 	
-	// Copy each point to each index it corresponds to
-	int index;
-	for (int p=0; p<8; ++p) {
-		for (int j=0; j<3; ++j) {
-			index = indices[p][j];
-			for (int k=0; k<3; ++k) {
-				points[index][k] = P[p][k];
-			}
-		}
-	}
+	// Fill array from corners
+	toArray(points, Vector(-0.5,-0.5,-0.5),Vector(+0.5,+0.5,+0.5));
 	
 	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -137,18 +131,32 @@ void Hexahedron::load() {
  * @param l Lower corner of the shape
  * @param u Upper corner of the shape
  */
-void Hexahedron::toArray(float array[8][3],
+void Hexahedron::toArray(float array[24][3],
                          const Vector &l,
                          const Vector &u) {
 	
-	array[0][0] = l.x;  array[0][1] = l.y;  array[0][2] = u.z;
-	array[1][0] = u.x;  array[1][1] = l.y;  array[1][2] = u.z;
-	array[2][0] = l.x;  array[2][1] = u.y;  array[2][2] = u.z;
-	array[3][0] = u.x;  array[3][1] = u.y;  array[3][2] = u.z;
-	array[4][0] = l.x;  array[4][1] = l.y;  array[4][2] = l.z;
-	array[5][0] = u.x;  array[5][1] = l.y;  array[5][2] = l.z;
-	array[6][0] = l.x;  array[6][1] = u.y;  array[6][2] = l.z;
-	array[7][0] = u.x;  array[7][1] = u.y;  array[7][2] = l.z;
+	GLfloat P[8][3];
+	int index;
+	
+	// Form eight points on corners
+	P[0][0] = l.x;  P[0][1] = l.y;  P[0][2] = u.z;
+	P[1][0] = u.x;  P[1][1] = l.y;  P[1][2] = u.z;
+	P[2][0] = l.x;  P[2][1] = u.y;  P[2][2] = u.z;
+	P[3][0] = u.x;  P[3][1] = u.y;  P[3][2] = u.z;
+	P[4][0] = l.x;  P[4][1] = l.y;  P[4][2] = l.z;
+	P[5][0] = u.x;  P[5][1] = l.y;  P[5][2] = l.z;
+	P[6][0] = l.x;  P[6][1] = u.y;  P[6][2] = l.z;
+	P[7][0] = u.x;  P[7][1] = u.y;  P[7][2] = l.z;
+	
+	// Copy each point to indexed points in array
+	for (int p=0; p<8; ++p) {
+		for (int j=0; j<3; ++j) {
+			index = indices[p][j];
+			for (int k=0; k<3; ++k) {
+				array[index][k] = P[p][k];
+			}
+		}
+	}
 }
 
 
