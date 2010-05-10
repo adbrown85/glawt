@@ -27,12 +27,13 @@
 <texture name="crate" file="../../textures/crate.jpg">
 <texture name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader file="../../glsl/color.vert" />
-		<shader file="../../glsl/color.frag" />
+		<shader file="../../glsl/lighting.vert" />
+		<shader file="../../glsl/lighting.frag" />
+		<uniform type="mat4" name="MVMatrix" as="modelview" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="vec4" name="Color" value="1 0 0 1" />
-		<!-- <boolean operation="XOR" of="cubes" selectable="false" take="left"/> -->
-		<uniform type="vec4" name="Color" value="0 0 1 0" />
+		<uniform type="mat4" name="NormalMatrix" as="normal" />
+		<uniform type="vec3" name="LightPosition" value="15 15 15" />
+		<uniform type="float" name="Ambient" value="0.2" />
 		<boolean operation="XOR" of="cubes" selectable="false" take="right"/>
 	</program>
 	<program>

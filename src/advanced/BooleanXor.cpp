@@ -118,6 +118,7 @@ ShapeTraits BooleanXor::getTraits() {
 	traits.mode = GL_QUADS;
 	traits.usage = GL_DYNAMIC_DRAW;
 	traits.attributes.push_back("MCVertex");
+	traits.attributes.push_back("MCNormal");
 	return traits;
 }
 
@@ -141,6 +142,18 @@ void BooleanXor::initPoints() {
 	
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
+}
+
+
+void BooleanXor::initNormals() {
+	
+	GLfloat normals[72][3];
+	
+	toNormals(normals);
+	toNormals(normals+24);
+	toNormals(normals+48);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
 }
 
 

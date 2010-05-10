@@ -30,7 +30,7 @@ protected:
 	virtual void findShapes();
 	virtual void findTake();
 	virtual void initPoints();
-	virtual void initNormals() {}
+	virtual void initNormals();
 	virtual void initCoords() {}
 	virtual void updateTangible();
 private:
