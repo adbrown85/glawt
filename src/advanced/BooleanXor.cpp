@@ -7,21 +7,20 @@
 #include "BooleanXor.hpp"
 
 
+void BooleanXor::associate() {
+	
+	Boolean::associate();
+	findTake();
+}
+
+
 void BooleanXor::calculate() {
 	
-	// Check size
-	if (extents.size() != 2) {
-		NodeException e(tag);
-		e << "[BooleanXor] Must use two shapes.";
-		throw e;
-	}
+	map<Shape*,Extent>::iterator it;
 	
 	// Calculate with two extents
-	map<Shape*,Extent>::iterator it;
 	for (it=extents.begin(); it!=extents.end(); ++it) {
 		it->second.label = it->first->getID();
-		cout << "Set " << it->second.label
-		     << " to " << it->first->getID() << endl;
 	}
 	it = extents.begin();
 	++it;
@@ -31,19 +30,13 @@ void BooleanXor::calculate() {
 
 void BooleanXor::calculate(Extent A, Extent B) {
 	
-	map<int,extent_list>::iterator it;
 	Extent *l, *h;
 	pair<Extent,Extent> result;
 	
 	// Initialize
 	pieces.clear();
-	pieces[A.label] = extent_list();
-	pieces[B.label] = extent_list();
 	l = &A;
 	h = &B;
-	
-	cout << "A.label = " << A.label << endl;
-	cout << "B.label = " << B.label << endl;
 	
 	// Split
 	for (int i=0; i<3; ++i) {
@@ -52,14 +45,57 @@ void BooleanXor::calculate(Extent A, Extent B) {
 		}
 		if (h->lower[i] < l->upper[i]) {
 			result = knife(*l, h->lower[i], i);
-			it = pieces.find(l->label);
-			it->second.push_back(result.first);
+			if (l->label == takeID)
+				pieces.push_back(result.first);
 			*l = result.second;
 			result = knife(*h, l->upper[i], i);
-			it = pieces.find(h->label);
-			it->second.push_back(result.second);
+			if (h->label == takeID)
+				pieces.push_back(result.second);
 			*h = result.first;
 		}
+	}
+}
+
+
+void BooleanXor::findShapes() {
+	
+	Boolean::findShapes();
+	
+	// Check size
+	if (shapes.size() != 2) {
+		NodeException e(tag);
+		e << "[BooleanXor] Must use two shapes.";
+		throw e;
+	}
+}
+
+
+/** Searches for the shape the operation should limit its output to.
+ * 
+ * @throws NodeException if a shape matching @e only cannot be found.
+ */
+void BooleanXor::findTake() {
+	
+	string text;
+	list<Shape*>::iterator it;
+	Shape *shape;
+	
+	// Look through list of shapes for matching name
+	tag.get("take", text, true, false);
+	takeShape = NULL;
+	for (it=shapes.begin(); it!=shapes.end(); ++it) {
+		shape = *it;
+		if (shape->getName() == text) {
+			takeID = shape->getID();
+			takeShape = shape;
+		}
+	}
+	
+	// Make sure it found it
+	if (takeShape == NULL) {
+		NodeException e(tag);
+		e << "[BooleanXor] Could not find shape named '" << text << "'.";
+		throw e;
 	}
 }
 
@@ -90,39 +126,36 @@ ShapeTraits BooleanXor::getTraits() {
 
 void BooleanXor::initPoints() {
 	
-	Extent extent;
 	int off;
-	map<int,extent_list>::iterator pi;
-	extent_list::iterator ei;
 	
 	if (isOverlapped()) {
-		cout << "Shapes are overlapped." << endl;
 		calculate();
-		for (pi=pieces.begin(); pi!=pieces.end(); ++pi) {
-			cout << pi->first << endl;
-			for (ei=pi->second.begin(); ei!=pi->second.end(); ++ei) {
-				cout << "  " << ei->lower << " " << ei->upper << endl;
-				extent = *ei;
-			}
-		}
-		pi = pieces.begin();
-		++pi;
 		off = 0;
-		for (ei=pi->second.begin(); ei!=pi->second.end(); ++ei) {
-			cout << "off=" << off << endl;
-			cout << "id=" << ei->label << endl;
-			toArray(points+off, ei->lower, ei->upper);
+		list<Extent>::iterator it;
+		for (it=pieces.begin(); it!=pieces.end(); ++it) {
+			toArray(points+off, it->lower, it->upper);
 			off += 24;
 		}
 	} else {
-		cout << "Shapes are not overlapped." << endl;
-		toArray(points   , Vector(-0.3,-0.3,-0.1), Vector(-0.1,-0.1,+0.1));
-		toArray(points+24, Vector(+0.1,+0.1,-0.1), Vector(+0.3,+0.3,+0.1));
-		toArray(points+48, Vector(-0.1,-0.1,-0.1), Vector(+0.1,+0.1,+0.1));
+		map<Shape*,Extent>::iterator it;
+		it = extents.find(takeShape);
+		toArray(points   , it->second.lower, it->second.upper);
+		toArray(points+24, Vector(0,0,0), Vector(0,0,0));
+		toArray(points+48, Vector(0,0,0), Vector(0,0,0));
 	}
 	
 	
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
+}
+
+
+string BooleanXor::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Boolean::toString();
+	stream << " take='" << takeShape->getName() << "'";
+	return stream.str();
 }
 

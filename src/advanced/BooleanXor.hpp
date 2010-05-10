@@ -14,9 +14,6 @@
 using namespace std;
 
 
-typedef list<Extent> extent_list;
-
-
 /**
  * @ingroup advanced
  * @brief Exclusive OR boolean operator for two shapes.
@@ -24,20 +21,24 @@ typedef list<Extent> extent_list;
 class BooleanXor : public Boolean {
 public:
 	BooleanXor(const Tag &tag) : Boolean(tag,getTraits()) {}
+	virtual void associate();
 	static ShapeTraits getTraits();
+	virtual string toString() const;
 protected:
 	virtual void calculate();
 	virtual void calculate(Extent A, Extent B);
 	pair<Extent,Extent> knife(Extent &extent, float at, int on);
+	virtual void findShapes();
+	virtual void findTake();
 	virtual void initPoints();
 	virtual void initNormals() {}
 	virtual void initCoords() {}
 	virtual void updateTangible();
 private:
-	//GLint uses[2];
-	//GLfloat piece[2][3][24][3];
 	GLfloat points[72][3];
-	map<int,extent_list> pieces;
+	int takeID;
+	Shape *takeShape;
+	list<Extent> pieces;
 };
 
 
