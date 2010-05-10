@@ -68,25 +68,10 @@ void Hexahedron::initPoints() {
 /** Initializes the normals in the vertex buffer. */
 void Hexahedron::initNormals() {
 	
-	GLfloat N[6][3] = {{ 0.0,  0.0, +1.0},     // front
-	                   { 0.0,  0.0, -1.0},     // back
-	                   {-1.0,  0.0,  0.0},     // left
-	                   {+1.0,  0.0,  0.0},     // right
-	                   { 0.0, +1.0,  0.0},     // top
-	                   { 0.0, -1.0,  0.0}};    // bottom
 	GLfloat normals[24][3];
 	
-	// Copy normals from faces to each index
-	int index = -1;
-	for (int n=0; n<6; ++n) {
-		for (int j=0; j<4; ++j) {
-			++index;
-			for (int k=0; k<3; ++k)
-				normals[index][k] = N[n][k];
-		}
-	}
-	
 	// Send to buffer
+	toNormals(normals);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
 }
@@ -147,4 +132,24 @@ void Hexahedron::toArray(float array[24][3],
 	}
 }
 
+
+void Hexahedron::toNormals(GLfloat array[24][3]) {
+	
+	GLfloat N[6][3] = {{ 0.0,  0.0, +1.0},     // front
+	                   { 0.0,  0.0, -1.0},     // back
+	                   {-1.0,  0.0,  0.0},     // left
+	                   {+1.0,  0.0,  0.0},     // right
+	                   { 0.0, +1.0,  0.0},     // top
+	                   { 0.0, -1.0,  0.0}};    // bottom
+	
+	// Copy normals from faces to each index
+	int index = -1;
+	for (int n=0; n<6; ++n) {
+		for (int j=0; j<4; ++j) {
+			++index;
+			for (int k=0; k<3; ++k)
+				array[index][k] = N[n][k];
+		}
+	}
+}
 

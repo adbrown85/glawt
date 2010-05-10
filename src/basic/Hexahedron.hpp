@@ -51,7 +51,8 @@ protected:
 	virtual void initNormals();
 	virtual void initCoords() = 0;
 	static void load();
-	static void toArray(float array[8][3], const Vector &l, const Vector &u);
+	static void toArray(float array[24][3], const Vector &l, const Vector &u);
+	static void toNormals(float array[24][3]);
 protected:
 	static bool loaded;
 	static int indices[8][3];

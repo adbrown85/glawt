@@ -7,15 +7,13 @@
 
 
 <program>
-	<shader file="../../glsl/coordinates.vert" />
-	<shader file="../../glsl/coordinates.frag" />
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
 	<translate x="1.0">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-<!--
 		<uniform type="mat4" name="MVMatrix" as="modelview" />
 		<uniform type="mat3" name="NormalMatrix" as="normal" />
 		<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
--->
 		<cube />
 	</translate>
 <!--
