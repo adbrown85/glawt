@@ -14,18 +14,23 @@ using namespace std;
 
 class FakeShape : public Shape {
 public:
-	FakeShape(const Tag &tag) : Shape(tag,24,getAttributes(),GL_QUADS) {}
-	static list<string> getAttributes();
+	FakeShape(const Tag &tag) : Shape(tag,getTraits()) {}
+	static ShapeTraits getTraits();
 	virtual void draw() const {};
-	virtual void initAttributeValues() {};
+	virtual void initAttributes() {};
 };
 
-list<string> FakeShape::getAttributes() {
+ShapeTraits FakeShape::getTraits() {
 	
-	list<string> attributes;
+	ShapeTraits traits;
 	
-	attributes.push_back("MCVertex");
-	return attributes;
+	traits.count = 24;
+	traits.mode = GL_QUADS;
+	traits.usage = GL_STATIC_DRAW;
+	traits.attributes.push_back("MCVertex");
+	traits.attributes.push_back("MCNormal");
+	traits.attributes.push_back("TexCoord0");
+	return traits;
 }
 
 
