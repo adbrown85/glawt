@@ -54,7 +54,7 @@ public:
 protected:
 	void findGroup();
 	UniformSampler* findSampler(Shape *shape);
-	void findShapes();
+	virtual void findShapes();
 	void findTransforms();
 	virtual void initAttributes();
 	bool isOverlapped();
@@ -67,6 +67,7 @@ protected:
 	bool tangible;
 	Extent overlap;
 	Group *group;
+	list<Shape*> shapes;
 	map<Shape*,Extent> extents;
 	map<int,Coordinates> units;
 	Matrix mvm;

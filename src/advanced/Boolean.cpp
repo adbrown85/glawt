@@ -99,27 +99,26 @@ UniformSampler* Boolean::findSampler(Shape *shape) {
 /** @throws NodeException if no shapes are in group. */
 void Boolean::findShapes() {
 	
-	int tally;
 	Node *node;
 	Node::iterator it;
 	queue<Node*> q;
 	Shape *shape;
 	
 	// Search subtree under group for shapes
-	tally = 0;
 	q.push(group);
 	while (!q.empty()) {
 		node = q.front();
 		shape = dynamic_cast<Shape*>(node);
-		if (shape != NULL)
-			++tally;
+		if (shape != NULL) {
+			shapes.push_back(shape);
+		}
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
 	}
 	
 	// Check
-	if (tally == 0) {
+	if (shapes.size() == 0) {
 		NodeException e(tag);
 		e << "[Boolean] No shapes found in group.";
 		throw e;
@@ -226,6 +225,7 @@ void Boolean::updateExtents(Node *node) {
 		extent.upper = mvm * Vector(+0.5,+0.5,+0.5,1.0);
 		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
 		extent.diagonal = extent.upper - extent.lower;
+		extent.label = shape->getID();
 		extents[shape] = extent;
 	}
 	
