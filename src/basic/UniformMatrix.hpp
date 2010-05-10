@@ -21,7 +21,8 @@ public:
 	virtual string toString() const;
 private:
 	GLfloat value[16];
-	enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION, NORMAL};
+	enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION,
+	                NORMAL, IDENTITY};
 	MatrixType matrixType;
 	string as;
 };

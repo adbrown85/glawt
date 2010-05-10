@@ -7,6 +7,14 @@
 #include "Transform.hpp"
 
 
+void Transform::getIdentityMatrix(GLfloat array[16]) {
+	
+	Matrix matrix;
+	
+	matrix.toArray(array);
+}
+
+
 Matrix Transform::getModelViewMatrix() {
 	
 	GLfloat array[16];

@@ -23,6 +23,8 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 		matrixType = MODELVIEW_PROJECTION;
 	} else if (as == "normal") {
 		matrixType = NORMAL;
+	} else if (as == "identity") {
+		matrixType = IDENTITY;
 	} else {
 		NodeException e(tag);
 		e << "[UniformMatrix] Matrix '" << as << "' not supported.";
@@ -52,6 +54,10 @@ void UniformMatrix::apply() {
 	case NORMAL:
 		Transform::getNormalMatrix(value);
 		glUniformMatrix3fv(location, 1, false, value);
+		break;
+	case IDENTITY:
+		Transform::getIdentityMatrix(value);
+		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	}
 }
