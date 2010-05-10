@@ -98,18 +98,6 @@ void BooleanXor::findTake() {
 }
 
 
-pair<Extent,Extent> BooleanXor::knife(Extent &extent, float at, int on) {
-	
-	pair<Extent,Extent> result;
-	
-	result.first = extent;
-	result.first.upper[on] = at;
-	result.second = extent;
-	result.second.lower[on] = at;
-	return result;
-}
-
-
 ShapeTraits BooleanXor::getTraits() {
 	
 	ShapeTraits traits;
@@ -154,6 +142,18 @@ void BooleanXor::initNormals() {
 	toNormals(normals+48);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
+}
+
+
+pair<Extent,Extent> BooleanXor::knife(Extent &extent, float at, int on) {
+	
+	pair<Extent,Extent> result;
+	
+	result.first = extent;
+	result.first.upper[on] = at;
+	result.second = extent;
+	result.second.lower[on] = at;
+	return result;
 }
 
 
