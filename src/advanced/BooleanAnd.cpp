@@ -76,8 +76,8 @@ void BooleanAnd::initCoords() {
 
 
 /** Checks that the shape formed by the operation can be shown. */
-bool BooleanAnd::isTangible() {
+void BooleanAnd::updateTangible() {
 	
-	return isOverlapped();
+	tangible = isOverlapped();
 }
 

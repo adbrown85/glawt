@@ -55,12 +55,13 @@ protected:
 	UniformSampler* findSampler(Shape *shape);
 	void findShapes();
 	void findTransforms();
+	virtual void initAttributes();
 	bool isOverlapped();
-	virtual bool isTangible() = 0;
 	void update();
 	void updateExtents();
 	void updateExtents(Node *node);
 	void updateOverlap();
+	virtual void updateTangible() = 0;
 protected:
 	bool tangible;
 	Extent overlap;
@@ -71,9 +72,6 @@ protected:
 	string of, operation;
 	static float FLT_INF;
 };
-
-
-inline void Boolean::nodeUpdated() {update();}
 
 
 #endif

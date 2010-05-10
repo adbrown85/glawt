@@ -64,8 +64,7 @@ void Boolean::draw() const {
 /** Creates the shape. */
 void Boolean::finalize() {
 	
-	updateExtents();
-	updateOverlap();
+	update();
 	Hexahedron::finalize();
 }
 
@@ -150,10 +149,25 @@ void Boolean::findTransforms() {
 }
 
 
+void Boolean::initAttributes() {
+	
+	if (tangible) {
+		Hexahedron::initAttributes();
+	}
+}
+
+
 /** Determines if the shapes intersect each other using overlap attribute. */
 bool Boolean::isOverlapped() {
 	
 	return (min(overlap.upper,overlap.lower) == overlap.lower);
+}
+
+
+void Boolean::nodeUpdated() {
+	
+	update();
+	initAttributes();
 }
 
 
@@ -174,10 +188,7 @@ void Boolean::update() {
 	
 	updateExtents();
 	updateOverlap();
-	tangible = isTangible();
-	if (tangible) {
-		initAttributes();
-	}
+	updateTangible();
 }
 
 
