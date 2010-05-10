@@ -159,7 +159,16 @@ void Boolean::initAttributes() {
 /** Determines if the shapes intersect each other using overlap attribute. */
 bool Boolean::isOverlapped() {
 	
-	return (min(overlap.upper,overlap.lower) == overlap.lower);
+	return min(overlap.upper,overlap.lower) == overlap.lower
+	         && isSubstantial(overlap);
+}
+
+
+bool Boolean::isSubstantial(const Extent &extent) {
+	
+	return fabs(extent.diagonal.x) > 0.01
+	         && fabs(extent.diagonal.y) > 0.01
+	         && fabs(extent.diagonal.z) > 0.01;
 }
 
 
@@ -250,5 +259,6 @@ void Boolean::updateOverlap() {
 		overlap.upper = min(overlap.upper, it->second.upper);
 		overlap.lower = max(overlap.lower, it->second.lower);
 	}
+	overlap.diagonal = overlap.upper - overlap.lower;
 }
 

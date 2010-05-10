@@ -26,7 +26,7 @@ public:
 	virtual string toString() const;
 protected:
 	virtual void calculate();
-	pair<Extent,Extent> knife(Extent &extent, float at, int on);
+	pair<Extent,Extent> knife(const Extent &extent, float at, int on);
 	virtual void findShapes();
 	virtual void findTake();
 	virtual void initPoints();

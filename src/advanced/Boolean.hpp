@@ -58,6 +58,7 @@ protected:
 	void findTransforms();
 	virtual void initAttributes();
 	bool isOverlapped();
+	bool isSubstantial(const Extent &extent);
 	void update();
 	void updateExtents();
 	void updateExtents(Node *node);

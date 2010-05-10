@@ -29,26 +29,22 @@ void BooleanXor::calculate() {
 		if (l->lower[i] > h->lower[i]) {
 			swap(l, h);
 		}
-		if (h->lower[i] < l->upper[i]) {
+		if (l->upper[i] > h->lower[i]) {
+			
+			// Low piece
 			result = knife(*l, h->lower[i], i);
-			if (l->label == takeID)
-				pieces.push_back(result.first);
-			*l = result.second;
+			if (isSubstantial(result.first)) {
+				if (l->label == takeID)
+					pieces.push_back(result.first);
+				*l = result.second;
+			}
+			
+			// High piece
 			result = knife(*h, l->upper[i], i);
-			if (h->label == takeID)
-				pieces.push_back(result.second);
-			*h = result.first;
-		}
-	}
-	
-	// Filter out bad pieces
-	list<Extent>::iterator it;
-	for (it=pieces.begin(); it!=pieces.end(); ++it) {
-		it->diagonal = it->upper - it->lower;
-		for (int i=0; i<3; ++i) {
-			if (fabs(it->diagonal[i]) < 0.05) {
-				it = pieces.erase(it);
-				break;
+			if (isSubstantial(result.second)) {
+				if (h->label == takeID)
+					pieces.push_back(result.second);
+				*h = result.first;
 			}
 		}
 	}
@@ -145,15 +141,17 @@ void BooleanXor::initNormals() {
 }
 
 
-pair<Extent,Extent> BooleanXor::knife(Extent &extent, float at, int on) {
+pair<Extent,Extent> BooleanXor::knife(const Extent &extent, float at, int on) {
 	
-	pair<Extent,Extent> result;
+	Extent l, u;
 	
-	result.first = extent;
-	result.first.upper[on] = at;
-	result.second = extent;
-	result.second.lower[on] = at;
-	return result;
+	l = extent;
+	l.upper[on] = at;
+	l.diagonal = l.upper - l.lower;
+	u = extent;
+	u.lower[on] = at;
+	u.diagonal = u.upper - u.lower;
+	return pair<Extent,Extent>(l,u);
 }
 
 
