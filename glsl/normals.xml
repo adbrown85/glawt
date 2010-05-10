@@ -1,0 +1,15 @@
+<!--
+ * normals.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="normals.vert" />
+	<shader file="normals.frag" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="mat4" name="NormalMatrix" as="normal" />
+	<cube />
+</program>
