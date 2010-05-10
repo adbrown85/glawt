@@ -16,27 +16,13 @@ void BooleanXor::associate() {
 
 void BooleanXor::calculate() {
 	
-	map<Shape*,Extent>::iterator it;
-	
-	// Calculate with two extents
-	for (it=extents.begin(); it!=extents.end(); ++it) {
-		it->second.label = it->first->getID();
-	}
-	it = extents.begin();
-	++it;
-	calculate(extents.begin()->second, it->second);
-}
-
-
-void BooleanXor::calculate(Extent A, Extent B) {
-	
 	Extent *l, *h;
 	pair<Extent,Extent> result;
 	
 	// Initialize
 	pieces.clear();
-	l = &A;
-	h = &B;
+	l = &(   extents.begin() ->second);
+	h = &((++extents.begin())->second);
 	
 	// Split
 	for (int i=0; i<3; ++i) {
@@ -52,6 +38,18 @@ void BooleanXor::calculate(Extent A, Extent B) {
 			if (h->label == takeID)
 				pieces.push_back(result.second);
 			*h = result.first;
+		}
+	}
+	
+	// Filter out bad pieces
+	list<Extent>::iterator it;
+	for (it=pieces.begin(); it!=pieces.end(); ++it) {
+		it->diagonal = it->upper - it->lower;
+		for (int i=0; i<3; ++i) {
+			if (fabs(it->diagonal[i]) < 0.05) {
+				it = pieces.erase(it);
+				break;
+			}
 		}
 	}
 }
@@ -126,24 +124,20 @@ ShapeTraits BooleanXor::getTraits() {
 
 void BooleanXor::initPoints() {
 	
-	int off;
-	
 	if (isOverlapped()) {
 		calculate();
-		off = 0;
+		count = 0;
 		list<Extent>::iterator it;
 		for (it=pieces.begin(); it!=pieces.end(); ++it) {
-			toArray(points+off, it->lower, it->upper);
-			off += 24;
+			toArray(points+count, it->lower, it->upper);
+			count += 24;
 		}
 	} else {
 		map<Shape*,Extent>::iterator it;
 		it = extents.find(takeShape);
 		toArray(points   , it->second.lower, it->second.upper);
-		toArray(points+24, Vector(0,0,0), Vector(0,0,0));
-		toArray(points+48, Vector(0,0,0), Vector(0,0,0));
+		count = 24;
 	}
-	
 	
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
