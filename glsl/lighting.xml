@@ -1,0 +1,18 @@
+<!--
+ * lighting.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="lighting.vert" />
+	<shader file="lighting.frag" />
+	<uniform type="mat4" name="MVMatrix" as="modelview" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="mat4" name="NormalMatrix" as="normal" />
+	<uniform type="vec3" name="LightPosition" value="15 15 15" />
+	<uniform type="float" name="Ambient" value="0.4" />
+	<cube />
+</program>
