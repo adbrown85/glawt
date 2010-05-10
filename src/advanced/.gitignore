@@ -2,6 +2,7 @@ AdvancedFactory
 Blend
 Boolean
 BooleanAnd
+BooleanXor
 Cull
 Framebuffer
 Fullscreen

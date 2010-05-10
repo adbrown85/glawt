@@ -1,0 +1,45 @@
+<!--
+ * Boolean.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<group name="cubes">
+	<translate x="-1">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube>
+			<uniform type="vec4" name="Color" value="1 0 1 1" />
+			<uniform type="sampler2D" name="unit" link="crate" />
+		</cube>
+	</translate>
+	<translate x="+1" y="+0.5" z="-0.5">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube>
+			<uniform type="vec4" name="Color" value="0 1 1 1" />
+			<uniform type="sampler2D" name="unit" link="stone" />
+		</cube>
+	</translate>
+</group>
+
+
+<texture name="crate" file="../../textures/crate.jpg">
+<texture name="stone" file="../../textures/stone.jpg">
+	<program>
+		<shader file="../../glsl/coordinates.vert" />
+		<shader file="../../glsl/coordinates.frag" />
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<!-- <uniform type="vec4" name="Color" value="1 1 1 1" /> -->
+		<boolean operation="XOR" of="cubes" selectable="false" />
+	</program>
+	<program>
+		<shader file="../../glsl/color.vert" />
+		<shader file="../../glsl/color.frag" />
+		<wireframe>
+			<instance of="cubes" />
+		</wireframe>
+	</program>
+</texture>
+</texture>
+

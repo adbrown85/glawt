@@ -16,6 +16,7 @@ $(BINARIES): AdvancedFactory.o
 # Nodes
 Boolean.o:
 BooleanAnd.o: Boolean.o
+BooleanXor.o: Boolean.o
 Cull.o:
 Framebuffer.o:
 Fullscreen.o: 

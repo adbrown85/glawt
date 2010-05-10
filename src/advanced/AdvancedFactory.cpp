@@ -44,6 +44,8 @@ Node* AdvancedFactory::createBoolean(const Tag &tag) {
 	tag.get("operation", operation);
 	if (operation == "and") {
 		return new BooleanAnd(tag);
+	} else if (operation == "xor") {
+		return new BooleanXor(tag);
 	} else {
 		NodeException e(tag);
 		e << "[AdvancedFactory] Boolean operation not supported.";
