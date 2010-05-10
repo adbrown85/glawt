@@ -18,8 +18,9 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 	this->count = traits.count;
 	this->mode = traits.mode;
 	this->usage = traits.usage;
+	tag.get("name", name, false, false);
 	
-	// Store attributes
+	// Store vertex attributes
 	list<string>::iterator it;
 	int i=0;
 	for (it=traits.attributes.begin(); it!=traits.attributes.end(); ++it) {
@@ -100,5 +101,17 @@ void Shape::finalize() {
 	
 	// Initialize attributes
 	initAttributes();
+}
+
+
+string Shape::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Drawable::toString();
+	if (!name.empty()) {
+		stream << " name='" << name << "'";
+	}
+	return stream.str();
 }
 

@@ -61,6 +61,8 @@ public:
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
+	virtual string getName() const;
+	virtual string toString() const;
 protected:
 	virtual void initAttributes() = 0;
 	GLuint offset(int i) const;
@@ -69,11 +71,15 @@ protected:
 	GLenum mode, usage;
 	GLuint buffer, count;
 	Program *program;
+	string name;
 };
 
 
 /** @return position in the buffer for the i'th attribute. */
 inline GLuint Shape::offset(int i) const {return i*count*3*sizeof(GLfloat);}
+
+/** @return user-assigned name of the shape. */
+inline string Shape::getName() const {return name;}
 
 #endif
 
