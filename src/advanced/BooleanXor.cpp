@@ -16,35 +16,34 @@ void BooleanXor::associate() {
 
 void BooleanXor::calculate() {
 	
-	Extent *l, *h;
+	Extent *A, *B;
 	pair<Extent,Extent> result;
 	
 	// Initialize
 	pieces.clear();
-	l = &(   extents.begin() ->second);
-	h = &((++extents.begin())->second);
+	A = &(   extents.begin() ->second);
+	B = &((++extents.begin())->second);
+	if (A->label != takeID) {
+		swap(A, B);
+	}
 	
 	// Split
 	for (int i=0; i<3; ++i) {
-		if (l->lower[i] > h->lower[i]) {
-			swap(l, h);
-		}
-		if (l->upper[i] > h->lower[i]) {
-			
-			// Low piece
-			result = knife(*l, h->lower[i], i);
-			if (isSubstantial(result.first)) {
-				if (l->label == takeID)
+		if (A->lower[i] < B->lower[i]) {
+			if (A->upper[i] > B->lower[i]) {
+				result = knife(*A, B->lower[i], i);
+				if (isSubstantial(result.first)) {
 					pieces.push_back(result.first);
-				*l = result.second;
+					*A = result.second;
+				}
 			}
-			
-			// High piece
-			result = knife(*h, l->upper[i], i);
-			if (isSubstantial(result.second)) {
-				if (h->label == takeID)
+		} else {
+			if (B->lower[i] < A->lower[i]) {
+				result = knife(*A, B->upper[i], i);
+				if (isSubstantial(result.second)) {
 					pieces.push_back(result.second);
-				*h = result.first;
+					*A = result.first;
+				}
 			}
 		}
 	}
