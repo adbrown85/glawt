@@ -16,33 +16,33 @@ void BooleanXor::associate() {
 
 void BooleanXor::calculate() {
 	
-	Extent *A, *B;
+	Extent A, B;
 	pair<Extent,Extent> result;
 	
 	// Initialize
 	pieces.clear();
-	A = &(   extents.begin() ->second);
-	B = &((++extents.begin())->second);
-	if (A->label != takeID) {
+	A =    extents.begin() ->second;
+	B = (++extents.begin())->second;
+	if (A.label != takeID) {
 		swap(A, B);
 	}
 	
 	// Split
 	for (int i=0; i<3; ++i) {
-		if (A->lower[i] < B->lower[i]) {
-			if (A->upper[i] > B->lower[i]) {
-				result = knife(*A, B->lower[i], i);
+		if (A.lower[i] < B.lower[i]) {
+			if (A.upper[i] > B.lower[i]) {
+				result = knife(A, B.lower[i], i);
 				if (isSubstantial(result.first)) {
 					pieces.push_back(result.first);
-					*A = result.second;
+					A = result.second;
 				}
 			}
 		} else {
-			if (B->lower[i] < A->lower[i]) {
-				result = knife(*A, B->upper[i], i);
+			if (B.lower[i] < A.lower[i]) {
+				result = knife(A, B.upper[i], i);
 				if (isSubstantial(result.second)) {
 					pieces.push_back(result.second);
-					*A = result.first;
+					A = result.first;
 				}
 			}
 		}
@@ -102,6 +102,7 @@ ShapeTraits BooleanXor::getTraits() {
 	traits.usage = GL_DYNAMIC_DRAW;
 	traits.attributes.push_back("MCVertex");
 	traits.attributes.push_back("MCNormal");
+	traits.attributes.push_back("TexCoord0");
 	return traits;
 }
 
@@ -137,6 +138,38 @@ void BooleanXor::initNormals() {
 	toNormals(normals+48);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
+}
+
+
+void BooleanXor::initCoords() {
+	
+	Extent extent;
+	int off;
+	list<Extent>::iterator it;
+	Coordinates C;
+	
+	// Calculate each piece based on overlap
+	if (isOverlapped()) {
+		extent = extents.find(takeShape)->second;
+		off = 0;
+		for (it=pieces.begin(); it!=pieces.end(); ++it) {
+			C.upper = (it->upper - extent.lower) / extent.diagonal;
+			C.upper.z = 1.0 - C.upper.z;
+			C.lower = (it->lower - extent.lower) / extent.diagonal;
+			C.lower.z = 1.0 - C.lower.z;
+			toArray(coords+off, C.lower, C.upper);
+			off += 24;
+		}
+	}
+	
+	// Or if not overlapped just send regular coordinates
+	else {
+		toArray(coords, Vector(0,0,1), Vector(1,1,0));
+	}
+	
+	// Send to buffer
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords), coords);
 }
 
 

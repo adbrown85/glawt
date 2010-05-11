@@ -27,8 +27,8 @@
 <texture name="crate" file="../../textures/crate.jpg">
 <texture name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader file="../../glsl/lighting.vert" />
-		<shader file="../../glsl/lighting.frag" />
+		<shader file="../../glsl/basic.vert" />
+		<shader file="../../glsl/basic.frag" />
 		<uniform type="mat4" name="MVMatrix" as="modelview" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<uniform type="mat4" name="NormalMatrix" as="normal" />

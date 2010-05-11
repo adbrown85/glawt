@@ -31,10 +31,10 @@ protected:
 	virtual void findTake();
 	virtual void initPoints();
 	virtual void initNormals();
-	virtual void initCoords() {}
+	virtual void initCoords();
 	virtual void updateTangible();
 private:
-	GLfloat points[72][3];
+	GLfloat points[72][3], coords[72][3];
 	int takeID;
 	Shape *takeShape;
 	list<Extent> pieces;
