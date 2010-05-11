@@ -48,7 +48,7 @@ void UniformSampler::associate() {
 	if (texture == NULL) {
 		NodeException e(tag);
 		e << "[UniformSampler] Could not find texture with '" << link
-		  << "'as name.";
+		  << "' as name.";
 		throw e;
 	}
 	value = texture->getUnit();
