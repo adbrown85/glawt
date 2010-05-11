@@ -15,6 +15,12 @@
 using namespace std;
 
 
+/**
+ * @ingroup graph
+ * @brief %Exception thrown from a Node.
+ * 
+ * Automatically initializes the exception's message to the tag's location.
+ */
 class NodeException : public Exception {
 public:
 	NodeException(const Tag &tag);

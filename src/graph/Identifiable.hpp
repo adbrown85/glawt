@@ -15,8 +15,7 @@ using namespace std;
 /**
  * @interface Identifiable
  * @ingroup graph
- * @brief
- *     Interface for an object that has a unique ID number.
+ * @brief Interface for an object that has a unique ID number.
  */
 class Identifiable {
 public:

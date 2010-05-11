@@ -9,9 +9,7 @@ Scene Tester::scene;
 Traverser *Tester::traverser;
 
 
-/**
- * GLUT display callback.
- */
+/** GLUT display callback. */
 void Tester::display(void) {
 	
 	// Clear
@@ -27,6 +25,7 @@ void Tester::display(void) {
 }
 
 
+/** Creates a window, opens the scene, and prepares it. */
 void Tester::open(const string &filename) {
 	
 	// Print
@@ -53,6 +52,7 @@ void Tester::open(const string &filename) {
 }
 
 
+/** Starts the window's main loop, catching any exceptions. */
 void Tester::start() {
 	
 	try {

@@ -9,10 +9,7 @@ unsigned int Identifiable::count=0;
 vector<Identifiable*> Identifiable::ids;
 
 
-/**
- * Increments the counter and stores it as this identifiable 
- * object's unique ID number.
- */
+/** Increments counter and stores it as this object's unique ID number. */
 Identifiable::Identifiable() {
 	
 	id = count++;
@@ -20,10 +17,9 @@ Identifiable::Identifiable() {
 }
 
 
-/**
- * Finds an identifiable object by its unique ID number.
+/** Finds an identifiable object by its unique ID number.
  * 
- * @return Pointer to the object.
+ * @return Pointer to the object (NULL if not found).
  */
 Identifiable* Identifiable::findByID(unsigned int id) {
 	
@@ -35,15 +31,14 @@ Identifiable* Identifiable::findByID(unsigned int id) {
 }
 
 
-/**
- * Returns a unique identifier to the object.
- */
+/** Returns a unique identifier to the object. */
 unsigned int Identifiable::getID() const {
 	
 	return id;
 }
 
 
+/** Forms a string from the object's attributes. */
 string Identifiable::toString() const {
 	
 	stringstream stream;

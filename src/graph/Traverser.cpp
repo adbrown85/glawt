@@ -43,8 +43,7 @@ void Traverser::start() {
 }
 
 
-/**
- * Recursively traverses the children of a node.
+/** Recursively traverses the children of a node.
  * 
  * This functionality is implemented as a separate function, as opposed to 
  * incorporating it directly into <i>paint</i>, because some nodes need to 
@@ -67,8 +66,7 @@ void Traverser::traverseChildren(Node *node) {
 }
 
 
-/**
- * Recursively traverses a node.
+/** Recursively traverses a node.
  * 
  * Automatically takes care of performing different actions depending on what 
  * type of interfaces the node supports.

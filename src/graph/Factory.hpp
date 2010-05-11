@@ -20,9 +20,7 @@
 using namespace std;
 
 
-/**
- * Creator function.
- */
+/* Creator function. */
 typedef Node* (*creator_t)(const Tag &tag);
 
 

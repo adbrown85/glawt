@@ -47,9 +47,7 @@ Node* Factory::create(const string &text,
 }
 
 
-/**
- * @throws NodeException if Factory could not find a creator function.
- */
+/** @throws NodeException if Factory could not find a creator function. */
 void Factory::error(const Tag &tag) {
 	
 	NodeException e(tag);
