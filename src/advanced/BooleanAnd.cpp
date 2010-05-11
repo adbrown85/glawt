@@ -11,39 +11,37 @@
 void BooleanAnd::associate() {
 	
 	Boolean::associate();
-	findUnits();
+	findUniforms();
 }
 
 
-/** Find sampler that a shape uses. */
-UniformSampler* BooleanAnd::findSampler(Shape *shape) {
+/** Finds and copies uniforms from each shape. */
+void BooleanAnd::findUniforms() {
 	
-	Node::iterator it;
-	UniformSampler *sampler;
+	Node *node;
+	Uniform *uniform;
+	ostringstream stream;
+	Tag tag;
 	
-	// Check each child for a sampler
-	for (it=shape->begin(); it!=shape->end(); ++it) {
-		sampler = dynamic_cast<UniformSampler*>(*it);
-		if (sampler != NULL)
-			return sampler;
-	}
-	return NULL;
-}
-
-
-/** Finds the texture units for each shape. */
-void BooleanAnd::findUnits() {
-	
-	vector<Shape*>::iterator it;
-	UniformSampler *sampler;
-	
-	// Store unit from sampler under each shape
-	for (it=shapes.begin(); it!=shapes.end(); ++it) {
-		sampler = findSampler(*it);
-		if (sampler == NULL) {
-			units.push_back(-1);
-		} else {
-			units.push_back(sampler->getValue());
+	// For each child under each shape
+	for (size_t i=0; i<shapes.size(); ++i) {
+		Node::iterator it;
+		for (it=shapes[i]->begin(); it!=shapes[i]->end(); ++it) {
+			
+			// See if it's a uniform
+			uniform = dynamic_cast<Uniform*>(*it);
+			if (uniform == NULL) {
+				continue;
+			}
+			
+			// If so, copy it
+			tag = uniform->getTag();
+			tag.setLine(this->tag.getLine());
+			stream.str("");
+			stream << tag["name"] << i;
+			tag["name"] = stream.str();
+			node = Factory::create(tag);
+			addChild(node);
 		}
 	}
 }
