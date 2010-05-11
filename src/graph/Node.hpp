@@ -48,6 +48,7 @@ public:
 	string getClassName() const;
 	float getDepth() const;
 	Node* getParent() const;
+	Tag getTag() const;
 	bool hasChildren() const;
 	friend ostream& operator<<(ostream &stream, const Node &node);
 	void setDepth(float depth);
@@ -72,6 +73,7 @@ inline void Node::erase(Node::iterator it) {children.erase(it);}
 inline vector<Node*> Node::getChildren() const {return children;}
 inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
+inline Tag Node::getTag() const {return tag;}
 inline bool Node::hasChildren() const {return !children.empty();}
 inline void Node::setDepth(float depth) {this->depth = depth;}
 inline void Node::setParent(Node *parent) {this->parent = parent;}
