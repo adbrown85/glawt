@@ -11,6 +11,7 @@
 #include <string>
 #include "Boolean.hpp"
 #include "UniformSampler.hpp"
+#include "Factory.hpp"
 using namespace std;
 
 
@@ -22,16 +23,14 @@ class BooleanAnd : public Boolean {
 public:
 	BooleanAnd(const Tag &tag) : Boolean(tag,getTraits()) {}
 	virtual void associate();
-	UniformSampler* findSampler(Shape *shape);
-	virtual void findUnits();
 	static ShapeTraits getTraits();
 protected:
+	virtual void findUniforms();
 	virtual void initPoints();
 	virtual void initCoords();
 	virtual void updateTangible();
 private:
 	GLfloat points[24][3], coords[2][24][3];
-	list<int> units;
 };
 
 

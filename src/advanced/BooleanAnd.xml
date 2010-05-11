@@ -11,14 +11,14 @@
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube>
 			<uniform type="vec4" name="Color" value="1 0 1 1" />
-			<uniform type="sampler2D" name="unit" link="crate" />
+			<uniform type="sampler2D" name="Unit" link="crate" />
 		</cube>
 	</translate>
 	<translate x="+0.5" y="+0.5" z="-0.5">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube>
 			<uniform type="vec4" name="Color" value="0 1 1 1" />
-			<uniform type="sampler2D" name="unit" link="stone" />
+			<uniform type="sampler2D" name="Unit" link="stone" />
 		</cube>
 	</translate>
 </group>
