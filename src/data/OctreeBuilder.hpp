@@ -24,6 +24,7 @@ public:
 	OctreeBuilder(Dataset *dataset);
 	~OctreeBuilder();
 	OctreeNode* build();
+	int* getOffsets() const;
 	int getTotalNodes() const;
 	int getTreeHeight() const;
 	static int getTreeHeightOf(Dataset *dataset);
@@ -42,6 +43,8 @@ private:
 	int *offsets, totalNodes, treeHeight;
 };
 
+
+inline int* OctreeBuilder::getOffsets() const {return offsets;}
 
 /** @return Total number of nodes in the tree. */
 inline int OctreeBuilder::getTotalNodes() const {return totalNodes;}

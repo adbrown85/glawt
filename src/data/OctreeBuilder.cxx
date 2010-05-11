@@ -43,8 +43,8 @@ void OctreeBuilderTester::print(OctreeNode *node) {
 
 void OctreeBuilderTester::printOffsets() {
 	
-	for (int i=0; i<treeHeight+1; ++i) {
-		cout << "  " << offsets[i] << endl;
+	for (int i=0; i<getTreeHeight()+1; ++i) {
+		cout << "  " << getOffsets()[i] << endl;
 	}
 }
 
