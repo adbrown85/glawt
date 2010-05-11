@@ -27,11 +27,6 @@ struct Extent {
 	int label;
 };
 
-/* Texture coordinates of a shape. */
-struct Coordinates {
-	Vector upper, lower;
-};
-
 
 /**
  * @ingroup advanced

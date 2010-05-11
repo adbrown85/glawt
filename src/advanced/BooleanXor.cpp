@@ -135,24 +135,24 @@ void BooleanXor::initCoords() {
 	
 	int off;
 	list<Extent>::iterator it;
-	Coordinates C;
+	Vector lower(0,0,1), upper(1,1,0);
 	
 	// Calculate coordinates of each piece based on extent of total shape
 	if (isOverlapped()) {
 		off = 0;
 		for (it=pieces.begin(); it!=pieces.end(); ++it) {
-			C.upper = (it->upper - extents[take].lower) / extents[take].diagonal;
-			C.upper.z = 1.0 - C.upper.z;
-			C.lower = (it->lower - extents[take].lower) / extents[take].diagonal;
-			C.lower.z = 1.0 - C.lower.z;
-			toArray(coords+off, C.lower, C.upper);
+			upper = (it->upper - extents[take].lower) / extents[take].diagonal;
+			upper.z = 1.0 - upper.z;
+			lower = (it->lower - extents[take].lower) / extents[take].diagonal;
+			lower.z = 1.0 - lower.z;
+			toArray(coords+off, lower, upper);
 			off += 24;
 		}
 	}
 	
 	// Or if not overlapped just send regular coordinates
 	else {
-		toArray(coords, Vector(0,0,1), Vector(1,1,0));
+		toArray(coords, lower, upper);
 	}
 	
 	// Send to buffer

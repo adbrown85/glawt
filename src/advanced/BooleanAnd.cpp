@@ -88,16 +88,16 @@ void BooleanAnd::initPoints() {
 /** Updates the texture coordinates in the vertex buffer. */
 void BooleanAnd::initCoords() {
 	
-	Extent C;
+	Vector upper, lower;
 	list<Extent>::iterator it;
 	
 	// Calculate coordinates from overlap
 	for (size_t i=0; i<extents.size(); ++i) {
-		C.upper = (overlap.upper - extents[i].lower) / extents[i].diagonal;
-		C.upper.z = 1.0 - C.upper.z;
-		C.lower = (overlap.lower - extents[i].lower) / extents[i].diagonal;
-		C.lower.z = 1.0 - C.lower.z;
-		toArray(coords[i], C.lower, C.upper);
+		upper = (overlap.upper - extents[i].lower) / extents[i].diagonal;
+		upper.z = 1.0 - upper.z;
+		lower = (overlap.lower - extents[i].lower) / extents[i].diagonal;
+		lower.z = 1.0 - lower.z;
+		toArray(coords[i], lower, upper);
 	}
 	
 	// Send to buffer
