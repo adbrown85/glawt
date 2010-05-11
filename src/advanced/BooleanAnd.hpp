@@ -18,6 +18,12 @@ using namespace std;
 /**
  * @ingroup advanced
  * @brief Boolean AND operation of two shapes.
+ * 
+ * Uses the following vertex attributes:
+ *   - MCVertex
+ *   - MCNormal
+ *   - TexCoord0
+ *   - TexCoord1
  */
 class BooleanAnd : public Boolean {
 public:
