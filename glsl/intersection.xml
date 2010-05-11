@@ -1,0 +1,43 @@
+<!--
+ * intersection.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<group name="cubes">
+	<translate x="-2">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube name="left">
+			<uniform type="vec4" name="Color" value="1 0 1 1" />
+			<uniform type="sampler3D" name="Texture" link="skull" />
+		</cube>
+	</translate>
+	<translate x="+2">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube name="right">
+			<uniform type="vec4" name="Color" value="0 1 1 1" />
+			<uniform type="sampler3D" name="Texture" link="bear" />
+		</cube>
+	</translate>
+</group>
+
+
+<texture name="skull" file="../textures/skull.vlb">
+<texture name="bear" file="../textures/bear.vlb">
+	<program>
+		<shader file="intersection.vert" />
+		<shader file="intersection.frag" />
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<boolean operation="AND" of="cubes" selectable="false" />
+	</program>
+	<program>
+		<shader file="color.vert" />
+		<shader file="color.frag" />
+		<wireframe>
+			<instance of="cubes" />
+		</wireframe>
+	</program>
+</texture>
+</texture>
