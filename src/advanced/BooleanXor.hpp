@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include "Boolean.hpp"
+#include <climits>
 using namespace std;
 
 
@@ -27,7 +28,6 @@ public:
 protected:
 	virtual void calculate();
 	pair<Extent,Extent> knife(const Extent &extent, float at, int on);
-	virtual void findShapes();
 	virtual void findTake();
 	virtual void initPoints();
 	virtual void initNormals();
@@ -35,8 +35,7 @@ protected:
 	virtual void updateTangible();
 private:
 	GLfloat points[72][3], coords[72][3];
-	int takeID;
-	Shape *takeShape;
+	GLuint take;
 	list<Extent> pieces;
 };
 

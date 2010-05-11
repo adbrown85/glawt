@@ -84,21 +84,6 @@ void Boolean::findGroup() {
 }
 
 
-/** Find texture unit that corresponds with the texture coordinates. */
-UniformSampler* Boolean::findSampler(Shape *shape) {
-	
-	Node::iterator it;
-	UniformSampler *sampler;
-	
-	for (it=shape->begin(); it!=shape->end(); ++it) {
-		sampler = dynamic_cast<UniformSampler*>(*it);
-		if (sampler != NULL)
-			return sampler;
-	}
-	return NULL;
-}
-
-
 /** @throws NodeException if no shapes are in group. */
 void Boolean::findShapes() {
 	
@@ -121,9 +106,9 @@ void Boolean::findShapes() {
 	}
 	
 	// Check
-	if (shapes.size() == 0) {
+	if (shapes.size() != 2) {
 		NodeException e(tag);
-		e << "[Boolean] No shapes found in group.";
+		e << "[Boolean] Must use two shapes for boolean.";
 		throw e;
 	}
 }
@@ -209,11 +194,16 @@ void Boolean::update() {
 /** Traverse the group and calculate extents for each shape. */
 void Boolean::updateExtents() {
 	
-	// Collect extents of shapes in group
+	// Load identity matrix
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
+	
+	// Collect all the extents in the group
+	extents.clear();
 	updateExtents(group);
+	
+	// Restore original matrix
 	glPopMatrix();
 }
 
@@ -233,7 +223,7 @@ void Boolean::updateExtents(Node *node) {
 		transform->remove();
 	}
 	
-	// Store shapes with extents
+	// Store extents of shapes
 	else if ((shape = dynamic_cast<Shape*>(node))) {
 		Extent extent;
 		mvm = Transform::getModelViewMatrix();
@@ -241,10 +231,10 @@ void Boolean::updateExtents(Node *node) {
 		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
 		extent.diagonal = extent.upper - extent.lower;
 		extent.label = shape->getID();
-		extents[shape] = extent;
+		extents.push_back(extent);
 	}
 	
-	// Just do children
+	// Otherwise just do children
 	else {
 		for (it=node->begin(); it!=node->end(); ++it) {
 			updateExtents(*it);
@@ -256,14 +246,14 @@ void Boolean::updateExtents(Node *node) {
 /** Find where the shapes overlap. */
 void Boolean::updateOverlap() {
 	
-	map<Shape*,Extent>::iterator it;
+	vector<Extent>::iterator it;
 	
 	// Form shape
 	overlap.upper = Vector(+FLT_INF);
 	overlap.lower = Vector(-FLT_INF);
 	for (it=extents.begin(); it!=extents.end(); ++it) {
-		overlap.upper = min(overlap.upper, it->second.upper);
-		overlap.lower = max(overlap.lower, it->second.lower);
+		overlap.upper = min(overlap.upper, it->upper);
+		overlap.lower = max(overlap.lower, it->lower);
 	}
 	overlap.diagonal = overlap.upper - overlap.lower;
 }

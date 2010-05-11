@@ -11,13 +11,12 @@
 #include <sstream>
 #include <string>
 #include <limits>                       // Calculating result
-#include <list>                         // Storing shapes
 #include <queue>                        // Finding shapes
+#include <vector>                       // Storing shapes and extents
 #include "Group.hpp"
 #include "Shape.hpp"
 #include "Transformation.hpp"
 #include "Transform.hpp"
-#include "UniformSampler.hpp"
 #include "Hexahedron.hpp"
 using namespace std;
 
@@ -53,7 +52,6 @@ public:
 	virtual string toString() const;
 protected:
 	void findGroup();
-	UniformSampler* findSampler(Shape *shape);
 	virtual void findShapes();
 	void findTransforms();
 	virtual void initAttributes();
@@ -68,9 +66,8 @@ protected:
 	bool tangible;
 	Extent overlap;
 	Group *group;
-	list<Shape*> shapes;
-	map<Shape*,Extent> extents;
-	map<int,Coordinates> units;
+	vector<Shape*> shapes;
+	vector<Extent> extents;
 	Matrix mvm;
 	string of, operation;
 	static float FLT_INF;

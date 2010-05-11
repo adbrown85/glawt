@@ -21,11 +21,8 @@ void BooleanXor::calculate() {
 	
 	// Initialize
 	pieces.clear();
-	A =    extents.begin() ->second;
-	B = (++extents.begin())->second;
-	if (A.label != takeID) {
-		swap(A, B);
-	}
+	A = extents[ take];
+	B = extents[!take];
 	
 	// Split
 	for (int i=0; i<3; ++i) {
@@ -50,19 +47,6 @@ void BooleanXor::calculate() {
 }
 
 
-void BooleanXor::findShapes() {
-	
-	Boolean::findShapes();
-	
-	// Check size
-	if (shapes.size() != 2) {
-		NodeException e(tag);
-		e << "[BooleanXor] Must use two shapes.";
-		throw e;
-	}
-}
-
-
 /** Searches for the shape the operation should limit its output to.
  * 
  * @throws NodeException if a shape matching @e only cannot be found.
@@ -70,22 +54,21 @@ void BooleanXor::findShapes() {
 void BooleanXor::findTake() {
 	
 	string text;
-	list<Shape*>::iterator it;
-	Shape *shape;
 	
-	// Look through list of shapes for matching name
+	// Get name of shape
 	tag.get("take", text, true, false);
-	takeShape = NULL;
-	for (it=shapes.begin(); it!=shapes.end(); ++it) {
-		shape = *it;
-		if (shape->getName() == text) {
-			takeID = shape->getID();
-			takeShape = shape;
+	
+	// Look through list of shapes for it
+	take = UINT_MAX;
+	for (size_t i=0; i<shapes.size(); ++i) {
+		if (shapes[i]->getName() == text) {
+			take = i;
+			break;
 		}
 	}
 	
-	// Make sure it found it
-	if (takeShape == NULL) {
+	// Make sure it was found
+	if (take == UINT_MAX) {
 		NodeException e(tag);
 		e << "[BooleanXor] Could not find shape named '" << text << "'.";
 		throw e;
@@ -109,21 +92,25 @@ ShapeTraits BooleanXor::getTraits() {
 
 void BooleanXor::initPoints() {
 	
+	list<Extent>::iterator it;
+	
+	// Overlapped so form points from pieces
 	if (isOverlapped()) {
 		calculate();
 		count = 0;
-		list<Extent>::iterator it;
 		for (it=pieces.begin(); it!=pieces.end(); ++it) {
 			toArray(points+count, it->lower, it->upper);
 			count += 24;
 		}
-	} else {
-		map<Shape*,Extent>::iterator it;
-		it = extents.find(takeShape);
-		toArray(points   , it->second.lower, it->second.upper);
+	}
+	
+	// Otherwise send just the shape itself
+	else {
+		toArray(points, extents[take].lower, extents[take].upper);
 		count = 24;
 	}
 	
+	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
 }
@@ -133,9 +120,12 @@ void BooleanXor::initNormals() {
 	
 	GLfloat normals[72][3];
 	
+	// Fill array with normals
 	toNormals(normals);
 	toNormals(normals+24);
 	toNormals(normals+48);
+	
+	// Send to buffer
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
 }
@@ -143,19 +133,17 @@ void BooleanXor::initNormals() {
 
 void BooleanXor::initCoords() {
 	
-	Extent extent;
 	int off;
 	list<Extent>::iterator it;
 	Coordinates C;
 	
-	// Calculate each piece based on overlap
+	// Calculate coordinates of each piece based on extent of total shape
 	if (isOverlapped()) {
-		extent = extents.find(takeShape)->second;
 		off = 0;
 		for (it=pieces.begin(); it!=pieces.end(); ++it) {
-			C.upper = (it->upper - extent.lower) / extent.diagonal;
+			C.upper = (it->upper - extents[take].lower) / extents[take].diagonal;
 			C.upper.z = 1.0 - C.upper.z;
-			C.lower = (it->lower - extent.lower) / extent.diagonal;
+			C.lower = (it->lower - extents[take].lower) / extents[take].diagonal;
 			C.lower.z = 1.0 - C.lower.z;
 			toArray(coords+off, C.lower, C.upper);
 			off += 24;
@@ -177,12 +165,17 @@ pair<Extent,Extent> BooleanXor::knife(const Extent &extent, float at, int on) {
 	
 	Extent l, u;
 	
+	// Lower section
 	l = extent;
 	l.upper[on] = at;
 	l.diagonal = l.upper - l.lower;
+	
+	// Upper section
 	u = extent;
 	u.lower[on] = at;
 	u.diagonal = u.upper - u.lower;
+	
+	// Finish
 	return pair<Extent,Extent>(l,u);
 }
 
@@ -192,7 +185,7 @@ string BooleanXor::toString() const {
 	ostringstream stream;
 	
 	stream << Boolean::toString();
-	stream << " take='" << takeShape->getName() << "'";
+	stream << " take='" << take << "'";
 	return stream.str();
 }
 
