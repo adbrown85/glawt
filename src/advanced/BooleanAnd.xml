@@ -27,8 +27,8 @@
 <texture name="crate" file="../../textures/crate.jpg">
 <texture name="stone" file="../../textures/stone.jpg">
 	<program>
-		<shader file="../../glsl/coordinates.vert" />
-		<shader file="../../glsl/coordinates.frag" />
+		<shader file="BooleanAnd.vert" />
+		<shader file="BooleanAnd.frag" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<boolean operation="AND" of="cubes" selectable="false" />
 	</program>
