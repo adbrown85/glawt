@@ -7,8 +7,7 @@
 #include "DatasetHeader.hpp"
 
 
-/**
- * Reads a header from a dataset file.
+/** Reads a header from a dataset file.
  * 
  * @param [in] filename Path to the file.
  * @throws const_char* from check()
@@ -24,8 +23,7 @@ DatasetHeader::DatasetHeader(string filename) {
 }
 
 
-/**
- * Reads a header from a dataset file specified by an XML tag.
+/** Reads a header from a dataset file specified by an XML tag.
  * 
  * @param [in] tag XML tag with file attribute specifying path to the file.
  * @throws const_char* from check()
@@ -41,8 +39,7 @@ DatasetHeader::DatasetHeader(const Tag &tag) {
 }
 
 
-/**
- * Reads a dataset header directly from an input stream.
+/** Reads a dataset header directly from an input stream.
  * 
  * @param [in] stream Input stream to read from.
  * @throws const_char* from check()
@@ -54,8 +51,7 @@ DatasetHeader::DatasetHeader(istream &stream) {
 }
 
 
-/**
- * Checks if the file exists, then calls check(istream&).
+/** Checks if the file exists, then calls check(istream&).
  * 
  * @throws const_char* if the file could not be opened.
  */
@@ -75,8 +71,7 @@ void DatasetHeader::check() {
 }
 
 
-/**
- * Checks if the stream has a good header, then finds its beginning.
+/** Checks if the stream has a good header, then finds its beginning.
  * 
  * Determines if the header is good by reading the first line of the stream as 
  * text.  It will only be deemed appropriate if the first line is equal to 
@@ -114,8 +109,7 @@ void DatasetHeader::check(istream &stream) {
 }
 
 
-/**
- * Prints details of the header.
+/** Prints details of the header.
  * 
  * @see getWidth()
  * @see getHeight()
@@ -146,9 +140,7 @@ void DatasetHeader::print() const {
 }
 
 
-/**
- * Opens the file then calls read(istream&).
- */
+/** Opens the file then calls read(istream&). */
 void DatasetHeader::read() {
 	
 	ifstream file;
@@ -160,8 +152,7 @@ void DatasetHeader::read() {
 }
 
 
-/**
- * Reads the details in the header and sets @c offset.
+/** Reads the details in the header and sets @c offset.
  * 
  * @see getOffset()
  */

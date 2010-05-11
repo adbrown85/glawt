@@ -16,18 +16,6 @@ OctreeNode::OctreeNode() {
 }
 
 
-bool OctreeNode::isEmpty() {
-	
-	return empty;
-}
-
-
-void OctreeNode::setEmpty(bool empty) {
-	
-	this->empty = empty;
-}
-
-
 string OctreeNode::toString() {
 	
 	stringstream stream;

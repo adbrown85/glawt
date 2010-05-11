@@ -7,8 +7,7 @@
 #include "FileUtility.hpp"
 
 
-/**
- * Builds a path from its parts.
+/** Builds a path from its parts.
  * 
  * @param root Root of the path.
  * @param parts Parts of the path.
@@ -34,9 +33,7 @@ string FileUtility::build(const string &root,
 }
 
 
-/**
- * @return filename part from a path.
- */
+/** @return filename part from a path. */
 string FileUtility::getBasename(const string& path) {
 	
 	int index;
@@ -50,9 +47,7 @@ string FileUtility::getBasename(const string& path) {
 }
 
 
-/**
- * @return directory part from a path.
- */
+/** @return directory part from a path. */
 string FileUtility::getDirname(const string& path) {
 	
 	size_t index;
@@ -86,17 +81,14 @@ string FileUtility::getExtension(const string &path) {
 }
 
 
-/**
- * @return directories between root and filename.
- */
+/** @return directories between root and filename. */
 string FileUtility::getInternals(const string& path) {
 	
 	return stripRoot(getDirname(path));
 }
 
 
-/**
- * Makes a filename relative to another path.
+/** Makes a filename relative to another path.
  * 
  * @param primary Path used as the base.
  * @param secondary Relative path to modify primary.
@@ -127,9 +119,7 @@ string FileUtility::getRelativePath(const string &primary,
 }
 
 
-/**
- * @return top-most directory from a path.
- */
+/** @return top-most directory from a path. */
 string FileUtility::getRoot(const string &path) {
 	
 	// Unix
@@ -146,18 +136,14 @@ string FileUtility::getRoot(const string &path) {
 }
 
 
-/**
- * @return true if the path starts with a drive letter and a colon.
- */
+/** @return true if the path starts with a drive letter and a colon. */
 bool FileUtility::hasWindowsRoot(const string &token) {
 	
 	return isalpha(token[0]) && token[1]==':';
 }
 
 
-/**
- * @return true if the filename is an absolute path.
- */
+/** @return true if the filename is an absolute path. */
 bool FileUtility::isAbsolutePath(const string& filename) {
 	
 	// Check for Unix absolute path
@@ -175,26 +161,21 @@ bool FileUtility::isAbsolutePath(const string& filename) {
 }
 
 
-/**
- * @return true if the token is a drive letter followed by a colon.
- */
+/** @return true if the token is a drive letter followed by a colon. */
 bool FileUtility::isWindowsRoot(const string& token) {
 	
 	return (token.length()==2) && hasWindowsRoot(token);
 }
 
 
-/**
- * @return true if the character is a forward slash or backslash.
- */
+/** @return true if the character is a forward slash or backslash. */
 bool FileUtility::isSeparator(char character) {
 	
 	return character == '/' || character == '\\';
 }
 
 
-/**
- * Merges a relative path with a base path.
+/** Merges a relative path with a base path.
  * 
  * @param root Top-most directory
  * @param path Base path
@@ -255,9 +236,7 @@ string FileUtility::replaceEnvironmentVariable(const string &path) {
 }
 
 
-/**
- * Removes the top-most directory from a path.
- */
+/** Removes the top-most directory from a path. */
 string FileUtility::stripRoot(const string &path) {
 	
 	// Absolute path
@@ -283,8 +262,7 @@ string FileUtility::stripRoot(const string &path) {
 }
 
 
-/**
- * Splits a filename up into tokens.
+/** Splits a filename up into tokens.
  * 
  * @param filename Path to split up.
  * @param tokens Parts of the path.

@@ -13,26 +13,17 @@ using namespace std;
 
 /**
  * @ingroup data
- * @brief
- *     Location in a three-dimensional array.
+ * @brief Location in a three-dimensional array.
  */
 class Index {
-	
-	public :
-		
-		int i, j, k;
-		
-		Index();
-		Index(int i,
-		      int j,
-		      int k);
-		Index& operator=(const Index &B);
-		void set(int value);
-		
-		friend ostream& operator<<(ostream &stream,
-		                           const Index &index);
-		friend Index operator+(const Index &A,
-		                       const Index &B);
+public:
+	int i, j, k;
+	Index();
+	Index(int i, int j, int k);
+	Index& operator=(const Index &B);
+	void set(int value);
+	friend ostream& operator<<(ostream &stream, const Index &index);
+	friend Index operator+(const Index &A, const Index &B);
 };
 
 
@@ -44,9 +35,7 @@ inline Index::Index() {
 }
 
 
-inline Index::Index(int i,
-                    int j,
-                    int k) {
+inline Index::Index(int i, int j, int k) {
 	
 	this->i = i;
 	this->j = j;
@@ -71,8 +60,7 @@ inline Index& Index::operator=(const Index &B) {
 }
 
 
-inline ostream& operator<<(ostream &stream,
-                           const Index &index) {
+inline ostream& operator<<(ostream &stream, const Index &index) {
 	
 	stream << '(' << index.i
 	       << ',' << index.j
@@ -82,8 +70,7 @@ inline ostream& operator<<(ostream &stream,
 }
 
 
-inline Index operator+(const Index &A,
-                       const Index &B) {
+inline Index operator+(const Index &A, const Index &B) {
 	
 	return Index(A.i+B.i, A.j+B.j, A.k+B.k);
 }

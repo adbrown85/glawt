@@ -76,36 +76,22 @@ private:
 };
 
 
-/**
- * @return Number of bytes in one sample.
- */
+/** @return Number of bytes in one sample. */
 inline int Dataset::getBlock() const {return block;}
 
-
-/**
- * @return Pointer to the start of all the data.
- */
+/** @return Pointer to the start of all the data. */
 inline void* Dataset::getData() {return data;}
 
-
-/**
- * @return Number of samples in the Z direction.
- */
+/** @return Number of samples in the Z direction. */
 inline int Dataset::getDepth() const {return depth;}
 
-
-/**
- * @return Number of samples in the Y direction.
- */
+/** @return Number of samples in the Y direction. */
 inline int Dataset::getHeight() const {return height;}
 
-
-/**
- * Currently, the return value will be one of 
- * 
- * @li @c GL_UNSIGNED_BYTE,
- * @li @c GL_SHORT, or 
- * @li @c GL_FLOAT,
+/** Currently, the return value will be one of 
+ *   - @c GL_UNSIGNED_BYTE,
+ *   - @c GL_SHORT, or 
+ *   - @c GL_FLOAT,
  * 
  * which can then be used in a @c switch statement.
  * 
@@ -113,16 +99,10 @@ inline int Dataset::getHeight() const {return height;}
  */
 inline GLenum Dataset::getType() const {return type;}
 
-
-/**
- * @return Number of samples in the X direction.
- */
+/** @return Number of samples in the X direction. */
 inline int Dataset::getWidth() const {return width;}
 
-
-/**
- * Prints the header of the dataset.
- */
+/** Prints the header of the dataset. */
 inline void Dataset::print() const {header.print();}
 
 
