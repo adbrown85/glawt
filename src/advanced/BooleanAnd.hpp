@@ -17,7 +17,7 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief Boolean AND operation of two shapes.
+ * @brief %Boolean AND operation of two shapes.
  * 
  * Uses the following vertex attributes:
  *   - MCVertex

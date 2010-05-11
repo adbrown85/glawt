@@ -23,7 +23,7 @@
 using namespace std;
 
 
-/** @typedef Function pointer listener to be called on a specific command. */
+/* Function pointer listener to be called on a specific command. */
 typedef void (*interpreter_listener)();
 
 

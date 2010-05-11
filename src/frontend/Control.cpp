@@ -10,7 +10,6 @@
 /** Creates a new control using the specified Delegate to run commands.
  * 
  * @param interpreter Class that will run commands
- * @param scene Pointer to the collection of nodes
  */
 Control::Control(Interpreter *interpreter) {
 	

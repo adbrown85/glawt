@@ -13,13 +13,13 @@
 using namespace std;
 
 
-/** @typedef Function pointer for a command with no arguments. */
+/* Function pointer for a command with no arguments. */
 typedef void(*handler_0)(Scene*,int);
 
-/** @typedef Function pointer for a command with a float argument. */
+/* Function pointer for a command with a float argument. */
 typedef void(*handler_f)(Scene*,int,float);
 
-/** @typedef Function pointer for a command with a string argument. */
+/* Function pointer for a command with a string argument. */
 typedef void(*handler_s)(Scene*,int,string);
 
 

@@ -153,11 +153,10 @@ string Parser::findTag() {
 }
 
 
-/**
- * Checks if the next few characters indicate a comment.
+/** Checks if the current character and the next few matches some text.
  * 
- * @param comment Characters that start or end a comment.
- * @return True if the characters indicate a comment.
+ * @param text String to match against.
+ * @return True if everything matches.
  */
 bool Parser::match(const string &text) {
 	
