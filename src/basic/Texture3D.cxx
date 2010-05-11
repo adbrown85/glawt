@@ -10,9 +10,7 @@ void display(void);
 void init(int,char*[],string);
 
 
-/**
- * Unit test for Texture3D.
- */
+/* Unit test for Texture3D. */
 int main(int argc,
          char *argv[]) {
 	
@@ -60,9 +58,7 @@ int main(int argc,
 }
 
 
-/**
- * Initializes the GLUT display.
- */
+/* Initializes the GLUT display. */
 void init(int argc,
           char *argv[],
           string title) {
@@ -90,9 +86,7 @@ void init(int argc,
 }
 
 
-/**
- * GLUT display callback.
- */
+/* GLUT display callback. */
 void display(void) {
 	
 	// Initialize

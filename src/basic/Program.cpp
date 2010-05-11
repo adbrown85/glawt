@@ -30,9 +30,7 @@ void Program::apply() {
 }
 
 
-/**
- * Creates the program so other nodes can use it.
- */
+/** Creates the program so other nodes can use it. */
 void Program::associate() {
 	
 	// Create program

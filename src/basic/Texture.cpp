@@ -8,8 +8,7 @@
 vector<GLenum> Texture::active_units;
 
 
-/**
- * Creates a new texture from an XML tag.
+/** Creates a new texture from an XML tag.
  * 
  * @param [in] type 1D, 2D, or 3D.
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
@@ -26,9 +25,7 @@ Texture::Texture(GLenum type,
 }
 
 
-/**
- * Applies the texture.
- */
+/** Applies the texture. */
 void Texture::apply() {
 	
 	// Enable texturing on unit
@@ -39,9 +36,7 @@ void Texture::apply() {
 }
 
 
-/**
- * Finds out which texture unit to use by looking for other texture ancestors.
- */
+/** Finds out which texture unit to use by looking for texture ancestors. */
 void Texture::associate() {
 	
 	Node *current;
@@ -62,9 +57,7 @@ void Texture::associate() {
 }
 
 
-/**
- * Temporarily disables texturing on all active units.
- */
+/** Temporarily disables texturing on all active units. */
 void Texture::pause() {
 	
 	int count;
@@ -78,9 +71,7 @@ void Texture::pause() {
 }
 
 
-/**
- * Removes the texture.
- */
+/** Removes the texture. */
 void Texture::remove() {
 	
 	// Disable texturing on unit
@@ -90,9 +81,7 @@ void Texture::remove() {
 }
 
 
-/**
- * Renables texturing on all active units.
- */
+/** Renables texturing on all active units. */
 void Texture::restart() {
 	
 	int count;
@@ -106,9 +95,7 @@ void Texture::restart() {
 }
 
 
-/**
- * Forms a string using the Texture's attributes.
- */
+/** Forms a string using the Texture's attributes. */
 string Texture::toString() const {
 	
 	ostringstream stream;

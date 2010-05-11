@@ -7,9 +7,7 @@
 #include "UniformSampler.hpp"
 
 
-/**
- * @throws NodeException if <i>link</i> attribute is not specified.
- */
+/** @throws NodeException if @e link attribute is not specified. */
 UniformSampler::UniformSampler(const Tag &tag) :
                                Uniform(tag) {
 	

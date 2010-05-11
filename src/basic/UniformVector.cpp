@@ -7,9 +7,7 @@
 #include "UniformVector.hpp"
 
 
-/**
- * @throws NodeException if the <i>type</i> is not supported.
- */
+/** @throws NodeException if the @e type is not supported. */
 UniformVector::UniformVector(const Tag &tag) :
                              Uniform(tag) {
 	
@@ -27,9 +25,7 @@ UniformVector::UniformVector(const Tag &tag) :
 }
 
 
-/**
- * @throws NodeException if unexpeted size is encountered.
- */
+/** @throws NodeException if unexpeted size is encountered. */
 void UniformVector::apply() {
 	
 	if (location == -1)

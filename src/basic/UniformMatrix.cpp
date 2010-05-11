@@ -7,9 +7,7 @@
 #include "UniformMatrix.hpp"
 
 
-/**
- * @throws NodeException if matrix type not supported.
- */
+/** @throws NodeException if matrix type not supported. */
 UniformMatrix::UniformMatrix(const Tag &tag) :
                              Uniform(tag) {
 	

@@ -7,8 +7,7 @@
 #include "Texture3D.hpp"
 
 
-/**
- * Creates a new 3D texture from an XML tag.
+/** Creates a new 3D texture from an XML tag.
  * 
  * @param tag XML tag with "name" and "filename" attributes.
  */
@@ -19,9 +18,7 @@ Texture3D::Texture3D(const Tag &tag) :
 }
 
 
-/**
- * Loads the texture on an available texture unit.
- */
+/** Loads the texture on an available texture unit. */
 void Texture3D::associate() {
 	
 	// Find the unit and load
@@ -49,9 +46,7 @@ Texture3D* Texture3D::find(Node *node,
 }
 
 
-/**
- * Loads the dataset as a 3D texture.
- */
+/** Loads the dataset as a 3D texture. */
 void Texture3D::load() {
 	
 	// Bind the texture to the right unit

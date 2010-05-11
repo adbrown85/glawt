@@ -7,8 +7,7 @@
 #include "Uniform.hpp"
 
 
-/**
- * Creates a new %Uniform from an XML tag.
+/** Creates a new %Uniform from an XML tag.
  * 
  * @param tag XML tag with "type", "name", "value", and "link" information.
  */
@@ -22,8 +21,7 @@ Uniform::Uniform(const Tag &tag) : Applicable(tag) {
 }
 
 
-/**
- * Finds a Program node that is an ancestor of this node.
+/** Finds a Program node that is an ancestor of this node.
  * 
  * @throws NodeException if program cannot be found.
  */
@@ -39,8 +37,7 @@ void Uniform::associate() {
 }
 
 
-/**
- * Finds the variable's location in the program.
+/** Finds the variable's location in the program.
  * 
  * @warning if location for uniform cannot be found
  */
@@ -56,6 +53,7 @@ void Uniform::finalize() {
 }
 
 
+/** Forms a string from the object's attributes. */
 string Uniform::toString() const {
 	
 	ostringstream stream;

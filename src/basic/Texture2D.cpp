@@ -8,8 +8,7 @@
 bool Texture2D::librariesLoaded=false;
 
 
-/**
- * Creates a new 2D texture from an XML tag.
+/** Creates a new 2D texture from an XML tag.
  * 
  * @param tag XML tag with "size" attributes.
  */
@@ -22,8 +21,7 @@ Texture2D::Texture2D(const Tag &tag) :
 }
 
 
-/**
- * Generates or loads the texture.
+/** Generates or loads the texture.
  * 
  * Is done here rather than @c finalize() because other nodes might need to get 
  * the texture's handle.
@@ -47,8 +45,7 @@ void Texture2D::associate() {
 }
 
 
-/**
- * Finds a %Texture2D with a specific name.
+/** Finds a %Texture2D with a specific name.
  * 
  * @param node Node to start looking.
  * @param pointer Pointer to the %Texture2D.
@@ -73,9 +70,7 @@ void Texture2D::find(Node *node,
 }
 
 
-/**
- * Generates a blank texture.
- */
+/** Generates a blank texture. */
 void Texture2D::generate() {
 	
 	// Create the texture
@@ -99,8 +94,7 @@ void Texture2D::generate() {
 }
 
 
-/**
- * Initializes required libraries, currently just DevIL.
+/** Initializes required libraries, currently just DevIL.
  * 
  * Checks that DevIL libraries being run by the user are not older than the 
  * libraries used to compile Gander.  If they are, warnings are issued.  Either
@@ -146,8 +140,7 @@ void Texture2D::initLibraries() {
 }
 
 
-/**
- * Loads an image into the texture.
+/** Loads an image into the texture.
  * 
  * @throws NodeException if the libraries could not be loaded
  * @throws NodeException if the image cannot be loaded
@@ -187,9 +180,7 @@ void Texture2D::load() {
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Texture2D::toString() const {
 	
 	ostringstream stream;

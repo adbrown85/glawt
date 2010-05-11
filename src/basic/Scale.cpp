@@ -7,8 +7,7 @@
 #include "Scale.hpp"
 
 
-/**
- * Creates a new %Scale from an XML tag.
+/** Creates a new %Scale from an XML tag.
  * 
  * @param tag XML tag with "x", "y", and "z" values.
  */
@@ -30,9 +29,7 @@ Scale::Scale(const Tag &tag) : Transformation(tag) {
 }
 
 
-/**
- * Performs the transformation.
- */
+/** Performs the transformation. */
 void Scale::apply() {
 	
 	glPushMatrix();
@@ -40,18 +37,14 @@ void Scale::apply() {
 }
 
 
-/**
- * Restores state before transformation was applied.
- */
+/** Restores state before transformation was applied. */
 void Scale::remove() {
 	
 	glPopMatrix();
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Scale::toString() const {
 	
 	ostringstream stream;

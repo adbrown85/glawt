@@ -7,8 +7,7 @@
 #include "Shader.hpp"
 
 
-/**
- * Creates a new %Shader from an XML tag.
+/** Creates a new %Shader from an XML tag.
  * 
  * @param tag XML tag with "type" and "file" attributes.
  * @throws NodeException if extension not recognized as a type.
@@ -41,8 +40,7 @@ Shader::Shader(const Tag &tag) : Node(tag) {
 }
 
 
-/**
- * Cleans up the source array allocated by the %Shader object.
+/** Cleans up the source array allocated by the %Shader object.
  */
 Shader::~Shader() {
 	
@@ -52,8 +50,7 @@ Shader::~Shader() {
 }
 
 
-/**
- * Attaches the shader to a program and compiles the shader.
+/** Attaches the shader to a program and compiles the shader.
  * 
  * @throws NodeException from create()
  * @throws NodeException from load()
@@ -75,8 +72,7 @@ void Shader::associate() {
 }
 
 
-/**
- * Compiles the shader.  Prints the log and exits if unsuccessful.
+/** Compiles the shader and prints the log..
  * 
  * @throws NodeException if the shader doesn't compile.
  */
@@ -96,8 +92,7 @@ void Shader::compile() {
 }
 
 
-/**
- * Creates a GLSL shader.
+/** Requests a handle to a new GLSL shader of the correct type.
  * 
  * @throws NodeException if <i>type</i> is not supported.
  */
@@ -120,9 +115,7 @@ void Shader::create() {
 }
 
 
-/**
- * Prints the file stored in the source array.
- */
+/** Prints the file stored in the source array. */
 void Shader::list() const {
 	
 	// Print
@@ -131,8 +124,7 @@ void Shader::list() const {
 }
 
 
-/**
- * Loads a file into the Shader's source array and passes it to OpenGL.
+/** Loads a file into the Shader's source array and passes it to OpenGL.
  * 
  * @throws NodeException if Preprocessor threw an exception.
  */
@@ -163,9 +155,7 @@ void Shader::load() {
 }
 
 
-/**
- * Prints the log for this shader.
- */
+/** Prints the log for this shader. */
 void Shader::log() const {
 	
 	GLchar *log;
@@ -185,9 +175,7 @@ void Shader::log() const {
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Shader::toString() const {
 	
 	ostringstream stream;
