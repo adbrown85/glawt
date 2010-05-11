@@ -51,7 +51,7 @@ void Boolean::associate() {
 }
 
 
-/** Draws the boolean shape. */
+/** Only draw the boolean operation if its output is tangible. */
 void Boolean::draw() const {
 	
 	// Only draw if tangible
@@ -61,7 +61,7 @@ void Boolean::draw() const {
 }
 
 
-/** Creates the shape. */
+/** Updates and then creates the shape. */
 void Boolean::finalize() {
 	
 	update();
@@ -69,7 +69,10 @@ void Boolean::finalize() {
 }
 
 
-/** @throws NodeException if the group named by @e of cannot be found. */
+/** Finds the group the Boolean should look for shapes in. 
+ * 
+ * @throws NodeException if the group named by @e of cannot be found.
+ */
 void Boolean::findGroup() {
 	
 	group = Group::find(this, of);
@@ -126,7 +129,7 @@ void Boolean::findShapes() {
 }
 
 
-/** Finds transforms in the group and adds this as a listener. */
+/** Finds transforms in the group and listens for changes from them. */
 void Boolean::findTransforms() {
 	
 	Node *node;
@@ -148,6 +151,7 @@ void Boolean::findTransforms() {
 }
 
 
+/** Only initialize all the attributes if the boolean output is tangible. */
 void Boolean::initAttributes() {
 	
 	if (tangible) {
@@ -164,6 +168,7 @@ bool Boolean::isOverlapped() {
 }
 
 
+/** Determines if an extent is three dimensional. */
 bool Boolean::isSubstantial(const Extent &extent) {
 	
 	return fabs(extent.diagonal.x) > 0.01
@@ -172,6 +177,7 @@ bool Boolean::isSubstantial(const Extent &extent) {
 }
 
 
+/** Redo the operation when a Transformation has changed. */
 void Boolean::nodeUpdated() {
 	
 	update();
