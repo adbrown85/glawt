@@ -163,7 +163,7 @@ bool Boolean::isSubstantial(const Extent &extent) {
 
 
 /** Redo the operation when a Transformation has changed. */
-void Boolean::nodeUpdated() {
+void Boolean::onNodeEvent(NodeEvent &event) {
 	
 	update();
 	initAttributes();

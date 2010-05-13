@@ -3,6 +3,7 @@ Factory
 Identifiable
 Node
 NodeException
+NodeNotifier
 Scene
 Selectable
 Selection

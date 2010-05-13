@@ -11,6 +11,7 @@
 #include <list>                         // Storing listeners
 #include "Applicable.hpp"
 #include "NodeListener.hpp"
+#include "NodeNotifier.hpp"
 
 
 /**
@@ -22,12 +23,11 @@ class Transformation : public Applicable {
 public:
 	Transformation(const Tag &tag) : Applicable(tag) {}
 	virtual void addListener(NodeListener *listener);
+	virtual void fireEvent();
 	virtual void apply() = 0;
 	virtual void remove() = 0;
-protected:
-	virtual void fireUpdate();
 private:
-	list<NodeListener*> listeners;
+	NodeNotifier notifier;
 };
 
 

@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include "NodeEvent.hpp"
 using namespace std;
 
 
@@ -19,7 +20,7 @@ using namespace std;
  */
 class NodeListener {
 public:
-	virtual void nodeUpdated() = 0;
+	virtual void onNodeEvent(NodeEvent &event) = 0;
 };
 
 

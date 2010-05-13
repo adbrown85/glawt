@@ -7,20 +7,16 @@
 #include "Transformation.hpp"
 
 
-/** Adds a listener to this node. */
+/** Adds a modify listener to this node. */
 void Transformation::addListener(NodeListener *listener) {
 	
-	listeners.push_back(listener);
+	notifier.addListener(listener, NodeEvent::MODIFY);
 }
 
 
-/** Sends a notification to each of the listeners. */
-void Transformation::fireUpdate() {
+/** Fires a modify event. */
+void Transformation::fireEvent() {
 	
-	list<NodeListener*>::iterator it;
-	
-	for (it=listeners.begin(); it!=listeners.end(); ++it) {
-		(*it)->nodeUpdated();
-	}
+	notifier.fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 

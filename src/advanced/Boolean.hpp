@@ -43,7 +43,7 @@ public:
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
-	virtual void nodeUpdated();
+	virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
 	void findGroup();
