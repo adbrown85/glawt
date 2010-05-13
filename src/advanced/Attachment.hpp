@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include "Node.hpp"                     // Base class
+#include "Attachable.hpp"               // Interface
 #include "Framebuffer.hpp"              // Attach to framebuffer
 using namespace std;
 

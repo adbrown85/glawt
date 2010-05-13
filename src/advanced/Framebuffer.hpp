@@ -13,16 +13,8 @@
 #include <string>
 #include <list>                         // Storing attachments
 #include "Applicable.hpp"
+#include "Attachable.hpp"
 #include "Texture2D.hpp"
-
-
-/* Item that can be attached to the framebuffer. */
-class Attachable {
-public:
-	virtual void attach() = 0;
-	virtual void setLocation(GLuint location) = 0;
-	virtual void setIndex(GLint index) = 0;
-};
 
 
 /* Slot in the framebuffer items can be attached to. */
