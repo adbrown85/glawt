@@ -36,13 +36,36 @@ struct FramebufferSlot {
 /**
  * @ingroup advanced
  * @brief Container for offscreen rendering targets.
+ * 
+ * Replaces the default framebuffer with an external framebuffer object 
+ * comprised of a number of attachments.  When the framebuffer is active, 
+ * rendering will be redirected to these attachments instead of the screen.  
+ * Thus framebuffer can be used to render in multiple passes or to perform 
+ * general-purpose computations.
+ * 
+ * %Framebuffer cannot be used by itself.  Make sure to place one or more 
+ * Attachment nodes under the framebuffer.
+ * 
+ * <b>XML Name</b>
+ *   - framebuffer
+ * 
+ * <b>XML Example</b>
+ * <pre>
+ *   &lt;framebuffer>
+ *     &lt;attachment />
+ *     &lt;attachment />
+ *   &lt;/framebuffer>
+ * </pre>
+ * 
+ * @see Attachment
+ * @see Target
  */
 class Framebuffer : public Applicable {
 public:
 	Framebuffer(const Tag &tag);
-	~Framebuffer();
+	virtual ~Framebuffer();
 	virtual bool areChildrenSelectable();
-	virtual void add(const string &type, Attachable *attachable);
+	virtual void add(const string &type, Attachable *item);
 	virtual void apply();
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
@@ -62,10 +85,10 @@ private:
 /** Disables trying to pick children drawn into a framebuffer. */
 inline bool Framebuffer::areChildrenSelectable() {return false;}
 
-/** @return integer identifying the framebuffer with OpenGL. */
+/** @return Integer identifying the underlying OpenGL framebuffer object. */
 inline GLuint Framebuffer::getHandle() const {return handle;}
 
-/** @return true if a Framebuffer is active. */
+/** @return True if a Framebuffer is active. */
 inline bool Framebuffer::isActive() {return active;}
 
 

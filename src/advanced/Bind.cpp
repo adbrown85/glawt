@@ -7,7 +7,7 @@
 #include "Bind.hpp"
 
 
-/** Creates a new %Bind from an XML tag. */
+/** Initializes the @e name and @e to attributes. */
 Bind::Bind(const Tag &tag) : Node(tag) {
 	
 	tag.get("name", name, true, false);
@@ -15,7 +15,7 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 }
 
 
-/** Finds the target and the program. */
+/** Finds the target and program then adds a listener to the program. */
 void Bind::associate() {
 	
 	// Find program

@@ -34,21 +34,22 @@ Framebuffer::~Framebuffer() {
 /** Queues an attachable item to be attached.
  * 
  * @param type Either @e color or @e depth.
+ * @param item Item to be attached.
  * @throws NodeException if type not supported.
  * @throws NodeException if maximum attachments for a slot will be exceeded.
  */
-void Framebuffer::add(const string &type, Attachable *attachable) {
+void Framebuffer::add(const string &type, Attachable *item) {
 	
 	FramebufferSlot *slot;
 	
 	// Add to list in slot
 	slot = getSlot(type);
-	slot->attachables.push_back(attachable);
+	slot->attachables.push_back(item);
 	
 	// Check if the maximum was exceeded
 	if (slot->attachables.size() > slot->maximum) {
 		NodeException e(tag);
-		e << "[Framebuffer] Maximum amount of attachments was exceeded.";
+		e << "[Framebuffer] Maximum amount of attachable items exceeded.";
 		throw e;
 	}
 }
@@ -139,7 +140,7 @@ Framebuffer* Framebuffer::find(Node *node) {
 }
 
 
-/** @return Last used attachment index for a type of buffer. 
+/** @return Structure holding state for one type of attachment. 
  * 
  * @throws NodeException if type not supported.
  */

@@ -51,7 +51,7 @@ void Target::attach() {
 }
 
 
-/** @return string comprised of the object's name and attributes. */
+/** @return String comprised of the object's name and attributes. */
 string Target::toString() const {
 	
 	ostringstream stream;
