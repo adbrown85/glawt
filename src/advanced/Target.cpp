@@ -34,11 +34,11 @@ void Target::associate() {
 	}
 	
 	// Queue in framebuffer
-	getFramebuffer()->add("color", this);
+	getFramebuffer()->attach("color", this);
 }
 
 
-/** Attaches the target's texture.
+/** Attaches the target's texture to the framebuffer.
  * 
  * @note Assumes the framebuffer is already bound.
  */

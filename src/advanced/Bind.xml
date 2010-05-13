@@ -6,24 +6,35 @@
 -->
 
 
-<texture name="layer0" size="512">
-<texture name="layer1" size="512">
+<texture name="back_coords" size="512">
+<texture name="front_coords" size="512">
 	<framebuffer>
-		<target link="layer0" />
-		<target link="layer1" />
+		<target link="back_coords" />
+		<target link="front_coords" />
 		<program>
 			<shader file="../../glsl/coordinates.vert" />
 			<shader file="../../glsl/coordinates.frag" />
+			<bind name="FragColor" to="back_coords" />
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<bind name="FragColor" to="layer0" />
-			<cube />
+			<cull faces="front">
+				<cube />
+			</cull>
+		</program>
+		<program>
+			<shader file="../../glsl/coordinates.vert" />
+			<shader file="../../glsl/coordinates.frag" />
+			<bind name="FragColor" to="front_coords" />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<cull faces="back">
+				<cube />
+			</cull>
 		</program>
 	</framebuffer>
 	<program>
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="sampler2D" name="unit" link="layer0" />
+		<uniform type="sampler2D" name="unit" link="back_coords" />
 		<box />
 	</program>
 </texture>

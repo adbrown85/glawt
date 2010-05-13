@@ -17,10 +17,12 @@
 #include "Texture2D.hpp"
 
 
-/* Slot in the framebuffer items can be attached to. */
-struct FramebufferSlot {
+/* Group of similar framebuffer attachments. */
+struct Chain {
+	Chain() {}
+	Chain(GLenum base, GLuint max) : base(base), max(max) {}
 	GLenum base;                        // GL_COLOR_ATTACHMENT0, etc.
-	GLuint maximum;                     // Maximum amount of items
+	GLuint max;                         // Maximum amount of items
 	list<Attachable*> attachables;      // Attached items
 };
 
@@ -57,21 +59,25 @@ public:
 	Framebuffer(const Tag &tag);
 	virtual ~Framebuffer();
 	virtual bool areChildrenSelectable();
-	virtual void add(const string &type, Attachable *item);
+	virtual void attach(const string &type, Attachable *item);
 	virtual void apply();
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
 	static bool isActive();
 	virtual void remove();
+	virtual void verify();
 	virtual string toString() const;
 protected:
+	virtual void activate();
 	virtual void associate();
+	virtual void attach();
+	virtual void attach(Chain &chain);
 	virtual void finalize();
-	virtual FramebufferSlot* getSlot(const string &name);
+	virtual Chain* getChain(const string &name);
 private:
 	static bool active;
 	GLuint handle;
-	map<string,FramebufferSlot> slots;
+	map<string,Chain> chains;
 };
 
 /** Disables trying to pick children drawn into a framebuffer. */
