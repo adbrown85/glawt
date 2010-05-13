@@ -22,6 +22,13 @@ void Program::addCode(int handle,
 }
 
 
+/** Adds a listener to the program. */
+void Program::addListener(NodeListener *listener, int type) {
+	
+	notifier.addListener(listener, type);
+}
+
+
 /** Installs the program into the current context. */
 void Program::apply() {
 	
@@ -48,6 +55,9 @@ void Program::associate() {
 void Program::finalize() {
 	
 	GLint linked=0;
+	
+	// Notify
+	notifier.fireEvent(NodeEvent(this, NodeEvent::FINALIZE));
 	
 	// Link
 	glLinkProgram(handle);

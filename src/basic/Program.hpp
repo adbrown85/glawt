@@ -16,6 +16,7 @@
 #include "Node.hpp"
 #include "Preprocessor.hpp"
 #include "Tag.hpp"
+#include "NodeNotifier.hpp"
 #define POINT_LOCATION 0
 #define POINT_NAME "MCVertex"
 #define NORMAL_LOCATION 1
@@ -33,6 +34,7 @@ class Program : public Applicable {
 public:
 	Program(const Tag& tag);
 	virtual void addCode(int handle, const Preprocessor *preprocessor);
+	virtual void addListener(NodeListener *listener, int type);
 	virtual void apply();
 	virtual void associate();
 	virtual void finalize();
@@ -48,6 +50,7 @@ private:
 	GLuint handle;
 	map<int,const Preprocessor*> code;
 	static Program* current;
+	NodeNotifier notifier;
 };
 
 /** @return Integer OpenGL identifies the program with. */
