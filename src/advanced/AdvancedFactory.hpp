@@ -14,6 +14,7 @@
 #include "Boolean.hpp"
 #include "BooleanAnd.hpp"
 #include "BooleanXor.hpp"
+#include "Bind.hpp"
 #include "Blend.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
@@ -34,6 +35,7 @@ class AdvancedFactory : public Factory {
 public:
 	static void install();
 	static Node* createBoolean(const Tag &tag);
+	static Node* createBind(const Tag &tag);
 	static Node* createBlend(const Tag &tag);
 	static Node* createCull(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);

@@ -7,35 +7,22 @@
 #include "Target.hpp"
 
 
-/** Creates a new %Target from an XML tag.
- * 
- * @param tag XML tag with "link" attribute.
- */
-Target::Target(const Tag &tag) : Node(tag) {
+/** Initializes the @e link and @e name attributes. */
+Target::Target(const Tag &tag) : Attachment(tag) {
 	
-	// Initialize
 	tag.get("link", link, true, false);
+	setName(link);
 }
 
 
-/** Finds the texture to use for the color buffer.
+/** Finds the framebuffer and texture to use.
  * 
  * @throws NodeException if cannot find framebuffer node.
  * @throws NodeException if cannot find texture with correct name.
  */
 void Target::associate() {
 	
-	Framebuffer *framebuffer;
-	Texture2D *texture;
-	
-	// Find the framebuffer
-	framebuffer = Framebuffer::find(this);
-	if (framebuffer == NULL) {
-		NodeException e(tag);
-		e << "[Target] Could not find framebuffer.";
-		throw e;
-	}
-	framebufferHandle = framebuffer->getHandle();
+	Attachment::associate();
 	
 	// Find the texture
 	Texture2D::find(this, texture, link);
@@ -44,47 +31,35 @@ void Target::associate() {
 		e << "[Target] Could not find texture with name '" << link << "'.";
 		throw e;
 	}
-	textureHandle = texture->getHandle();
-	size = texture->getSize();
+	
+	// Queue in framebuffer
+	getFramebuffer()->add("color", this);
 }
 
 
-/** Attaches the target to the Framebuffer.
+/** Attaches the target's texture.
  * 
- * @throws NodeException if Framebuffer is not complete.
+ * @note Assumes the framebuffer is already bound.
  */
-void Target::finalize() {
+void Target::attach() {
 	
-	// Bind the framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, framebufferHandle);
-	
-	// Attach the texture
 	glFramebufferTexture2D(GL_FRAMEBUFFER,
-	                       GL_COLOR_ATTACHMENT0,
+	                       getLocation(),
 	                       GL_TEXTURE_2D,
-	                       textureHandle,
+	                       texture->getHandle(),
 	                       0);
-	
-	// Check status
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		NodeException e(tag);
-		e << "[Target] Framebuffer is not complete!";
-		throw e;
-	}
 }
 
 
-/** Forms a string from the Target's attributes.
- */
+/** @return string comprised of the object's name and attributes. */
 string Target::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Node::toString()
-	       << " size='" << size << "'"
+	stream << Attachment::toString()
 	       << " link='" << link << "'"
-	       << " text='" << textureHandle << "'"
-	       << " fram='" << framebufferHandle << "'";
+	       << " size='" << texture->getSize() << "'"
+	       << " texture='" << texture->getHandle() << "'";
 	return stream.str();
 }
 

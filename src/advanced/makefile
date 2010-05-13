@@ -13,15 +13,21 @@ include $(GANDER)/src/module.mak
 AdvancedFactory.o: ${filter-out AdvancedFactory.o,$(OBJECTS)}
 $(BINARIES): AdvancedFactory.o
 
-# Nodes
+# Geometry
 Boolean.o:
 BooleanAnd.o: Boolean.o
 BooleanXor.o: Boolean.o
-Cull.o:
-Framebuffer.o:
 Fullscreen.o: 
 Group.o:
 Instance.o: Group.o
-Octree.o: 
-Target.o: Framebuffer.o
+
+# Rendering
+Cull.o:
 Wireframe.o:
+Framebuffer.o:
+Attachment.o: Framebuffer.o
+Bind.o: Attachment.o
+Target.o: Attachment.o
+
+# Acceleration
+Octree.o: 

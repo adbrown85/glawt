@@ -1,18 +1,21 @@
 <!--
- * Target.xml
+ * Bind.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
 -->
 
 
-<texture name="mytexture" size="512">
+<texture name="layer0" size="512">
+<texture name="layer1" size="512">
 	<framebuffer>
-		<target link="mytexture" />
+		<target link="layer0" />
+		<target link="layer1" />
 		<program>
 			<shader file="../../glsl/coordinates.vert" />
 			<shader file="../../glsl/coordinates.frag" />
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<bind name="FragColor" to="layer0" />
 			<cube />
 		</program>
 	</framebuffer>
@@ -20,7 +23,7 @@
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="sampler2D" name="unit" link="mytexture" />
+		<uniform type="sampler2D" name="unit" link="layer0" />
 		<box />
 	</program>
 </texture>

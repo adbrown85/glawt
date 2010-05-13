@@ -11,9 +11,26 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <list>                         // Storing attachments
 #include "Applicable.hpp"
-#include "Node.hpp"
-#include "Tag.hpp"
+#include "Texture2D.hpp"
+
+
+/* Item that can be attached to the framebuffer. */
+class Attachable {
+public:
+	virtual void attach() = 0;
+	virtual void setLocation(GLuint location) = 0;
+	virtual void setIndex(GLint index) = 0;
+};
+
+
+/* Slot in the framebuffer items can be attached to. */
+struct FramebufferSlot {
+	GLenum base;                        // GL_COLOR_ATTACHMENT0, etc.
+	GLuint maximum;                     // Maximum amount of items
+	list<Attachable*> attachables;      // Attached items
+};
 
 
 /**
@@ -21,10 +38,11 @@
  * @brief Container for offscreen rendering targets.
  */
 class Framebuffer : public Applicable {
-public :
+public:
 	Framebuffer(const Tag &tag);
 	~Framebuffer();
 	virtual bool areChildrenSelectable();
+	virtual void add(const string &type, Attachable *attachable);
 	virtual void apply();
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
@@ -33,20 +51,22 @@ public :
 	virtual string toString() const;
 protected:
 	virtual void associate();
+	virtual void finalize();
+	virtual FramebufferSlot* getSlot(const string &name);
 private:
 	static bool active;
-	GLuint depthBuffer, handle;
+	GLuint handle;
+	map<string,FramebufferSlot> slots;
 };
 
-
-/** Disable trying to pick children drawn into a Framebuffer. */
+/** Disables trying to pick children drawn into a framebuffer. */
 inline bool Framebuffer::areChildrenSelectable() {return false;}
-
-/** @return true if a Framebuffer is active. */
-inline bool Framebuffer::isActive() {return active;}
 
 /** @return integer identifying the framebuffer with OpenGL. */
 inline GLuint Framebuffer::getHandle() const {return handle;}
+
+/** @return true if a Framebuffer is active. */
+inline bool Framebuffer::isActive() {return active;}
 
 
 #endif

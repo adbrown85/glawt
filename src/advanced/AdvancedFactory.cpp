@@ -19,6 +19,7 @@ void AdvancedFactory::install() {
 	BasicFactory::install();
 	Factory::install("boolean", &createBoolean);
 	Factory::install("blend", &createBlend);
+	Factory::install("bind", &createBind);
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
@@ -27,6 +28,12 @@ void AdvancedFactory::install() {
 	Factory::install("octree", &createOctree);
 	Factory::install("target", &createTarget);
 	Factory::install("wireframe", &createWireframe);
+}
+
+
+Node* AdvancedFactory::createBind(const Tag &tag) {
+	
+	return new Bind(tag);
 }
 
 
