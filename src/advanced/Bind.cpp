@@ -15,6 +15,16 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 }
 
 
+/** Sets the value when the program is about to be finalized. */
+void Bind::onNodeEvent(NodeEvent &event) {
+	
+	if (event.getSource() == program) {
+		index = attachment->getIndex();
+		glBindFragDataLocation(program->getHandle(), index, name.c_str());
+	}
+}
+
+
 /** Finds the target and program then adds a listener to the program. */
 void Bind::associate() {
 	
@@ -33,14 +43,9 @@ void Bind::associate() {
 		e << "[Bind] Could not find attachment with name '" << name << "'.";
 		throw e;
 	}
-}
-
-
-/** Sets the variable in the program to the location of the target. */
-void Bind::finalize() {
 	
-	index = attachment->getIndex();
-	glBindFragDataLocation(program->getHandle(), index, name.c_str());
+	// Add listener
+	program->addListener(this, NodeEvent::FINALIZE);
 }
 
 

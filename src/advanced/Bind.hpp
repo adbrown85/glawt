@@ -13,6 +13,7 @@
 #include "Node.hpp"                     // Base class
 #include "Attachment.hpp"               // Look up attachment location
 #include "Program.hpp"                  // Bind location in current program
+#include "NodeListener.hpp"             // Listen to program node
 using namespace std;
 
 
@@ -69,13 +70,14 @@ using namespace std;
  * @see Attachment
  * @see Target
  */
-class Bind : public Node {
+class Bind : public Node,
+             public NodeListener {
 public:
 	Bind(const Tag &tag);
+	virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
 	virtual void associate();
-	virtual void finalize();
 private:
 	string name, to;
 	GLint index;
