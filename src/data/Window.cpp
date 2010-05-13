@@ -99,6 +99,14 @@ void Window::keyboard(unsigned char key, int x, int y) {
 	case 'R':
 		reset();
 		break;
+	case '-':
+	case '_':
+		translate(Vector(0,0,-1));
+		break;
+	case '+':
+	case '=':
+		translate(Vector(0,0,+1));
+		break;
 	case 27:
 	case 'Q':
 		quit();
