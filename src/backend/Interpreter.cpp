@@ -57,7 +57,7 @@ Interpreter::~Interpreter() {
 
 /** Adds a callback that will be called when a command is issued. */
 void Interpreter::addListener(int command,
-                              interpreter_listener) {
+                              interpreter_listener function) {
 	
 	listeners[command] = function;
 }
