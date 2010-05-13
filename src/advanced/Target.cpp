@@ -11,7 +11,8 @@
 Target::Target(const Tag &tag) : Attachment(tag) {
 	
 	tag.get("link", link, true, false);
-	setName(link);
+	if (getName().empty())
+		setName(link);
 }
 
 
