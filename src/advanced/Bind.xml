@@ -17,6 +17,7 @@
 			<outputs>
 				<bind name="FragColor" to="back_coords" />
 			</outputs>
+			<clear r="0.8" g="0.8" b="0.8" />
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="front">
 				<cube />
@@ -28,6 +29,7 @@
 			<outputs>
 				<bind name="FragColor" to="front_coords" />
 			</outputs>
+			<clear r="0.8" g="0.8" b="0.8" />
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="back">
 				<cube />
