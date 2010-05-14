@@ -14,7 +14,6 @@
 #include "Attachment.hpp"               // Look up attachment location
 #include "Outputs.hpp"                  // Add attachment, look up position
 #include "Program.hpp"                  // Bind location in current program
-//#include "NodeListener.hpp"             // Listen to program node
 using namespace std;
 
 
@@ -28,9 +27,9 @@ using namespace std;
  * in the fragment shader take their place.
  * 
  * A %Bind node sets the value of one of these variables in a Program above it
- * to the index of a named framebuffer attachment.  The variable is set during 
- * the <i>associate</i> stage before the program is linked and is not touched 
- * again.
+ * to the index of a named framebuffer attachment in the current outputs 
+ * list.  The variable is set during the <i>associate</i> stage before the 
+ * program is linked and is not touched again.
  * 
  * <b>XML Name</b>
  *   - bind
@@ -57,8 +56,10 @@ using namespace std;
  *       &lt;program>
  *         &lt;shader file="layers.vert" />
  *         &lt;shader file="layers.frag" />
- *         &lt;bind name="Layer0" to="layer0" />
- *         &lt;bind name="Layer1" to="layer1" />
+ *         &lt;outputs>
+ *           &lt;bind name="Layer0" to="layer0" />
+ *           &lt;bind name="Layer1" to="layer1" />
+ *         &lt;/outputs>
  *         &lt;uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
  *         &lt;cube />
  *       &lt;/program>
@@ -70,12 +71,12 @@ using namespace std;
  * @see Framebuffer
  * @see Attachment
  * @see Target
+ * @see Outputs
  */
 class Bind : public Node {
 public:
 	Bind(const Tag &tag);
 	virtual GLint getIndex() const;
-	//virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
 	virtual void associate();

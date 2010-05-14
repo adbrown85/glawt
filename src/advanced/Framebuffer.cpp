@@ -24,50 +24,12 @@ Framebuffer::~Framebuffer() {
 }
 
 
-/** Activates all the color attachments using glDrawBuffers. */
-void Framebuffer::activate() {
-	
-	Chain *chain;
-	GLenum *buffers;
-	GLsizei n;
-	
-	// Create the array
-	chain = getChain("color");
-	n = chain->attachables.size();
-	if (n > getMaxDrawBuffers()) {
-		n = getMaxDrawBuffers();
-		cerr << tag.getLocation();
-		cerr << "[Framebuffer] Only using first " << n
-		     << " attachments." << endl;
-	}
-	buffers = new GLenum[n];
-	
-	// Fill it
-	for (int i=0; i<n; ++i) {
-		buffers[i] = GL_COLOR_ATTACHMENT0 + i;
-	}
-	
-	// Pass it
-	glDrawBuffers(n, buffers);
-	
-	// Finish
-	delete[] buffers;
-}
-
-
-/** Binds and clears the framebuffer.
- * 
- * @todo Move <i>clear</i> to another node.
- */
+/** Binds the framebuffer object. */
 void Framebuffer::apply() {
 	
 	// Bind
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
 	active = true;
-	
-	// Clear
-	glClearColor(0.8, 0.8, 0.8, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -84,8 +46,6 @@ void Framebuffer::associate() {
  * @param item Item to be attached.
  * @throws NodeException if type not supported.
  * @throws NodeException if maximum attachments for a slot will be exceeded.
- * 
- * @todo Fix maximum check.
  */
 void Framebuffer::attach(const string &type, Attachable *item) {
 	
@@ -143,7 +103,6 @@ void Framebuffer::finalize() {
 	// Attach
 	attach();
 	verify();
-	activate();
 	
 	// Restore default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -190,15 +149,7 @@ Chain* Framebuffer::getChain(const string &name) {
 }
 
 
-GLint Framebuffer::getMaxDrawBuffers() {
-	
-	GLint value;
-	
-	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
-	return value;
-}
-
-
+/** @return Maximum number of color attachments on this system. */
 GLint Framebuffer::getMaxColorAttachments() {
 	
 	GLint value;
@@ -208,16 +159,10 @@ GLint Framebuffer::getMaxColorAttachments() {
 }
 
 
-GLint Framebuffer::getNumberOfAttachmentsFor(const string &type) {
-	
-	Chain *chain;
-	
-	chain = getChain(type);
-	return chain->attachables.size();
-}
-
-
-/** Unbinds the %Framebuffer. */
+/** Unbinds the %Framebuffer.
+ * 
+ * @todo Research needing clear here...
+ */
 void Framebuffer::remove() {
 	
 	// Unbind

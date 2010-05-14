@@ -64,15 +64,6 @@ void Outputs::associate() {
 		e << "[Outputs] Could not find Framebuffer.";
 		throw e;
 	}
-	
-/*
-	for (it=begin(); it!=end(); ++it) {
-		bind = dynamic_cast<Bind*>(*it);
-		if (bind != NULL) {
-			binds.push_back(bind);
-		}
-	}
-*/
 }
 
 
@@ -90,7 +81,7 @@ void Outputs::finalize() {
 	}
 	
 	// Initialize array
-	n = Framebuffer::getMaxDrawBuffers();
+	n = getMaxDrawBuffers();
 	locations = new GLenum[n];
 	for (int i=0; i<n; ++i) {
 		locations[i] = GL_NONE;
@@ -101,31 +92,6 @@ void Outputs::finalize() {
 		i = distance(attachments.begin(), it);
 		locations[i] = (*it)->getLocation();
 	}
-	
-	
-/*
-	istringstream stream(blunt);
-	string token;
-	
-	stream >> token;
-	for (int i=0; stream; ++i) {
-		if (token == "none") {
-			locations[i] = GL_NONE;
-		} else {
-			locations[i] = GL_COLOR_ATTACHMENT0 + atoi(token.c_str());
-		}
-		stream >> token;
-	}
-	for (int i=0; i<n; ++i) {
-		cout << locations[i] << " ";
-	}
-	cout << endl;
-*/
-/*
-	locations[0] = GL_COLOR_ATTACHMENT0 + 0;
-	locations[1] = GL_COLOR_ATTACHMENT0 + 1;
-	locations[2] = GL_NONE;
-*/
 }
 
 
@@ -146,20 +112,14 @@ Outputs* Outputs::find(Node *node) {
 }
 
 
-
-/*
-string Outputs::toString(GLenum attachment) const {
+/** Returns the maximum amount of items in the outputs list. */
+GLint Outputs::getMaxDrawBuffers() {
 	
-	ostringstream stream;
+	GLint value;
 	
-	if (attachment == GL_NONE) {
-		stream << "none";
-	} else {
-		stream << (attachment - GL_COLOR_ATTACHMENT0);
-	}
-	return stream.str();
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
+	return value;
 }
-*/
 
 
 /** @return String comprised of the object's attributes. */
