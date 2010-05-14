@@ -16,6 +16,7 @@
 #include "BooleanAnd.hpp"
 #include "Boolean.hpp"
 #include "BooleanXor.hpp"
+#include "Clear.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
@@ -38,6 +39,7 @@ public:
 	static Node* createBoolean(const Tag &tag);
 	static Node* createBind(const Tag &tag);
 	static Node* createBlend(const Tag &tag);
+	static Node* createClear(const Tag &tag);
 	static Node* createCull(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);

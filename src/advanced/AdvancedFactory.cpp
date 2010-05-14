@@ -20,6 +20,7 @@ void AdvancedFactory::install() {
 	Factory::install("boolean", &createBoolean);
 	Factory::install("blend", &createBlend);
 	Factory::install("bind", &createBind);
+	Factory::install("clear", &createClear);
 	Factory::install("cull", &createCull);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
@@ -65,6 +66,12 @@ Node* AdvancedFactory::createBoolean(const Tag &tag) {
 Node* AdvancedFactory::createCull(const Tag &tag) {
 	
 	return new Cull(tag);
+}
+
+
+Node* AdvancedFactory::createClear(const Tag &tag) {
+	
+	return new Clear(tag);
 }
 
 
