@@ -78,6 +78,7 @@ public:
 	virtual string toString() const;
 protected:
 	virtual void associate();
+	virtual void finalize();
 private:
 	string name, to;
 	GLint index;

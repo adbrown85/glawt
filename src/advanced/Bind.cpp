@@ -49,6 +49,19 @@ void Bind::associate() {
 }
 
 
+void Bind::finalize() {
+	
+	GLint location;
+	
+	location = glGetFragDataLocation(program->getHandle(), name.c_str());
+	if (location != index) {
+		NodeException e(tag);
+		e << "[Bind] Variable was not bound correctly.";
+		throw e;
+	}
+}
+
+
 /** @return String comprised of the object's attributes. */
 string Bind::toString() const {
 	
