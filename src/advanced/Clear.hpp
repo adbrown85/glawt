@@ -29,6 +29,7 @@ public:
 	Clear(const Tag &tag);
 	virtual void apply();
 	virtual void remove() {}
+	virtual string toString() const;
 private:
 	float r, g, b;
 };

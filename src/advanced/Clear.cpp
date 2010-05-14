@@ -24,3 +24,16 @@ void Clear::apply() {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+
+/** @return String comprised of the object's attributes. */
+string Clear::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Applicable::toString();
+	stream << " r='" << r << "'"
+	       << " g='" << g << "'"
+	       << " b='" << b << "'";
+	return stream.str();
+}
+
