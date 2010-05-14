@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Attachment.hpp"
+#include "Window.hpp"
 
 
 class AttachmentTest {
@@ -17,15 +18,21 @@ public:
 
 void AttachmentTest::testMaxDrawBuffers() {
 	
+	GLint value;
+	
 	cout << "Max draw buffers: " << endl;
-	cout << GL_MAX_DRAW_BUFFERS << endl;
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
+	cout << value << endl;
 }
 
 
 void AttachmentTest::testMaxColorAttachments() {
 	
+	GLint value;
+	
 	cout << "\nMax color attachments: " << endl;
-	cout << GL_MAX_COLOR_ATTACHMENTS << endl;
+	glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, &value);
+	cout << value << endl;
 }
 
 
@@ -53,6 +60,10 @@ int main(int argc,
 	cout << "Attachment" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
+	
+	// Initialize
+	Window::init(argc, argv);
+	Window::create("Attachment");
 	
 	// Test
 	test.testMaxDrawBuffers();
