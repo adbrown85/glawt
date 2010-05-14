@@ -27,7 +27,7 @@ public:
 	virtual GLint addAttachment(Attachment *attachment);
 	virtual void apply();
 	static Outputs* find(Node *node);
-	static GLint getMaxDrawBuffers();
+	static GLuint getMaxDrawBuffers();
 	virtual void remove() {}
 	virtual string toString() const;
 protected:

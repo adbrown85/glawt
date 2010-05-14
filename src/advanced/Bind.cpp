@@ -15,7 +15,13 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 }
 
 
-/** Finds the target, outputs, and program. */
+/** Adds attachment to outputs and sets its index in outputs to program value.
+ * 
+ * @throws NodeException if Attachment with name could not be found.
+ * @throws NodeException if could not find Outputs list.
+ * @throws NodeException if maximum number of outputs exceeded.
+ * @throws NodeException if could not find Program.
+ */
 void Bind::associate() {
 	
 	// Find attachment
@@ -30,10 +36,15 @@ void Bind::associate() {
 	outputs = Outputs::find(this);
 	if (outputs == NULL) {
 		NodeException e(tag);
-		e << "[Outputs] Could not find outputs.";
+		e << "[Bind] Could not find outputs.";
 		throw e;
 	}
 	index = outputs->addAttachment(attachment);
+	if (index == -1) {
+		NodeException e(tag);
+		e << "[Bind] Maximum number of outputs exceeded.";
+		throw e;
+	}
 	
 	// Find program
 	program = Program::find(this);
@@ -46,7 +57,10 @@ void Bind::associate() {
 }
 
 
-/** Checks that the bind was completed successfully. */
+/** Checks that the variable's value was set successfully.
+ * 
+ * @throws NodeException if the value in the program does not match.
+ */
 void Bind::finalize() {
 	
 	GLint location;

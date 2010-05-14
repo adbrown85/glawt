@@ -26,7 +26,7 @@ Outputs::~Outputs() {
 
 /** Adds an attachment so it will be available for output. 
  * 
- * @return Position of the attachment in the list.
+ * @return Position of the attachment in list (-1 if couldn't be added).
  */
 GLint Outputs::addAttachment(Attachment *attachment) {
 	
@@ -38,9 +38,13 @@ GLint Outputs::addAttachment(Attachment *attachment) {
 		return distance(attachments.begin(), it);
 	}
 	
-	// Otherwise add it
-	attachments.push_back(attachment);
-	return attachments.size() - 1;
+	// Otherwise try to add it
+	if (attachments.size() == getMaxDrawBuffers()) {
+		return -1;
+	} else {
+		attachments.push_back(attachment);
+		return attachments.size() - 1;
+	}
 }
 
 
@@ -113,12 +117,12 @@ Outputs* Outputs::find(Node *node) {
 
 
 /** Returns the maximum amount of items in the outputs list. */
-GLint Outputs::getMaxDrawBuffers() {
+GLuint Outputs::getMaxDrawBuffers() {
 	
 	GLint value;
 	
 	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
-	return value;
+	return static_cast<GLuint>(value);
 }
 
 
