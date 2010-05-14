@@ -66,7 +66,7 @@ class Framebuffer : public Applicable {
 public:
 	Framebuffer(const Tag &tag);
 	virtual ~Framebuffer();
-	virtual bool areChildrenSelectable();
+	virtual bool areChildrenSelectable() const;
 	virtual void apply();
 	virtual void enqueue(const string &type, Attachable *item);
 	static Framebuffer* find(Node *node);
@@ -85,7 +85,7 @@ private:
 };
 
 /** Disables trying to pick children drawn into a framebuffer. */
-inline bool Framebuffer::areChildrenSelectable() {return false;}
+inline bool Framebuffer::areChildrenSelectable() const {return false;}
 
 /** @return Integer identifying the underlying OpenGL framebuffer object. */
 inline GLuint Framebuffer::getHandle() const {return handle;}
