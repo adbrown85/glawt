@@ -36,6 +36,7 @@
 			</cull>
 		</program>
 	</framebuffer>
+	<clear />
 	<program>
 		<shader file="../../glsl/multitexture.vert" />
 		<shader file="../../glsl/multitexture.frag" />

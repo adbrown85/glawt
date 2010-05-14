@@ -160,17 +160,10 @@ GLint Framebuffer::getMaxColorAttachments() {
 }
 
 
-/** Unbinds the %Framebuffer.
- * 
- * @todo Research needing clear here...
- */
+/** Unbinds the %Framebuffer. */
 void Framebuffer::remove() {
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	
-	// Clear?
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 

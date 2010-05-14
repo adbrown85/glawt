@@ -37,7 +37,9 @@ struct Chain {
  * 
  * %Framebuffer cannot be used by itself.  Make sure to place one or more 
  * Attachment nodes under the framebuffer, such as Target.  Also, you will 
- * need to use Outputs and Bind to direct fragments to the correct location.
+ * need to use Outputs and Bind to direct fragments to the correct location.  
+ * Lastly, a Clear node is usually needed directly after the ending 
+ * framebuffer tag.
  * 
  * <b>XML Name</b>
  *   - framebuffer
@@ -48,12 +50,17 @@ struct Chain {
  *     &lt;attachment />
  *     &lt;attachment />
  *   &lt;/framebuffer>
+ *   &lt;clear />
  * </pre>
+ * 
+ * <b>Notes</b>
+ *   - A Clear node is usually needed directly after the ending framebuffer tag
  * 
  * @see Attachment
  * @see Target
  * @see Outputs
  * @see Bind
+ * @see Clear
  */
 class Framebuffer : public Applicable {
 public:
