@@ -13,7 +13,7 @@ Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
 	
 	// Initialize
 	this->handle = 0;
-	chains["color"] = Chain(GL_COLOR_ATTACHMENT0, GL_MAX_COLOR_ATTACHMENTS);
+	chains["color"] = Chain(GL_COLOR_ATTACHMENT0, getMaxColorAttachments());
 }
 
 
@@ -34,6 +34,12 @@ void Framebuffer::activate() {
 	// Create the array
 	chain = getChain("color");
 	n = chain->attachables.size();
+	if (n > getMaxDrawBuffers()) {
+		n = getMaxDrawBuffers();
+		cerr << tag.getLocation();
+		cerr << "[Framebuffer] Only using first " << n
+		     << " attachments." << endl;
+	}
 	buffers = new GLenum[n];
 	
 	// Fill it
@@ -181,6 +187,24 @@ Chain* Framebuffer::getChain(const string &name) {
 		e << "[Framebuffer] Unsupported attachment type '" << name << "'.";
 		throw e;
 	}
+}
+
+
+GLint Framebuffer::getMaxDrawBuffers() {
+	
+	GLint value;
+	
+	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
+	return value;
+}
+
+
+GLint Framebuffer::getMaxColorAttachments() {
+	
+	GLint value;
+	
+	glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, &value);
+	return value;
 }
 
 
