@@ -208,6 +208,15 @@ GLint Framebuffer::getMaxColorAttachments() {
 }
 
 
+GLint Framebuffer::getNumberOfAttachmentsFor(const string &type) {
+	
+	Chain *chain;
+	
+	chain = getChain(type);
+	return chain->attachables.size();
+}
+
+
 /** Unbinds the %Framebuffer. */
 void Framebuffer::remove() {
 	

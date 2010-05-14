@@ -11,17 +11,18 @@
 #include <string>
 #include "Factory.hpp"
 #include "BasicFactory.hpp"
-#include "Boolean.hpp"
-#include "BooleanAnd.hpp"
-#include "BooleanXor.hpp"
 #include "Bind.hpp"
 #include "Blend.hpp"
+#include "BooleanAnd.hpp"
+#include "Boolean.hpp"
+#include "BooleanXor.hpp"
 #include "Cull.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
 #include "Group.hpp"
 #include "Instance.hpp"
 #include "Octree.hpp"
+#include "Outputs.hpp"
 #include "Target.hpp"
 #include "Wireframe.hpp"
 using namespace std;
@@ -43,6 +44,7 @@ public:
 	static Node* createGroup(const Tag &tag);
 	static Node* createInstance(const Tag &tag);
 	static Node* createOctree(const Tag &tag);
+	static Node* createOutputs(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
 	static Node* createWireframe(const Tag &tag);
 private:

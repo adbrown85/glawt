@@ -12,8 +12,9 @@
 #include <string>
 #include "Node.hpp"                     // Base class
 #include "Attachment.hpp"               // Look up attachment location
+#include "Outputs.hpp"                  // Add attachment, look up position
 #include "Program.hpp"                  // Bind location in current program
-#include "NodeListener.hpp"             // Listen to program node
+//#include "NodeListener.hpp"             // Listen to program node
 using namespace std;
 
 
@@ -70,11 +71,11 @@ using namespace std;
  * @see Attachment
  * @see Target
  */
-class Bind : public Node,
-             public NodeListener {
+class Bind : public Node {
 public:
 	Bind(const Tag &tag);
-	virtual void onNodeEvent(NodeEvent &event);
+	virtual GLint getIndex() const;
+	//virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
 	virtual void associate();
@@ -82,9 +83,13 @@ protected:
 private:
 	string name, to;
 	GLint index;
-	Program *program;
 	Attachment *attachment;
+	Outputs *outputs;
+	Program *program;
 };
+
+/** @return Index of the target in the outputs list. */
+inline GLint Bind::getIndex() const {return index;}
 
 
 #endif

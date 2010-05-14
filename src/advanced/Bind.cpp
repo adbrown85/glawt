@@ -16,6 +16,7 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 
 
 /** Sets the value when the program is about to be finalized. */
+/*
 void Bind::onNodeEvent(NodeEvent &event) {
 	
 	if (event.getSource() == program) {
@@ -23,10 +24,28 @@ void Bind::onNodeEvent(NodeEvent &event) {
 		glBindFragDataLocation(program->getHandle(), index, name.c_str());
 	}
 }
+*/
 
 
-/** Finds the target and program then adds a listener to the program. */
+/** Finds the target, outputs, and program. */
 void Bind::associate() {
+	
+	// Find attachment
+	attachment = Attachment::find(this, to);
+	if (attachment == NULL) {
+		NodeException e(tag);
+		e << "[Bind] Could not find attachment with name '" << to << "'.";
+		throw e;
+	}
+	
+	// Find outputs and add attachment
+	outputs = Outputs::find(this);
+	if (outputs == NULL) {
+		NodeException e(tag);
+		e << "[Outputs] Could not find outputs.";
+		throw e;
+	}
+	index = outputs->addAttachment(attachment);
 	
 	// Find program
 	program = Program::find(this);
@@ -35,20 +54,16 @@ void Bind::associate() {
 		e << "[Bind] Cound not find program.";
 		throw e;
 	}
+	glBindFragDataLocation(program->getHandle(), index, name.c_str());
 	
-	// Find attachment
-	attachment = Attachment::find(this, to);
-	if (attachment == NULL) {
-		NodeException e(tag);
-		e << "[Bind] Could not find attachment with name '" << name << "'.";
-		throw e;
-	}
-	
+/*
 	// Add listener
 	program->addListener(this, NodeEvent::FINALIZE);
+*/
 }
 
 
+/** Checks that the bind was completed successfully. */
 void Bind::finalize() {
 	
 	GLint location;

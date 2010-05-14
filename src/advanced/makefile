@@ -26,8 +26,9 @@ Cull.o:
 Wireframe.o:
 Framebuffer.o:
 Attachment.o: Framebuffer.o
-Bind.o: Attachment.o
 Target.o: Attachment.o
+Outputs.o: Attachment.o
+Bind.o: Outputs.o
 
 # Acceleration
 Octree.o: 

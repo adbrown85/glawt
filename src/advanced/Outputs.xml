@@ -1,5 +1,5 @@
 <!--
- * Bind.xml
+ * Outputs.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -15,7 +15,6 @@
 			<shader file="../../glsl/coordinates.vert" />
 			<shader file="../../glsl/coordinates.frag" />
 			<outputs>
-				<bind name="FragColor" to="back_coords" />
 			</outputs>
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="front">
@@ -26,7 +25,6 @@
 			<shader file="../../glsl/coordinates.vert" />
 			<shader file="../../glsl/coordinates.frag" />
 			<outputs>
-				<bind name="FragColor" to="front_coords" />
 			</outputs>
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="back">
@@ -42,5 +40,6 @@
 		<uniform type="sampler2D" name="right" link="front_coords" />
 		<box />
 	</program>
+</texture>
 </texture>
  

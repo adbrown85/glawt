@@ -63,6 +63,9 @@ public:
 	virtual void apply();
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
+	static GLint getMaxDrawBuffers();
+	static GLint getMaxColorAttachments();
+	virtual GLint getNumberOfAttachmentsFor(const string &type);
 	static bool isActive();
 	virtual void remove();
 	virtual void verify();
@@ -74,8 +77,6 @@ protected:
 	virtual void attach(Chain &chain);
 	virtual void finalize();
 	virtual Chain* getChain(const string &name);
-	static GLint getMaxDrawBuffers();
-	static GLint getMaxColorAttachments();
 private:
 	static bool active;
 	GLuint handle;
