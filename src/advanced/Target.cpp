@@ -8,7 +8,7 @@
 
 
 /** Initializes the @e link and @e name attributes. */
-Target::Target(const Tag &tag) : Attachment(tag) {
+Target::Target(const Tag &tag) : Attachment(tag,"color") {
 	
 	tag.get("link", link, true, false);
 	if (getName().empty())
@@ -18,12 +18,10 @@ Target::Target(const Tag &tag) : Attachment(tag) {
 
 /** Finds the framebuffer and texture to use.
  * 
- * @throws NodeException if cannot find framebuffer node.
  * @throws NodeException if cannot find texture with correct name.
+ * @throws NodeException from Attachment::associate().
  */
 void Target::associate() {
-	
-	Attachment::associate();
 	
 	// Find the texture
 	Texture2D::find(this, texture, link);
@@ -33,8 +31,8 @@ void Target::associate() {
 		throw e;
 	}
 	
-	// Queue in framebuffer
-	getFramebuffer()->attach("color", this);
+	// Find framebuffer and enqueue
+	Attachment::associate();
 }
 
 

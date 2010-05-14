@@ -22,7 +22,7 @@ using namespace std;
 class Attachment : public Node,
                    public Attachable {
 public:
-	Attachment(const Tag &tag);
+	Attachment(const Tag &tag, const string &type);
 	virtual void attach() = 0;
 	static Attachment* find(Node *node, const string &name);
 	Framebuffer* getFramebuffer() const;
@@ -39,7 +39,7 @@ private:
 	Framebuffer *framebuffer;
 	GLint index;
 	GLuint location;
-	string name;
+	string name, type;
 };
 
 /** @return %Framebuffer item attaches to. */

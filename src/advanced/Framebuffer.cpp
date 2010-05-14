@@ -5,15 +5,19 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Framebuffer.hpp"
-bool Framebuffer::active=false;
 
 
 /** Initializes the chains in the framebuffer. */
 Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
 	
-	// Initialize
+	// Handle
 	this->handle = 0;
-	chains["color"] = Chain(GL_COLOR_ATTACHMENT0, getMaxColorAttachments());
+	
+	// Chains
+	Chain chain;
+	chain.base = GL_COLOR_ATTACHMENT0;
+	chain.max = getMaxColorAttachments();
+	chains["color"] = chain;
 }
 
 
@@ -27,9 +31,7 @@ Framebuffer::~Framebuffer() {
 /** Binds the framebuffer object. */
 void Framebuffer::apply() {
 	
-	// Bind
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
-	active = true;
 }
 
 
@@ -37,41 +39,6 @@ void Framebuffer::apply() {
 void Framebuffer::associate() {
 	
 	glGenFramebuffers(1, &handle);
-}
-
-
-/** Queues an attachable item to be attached.
- * 
- * @param type Either @e color or @e depth.
- * @param item Item to be attached.
- * @throws NodeException if type not supported.
- * @throws NodeException if maximum attachments for a slot will be exceeded.
- */
-void Framebuffer::attach(const string &type, Attachable *item) {
-	
-	Chain *chain;
-	
-	// Add to list in slot
-	chain = getChain(type);
-	chain->attachables.push_back(item);
-	
-	// Check if the maximum was exceeded
-	if (chain->attachables.size() > chain->max) {
-		NodeException e(tag);
-		e << "[Framebuffer] Maximum amount of attachable items exceeded.";
-		throw e;
-	}
-}
-
-
-/** Attaches each chain of attachments. */
-void Framebuffer::attach() {
-	
-	map<string,Chain>::iterator it;
-	
-	for (it=chains.begin(); it!=chains.end(); ++it) {
-		attach(it->second);
-	}
 }
 
 
@@ -91,18 +58,52 @@ void Framebuffer::attach(Chain &chain) {
 }
 
 
+/** Enqueues an attachable item to be attached.
+ * 
+ * @param type Either @e color or @e depth.
+ * @param item Item to be attached.
+ * @throws NodeException if type not supported.
+ * @throws NodeException if maximum attachments for a slot will be exceeded.
+ */
+void Framebuffer::enqueue(const string &type, Attachable *item) {
+	
+	Chain *chain;
+	
+	// Add to list in slot
+	chain = getChain(type);
+	chain->attachables.push_back(item);
+	
+	// Check if the maximum was exceeded
+	if (chain->attachables.size() > chain->max) {
+		NodeException e(tag);
+		e << "[Framebuffer] Maximum amount of attachable items exceeded.";
+		throw e;
+	}
+}
+
+
 /** Attaches all the attachments and checks if the framebuffer is complete.
  * 
- * @throws NodeException if maximum slots.
+ * @throws NodeException if framebuffer is not complete.
  */
 void Framebuffer::finalize() {
+	
+	map<string,Chain>::iterator it;
 	
 	// Make sure the framebuffer is bound
 	glBindFramebuffer(GL_FRAMEBUFFER, handle);
 	
-	// Attach
-	attach();
-	verify();
+	// Attach all the chains
+	for (it=chains.begin(); it!=chains.end(); ++it) {
+		attach(it->second);
+	}
+	
+	// Verify
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		NodeException e(tag);
+		e << "[Framebuffer] Needs attachments to be complete.";
+		throw e;
+	}
 	
 	// Restore default framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -165,26 +166,11 @@ GLint Framebuffer::getMaxColorAttachments() {
  */
 void Framebuffer::remove() {
 	
-	// Unbind
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	active = false;
+	
+	// Clear?
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
-}
-
-
-/** Checks to make sure the framebuffer is complete.
- * 
- * @throws NodeException if framebuffer is not complete.
- */
-void Framebuffer::verify() {
-	
-	// Check status
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		NodeException e(tag);
-		e << "[Framebuffer] Needs attachments to be complete.";
-		throw e;
-	}
 }
 
 

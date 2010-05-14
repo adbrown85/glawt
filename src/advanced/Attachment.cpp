@@ -8,28 +8,30 @@
 
 
 /** Initializes the name of the attachment. */
-Attachment::Attachment(const Tag &tag) : Node(tag) {
+Attachment::Attachment(const Tag &tag, const string &type) : Node(tag) {
 	
 	// Initialize
 	tag.get("name", name, false, false);
 	location = -1;
 	framebuffer = NULL;
+	this->type = type;
 }
 
 
-/** Finds the first framebuffer above this node.
+/** Finds the first framebuffer above this node and enqueue it.
  * 
  * @throws NodeException if framebuffer cannot be found.
  */
 void Attachment::associate() {
 	
-	// Find the framebuffer
+	// Find the framebuffer and enqueue it to be attached
 	framebuffer = Framebuffer::find(this);
 	if (framebuffer == NULL) {
 		NodeException e(tag);
 		e << "[Attachment] Could not find framebuffer.";
 		throw e;
 	}
+	framebuffer->enqueue(type, this);
 }
 
 
@@ -65,7 +67,8 @@ string Attachment::toString() const {
 	stream << Node::toString();
 	stream << " framebuffer='" << framebuffer->getHandle() << "'"
 	       << " name='" << name << "'"
-	       << " index='" << index << "'";
+	       << " index='" << index << "'"
+	       << " type='" << type << "'";
 	return stream.str();
 }
 

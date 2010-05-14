@@ -19,8 +19,6 @@
 
 /* Group of similar framebuffer attachments. */
 struct Chain {
-	Chain() {}
-	Chain(GLenum base, GLuint max) : base(base), max(max) {}
 	GLenum base;                        // GL_COLOR_ATTACHMENT0, etc.
 	GLuint max;                         // Maximum amount of items
 	list<Attachable*> attachables;      // Attached items
@@ -38,7 +36,8 @@ struct Chain {
  * general-purpose computations.
  * 
  * %Framebuffer cannot be used by itself.  Make sure to place one or more 
- * Attachment nodes under the framebuffer.
+ * Attachment nodes under the framebuffer, such as Target.  Also, you will 
+ * need to use Outputs and Bind to direct fragments to the correct location.
  * 
  * <b>XML Name</b>
  *   - framebuffer
@@ -53,29 +52,27 @@ struct Chain {
  * 
  * @see Attachment
  * @see Target
+ * @see Outputs
+ * @see Bind
  */
 class Framebuffer : public Applicable {
 public:
 	Framebuffer(const Tag &tag);
 	virtual ~Framebuffer();
 	virtual bool areChildrenSelectable();
-	virtual void attach(const string &type, Attachable *item);
 	virtual void apply();
+	virtual void enqueue(const string &type, Attachable *item);
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
 	static GLint getMaxColorAttachments();
-	static bool isActive();
 	virtual void remove();
-	virtual void verify();
 	virtual string toString() const;
 protected:
 	virtual void associate();
-	virtual void attach();
 	virtual void attach(Chain &chain);
 	virtual void finalize();
 	virtual Chain* getChain(const string &name);
 private:
-	static bool active;
 	GLuint handle;
 	map<string,Chain> chains;
 };
@@ -85,9 +82,6 @@ inline bool Framebuffer::areChildrenSelectable() {return false;}
 
 /** @return Integer identifying the underlying OpenGL framebuffer object. */
 inline GLuint Framebuffer::getHandle() const {return handle;}
-
-/** @return True if a Framebuffer is active. */
-inline bool Framebuffer::isActive() {return active;}
 
 
 #endif
