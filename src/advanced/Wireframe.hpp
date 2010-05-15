@@ -11,8 +11,6 @@
 #include <string>
 #include <GL/glut.h>
 #include "Applicable.hpp"
-#include "Node.hpp"
-#include "Tag.hpp"
 using namespace std;
 
 
@@ -25,6 +23,10 @@ public:
 	Wireframe(const Tag &tag);
 	virtual void apply();
 	virtual void remove();
+	virtual string toString() const;
+private:
+	GLenum mode;
+	string faces;
 };
 
 

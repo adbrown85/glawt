@@ -10,8 +10,22 @@
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-	<wireframe>
-		<cube />
-	</wireframe>
+	<translate x="-2.0">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<wireframe faces="front">			<cube />
+		</wireframe>
+	</translate>
+	<translate>
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<wireframe>
+			<cube />
+		</wireframe>
+	</translate>
+	<translate x="2.0">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<wireframe faces="back">
+			<cube />
+		</wireframe>
+	</translate>
 </program>
  
