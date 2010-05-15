@@ -6,23 +6,27 @@
  */
 #version 130
 
-// Uniforms
+/* Uniforms */
 uniform mat4 MVPMatrix;
 
-// Input
+/* Input */
 in vec4 MCVertex;
 in vec3 TexCoord0;
 in vec3 TexCoord1;
 
-// Output
-out vec3 Coord0;
-out vec3 Coord1;
+/* Output */
+out vec3 Origin0;
+out vec3 Origin1;
 
 
+/** Assigns the coordinates and position. */
 void main() {
 	
-	Coord0 = TexCoord0;
-	Coord1 = TexCoord1;
+	// Coordinates
+	Origin0 = TexCoord0;
+	Origin1 = TexCoord1;
+	
+	// Position
 	gl_Position = MVPMatrix * MCVertex;
 }
 

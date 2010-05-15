@@ -7,37 +7,65 @@
 
 
 <group name="cubes">
-	<translate x="-2">
+	<translate x="-1">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="left">
-			<uniform type="vec4" name="Color" value="1 0 1 1" />
+			<uniform type="vec4" name="Color" value="1 0 1 0.4" />
 			<uniform type="sampler3D" name="Texture" link="skull" />
 		</cube>
 	</translate>
-	<translate x="+2">
+	<translate x="+1">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="right">
-			<uniform type="vec4" name="Color" value="0 1 1 1" />
+			<uniform type="vec4" name="Color" value="0 1 1 0.4" />
 			<uniform type="sampler3D" name="Texture" link="bear" />
 		</cube>
 	</translate>
 </group>
 
-
 <texture name="skull" file="../textures/skull.vlb">
-<texture name="bear" file="../textures/bear.vlb">
-	<program>
-		<shader file="intersection.vert" />
-		<shader file="intersection.frag" />
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<boolean operation="AND" of="cubes" selectable="false" />
-	</program>
-	<program>
-		<shader file="color.vert" />
-		<shader file="color.frag" />
-		<wireframe>
-			<instance of="cubes" />
-		</wireframe>
-	</program>
+<texture name="bear" file="../textures/skull.vlb">
+	<texture name="end_coords_0" size="512">
+	<framebuffer>
+		<target link="end_coords_0" />
+		<program>
+			<shader file="coordinates.vert" />
+			<shader file="coordinates.frag" />
+			<outputs>
+				<bind name="FragColor" to="end_coords_0" />
+			</outputs>
+			<clear />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<uniform type="int" name="which" value="0" />
+			<cull faces="back">
+				<boolean operation="AND" of="cubes" />
+			</cull>
+		</program>
+	</framebuffer>
+	<clear />
+	<blend>
+		<program>
+			<shader file="intersection.vert">
+			<shader file="intersection.frag">
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<uniform type="int" name="WindowSize" value="512" />
+			<uniform type="float" name="SampleRate" value="0.01" />
+			<uniform type="float" name="Transfer" value="0.4" />
+			<uniform type="sampler2D" name="EndCoords0" link="end_coords_0" />
+			<uniform type="sampler3D" name="Volume0" link="skull" />
+			<uniform type="sampler3D" name="Volume1" link="bear" />
+			<cull faces="front">
+				<boolean operation="AND" of="cubes" selectable="false"/>
+			</cull>
+		</program>
+		<program>
+			<shader file="color.vert" />
+			<shader file="color.frag" />
+			<wireframe faces="front">
+				<instance of="cubes" />
+			</wireframe>
+		</program>
+	</blend>
+	</texture>
 </texture>
 </texture>
