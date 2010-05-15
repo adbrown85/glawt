@@ -16,6 +16,7 @@ int main(int argc,
 		client.start();
 	} catch (Exception &e) {
 		cerr << e << endl;
+		exit(1);
 	}
 	return 0;
 }
