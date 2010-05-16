@@ -38,7 +38,10 @@ struct ShapeTraits {
  * @ingroup basic
  * @brief Base class for a 3D object in the scene.
  * 
- * Uses a vertex buffer for drawing.
+ * Uses a vertex buffer for drawing.  If <i>usage</i> is 
+ * <tt>GL_STATIC_DRAW</tt>, a buffer will only be generated once for each 
+ * concrete shape.  Subsequent instances of that shape will be given the same 
+ * buffer.  That way duplicate buffers are avoided.
  * 
  * <table>
  * <tr>
@@ -65,6 +68,7 @@ public:
 	virtual string toString() const;
 protected:
 	virtual void initAttributes() = 0;
+	static bool isBufferStored(string className);
 	GLuint offset(int i) const;
 protected: 
 	list<VertexAttribute> attributes;
@@ -72,6 +76,7 @@ protected:
 	GLuint buffer, count;
 	Program *program;
 	string name;
+	static map<string,GLuint> buffers;
 };
 
 

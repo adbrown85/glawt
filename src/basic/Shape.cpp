@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Shape.hpp"
+map<string,GLuint> Shape::buffers;
 
 
 /** Creates a shape from an XML tag.
@@ -54,10 +55,8 @@ void Shape::draw() const {
 	
 	list<VertexAttribute>::const_iterator it;
 	
-	// Enable buffer
+	// Enable buffer and attributes
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	
-	// Enable attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
 		glEnableVertexAttribArray(it->location);
 		glVertexAttribPointer(it->location,
@@ -71,12 +70,10 @@ void Shape::draw() const {
 	// Draw
 	glDrawArrays(mode, 0, count);
 	
-	// Disable attributes
+	// Disable buffer and attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
 		glDisableVertexAttribArray(it->location);
 	}
-	
-	// Disable buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -84,13 +81,26 @@ void Shape::draw() const {
 /** Loads the vertex data into the vertex buffer so it's ready to render. */
 void Shape::finalize() {
 	
-	// Initialize the buffer
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
+	list<VertexAttribute>::iterator it;
+	
+	// Initialize buffer for dynamic shapes or first run of static shapes
+	if (usage == GL_DYNAMIC_DRAW || !isBufferStored(getClassName())) {
+		glGenBuffers(1, &buffer);
+		glBindBuffer(GL_ARRAY_BUFFER, buffer);
+		glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
+		initAttributes();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		if (usage == GL_STATIC_DRAW) {
+			buffers[getClassName()] = buffer;
+		}
+	}
+	
+	// Set buffer for static shapes
+	if (usage == GL_STATIC_DRAW) {
+		buffer = buffers.find(getClassName())->second;
+	}
 	
 	// Get locations of attributes in program
-	list<VertexAttribute>::iterator it;
 	for (it=attributes.begin(); it!=attributes.end(); ) {
 		it->location = program->getAttributeLocation(it->name);
 		if (it->location == -1)
@@ -98,9 +108,16 @@ void Shape::finalize() {
 		else
 			++it;
 	}
+}
+
+
+/** Checks if a buffer already exists for a concrete shape. */
+bool Shape::isBufferStored(string className) {
 	
-	// Initialize attributes
-	initAttributes();
+	map<string,GLuint>::iterator it;
+	
+	it = buffers.find(className);
+	return it != buffers.end();
 }
 
 
@@ -109,6 +126,7 @@ string Shape::toString() const {
 	ostringstream stream;
 	
 	stream << Drawable::toString();
+	stream << " buffer='" << buffer << "'";
 	if (!name.empty()) {
 		stream << " name='" << name << "'";
 	}
