@@ -24,7 +24,7 @@ Target::Target(const Tag &tag) : Attachment(tag,"color") {
 void Target::associate() {
 	
 	// Find the texture
-	Texture2D::find(this, texture, link);
+	texture = Texture2D::find(this, link);
 	if (texture == NULL) {
 		NodeException e(tag);
 		e << "[Target] Could not find texture with name '" << link << "'.";
