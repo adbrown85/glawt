@@ -51,6 +51,83 @@ void Boolean::associate() {
 }
 
 
+/** Boolean shape is not correct and must be recalculated. */
+void Boolean::calculate() {
+	
+	calculateExtents();
+	calculateOverlap();
+	calculateTangible();
+}
+
+
+/** Traverse the group and calculate extents for each shape. */
+void Boolean::calculateExtents() {
+	
+	// Load identity matrix
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	
+	// Collect all the extents in the group
+	extents.clear();
+	calculateExtents(group);
+	
+	// Restore original matrix
+	glPopMatrix();
+}
+
+
+/** Traverse a subtree and calculate extents for each shape. */
+void Boolean::calculateExtents(Node *node) {
+	
+	Node::iterator it;
+	Transformation *transform;
+	Shape *shape;
+	
+	// Apply and remove transform nodes
+	if ((transform = dynamic_cast<Transformation*>(node))) {
+		transform->apply();
+		for (it=transform->begin(); it!=transform->end(); ++it)
+			calculateExtents(*it);
+		transform->remove();
+	}
+	
+	// Store extents of shapes
+	else if ((shape = dynamic_cast<Shape*>(node))) {
+		Extent extent;
+		mvm = Transform::getModelViewMatrix();
+		extent.upper = mvm * Vector(+0.5,+0.5,+0.5,1.0);
+		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
+		extent.diagonal = extent.upper - extent.lower;
+		extent.label = shape->getID();
+		extents.push_back(extent);
+	}
+	
+	// Otherwise just do children
+	else {
+		for (it=node->begin(); it!=node->end(); ++it) {
+			calculateExtents(*it);
+		}
+	}
+}
+
+
+/** Find where the shapes overlap. */
+void Boolean::calculateOverlap() {
+	
+	vector<Extent>::iterator it;
+	
+	// Form shape
+	overlap.upper = Vector(+FLT_INF);
+	overlap.lower = Vector(-FLT_INF);
+	for (it=extents.begin(); it!=extents.end(); ++it) {
+		overlap.upper = min(overlap.upper, it->upper);
+		overlap.lower = max(overlap.lower, it->lower);
+	}
+	overlap.diagonal = overlap.upper - overlap.lower;
+}
+
+
 /** Only draw the boolean operation if its output is tangible. */
 void Boolean::draw() const {
 	
@@ -61,10 +138,10 @@ void Boolean::draw() const {
 }
 
 
-/** Updates and then creates the shape. */
+/** Calculates and then creates the shape. */
 void Boolean::finalize() {
 	
-	update();
+	calculate();
 	Hexahedron::finalize();
 }
 
@@ -136,15 +213,6 @@ void Boolean::findTransforms() {
 }
 
 
-/** Only initialize all the attributes if the boolean output is tangible. */
-void Boolean::initAttributes() {
-	
-	if (tangible) {
-		Hexahedron::initAttributes();
-	}
-}
-
-
 /** Determines if the shapes intersect each other using overlap attribute. */
 bool Boolean::isOverlapped() {
 	
@@ -165,8 +233,8 @@ bool Boolean::isSubstantial(const Extent &extent) {
 /** Redo the operation when a Transformation has changed. */
 void Boolean::onNodeEvent(NodeEvent &event) {
 	
-	update();
-	initAttributes();
+	calculate();
+	updateBuffer();
 }
 
 
@@ -182,79 +250,11 @@ string Boolean::toString() const {
 }
 
 
-/** Boolean shape is not correct and must be recalculated. */
-void Boolean::update() {
+/** Only initialize all the attributes if the boolean output is tangible. */
+void Boolean::updateBuffer() {
 	
-	updateExtents();
-	updateOverlap();
-	updateTangible();
-}
-
-
-/** Traverse the group and calculate extents for each shape. */
-void Boolean::updateExtents() {
-	
-	// Load identity matrix
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	
-	// Collect all the extents in the group
-	extents.clear();
-	updateExtents(group);
-	
-	// Restore original matrix
-	glPopMatrix();
-}
-
-
-/** Traverse a subtree and calculate extents for each shape. */
-void Boolean::updateExtents(Node *node) {
-	
-	Node::iterator it;
-	Transformation *transform;
-	Shape *shape;
-	
-	// Apply and remove transform nodes
-	if ((transform = dynamic_cast<Transformation*>(node))) {
-		transform->apply();
-		for (it=transform->begin(); it!=transform->end(); ++it)
-			updateExtents(*it);
-		transform->remove();
+	if (tangible) {
+		Hexahedron::updateBuffer();
 	}
-	
-	// Store extents of shapes
-	else if ((shape = dynamic_cast<Shape*>(node))) {
-		Extent extent;
-		mvm = Transform::getModelViewMatrix();
-		extent.upper = mvm * Vector(+0.5,+0.5,+0.5,1.0);
-		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
-		extent.diagonal = extent.upper - extent.lower;
-		extent.label = shape->getID();
-		extents.push_back(extent);
-	}
-	
-	// Otherwise just do children
-	else {
-		for (it=node->begin(); it!=node->end(); ++it) {
-			updateExtents(*it);
-		}
-	}
-}
-
-
-/** Find where the shapes overlap. */
-void Boolean::updateOverlap() {
-	
-	vector<Extent>::iterator it;
-	
-	// Form shape
-	overlap.upper = Vector(+FLT_INF);
-	overlap.lower = Vector(-FLT_INF);
-	for (it=extents.begin(); it!=extents.end(); ++it) {
-		overlap.upper = min(overlap.upper, it->upper);
-		overlap.lower = max(overlap.lower, it->lower);
-	}
-	overlap.diagonal = overlap.upper - overlap.lower;
 }
 

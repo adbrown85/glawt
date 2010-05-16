@@ -15,6 +15,13 @@ void BooleanAnd::associate() {
 }
 
 
+/** Checks that the shape formed by the operation can be shown. */
+void BooleanAnd::calculateTangible() {
+	
+	tangible = isOverlapped();
+}
+
+
 /** Finds and copies uniforms from each shape. */
 void BooleanAnd::findUniforms() {
 	
@@ -74,7 +81,7 @@ ShapeTraits BooleanAnd::getTraits() {
  *   0-------1
  * </pre>
  */
-void BooleanAnd::initPoints() {
+void BooleanAnd::updateBufferPoints() {
 	
 	// Update points from overlap
 	toArray(points, overlap.lower, overlap.upper);
@@ -84,7 +91,7 @@ void BooleanAnd::initPoints() {
 
 
 /** Updates the texture coordinates in the vertex buffer. */
-void BooleanAnd::initCoords() {
+void BooleanAnd::updateBufferCoords() {
 	
 	Vector upper, lower;
 	list<Extent>::iterator it;
@@ -102,12 +109,5 @@ void BooleanAnd::initCoords() {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords[0]), coords[0]);
 	glBufferSubData(GL_ARRAY_BUFFER, offset(3), sizeof(coords[1]), coords[1]);
-}
-
-
-/** Checks that the shape formed by the operation can be shown. */
-void BooleanAnd::updateTangible() {
-	
-	tangible = isOverlapped();
 }
 

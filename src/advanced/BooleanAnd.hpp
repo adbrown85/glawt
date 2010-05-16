@@ -80,10 +80,10 @@ public:
 	virtual void associate();
 	static ShapeTraits getTraits();
 protected:
+	virtual void calculateTangible();
 	virtual void findUniforms();
-	virtual void initPoints();
-	virtual void initCoords();
-	virtual void updateTangible();
+	virtual void updateBufferPoints();
+	virtual void updateBufferCoords();
 private:
 	GLfloat points[24][3], coords[2][24][3];
 };

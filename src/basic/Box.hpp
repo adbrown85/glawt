@@ -21,7 +21,7 @@ class Box : public Hexahedron {
 public:
 	Box(const Tag &tag) : Hexahedron(tag,getTraits()) {};
 protected:
-	virtual void initCoords();
+	virtual void updateBufferCoords();
 };
 
 

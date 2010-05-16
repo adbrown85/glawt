@@ -68,7 +68,7 @@
  *            21-----20              2-------3  
  * </pre>
  */
-void Box::initCoords() {
+void Box::updateBufferCoords() {
 	
 	GLfloat C[4][3] = {{0.0, 0.0, 0.0},
 	                   {1.0, 0.0, 0.0},

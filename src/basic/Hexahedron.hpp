@@ -46,13 +46,13 @@ public:
 	Hexahedron(const Tag &tag, ShapeTraits traits);
 protected:
 	static ShapeTraits getTraits();
-	virtual void initAttributes();
-	virtual void initPoints();
-	virtual void initNormals();
-	virtual void initCoords() = 0;
 	static void load();
 	static void toArray(float array[24][3], const Vector &l, const Vector &u);
 	static void toNormals(GLfloat array[24][3]);
+	virtual void updateBuffer();
+	virtual void updateBufferPoints();
+	virtual void updateBufferNormals();
+	virtual void updateBufferCoords() = 0;
 protected:
 	static bool loaded;
 	static int indices[8][3];

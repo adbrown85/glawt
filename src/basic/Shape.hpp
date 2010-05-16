@@ -67,9 +67,9 @@ public:
 	virtual string getName() const;
 	virtual string toString() const;
 protected:
-	virtual void initAttributes() = 0;
 	static bool isBufferStored(string className);
 	GLuint offset(int i) const;
+	virtual void updateBuffer() = 0;
 protected: 
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;

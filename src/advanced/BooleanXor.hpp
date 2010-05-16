@@ -32,12 +32,12 @@ public:
 	virtual string toString() const;
 protected:
 	virtual void calculate();
-	pair<Extent,Extent> knife(const Extent &extent, float at, int on);
+	virtual void calculateTangible();
 	virtual void findTake();
-	virtual void initPoints();
-	virtual void initNormals();
-	virtual void initCoords();
-	virtual void updateTangible();
+	pair<Extent,Extent> knife(const Extent &extent, float at, int on);
+	virtual void updateBufferPoints();
+	virtual void updateBufferNormals();
+	virtual void updateBufferCoords();
 private:
 	GLfloat points[72][3], coords[72][3];
 	GLuint take;
@@ -46,7 +46,7 @@ private:
 
 
 /** Assumed to be always visible (for now). */
-inline void BooleanXor::updateTangible() {tangible = true;}
+inline void BooleanXor::calculateTangible() {tangible = true;}
 
 
 #endif

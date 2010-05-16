@@ -88,7 +88,7 @@ void Shape::finalize() {
 		glGenBuffers(1, &buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, buffer);
 		glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
-		initAttributes();
+		updateBuffer();
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		if (usage == GL_STATIC_DRAW) {
 			buffers[getClassName()] = buffer;

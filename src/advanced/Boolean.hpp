@@ -46,17 +46,17 @@ public:
 	virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
+	void calculate();
+	void calculateExtents();
+	void calculateExtents(Node *node);
+	void calculateOverlap();
+	virtual void calculateTangible() = 0;
 	void findGroup();
 	virtual void findShapes();
 	void findTransforms();
-	virtual void initAttributes();
 	bool isOverlapped();
 	bool isSubstantial(const Extent &extent);
-	void update();
-	void updateExtents();
-	void updateExtents(Node *node);
-	void updateOverlap();
-	virtual void updateTangible() = 0;
+	virtual void updateBuffer();
 protected:
 	bool tangible;
 	Extent overlap;

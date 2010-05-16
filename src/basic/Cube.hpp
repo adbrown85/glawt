@@ -21,7 +21,7 @@ class Cube : public Hexahedron {
 public:
 	Cube(const Tag &tag) : Hexahedron(tag,getTraits()) {};
 protected:
-	virtual void initCoords();
+	virtual void updateBufferCoords();
 };
 
 

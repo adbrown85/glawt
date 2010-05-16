@@ -20,10 +20,10 @@ Square::Square(const Tag &tag) : Shape(tag,getTraits()) {
 	
 	// Initialize vertices
 	if (!loaded) {
-		initPoints();
-		initCoords();
+		updateBufferPoints();
+		updateBufferCoords();
 		initIndices();
-		initNormals();
+		updateBufferNormals();
 		initBuffer();
 		loaded = true;
 	}
@@ -94,7 +94,7 @@ void Square::initBuffer() {
 }
 
 
-void Square::initCoords() {
+void Square::updateBufferCoords() {
 	
 	GLfloat coords[4][3] = {{1.0, 1.0, 0.0},
 	                        {0.0, 1.0, 0.0},
@@ -117,7 +117,7 @@ void Square::initIndices() {
 }
 
 
-void Square::initNormals() {
+void Square::updateBufferNormals() {
 	
 	for (int i=0; i<4; ++i) {
 		this->normals[i][0] = 0.0;
@@ -128,7 +128,7 @@ void Square::initNormals() {
 
 
 /** Initializes the static points array of the class. */
-void Square::initPoints() {
+void Square::updateBufferPoints() {
 	
 	GLfloat points[4][3] = {{+0.5, +0.5, 0.0},
 	                        {-0.5, +0.5, 0.0},

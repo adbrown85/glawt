@@ -8,7 +8,7 @@
 
 
 /** Initializes the coordinates in the vertex buffer. */
-void Cube::initCoords() {
+void Cube::updateBufferCoords() {
 	
 	GLfloat coords[24][3];
 	

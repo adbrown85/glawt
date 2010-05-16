@@ -34,49 +34,6 @@ ShapeTraits Hexahedron::getTraits() {
 }
 
 
-/** Initializes the points, normals, and coordinates. */
-void Hexahedron::initAttributes() {
-	
-	initPoints();
-	initNormals();
-	initCoords();
-}
-
-
-/** Initializes the points in the vertex buffer.
- * 
- * <pre>
- *     6-------7
- *    /|      /|
- *   2-------3 |
- *   | 4-----|-5
- *   |/      |/
- *   0-------1
- * </pre>
- */
-void Hexahedron::initPoints() {
-	
-	GLfloat points[24][3];
-	
-	// Fill buffer with points array
-	toArray(points, Vector(-0.5,-0.5,-0.5),Vector(+0.5,+0.5,+0.5));
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(0), sizeof(points), points);
-}
-
-
-/** Initializes the normals in the vertex buffer. */
-void Hexahedron::initNormals() {
-	
-	GLfloat normals[24][3];
-	
-	// Send to buffer
-	toNormals(normals);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
-}
-
-
 /** Maps vertex indices to points and texture coordinates. */
 void Hexahedron::load() {
 	
@@ -132,7 +89,10 @@ void Hexahedron::toArray(float array[24][3],
 	}
 }
 
-
+/** Fills an array of normals.
+ * 
+ * @param array Array of points to fill
+ */
 void Hexahedron::toNormals(GLfloat array[24][3]) {
 	
 	GLfloat N[6][3] = {{ 0.0,  0.0, +1.0},     // front
@@ -151,5 +111,48 @@ void Hexahedron::toNormals(GLfloat array[24][3]) {
 				array[index][k] = N[n][k];
 		}
 	}
+}
+
+
+/** Initializes the points, normals, and coordinates. */
+void Hexahedron::updateBuffer() {
+	
+	updateBufferPoints();
+	updateBufferNormals();
+	updateBufferCoords();
+}
+
+
+/** Initializes the points in the vertex buffer.
+ * 
+ * <pre>
+ *     6-------7
+ *    /|      /|
+ *   2-------3 |
+ *   | 4-----|-5
+ *   |/      |/
+ *   0-------1
+ * </pre>
+ */
+void Hexahedron::updateBufferPoints() {
+	
+	GLfloat points[24][3];
+	
+	// Fill buffer with points array
+	toArray(points, Vector(-0.5,-0.5,-0.5),Vector(+0.5,+0.5,+0.5));
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(0), sizeof(points), points);
+}
+
+
+/** Initializes the normals in the vertex buffer. */
+void Hexahedron::updateBufferNormals() {
+	
+	GLfloat normals[24][3];
+	
+	// Send to buffer
+	toNormals(normals);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
 }
 

@@ -27,10 +27,10 @@ protected:
 	static ShapeTraits getTraits();
 	virtual void initBuffer();
 	virtual void initIndices();
-	virtual void initAttributes() {};
-	virtual void initPoints();
-	virtual void initNormals();
-	virtual void initCoords();
+	virtual void updateBuffer() {};
+	virtual void updateBufferPoints();
+	virtual void updateBufferNormals();
+	virtual void updateBufferCoords();
 private:
 	static bool loaded;
 	static GLfloat coords[4][3], normals[4][3], points[4][3];
