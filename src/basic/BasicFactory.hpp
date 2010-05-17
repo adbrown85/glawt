@@ -15,6 +15,7 @@
 #include "Factory.hpp"
 #include "Box.hpp"
 #include "Cube.hpp"
+#include "Cone.hpp"
 #include "Disk.hpp"
 #include "Program.hpp"
 #include "Scale.hpp"
@@ -39,6 +40,7 @@ class BasicFactory {
 public:
 	static void install();
 	static Node* createBox(const Tag &tag);
+	static Node* createCone(const Tag &tag);
 	static Node* createCube(const Tag &tag);
 	static Node* createDisk(const Tag &tag);
 	static Node* createProgram(const Tag &tag);

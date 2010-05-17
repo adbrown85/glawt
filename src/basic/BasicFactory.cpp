@@ -18,6 +18,7 @@ void BasicFactory::install() {
 	
 	// Tags
 	Factory::install("box", &createBox);
+	Factory::install("cone", &createCone);
 	Factory::install("cube", &createCube);
 	Factory::install("disk", &createDisk);
 	Factory::install("program", &createProgram);
@@ -45,6 +46,8 @@ void BasicFactory::install() {
 
 
 Node* BasicFactory::createBox(const Tag &tag) {return new Box(tag);}
+
+Node* BasicFactory::createCone(const Tag &tag) {return new Cone(tag);}
 
 Node* BasicFactory::createCube(const Tag &tag) {return new Cube(tag);}
 
