@@ -17,6 +17,7 @@
 #include "Cube.hpp"
 #include "Cone.hpp"
 #include "Disk.hpp"
+#include "Line.hpp"
 #include "Program.hpp"
 #include "Scale.hpp"
 #include "Shader.hpp"
@@ -43,6 +44,7 @@ public:
 	static Node* createCone(const Tag &tag);
 	static Node* createCube(const Tag &tag);
 	static Node* createDisk(const Tag &tag);
+	static Node* createLine(const Tag &tag);
 	static Node* createProgram(const Tag &tag);
 	static Node* createScale(const Tag &tag);
 	static Node* createShader(const Tag &tag);
