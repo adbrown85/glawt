@@ -5,27 +5,22 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Quaternion.hpp"
-float Quaternion::PI=355.0/113.0;
 
 
 Quaternion::Quaternion() {
 	
-	// Set defaults
 	s = 1.0;
 	v.set(0.0, 0.0, 0.0);
 }
 
 
-Quaternion::Quaternion(float angle,
-                       const Vector &axis) {
+Quaternion::Quaternion(float angle, const Vector &axis) {
 	
 	set(angle, axis);
 }
 
 
-/**
- * Returns a matrix representing the rotation.
- */
+/** Returns a matrix representing the rotation. */
 Matrix Quaternion::getMatrix() const {
 	
 	float xx2, yy2, zz2, xy2, xz2, yz2, sx2, sy2, sz2;
@@ -67,8 +62,6 @@ void Quaternion::normalize() {
 }
 
 
-//C.s = s * B.s - v.dotProduct(B.v);
-//C.v = (B.v * s) + (v * B.s) + v.crossProduct(B.v);
 Quaternion Quaternion::operator*(const Quaternion& B) {
 	
 	Quaternion C;
@@ -86,8 +79,7 @@ void Quaternion::print() {
 }
 
 
-void Quaternion::rotate(float angle,
-                        const Vector &axis) {
+void Quaternion::rotate(float angle, const Vector &axis) {
 	
 	Quaternion B(angle, axis);
 	
@@ -96,8 +88,7 @@ void Quaternion::rotate(float angle,
 }
 
 
-void Quaternion::set(float angle,
-                     const Vector &axis) {
+void Quaternion::set(float angle, const Vector &axis) {
 	
 	float cosAngleHalved,
 	      sinAngleHalved,
@@ -106,7 +97,7 @@ void Quaternion::set(float angle,
 	
 	// Initialize
 	angleHalved = angle * 0.5;
-	angleHalvedInRadians = radians(angleHalved);
+	angleHalvedInRadians = Numeric::toRadians(angleHalved);
 	cosAngleHalved = cos(angleHalvedInRadians);
 	sinAngleHalved = sin(angleHalvedInRadians);
 	
@@ -119,7 +110,7 @@ void Quaternion::set(float angle,
 }
 
 
-string Quaternion::toString() {
+string Quaternion::toString() const {
 	
 	stringstream stream;
 	

@@ -12,46 +12,30 @@
 #include <sstream>
 #include "Matrix.hpp"
 #include "Vector.hpp"
+#include "Numeric.hpp"
 using namespace std;
 
 
 /**
  * @ingroup data
- * @brief
- *     Encapsulation of an axis/angle rotation that avoids gimbal lock.
+ * @brief Encapsulation of an axis/angle rotation that avoids gimbal lock.
  */
 class Quaternion {
-	
-	public:
-		
-		Quaternion();
-		Quaternion(float angle,
-		           const Vector &axis);
-		Matrix getMatrix() const;
-		Quaternion operator*(const Quaternion &B);
-		void print();
-		void set(float angle,
-		         const Vector &axis);
-		void rotate(float angle,
-		            const Vector &axis);
-		string toString();
-	
-	private :
-		
-		float s;
-		Vector v;
-		
-		static float PI;
-		
-		void normalize();
-		static float radians(float degrees);
+public:
+	Quaternion();
+	Quaternion(float angle, const Vector &axis);
+	Matrix getMatrix() const;
+	Quaternion operator*(const Quaternion &B);
+	void print();
+	void set(float angle, const Vector &axis);
+	void rotate(float angle, const Vector &axis);
+	string toString() const;
+protected:
+	void normalize();
+private:
+	float s;
+	Vector v;
 };
-
-
-inline float Quaternion::radians(float degrees) {
-	
-	return degrees * PI / 180;
-}
 
 
 #endif

@@ -14,8 +14,9 @@ ${filter-out Exception.o,$(OBJECTS)}: Exception.o
 
 # Math
 Vector.o: 
+Numeric.o: Vector.o
 Matrix.o: Vector.o
-Quaternion.o: Matrix.o Vector.o
+Quaternion.o: Matrix.o Vector.o Numeric.o
 
 # Volume
 DatasetHeader.o: Tag.o
