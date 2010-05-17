@@ -9,16 +9,15 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
-#include <GL/glut.h>
+#include <GL/gl.h>
 #include <vector>
-#include "Identifiable.hpp"
 #include "Manipulator.hpp"
 #include "Matrix.hpp"
-#include "Node.hpp"
 #include "Scene.hpp"
 #include "Selection.hpp"
 #include "Shape.hpp"
 #include "Translate.hpp"
+#include "Traverser.hpp"
 #include "Vector.hpp"
 #include "Window.hpp"
 using namespace std;
@@ -31,11 +30,13 @@ using namespace std;
 class Translator : public Manipulator {
 public:
 	Translator(float x, float y, float z);
-	void draw() const;
+	~Translator();
+	virtual void draw() const;
 	float findPixelFactor(Scene *scene, GLuint shapeID);
 	void use(Scene *scene, const Vector &movement, GLuint shapeID);
 private:
-	GLUquadricObj *cone, *disk;
+	Scene *geometry;
+	Traverser *traverser;
 };
 
 

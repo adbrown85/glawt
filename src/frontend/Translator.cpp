@@ -14,46 +14,32 @@ Translator::Translator(float x, float y, float z) {
 	axis.set(x, y, z, 1.0);
 	size = 1.0;
 	
-	// Initialize GLU shapes
-	cone = gluNewQuadric();
-	gluQuadricDrawStyle(cone, GLU_FILL);
-	disk = gluNewQuadric();
-	gluQuadricDrawStyle(disk, GLU_FILL);
+	// Initialize geometry
+	BasicFactory::install();
+	geometry = new Scene();
+	if (x > 0.9) {
+		geometry->open("${GANDER}/glsl/TranslatorX.xml");
+	} else if (y > 0.9) {
+		geometry->open("${GANDER}/glsl/TranslatorY.xml");
+	} else {
+		geometry->open("${GANDER}/glsl/TranslatorZ.xml");
+	}
+	geometry->prepare();
+	traverser = new Traverser(geometry);
+}
+
+
+Translator::~Translator() {
+	
+	delete geometry;
+	delete traverser;
 }
 
 
 /** Draws the Translator. */
 void Translator::draw() const {
 	
-	float half;
-	
-	// Set unique color for each translator based on axis
-	glPushAttrib(GL_CURRENT_BIT);
-	glColor3f(axis.x, axis.y, axis.z);
-	
-	// Line from origin
-	half = size / 2;
-	glBegin(GL_LINES);
-		glVertex3f(axis.x*half, axis.y*half, axis.z*half);
-		glVertex3f(axis.x*size, axis.y*size, axis.z*size);
-	glEnd();
-	
-	// Cone at end of line
-	glPushMatrix();
-		glTranslatef(axis.x*size, axis.y*size, axis.z*size);
-		if (axis.x >= 0.9)
-			glRotatef(90.0, 0.0, 1.0, 0.0);
-		else if (axis.y >= 0.9)
-			glRotatef(-90.0, 1.0, 0.0, 0.0);
-		glPushMatrix();
-			glRotatef(180.0, 0.0, 1.0, 0.0);
-			gluDisk(disk, 0.0, 0.1, 12, 1);
-		glPopMatrix();
-		gluCylinder(cone, 0.1, 0, 0.25, 12, 1);
-	glPopMatrix();
-	
-	// Restore color
-	glPopAttrib();
+	traverser->start();
 }
 
 
