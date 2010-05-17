@@ -81,6 +81,11 @@ void Scene::open(string filename) {
 		// Step back on closing tags
 		if (it->isClosing()) {
 			Factory::check(*it);
+			if (it->getName() != current->getTag().getName()) {
+				NodeException e(*it);
+				e << "[Scene] Extra closing tag or mismatch detected.";
+				throw e;
+			}
 			current = current->getParent();
 			if (current == NULL) {
 				NodeException e(*it);
