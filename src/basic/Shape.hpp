@@ -69,15 +69,17 @@ public:
 	virtual string toString() const;
 protected:
 	static bool isBufferStored(string className);
-	GLuint offset(int i) const;
+	virtual GLuint getOffset(const string &name) const;
+	void setBufferData(const string &name, GLfloat data[][3]);
 	virtual void updateBuffer() = 0;
-protected: 
+private:
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count;
+	static map<string,GLuint> buffers;
+	map<string,GLuint> offsets;
 	Program *program;
 	string name;
-	static map<string,GLuint> buffers;
 };
 
 

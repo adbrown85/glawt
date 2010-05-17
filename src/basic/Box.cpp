@@ -91,7 +91,6 @@ void Box::updateBufferCoords() {
 	}
 	
 	// Send to buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords), coords);
+	setBufferData("TexCoord0", coords);
 }
 

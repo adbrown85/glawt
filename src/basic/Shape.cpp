@@ -31,6 +31,7 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 		va.number = distance(traits.attributes.begin(), it);
 		va.offset = va.number * block;
 		attributes.push_back(va);
+		offsets[va.name] = va.offset;
 	}
 }
 
@@ -115,6 +116,21 @@ void Shape::finalize() {
 }
 
 
+GLuint Shape::getOffset(const string &name) const {
+	
+	map<string,GLuint>::const_iterator it;
+	
+	it = offsets.find(name);
+	if (it != offsets.end()) {
+		return it->second;
+	} else {
+		NodeException e(tag);
+		e << "[Shape] Unrecognized vertex attribute name '" << name << "'.";
+		throw e;
+	}
+}
+
+
 /** Checks if a buffer already exists for a concrete shape. */
 bool Shape::isBufferStored(string className) {
 	
@@ -125,6 +141,20 @@ bool Shape::isBufferStored(string className) {
 }
 
 
+/** Sets data in the buffer according to its vertex attribute name.
+ * 
+ * @param name Name of the vertex attribute
+ * @param data Array of values of length <i>count</i>
+ */
+void Shape::setBufferData(const string &name, GLfloat data[][3]) {
+	
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER,                        // target
+	                getOffset(name),                        // offset
+	                block,                                  // size
+	                data);                                  // data
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 string Shape::toString() const {
 	
 	ostringstream stream;

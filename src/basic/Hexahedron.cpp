@@ -140,8 +140,7 @@ void Hexahedron::updateBufferPoints() {
 	
 	// Fill buffer with points array
 	toArray(points, Vector(-0.5,-0.5,-0.5),Vector(+0.5,+0.5,+0.5));
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(0), sizeof(points), points);
+	setBufferData("MCVertex", points);
 }
 
 
@@ -152,7 +151,6 @@ void Hexahedron::updateBufferNormals() {
 	
 	// Send to buffer
 	toNormals(normals);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
+	setBufferData("MCNormal", normals);
 }
 
