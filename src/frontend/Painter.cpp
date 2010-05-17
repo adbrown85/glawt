@@ -50,11 +50,10 @@ void Painter::onDrawable(Drawable *node) {
 	if (!node->isSelected())
 		return;
 	
-	// Disable shading and texture
+	// Disable shaders
 	program = Program::getCurrent();
 	if (program != NULL)
 		program->remove();
-	Texture::pause();
 	
 	// Draw outline and manipulators
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
@@ -73,10 +72,9 @@ void Painter::onDrawable(Drawable *node) {
 		glPopAttrib();
 	glPopAttrib();
 	
-	// Restore shading and texturing
+	// Restore shaders
 	if (program != NULL)
 		program->apply();
-	Texture::restart();
 }
 
 
