@@ -82,6 +82,11 @@ void Scene::open(string filename) {
 		if (it->isClosing()) {
 			Factory::check(*it);
 			current = current->getParent();
+			if (current == NULL) {
+				NodeException e(*it);
+				e << "[Scene] Extra closing tag or mismatch detected.";
+				throw e;
+			}
 			continue;
 		}
 		
@@ -90,6 +95,13 @@ void Scene::open(string filename) {
 		current->addChild(node);
 		if (!it->isLeaf())
 			current = node;
+	}
+	
+	// Make sure ended back at root
+	if (current != root) {
+		NodeException e(tags.back());
+		e << "[Scene] Extra closing tag or mismatch detected.";
+		throw e;
 	}
 }
 
