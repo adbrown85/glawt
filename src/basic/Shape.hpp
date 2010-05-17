@@ -68,8 +68,8 @@ public:
 	virtual string getName() const;
 	virtual string toString() const;
 protected:
-	static bool isBufferStored(string className);
 	virtual GLuint getOffset(const string &name) const;
+	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
 	virtual void updateBuffer() = 0;
 private:
@@ -82,11 +82,7 @@ private:
 	string name;
 };
 
-
-/** @return position in the buffer for the i'th attribute. */
-inline GLuint Shape::offset(int i) const {return i*count*3*sizeof(GLfloat);}
-
-/** @return user-assigned name of the shape. */
+/** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
 
 #endif

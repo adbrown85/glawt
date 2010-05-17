@@ -132,7 +132,7 @@ GLuint Shape::getOffset(const string &name) const {
 
 
 /** Checks if a buffer already exists for a concrete shape. */
-bool Shape::isBufferStored(string className) {
+bool Shape::isBufferStored(const string &className) {
 	
 	map<string,GLuint>::iterator it;
 	
@@ -155,6 +155,9 @@ void Shape::setBufferData(const string &name, GLfloat data[][3]) {
 	                data);                                  // data
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+
+/** @return String comprised of the object's attributes. */
 string Shape::toString() const {
 	
 	ostringstream stream;
