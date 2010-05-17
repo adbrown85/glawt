@@ -6,37 +6,26 @@
  */
 #ifndef SQUARE_HPP
 #define SQUARE_HPP
+#include <cstdlib>
 #include <iostream>
-#include <GL/glut.h>
-#include <sstream>
-#include "Program.hpp"
-#include "Shape.hpp"
-#include "Tag.hpp"
+#include <string>
+#include "Shape.hpp"                    // Base class
 using namespace std;
 
 
 /**
  * @ingroup basic
- * @brief 2D square shape that can be drawn by %Display.
+ * @brief Four-sided, 2D shape with equal width and height.
  */
 class Square : public Shape {
 public:
-	Square(const Tag &tag);
-	virtual void draw() const;
+	Square(const Tag &tag) : Shape(tag,getTraits()) {}
 protected:
 	static ShapeTraits getTraits();
-	virtual void initBuffer();
-	virtual void initIndices();
-	virtual void updateBuffer() {};
+	virtual void updateBuffer();
 	virtual void updateBufferPoints();
 	virtual void updateBufferNormals();
 	virtual void updateBufferCoords();
-private:
-	static bool loaded;
-	static GLfloat coords[4][3], normals[4][3], points[4][3];
-	static GLint coordsOffset, normalsOffset, pointsOffset;
-	static GLuint dataBuffer, indicesBuffer;
-	static GLushort indices[4];
 };
 
 

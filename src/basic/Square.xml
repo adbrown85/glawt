@@ -9,12 +9,9 @@
 <program>
 	<shader file="../../glsl/basic.vert" />
 	<shader file="../../glsl/basic.frag" />
-	<scale value="1.5">
-		<square>
-			<uniform type="mat4" name="MVMatrix" as="modelview" />
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<uniform type="mat3" name="NormalMatrix" as="normal" />
-			<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
-		</square>
-	</scale>
+	<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
+	<uniform type="mat4" name="MVMatrix" as="modelview" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="mat3" name="NormalMatrix" as="normal" />
+	<square />
 </program>

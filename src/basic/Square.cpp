@@ -5,54 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Square.hpp"
-bool Square::loaded = false;
-GLfloat Square::coords[4][3], Square::normals[4][3], Square::points[4][3];
-GLint Square::coordsOffset, Square::normalsOffset, Square::pointsOffset;
-GLuint Square::dataBuffer, Square::indicesBuffer;
-GLushort Square::indices[4];
-
-
-/** Creates a new %Square from an XML tag.
- * 
- * @param tag XML tag with "size" attribute.
- */
-Square::Square(const Tag &tag) : Shape(tag,getTraits()) {
-	
-	// Initialize vertices
-	if (!loaded) {
-		updateBufferPoints();
-		updateBufferCoords();
-		initIndices();
-		updateBufferNormals();
-		initBuffer();
-		loaded = true;
-	}
-}
-
-
-/** Draws the square. */
-void Square::draw() const {
-	
-	// Enable buffers and arrays
-	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
-	glEnableVertexAttribArray(POINT_LOCATION);
-	glEnableVertexAttribArray(NORMAL_LOCATION);
-	glEnableVertexAttribArray(COORD_LOCATION);
-	
-	// Draw
-	glVertexAttribPointer(POINT_LOCATION, 3, GL_FLOAT, false, 0, (void*)pointsOffset);
-	glVertexAttribPointer(NORMAL_LOCATION, 3, GL_FLOAT, false, 0, (void*)normalsOffset);
-	glVertexAttribPointer(COORD_LOCATION, 3, GL_FLOAT, false, 0, (void*)coordsOffset);
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_SHORT, 0);
-	
-	// Disable buffers and arrays
-	glDisableVertexAttribArray(POINT_LOCATION);
-	glDisableVertexAttribArray(NORMAL_LOCATION);
-	glDisableVertexAttribArray(COORD_LOCATION);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
 
 
 ShapeTraits Square::getTraits() {
@@ -62,82 +14,53 @@ ShapeTraits Square::getTraits() {
 	traits.count = 4;
 	traits.mode = GL_QUADS;
 	traits.usage = GL_STATIC_DRAW;
-	traits.addAttribute("MCVertex");
-	traits.addAttribute("MCNormal");
-	traits.addAttribute("TexCoord0");
+	traits.attributes.push_back("MCVertex");
+	traits.attributes.push_back("MCNormal");
+	traits.attributes.push_back("TexCoord0");
 	return traits;
 }
 
 
-void Square::initBuffer() {
+void Square::updateBuffer() {
 	
-	int dataSize;
-	
-	// Calculate sizes and offsets
-	dataSize = sizeof(points) + sizeof(normals) + sizeof(coords);
-	pointsOffset = 0;
-	normalsOffset = pointsOffset + sizeof(points);
-	coordsOffset = normalsOffset + sizeof(normals);
-	
-	// Points and coordinates
-	glGenBuffers(1, &dataBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, dataBuffer);
-	glBufferData(GL_ARRAY_BUFFER, dataSize, NULL, GL_STATIC_DRAW);
-	glBufferSubData(GL_ARRAY_BUFFER, pointsOffset, sizeof(points), points);
-	glBufferSubData(GL_ARRAY_BUFFER, normalsOffset, sizeof(normals), normals);
-	glBufferSubData(GL_ARRAY_BUFFER, coordsOffset, sizeof(coords), coords);
-	
-	// Indices
-	glGenBuffers(1, &indicesBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	updateBufferPoints();
+	updateBufferNormals();
+	updateBufferCoords();
 }
 
 
-void Square::updateBufferCoords() {
+void Square::updateBufferPoints() {
 	
-	GLfloat coords[4][3] = {{1.0, 1.0, 0.0},
-	                        {0.0, 1.0, 0.0},
-	                        {0.0, 0.0, 0.0},
-	                        {1.0, 0.0, 0.0}};
+	GLfloat points[4][3] = {{+0.5,+0.5,0.0},
+	                        {-0.5,+0.5,0.0},
+	                        {-0.5,-0.5,0.0},
+	                        {+0.5,-0.5,0.0}};
 	
-	// Copy to class
-	for (int i=0; i<4; i++)
-		for (int j=0; j<3; j++)
-			this->coords[i][j] = coords[i][j];
-}
-
-
-/** Initializes the indices used to draw the square's faces. */
-void Square::initIndices() {
-	
-	// Copy to class
-	for (int i=0; i<4; i++)
-		this->indices[i] = i;
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(0), sizeof(points), points);
 }
 
 
 void Square::updateBufferNormals() {
 	
-	for (int i=0; i<4; ++i) {
-		this->normals[i][0] = 0.0;
-		this->normals[i][1] = 0.0;
-		this->normals[i][2] = 1.0;
-	}
+	GLfloat normals[4][3] = {{0.0,0.0,+1.0},
+	                         {0.0,0.0,+1.0},
+	                         {0.0,0.0,+1.0},
+	                         {0.0,0.0,+1.0}};
+	
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
 }
 
 
-/** Initializes the static points array of the class. */
-void Square::updateBufferPoints() {
+void Square::updateBufferCoords() {
 	
-	GLfloat points[4][3] = {{+0.5, +0.5, 0.0},
-	                        {-0.5, +0.5, 0.0},
-	                        {-0.5, -0.5, 0.0},
-	                        {+0.5, -0.5, 0.0}};
+	GLfloat coords[4][3] = {{1.0,1.0,0.0},
+	                        {0.0,1.0,0.0},
+	                        {0.0,0.0,0.0},
+	                        {1.0,0.0,0.0}};
 	
-	// Copy to class
-	for (int i=0; i<4; i++)
-		for (int j=0; j<3; j++)
-			this->points[i][j] = points[i][j];
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords), coords);
 }
 
