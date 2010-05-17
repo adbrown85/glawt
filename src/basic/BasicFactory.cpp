@@ -23,6 +23,7 @@ void BasicFactory::install() {
 	Factory::install("disk", &createDisk);
 	Factory::install("line", &createLine);
 	Factory::install("program", &createProgram);
+	Factory::install("rotate", &createRotate);
 	Factory::install("scale", &createScale);
 	Factory::install("shader", &createShader);
 	Factory::install("square", &createSquare);
@@ -58,6 +59,8 @@ Node* BasicFactory::createLine(const Tag &tag) {return new Line(tag);}
 
 Node* BasicFactory::createProgram(const Tag &tag) {return new Program(tag);}
 
+Node* BasicFactory::createRotate(const Tag &tag) {return new Rotate(tag);}
+
 Node* BasicFactory::createScale(const Tag &tag) {return new Scale(tag);}
 
 Node* BasicFactory::createShader(const Tag &tag) {return new Shader(tag);}
@@ -80,10 +83,7 @@ Node* BasicFactory::createTexture(const Tag &tag) {
 }
 
 
-Node* BasicFactory::createTranslate(const Tag &tag) {
-	
-	return new Translate(tag);
-}
+Node* BasicFactory::createTranslate(const Tag &t) {return new Translate(t);}
 
 
 Node* BasicFactory::createUniform(const Tag &tag) {

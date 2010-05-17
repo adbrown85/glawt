@@ -19,6 +19,7 @@
 #include "Disk.hpp"
 #include "Line.hpp"
 #include "Program.hpp"
+#include "Rotate.hpp"
 #include "Scale.hpp"
 #include "Shader.hpp"
 #include "Square.hpp"
@@ -46,6 +47,7 @@ public:
 	static Node* createDisk(const Tag &tag);
 	static Node* createLine(const Tag &tag);
 	static Node* createProgram(const Tag &tag);
+	static Node* createRotate(const Tag &tag);
 	static Node* createScale(const Tag &tag);
 	static Node* createShader(const Tag &tag);
 	static Node* createSquare(const Tag &tag);
