@@ -23,6 +23,7 @@ using namespace std;
 struct VertexAttribute {
 	string name;
 	GLint location, number;
+	GLuint offset;
 };
 
 /* Shape parameters. */
@@ -73,7 +74,7 @@ protected:
 protected: 
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
-	GLuint buffer, count;
+	GLuint block, buffer, count;
 	Program *program;
 	string name;
 	static map<string,GLuint> buffers;

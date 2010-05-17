@@ -15,6 +15,9 @@ map<string,GLuint> Shape::buffers;
  */
 Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 	
+	list<string>::iterator it;
+	VertexAttribute va;
+	
 	// Copy
 	this->count = traits.count;
 	this->mode = traits.mode;
@@ -22,14 +25,12 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
 	tag.get("name", name, false, false);
 	
 	// Store vertex attributes
-	list<string>::iterator it;
-	int i=0;
+	block = count * 3 * sizeof(GLfloat);
 	for (it=traits.attributes.begin(); it!=traits.attributes.end(); ++it) {
-		VertexAttribute va;
 		va.name = *it;
-		va.number = i;
-		this->attributes.push_back(va);
-		++i;
+		va.number = distance(traits.attributes.begin(), it);
+		va.offset = va.number * block;
+		attributes.push_back(va);
 	}
 }
 
@@ -59,12 +60,12 @@ void Shape::draw() const {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
 		glEnableVertexAttribArray(it->location);
-		glVertexAttribPointer(it->location,
-		                      3,
-		                      GL_FLOAT,
-		                      false,
-		                      0,
-		                      (void*)offset(it->number));
+		glVertexAttribPointer(it->location,                 // index
+		                      3,                            // size
+		                      GL_FLOAT,                     // type
+		                      false,                        // normalized
+		                      0,                            // stride
+		                      (void*)it->offset);           // pointer
 	}
 	
 	// Draw
@@ -87,7 +88,10 @@ void Shape::finalize() {
 	if (usage == GL_DYNAMIC_DRAW || !isBufferStored(getClassName())) {
 		glGenBuffers(1, &buffer);
 		glBindBuffer(GL_ARRAY_BUFFER, buffer);
-		glBufferData(GL_ARRAY_BUFFER, offset(attributes.size()), NULL, usage);
+		glBufferData(GL_ARRAY_BUFFER,                       // target
+		             block * attributes.size(),             // size
+		             NULL,                                  // data
+		             usage);                                // usage
 		updateBuffer();
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		if (usage == GL_STATIC_DRAW) {
