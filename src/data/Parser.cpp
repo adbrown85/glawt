@@ -121,6 +121,9 @@ string Parser::findKeyIn(const string &text) {
 	
 	// Return up to equals sign
 	index = text.find('=');
+	if (index > text.length()) {
+		throw Exception("[Parser] Detected attribute without equals sign.");
+	}
 	return Text::trim(text.substr(0, index));
 }
 
@@ -131,6 +134,9 @@ string Parser::findValueIn(const string &text) {
 	
 	// Return after equals sign
 	index = text.find('=');
+	if (index > text.length()) {
+		throw Exception("[Parser] Detected attribute without equals sign.");
+	}
 	return Text::trim(text.substr(index+1), " '\"");
 }
 
