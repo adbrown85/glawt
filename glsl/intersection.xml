@@ -8,18 +8,22 @@
 
 <group name="cubes">
 	<translate x="-1">
+	<scale>
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="left">
 			<uniform type="vec4" name="Color" value="1 0 1 0.4" />
 			<uniform type="sampler3D" name="Texture" link="skull" />
 		</cube>
+	</scale>
 	</translate>
 	<translate x="+1">
+	<scale>
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="right">
 			<uniform type="vec4" name="Color" value="0 1 1 0.4" />
 			<uniform type="sampler3D" name="Texture" link="bear" />
 		</cube>
+	</scale>
 	</translate>
 </group>
 
@@ -45,8 +49,8 @@
 	<clear />
 	<blend>
 		<program>
-			<shader file="intersection.vert">
-			<shader file="intersection.frag">
+			<shader file="intersection.vert" />
+			<shader file="intersection.frag" />
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<uniform type="int" name="WindowSize" value="512" />
 			<uniform type="float" name="SampleRate" value="0.01" />
