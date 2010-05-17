@@ -15,6 +15,7 @@
 #include "Factory.hpp"
 #include "Box.hpp"
 #include "Cube.hpp"
+#include "Disk.hpp"
 #include "Program.hpp"
 #include "Scale.hpp"
 #include "Shader.hpp"
@@ -39,6 +40,7 @@ public:
 	static void install();
 	static Node* createBox(const Tag &tag);
 	static Node* createCube(const Tag &tag);
+	static Node* createDisk(const Tag &tag);
 	static Node* createProgram(const Tag &tag);
 	static Node* createScale(const Tag &tag);
 	static Node* createShader(const Tag &tag);

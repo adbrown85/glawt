@@ -1,0 +1,17 @@
+<!--
+ * Disk.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
+	<uniform type="vec3" name="LightPosition" value="5.0 5.0 5.0" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="mat4" name="MVMatrix" as="modelview" />
+	<uniform type="mat3" name="NormalMatrix" as="normal" />
+	<disk />
+</program>

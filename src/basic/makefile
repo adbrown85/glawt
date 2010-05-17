@@ -36,6 +36,7 @@ Hexahedron.o: Shape.o
 Box.o: Hexahedron.o
 Cube.o: Hexahedron.o
 Square.o: Shape.o
+Disk.o: Shape.o
 
 # Transforms
 Scale.o: Transformation.hpp
