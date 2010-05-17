@@ -25,6 +25,7 @@
 #include "MouseDragHelper.hpp"
 #include "Scene.hpp"
 #include "Translator.hpp"
+#include "Scaler.hpp"
 using namespace std;
 
 
@@ -38,12 +39,8 @@ class Mouse : public Control {
 public:
 	Mouse(Interpreter *interpreter);
 	virtual void install();
-	static void onClick(int button,
-	                    int action,
-	                    int x,
-	                    int y);
-	static void onDrag(int x,
-	                   int y);
+	static void onClick(int button, int action, int x, int y);
+	static void onDrag(int x, int y);
 protected:
 	void initBindings();
 	void initData();

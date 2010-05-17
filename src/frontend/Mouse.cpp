@@ -21,9 +21,7 @@ Mouse::Mouse(Interpreter *interpreter) : Control(interpreter),
 }
 
 
-/**
- * Installs the control into the current context.
- */
+/** Installs the control into the current context. */
 void Mouse::install() {
 	
 	// Register callbacks
@@ -36,11 +34,7 @@ void Mouse::install() {
 }
 
 
-/**
- * Installs the bindings for the mouse.
- * 
- * @see Binding
- */
+/** Installs the bindings for the mouse. */
 void Mouse::initBindings() {
 	
 	// Add bindings for mouse wheel
@@ -86,6 +80,7 @@ void Mouse::initBindings() {
 }
 
 
+/** Shares the mouse data with the helpers. */
 void Mouse::initData() {
 	
 	clickHelper.setData(&data);
@@ -93,18 +88,18 @@ void Mouse::initData() {
 }
 
 
-/**
- * Installs the manipulators to show for selected items.
- * 
- * A class that uses the control should draw these manipulators for selected 
- * items.
- */
+/** Installs the manipulators to show for selected items. */
 void Mouse::initManipulators() {
 	
 	// Add translators
+/*
 	add(new Translator(1.0, 0.0, 0.0));
 	add(new Translator(0.0, 1.0, 0.0));
 	add(new Translator(0.0, 0.0, 1.0));
+*/
+	add(new Scaler(1.0, 0.0, 0.0));
+	add(new Scaler(0.0, 1.0, 0.0));
+	add(new Scaler(0.0, 0.0, 1.0));
 	
 	// Set delegates
 	for (size_t i=0; i<manipulators.size(); ++i) {
@@ -117,24 +112,16 @@ void Mouse::initManipulators() {
 }
 
 
-/**
- * GLUT callback for mouse clicks.
- */
-void Mouse::onClick(int button,
-                    int state,
-                    int x,
-                    int y) {
+/** GLUT callback for mouse clicks. */
+void Mouse::onClick(int button, int state, int x, int y) {
 	
 	// Pass to click helper
 	obj->clickHelper.onClick(button, state, x, y);
 }
 
 
-/**
- * GLUT callback for when the mouse is dragged.
- */
-void Mouse::onDrag(int x,
-                   int y) {
+/** GLUT callback for when the mouse is dragged. */
+void Mouse::onDrag(int x, int y) {
 	
 	// Pass to drag helper
 	obj->dragHelper.onDrag(x, y);

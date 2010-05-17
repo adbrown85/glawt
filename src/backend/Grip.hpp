@@ -15,6 +15,7 @@
 #include "Node.hpp"
 #include "Selection.hpp"
 #include "Scene.hpp"
+#include "Scale.hpp"
 #include "Translate.hpp"
 #include "Vector.hpp"
 using namespace std;

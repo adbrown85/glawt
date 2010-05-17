@@ -25,7 +25,9 @@ class Scale : public Transformation,
               public Vector {
 public:
 	Scale(const Tag &tag);
+	virtual void add(const Vector &B);
 	virtual void apply();
+	static Scale* find(Node *node);
 	virtual void remove();
 	virtual string toString() const;
 private:

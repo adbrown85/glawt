@@ -12,14 +12,16 @@
 	<shader file="halfmoon.frag" />
 	<blend>
 		<translate x="+3.0">
-			<box>
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			</box>
+		<scale>
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<box />
+		</scale>
 		</translate>
 		<translate x="-3.0">
-			<box>
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			</box>
+		<scale>
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<box />
+		</scale>
 		</translate>
 	</blend>
 </program>

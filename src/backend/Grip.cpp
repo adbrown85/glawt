@@ -40,7 +40,36 @@ void Grip::scale(Scene *scene,
                  int command,
                  float argument) {
 	
-	cout << "Grip::scale(Scene*,int)" << endl;
+	Node *node;
+	Selection selection;
+	Selection::iterator it;
+	Scale *scale;
+	Vector change;
+	
+	// Determine change
+	switch (command) {
+	case Command::SCALE_X:
+		change.x = argument;
+		break;
+	case Command::SCALE_Y:
+		change.y = argument;
+		break;
+	case Command::SCALE_Z:
+		change.z = argument;
+		break;
+	}
+	
+	// Apply change
+	selection = scene->getSelection();
+	for (it=selection.begin(); it!=selection.end(); ++it) {
+		node = dynamic_cast<Node*>(*it);
+		if (node != NULL) {
+			scale = Scale::find(node);
+			if (scale != NULL) {
+				scale->add(change);
+			}
+		}
+	}
 }
 
 

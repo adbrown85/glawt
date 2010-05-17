@@ -29,11 +29,38 @@ Scale::Scale(const Tag &tag) : Transformation(tag) {
 }
 
 
+/** Adds a vector to this scale. */
+void Scale::add(const Vector &B) {
+	
+	// Add components
+	x += B.x;
+	y += B.y;
+	z += B.z;
+	fireEvent();
+}
+
+
 /** Performs the transformation. */
 void Scale::apply() {
 	
 	glPushMatrix();
 	glScalef(x, y, z);
+}
+
+
+Scale* Scale::find(Node *node) {
+	
+	Scale *scale;
+	
+	node = node->getParent();
+	while (node != NULL) {
+		scale = dynamic_cast<Scale*>(node);
+		if (scale != NULL) {
+			return scale;
+		}
+		node = node->getParent();
+	}
+	return NULL;
 }
 
 
