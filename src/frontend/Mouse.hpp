@@ -41,10 +41,13 @@ public:
 	virtual void install();
 	static void onClick(int button, int action, int x, int y);
 	static void onDrag(int x, int y);
+	static void onModeChange(int command);
 protected:
 	void initBindings();
 	void initData();
 	void initManipulators();
+	void enableScalers();
+	void enableTranslators();
 private:
 	MouseClickHelper clickHelper;
 	MouseData data;

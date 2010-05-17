@@ -64,9 +64,11 @@ void Painter::onDrawable(Drawable *node) {
 		glPushAttrib(GL_POLYGON_BIT);
 			glPolygonMode(GL_FRONT, GL_FILL);
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-				if (mode == GL_SELECT)
-					glPushName((*mi)->getID());
-				(*mi)->draw();
+				if ((*mi)->isEnabled()) {
+					if (mode == GL_SELECT)
+						glPushName((*mi)->getID());
+					(*mi)->draw();
+				}
 			}
 		glPopAttrib();
 	glPopAttrib();

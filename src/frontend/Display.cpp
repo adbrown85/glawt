@@ -94,7 +94,7 @@ void Display::overlay() {
 }
 
 
-void Display::toggleOverlay() {
+void Display::toggleOverlay(int command) {
 	
 	obj->useOverlay = !obj->useOverlay;
 	if (obj->useOverlay)

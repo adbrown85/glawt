@@ -35,7 +35,7 @@ public:
 	static void display(void);
 	Interpreter* getInterpreter();
 	static void idle(void);
-	static void toggleOverlay();
+	static void toggleOverlay(int command);
 protected:
 	void overlay();
 private:

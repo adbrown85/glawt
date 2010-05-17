@@ -24,7 +24,7 @@ using namespace std;
 
 
 /* Function pointer listener to be called on a specific command. */
-typedef void (*interpreter_listener)();
+typedef void (*interpreter_listener)(int);
 
 
 /**
@@ -50,7 +50,7 @@ public:
 	void setScene(Scene *scene);
 private:
 	Scene *scene;
-	map<int,void(*)()> listeners;
+	map<int,interpreter_listener> listeners;
 	vector<Delegate*> delegates;
 };
 

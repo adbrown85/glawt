@@ -27,9 +27,12 @@ public:
 	virtual void draw() const = 0;
 	float findPixelFactor(GLuint shapeID);
 	Vector getAxis() const;
+	bool isEnabled() const;
+	void setEnabled(bool enabled);
 	void setInterpreter(Interpreter *interpreter);
 	virtual void use(const Vector &movement, GLuint shapeID) = 0;
 protected:
+	bool enabled;
 	float size;
 	Interpreter *interpreter;
 	Vector axis;
@@ -37,6 +40,10 @@ protected:
 
 /** @return Direction the manipulator is oriented in. */
 inline Vector Manipulator::getAxis() const {return axis;}
+
+inline bool Manipulator::isEnabled() const {return enabled;}
+
+inline void Manipulator::setEnabled(bool enabled) {this->enabled = enabled;}
 
 /** Changes the object to send commands to. */
 inline void Manipulator::setInterpreter(Interpreter *i) {this->interpreter = i;}

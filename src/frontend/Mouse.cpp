@@ -91,17 +91,18 @@ void Mouse::initData() {
 /** Installs the manipulators to show for selected items. */
 void Mouse::initManipulators() {
 	
-	// Add translators
-/*
+	// Add
 	add(new Translator(1.0, 0.0, 0.0));
 	add(new Translator(0.0, 1.0, 0.0));
 	add(new Translator(0.0, 0.0, 1.0));
-*/
 	add(new Scaler(1.0, 0.0, 0.0));
 	add(new Scaler(0.0, 1.0, 0.0));
 	add(new Scaler(0.0, 0.0, 1.0));
 	
-	// Set delegates
+	// Enable scalers
+	enableTranslators();
+	
+	// Set interpreter
 	for (size_t i=0; i<manipulators.size(); ++i) {
 		manipulators[i]->setInterpreter(interpreter);
 	}
@@ -109,6 +110,11 @@ void Mouse::initManipulators() {
 	// Copy to helpers
 	clickHelper.setManipulators(manipulators);
 	dragHelper.setManipulators(manipulators);
+	
+	// Add listeners
+	interpreter->addListener(Command::TRANSLATE, &onModeChange);
+	interpreter->addListener(Command::SCALE, &onModeChange);
+	interpreter->addListener(Command::ROTATE, &onModeChange);
 }
 
 
@@ -125,5 +131,50 @@ void Mouse::onDrag(int x, int y) {
 	
 	// Pass to drag helper
 	obj->dragHelper.onDrag(x, y);
+}
+
+
+void Mouse::onModeChange(int command) {
+	
+	switch (command) {
+	case Command::TRANSLATE:
+		obj->enableTranslators();
+		break;
+	case Command::SCALE:
+		obj->enableScalers();
+		break;
+	}
+}
+
+
+void Mouse::enableScalers() {
+	
+	Scaler *scaler;
+	vector<Manipulator*>::iterator it;
+	
+	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
+		scaler = dynamic_cast<Scaler*>(*it);
+		if (scaler != NULL) {
+			(*it)->setEnabled(true);
+		} else {
+			(*it)->setEnabled(false);
+		}
+	}
+}
+
+
+void Mouse::enableTranslators() {
+	
+	Translator *translator;
+	vector<Manipulator*>::iterator it;
+	
+	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
+		translator = dynamic_cast<Translator*>(*it);
+		if (translator != NULL) {
+			(*it)->setEnabled(true);
+		} else {
+			(*it)->setEnabled(false);
+		}
+	}
 }
 

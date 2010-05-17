@@ -96,7 +96,7 @@ void Interpreter::run(int command) {
 	// Check for listener
 	li = listeners.find(command);
 	if (li != listeners.end())
-		(li->second)();
+		(li->second)(command);
 	
 	// Hand off to delegate
 	hi = handlersZero.find(command);
@@ -119,7 +119,7 @@ void Interpreter::run(int command,
 	// Check for listener
 	li = listeners.find(command);
 	if (li != listeners.end())
-		(li->second)();
+		(li->second)(command);
 	
 	// Hand off to delegate
 	hi = handlersFloat.find(command);
@@ -142,7 +142,7 @@ void Interpreter::run(int command,
 	// Check for listener
 	li = listeners.find(command);
 	if (li != listeners.end())
-		(li->second)();
+		(li->second)(command);
 	
 	// Hand off to delegate
 	hi = handlersString.find(command);

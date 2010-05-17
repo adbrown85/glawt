@@ -27,9 +27,9 @@ public:
 		TRACK, TRACK_LEFT, TRACK_RIGHT,
 		ZOOM_IN, ZOOM_OUT,
 		RESET,
-		ROTATE_X, ROTATE_Y, ROTATE_Z,
-		SCALE_X, SCALE_Y, SCALE_Z,
-		TRANSLATE_X, TRANSLATE_Y, TRANSLATE_Z,
+		ROTATE, ROTATE_X, ROTATE_Y, ROTATE_Z,
+		SCALE, SCALE_X, SCALE_Y, SCALE_Z,
+		TRANSLATE, TRANSLATE_X, TRANSLATE_Y, TRANSLATE_Z,
 		COPY, CUT, PASTE, DUPLICATE,
 		OPEN, LIST, SAVE, EXIT,
 		HIDE, SHOW_ALL,
@@ -65,12 +65,15 @@ inline void Command::setNames() {
 	names[ZOOM_IN] = "Zoom In";
 	names[ZOOM_OUT] = "Zoom Out";
 	names[RESET] = "Reset Camera";
+	names[ROTATE] = "Rotate";
 	names[ROTATE_X] = "Rotate X";
 	names[ROTATE_Y] = "Rotate Y";
 	names[ROTATE_Z] = "Rotate Z";
+	names[SCALE] = "Scale";
 	names[SCALE_X] = "Scale X";
 	names[SCALE_Y] = "Scale Y";
 	names[SCALE_Z] = "Scale Z";
+	names[TRANSLATE] = "Translate";
 	names[TRANSLATE_X] = "Translate X";
 	names[TRANSLATE_Y] = "Translate Y";
 	names[TRANSLATE_Z] = "Translate Z";
