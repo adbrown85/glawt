@@ -43,55 +43,18 @@ void Translator::draw() const {
 }
 
 
-/** Calculates how a pixel compares to a global unit.
- * 
- * @param scene Graph of nodes.
- * @param shapeID ID of the shape to use for the depth component.
- */
-float Translator::findPixelFactor(Scene *scene,
-                                  GLuint shapeID) {
-	
-	float screenX, projMatArr[16];
-	float pixelsPerUnit, viewDepth;
-	Matrix projMat;
-	Node *node;
-	Vector clipVec, projVec, viewVec;
-	
-	// Get depth
-	node = dynamic_cast<Node*>(Identifiable::findByID(shapeID));
-	viewDepth = node->getDepth() + Window::getPosition().z;
-	
-	// Get projection matrix
-	glGetFloatv(GL_PROJECTION_MATRIX, projMatArr);
-	projMat.set(projMatArr);
-	
-	// Transform vector from view to clip space
-	viewVec.set(1.0, 0.0, viewDepth, 1.0);
-	projVec = projMat * viewVec;
-	clipVec = projVec / projVec.w;
-	
-	// Calculate pixels per unit
-	screenX = ((clipVec.x + 1.0) * 0.5) * Window::getWidth();
-	pixelsPerUnit = screenX - (Window::getWidth() * 0.5);
-	return 1 / pixelsPerUnit;
-}
-
-
 /** Use the Translator.
  * 
- * @param scene Graph of nodes.
  * @param movement Difference between current and last cursor positions.
  * @param shapeID ID of the shape the translator is attached to.
  */
-void Translator::use(Scene *scene,
-                     const Vector &movement,
-                     GLuint shapeID) {
+void Translator::use(const Vector &movement, GLuint shapeID) {
 	
 	float dotProduct, pixelFactor, translateAmount;
 	Vector viewAxis;
 	
 	// Calculate translate amount
-	pixelFactor = findPixelFactor(scene, shapeID);
+	pixelFactor = findPixelFactor(shapeID);
 	viewAxis = Window::getRotationMatrix() * axis;
 	dotProduct = dot(normalize(movement), normalize(viewAxis));
 	translateAmount = movement.length() * dotProduct * pixelFactor;

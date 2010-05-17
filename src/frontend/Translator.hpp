@@ -32,8 +32,7 @@ public:
 	Translator(float x, float y, float z);
 	~Translator();
 	virtual void draw() const;
-	float findPixelFactor(Scene *scene, GLuint shapeID);
-	void use(Scene *scene, const Vector &movement, GLuint shapeID);
+	void use(const Vector &movement, GLuint shapeID);
 private:
 	Scene *geometry;
 	Traverser *traverser;

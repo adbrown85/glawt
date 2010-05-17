@@ -29,8 +29,7 @@ using namespace std;
 class MouseDragHelper : public MouseHelper {
 public:
 	MouseDragHelper(Interpreter *interpreter);
-	void onDrag(int x,
-	            int y);
+	void onDrag(int x, int y);
 	void setBindings(multimap<int,Binding> bindings);
 protected:
 	void decideAxis();

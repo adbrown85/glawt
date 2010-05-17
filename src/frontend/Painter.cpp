@@ -66,7 +66,6 @@ void Painter::onDrawable(Drawable *node) {
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
 				if (mode == GL_SELECT)
 					glPushName((*mi)->getID());
-				(*mi)->copySizeOf(*node);
 				(*mi)->draw();
 			}
 		glPopAttrib();

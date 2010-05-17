@@ -59,8 +59,7 @@ void MouseDragHelper::decideAxis() {
  * @param x Current horizontal coordinate of mouse while it's being dragged.
  * @param y Current vertical coordinate of mouse while it's being dragged.
  */
-void MouseDragHelper::onDrag(int x,
-                             int y) {
+void MouseDragHelper::onDrag(int x, int y) {
 	
 	// Update current mouse data
 	updateCurrentData(x, y);
@@ -70,7 +69,7 @@ void MouseDragHelper::onDrag(int x,
 	
 	// Dragging a manipulator
 	if (data->manipulator != NULL)
-		data->manipulator->use(scene, movement, data->shapeID);
+		data->manipulator->use(movement, data->shapeID);
 	
 	// Dragging on the screen
 	else {

@@ -9,29 +9,25 @@ MODULE := frontend
 GANDER := ../..
 include $(GANDER)/src/module.mak
 
-# Utilities
-Binding.o: 
-Picker.o: Painter.o Manipulator.hpp
-
 # Manipulators
-Manipulator.hpp : 
-Translator.o : Manipulator.hpp
+Manipulator.o: 
+Translator.o: Manipulator.o
 
 # Controls
-Control.o : Binding.o Manipulator.hpp
-Keyboard.o : Binding.o Control.o
-Menu.o : Control.o
-
-# Mouse controls
-MouseData.hpp: Manipulator.hpp
+Binding.o: 
+Control.o: Binding.o Manipulator.o
+Keyboard.o: Control.o
+Menu.o: Control.o
+Picker.o: Painter.o
+MouseData.hpp: Manipulator.o
 MouseHelper.o: Control.o MouseData.hpp
 MouseClickHelper.o: MouseHelper.o Picker.o
 MouseDragHelper.o: MouseHelper.o Translator.o
-Mouse.o: Control.o MouseClickHelper.o MouseData.hpp MouseDragHelper.o
+Mouse.o: MouseClickHelper.o MouseDragHelper.o
 
 # Display
-Display.o : Control.o Manipulator.hpp Painter.o Picker.o
-Painter.o : Manipulator.hpp Translator.o
+Display.o: Control.o Manipulator.o Painter.o Picker.o
+Painter.o: Manipulator.o Translator.o
 
 # Executables
 Display: Keyboard.o Mouse.o Translator.o
