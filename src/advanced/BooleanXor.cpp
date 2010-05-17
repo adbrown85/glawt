@@ -121,27 +121,28 @@ string BooleanXor::toString() const {
 
 void BooleanXor::updateBufferPoints() {
 	
+	int tally;
 	list<Extent>::iterator it;
 	
 	// Overlapped so form points from pieces
 	if (isOverlapped()) {
 		calculate();
-		count = 0;
+		tally = 0;
 		for (it=pieces.begin(); it!=pieces.end(); ++it) {
-			toArray(points+count, it->lower, it->upper);
-			count += 24;
+			toArray(points+tally, it->lower, it->upper);
+			tally += 24;
 		}
+		setCount(tally);
 	}
 	
 	// Otherwise send just the shape itself
 	else {
 		toArray(points, extents[take].lower, extents[take].upper);
-		count = 24;
+		setCount(24);
 	}
 	
 	// Send to buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
+	setBufferData("MCVertex", points);
 }
 
 
@@ -155,8 +156,7 @@ void BooleanXor::updateBufferNormals() {
 	toNormals(normals+48);
 	
 	// Send to buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(1), sizeof(normals), normals);
+	setBufferData("MCNormal", normals);
 }
 
 
@@ -185,7 +185,6 @@ void BooleanXor::updateBufferCoords() {
 	}
 	
 	// Send to buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords), coords);
+	setBufferData("TexCoord0", coords);
 }
 

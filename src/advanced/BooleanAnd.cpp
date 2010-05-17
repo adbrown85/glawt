@@ -85,8 +85,7 @@ void BooleanAnd::updateBufferPoints() {
 	
 	// Update points from overlap
 	toArray(points, overlap.lower, overlap.upper);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
+	setBufferData("MCVertex", points);
 }
 
 
@@ -106,8 +105,7 @@ void BooleanAnd::updateBufferCoords() {
 	}
 	
 	// Send to buffer
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(2), sizeof(coords[0]), coords[0]);
-	glBufferSubData(GL_ARRAY_BUFFER, offset(3), sizeof(coords[1]), coords[1]);
+	setBufferData("TexCoord0", coords[0]);
+	setBufferData("TexCoord1", coords[1]);
 }
 

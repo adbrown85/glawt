@@ -65,12 +65,14 @@ public:
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
+	virtual GLuint getCount() const;
 	virtual string getName() const;
 	virtual string toString() const;
 protected:
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
+	virtual void setCount(GLuint count);
 	virtual void updateBuffer() = 0;
 private:
 	list<VertexAttribute> attributes;
@@ -82,8 +84,14 @@ private:
 	string name;
 };
 
+/** @return Number of vertices in the shape. */
+inline GLuint Shape::getCount() const {return count;}
+
 /** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
+
+/** Sets the number of vertices in the shape. */
+inline void Shape::setCount(GLuint count) {this->count = count;}
 
 #endif
 
