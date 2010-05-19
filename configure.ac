@@ -7,6 +7,26 @@ AC_CONFIG_SRCDIR([src/Gander.cxx])
 AC_PROG_CXX
 AC_PROG_INSTALL
 
+# Check for GNU Make
+echo -n "Checking for GNU Make..."
+make_command=""
+for i in "$MAKE" make gmake gnumake; do
+	if (sh -c "$i --version" 2>/dev/null | grep GNU >/dev/null); then
+		make_command=$i;
+		break;
+	fi
+done
+if test -z $make_command; then
+	echo " no"
+	echo "--------------------------------------------------"
+	echo " GNU Make is required to build Gander.            "
+	echo " Please visit http://www.gnu.org/software/make/   "
+	echo "--------------------------------------------------"
+	(exit 1); exit 1;
+else
+	echo " yes"
+fi
+
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
 
