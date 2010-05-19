@@ -37,6 +37,7 @@ $(distdir): depend
 	@mkdir -p $(distdir)/src
 	@cp configure $(distdir)
 	@cp Makefile.in $(distdir)
+	@cp config.in $(distdir)
 	@cp install-sh $(distdir)
 	@cp src/Makefile.in $(distdir)/src
 	@cp src/depend $(distdir)/src
