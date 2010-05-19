@@ -80,4 +80,6 @@ distclean: clean
 	@rm -f config.status
 	@rm -f Makefile
 	@rm -f src/Makefile
+	@rm -f config.h
+	@rm -f config.in~
 	@rm -f $(tarball)
