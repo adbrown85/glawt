@@ -16,7 +16,7 @@ distdir         := $(tarname)-$(version)
 tarball         := $(tarname)-$(version).tar.gz
 
 # General phony targets
-targets         := all clean tests $(modules) gander
+targets         := all clean tests $(modules) gander depend
 .PHONY: $(targets)
 .DEFAULT: all
 $(targets):
@@ -31,7 +31,7 @@ $(tarball): FORCE $(distdir)
 	@echo "  Packaging tarball..."
 	@tar -czf $(tarball) $(distdir)
 	@rm -rf $(distdir)
-$(distdir):
+$(distdir): depend
 	@echo "  Copying files..."
 	@echo "    src"
 	@mkdir -p $(distdir)/src
@@ -39,6 +39,7 @@ $(distdir):
 	@cp Makefile.in $(distdir)
 	@cp install-sh $(distdir)
 	@cp src/Makefile.in $(distdir)/src
+	@cp src/depend $(distdir)/src
 	@cp src/Gander.* $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
@@ -78,5 +79,4 @@ distclean: clean
 	@rm -f config.status
 	@rm -f Makefile
 	@rm -f src/Makefile
-	@rm -f src/depend
 	@rm -f $(tarball)
