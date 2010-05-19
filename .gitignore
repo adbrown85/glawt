@@ -4,4 +4,5 @@ configure
 config.log
 config.status
 autom4te.cache/
+gander-*.*.tar.gz
 
