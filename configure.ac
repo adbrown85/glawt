@@ -9,16 +9,34 @@ AC_PROG_INSTALL
 
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
-AC_SEARCH_LIBS([glutInit], [glut])
-AC_SEARCH_LIBS([ilGetInteger], [IL])
-AC_SEARCH_LIBS([iluGetInteger], [ILU])
-AC_SEARCH_LIBS([ilutGetInteger], [ILUT])
 
-# Checks for headers
-AC_CHECK_HEADER([GL/glut.h],,AC_MSG_ERROR([Cannot find Glut.]))
-AC_CHECK_HEADER([IL/il.h],,AC_MSG_ERROR([Cannot find 'il.h' from DevIL.]))
-AC_CHECK_HEADER([IL/ilu.h],,AC_MSG_ERROR([Cannot find 'ilu.h' from DevIL.]))
-AC_CHECK_HEADER([IL/ilut.h],,AC_MSG_ERROR([Cannot find 'ilut.h' from DevIL.]))
+# Check for Glut
+error_no_glut() {
+	echo "--------------------------------------------------"
+	echo " Glut (glut) is required to install Gander.       "
+	echo " Try 'sudo apt-get install freeglut3-dev'         "
+	echo " Or visit 'http://freeglut.sourceforge.net'       "
+	echo "--------------------------------------------------"
+	(exit 1); exit 1;
+}
+AC_SEARCH_LIBS([glutInit], [glut], , [error_no_glut])
+AC_CHECK_HEADER([GL/glut.h], , [error_no_glut])
+
+# Check for DevIL
+error_no_devil() {
+	echo "--------------------------------------------------"
+	echo " DevIL (ILUT) is required to install Gander.      "
+	echo " Try 'sudo apt-get install libdevil-dev'          "
+	echo " Or visit 'http://openil.sourceforge.net'         "
+	echo "--------------------------------------------------"
+	(exit 1); exit 1;
+}
+AC_SEARCH_LIBS([ilGetInteger], [IL], , [error_no_devil])
+AC_SEARCH_LIBS([iluGetInteger], [ILU], , [error_no_devil])
+AC_SEARCH_LIBS([ilutGetInteger], [ILUT], , [error_no_devil])
+AC_CHECK_HEADER([IL/il.h], , [error_no_devil])
+AC_CHECK_HEADER([IL/ilu.h], , [error_no_devil])
+AC_CHECK_HEADER([IL/ilut.h], , [error_no_devil])
 
 # Checks for library functions
 AC_CHECK_FUNCS([pow])
