@@ -13,7 +13,7 @@ CXX             := @CXX@
 CXXFLAGS        := @CXXFLAGS@
 DEFS            := @DEFS@ -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
 LIBS            := @LIBS@
-ARFLAGS         := cr
+ARFLAGS         := -cr
 
 # Files
 includes        := ${foreach i,$(modules),-I$(i)/}
@@ -51,15 +51,17 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 %.o: %.cpp %.hpp
 	@echo "  $<"
 	@$(CXX) $(includes) $(DEFS) -o $@ -c $<
+	@$(AR) $(ARFLAGS) $(archive) $@
 depend: $(headers)
 	@echo "  Generating dependencies..."
 	@g++ $(includes) -MM $(sources) -MF depend
 include depend
+$(objects):
 $(archive): $(objects)
-	@$(AR) $(ARFLAGS) $(archive) $^
 %: %.cxx %.o
 	@echo "  $<"
 	@$(CXX) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+$(tests):
 
 # Application
 Gander.o: Gander.cpp Gander.hpp $(archive)
