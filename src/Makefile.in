@@ -1,0 +1,70 @@
+# @configure_input@
+
+
+# Directories
+prefix          := @prefix@
+exec_prefix     := @exec_prefix@
+bindir          := @bindir@
+srcdir          := @srcdir@
+modules         := @modules@
+
+# Tools
+CXX             := @CXX@
+CXXFLAGS        := @CXXFLAGS@
+DEFS            := @DEFS@ -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
+LIBS            := @LIBS@
+ARFLAGS         := cr
+
+# Files
+includes        := ${foreach i,$(modules),-I$(i)/}
+sources         := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
+objects         := ${subst cpp,o,$(sources)}
+headers         := ${subst cpp,hpp,$(sources)}
+mains           := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
+tests           := ${subst .cxx,,$(mains)}
+application     := gander
+archive         := libgander.a
+
+# General phony targets
+.PHONY: all clean tests
+.DEFAULT: all
+all: $(application)
+clean:
+	@echo "  Removing objects..."
+	@$(RM) $(objects) Gander.o
+	@echo "  Removing archive..."
+	@$(RM) $(archive)
+	@echo "  Removing tests..."
+	@$(RM) $(tests)
+	@echo "  Removing application..."
+	@$(RM) $(application)
+tests: $(tests)
+
+# Local phony targets
+.PHONY: $(modules)
+define module
+$(1): $${filter $(1)/%.o,$(objects)}
+endef
+${foreach i,$(modules),${eval ${call module,$(i)}}}
+
+# Objects, archive, and tests
+%.o: %.cpp %.hpp
+	@echo "  $<"
+	@$(CXX) $(includes) $(DEFS) -o $@ -c $<
+depend: $(headers)
+	@echo "  Generating dependencies..."
+	@g++ $(includes) -MM $(sources) -MF depend
+include depend
+$(archive): $(objects)
+	@$(AR) $(ARFLAGS) $(archive) $^
+%: %.cxx %.o
+	@echo "  $<"
+	@$(CXX) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+
+# Application
+Gander.o: Gander.cpp Gander.hpp $(archive)
+	@echo "  $<"
+	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -c $<
+$(application): Gander.cxx Gander.o $(archive)
+	@echo "  gander"
+	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $^ $(LIBS)

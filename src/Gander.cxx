@@ -1,19 +1,19 @@
 /*
- * Client.cxx
+ * Gander.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Client.hpp"
+#include "Gander.hpp"
 
 
 int main(int argc,
          char *argv[]) {
 	
-	Client client(argc, argv);
+	Gander gander(argc, argv);
 	
 	try {
-		client.start();
+		gander.start();
 	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);

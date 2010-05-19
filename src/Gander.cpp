@@ -1,20 +1,14 @@
 /*
- * Client.cpp
+ * Gander.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Client.hpp"
+#include "Gander.hpp"
 
 
-/**
- * Creates a %Client.
- * 
- * @param argc Number of arguments.
- * @param argv Array of arguments as C-strings.
- */
-Client::Client(int argc,
-               char *argv[]) {
+/** Creates an instance of the application. */
+Gander::Gander(int argc, char *argv[]) {
 	
 	this->argc = argc;
 	this->argv = argv;
@@ -24,7 +18,7 @@ Client::Client(int argc,
 }
 
 
-Client::~Client() {
+Gander::~Gander() {
 	
 	if (display != NULL)
 		delete display;
@@ -35,7 +29,7 @@ Client::~Client() {
 }
 
 
-void Client::banner() {
+void Gander::banner() {
 	
 	cout << endl;
 	cout << "****************************************" << endl;
@@ -45,7 +39,7 @@ void Client::banner() {
 }
 
 
-void Client::onCompile() {
+void Gander::onCompile() {
 	
 	// Create window
 	Window::init(argc, argv);
@@ -58,12 +52,11 @@ void Client::onCompile() {
 }
 
 
-/**
- * Starts the display for a scene.
+/** Starts the display for a scene.
  * 
  * @note Controls are not deleted.
  */
-void Client::onDisplay() {
+void Gander::onDisplay() {
 	
 	// Create window
 	Window::init(argc, argv);
@@ -86,7 +79,7 @@ void Client::onDisplay() {
 }
 
 
-void Client::onHeader() {
+void Gander::onHeader() {
 	
 	DatasetHeader header(inFilename);
 	
@@ -94,7 +87,7 @@ void Client::onHeader() {
 }
 
 
-void Client::onPreprocess() {
+void Gander::onPreprocess() {
 	
 	Preprocessor pp(inFilename);
 	
@@ -103,7 +96,7 @@ void Client::onPreprocess() {
 }
 
 
-void Client::onVlb() {
+void Gander::onVlb() {
 	
 	VlbMaker vlbMaker(inFilename, outFilename);
 	
@@ -111,10 +104,8 @@ void Client::onVlb() {
 }
 
 
-/**
- * Parses the command line arguments.
- */
-void Client::parse() {
+/** Parses the command line arguments. */
+void Gander::parse() {
 	
 	// Handle arguments
 	if (argc == 2) {
@@ -133,10 +124,8 @@ void Client::parse() {
 }
 
 
-/**
- * Starts the actions.
- */
-void Client::start() {
+/** Starts the actions. */
+void Gander::start() {
 	
 	// Initialize
 	parse();
@@ -159,10 +148,8 @@ void Client::start() {
 }
 
 
-/**
- * Prints a usage message.
- */
-void Client::usage() {
+/** Prints a usage message. */
+void Gander::usage() {
 	
 	cerr << "Usage: " << argv[0] << " [OPTION] INPUT [OUTPUT]" << endl;
 	cerr << endl;

@@ -1,11 +1,11 @@
 /*
- * Client.hpp
+ * Gander.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CLIENT_HPP
-#define CLIENT_HPP
+#ifndef GANDER_HPP
+#define GANDER_HPP
 #include <cstdlib>
 #include <cstring>
 #include <GL/glut.h>
@@ -32,7 +32,7 @@ using namespace std;
  * starting with the @e Modules page, which gives a good overview of how the 
  * application is divided up into several different layers, starting at the 
  * bottom with @e Data and moving all the way up to @e Graph, @e Backend, 
- * @e Frontend, and finally @e %Client.</p>
+ * @e Frontend, and finally @e %gander.</p>
  * 
  * After that, check out the <i>Class Hierarchy</i> to get a better idea of 
  * how the classes work together, or go ahead and dive in to the actual 
@@ -48,18 +48,14 @@ using namespace std;
  * @defgroup advanced Advanced
  * @defgroup backend Backend
  * @defgroup frontend Frontend
- * @defgroup client Client
  */
 /**
- * @brief
- *     Ties together a %Display with %Mouse, %Keyboard, and %Menu controls.
- * @ingroup client
+ * @brief Main application.
  */
-class Client {
+class Gander {
 public:
-	Client(int argc,
-	       char *argv[]);
-	~Client();
+	Gander(int argc, char *argv[]);
+	~Gander();
 	void start();
 protected:
 	void banner();

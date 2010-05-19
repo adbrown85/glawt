@@ -1,0 +1,82 @@
+# @configure_input@
+
+
+# Directories
+prefix          := @prefix@
+exec_prefix     := @exec_prefix@
+bindir          := @bindir@
+srcdir          := @srcdir@
+modules         := @modules@
+
+# Package
+package         := @PACKAGE_NAME@
+version         := @PACKAGE_VERSION@
+tarname         := @PACKAGE_TARNAME@
+distdir         := $(tarname)-$(version)
+tarball         := $(tarname)-$(version).tar.gz
+
+# General phony targets
+targets         := all clean tests $(modules) gander
+.PHONY: $(targets)
+.DEFAULT: all
+$(targets):
+	@$(MAKE) -C src $@
+
+# Local phony targets
+.PHONY: FORCE dist distcheck
+
+# Distribution
+dist: $(tarball)
+$(tarball): FORCE $(distdir)
+	@echo "  Packaging tarball..."
+	@tar -czf $(tarball) $(distdir)
+	@rm -rf $(distdir)
+$(distdir):
+	@echo "  Copying files..."
+	@echo "    src"
+	@mkdir -p $(distdir)/src
+	@cp configure $(distdir)
+	@cp Makefile.in $(distdir)
+	@cp install-sh $(distdir)
+	@cp src/Makefile.in $(distdir)/src
+	@cp src/Gander.* $(distdir)/src
+	@for i in $(modules); do \
+        echo "      $${i}"; \
+        mkdir $(distdir)/src/$${i}; \
+        cp src/$${i}/*.cpp $(distdir)/src/$${i}; \
+        cp src/$${i}/*.hpp $(distdir)/src/$${i}; \
+        cp src/$${i}/*.cxx $(distdir)/src/$${i}; \
+        cp src/$${i}/*.xml $(distdir)/src/$${i}; \
+    done
+	@cp src/advanced/*.frag $(distdir)/src/advanced
+	@cp src/advanced/*.vert $(distdir)/src/advanced
+	@cp src/basic/*.glsl $(distdir)/src/basic
+	@cp src/data/*.glsl $(distdir)/src/data
+	@cp src/data/*.in $(distdir)/src/data
+	@cp src/data/*.out $(distdir)/src/data
+	@echo "    glsl"
+	@mkdir -p $(distdir)/glsl
+	@cp glsl/* $(distdir)/glsl
+	@echo "    textures"
+	@mkdir -p $(distdir)/textures
+	@cp textures/*.jpg $(distdir)/textures
+FORCE:
+	@-rm -f $(tarball) &> /dev/null
+	@-rm -rf $(distdir) &> /dev/null
+distcheck: $(tarball)
+	@echo "  Unpacking and checking tarball."
+	@tar -zxf $(tarball) $(distdir)
+	@cd $(distdir) && ./configure
+	@$(MAKE) -C $(distdir) all
+	@$(MAKE) -C $(distdir) clean
+	@rm -rf $(distdir)
+	@echo "  Package $(tarball) is ready for distribution."
+distclean: clean
+	@echo "  Removing generated files..."
+	@rm -rf autom4te.cache
+	@rm -f config.log
+	@rm -f config.status
+	@rm -f Makefile
+	@rm -f src/Makefile
+	@rm -f src/depend
+	@rm -f $(tarball)
