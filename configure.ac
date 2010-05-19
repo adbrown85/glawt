@@ -68,7 +68,7 @@ AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
 # Manual variables
-modules="data graph basic advanced backend frontend"
+modules='data graph basic advanced backend frontend'
 AC_SUBST([modules])
 
 # Finish
@@ -76,7 +76,7 @@ AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
 
 echo \
-"-------------------------------------------------
+"------------------------------------------------------------
  ${PACKAGE_NAME} ${PACKAGE_VERSION}
 
  prefix      ${prefix}
@@ -87,4 +87,4 @@ echo \
  modules     ${modules}
  
  Now type 'make' then 'sudo make install'
---------------------------------------------------"
+-------------------------------------------------------------"
