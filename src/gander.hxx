@@ -1,24 +1,22 @@
 /*
- * gander.hpp
+ * gander.hxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef GANDER_HPP
-#define GANDER_HPP
+#ifndef GANDER_HXX
+#define GANDER_HXX
 #include <cstdlib>
 #include <cstring>
-#include <GL/glut.h>
 #include <iostream>
 #include <string>
-#include "DatasetHeader.hpp"
+#include <GL/glut.h>
 #include "Display.hpp"
-#include "Interpreter.hpp"
 #include "Keyboard.hpp"
 #include "Menu.hpp"
 #include "Mouse.hpp"
+#include "DatasetHeader.hpp"
 #include "Preprocessor.hpp"
-#include "Scene.hpp"
 #include "VlbMaker.hpp"
 using namespace std;
 

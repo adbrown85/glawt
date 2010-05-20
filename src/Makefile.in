@@ -32,7 +32,7 @@ archive         := libgander.a
 all: $(application)
 clean:
 	@echo "  Removing objects..."
-	@$(RM) $(objects) gander.o
+	@$(RM) $(objects)
 	@echo "  Removing archive..."
 	@$(RM) $(archive)
 	@echo "  Removing tests..."
@@ -51,7 +51,7 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 # Objects, archive, and tests
 %.o: %.cpp %.hpp
 	@echo "  $<"
-	@$(CXX) $(includes) $(DEFS) -o $@ -c $<
+	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ -c $<
 	@$(AR) $(ARFLAGS) $(archive) $@
 depend: $(headers)
 	@echo "  Generating dependencies..."
@@ -62,13 +62,10 @@ $(objects):
 $(archive): $(objects)
 %: %.cxx %.o
 	@echo "  $<"
-	@$(CXX) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
 $(tests):
 
 # Application
-gander.o: gander.cpp gander.hpp $(archive)
+$(application): gander.cxx gander.hxx $(archive)
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -c $<
-$(application): gander.cxx gander.o $(archive)
-	@echo "  gander"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $^ $(LIBS)

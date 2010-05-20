@@ -7,6 +7,12 @@ AC_CONFIG_HEADERS([config.h:config.in])
 # Checks for programs
 AC_PROG_CXX
 AC_PROG_INSTALL
+AC_PROG_SED
+if test -z $SED; then
+	echo "--------------------------------------------------"
+	echo " Sed is required to build Gander.                 "
+	echo "--------------------------------------------------"
+fi
 
 # Check for GNU Make
 echo -n "Checking for GNU Make..."

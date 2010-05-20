@@ -35,14 +35,13 @@ $(distdir): depend
 	@echo "  Copying files..."
 	@echo "    src"
 	@mkdir -p $(distdir)/src
-	@cp configure $(distdir)
 	@cp Makefile.in $(distdir)
+	@cp configure $(distdir)
 	@cp config.in $(distdir)
 	@cp install-sh $(distdir)
 	@cp src/Makefile.in $(distdir)/src
 	@cp src/depend $(distdir)/src
-	@cp src/gander.*pp $(distdir)/src
-	@cp src/gander.cxx $(distdir)/src
+	@cp src/gander.*xx $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \
