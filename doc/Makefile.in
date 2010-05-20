@@ -1,0 +1,42 @@
+# @configure_input@
+
+# Package
+package         := @PACKAGE_NAME@
+version         := @PACKAGE_VERSION@
+tarname         := @PACKAGE_TARNAME@
+PACKAGE_TARNAME := @PACKAGE_TARNAME@
+
+# Directories
+prefix      := @prefix@
+exec_prefix := @exec_prefix@
+bindir      := @bindir@
+srcdir      := @srcdir@
+datarootdir := @datarootdir@
+datadir     := @datadir@
+docdir      := @docdir@$
+htmldir     := @htmldir@/html
+
+# Tools
+INSTALL     := @INSTALL@
+
+# Files
+modules     := @modules@
+images      := gander.png
+
+# Documentation
+.PHONY: all html install uninstall
+.DEFAULT: all
+all: html
+install: install-html
+uninstall: uninstall-html
+
+# HTML
+.PHONY: install-html uninstall-html
+html:
+	@echo "  Generating HTML documentation..."
+	@$(RM) ${addprefix html/,$(images)}
+	@doxygen doxyfile
+install-html:
+	@echo "  Installing HTML to '$(htmldir)'..."
+	@$(INSTALL) -d $(htmldir)
+	@$(INSTALL) -m 0644 html/* $(htmldir)

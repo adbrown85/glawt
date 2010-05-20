@@ -79,7 +79,7 @@ modules='data graph basic advanced backend frontend'
 AC_SUBST([modules])
 
 # Finish
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
 AC_OUTPUT
 
 echo \

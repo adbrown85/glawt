@@ -16,7 +16,7 @@ using namespace std;
 /**
  * @interface Attachable
  * @ingroup graph
- * @brief Node that can be attached to another node.
+ * @brief %Node that can be attached to another node.
  */
 class Attachable {
 public:

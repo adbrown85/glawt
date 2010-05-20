@@ -12,21 +12,26 @@ bindir      := @bindir@
 srcdir      := @srcdir@
 datarootdir := @datarootdir@
 datadir     := @datadir@
-modules     := @modules@
+docdir      := @docdir@
+htmldir     := @htmldir@
 
 # Tools
 INSTALL     := @INSTALL@
 
 # Files
+modules     := @modules@
 distdir     := $(tarname)-$(version)
 tarball     := $(tarname)-$(version).tar.gz
 
 # Targets to pass down
-pass := all clean tests install uninstall depend $(modules) 
-.PHONY: $(pass)
+src_targets := all clean tests install uninstall depend $(modules) 
+doc_targets := html install-html
+.PHONY: $(src_targets) $(doc_targets)
 .DEFAULT: all
-$(pass):
+$(src_targets):
 	@$(MAKE) -C src $@
+$(doc_targets):
+	@$(MAKE) -C doc $@
 
 # Installation
 .PHONY: install-data uninstall-data
@@ -84,6 +89,11 @@ $(distdir): depend
 	@echo "    textures"
 	@mkdir $(distdir)/textures
 	@cp textures/*.jpg $(distdir)/textures
+	@mkdir $(distdir)/doc
+	@cp doc/Makefile.in $(distdir)/doc
+	@cp doc/doxyfile $(distdir)/doc
+	@cp doc/doxygen.css $(distdir)/doc
+	@cp doc/gander.png $(distdir)/doc
 FORCE:
 	@-$(RM) $(tarball) &> /dev/null
 	@-$(RM) -r $(distdir) &> /dev/null

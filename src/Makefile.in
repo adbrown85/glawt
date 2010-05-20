@@ -13,6 +13,8 @@ srcdir      := @srcdir@
 datarootdir := @datarootdir@
 datadir     := @datadir@
 modules     := @modules@
+docdir      := @docdir@
+htmldir     := @htmldir@
 
 # Tools
 CXX         := @CXX@

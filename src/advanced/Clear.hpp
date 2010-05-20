@@ -17,7 +17,7 @@ using namespace std;
 
 /**
  * @ingroup advanced
- * @brief Clear a framebuffer.
+ * @brief %Clear a framebuffer.
  * 
  * Although actually one of the most mundane operations, most of the time clear 
  * is not directly needed by the user because the display loop will it do 

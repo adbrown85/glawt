@@ -48,7 +48,6 @@ void Texture2D::associate() {
 /** Finds a %Texture2D with a specific name.
  * 
  * @param node Node to start looking.
- * @param pointer Pointer to the %Texture2D.
  * @param name Name of the node as specified by the user.
  */
 Texture2D* Texture2D::find(Node *node, const string &name) {
