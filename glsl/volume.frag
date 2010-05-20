@@ -33,13 +33,13 @@ void main() {
 	
 	// Sample until out of volume
 	FragColor = vec4(0,0,0,0);
-	t = 0.0;
+	t = SampleRate;
 	while (t < tExit) {
 		sample = texture(Volume, Origin+(d*t));
 		sample.a = sample.x; /* * Transfer */
-		//if (sample.a > 0.1) {
+		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
-		//}
+		}
 		t += SampleRate;
 	}
 }
