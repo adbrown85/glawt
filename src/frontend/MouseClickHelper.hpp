@@ -10,12 +10,9 @@
 #include <iostream>
 #include <map>
 #include <utility>
-#include "Binding.hpp"
-#include "Delegate.hpp"
-#include "Identifiable.hpp"
 #include "MouseHelper.hpp"
+#include "Identifiable.hpp"
 #include "Picker.hpp"
-#include "Vector.hpp"
 using namespace std;
 
 

@@ -10,8 +10,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-#include "AdvancedFactory.hpp"     // Outline selected items
-#include "BasicFactory.hpp"        // Outline selected items
+//#include "BasicFactory.hpp"        // Outline selected items
 #include "Manipulator.hpp"         // Drawing manipulators for selection
 #include "Matrix.hpp"              // Rotating camera
 #include "Node.hpp"                // Traversing the scene graph

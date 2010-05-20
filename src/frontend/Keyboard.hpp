@@ -6,25 +6,22 @@
  */
 #ifndef KEYBOARD_HPP
 #define KEYBOARD_HPP
-#include <cctype>
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
+#include <string>
+#include <cctype>
 #include <map>
 #include <utility>
 #include <vector>
-#include "Binding.hpp"
-#include "Command.hpp"
+#include <GL/glut.h>
 #include "Control.hpp"
-#include "Delegate.hpp"
 #include "Scene.hpp"
 using namespace std;
 
 
 /**
  * @ingroup frontend
- * @brief
- *     %Keyboard control for the %Display.
+ * @brief %Keyboard control for the %Display.
  */
 class Keyboard : public Control {
 public:
@@ -40,7 +37,7 @@ private:
 	static Keyboard *obj;
 };
 
-
+/** Adds all the default keyboard bindings to Gander. */
 inline void Keyboard::initBindings() {
 	
 	add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));

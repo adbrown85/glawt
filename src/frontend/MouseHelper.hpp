@@ -8,12 +8,10 @@
 #define MOUSEHELPER_HPP
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include <map>
 #include <vector>
 #include "Control.hpp"
-#include "Delegate.hpp"
-#include "Manipulator.hpp"
-#include "Scene.hpp"
 #include "Vector.hpp"
 using namespace std;
 

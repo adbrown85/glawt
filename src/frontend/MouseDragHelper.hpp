@@ -7,16 +7,13 @@
 #ifndef MOUSEDRAGHELPER_HPP
 #define MOUSEDRAGHELPER_HPP
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
+#include <string>
 #include <map>
 #include <vector>
-#include "Binding.hpp"
-#include "Delegate.hpp"
-#include "Manipulator.hpp"
+#include <GL/glut.h>
 #include "MouseHelper.hpp"
 #include "Vector.hpp"
-#include "Window.hpp"
 using namespace std;
 
 

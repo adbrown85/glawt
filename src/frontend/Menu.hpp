@@ -10,17 +10,13 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
-#include "Command.hpp"
 #include "Control.hpp"
-#include "Delegate.hpp"
-#include "Scene.hpp"
 using namespace std;
 
 
 /**
  * @ingroup frontend
- * @brief
- *     Right-click menu for the %Display.
+ * @brief Right-click menu for the %Display.
  */
 class Menu : public Control {
 public:

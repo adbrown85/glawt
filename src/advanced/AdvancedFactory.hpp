@@ -25,7 +25,6 @@
 #include "Octree.hpp"
 #include "Outputs.hpp"
 #include "Target.hpp"
-#include "Wireframe.hpp"
 using namespace std;
 
 
@@ -48,7 +47,6 @@ public:
 	static Node* createOctree(const Tag &tag);
 	static Node* createOutputs(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
-	static Node* createWireframe(const Tag &tag);
 private:
 	static bool installed;
 };

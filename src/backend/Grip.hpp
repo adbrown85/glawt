@@ -11,10 +11,6 @@
 #include <string>
 #include <typeinfo>
 #include "Command.hpp"
-#include "Delegate.hpp"
-#include "Node.hpp"
-#include "Selection.hpp"
-#include "Scene.hpp"
 #include "Scale.hpp"
 #include "Translate.hpp"
 #include "Vector.hpp"

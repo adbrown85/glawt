@@ -15,7 +15,6 @@
 #include "Binding.hpp"
 #include "Interpreter.hpp"
 #include "Manipulator.hpp"
-#include "Scene.hpp"
 using namespace std;
 
 

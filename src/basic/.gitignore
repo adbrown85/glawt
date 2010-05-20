@@ -14,4 +14,5 @@ Texture3D
 Translate
 Uniform
 UniformMatrix
+Wireframe
 

@@ -6,20 +6,17 @@
  */
 #ifndef INTERPRETER_HPP
 #define INTERPRETER_HPP
-#include <algorithm>
 #include <cstdlib>
 #include <iostream>
-#include <map>
 #include <string>
+#include <algorithm>
+#include <map>
 #include <vector>
 #include "Cameraman.hpp"
-#include "Command.hpp"
 #include "Compositor.hpp"
-#include "Delegate.hpp"
 #include "Director.hpp"
 #include "Grip.hpp"
 #include "Producer.hpp"
-#include "Scene.hpp"
 using namespace std;
 
 
@@ -53,8 +50,6 @@ private:
 	map<int,interpreter_listener> listeners;
 	vector<Delegate*> delegates;
 };
-
-
 
 inline Scene* Interpreter::getScene() const {return scene;}
 

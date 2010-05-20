@@ -30,6 +30,7 @@ void BasicFactory::install() {
 	Factory::install("texture", &createTexture);
 	Factory::install("translate", &createTranslate);
 	Factory::install("uniform", &createUniform);
+	Factory::install("wireframe", &createWireframe);
 	
 	// Map uniform types back to kinds
 	kinds["int"] = INT;
@@ -119,5 +120,11 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 		e << "[BasicFactory] Unexpected error making uniform.";
 		throw e;
 	}
+}
+
+
+Node* BasicFactory::createWireframe(const Tag &tag) {
+	
+	return new Wireframe(tag);
 }
 

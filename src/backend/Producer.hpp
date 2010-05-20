@@ -13,14 +13,9 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include "Exception.hpp"
+#include "Command.hpp"
 #include "AdvancedFactory.hpp"
 #include "BasicFactory.hpp"
-#include "Command.hpp"
-#include "Delegate.hpp"
-#include "Factory.hpp"
-#include "Scene.hpp"
-#include "Tag.hpp"
 #include "Translate.hpp"
 using namespace std;
 

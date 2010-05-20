@@ -9,10 +9,6 @@
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
-#include "Delegate.hpp"
-#include "Node.hpp"
-#include "Scene.hpp"
-#include "Selection.hpp"
 using namespace std;
 
 

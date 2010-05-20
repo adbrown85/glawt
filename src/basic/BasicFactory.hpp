@@ -31,6 +31,7 @@
 #include "UniformMatrix.hpp"
 #include "UniformSampler.hpp"
 #include "UniformVector.hpp"
+#include "Wireframe.hpp"
 using namespace std;
 
 
@@ -54,6 +55,7 @@ public:
 	static Node* createTexture(const Tag &tag);
 	static Node* createTranslate(const Tag &tag);
 	static Node* createUniform(const Tag &tag);
+	static Node* createWireframe(const Tag &tag);
 private:
 	enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
 	static bool installed;

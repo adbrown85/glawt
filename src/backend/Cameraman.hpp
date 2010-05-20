@@ -11,8 +11,6 @@
 #include <iostream>
 #include <map>
 #include "Command.hpp"
-#include "Delegate.hpp"
-#include "Scene.hpp"
 #include "Window.hpp"
 using namespace std;
 
