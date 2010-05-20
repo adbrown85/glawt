@@ -15,39 +15,21 @@ Texture3D::Texture3D(const Tag &tag) :
                      Texture(GL_TEXTURE_3D, tag),
                      dataset(tag) {
 	
-}
-
-
-/** Loads the texture on an available texture unit. */
-void Texture3D::associate() {
-	
-	// Find the unit and load
-	Texture::associate();
-	load();
-}
-
-
-Texture3D* Texture3D::find(Node *node,
-                           const string &name) {
-	
-	Node *current;
-	Texture3D *texture3d;
-	
-	current = node->getParent();
-	while (current != NULL) {
-		texture3d = dynamic_cast<Texture3D*>(current);
-		if (texture3d != NULL && texture3d->getName()==name) {
-			return texture3d;
-		} else {
-			current = current->getParent();
-		}
+	if (!tag.get("normalize", normalize, false)) {
+		normalize = false;
 	}
-	return NULL;
 }
 
 
-/** Loads the dataset as a 3D texture. */
-void Texture3D::load() {
+/** Loads the dataset into texture memory. */
+void Texture3D::finalize() {
+	
+	// Load the dataset
+	dataset.load();
+	if (normalize) {
+		cerr << "[Texture3D] Normalizing (this could take awhile...)" << endl;
+		dataset.normalize();
+	}
 	
 	// Bind the texture to the right unit
 	glActiveTexture(GL_TEXTURE0 + unit);
@@ -73,5 +55,24 @@ void Texture3D::load() {
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP);
+}
+
+
+Texture3D* Texture3D::find(Node *node,
+                           const string &name) {
+	
+	Node *current;
+	Texture3D *texture3d;
+	
+	current = node->getParent();
+	while (current != NULL) {
+		texture3d = dynamic_cast<Texture3D*>(current);
+		if (texture3d != NULL && texture3d->getName()==name) {
+			return texture3d;
+		} else {
+			current = current->getParent();
+		}
+	}
+	return NULL;
 }
 

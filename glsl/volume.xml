@@ -1,0 +1,40 @@
+<!--
+ * kruger.xml
+ * 
+ * Author
+ *     Andrew Brown
+-->
+
+
+
+<texture name="exit_coords" size="512">
+	
+	<!-- Render front faces into offscreen buffer -->
+	<framebuffer>
+		<target link="exit_coords" />
+		<program>
+			<shader file="coordinates.vert" />
+			<shader file="coordinates.frag" />
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<cull faces="back">
+				<cube />
+			</cull>
+		</program>
+	</framebuffer>
+	
+	<!-- Sample volume -->
+	<program>
+		<shader file="volume.vert" />
+		<shader file="volume.frag" />
+		<uniform type="int" name="WindowSize" value="512" />
+		<texture file="../textures/bunny.vlb" name="volume" normalize="true">
+			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+			<uniform type="float" name="SampleRate" value="0.004" />
+			<uniform type="sampler2d" name="ExitCoords" link="exit_coords" />
+			<uniform type="sampler3d" name="Volume" link="volume" />
+			<cull faces="front">
+				<cube />
+			</cull>
+		</texture>
+	</program>
+</texture>

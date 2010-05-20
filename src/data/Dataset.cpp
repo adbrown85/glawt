@@ -14,8 +14,8 @@
 Dataset::Dataset(string filename) :
                  header(filename) {
 	
-	// Initialize
-	Dataset::init();
+	initTypeBlock();
+	initDimensions();
 }
 
 
@@ -26,8 +26,8 @@ Dataset::Dataset(string filename) :
 Dataset::Dataset(const Tag &tag) :
                  header(tag) {
 	
-	// Initialize
-	Dataset::init();
+	initTypeBlock();
+	initDimensions();
 }
 
 
@@ -89,7 +89,7 @@ void Dataset::get(const Index &index,
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws const_char* if the dataset's type is not GL_UNSIGNED_BYTE.
+ * @throws Exception if the dataset's type is not GL_UNSIGNED_BYTE.
  * @return Copy of the value as an unsigned byte.
  * @note Remember if you want to print the value, cast it to an @c int first.
  */
@@ -111,7 +111,7 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws const_char* if the dataset's type is not GL_FLOAT.
+ * @throws Exception if the dataset's type is not GL_FLOAT.
  * @return Copy of the value as a float.
  */
 float Dataset::getAsFloat(const Index &I) const {
@@ -132,7 +132,7 @@ float Dataset::getAsFloat(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws const_char* if the dataset's type is not GL_SHORT.
+ * @throws Exception if the dataset's type is not GL_SHORT.
  * @return Copy of the value as a short.
  */
 short Dataset::getAsShort(const Index &I) const {
@@ -147,6 +147,27 @@ short Dataset::getAsShort(const Index &I) const {
 	// Return the value
 	get(I, value);
 	return *((short*)value);
+}
+
+
+/** Gets the value of an element in the data.
+ * 
+ * @param [in] I Integer coordinates specifying the location in dataset.
+ * @throws Exception if the dataset's type is not GL_SHORT.
+ * @return Copy of the value as a short.
+ */
+unsigned short Dataset::getAsUnsignedShort(const Index &I) const {
+	
+	void *value;
+	
+	// Check type
+	if (type != GL_UNSIGNED_SHORT) {
+		throw Exception("[Dataset] Data is not made up of unsigned shorts.");
+	}
+	
+	// Return the value
+	get(I, value);
+	return *((unsigned short*)value);
 }
 
 
@@ -167,19 +188,6 @@ int Dataset::getMaximumDimension() const {
 	if (depth > max)
 		max = depth;
 	return max;
-}
-
-
-/** Initializes attributes common to all constructors. */
-void Dataset::init() {
-	
-	// Initialize
-	initTypeBlock();
-	initDimensions();
-	
-	// Allocate and read data
-	data = malloc(length * block);
-	readData();
 }
 
 
@@ -218,11 +226,55 @@ void Dataset::initTypeBlock() {
 	} else if (type == "int16") {
 		this->type = GL_SHORT;
 		block = 2;
+	} else if (type == "uint16") {
+		this->type = GL_UNSIGNED_SHORT;
+		block = 2;
 	} else if (type == "float") {
 		this->type = GL_FLOAT;
 		block = 4;
 	} else {
 		throw Exception("[Dataset] Data type not currently supported.");
+	}
+}
+
+
+void Dataset::load() {
+	
+	// Allocate and read data
+	data = malloc(length * block);
+	readData();
+}
+
+
+void Dataset::normalize() {
+	
+	switch (type) {
+	case GL_UNSIGNED_SHORT:
+		normalizeAsUnsignedShort();
+		break;
+	default:
+		cerr << "[Dataset] Normalized not supported for this type." << endl;
+		break;
+	}
+}
+
+
+void Dataset::normalizeAsUnsignedShort() {
+	
+	unsigned short value;
+	
+	for (int k=0; k<depth; ++k) {
+		for (int i=0; i<height; ++i) {
+			for (int j=0; j<width; ++j) {
+				value = getAsUnsignedShort(Index(i,j,k));
+				if (value < 4095) {
+					value = (unsigned short)(((float)value / 4095) * 65535);
+				} else {
+					value = 0;
+				}
+				set(Index(i,j,k), &value, type);
+			}
+		}
 	}
 }
 
@@ -243,6 +295,9 @@ void Dataset::print(Index index) {
 			break;
 		case GL_SHORT:
 			cout << "  " << getAsShort(index) << endl;
+			break;
+		case GL_UNSIGNED_SHORT:
+			cout << "  " << getAsUnsignedShort(index) << endl;
 			break;
 		case GL_FLOAT:
 			cout << "  " << getAsFloat(index) << endl;

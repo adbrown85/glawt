@@ -43,30 +43,34 @@ public:
 	Dataset(string filename);
 	Dataset(const Tag &tag);
 	virtual ~Dataset();
-	virtual unsigned char getAsByte(const Index &I) const;
-	virtual float getAsFloat(const Index &I) const;
-	virtual short getAsShort(const Index &I) const;
-	virtual int getBlock() const;
-	virtual void* getData();
-	virtual int getDepth() const;
-	virtual int getHeight() const;
-	virtual int getMaximumDimension() const;
-	virtual GLenum getType() const;
-	virtual int getWidth() const;
-	virtual void print() const;
-	virtual void print(Index I);
-	virtual void set(const Index &I,
-	                 const void *value,
-	                 GLenum type);
+	unsigned char getAsByte(const Index &I) const;
+	float getAsFloat(const Index &I) const;
+	short getAsShort(const Index &I) const;
+	unsigned short getAsUnsignedShort(const Index &I) const;
+	int getBlock() const;
+	void* getData();
+	int getDepth() const;
+	int getHeight() const;
+	int getHigh() const;
+	int getLow() const;
+	int getMax() const;
+	int getMin() const;
+	int getMaximumDimension() const;
+	GLenum getType() const;
+	int getWidth() const;
+	void load();
+	void normalize();
+	void print() const;
+	void print(Index I);
+	void set(const Index &I, const void *value, GLenum type);
 protected:
-	virtual char* findPosition(const Index &I) const;
-	virtual void get(const Index &I,
-	                 void *&value) const;
-	virtual void init();
-	virtual void initDimensions();
-	virtual void initTypeBlock();
-	virtual void readData();
-	virtual void checkIndex(const Index &I) const;
+	void checkIndex(const Index &I) const;
+	char* findPosition(const Index &I) const;
+	void get(const Index &I, void *&value) const;
+	void initDimensions();
+	void initTypeBlock();
+	void normalizeAsUnsignedShort();
+	void readData();
 private:
 	DatasetHeader header;
 	GLenum type;
@@ -74,7 +78,6 @@ private:
 	int width, height, depth, widthTimesHeight;
 	void *data;
 };
-
 
 /** @return Number of bytes in one sample. */
 inline int Dataset::getBlock() const {return block;}
@@ -88,9 +91,22 @@ inline int Dataset::getDepth() const {return depth;}
 /** @return Number of samples in the Y direction. */
 inline int Dataset::getHeight() const {return height;}
 
+/** @return Highest value according to the header. */
+inline int Dataset::getHigh() const {return header.getHigh();}
+
+/** @return Lowest value according to the header. */
+inline int Dataset::getLow() const {return header.getLow();}
+
+/** @return Maximum possible value according to the header. */
+inline int Dataset::getMax() const {return header.getMax();}
+
+/** @return Minimum possible value according to the header. */
+inline int Dataset::getMin() const {return header.getMin();}
+
 /** Currently, the return value will be one of 
  *   - @c GL_UNSIGNED_BYTE,
  *   - @c GL_SHORT, or 
+ *   - @c GL_UNSIGNED_SHORT, or 
  *   - @c GL_FLOAT,
  * 
  * which can then be used in a @c switch statement.

@@ -59,13 +59,16 @@ public :
 	int getDepth() const;
 	string getFilename() const;
 	int getHeight() const;
+	int getHigh() const;
+	int getLow() const;
+	int getMax() const;
+	int getMin() const;
 	int getOffset() const;
 	string getType() const;
 	int getWidth() const;
 	void print() const;
 	void write(ostream &stream);
 protected:
-	
 	void check();
 	void check(istream &stream);
 	void read();
@@ -88,7 +91,19 @@ inline string DatasetHeader::getFilename() const {return filename;}
 /** @return Number of samples in the Y direction. */
 inline int DatasetHeader::getHeight() const {return height;}
 
-/**  @return Lines to skip to get past the header.
+/** @return Highest value in the dataset according to the header. */
+inline int DatasetHeader::getHigh() const {return high;}
+
+/** @return Lowest value in the dataset according to the header. */
+inline int DatasetHeader::getLow() const {return low;}
+
+/** @return Maximum possible value according to the header. */
+inline int DatasetHeader::getMax() const {return max;}
+
+/** @return Minimum possible value according to the header. */
+inline int DatasetHeader::getMin() const {return min;}
+
+/** @return Lines to skip to get past the header.
  * 
  * In other words, the next byte after that will be the first byte of the 
  * actual samples.  Because the Vlib specification is so strict, we assume that 

@@ -27,7 +27,7 @@
 	</translate>
 </group>
 
-<texture name="skull" file="../textures/skull.vlb">
+<texture name="skull" file="../textures/bunny.vlb" normalize="true">
 <texture name="bear" file="../textures/skull.vlb">
 	<texture name="end_coords_0" size="512">
 	<framebuffer>

@@ -95,7 +95,7 @@ void DatasetHeader::check(istream &stream) {
 	// Look for descriptor
 	getline(stream, line);
 	if (line != "VLIB.1") {
-		throw Exception("[DatasetHeader] First line of stream is not 'VLIB.1'.");
+		throw Exception("[DatasetHeader] First line is not 'VLIB.1'.");
 	}
 	beginning = 1;
 	

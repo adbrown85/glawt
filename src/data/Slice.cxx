@@ -37,6 +37,7 @@ int main(int argc,
 		
 		// Create sequence and slice
 		dataset = new Dataset(filename);
+		dataset->load();
 		slice = new Slice(dataset, 0);
 		
 		// Initialize display
@@ -63,9 +64,7 @@ int main(int argc,
 }
 
 
-/**
- * GLUT display callback.
- */
+/** GLUT display callback. */
 void display(void) {
 	
 	char buffer[4];
@@ -76,6 +75,7 @@ void display(void) {
 	
 	// Add index
 	glRasterPos2f(-xText, +yText);
+	glColor3f(0.0, 1.0, 0.0);
 	sprintf(buffer, "%d", slice->getIndex());
 	for (size_t i=0; i<strlen(buffer); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,
@@ -86,9 +86,7 @@ void display(void) {
 }
 
 
-/**
- * Initializes the GLUT display.
- */
+/** Initializes the GLUT display. */
 void init(int argc,
           char *argv[],
           string title) {
@@ -110,9 +108,7 @@ void init(int argc,
 }
 
 
-/**
- * GLUT special keys callback.
- */
+/** GLUT special keys callback. */
 void special(int key,
              int x,
              int y) {
@@ -132,9 +128,7 @@ void special(int key,
 }
 
 
-/**
- * GLUT keyboard callback.
- */
+/** GLUT keyboard callback. */
 void keyboard(unsigned char key,
               int x,
               int y) {
