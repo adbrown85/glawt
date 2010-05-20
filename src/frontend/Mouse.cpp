@@ -92,22 +92,18 @@ void Mouse::initData() {
 void Mouse::initManipulators() {
 	
 	// Add
-	add(new Translator(1.0, 0.0, 0.0));
-	add(new Translator(0.0, 1.0, 0.0));
-	add(new Translator(0.0, 0.0, 1.0));
-	add(new Scaler(1.0, 0.0, 0.0));
-	add(new Scaler(0.0, 1.0, 0.0));
-	add(new Scaler(0.0, 0.0, 1.0));
+	add(new Manipulator('x', Command::TRANSLATE_X, "ui/TranslateX.xml"));
+	add(new Manipulator('y', Command::TRANSLATE_Y, "ui/TranslateY.xml"));
+	add(new Manipulator('z', Command::TRANSLATE_Z, "ui/TranslateZ.xml"));
+	add(new Manipulator('x', Command::SCALE_X, "ui/ScaleX.xml"));
+	add(new Manipulator('y', Command::SCALE_Y, "ui/ScaleY.xml"));
+	add(new Manipulator('z', Command::SCALE_Z, "ui/ScaleZ.xml"));
 	
-	// Enable scalers
-	enableTranslators();
-	
-	// Set interpreter
+	// Initialize
+	enableTranslateManipulators();
 	for (size_t i=0; i<manipulators.size(); ++i) {
 		manipulators[i]->setInterpreter(interpreter);
 	}
-	
-	// Copy to helpers
 	clickHelper.setManipulators(manipulators);
 	dragHelper.setManipulators(manipulators);
 	
@@ -121,7 +117,6 @@ void Mouse::initManipulators() {
 /** GLUT callback for mouse clicks. */
 void Mouse::onClick(int button, int state, int x, int y) {
 	
-	// Pass to click helper
 	obj->clickHelper.onClick(button, state, x, y);
 }
 
@@ -129,7 +124,6 @@ void Mouse::onClick(int button, int state, int x, int y) {
 /** GLUT callback for when the mouse is dragged. */
 void Mouse::onDrag(int x, int y) {
 	
-	// Pass to drag helper
 	obj->dragHelper.onDrag(x, y);
 }
 
@@ -138,41 +132,45 @@ void Mouse::onModeChange(int command) {
 	
 	switch (command) {
 	case Command::TRANSLATE:
-		obj->enableTranslators();
+		obj->enableTranslateManipulators();
 		break;
 	case Command::SCALE:
-		obj->enableScalers();
+		obj->enableScaleManipulators();
 		break;
 	}
 }
 
 
-void Mouse::enableScalers() {
+void Mouse::enableScaleManipulators() {
 	
-	Scaler *scaler;
 	vector<Manipulator*>::iterator it;
 	
 	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
-		scaler = dynamic_cast<Scaler*>(*it);
-		if (scaler != NULL) {
+		switch ((*it)->getCommand()) {
+		case Command::SCALE_X:
+		case Command::SCALE_Y:
+		case Command::SCALE_Z:
 			(*it)->setEnabled(true);
-		} else {
+			break;
+		default:
 			(*it)->setEnabled(false);
 		}
 	}
 }
 
 
-void Mouse::enableTranslators() {
+void Mouse::enableTranslateManipulators() {
 	
-	Translator *translator;
 	vector<Manipulator*>::iterator it;
 	
 	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
-		translator = dynamic_cast<Translator*>(*it);
-		if (translator != NULL) {
+		switch ((*it)->getCommand()) {
+		case Command::TRANSLATE_X:
+		case Command::TRANSLATE_Y:
+		case Command::TRANSLATE_Z:
 			(*it)->setEnabled(true);
-		} else {
+			break;
+		default:
 			(*it)->setEnabled(false);
 		}
 	}

@@ -1,5 +1,5 @@
 <!--
- * ScalerZ.xml
+ * TranslatorZ.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -7,16 +7,17 @@
 
 
 <program>
-	<shader file="color.vert" />
-	<shader file="color.frag" />
+	<shader file="../glsl/color.vert" />
+	<shader file="../glsl/color.frag" />
 	<uniform type="vec4" name="Color" value="0 0 1 1" />
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 	<line from="0 0 0.5 1" to="0 0 1 1" selectable="false"/>
 	<translate z="1.0">
 		<rotate angle="180" y="1.0">
-			<scale x="0.15" y="0.15" z="0.15">
+			<scale x="0.15" y="0.15" z="0.25">
 				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-				<cube />
+				<cone />
+				<disk />
 			</scale>
 		</rotate>
 	</translate>

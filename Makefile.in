@@ -11,7 +11,7 @@ exec_prefix := @exec_prefix@
 bindir      := @bindir@
 srcdir      := @srcdir@
 datarootdir := @datarootdir@
-datadir     := @datadir@
+datadir     := @datadir@/$(tarname)
 docdir      := @docdir@
 htmldir     := @htmldir@
 
@@ -38,17 +38,20 @@ $(doc_targets):
 install: install-data
 install-data:
 	@echo "  Installing data to $(datadir)..."
-	@$(INSTALL) -d $(datadir)/$(tarname)
+	@$(INSTALL) -d $(datadir)
 	@echo "    glsl"
-	@$(INSTALL) -d $(datadir)/$(tarname)/glsl
-	@$(INSTALL) -m 0644 glsl/* $(datadir)/$(tarname)/glsl
+	@$(INSTALL) -d $(datadir)/glsl
+	@$(INSTALL) -m 0644 glsl/* $(datadir)/glsl
 	@echo "    textures"
-	@$(INSTALL) -d $(datadir)/$(tarname)/textures
-	@$(INSTALL) -m 0644 textures/* $(datadir)/$(tarname)/textures
+	@$(INSTALL) -d $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/* $(datadir)/textures
+	@echo "    ui"
+	@$(INSTALL) -d $(datadir)/ui
+	@$(INSTALL) -m 0644 ui/* $(datadir)/ui
 uninstall: uninstall-data
 uninstall-data:
-	@echo "  Uninstalling data from $(datadir)..."
-	@$(RM) -r $(datadir)/$(tarname)
+	@echo "  Uninstalling data from $(datadir)/..."
+	@$(RM) -r $(datadir)
 
 # Distribution
 .PHONY: FORCE dist distcheck
@@ -83,17 +86,21 @@ $(distdir): depend
 	@cp src/data/*.glsl $(distdir)/src/data
 	@cp src/data/*.in $(distdir)/src/data
 	@cp src/data/*.out $(distdir)/src/data
+	@echo "    doc"
+	@mkdir $(distdir)/doc
+	@cp doc/Makefile.in $(distdir)/doc
+	@cp doc/doxyfile $(distdir)/doc
+	@cp doc/doxygen.css $(distdir)/doc
+	@cp doc/gander.png $(distdir)/doc
 	@echo "    glsl"
 	@mkdir $(distdir)/glsl
 	@cp glsl/* $(distdir)/glsl
 	@echo "    textures"
 	@mkdir $(distdir)/textures
 	@cp textures/*.jpg $(distdir)/textures
-	@mkdir $(distdir)/doc
-	@cp doc/Makefile.in $(distdir)/doc
-	@cp doc/doxyfile $(distdir)/doc
-	@cp doc/doxygen.css $(distdir)/doc
-	@cp doc/gander.png $(distdir)/doc
+	@echo "    ui"
+	@mkdir $(distdir)/ui
+	@cp ui/* $(distdir)/ui
 FORCE:
 	@-$(RM) $(tarball) &> /dev/null
 	@-$(RM) -r $(distdir) &> /dev/null

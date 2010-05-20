@@ -22,8 +22,6 @@
 #include "MouseClickHelper.hpp"
 #include "MouseDragHelper.hpp"
 #include "Scene.hpp"
-#include "Translator.hpp"
-#include "Scaler.hpp"
 using namespace std;
 
 
@@ -44,11 +42,11 @@ protected:
 	void initBindings();
 	void initData();
 	void initManipulators();
-	void enableScalers();
-	void enableTranslators();
+	void enableScaleManipulators();
+	void enableTranslateManipulators();
 private:
-	MouseClickHelper clickHelper;
 	MouseData data;
+	MouseClickHelper clickHelper;
 	MouseDragHelper dragHelper;
 	static Mouse *obj;
 };

@@ -19,7 +19,7 @@ Painter::Painter(Scene *scene, GLenum mode) : Traverser(scene) {
 		try {
 			//BasicFactory::install();
 			outline = new Scene();
-			filename += "/glsl/outline.xml";
+			filename += "/ui/outline.xml";
 			outline->open(filename);
 			outline->prepare();
 		} catch (Exception e) {
