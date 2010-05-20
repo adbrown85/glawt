@@ -1,37 +1,32 @@
 /*
- * Drawable.cpp
+ * SimpleDrawable.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Drawable.hpp"
+#include "SimpleDrawable.hpp"
 
 
-/** Creates a new Drawable from an XML tag.
- * 
- * @param tag XML tag with @e size attribute.
- */
-Drawable::Drawable(const Tag &tag) : Node(tag) {
+/** Initializes the selected, visible, and selectable attributes. */
+SimpleDrawable::SimpleDrawable(const Tag &tag) : Drawable(tag) {
 	
 	// Initialize attributes
 	this->selected = false;
 	this->visible = true;
-	if (!tag.get("size", size, false))
-		size = 1.0;
 	if (!tag.get("selectable", selectable, false))
 		selectable = true;
 }
 
 
-string Drawable::toString() const {
+/** @return String comprised of the object's attributes. */
+string SimpleDrawable::toString() const {
 	
-	stringstream stream;
+	ostringstream stream;
 	
 	// Make string
 	stream << Node::toString();
 	stream << " " << Identifiable::toString();
 	stream << " visible='" << (visible?'T':'F') << "'"
-	       << " size='" << size << "'"
 	       << " selected='" << (selected?'T':'F') << "'"
 	       << " selectable='" << (selectable?'T':'F') << "'";
 	return stream.str();

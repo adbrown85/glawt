@@ -15,9 +15,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include "Node.hpp"
-#include "Applicable.hpp"
-#include "Tag.hpp"
+#include "Node.hpp"                     // Base class
 using namespace std;
 
 
@@ -37,8 +35,7 @@ using namespace std;
  */
 class Texture : public Applicable {
 public:
-	Texture(GLenum type,
-	        const Tag &tag);
+	Texture(GLenum type, const Tag &tag);
 	virtual void apply();
 	virtual void associate();
 	virtual string getFilename() const;

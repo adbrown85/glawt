@@ -14,9 +14,8 @@
 #include <map>
 #include <queue>
 #include <GL/glut.h>
+#include "Node.hpp"
 #include "Group.hpp"
-#include "Applicable.hpp"
-#include "Tag.hpp"
 #include "Uniform.hpp"
 using namespace std;
 

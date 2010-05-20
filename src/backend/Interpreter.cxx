@@ -7,7 +7,7 @@
 #include "Interpreter.hpp"
 
 
-void cutListener() {
+void cutListener(int command) {
 	
 	cout << "void cutListener()" << endl;
 }

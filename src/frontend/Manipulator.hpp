@@ -10,7 +10,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include "Interpreter.hpp"              // For sending commands
-#include "Drawable.hpp"
+#include "Node.hpp"
 #include "Identifiable.hpp"
 #include "Scene.hpp"                    // Need to send to commands
 #include "Vector.hpp"                   // For axis

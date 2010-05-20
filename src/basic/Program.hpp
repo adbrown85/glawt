@@ -7,15 +7,14 @@
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
 #include <cstdlib>
-#include <cstring>
-#include <GL/glut.h>
 #include <iostream>
+#include <string>
+#include <cstring>
 #include <vector>
-#include "Applicable.hpp"
-#include "Log.hpp"
+#include <GL/glut.h>
 #include "Node.hpp"
+#include "Log.hpp"
 #include "Preprocessor.hpp"
-#include "Tag.hpp"
 #include "NodeEvent.hpp"
 #define POINT_LOCATION 0
 #define POINT_NAME "MCVertex"

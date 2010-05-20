@@ -9,10 +9,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include "Applicable.hpp"
-#include "Drawable.hpp"
-#include "FileUtility.hpp"
 #include "Node.hpp"
+#include "FileUtility.hpp"
 #include "Scene.hpp"
 #include "Traverser.hpp"
 #include "Window.hpp"

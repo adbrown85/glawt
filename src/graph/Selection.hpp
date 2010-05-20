@@ -12,7 +12,6 @@
 #include <set>
 #include "Identifiable.hpp"
 #include "Node.hpp"
-#include "Drawable.hpp"
 using namespace std;
 
 

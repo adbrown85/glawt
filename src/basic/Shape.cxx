@@ -17,7 +17,7 @@ public:
 	FakeShape(const Tag &tag) : Shape(tag,getTraits()) {}
 	static ShapeTraits getTraits();
 	virtual void draw() const {};
-	virtual void initAttributes() {};
+	virtual void updateBuffer() {};
 };
 
 ShapeTraits FakeShape::getTraits() {

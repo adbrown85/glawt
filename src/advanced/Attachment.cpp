@@ -8,7 +8,8 @@
 
 
 /** Initializes the name of the attachment. */
-Attachment::Attachment(const Tag &tag, const string &type) : Node(tag) {
+Attachment::Attachment(const Tag &tag,
+                       const string &type) : Attachable(tag) {
 	
 	// Initialize
 	tag.get("name", name, false, false);

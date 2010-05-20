@@ -8,12 +8,12 @@
 #include "Factory.hpp"
 #include "Parser.hpp"
 #include "Tag.hpp"
-#include "Window.hpp"
+#include "SimpleDrawable.hpp"
 
 
-class FakeDrawable : public Drawable {
+class FakeDrawable : public SimpleDrawable {
 public: 
-	FakeDrawable(const Tag &tag) : Drawable(tag) {name = tag.getName();}
+	FakeDrawable(const Tag &tag) : SimpleDrawable(tag) {name = tag.getName();}
 	virtual void draw() const {cout << "  " << name << endl;}
 	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;

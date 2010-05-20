@@ -97,8 +97,7 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 	it = kinds.find(type);
 	if (it == kinds.end()) {
 		NodeException e(tag);
-		e << "[BasicFactory] Uniform type '" << type
-		  << "' not supported.";
+		e << "[BasicFactory] Uniform type '" << type << "' not supported.";
 		throw e;
 	}
 	

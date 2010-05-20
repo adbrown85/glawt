@@ -7,10 +7,10 @@
 #ifndef ROTATE_HPP
 #define ROTATE_HPP
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <sstream>
+#include <GL/glut.h>
 #include "Transformation.hpp"
 #include "Vector.hpp"
 using namespace std;

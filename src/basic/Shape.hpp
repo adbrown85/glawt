@@ -12,10 +12,9 @@
 #include <sstream>
 #include <string>
 #include <list>                         // For attributes
+#include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
-#include "Drawable.hpp"
-#include "Tag.hpp"
 using namespace std;
 
 
@@ -59,7 +58,7 @@ struct ShapeTraits {
  * </tr>
  * </table>
  */
-class Shape : public Drawable {
+class Shape : public SimpleDrawable {
 public:
 	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();

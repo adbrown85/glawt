@@ -13,9 +13,19 @@
 #include "Control.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
-#include "MouseData.hpp"
 #include "Scene.hpp"
+#include "Vector.hpp"
 using namespace std;
+
+
+/* Shared data between all the mouse controls. */
+struct MouseData {
+	int button, modifier, state, x, y;
+	float z;
+	unsigned int itemID, iteration, shapeID;
+	Manipulator *manipulator;
+	Vector lastPosition;
+};
 
 
 /**

@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <list>                         // Storing listeners
-#include "Applicable.hpp"
+#include "Node.hpp"
 #include "NodeEvent.hpp"
 
 

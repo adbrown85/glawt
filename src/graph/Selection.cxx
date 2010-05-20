@@ -6,12 +6,13 @@
  */
 #include <iostream>
 #include "Selection.hpp"
+#include "SimpleDrawable.hpp"
 #define NUMBER_OF_NODES 4
 
 
-class FakeDrawable : public Drawable {
+class FakeDrawable : public SimpleDrawable {
 public:
-	FakeDrawable(const Tag &tag) : Drawable(tag) {}
+	FakeDrawable(const Tag &tag) : SimpleDrawable(tag) {}
 	void draw() const {}
 };
 

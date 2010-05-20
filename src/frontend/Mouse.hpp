@@ -20,8 +20,6 @@
 #include "Interpreter.hpp"
 #include "Manipulator.hpp"
 #include "MouseClickHelper.hpp"
-#include "MouseData.hpp"
-#include "MouseHelper.hpp"
 #include "MouseDragHelper.hpp"
 #include "Scene.hpp"
 #include "Translator.hpp"

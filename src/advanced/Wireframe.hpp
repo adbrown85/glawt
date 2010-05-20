@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 #include <GL/glut.h>
-#include "Applicable.hpp"
+#include "Node.hpp"
 using namespace std;
 
 

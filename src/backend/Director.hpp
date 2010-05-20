@@ -11,7 +11,7 @@
 #include "Command.hpp"
 #include "Delegate.hpp"
 #include "Identifiable.hpp"
-#include "Drawable.hpp"
+#include "Node.hpp"
 #include "Scene.hpp"
 using namespace std;
 

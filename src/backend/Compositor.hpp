@@ -10,7 +10,6 @@
 #include <iostream>
 #include "Command.hpp"
 #include "Delegate.hpp"
-#include "Drawable.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"
 #include "Selection.hpp"

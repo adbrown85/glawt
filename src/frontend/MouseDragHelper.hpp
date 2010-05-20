@@ -14,7 +14,6 @@
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
-#include "MouseData.hpp"
 #include "MouseHelper.hpp"
 #include "Vector.hpp"
 #include "Window.hpp"
@@ -23,8 +22,7 @@ using namespace std;
 
 /**
  * @ingroup frontend
- * @brief
- *     Handles mouse dragging actions for %Mouse.
+ * @brief Handles mouse dragging actions for %Mouse.
  */
 class MouseDragHelper : public MouseHelper {
 public:

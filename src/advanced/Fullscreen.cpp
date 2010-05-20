@@ -11,15 +11,10 @@ GLubyte Fullscreen::indices[4];
 GLfloat Fullscreen::points[4][3];
 
 
-/**
- * Creates a new %Fullscreen from an XML tag.
- * 
- * @param tag XML tag.
- */
-Fullscreen::Fullscreen(const Tag &tag) : Drawable(tag) {
+/** Creates a new %Fullscreen from an XML tag. */
+Fullscreen::Fullscreen(const Tag &tag) : SimpleDrawable(tag) {
 	
 	// Initialize
-	this->size = 2.0;
 	if (!loaded) {
 		initCoordinates();
 		initIndices();
@@ -29,9 +24,7 @@ Fullscreen::Fullscreen(const Tag &tag) : Drawable(tag) {
 }
 
 
-/**
- * Draws the %Fullscreen.
- */
+/** Draws the %Fullscreen. */
 void Fullscreen::draw() const {
 	
 	// Load identity matrices
@@ -59,9 +52,7 @@ void Fullscreen::draw() const {
 }
 
 
-/**
- * Initializes the static coordinates array of the class.
- */
+/** Initializes the static coordinates array of the class. */
 void Fullscreen::initCoordinates() {
 	
 	GLfloat coordinates[4][3] = {{1.0, 1.0, 0.0},
@@ -76,9 +67,7 @@ void Fullscreen::initCoordinates() {
 }
 
 
-/**
- * Initializes the static indices array of the class.
- */
+/** Initializes the static indices array of the class. */
 void Fullscreen::initIndices() {
 	
 	// Copy to class
@@ -87,9 +76,7 @@ void Fullscreen::initIndices() {
 }
 
 
-/**
- * Initializes the static points array of the class.
- */
+/** Initializes the static points array of the class. */
 void Fullscreen::initPoints() {
 	
 	GLfloat points[4][3] = {{+1.0, +1.0, -1.0},

@@ -7,18 +7,17 @@
 #ifndef FULLSCREEN_HPP
 #define FULLSCREEN_HPP
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
-#include "Drawable.hpp"
+#include <string>
 #include "Node.hpp"
-#include "Tag.hpp"
+#include "SimpleDrawable.hpp"
 
 
 /**
  * @ingroup advanced
  * @brief Polygon that takes up the entire window.
  */
-class Fullscreen : public Drawable {
+class Fullscreen : public SimpleDrawable {
 public:
 	Fullscreen(const Tag &tag);
 	virtual void draw() const;

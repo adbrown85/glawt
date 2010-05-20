@@ -1,28 +1,27 @@
 /*
- * Drawable.cxx
+ * SimpleDrawable.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include <iostream>
-#include "Drawable.hpp"
+#include "SimpleDrawable.hpp"
 #define NUMBER_OF_ITEMS 4
 using namespace std;
 
 
-class FakeDrawable : public Drawable {
+class FakeDrawable : public SimpleDrawable {
 public: 
-	FakeDrawable(const Tag &tag) : Drawable(tag) {}
+	FakeDrawable(const Tag &tag) : SimpleDrawable(tag) {}
 	void draw() const {}
 };
 
 
-class DrawableTest {
+class SimpleDrawableTest {
 public:
 	void setUp();
 	void testSetSelected();
 	void testSetVisible();
-	void testSetSize();
 	void testToggleSelected();
 	void testToggleVisible();
 private:
@@ -30,7 +29,7 @@ private:
 };
 
 
-void DrawableTest::setUp() {
+void SimpleDrawableTest::setUp() {
 	
 	Tag tag;
 	
@@ -43,7 +42,7 @@ void DrawableTest::setUp() {
 }
 
 
-void DrawableTest::testSetSelected() {
+void SimpleDrawableTest::testSetSelected() {
 	
 	cout << "\nSetting selected... " << endl;
 	items[0]->setSelected(false);
@@ -54,17 +53,7 @@ void DrawableTest::testSetSelected() {
 }
 
 
-void DrawableTest::testSetSize() {
-	
-	cout << "\nSetting sizes... " << endl;
-	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
-		items[i]->setSize(i+1);
-		cout << "  " << *items[i] << endl;
-	}
-}
-
-
-void DrawableTest::testSetVisible() {
+void SimpleDrawableTest::testSetVisible() {
 	
 	cout << "\nSetting visible..." << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
@@ -79,7 +68,7 @@ void DrawableTest::testSetVisible() {
 }
 
 
-void DrawableTest::testToggleSelected() {
+void SimpleDrawableTest::testToggleSelected() {
 	
 	cout << "\nToggling selected... " << endl;
 	for (int i=0; i<NUMBER_OF_ITEMS; ++i) {
@@ -89,7 +78,7 @@ void DrawableTest::testToggleSelected() {
 }
 
 
-void DrawableTest::testToggleVisible() {
+void SimpleDrawableTest::testToggleVisible() {
 	
 	cout << "\nToggling visible..." << endl;
 	for (int j=0; j<3; ++j) {
@@ -106,18 +95,17 @@ void DrawableTest::testToggleVisible() {
 
 int main() {
 	
-	DrawableTest test;
+	SimpleDrawableTest test;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Drawable" << endl;
+	cout << "SimpleDrawable" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
 	// Test
 	test.setUp();
-	test.testSetSize();
 	test.testSetVisible();
 	test.testToggleVisible();
 	test.testSetSelected();
@@ -126,7 +114,7 @@ int main() {
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Drawable" << endl;
+	cout << "SimpleDrawable" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 }

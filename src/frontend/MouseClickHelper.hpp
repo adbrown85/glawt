@@ -13,7 +13,6 @@
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Identifiable.hpp"
-#include "MouseData.hpp"
 #include "MouseHelper.hpp"
 #include "Picker.hpp"
 #include "Vector.hpp"

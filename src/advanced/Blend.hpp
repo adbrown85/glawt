@@ -12,7 +12,7 @@
 #include <list>
 #include <string>
 #include <GL/glut.h>
-#include "Applicable.hpp"
+#include "Node.hpp"
 #include "Tag.hpp"
 #include "Translate.hpp"
 #include "Window.hpp"

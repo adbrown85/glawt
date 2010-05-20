@@ -12,8 +12,7 @@
 #include <sstream>
 #include <string>
 #include <list>                         // Storing attachments
-#include "Applicable.hpp"
-#include "Attachable.hpp"
+#include "Node.hpp"
 #include "Texture2D.hpp"
 
 

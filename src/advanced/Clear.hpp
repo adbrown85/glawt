@@ -11,7 +11,7 @@
 #include <string>
 #include <sstream>
 #include <GL/gl.h>
-#include "Applicable.hpp"               // Base class
+#include "Node.hpp"
 using namespace std;
 
 

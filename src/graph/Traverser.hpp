@@ -12,8 +12,6 @@
 #include "Exception.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"
-#include "Applicable.hpp"          // Apply modifications to scene
-#include "Drawable.hpp"            // Drawing items in scene
 using namespace std;
 
 

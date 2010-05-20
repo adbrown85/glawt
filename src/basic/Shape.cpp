@@ -10,10 +10,10 @@ map<string,GLuint> Shape::buffers;
 
 /** Creates a shape from an XML tag.
  * 
- * @param tag XML tag with attributes for Drawable.
+ * @param tag XML tag with attributes for SimpleDrawable.
  * @param traits Structure of shape parameters.
  */
-Shape::Shape(const Tag &tag, ShapeTraits traits) : Drawable(tag) {
+Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	
 	list<string>::iterator it;
 	VertexAttribute va;
@@ -162,7 +162,7 @@ string Shape::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Drawable::toString();
+	stream << SimpleDrawable::toString();
 	stream << " buffer='" << buffer << "'";
 	if (!name.empty()) {
 		stream << " name='" << name << "'";

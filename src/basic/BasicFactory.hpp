@@ -8,11 +8,11 @@
 #define BASICFACTORY_HPP
 #include <cstdlib>
 #include <iostream>
-#include <map>
-#include <sstream>
 #include <string>
-#include "Exception.hpp"
+#include <sstream>
+#include <map>
 #include "Factory.hpp"
+#include "NodeException.hpp"
 #include "Box.hpp"
 #include "Cube.hpp"
 #include "Cone.hpp"

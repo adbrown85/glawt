@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include "Node.hpp"                     // Base class
-#include "Attachable.hpp"               // Interface
 #include "Framebuffer.hpp"              // Attach to framebuffer
 using namespace std;
 
@@ -19,8 +18,7 @@ using namespace std;
  * @ingroup advanced
  * @brief Abstract base class for an item attached to the framebuffer.
  */
-class Attachment : public Node,
-                   public Attachable {
+class Attachment : public Attachable {
 public:
 	Attachment(const Tag &tag, const string &type);
 	virtual void attach() = 0;
