@@ -1,10 +1,10 @@
 /*
- * Gander.cpp
+ * gander.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Gander.hpp"
+#include "gander.hpp"
 
 
 /** Creates an instance of the application. */

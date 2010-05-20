@@ -1,10 +1,10 @@
 /*
- * NodeNotifier.cpp
+ * NodeEvent.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "NodeNotifier.hpp"
+#include "NodeEvent.hpp"
 
 
 void NodeNotifier::addListener(NodeListener *listener, int type) {

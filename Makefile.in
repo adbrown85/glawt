@@ -41,7 +41,8 @@ $(distdir): depend
 	@cp install-sh $(distdir)
 	@cp src/Makefile.in $(distdir)/src
 	@cp src/depend $(distdir)/src
-	@cp src/Gander.* $(distdir)/src
+	@cp src/gander.*pp $(distdir)/src
+	@cp src/gander.cxx $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \

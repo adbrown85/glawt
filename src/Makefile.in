@@ -32,7 +32,7 @@ archive         := libgander.a
 all: $(application)
 clean:
 	@echo "  Removing objects..."
-	@$(RM) $(objects) Gander.o
+	@$(RM) $(objects) gander.o
 	@echo "  Removing archive..."
 	@$(RM) $(archive)
 	@echo "  Removing tests..."
@@ -66,9 +66,9 @@ $(archive): $(objects)
 $(tests):
 
 # Application
-Gander.o: Gander.cpp Gander.hpp $(archive)
+gander.o: gander.cpp gander.hpp $(archive)
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -c $<
-$(application): Gander.cxx Gander.o $(archive)
+$(application): gander.cxx gander.o $(archive)
 	@echo "  gander"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $^ $(LIBS)

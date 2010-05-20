@@ -16,7 +16,7 @@
 #include "Node.hpp"
 #include "Preprocessor.hpp"
 #include "Tag.hpp"
-#include "NodeNotifier.hpp"
+#include "NodeEvent.hpp"
 #define POINT_LOCATION 0
 #define POINT_NAME "MCVertex"
 #define NORMAL_LOCATION 1

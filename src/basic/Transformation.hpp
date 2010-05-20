@@ -10,8 +10,7 @@
 #include <iostream>
 #include <list>                         // Storing listeners
 #include "Applicable.hpp"
-#include "NodeListener.hpp"
-#include "NodeNotifier.hpp"
+#include "NodeEvent.hpp"
 
 
 /**

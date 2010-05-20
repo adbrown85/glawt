@@ -1,5 +1,5 @@
 /*
- * Gander.cxx
+ * gander.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>

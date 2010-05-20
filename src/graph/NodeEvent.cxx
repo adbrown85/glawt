@@ -1,10 +1,10 @@
 /*
- * NodeNotifier.cxx
+ * NodeEvent.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "NodeNotifier.hpp"
+#include "NodeEvent.hpp"
 
 
 class FakeNodeListener : public NodeListener {
