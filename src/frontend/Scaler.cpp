@@ -10,36 +10,58 @@
 /** Creates a new Scaler using an axis. */
 Scaler::Scaler(float x, float y, float z) {
 	
+	string filename(GANDER_DATA_DIR);
+	
 	// Initialize attributes
 	axis.set(x, y, z, 1.0);
 	size = 1.0;
+	geometry = NULL;
+	traverser = NULL;
 	
 	// Initialize geometry
 	BasicFactory::install();
-	geometry = new Scene();
-	if (x > 0.9) {
-		geometry->open("${GANDER}/glsl/ScalerX.xml");
-	} else if (y > 0.9) {
-		geometry->open("${GANDER}/glsl/ScalerY.xml");
-	} else {
-		geometry->open("${GANDER}/glsl/ScalerZ.xml");
+	try {
+		geometry = new Scene();
+		if (x > 0.9) {
+			filename += "/glsl/ScalerX.xml";
+			geometry->open(filename);
+		} else if (y > 0.9) {
+			filename += "/glsl/ScalerY.xml";
+			geometry->open(filename);
+		} else {
+			filename += "/glsl/ScalerZ.xml";
+			geometry->open(filename);
+		}
+		geometry->prepare();
+		traverser = new Traverser(geometry);
+	} catch (Exception e) {
+		delete geometry;
+		geometry = NULL;
+		traverser = NULL;
+		cerr << "[Scaler] Problem opening '" << filename << "'." << endl;
+		cerr << "[Scaler] May not be able to scale with mouse." << endl;
+		cerr << "[Scaler] Try installing Gander again." << endl;
 	}
-	geometry->prepare();
-	traverser = new Traverser(geometry);
 }
 
 
 Scaler::~Scaler() {
 	
-	delete geometry;
-	delete traverser;
+	if (geometry != NULL) {
+		delete geometry;
+	}
+	if (traverser != NULL) {
+		delete traverser;
+	}
 }
 
 
 /** Draws the Scaler. */
 void Scaler::draw() const {
 	
-	traverser->start();
+	if (traverser != NULL) {
+		traverser->start();
+	}
 }
 
 

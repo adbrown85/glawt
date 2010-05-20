@@ -1,40 +1,62 @@
 # @configure_input@
 
+# Package
+package     := @PACKAGE_NAME@
+version     := @PACKAGE_VERSION@
+tarname     := @PACKAGE_TARNAME@
 
 # Directories
-prefix          := @prefix@
-exec_prefix     := @exec_prefix@
-bindir          := @bindir@
-srcdir          := @srcdir@
-modules         := @modules@
+prefix      := @prefix@
+exec_prefix := @exec_prefix@
+bindir      := @bindir@
+srcdir      := @srcdir@
+datarootdir := @datarootdir@
+datadir     := @datadir@
+modules     := @modules@
 
-# Package
-package         := @PACKAGE_NAME@
-version         := @PACKAGE_VERSION@
-tarname         := @PACKAGE_TARNAME@
-distdir         := $(tarname)-$(version)
-tarball         := $(tarname)-$(version).tar.gz
+# Tools
+INSTALL     := @INSTALL@
 
-# General phony targets
-targets         := all clean tests $(modules) gander depend
-.PHONY: $(targets)
+# Files
+distdir     := $(tarname)-$(version)
+tarball     := $(tarname)-$(version).tar.gz
+
+# Targets to pass down
+pass := all clean tests install uninstall depend $(modules) 
+.PHONY: $(pass)
 .DEFAULT: all
-$(targets):
+$(pass):
 	@$(MAKE) -C src $@
 
-# Local phony targets
-.PHONY: FORCE dist distcheck
+# Installation
+.PHONY: install-data uninstall-data
+install: install-data
+install-data:
+	@echo "  Installing data to $(datadir)..."
+	@$(INSTALL) -d $(datadir)/$(tarname)
+	@echo "    glsl"
+	@$(INSTALL) -d $(datadir)/$(tarname)/glsl
+	@$(INSTALL) -m 0644 glsl/* $(datadir)/$(tarname)/glsl
+	@echo "    textures"
+	@$(INSTALL) -d $(datadir)/$(tarname)/textures
+	@$(INSTALL) -m 0644 textures/* $(datadir)/$(tarname)/textures
+uninstall: uninstall-data
+uninstall-data:
+	@echo "  Uninstalling data from $(datadir)..."
+	@$(RM) -r $(datadir)/$(tarname)
 
 # Distribution
+.PHONY: FORCE dist distcheck
 dist: $(tarball)
 $(tarball): FORCE $(distdir)
 	@echo "  Packaging tarball..."
 	@tar -czf $(tarball) $(distdir)
-	@rm -rf $(distdir)
+	@$(RM) -r $(distdir)
 $(distdir): depend
 	@echo "  Copying files..."
 	@echo "    src"
-	@mkdir -p $(distdir)/src
+	@mkdir $(distdir)
+	@mkdir $(distdir)/src
 	@cp Makefile.in $(distdir)
 	@cp configure $(distdir)
 	@cp config.in $(distdir)
@@ -57,29 +79,29 @@ $(distdir): depend
 	@cp src/data/*.in $(distdir)/src/data
 	@cp src/data/*.out $(distdir)/src/data
 	@echo "    glsl"
-	@mkdir -p $(distdir)/glsl
+	@mkdir $(distdir)/glsl
 	@cp glsl/* $(distdir)/glsl
 	@echo "    textures"
-	@mkdir -p $(distdir)/textures
+	@mkdir $(distdir)/textures
 	@cp textures/*.jpg $(distdir)/textures
 FORCE:
-	@-rm -f $(tarball) &> /dev/null
-	@-rm -rf $(distdir) &> /dev/null
+	@-$(RM) $(tarball) &> /dev/null
+	@-$(RM) -r $(distdir) &> /dev/null
 distcheck: $(tarball)
 	@echo "  Unpacking and checking tarball."
 	@tar -zxf $(tarball) $(distdir)
 	@cd $(distdir) && ./configure
 	@$(MAKE) -C $(distdir) all
 	@$(MAKE) -C $(distdir) clean
-	@rm -rf $(distdir)
+	@$(RM) -r $(distdir)
 	@echo "  Package $(tarball) is ready for distribution."
 distclean: clean
 	@echo "  Removing generated files..."
-	@rm -rf autom4te.cache
-	@rm -f config.log
-	@rm -f config.status
-	@rm -f Makefile
-	@rm -f src/Makefile
-	@rm -f config.h
-	@rm -f config.in~
-	@rm -f $(tarball)
+	@$(RM) -r autom4te.cache
+	@$(RM) config.log
+	@$(RM) config.status
+	@$(RM) Makefile
+	@$(RM) src/Makefile
+	@$(RM) config.h
+	@$(RM) config.in~
+	@$(RM) $(tarball)

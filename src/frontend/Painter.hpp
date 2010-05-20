@@ -35,8 +35,7 @@ using namespace std;
  */
 class Painter : public Traverser {
 public:
-	Painter(Scene *scene,
-	        GLenum mode=GL_RENDER);
+	Painter(Scene *scene, GLenum mode=GL_RENDER);
 	void addManipulator(Manipulator *manipulator);
 	virtual void start();
 	void setMode(GLenum mode);
@@ -44,6 +43,7 @@ protected:
 	virtual void onApplicable(Applicable *node);
 	virtual void onDrawable(Drawable *node);
 private:
+	static bool tried;
 	GLenum mode;
 	static Scene *outline;
 	vector<Manipulator*> manipulators;

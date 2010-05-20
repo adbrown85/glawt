@@ -1,33 +1,43 @@
 # @configure_input@
 
+# Package
+package     := @PACKAGE_NAME@
+version     := @PACKAGE_VERSION@
+tarname     := @PACKAGE_TARNAME@
 
 # Directories
-prefix          := @prefix@
-exec_prefix     := @exec_prefix@
-bindir          := @bindir@
-srcdir          := @srcdir@
-modules         := @modules@
-VPATH           := @modules@
+prefix      := @prefix@
+exec_prefix := @exec_prefix@
+bindir      := @bindir@
+srcdir      := @srcdir@
+datarootdir := @datarootdir@
+datadir     := @datadir@
+modules     := @modules@
 
 # Tools
-CXX             := @CXX@
-CXXFLAGS        := @CXXFLAGS@
-DEFS            := @DEFS@ -DGL_GLEXT_PROTOTYPES -DILUT_USE_OPENGL
-LIBS            := @LIBS@
-ARFLAGS         := -cr
+CXX         := @CXX@
+CXXFLAGS    := @CXXFLAGS@
+LIBS        := @LIBS@
+ARFLAGS     := -cr
+INSTALL     := @INSTALL@
+DEFS        := @DEFS@ \
+               -DGL_GLEXT_PROTOTYPES \
+               -DILUT_USE_OPENGL \
+               -DGANDER_DATA_DIR='"$(datadir)/$(tarname)"'
 
 # Files
-includes        := ${foreach i,$(modules),-I$(i)/}
-sources         := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
-objects         := ${subst cpp,o,$(sources)}
-headers         := ${subst cpp,hpp,$(sources)}
-mains           := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
-tests           := ${subst .cxx,,$(mains)}
-application     := gander
-archive         := libgander.a
+includes    := ${foreach i,$(modules),-I$(i)/}
+sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
+objects     := ${subst cpp,o,$(sources)}
+headers     := ${subst cpp,hpp,$(sources)}
+mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
+tests       := ${subst .cxx,,$(mains)}
+application := $(tarname)
+archive     := lib$(tarname).a
+VPATH       := @modules@
 
 # General phony targets
-.PHONY: all clean tests
+.PHONY: all clean tests install uninstall
 .DEFAULT: all
 all: $(application)
 clean:
@@ -39,16 +49,15 @@ clean:
 	@$(RM) $(tests)
 	@echo "  Removing application..."
 	@$(RM) $(application)
-tests: $(tests)
 
-# Local phony targets
+# Modules
 .PHONY: $(modules)
 define module
 $(1): $${filter $(1)/%.o,$(objects)}
 endef
 ${foreach i,$(modules),${eval ${call module,$(i)}}}
 
-# Objects, archive, and tests
+# Objects and archive
 %.o: %.cpp %.hpp
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ -c $<
@@ -60,12 +69,27 @@ depend: $(headers)
 include depend
 $(objects):
 $(archive): $(objects)
+
+# Tests
 %: %.cxx %.o
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+tests: $(tests)
 $(tests):
 
 # Application
-$(application): gander.cxx gander.hxx $(archive)
+$(application): gander.cxx gander.hxx $(objects)
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $^ $(LIBS)
+	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+
+# Installation
+.PHONY: install-bin uninstall-bin
+install: install-bin
+install-bin:
+	@echo "  Installing application in $(bindir)..."
+	@$(INSTALL) -d $(bindir)
+	@$(INSTALL) -m 0755 $(application) $(bindir)
+uninstall: uninstall-bin
+uninstall-bin:
+	@echo "  Uninstalling application from $(bindir)..."
+	@$(RM) $(bindir)/$(application)

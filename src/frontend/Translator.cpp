@@ -10,36 +10,58 @@
 /** Creates a new Translator using an axis. */
 Translator::Translator(float x, float y, float z) {
 	
+	string filename(GANDER_DATA_DIR);
+	
 	// Initialize attributes
 	axis.set(x, y, z, 1.0);
 	size = 1.0;
+	geometry = NULL;
+	traverser = NULL;
 	
 	// Initialize geometry
 	BasicFactory::install();
-	geometry = new Scene();
-	if (x > 0.9) {
-		geometry->open("${GANDER}/glsl/TranslatorX.xml");
-	} else if (y > 0.9) {
-		geometry->open("${GANDER}/glsl/TranslatorY.xml");
-	} else {
-		geometry->open("${GANDER}/glsl/TranslatorZ.xml");
+	try {
+		geometry = new Scene();
+		if (x > 0.9) {
+			filename += "/glsl/TranslatorX.xml";
+			geometry->open(filename);
+		} else if (y > 0.9) {
+			filename += "/glsl/TranslatorY.xml";
+			geometry->open(filename);
+		} else {
+			filename += "/glsl/TranslatorZ.xml";
+			geometry->open(filename);
+		}
+		geometry->prepare();
+		traverser = new Traverser(geometry);
+	} catch (Exception e) {
+		delete geometry;
+		geometry = NULL;
+		traverser = NULL;
+		cerr << "[Translator] Problem opening '" << filename << "'." << endl;
+		cerr << "[Translator] May not be able to translate with mouse." << endl;
+		cerr << "[Translator] Try installing Gander again." << endl;
 	}
-	geometry->prepare();
-	traverser = new Traverser(geometry);
 }
 
 
 Translator::~Translator() {
 	
-	delete geometry;
-	delete traverser;
+	if (geometry != NULL) {
+		delete geometry;
+	}
+	if (traverser != NULL) {
+		delete traverser;
+	}
 }
 
 
 /** Draws the Translator. */
 void Translator::draw() const {
 	
-	traverser->start();
+	if (traverser != NULL) {
+		traverser->start();
+	}
 }
 
 

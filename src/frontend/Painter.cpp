@@ -6,19 +6,31 @@
  */
 #include "Painter.hpp"
 Scene *Painter::outline=NULL;
+bool Painter::tried=false;
 
 
-Painter::Painter(Scene *scene,
-                 GLenum mode) : Traverser(scene) {
+Painter::Painter(Scene *scene, GLenum mode) : Traverser(scene) {
+	
+	string filename(GANDER_DATA_DIR);
 	
 	this->mode = mode;
 	
-	if (outline == NULL) {
-		BasicFactory::install();
-		AdvancedFactory::install();
-		outline = new Scene();
-		outline->open("${GANDER}/glsl/outline.xml");
-		outline->prepare();
+	if (!tried) {
+		try {
+			BasicFactory::install();
+			AdvancedFactory::install();
+			outline = new Scene();
+			filename += "/glsl/outline.xml";
+			outline->open(filename);
+			outline->prepare();
+		} catch (Exception e) {
+			delete outline;
+			outline = NULL;
+			cerr << "[Painter] Problem opening '" << filename << "'." << endl;
+			cerr << "[Painter] Selected shapes will not be outlined." << endl;
+			cerr << "[Painter] Try installing Gander again." << endl;
+		}
+		tried = true;
 	}
 }
 
@@ -59,7 +71,9 @@ void Painter::onDrawable(Drawable *node) {
 	glPushAttrib(GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
-		Traverser::traverseNode(outline->getRoot());
+		if (outline != NULL) {
+			Traverser::traverseNode(outline->getRoot());
+		}
 		glPushAttrib(GL_POLYGON_BIT);
 			glPolygonMode(GL_FRONT, GL_FILL);
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
