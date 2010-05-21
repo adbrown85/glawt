@@ -79,7 +79,7 @@ void Painter::onDrawable(Drawable *node) {
 				if ((*mi)->isEnabled()) {
 					if (mode == GL_SELECT)
 						glPushName((*mi)->getID());
-					(*mi)->draw();
+					(*mi)->draw(node);
 				}
 			}
 		glPopAttrib();

@@ -95,9 +95,9 @@ void Mouse::initManipulators() {
 	add(new Manipulator('x', Command::TRANSLATE_X, "ui/TranslateX.xml"));
 	add(new Manipulator('y', Command::TRANSLATE_Y, "ui/TranslateY.xml"));
 	add(new Manipulator('z', Command::TRANSLATE_Z, "ui/TranslateZ.xml"));
-	add(new Manipulator('x', Command::SCALE_X, "ui/ScaleX.xml"));
-	add(new Manipulator('y', Command::SCALE_Y, "ui/ScaleY.xml"));
-	add(new Manipulator('z', Command::SCALE_Z, "ui/ScaleZ.xml"));
+	add(new Manipulator('x', Command::SCALE_X, "ui/ScaleX.xml", 2));
+	add(new Manipulator('y', Command::SCALE_Y, "ui/ScaleY.xml", 2));
+	add(new Manipulator('z', Command::SCALE_Z, "ui/ScaleZ.xml", 2));
 	
 	// Initialize
 	enableTranslateManipulators();

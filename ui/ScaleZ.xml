@@ -11,8 +11,8 @@
 	<shader file="../glsl/color.frag" />
 	<uniform type="vec4" name="Color" value="0 0 1 1" />
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-	<line from="0 0 0.5 1" to="0 0 1 1" selectable="false"/>
-	<translate z="1.0">
+	<line from="0 0 0 1" to="0 0 0.5 1" selectable="false"/>
+	<translate z="0.5">
 		<rotate angle="180" y="1.0">
 			<scale x="0.15" y="0.15" z="0.15">
 				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />

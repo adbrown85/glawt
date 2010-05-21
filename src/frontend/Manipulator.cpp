@@ -12,19 +12,22 @@
  * @param axis Either 'x', 'y', or 'z'.
  * @param command Command to run.
  * @param filename Path in data directory containing widget geometry.
+ * @param bias Multiplier to the default movement amount.
  * @param warning Text to print if cannot find widget file.
  */
 Manipulator::Manipulator(char axis,
                          int command,
                          string filename,
+                         float bias,
                          const string &warning) {
 	
 	// Initialize
 	this->command = command;
 	this->enabled = true;
 	this->interpreter = NULL;
+	this->bias = bias;
 	
-	// Initialize axis
+	// Initialize axis and offset
 	switch (tolower(axis)) {
 	case 'x': this->axis = Vector(1,0,0,1); break;
 	case 'y': this->axis = Vector(0,1,0,1); break;
@@ -32,6 +35,8 @@ Manipulator::Manipulator(char axis,
 	default:
 		throw Exception("[Manipulator] Unexpected axis.");
 	}
+	offset = this->axis * 0.5;
+	offset.w = 1.0;
 	
 	// Initialize widget
 	try {
@@ -89,11 +94,31 @@ float Manipulator::findPixelFactor(GLuint shapeID) {
 
 
 /** Draws the manipulator. */
-void Manipulator::draw() const {
+void Manipulator::draw(Node *node) const {
 	
-	if (traverser != NULL) {
-		traverser->start();
+	if (traverser == NULL)
+		return;
+	
+	Matrix matrix;
+	list<Transformation*> transforms;
+	list<Transformation*>::iterator it;
+	Vector position;
+	
+	// Compute position
+	Transformation::findAll(node, transforms);
+	for (it=transforms.begin(); it!=transforms.end(); ++it) {
+		(*it)->applyTo(matrix);
 	}
+	position = matrix * offset;
+	
+	// Draw at position
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	Window::applyView();
+	glTranslatef(position.x, position.y, position.z);
+	traverser->start();
+	glPopMatrix();
 }
 
 
@@ -115,7 +140,7 @@ void Manipulator::use(const Vector &movement, GLuint shapeID) {
 	
 	// Perform command
 	if (fabs(dotProduct) > 0.5) {
-		interpreter->run(command, amount);
+		interpreter->run(command, amount * bias);
 	}
 }
 

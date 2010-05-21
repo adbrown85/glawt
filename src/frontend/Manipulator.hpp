@@ -25,9 +25,10 @@ public:
 	Manipulator(char axis,
 	            int command,
 	            string filename,
+	            float bias=1.0,
 	            const string &warning="May not be able to use manipulator.");
 	virtual ~Manipulator();
-	virtual void draw() const;
+	virtual void draw(Node *node) const;
 	static float findPixelFactor(GLuint shapeID);
 	virtual Vector getAxis() const;
 	virtual int getCommand() const;
@@ -37,11 +38,12 @@ public:
 	virtual void use(const Vector &movement, GLuint shapeID);
 protected:
 	bool enabled;
+	float bias;
 	int command;
 	Interpreter *interpreter;
 	Scene *widget;
 	Traverser *traverser;
-	Vector axis;
+	Vector axis, offset;
 };
 
 /** @return Direction the manipulator is oriented in. */
