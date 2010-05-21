@@ -48,6 +48,17 @@ void Scale::apply() {
 }
 
 
+void Scale::applyTo(Matrix &matrix) {
+	
+	Matrix T( x , 0.0, 0.0, 0.0,
+	         0.0,  y , 0.0, 0.0,
+	         0.0, 0.0,  z , 0.0,
+	         0.0, 0.0, 0.0, 1.0);
+	
+	matrix = matrix * T;
+}
+
+
 Scale* Scale::find(Node *node) {
 	
 	Scale *scale;

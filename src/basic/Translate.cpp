@@ -58,15 +58,15 @@ Translate* Translate::find(Node *node) {
 
 
 /** Add the translate to the matrix before sorting. */
-void Translate::sortByDepthBeg(Matrix &matrix) {
+void Translate::applyTo(Matrix &matrix) {
 	
-	Matrix transMatrix(1.0, 0.0, 0.0,  +x,
-	                   0.0, 1.0, 0.0,  +y,
-	                   0.0, 0.0, 1.0,  +z,
-	                   0.0, 0.0, 0.0, 1.0);
+	Matrix T(1.0, 0.0, 0.0,  +x,
+	         0.0, 1.0, 0.0,  +y,
+	         0.0, 0.0, 1.0,  +z,
+	         0.0, 0.0, 0.0, 1.0);
 	
 	// Add in translation
-	matrix = matrix * transMatrix;
+	matrix = matrix * T;
 }
 
 

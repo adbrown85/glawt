@@ -13,6 +13,7 @@
 #include <GL/glut.h>
 #include "Transformation.hpp"
 #include "Vector.hpp"
+#include "Quaternion.hpp"
 using namespace std;
 
 
@@ -24,6 +25,7 @@ class Rotate : public Transformation {
 public:
 	Rotate(const Tag &tag);
 	virtual void apply();
+	virtual void applyTo(Matrix &matrix);
 	virtual void remove();
 	virtual string toString() const;
 private:

@@ -11,6 +11,7 @@
 #include <list>                         // Storing listeners
 #include "Node.hpp"
 #include "NodeEvent.hpp"
+#include "Matrix.hpp"
 
 
 /**
@@ -24,6 +25,7 @@ public:
 	virtual void addListener(NodeListener *listener);
 	virtual void fireEvent();
 	virtual void apply() = 0;
+	virtual void applyTo(Matrix &matrix) = 0;
 	virtual void remove() = 0;
 private:
 	NodeNotifier notifier;

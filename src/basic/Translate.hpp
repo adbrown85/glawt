@@ -28,11 +28,11 @@ public:
 	Translate(const Tag &tag);
 	void add(const Vector &B);
 	virtual void apply();
+	virtual void applyTo(Matrix &matrix);
 	static Translate* find(Node *node);
 	virtual void remove();
 	virtual string toString() const;
 protected:
-	virtual void sortByDepthBeg(Matrix &matrix);
 	virtual void sortByDepthEnd(Matrix &matrix);
 };
 

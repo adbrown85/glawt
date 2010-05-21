@@ -28,6 +28,14 @@ void Rotate::apply() {
 }
 
 
+void Rotate::applyTo(Matrix &matrix) {
+	
+	Quaternion quaternion(angle, axis);
+	
+	// matrix = matrix * quaternion.getMatrix();
+}
+
+
 /** Restores state before transformation was applied. */
 void Rotate::remove() {
 	
