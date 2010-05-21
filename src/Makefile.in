@@ -30,13 +30,14 @@ DEFS        := @DEFS@ \
 # Files
 includes    := ${foreach i,$(modules),-I$(i)/}
 sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
-objects     := ${subst cpp,o,$(sources)}
-headers     := ${subst cpp,hpp,$(sources)}
+objects     := ${subst .cpp,.o,$(sources)}
+headers     := ${subst .cpp,.hpp,$(sources)}
 mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
 tests       := ${subst .cxx,,$(mains)}
 application := $(tarname)
 archive     := lib$(tarname).a
 VPATH       := @modules@
+depends     := ${subst .cpp,.d,$(sources)}
 
 # General phony targets
 .PHONY: all clean tests install uninstall
@@ -51,6 +52,8 @@ clean:
 	@$(RM) $(tests)
 	@echo "  Removing application..."
 	@$(RM) $(application)
+	@echo "  Removing dependencies..."
+	@$(RM) $(depends)
 
 # Modules
 .PHONY: $(modules)
@@ -64,11 +67,6 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ -c $<
 	@$(AR) $(ARFLAGS) $(archive) $@
-depend: $(headers)
-	@echo "  Generating dependencies..."
-	@g++ $(includes) -MM $(sources) > depend
-	@g++ $(includes) -MM $(mains) | sed s/[.]o// | sed s/[.]hpp/.o/g >> depend
-include depend
 $(objects):
 $(archive): $(objects)
 
@@ -95,3 +93,13 @@ uninstall: uninstall-bin
 uninstall-bin:
 	@echo "  Uninstalling application from $(bindir)..."
 	@$(RM) $(bindir)/$(application)
+
+# Dependencies (recompile based on objects b/c of inheritance)
+%.d: %.hpp
+	@echo "  Generating dependencies for $<..."
+	@g++ $(includes) -MM ${subst .hpp,.cpp,$<} -MF $@~
+	@sed -e '1 s/.hpp/.HPP/' -e 's/.hpp/.o/g' -e '1 s/.HPP/.hpp/' < $@~ >$@
+	@$(RM) $@~
+ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
+  -include $(depends)
+endif
