@@ -7,34 +7,22 @@
 #include "Instance.hpp"
 
 
+/** Initializes the <i>of</i> attribute. */
 Instance::Instance(const Tag &tag) : Applicable(tag) {
 	
 	tag.get("of", of);
 }
 
 
+/** Resets all the uniforms to be under this instance. */
 void Instance::apply() {
 	
-	assignPrograms();
-	assignLocations();
+	restoreShapes();
+	restoreUniforms();
 }
 
 
-void Instance::assignLocations() {
-	
-	int location;
-	map<Uniform*,int>::iterator it;
-	Uniform *uniform;
-	
-	// Set each uniform to its location
-	for (it=locations.begin(); it!=locations.end(); ++it) {
-		uniform = it->first;
-		location = it->second;
-		uniform->setLocation(location);
-	}
-}
-
-
+/** Makes sure the instance's children point to it. */
 void Instance::assignParents() {
 	
 	Node::iterator ni;
@@ -46,49 +34,42 @@ void Instance::assignParents() {
 }
 
 
-void Instance::assignPrograms() {
-	
-	map<Uniform*,Program*>::iterator it;
-	Program *program;
-	Uniform *uniform;
-	
-	// Set programs
-	for (it=programs.begin(); it!=programs.end(); ++it) {
-		uniform = it->first;
-		program = it->second;
-		uniform->setProgram(program);
-	}
-}
-
-
+/** Finds the group, its children, and all the uniforms in it. */
 void Instance::associate() {
 	
 	findGroup();
 	findChildren();
+	findShapes();
 	findUniforms();
 }
 
 
+/** Stores the programs of the uniforms so they can be reset later. */
 void Instance::associateAfter() {
 	
-	findPrograms();
+	storeShapes();
+	storeUniforms();
 }
 
 
+/** Resets all the uniforms to be under this instance. */
 void Instance::finalize() {
 	
-	// Reset uniforms for this instance
 	assignParents();
-	assignPrograms();
+	restoreShapes();
+	restoreUniforms();
 }
 
 
+/** Stores the locations of the uniforms so they can be reset later. */
 void Instance::finalizeAfter() {
 	
-	findLocations();
+	storeShapes();
+	storeUniforms();
 }
 
 
+/** Adds the group's children to the instance's children. */
 void Instance::findChildren() {
 	
 	Node::iterator it;
@@ -100,8 +81,9 @@ void Instance::findChildren() {
 }
 
 
-/**
- * @throws NodeException if the group cannot be found
+/** Finds the group named by <i>of</i>.
+ * 
+ * @throws NodeException if the group cannot be found.
  */
 void Instance::findGroup() {
 	
@@ -115,28 +97,29 @@ void Instance::findGroup() {
 }
 
 
-void Instance::findLocations() {
+/** Finds all the shapes in the group. */
+void Instance::findShapes() {
 	
-	list<Uniform*>::iterator it;
+	Node::iterator it;
+	Node *node;
+	queue<Node*> q;
+	Shape *shape;
 	
-	// Get locations from uniforms
-	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
-		locations[(*it)] = (*it)->getLocation();
+	// Search subtree for uniforms
+	q.push(this);
+	while (!q.empty()) {
+		node = q.front();
+		shape = dynamic_cast<Shape*>(node);
+		if (shape != NULL)
+			shapes[shape] = ShapeSnapshot();
+		for (it=node->begin(); it!=node->end(); ++it)
+			q.push(*it);
+		q.pop();
 	}
 }
 
 
-void Instance::findPrograms() {
-	
-	list<Uniform*>::iterator ui;
-	
-	// Get programs from the uniforms
-	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
-		programs[(*ui)] = (*ui)->getProgram();
-	}
-}
-
-
+/** Finds all the uniforms in the group. */
 void Instance::findUniforms() {
 	
 	Node::iterator it;
@@ -150,7 +133,7 @@ void Instance::findUniforms() {
 		node = q.front();
 		uniform = dynamic_cast<Uniform*>(node);
 		if (uniform != NULL)
-			uniforms.push_back(uniform);
+			uniforms[uniform] = UniformSnapshot();
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
@@ -158,11 +141,55 @@ void Instance::findUniforms() {
 }
 
 
-void Instance::remove() {
+/** Resets the shapes to their stored snapshots. */
+void Instance::restoreShapes() {
 	
+	map<Shape*,ShapeSnapshot>::iterator it;
+	
+	for (it=shapes.begin(); it!=shapes.end(); ++it) {
+		(it->first)->setProgram((it->second).program);
+		(it->first)->setAttributes((it->second).attributes);
+	}
 }
 
 
+/** Resets the uniforms to their stored snapshots. */
+void Instance::restoreUniforms() {
+	
+	map<Uniform*,UniformSnapshot>::iterator it;
+	
+	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
+		(it->first)->setProgram((it->second).program);
+		(it->first)->setLocation((it->second).location);
+	}
+}
+
+
+/** Saves snapshots of the shapes. */
+void Instance::storeShapes() {
+	
+	map<Shape*,ShapeSnapshot>::iterator it;
+	
+	for (it=shapes.begin(); it!=shapes.end(); ++it) {
+		(it->second).program = (it->first)->getProgram();
+		(it->second).attributes = (it->first)->getAttributes();
+	}
+}
+
+
+/** Saves snapshots of the uniforms. */
+void Instance::storeUniforms() {
+	
+	map<Uniform*,UniformSnapshot>::iterator it;
+	
+	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
+		(it->second).program = (it->first)->getProgram();
+		(it->second).location = (it->first)->getLocation();
+	}
+}
+
+
+/** @return String comprised of the object's attributes. */
 string Instance::toString() const {
 	
 	ostringstream stream;

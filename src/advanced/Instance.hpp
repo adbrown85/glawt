@@ -17,8 +17,21 @@
 #include "Node.hpp"
 #include "Group.hpp"
 #include "Uniform.hpp"
+#include "Shape.hpp"
 using namespace std;
 
+
+/* State of a shape. */
+struct ShapeSnapshot {
+	Program *program;
+	list<VertexAttribute> attributes;
+};
+
+/* State of a uniform. */
+struct UniformSnapshot {
+	Program *program;
+	int location;
+};
 
 /**
  * @ingroup advanced
@@ -34,25 +47,24 @@ public:
 	virtual void associateAfter();
 	virtual void finalize();
 	virtual void finalizeAfter();
-	virtual void remove();
+	virtual void remove() {}
 	virtual string toString() const;
 protected:
-	void assignLocations();
 	void assignParents();
-	void assignPrograms();
 	void findChildren();
 	void findGroup();
-	void findLocations();
-	void findPrograms();
+	void findShapes();
 	void findUniforms();
+	void restoreShapes();
+	void restoreUniforms();
+	void storeShapes();
+	void storeUniforms();
 private:
 	Group *group;
 	string of;
-	list<Uniform*> uniforms;
-	map<Uniform*,int> locations;
-	map<Uniform*,Program*> programs;
+	map<Shape*,ShapeSnapshot> shapes;
+	map<Uniform*,UniformSnapshot> uniforms;
 };
-
 
 inline bool Instance::areChildrenDestroyable() const {return false;}
 inline bool Instance::areChildrenPrintable() const {return false;}

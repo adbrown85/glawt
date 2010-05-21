@@ -63,8 +63,12 @@ public:
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
+	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;
 	virtual string getName() const;
+	virtual Program* getProgram() const;
+	virtual void setAttributes(list<VertexAttribute> &attributes);
+	virtual void setProgram(Program *program);
 	virtual string toString() const;
 protected:
 	virtual GLuint getOffset(const string &name) const;
@@ -82,14 +86,26 @@ private:
 	string name;
 };
 
+/** @return Attributes in use for this shape. */
+inline list<VertexAttribute> Shape::getAttributes() const {return attributes;}
+
 /** @return Number of vertices in the shape. */
 inline GLuint Shape::getCount() const {return count;}
 
 /** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
 
+/** @return Program the shape sends vertex attributes to. */
+inline Program* Shape::getProgram() const {return program;}
+
+/** Set attributes in use for this shape. */
+inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}
+
 /** Sets the number of vertices in the shape. */
-inline void Shape::setCount(GLuint count) {this->count = count;}
+inline void Shape::setCount(GLuint c) {count = c;}
+
+/** Sets the program to send vertex attributes to. */
+inline void Shape::setProgram(Program *p) {program = p;}
 
 #endif
 
