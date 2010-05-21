@@ -1,0 +1,66 @@
+<!--
+ * clip.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<group name="cubes">
+	<uniform type="vec4" name="Color" value="0 1 1 0.1" />
+	<translate x="-1.0">
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube />
+	</translate>
+	<translate x="+1.0">
+	<scale>
+		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<cube />
+	</scale>
+	</translate>
+</group>
+
+<blend>
+<program>
+	<shader file="color.vert" />
+	<shader file="color.frag" />
+	<wireframe faces="back">
+		<instance of="cubes" />
+	</wireframe>
+</program>
+<texture name="volume" file="../textures/bunny.vlb" normalize="true">
+	<texture name="exit_coords" size="512">
+		<framebuffer>
+			<target link="exit_coords" />
+			<program>
+				<shader file="coordinates.vert" />
+				<shader file="coordinates.frag" />
+				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+				<cull faces="back">
+					<boolean operation="AND" of="cubes" selectable="false" />
+				</cull>
+			</program>
+		</framebuffer>
+		<program>
+			<shader file="volume.vert" />
+			<shader file="volume.frag" />
+			<uniform type="int" name="WindowSize" value="512" />
+			<uniform type="float" name="Weight" value="1.5" />
+			<uniform type="float" name="SampleRate" value="0.006" />
+			<uniform type="sampler2D" name="ExitCoords" link="exit_coords" />
+			<uniform type="sampler3D" name="Volume" link="volume" />
+			<cull faces="front">
+				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+				<boolean operation="AND" of="cubes" selectable="false" />
+			</cull>
+		</program>
+	</texture>
+</texture>
+<program>
+	<shader file="color.vert" />
+	<shader file="color.frag" />
+	<wireframe faces="front">
+		<instance of="cubes" />
+	</wireframe>
+</program>
+</blend>
