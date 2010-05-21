@@ -23,6 +23,7 @@ class Transformation : public Applicable {
 public:
 	Transformation(const Tag &tag) : Applicable(tag) {}
 	virtual void addListener(NodeListener *listener);
+	static void findAll(Node *node, list<Transformation*> &L);
 	virtual void fireEvent();
 	virtual void apply() = 0;
 	virtual void applyTo(Matrix &matrix) = 0;

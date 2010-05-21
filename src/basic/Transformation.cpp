@@ -14,6 +14,23 @@ void Transformation::addListener(NodeListener *listener) {
 }
 
 
+/** Finds all the transforms above a node. */
+void Transformation::findAll(Node *node, list<Transformation*> &L) {
+	
+	Transformation* transform;
+	
+	// Find all the transforms above the node
+	L.clear();
+	while (node != NULL) {
+		transform = dynamic_cast<Transformation*>(node);
+		if (transform != NULL) {
+			L.push_front(transform);
+		}
+		node = node->getParent();
+	}
+}
+
+
 /** Fires a modify event. */
 void Transformation::fireEvent() {
 	
