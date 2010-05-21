@@ -30,7 +30,6 @@ struct ShapeTraits {
 	GLuint count;
 	list<string> attributes;
 	GLenum mode, usage;
-	void addAttribute(const string &name) {attributes.push_back(name);}
 };
 
 

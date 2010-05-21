@@ -62,10 +62,10 @@ ShapeTraits BooleanAnd::getTraits() {
 	traits.count = 24;
 	traits.mode = GL_QUADS;
 	traits.usage = GL_DYNAMIC_DRAW;
-	traits.addAttribute("MCVertex");
-	traits.addAttribute("MCNormal");
-	traits.addAttribute("TexCoord0");
-	traits.addAttribute("TexCoord1");
+	traits.attributes.push_back("MCVertex");
+	traits.attributes.push_back("MCNormal");
+	traits.attributes.push_back("TexCoord0");
+	traits.attributes.push_back("TexCoord1");
 	return traits;
 }
 
