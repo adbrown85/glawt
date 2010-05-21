@@ -107,7 +107,8 @@ void Shape::finalize() {
 	
 	// Get locations of attributes in program
 	for (it=attributes.begin(); it!=attributes.end(); ) {
-		it->location = program->getAttributeLocation(it->name);
+		it->location = glGetAttribLocation(program->getHandle(),
+		                                   it->name.c_str());
 		if (it->location == -1)
 			it = attributes.erase(it);
 		else
