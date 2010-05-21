@@ -42,6 +42,7 @@ private:
 	map<int,const Preprocessor*> code;
 	static Program* current;
 	NodeNotifier notifier;
+	Program *previous;
 };
 
 /** @return Integer OpenGL identifies the program with. */

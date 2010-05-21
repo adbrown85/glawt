@@ -15,8 +15,8 @@ Program::Program(const Tag& tag) : Applicable(tag) {
 }
 
 
-void Program::addCode(int handle,
-                      const Preprocessor* preprocessor) {
+/** Adds link to shader code so linkage errors can be parsed. */
+void Program::addCode(int handle, const Preprocessor* preprocessor) {
 	
 	code[0] = preprocessor;
 }
@@ -37,11 +37,11 @@ void Program::apply() {
 }
 
 
-/** Creates the program so other nodes can use it. */
+/** Creates the program and finds the previous program. */
 void Program::associate() {
 	
-	// Create program
 	handle = glCreateProgram();
+	previous = find(getParent());
 }
 
 
@@ -72,6 +72,7 @@ void Program::finalize() {
 }
 
 
+/** Finds a program by looking upwards starting at <i>node</i>. */
 Program* Program::find(Node* node) {
 	
 	Program *program;
@@ -79,11 +80,12 @@ Program* Program::find(Node* node) {
 	// Look for a Program ancestor
 	while (node != NULL) {
 		program = dynamic_cast<Program*>(node);
-		if (program != NULL)
-			break;
+		if (program != NULL) {
+			return program;
+		}
 		node = node->getParent();
 	}
-	return program;
+	return NULL;
 }
 
 
@@ -107,12 +109,15 @@ void Program::log() const {
 }
 
 
-/** Stops using the program. */
+/** Stop using this program and restore the previous one. */
 void Program::remove() {
 	
-	// Restore fixed functionality
-	glUseProgram(0);
-	current = NULL;
+	current = previous;
+	if (previous == NULL) {
+		glUseProgram(0);
+	} else {
+		glUseProgram(previous->getHandle());
+	}
 }
 
 
