@@ -252,6 +252,12 @@ bool Tag::get(const string &key,
 
 string Tag::getLocation() const {
 	
+	return toLocation(filename, line);
+}
+
+
+string Tag::toLocation(string filename, int line) {
+	
 	ostringstream stream;
 	
 	stream << filename << ":" << line << ": ";

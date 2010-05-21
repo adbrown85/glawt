@@ -58,10 +58,10 @@ public:
 	void setLine(int line);
 	void setName(const string &name);
 	void setFilename(const string &filename);
+	static string toLocation(string filename, int line);
 protected:
 	void error(string key) const;
-	void error(string key,
-	           string type) const;
+	void error(string key, string type) const;
 private:
 	bool closing, leaf;
 	int line;

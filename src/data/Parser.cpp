@@ -7,6 +7,7 @@
 #include "Parser.hpp"
 
 
+/** Moves the input, checking for new lines as it goes. */
 void Parser::advance() {
 	
 	character = file.get();
@@ -16,6 +17,7 @@ void Parser::advance() {
 }
 
 
+/** Moves the input, checking for new lines as it goes. */
 void Parser::advance(int times) {
 	
 	for (int i=0; i<times; ++i) {
@@ -24,12 +26,7 @@ void Parser::advance(int times) {
 }
 
 
-/**
- * Creates a tag from text with name and attributes.
- * 
- * @param text Raw text for the tag from the file.
- * @return Tag object to store the attributes in.
- */
+/** @return Tag created from raw text without '<' and '>'. */
 Tag Parser::create(string text) {
 	
 	string key, value;
@@ -68,6 +65,7 @@ Tag Parser::create(string text) {
 }
 
 
+/** Finds the next attribute in <i>stream</i> by counting quotes. */
 string Parser::findAttribute(stringstream &stream) {
 	
 	int count=0;
@@ -87,8 +85,7 @@ string Parser::findAttribute(stringstream &stream) {
 }
 
 
-/**
- * Parses an attribute into a key and value, and then stores it.
+/** Parses an attribute into a key and value, and then stores it.
  * 
  * @param attribute Attribute as a raw string from the file.
  * @param tag Tag object to store the attribute in.
@@ -115,6 +112,10 @@ void Parser::findKeyValue(const string &attribute,
 }
 
 
+/** Returns the key in an attribute key/value pair.
+ * 
+ * @throws Exception if attribute does not have an equals sign.
+ */
 string Parser::findKeyIn(const string &text) {
 	
 	size_t index;
@@ -128,24 +129,24 @@ string Parser::findKeyIn(const string &text) {
 }
 
 
+/** Returns the value in an attribute key/value pair.
+ * 
+ * @throws Exception if there is no text between the quotes.
+ */
 string Parser::findValueIn(const string &text) {
 	
 	size_t index;
 	
 	// Return after equals sign
 	index = text.find('=');
-	if (index > text.length()) {
-		throw Exception("[Parser] Detected attribute without equals sign.");
+	if ((text.length() - index) <= 3) {
+		throw Exception("[Parser] Detected empty attribute.");
 	}
 	return Text::trim(text.substr(index+1), " '\"");
 }
 
 
-/**
- * Finds the next tag in the file.
- * 
- * @return %Tag string without '<' and '>'.
- */
+/** @return Next tag in the file as text without '<' and '>'. */
 string Parser::findTag() {
 	
 	// Read until end of tag
@@ -171,8 +172,7 @@ bool Parser::match(const string &text) {
 }
 
 
-/**
- * Opens a file and starts parsing it.
+/** Opens a file and starts parsing it.
  * 
  * @param filename Path of the file to open.
  * @throws const_char* if file cannot be opened.
@@ -194,6 +194,7 @@ void Parser::open(string filename) {
 }
 
 
+/** Reads XML tags from an input file. */
 void Parser::parse() {
 	
 	Tag tag;
@@ -201,23 +202,31 @@ void Parser::parse() {
 	// Read and process tags
 	tags.clear();
 	skipWhitespace();
-	while (file) {
-		if (character != '<') {
-			throw Exception("[Parser] Tags must start with '<'.");
-		} else if (match("<!--")) {
-			skip("-->");
-		} else {
-			tag = create(findTag());
-			tag.setFilename(filename);
-			tag.setLine(lineNumber);
-			tags.push_back(tag);
+	try {
+		while (file) {
+			if (character != '<') {
+				throw Exception("[Parser] Tags must start with '<'.");
+			} else if (match("<!--")) {
+				skip("-->");
+			} else {
+				tag = create(findTag());
+				tag.setFilename(filename);
+				tag.setLine(lineNumber);
+				tags.push_back(tag);
+			}
+			skipWhitespace();
 		}
-		skipWhitespace();
+		file.close();
+	} catch (Exception e) {
+		file.close();
+		Exception ex;
+		ex << Tag::toLocation(filename, lineNumber) << e;
+		throw ex;
 	}
-	file.close();
 }
 
 
+/** Looks at <i>length</i> characters of input without consuming them. */
 string Parser::peek(int length) {
 	
 	// Clear the buffer
@@ -234,9 +243,7 @@ string Parser::peek(int length) {
 }
 
 
-/**
- * Prints all the tags in the Parser.
- */
+/** Prints all the tags in the parser. */
 void Parser::print() {
 	
 	cout << "Tags: " << endl;
@@ -245,9 +252,7 @@ void Parser::print() {
 }
 
 
-/**
- * Skips a comment.
- */
+/** Skips input until it matches <i>text</i>. */
 void Parser::skip(const string &text) {
 	
 	while (!match(text)) {
@@ -257,6 +262,7 @@ void Parser::skip(const string &text) {
 }
 
 
+/** Skips spaces, newlines, etc. in the input. */
 void Parser::skipWhitespace() {
 	
 	advance();
