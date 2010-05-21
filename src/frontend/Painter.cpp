@@ -74,7 +74,7 @@ void Painter::onDrawable(Drawable *node) {
 			Traverser::traverseNode(outline->getRoot());
 		}
 		glPushAttrib(GL_POLYGON_BIT);
-			glPolygonMode(GL_FRONT, GL_FILL);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
 				if ((*mi)->isEnabled()) {
 					if (mode == GL_SELECT)
