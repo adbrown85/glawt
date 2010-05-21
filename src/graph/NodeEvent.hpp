@@ -53,7 +53,6 @@ private:
 	map<int, list<NodeListener*> > listeners;
 };
 
-
 inline NodeEvent::NodeEvent(Node *s, int t) : source(s), type(t) {}
 
 inline Node* NodeEvent::getSource() const {return source;}

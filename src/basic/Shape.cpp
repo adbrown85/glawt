@@ -42,6 +42,8 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
  */
 void Shape::associate() {
 	
+	list<Transformation*>::iterator it;
+	
 	// Find program
 	program = Program::find(parent);
 	if (program == NULL) {
@@ -49,6 +51,13 @@ void Shape::associate() {
 		e << "[Shape] No shader program found to bind attributes to.";
 		throw e;
 	}
+	
+	// Find transforms and update position
+	Transformation::findAll(getParent(), transforms);
+	//for (it=transforms.begin(); it!=transforms.end(); ++it) {
+	//	(*it)->addListener(this);
+	//}
+	//updatePosition();
 }
 
 
@@ -117,6 +126,7 @@ void Shape::finalize() {
 }
 
 
+/** @return Number of bytes into the vertex buffer for a vertex attribute. */
 GLuint Shape::getOffset(const string &name) const {
 	
 	map<string,GLuint>::const_iterator it;
@@ -169,5 +179,19 @@ string Shape::toString() const {
 		stream << " name='" << name << "'";
 	}
 	return stream.str();
+}
+
+
+/** Updates the position. */
+void Shape::updatePosition() {
+	
+	list<Transformation*>::iterator it;
+	Matrix matrix;
+	
+	// Calculate position by applying each transform
+	for (it=transforms.begin(); it!=transforms.end(); ++it) {
+		(*it)->applyTo(matrix);
+	}
+	position = matrix * Vector(0,0,0,1);
 }
 

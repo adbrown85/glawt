@@ -36,8 +36,7 @@ struct Extent {
  * isTangible() and updateAttributes().  Of course, make sure to pass the 
  * right number of vertices and all the attribute names in the constructor.
  */
-class Boolean : public Hexahedron,
-                public NodeListener {
+class Boolean : public Hexahedron {
 public:
 	Boolean(const Tag &tag, ShapeTraits traits);
 	virtual void associate();

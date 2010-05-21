@@ -7,14 +7,17 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <sstream>
 #include <list>                         // For attributes
+#include <GL/gl.h>
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
+#include "NodeEvent.hpp"
+#include "Transformation.hpp"
+#include "Transform.hpp"
 using namespace std;
 
 
@@ -57,7 +60,8 @@ struct ShapeTraits {
  * </tr>
  * </table>
  */
-class Shape : public SimpleDrawable {
+class Shape : public SimpleDrawable,
+              public NodeListener {
 public:
 	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
@@ -66,7 +70,9 @@ public:
 	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;
 	virtual string getName() const;
+	virtual Vector getPosition() const;
 	virtual Program* getProgram() const;
+	virtual void onNodeEvent(NodeEvent &event);
 	virtual void setAttributes(list<VertexAttribute> &attributes);
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
@@ -76,6 +82,7 @@ protected:
 	void setBufferData(const string &name, GLfloat data[][3]);
 	virtual void setCount(GLuint count);
 	virtual void updateBuffer() = 0;
+	virtual void updatePosition();
 private:
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
@@ -84,6 +91,8 @@ private:
 	map<string,GLuint> offsets;
 	Program *program;
 	string name;
+	Vector position;
+	list<Transformation*> transforms;
 };
 
 /** @return Attributes in use for this shape. */
@@ -95,8 +104,14 @@ inline GLuint Shape::getCount() const {return count;}
 /** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
 
+/** @return Position of the item in the scene. */
+inline Vector Shape::getPosition() const {return position;}
+
 /** @return Program the shape sends vertex attributes to. */
 inline Program* Shape::getProgram() const {return program;}
+
+/** Updates the position when a transform changes. */
+inline void Shape::onNodeEvent(NodeEvent &event) {updatePosition();}
 
 /** Set attributes in use for this shape. */
 inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}
