@@ -19,11 +19,13 @@
 using namespace std;
 
 
+/** @brief Mixes colors together based on their alpha value.
+ * @ingroup advanced
+ */
 class Blend : public Applicable {
 public:
 	Blend(const Tag &tag) : Applicable(tag) {}
 	virtual void apply();
-	virtual void associate();
 	virtual void remove();
 protected:
 	void sortChildren();

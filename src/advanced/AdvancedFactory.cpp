@@ -28,20 +28,14 @@ void AdvancedFactory::install() {
 	Factory::install("instance", &createInstance);
 	Factory::install("octree", &createOctree);
 	Factory::install("outputs", &createOutputs);
+	Factory::install("sort", &createSort);
 	Factory::install("target", &createTarget);
 }
 
 
-Node* AdvancedFactory::createBind(const Tag &tag) {
-	
-	return new Bind(tag);
-}
+Node* AdvancedFactory::createBind(const Tag &t) {return new Bind(t);}
 
-
-Node* AdvancedFactory::createBlend(const Tag &tag) {
-	
-	return new Blend(tag);
-}
+Node* AdvancedFactory::createBlend(const Tag &t) {return new Blend(t);}
 
 
 /** @throws NodeException if boolean operation not supported. */
@@ -62,56 +56,23 @@ Node* AdvancedFactory::createBoolean(const Tag &tag) {
 }
 
 
-Node* AdvancedFactory::createCull(const Tag &tag) {
-	
-	return new Cull(tag);
-}
+Node* AdvancedFactory::createCull(const Tag &t) {return new Cull(t);}
 
+Node* AdvancedFactory::createClear(const Tag &t) {return new Clear(t);}
 
-Node* AdvancedFactory::createClear(const Tag &tag) {
-	
-	return new Clear(tag);
-}
+Node* AdvancedFactory::createFramebuffer(const Tag &t) {return new Framebuffer(t);}
 
+Node* AdvancedFactory::createFullscreen(const Tag &t) {return new Fullscreen(t);}
 
-Node* AdvancedFactory::createFramebuffer(const Tag &tag) {
-	
-	return new Framebuffer(tag);
-}
+Node* AdvancedFactory::createGroup(const Tag &t) {return new Group(t);}
 
+Node* AdvancedFactory::createInstance(const Tag &t) {return new Instance(t);}
 
-Node* AdvancedFactory::createFullscreen(const Tag &tag) {
-	
-	return new Fullscreen(tag);
-}
+Node* AdvancedFactory::createOctree(const Tag &t) {return new Octree(t);}
 
+Node* AdvancedFactory::createOutputs(const Tag &t) {return new Outputs(t);}
 
-Node* AdvancedFactory::createGroup(const Tag &tag) {
-	
-	return new Group(tag);
-}
+Node* AdvancedFactory::createSort(const Tag &t) {return new Sort(t);}
 
-
-Node* AdvancedFactory::createInstance(const Tag &tag) {
-	
-	return new Instance(tag);
-}
-
-
-Node* AdvancedFactory::createOctree(const Tag &tag) {
-	
-	return new Octree(tag);
-}
-
-
-Node* AdvancedFactory::createOutputs(const Tag &tag) {
-	
-	return new Outputs(tag);
-}
-
-
-Node* AdvancedFactory::createTarget(const Tag &tag) {
-	
-	return new Target(tag);
-}
+Node* AdvancedFactory::createTarget(const Tag &t) {return new Target(t);}
 
