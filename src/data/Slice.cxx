@@ -75,7 +75,6 @@ void display(void) {
 	
 	// Add index
 	glRasterPos2f(-xText, +yText);
-	glColor3f(0.0, 1.0, 0.0);
 	sprintf(buffer, "%d", slice->getIndex());
 	for (size_t i=0; i<strlen(buffer); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10,

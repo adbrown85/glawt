@@ -7,6 +7,7 @@
 #ifndef SLICE_HPP
 #define SLICE_HPP
 #include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <GL/glut.h>
 #include <iomanip>

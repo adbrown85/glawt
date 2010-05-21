@@ -243,38 +243,42 @@ void Dataset::load() {
 	// Allocate and read data
 	data = malloc(length * block);
 	readData();
+	if (getHigh() != getMax()) {
+		normalize();
+	}
 }
 
 
 void Dataset::normalize() {
 	
+	clock_t beg, end;
+	
+	cerr << "[Dataset] Normalizing... ";
+	beg = clock();
 	switch (type) {
 	case GL_UNSIGNED_SHORT:
 		normalizeAsUnsignedShort();
 		break;
-	default:
-		cerr << "[Dataset] Normalized not supported for this type." << endl;
-		break;
 	}
+	end = clock();
+	cout << (((double)end-beg)/CLOCKS_PER_SEC) << "s" << endl;
 }
 
 
 void Dataset::normalizeAsUnsignedShort() {
 	
-	unsigned short value;
+	unsigned short *p;
+	unsigned short *end;
 	
-	for (int k=0; k<depth; ++k) {
-		for (int i=0; i<height; ++i) {
-			for (int j=0; j<width; ++j) {
-				value = getAsUnsignedShort(Index(i,j,k));
-				if (value < 4095) {
-					value = (unsigned short)(((float)value / 4095) * 65535);
-				} else {
-					value = 0;
-				}
-				set(Index(i,j,k), &value, type);
-			}
+	p = (unsigned short*)data;
+	end = ((unsigned short*)data) + length;
+	while (p < end) {
+		if (*p < getHigh()) {
+			*p = (unsigned short)(((float)*p / getHigh()) * 65535);
+		} else {
+			*p = 0;
 		}
+		p += 1;
 	}
 }
 

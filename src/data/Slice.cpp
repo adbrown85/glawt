@@ -27,9 +27,6 @@ Slice::Slice(Dataset *dataset, int index) {
 	// Memory sizes
 	length = width * height;
 	block = dataset->getBlock();
-	
-	// Operations
-	dataset->normalize();
 }
 
 

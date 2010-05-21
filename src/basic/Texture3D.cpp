@@ -15,9 +15,6 @@ Texture3D::Texture3D(const Tag &tag) :
                      Texture(GL_TEXTURE_3D, tag),
                      dataset(tag) {
 	
-	if (!tag.get("normalize", normalize, false)) {
-		normalize = false;
-	}
 }
 
 
@@ -26,10 +23,6 @@ void Texture3D::finalize() {
 	
 	// Load the dataset
 	dataset.load();
-	if (normalize) {
-		cerr << "[Texture3D] Normalizing (this could take awhile...)" << endl;
-		dataset.normalize();
-	}
 	
 	// Bind the texture to the right unit
 	glActiveTexture(GL_TEXTURE0 + unit);
