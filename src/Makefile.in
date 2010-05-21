@@ -18,7 +18,7 @@ htmldir     := @htmldir@
 
 # Tools
 CXX         := @CXX@
-CXXFLAGS    := @CXXFLAGS@
+CXXFLAGS     = @CXXFLAGS@ $(includes) $(DEFS)
 LIBS        := @LIBS@
 ARFLAGS     := -cr
 INSTALL     := @INSTALL@
@@ -65,22 +65,21 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 # Objects and archive
 %.o: %.cpp %.hpp
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ -c $<
-	@$(AR) $(ARFLAGS) $(archive) $@
-$(objects):
-$(archive): $(objects)
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} -c $<
+	@$(AR) $(ARFLAGS) $(archive) ${dir $<}${notdir $@}
+$(archive): ${notdir $(objects)}
 
 # Tests
 %: %.cxx %.o
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
-tests: $(tests)
-$(tests):
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LIBS)
+tests: ${notdir $(tests)}
+${notdir $(tests)}:
 
 # Application
-$(application): gander.cxx gander.hxx $(objects)
+$(application): gander.cxx gander.hxx $(archive)
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(includes) $(DEFS) -o $@ $< $(archive) $(LIBS)
+	@$(CXX) $(CXXFLAGS) -o $@ $< $(archive) $(LIBS)
 
 # Installation
 .PHONY: install-bin uninstall-bin
@@ -97,9 +96,12 @@ uninstall-bin:
 # Dependencies (recompile based on objects b/c of inheritance)
 %.d: %.hpp
 	@echo "  Generating dependencies for $<..."
-	@g++ $(includes) -MM ${subst .hpp,.cpp,$<} -MF $@~
-	@sed -e '1 s/.hpp/.HPP/' -e 's/.hpp/.o/g' -e '1 s/.HPP/.hpp/' < $@~ >$@
-	@$(RM) $@~
+	@$(CXX) $(CXXFLAGS) -MM ${subst .hpp,.cpp,$<} > $@
+	@if test -f ${subst .hpp,.cxx,$<}; then \
+		$(CXX) $(CXXFLAGS) \
+		-MM ${subst .hpp,.cxx,$<} \
+		-MT ${notdir ${subst .hpp,,$<}} | sed 's/.hpp/.o/g' >> $@; \
+	fi
 ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
   -include $(depends)
 endif
