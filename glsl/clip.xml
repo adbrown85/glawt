@@ -27,8 +27,7 @@
 	<wireframe faces="back">
 		<instance of="cubes" />
 	</wireframe>
-</program>
-<texture name="volume" file="../textures/bunny.vlb" normalize="true">
+	<texture name="volume" file="../textures/bunny.vlb" normalize="true">
 	<texture name="exit_coords" size="512">
 		<framebuffer>
 			<target link="exit_coords" />
@@ -55,10 +54,7 @@
 			</cull>
 		</program>
 	</texture>
-</texture>
-<program>
-	<shader file="color.vert" />
-	<shader file="color.frag" />
+	</texture>
 	<wireframe faces="front">
 		<instance of="cubes" />
 	</wireframe>
