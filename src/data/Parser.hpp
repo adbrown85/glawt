@@ -18,9 +18,17 @@
 using namespace std;
 
 
-/**
+/** @brief Reads an XML file, breaking it up into tags.
  * @ingroup data
- * @brief Reads an XML file, breaking it up into tags.
+ * 
+ * <b>Supports</b>
+ *   - Spaces between attribute name, equals, and value
+ *   - Spaces in attribute value
+ * 
+ * <b>Unsupported (or undetermined)</b>
+ *   - Spaces between closing slash and &gt; of leaf tag
+ *   - Empty attribute values
+ *   - Multiple lines in a tag
  */
 class Parser {
 public:
@@ -50,7 +58,6 @@ private:
 	string filename;
 	vector<Tag> tags;
 };
-
 
 inline int Parser::getLineNumber() const {return lineNumber;}
 inline vector<Tag> Parser::getTags() const {return tags;}
