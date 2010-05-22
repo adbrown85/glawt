@@ -28,7 +28,7 @@
 		<shader file="volume.frag" />
 		<uniform type="int" name="WindowSize" value="512" />
 		<uniform type="float" name="SampleRate" value="0.005" />
-		<texture file="../textures/skull.vlb" name="volume" normalize="true">
+		<texture file="../textures/bunny128.vlb" name="volume">
 			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<uniform type="sampler2d" name="ExitCoords" link="exit_coords" />
 			<uniform type="sampler3d" name="Volume" link="volume" />
