@@ -17,7 +17,6 @@
 #include "Mouse.hpp"
 #include "DatasetHeader.hpp"
 #include "Preprocessor.hpp"
-#include "VlbMaker.hpp"
 using namespace std;
 
 
@@ -58,10 +57,10 @@ public:
 protected:
 	void banner();
 	void onCompile();
+	void onDataset();
 	void onDisplay();
 	void onHeader();
 	void onPreprocess();
-	void onVlb();
 	void parse();
 	void usage();
 private:

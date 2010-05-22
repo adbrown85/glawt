@@ -6,34 +6,13 @@
  */
 #include <cstring>
 #include "Dataset.hpp"
-#include "Window.hpp"
+/*
 Dataset *dataset=NULL;
 int position, width, height, depth;
+*/
 
 
-/* GLUT special keys callback. */
-void special(int key, int x, int y) {
-	
-	switch(key) {
-	case GLUT_KEY_UP:
-	case GLUT_KEY_RIGHT:
-		if (position == depth-1)
-			position = -1;
-		++position;
-		Window::refresh();
-		break;
-	case GLUT_KEY_DOWN:
-	case GLUT_KEY_LEFT:
-		if (position == 0)
-			position = depth;
-		--position;
-		Window::refresh();
-		break;
-	}
-}
-
-
-/* Draws a slice to the screen. */
+/*
 void display(void) {
 	
 	char *data;
@@ -64,8 +43,90 @@ void display(void) {
 }
 
 
+void mouse(int button, int state, int x, int y) {
+	
+	Index index(height-y, x, position);
+	GLenum type;
+	
+	if (state != GLUT_UP) {
+		return;
+	}
+	
+	// Left button
+	if (button == GLUT_LEFT_BUTTON) {
+		switch (dataset->getType()) {
+		case GL_UNSIGNED_BYTE:
+			cout << (int)dataset->getAsByte(index) << endl;
+			break;
+		case GL_SHORT:
+			cout << dataset->getAsShort(index) << endl;
+			break;
+		case GL_UNSIGNED_SHORT:
+			cout << dataset->getAsUnsignedShort(index) << endl;
+			break;
+		case GL_FLOAT:
+			cout << dataset->getAsFloat(index) << endl;
+			break;
+		}
+	}
+	
+	// Right button
+	type = dataset->getType();
+	if (button == GLUT_RIGHT_BUTTON) {
+		switch (type) {
+		case GL_UNSIGNED_BYTE:
+			for (int i=-4; i<4; ++i)
+				for (int j=-4; j<4; ++j)
+					dataset->set(Index(height-y+j,x+i,position), &uc, type);
+			break;
+		case GL_SHORT:
+			for (int i=-4; i<4; ++i)
+				for (int j=-4; j<4; ++j)
+					dataset->set(Index(height-y+j,x+i,position), &s, type);
+			break;
+		case GL_UNSIGNED_SHORT:
+			for (int i=-4; i<4; ++i)
+				for (int j=-4; j<4; ++j)
+					dataset->set(Index(height-y+j,x+i,position), &us, type);
+			break;
+		case GL_FLOAT:
+			for (int i=-4; i<4; ++i)
+				for (int j=-4; j<4; ++j)
+					dataset->set(Index(height-y+j,x+i,position), &f, type);
+			break;
+		}
+		Window::refresh();
+	}
+	
+	// Wheel
+	else if (button == GLUT_UP_BUTTON) {
+		next();
+	} else if (button == GLUT_DOWN_BUTTON) {
+		previous();
+	}
+}
+
+
+void special(int key, int x, int y) {
+	
+	switch(key) {
+	case GLUT_KEY_UP:
+	case GLUT_KEY_RIGHT:
+		next();
+		break;
+	case GLUT_KEY_DOWN:
+	case GLUT_KEY_LEFT:
+		previous();
+		break;
+	}
+}
+*/
+
+
 int main(int argc, char *argv[]) {
 	
+	Dataset *dataset;
+	DatasetViewer *viewer;
 	string filename;
 	
 	// Handle arguments
@@ -90,20 +151,13 @@ int main(int argc, char *argv[]) {
 		dataset = new Dataset(filename);
 		dataset->load();
 		dataset->print();
-		width = dataset->getWidth();
-		height = dataset->getHeight();
-		depth = dataset->getDepth();
-		position = 0;
+		Window::init(argc, argv);
+		viewer = new DatasetViewer();
+		viewer->setDataset(dataset);
+		viewer->start();
 	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}
-	
-	// Start the window
-	Window::init(argc, argv);
-	Window::create(filename, dataset->getWidth(), dataset->getHeight());
-	Window::setDisplay(&display);
-	Window::setSpecial(&special);
-	Window::start();
 }
 

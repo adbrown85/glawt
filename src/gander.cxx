@@ -96,11 +96,16 @@ void Gander::onPreprocess() {
 }
 
 
-void Gander::onVlb() {
+void Gander::onDataset() {
 	
-	VlbMaker vlbMaker(inFilename, outFilename);
+	Dataset dataset(inFilename);
+	DatasetViewer viewer;
 	
-	vlbMaker.start();
+	// View dataset
+	Window::init(argc, argv);
+	dataset.load();
+	viewer.setDataset(&dataset);
+	viewer.start();
 }
 
 
@@ -134,8 +139,8 @@ void Gander::start() {
 	// Handle option
 	if (option == "--preprocess") {
 		onPreprocess();
-	} else if (option == "--vlb") {
-		onVlb();
+	} else if (option == "--dataset") {
+		onDataset();
 	} else if (option == "--header") {
 		onHeader();
 	} else if (option == "--compile") {
@@ -157,7 +162,7 @@ void Gander::usage() {
 	cerr << "  --display        Display a scene (the default)" << endl;
 	cerr << "  --compile        Compile but do not display scene" << endl;
 	cerr << "  --preprocess     Preprocess GLSL file" << endl;
-	cerr << "  --vlb            Make VLB volume file" << endl;
+	cerr << "  --dataset        View the slices of dataset" << endl;
 	cerr << "  --header         Print header of VLB file" << endl;
 }
 

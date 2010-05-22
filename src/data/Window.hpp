@@ -6,13 +6,15 @@
  */
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
-#include <GL/glut.h>
 #include <cstdlib>
 #include <iostream>
 #include <string>
 #include "Matrix.hpp"
 #include "Quaternion.hpp"
 #include "Vector.hpp"
+#include <GL/glut.h>
+#define GLUT_UP_BUTTON 3
+#define GLUT_DOWN_BUTTON 4
 #define DEFAULT_SCREEN_X 50
 #define DEFAULT_SCREEN_Y 300
 #define DEFAULT_WIDTH 512

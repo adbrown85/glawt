@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Dataset.hpp"
+DatasetViewer *DatasetViewer::instance=NULL;
 
 
 /** Creates a new %Dataset from a file.
@@ -58,14 +59,9 @@ void Dataset::checkIndex(const Index &index) const {
  * 
  * @param [in] index Integer coordinates specifying the location in dataset.
  */
-char* Dataset::findPosition(const Index &index) const {
+char* Dataset::findPointerTo(const Index &I) const {
 	
-	int offset;
-	
-	// Find position
-	checkIndex(index);
-	offset = (index.k * widthTimesHeight) + (index.i * width) + index.j;
-	return (char*)(data) + (offset * block);
+	return (char*)(data) + ((widthTimesHeight*I.k)+(width*I.i)+I.j) * block;
 }
 
 
@@ -82,7 +78,7 @@ void Dataset::get(const Index &index,
                   void *&value) const {
 	
 	// Get value
-	value = (void*)findPosition(index);
+	value = (void*)findPointerTo(index);
 }
 
 
@@ -346,7 +342,7 @@ void Dataset::set(const Index &index,
                   const void *value,
                   GLenum type) {
 	
-	void *position;
+	void *pointer;
 	
 	// Check type
 	if (type != this->type) {
@@ -354,7 +350,146 @@ void Dataset::set(const Index &index,
 	}
 	
 	// Copy the value
-	position = findPosition(index);
-	memcpy(position, value, block);
+	pointer = findPointerTo(index);
+	memcpy(pointer, value, block);
+}
+
+
+/** Draws a slice to the screen. */
+void DatasetViewer::draw() {
+	
+	ostringstream stream;
+	char *data;
+	
+	// Slice index
+	stream << slice;
+	Window::write(stream.str());
+	
+	// Reset raster position
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+			glLoadIdentity();
+			glRasterPos2f(-1.0, -1.0);
+		glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	
+	// Draw pixels
+	data = reinterpret_cast<char*>(dataset->getData());
+	data += slice * width * height * dataset->getBlock();
+	glDrawPixels(width, height, GL_LUMINANCE, dataset->getType(), data);
+}
+
+
+/** Shows the next slice in the dataset. */
+void DatasetViewer::goToNext() {
+	
+	if (slice == dataset->getDepth()-1)
+		slice = -1;
+	++slice;
+	Window::refresh();
+}
+
+
+/** Shows the previous slice in the dataset. */
+void DatasetViewer::goToPrevious() {
+	
+	if (slice == 0)
+		slice = dataset->getDepth();
+	--slice;
+	Window::refresh();
+}
+
+
+/** Draws a slice to the screen. */
+void DatasetViewer::onDisplay(void) {
+	
+	Window::clear();
+	instance->draw();
+	Window::flush();
+}
+
+
+/** Prints the value in the volume under the cursor. */
+void DatasetViewer::onMouse(int button, int state, int x, int y) {
+	
+	// Ignore down state
+	if (state == GLUT_DOWN) {
+		return;
+	}
+	
+	// Standard buttons
+	if (button == GLUT_LEFT_BUTTON) {
+		Index index(instance->height-y, x, instance->slice);
+		switch (instance->type) {
+		case GL_UNSIGNED_BYTE:
+			cout << (int)instance->dataset->getAsByte(index) << endl;
+			break;
+		case GL_SHORT:
+			cout << instance->dataset->getAsShort(index) << endl;
+			break;
+		case GL_UNSIGNED_SHORT:
+			cout << instance->dataset->getAsUnsignedShort(index) << endl;
+			break;
+		case GL_FLOAT:
+			cout << instance->dataset->getAsFloat(index) << endl;
+			break;
+		}
+	}
+	
+	// Wheel
+	else if (button == GLUT_UP_BUTTON) {
+		instance->goToNext();
+	} else if (button == GLUT_DOWN_BUTTON) {
+		instance->goToPrevious();
+	}
+}
+
+
+/** Changes the slice. */
+void DatasetViewer::onSpecial(int key, int x, int y) {
+	
+	switch(key) {
+	case GLUT_KEY_UP:
+	case GLUT_KEY_RIGHT:
+		instance->goToNext();
+		break;
+	case GLUT_KEY_DOWN:
+	case GLUT_KEY_LEFT:
+		instance->goToPrevious();
+		break;
+	}
+}
+
+
+void DatasetViewer::setDataset(Dataset *dataset) {
+	
+	this->dataset = dataset;
+	this->width = dataset->getWidth();
+	this->height = dataset->getHeight();
+	this->depth = dataset->getDepth();
+	this->type = dataset->getType();
+	this->slice = 0;
+}
+
+
+/** Creates and runs the window. */
+void DatasetViewer::start() {
+	
+	instance = this;
+	
+	// Create the window
+	Window::create(dataset->getFilename(), width, height);
+	
+	// Set callbacks
+	Window::setDisplay(&onDisplay);
+	Window::setSpecial(&onSpecial);
+	Window::setMouse(&onMouse);
+	
+	// Run
+	Window::start();
 }
 

@@ -7,18 +7,21 @@
 #ifndef DATASET_HPP
 #define DATASET_HPP
 #include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <GL/glut.h>
-#include <iomanip>
 #include <iostream>
-#include <map>
 #include <string>
+#include <cstring>
+#include <climits>
+#include <cfloat>
+#include <fstream>
+#include <iomanip>
+#include <map>
 #include <sstream>
 #include <utility>
+#include <GL/gl.h>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
 #include "Tag.hpp"
+#include "Window.hpp"
 using namespace std;
 
 
@@ -50,6 +53,8 @@ public:
 	int getBlock() const;
 	void* getData();
 	int getDepth() const;
+	string getFilename() const;
+	DatasetHeader getHeader() const;
 	int getHeight() const;
 	int getHigh() const;
 	int getLow() const;
@@ -58,14 +63,15 @@ public:
 	int getMaximumDimension() const;
 	GLenum getType() const;
 	int getWidth() const;
+	char* findPointerTo(const Index &I) const;
 	void load();
 	void normalize();
 	void print() const;
 	void print(Index I);
 	void set(const Index &I, const void *value, GLenum type);
+	void write(const string &filename, int every=1);
 protected:
 	void checkIndex(const Index &I) const;
-	char* findPosition(const Index &I) const;
 	void get(const Index &I, void *&value) const;
 	void initDimensions();
 	void initTypeBlock();
@@ -85,11 +91,11 @@ inline int Dataset::getBlock() const {return block;}
 /** @return Pointer to the start of all the data. */
 inline void* Dataset::getData() {return data;}
 
-/** @return Number of samples in the Z direction. */
-inline int Dataset::getDepth() const {return depth;}
+/** @return Path to the file the dataset was loaded from. */
+inline string Dataset::getFilename() const {return header.getFilename();}
 
-/** @return Number of samples in the Y direction. */
-inline int Dataset::getHeight() const {return height;}
+/** @return Header as read from the file. */
+inline DatasetHeader Dataset::getHeader() const {return header;}
 
 /** @return Highest value according to the header. */
 inline int Dataset::getHigh() const {return header.getHigh();}
@@ -118,8 +124,33 @@ inline GLenum Dataset::getType() const {return type;}
 /** @return Number of samples in the X direction. */
 inline int Dataset::getWidth() const {return width;}
 
+/** @return Number of samples in the Y direction. */
+inline int Dataset::getHeight() const {return height;}
+
+/** @return Number of samples in the Z direction. */
+inline int Dataset::getDepth() const {return depth;}
+
 /** Prints the header of the dataset. */
 inline void Dataset::print() const {header.print();}
+
+
+/** Utility for viewing a dataset. */
+class DatasetViewer {
+public:
+	void draw();
+	void goToNext();
+	void goToPrevious();
+	static void onDisplay(void);
+	static void onMouse(int button, int state, int x, int y);
+	static void onSpecial(int key, int x, int y);
+	void setDataset(Dataset *dataset);
+	void start();
+private:
+	Dataset *dataset;
+	GLenum type;
+	int slice, width, height, depth;
+	static DatasetViewer *instance;
+};
 
 
 

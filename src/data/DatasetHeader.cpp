@@ -168,29 +168,11 @@ void DatasetHeader::read(istream &stream) {
 	stream >> width >> height >> depth;
 	stream >> type;
 	stream >> endian;
-	stream >> pitch[0] >> pitch[1] >> pitch[2];
+	stream >> pitch.x >> pitch.y >> pitch.z;
 	stream >> min >> max;
 	stream >> low >> high;
 	
 	// Finish
 	offset = beginning + 6;
-}
-
-
-void DatasetHeader::write(ostream &stream) {
-	
-	// Descriptor and comments
-	stream << "VLIB.1" << endl;
-	for (size_t i=0; i<comments.size(); ++i) {
-		stream << '#' << comments[i] << endl;
-	}
-	
-	// Details
-	stream << width << " " << height << " " << depth << endl;
-	stream << type << endl;
-	stream << endian << endl;
-	stream << pitch[0] << " " << pitch[1] << " " << pitch[2] << endl;
-	stream << min << " " << max << endl;
-	stream << low << " " << high << endl;
 }
 

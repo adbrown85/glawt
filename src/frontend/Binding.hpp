@@ -13,8 +13,7 @@
 #include <map>
 #include <string>
 #include "Command.hpp"
-#define GLUT_UP_BUTTON 3
-#define GLUT_DOWN_BUTTON 4
+#include "Window.hpp"
 using namespace std;
 
 
