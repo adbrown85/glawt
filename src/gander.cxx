@@ -52,6 +52,18 @@ void Gander::onCompile() {
 }
 
 
+void Gander::onConvert() {
+	
+	DatasetWriter writer;
+	
+	writer.setInput(inFilename);
+	writer.setOutput(outFilename);
+	if (!parameter.empty())
+		writer.setJump(atoi(parameter.c_str()));
+	writer.write();
+}
+
+
 /** Starts the display for a scene.
  * 
  * @note Controls are not deleted.
@@ -96,7 +108,7 @@ void Gander::onPreprocess() {
 }
 
 
-void Gander::onDataset() {
+void Gander::onSlices() {
 	
 	Dataset dataset(inFilename);
 	DatasetViewer viewer;
@@ -122,6 +134,11 @@ void Gander::parse() {
 		option = argv[1];
 		inFilename = argv[2];
 		outFilename = argv[3];
+	} else if (argc == 5) {
+		option = argv[1];
+		parameter = argv[2];
+		inFilename = argv[3];
+		outFilename = argv[4];
 	} else {
 		usage();
 		exit(1);
@@ -139,12 +156,14 @@ void Gander::start() {
 	// Handle option
 	if (option == "--preprocess") {
 		onPreprocess();
-	} else if (option == "--dataset") {
-		onDataset();
+	} else if (option == "--slices") {
+		onSlices();
 	} else if (option == "--header") {
 		onHeader();
 	} else if (option == "--compile") {
 		onCompile();
+	} else if (option == "--convert") {
+		onConvert();
 	} else {
 		banner();
 		onDisplay();
@@ -162,8 +181,9 @@ void Gander::usage() {
 	cerr << "  --display        Display a scene (the default)" << endl;
 	cerr << "  --compile        Compile but do not display scene" << endl;
 	cerr << "  --preprocess     Preprocess GLSL file" << endl;
-	cerr << "  --dataset        View the slices of dataset" << endl;
-	cerr << "  --header         Print header of VLB file" << endl;
+	cerr << "  --slices         View the slices of dataset" << endl;
+	cerr << "  --header         Print header of volume file" << endl;
+	cerr << "  --convert [i]    Convert volume taking every i'th voxel" << endl;
 }
 
 

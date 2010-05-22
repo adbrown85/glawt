@@ -16,6 +16,7 @@
 #include "Menu.hpp"
 #include "Mouse.hpp"
 #include "DatasetHeader.hpp"
+#include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
 using namespace std;
 
@@ -57,10 +58,11 @@ public:
 protected:
 	void banner();
 	void onCompile();
-	void onDataset();
+	void onConvert();
 	void onDisplay();
 	void onHeader();
 	void onPreprocess();
+	void onSlices();
 	void parse();
 	void usage();
 private:
@@ -69,7 +71,7 @@ private:
 	Display *display;
 	Interpreter *interpreter;
 	Scene *scene;
-	string inFilename, option, outFilename, title;
+	string inFilename, option, outFilename, parameter, title;
 };
 
 
