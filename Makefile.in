@@ -44,7 +44,11 @@ install-data:
 	@$(INSTALL) -m 0644 glsl/* $(datadir)/glsl
 	@echo "    textures"
 	@$(INSTALL) -d $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/* $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/chunk.vlb $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/empty.vlb $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/bunny128.vlb $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/crate.jpg $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/stone.jpg $(datadir)/textures
 	@echo "    ui"
 	@$(INSTALL) -d $(datadir)/ui
 	@$(INSTALL) -m 0644 ui/* $(datadir)/ui
@@ -97,7 +101,11 @@ $(distdir): depend
 	@cp glsl/* $(distdir)/glsl
 	@echo "    textures"
 	@mkdir $(distdir)/textures
-	@cp textures/*.jpg $(distdir)/textures
+	@cp textures/chunk.vlb $(distdir)/textures
+	@cp textures/empty.vlb $(distdir)/textures
+	@cp textures/bunny128.vlb $(distdir)/textures
+	@cp textures/crate.jpg $(distdir)/textures
+	@cp textures/stone.jpg $(distdir)/textures
 	@echo "    ui"
 	@mkdir $(distdir)/ui
 	@cp ui/* $(distdir)/ui
