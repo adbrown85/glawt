@@ -9,8 +9,10 @@
 <group name="cubes">
 	<uniform type="vec4" name="Color" value="0 1 1 0.1" />
 	<translate x="-1.0">
+	<scale>
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube />
+	</scale>
 	</translate>
 	<translate x="+1.0">
 	<scale>
@@ -27,7 +29,7 @@
 	<wireframe faces="back">
 		<instance of="cubes" />
 	</wireframe>
-	<texture name="volume" file="../textures/bunny128.vlb">
+	<texture name="volume" file="../textures/head256.vlb">
 	<texture name="exit_coords" size="512">
 		<framebuffer>
 			<target link="exit_coords" />
@@ -44,7 +46,8 @@
 			<shader file="volume.vert" />
 			<shader file="volume.frag" />
 			<uniform type="int" name="WindowSize" value="512" />
-			<uniform type="float" name="Weight" value="1.5" />
+			<uniform type="float" name="Brightness" value="3.5" />
+			<uniform type="vec3" name="Color" value="1 0 1" />
 			<uniform type="float" name="SampleRate" value="0.006" />
 			<uniform type="sampler2D" name="ExitCoords" link="exit_coords" />
 			<uniform type="sampler3D" name="Volume" link="volume" />
