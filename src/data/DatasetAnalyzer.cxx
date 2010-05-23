@@ -11,8 +11,10 @@ int main(int argc,
          char *argv[]) {
 	
 	Dataset *dataset;
+	DatasetAnalyzer analyzer;
 	GLushort minimum, maximum;
 	string filename;
+	clock_t ticks;
 	
 	// Handle arguments
 	if (argc == 1) {
@@ -31,14 +33,26 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Run
 	try {
+		
+		// Initialize
 		dataset = new Dataset(filename);
 		dataset->load(true);
-		DatasetAnalyzer::findRange(dataset, minimum, maximum);
-		cout << " minimum: " << minimum << endl;
-		cout << " maximum: " << maximum << endl;
-	} catch (Exception &e) {
+		analyzer.setDataset(dataset);
+		
+		// Range
+		cout << "\nPrinting range..." << endl;
+		ticks=clock();
+		analyzer.printRange();
+		cout << (double)(clock()-ticks)/CLOCKS_PER_SEC << "s" << endl;
+		
+		// Histogram
+		cout << "\nPrinting histogram..." << endl;
+		ticks=clock();
+		analyzer.printHistogram();
+		cout << (double)(clock()-ticks)/CLOCKS_PER_SEC << "s" << endl;
+	}
+	catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}

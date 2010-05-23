@@ -99,12 +99,42 @@ void Gander::onHeader() {
 }
 
 
+void Gander::onHistogram() {
+	
+	Dataset dataset(inFilename);
+	DatasetAnalyzer analyzer;
+	clock_t ticks;
+	
+	dataset.load(true);
+	analyzer.setDataset(&dataset);
+	cout << "Computing histogram..." << endl;
+	ticks = clock();
+	analyzer.printHistogram();
+	cout << (double)(clock() - ticks) / CLOCKS_PER_SEC << "s" << endl;
+}
+
+
 void Gander::onPreprocess() {
 	
 	Preprocessor pp(inFilename);
 	
 	pp.start();
 	pp.printLines();
+}
+
+
+void Gander::onRange() {
+	
+	Dataset dataset(inFilename);
+	DatasetAnalyzer analyzer;
+	clock_t ticks;
+	
+	dataset.load(true);
+	analyzer.setDataset(&dataset);
+	cout << "Computing actual range..." << endl;
+	ticks = clock();
+	analyzer.printRange();
+	cout << (double)(clock() - ticks) / CLOCKS_PER_SEC << "s" << endl;
 }
 
 
@@ -164,6 +194,10 @@ void Gander::start() {
 		onCompile();
 	} else if (option == "--convert") {
 		onConvert();
+	} else if (option == "--range") {
+		onRange();
+	} else if (option == "--histogram") {
+		onHistogram();
 	} else {
 		banner();
 		onDisplay();
@@ -183,6 +217,8 @@ void Gander::usage() {
 	cerr << "  --preprocess     Preprocess GLSL file" << endl;
 	cerr << "  --slices         View the slices of dataset" << endl;
 	cerr << "  --header         Print header of volume file" << endl;
+	cerr << "  --range          Find actual high and low of dataset" << endl;
+	cerr << "  --histogram      Show distribution in dataset" << endl;
 	cerr << "  --convert [i]    Convert volume taking every i'th voxel" << endl;
 }
 

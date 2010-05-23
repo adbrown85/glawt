@@ -17,6 +17,7 @@
 #include "Mouse.hpp"
 #include "DatasetHeader.hpp"
 #include "DatasetWriter.hpp"
+#include "DatasetAnalyzer.hpp"
 #include "Preprocessor.hpp"
 using namespace std;
 
@@ -61,7 +62,9 @@ protected:
 	void onConvert();
 	void onDisplay();
 	void onHeader();
+	void onHistogram();
 	void onPreprocess();
+	void onRange();
 	void onSlices();
 	void parse();
 	void usage();
