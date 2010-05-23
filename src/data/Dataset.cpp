@@ -257,7 +257,7 @@ void Dataset::normalize() {
 		break;
 	}
 	end = clock();
-	cout << (((double)end-beg)/CLOCKS_PER_SEC) << "s" << endl;
+	cerr << (((double)end-beg)/CLOCKS_PER_SEC) << "s" << endl;
 }
 
 
