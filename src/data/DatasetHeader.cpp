@@ -31,7 +31,7 @@ DatasetHeader::DatasetHeader(string filename) {
 DatasetHeader::DatasetHeader(const Tag &tag) {
 	
 	// Initialize
-	tag.get("file", filename);
+	tag.get("file", filename, true, false);
 	
 	// Check and read
 	check();
