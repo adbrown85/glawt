@@ -55,6 +55,7 @@ public:
 	int getDepth() const;
 	string getFilename() const;
 	DatasetHeader getHeader() const;
+	int getLength() const;
 	int getHeight() const;
 	int getHigh() const;
 	int getLow() const;
@@ -102,6 +103,9 @@ inline int Dataset::getHigh() const {return header.getHigh();}
 
 /** @return Lowest value according to the header. */
 inline int Dataset::getLow() const {return header.getLow();}
+
+/** @return Number of total samples in the dataset. */
+inline int Dataset::getLength() const {return length;}
 
 /** @return Maximum possible value according to the header. */
 inline int Dataset::getMax() const {return header.getMax();}
