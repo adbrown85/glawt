@@ -24,7 +24,7 @@ distdir     := $(tarname)-$(version)
 tarball     := $(tarname)-$(version).tar.gz
 
 # Targets to pass down
-src_targets := all clean tests install uninstall depend $(modules) 
+src_targets := all clean tests install uninstall depend gander $(modules) 
 doc_targets := html install-html
 .PHONY: $(src_targets) $(doc_targets)
 .DEFAULT: all

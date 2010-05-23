@@ -18,7 +18,7 @@ htmldir     := @htmldir@
 
 # Tools
 CXX         := @CXX@
-CXXFLAGS     = @CXXFLAGS@ $(includes) $(DEFS)
+CXXFLAGS     = -g $(includes) $(DEFS)
 LIBS        := @LIBS@
 ARFLAGS     := -cr
 INSTALL     := @INSTALL@
@@ -77,7 +77,7 @@ tests: ${notdir $(tests)}
 ${notdir $(tests)}:
 
 # Application
-$(application): gander.cxx gander.hxx $(archive)
+$(application): gander.cxx gander.hxx ${notdir $(objects)}
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) -o $@ $< $(archive) $(LIBS)
 
