@@ -44,7 +44,6 @@ using namespace std;
 class Dataset {
 public:
 	Dataset(string filename);
-	Dataset(const Tag &tag);
 	virtual ~Dataset();
 	unsigned char getAsByte(const Index &I) const;
 	float getAsFloat(const Index &I) const;

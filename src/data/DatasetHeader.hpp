@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 #include "Exception.hpp"
-#include "Tag.hpp"
 #include "Vector.hpp"
 using namespace std;
 
@@ -55,7 +54,6 @@ using namespace std;
 class DatasetHeader {
 public :
 	DatasetHeader(string filename);
-	DatasetHeader(const Tag &tag);
 	DatasetHeader(istream &stream);
 	vector<string> getComments() const;
 	int getDepth() const;

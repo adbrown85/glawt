@@ -23,22 +23,6 @@ DatasetHeader::DatasetHeader(string filename) {
 }
 
 
-/** Reads a header from a dataset file specified by an XML tag.
- * 
- * @param [in] tag XML tag with file attribute specifying path to the file.
- * @throws const_char* from check()
- */
-DatasetHeader::DatasetHeader(const Tag &tag) {
-	
-	// Initialize
-	tag.get("file", filename, true, false);
-	
-	// Check and read
-	check();
-	read();
-}
-
-
 /** Reads a dataset header directly from an input stream.
  * 
  * @param [in] stream Input stream to read from.

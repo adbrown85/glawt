@@ -23,6 +23,7 @@ using namespace std;
 class Texture3D : public Texture {
 public:
 	Texture3D(const Tag &tag);
+	virtual ~Texture3D();
 	virtual void finalize();
 	static Texture3D* find(Node *node, const string &name);
 	virtual Dataset* getDataset();
@@ -30,14 +31,13 @@ public:
 	virtual int getHeight() const;
 	virtual int getWidth() const;
 private:
-	bool normalize;
-	Dataset dataset;
+	Dataset *dataset;
 };
 
-inline Dataset* Texture3D::getDataset() {return &dataset;}
-inline int Texture3D::getDepth() const {return dataset.getDepth();}
-inline int Texture3D::getHeight() const {return dataset.getHeight();}
-inline int Texture3D::getWidth() const {return dataset.getWidth();}
+inline Dataset* Texture3D::getDataset() {return dataset;}
+inline int Texture3D::getDepth() const {return dataset->getDepth();}
+inline int Texture3D::getHeight() const {return dataset->getHeight();}
+inline int Texture3D::getWidth() const {return dataset->getWidth();}
 
 
 #endif

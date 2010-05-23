@@ -20,18 +20,6 @@ Dataset::Dataset(string filename) :
 }
 
 
-/** Creates a new %Dataset from an XML tag.
- * 
- * @param [in] tag XML tag specifying the file with the data.
- */
-Dataset::Dataset(const Tag &tag) :
-                 header(tag) {
-	
-	initTypeBlock();
-	initDimensions();
-}
-
-
 /** Deallocates the data. */
 Dataset::~Dataset() {
 	

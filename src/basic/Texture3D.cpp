@@ -7,14 +7,17 @@
 #include "Texture3D.hpp"
 
 
-/** Creates a new 3D texture from an XML tag.
- * 
- * @param tag XML tag with "name" and "filename" attributes.
- */
-Texture3D::Texture3D(const Tag &tag) : 
-                     Texture(GL_TEXTURE_3D, tag),
-                     dataset(tag) {
+/** Creates the texture and underlying dataset. */
+Texture3D::Texture3D(const Tag &tag) : Texture(GL_TEXTURE_3D, tag) {
 	
+	dataset = new Dataset(filename);
+}
+
+
+/** Deletes the underlying dataset object. */
+Texture3D::~Texture3D() {
+	
+	delete dataset;
 }
 
 
@@ -22,7 +25,7 @@ Texture3D::Texture3D(const Tag &tag) :
 void Texture3D::finalize() {
 	
 	// Load the dataset
-	dataset.load();
+	dataset->load();
 	
 	// Bind the texture to the right unit
 	glActiveTexture(GL_TEXTURE0 + unit);
@@ -34,13 +37,13 @@ void Texture3D::finalize() {
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
 	             GL_LUMINANCE,            // Internal format
-	             dataset.getWidth(),      // Width
-	             dataset.getHeight(),     // Height
-	             dataset.getDepth(),      // Depth
+	             dataset->getWidth(),     // Width
+	             dataset->getHeight(),    // Height
+	             dataset->getDepth(),     // Depth
 	             0,                       // Border
 	             GL_LUMINANCE,            // Format
-	             dataset.getType(),       // Type
-	             dataset.getData());      // Data
+	             dataset->getType(),      // Type
+	             dataset->getData());     // Data
 	
 	// Set parameters
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -51,19 +54,17 @@ void Texture3D::finalize() {
 }
 
 
-Texture3D* Texture3D::find(Node *node,
-                           const string &name) {
+/** Finds a 3D texture above a node. */
+Texture3D* Texture3D::find(Node *node, const string &name) {
 	
-	Node *current;
 	Texture3D *texture3d;
 	
-	current = node->getParent();
-	while (current != NULL) {
-		texture3d = dynamic_cast<Texture3D*>(current);
+	while (node != NULL) {
+		texture3d = dynamic_cast<Texture3D*>(node);
 		if (texture3d != NULL && texture3d->getName()==name) {
 			return texture3d;
 		} else {
-			current = current->getParent();
+			node = node->getParent();
 		}
 	}
 	return NULL;
