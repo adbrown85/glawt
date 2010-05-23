@@ -234,12 +234,12 @@ void Dataset::initTypeBlock() {
 }
 
 
-void Dataset::load() {
+void Dataset::load(bool raw) {
 	
 	// Allocate and read data
 	data = malloc(length * block);
 	readData();
-	if (getHigh() != getMax()) {
+	if (!raw && (getHigh()!=getMax() || getLow()!=getMin())) {
 		normalize();
 	}
 }
@@ -263,16 +263,21 @@ void Dataset::normalize() {
 
 void Dataset::normalizeAsUnsignedShort() {
 	
-	unsigned short *p;
-	unsigned short *end;
+	GLfloat value;
+	GLushort *p, *end;
+	float rangeInv;
 	
-	p = (unsigned short*)data;
-	end = ((unsigned short*)data) + length;
+	rangeInv = ((float)1) / (getHigh() - getLow());
+	p = (GLushort*)data;
+	end = ((GLushort*)data) + length;
 	while (p < end) {
-		if (*p < getHigh()) {
-			*p = (unsigned short)(((float)*p / getHigh()) * 65535);
+		if ((int)(*p) < getLow()) {
+			(*p) = 0;
+		} else if ((int)(*p) > getHigh()) {
+			(*p) = 1;
 		} else {
-			*p = 0;
+			value = (float)((int)(*p) - getLow()) * rangeInv;
+			*p = (GLushort)((float)value * 65535);
 		}
 		p += 1;
 	}

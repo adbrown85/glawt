@@ -64,7 +64,7 @@ public:
 	GLenum getType() const;
 	int getWidth() const;
 	char* findPointerTo(const Index &I) const;
-	void load();
+	void load(bool raw=false);
 	void normalize();
 	void print() const;
 	void print(Index I);
