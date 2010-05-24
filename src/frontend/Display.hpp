@@ -32,6 +32,7 @@ class Display {
 public:
 	Display(Interpreter *interpreter);
 	void add(Control *control);
+	void computeFootprint();
 	static void display(void);
 	Interpreter* getInterpreter();
 	static void idle(void);
@@ -46,6 +47,7 @@ private:
 	int frames, framesPerSecond;
 	Painter *painter;
 	vector<Control*> controls;
+	double footprint;
 };
 
 

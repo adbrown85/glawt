@@ -192,6 +192,6 @@ void Window::write(const string &text, int x, int y) {
 	
 	// Draw text
 	for (size_t i=0; i<text.length(); ++i)
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, text[i]);
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13, text[i]);
 }
 

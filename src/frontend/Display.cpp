@@ -21,6 +21,7 @@ Display::Display(Interpreter *interpreter) {
 	this->timeStarted = 0;
 	this->frames = 0;
 	this->framesPerSecond = 0;
+	computeFootprint();
 	
 	// Register functions
 	interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
@@ -28,8 +29,7 @@ Display::Display(Interpreter *interpreter) {
 }
 
 
-/**
- * Installs a control into the display.
+/** Installs a control into the display.
  * 
  * @param control Pointer to an object implementing the Control interface.
  */
@@ -44,9 +44,26 @@ void Display::add(Control *control) {
 }
 
 
-/**
- * Draws the scene in the window.
- */
+/** Adds up the footprints of all the textures in the scene. */
+void Display::computeFootprint() {
+	
+	Scene *scene;
+	list<Texture*> textures;
+	list<Texture*>::iterator it;
+	
+	// Initialize
+	scene = interpreter->getScene();
+	textures = Texture::search(scene->getRoot());
+	
+	// Accumulate
+	footprint = 0;
+	for (it=textures.begin(); it!=textures.end(); ++it) {
+		footprint += (double)(*it)->getFootprint() / 1048576;
+	}
+}
+
+
+/** Draws the scene in the window. */
 void Display::display(void) {
 	
 	// Clear
@@ -62,18 +79,14 @@ void Display::display(void) {
 }
 
 
-/**
- * Refreshes the display.
- */
+/** Refreshes the display. */
 void Display::idle(void) {
 	
 	Window::refresh();
 }
 
 
-/**
- * Draws the overlay on the display.
- */
+/** Draws the overlay on the display. */
 void Display::overlay() {
 	
 	int time;
@@ -89,8 +102,12 @@ void Display::overlay() {
 	}
 	
 	// Draw text
-	stream << "fps: " << framesPerSecond;
-	Window::write(stream.str());
+	stream << "fps       " << framesPerSecond;
+	Window::write(stream.str(), 15, 30);
+	stream.str("");
+	stream << fixed << setprecision(2);
+	stream << "footprint " << footprint << " MB";
+	Window::write(stream.str(), 15, 50);
 }
 
 
