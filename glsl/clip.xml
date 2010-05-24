@@ -8,13 +8,13 @@
 
 <group name="cubes">
 	<uniform type="vec4" name="Color" value="0 1 1 0.1" />
-	<translate x="-1.0">
-	<scale>
+	<translate x="-0.25">
+	<scale z="1">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube />
 	</scale>
 	</translate>
-	<translate x="+1.0">
+	<translate x="+0.25">
 	<scale>
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube />
@@ -46,11 +46,14 @@
 			<shader file="volume.vert" />
 			<shader file="volume.frag" />
 			<uniform type="int" name="WindowSize" value="512" />
-			<uniform type="float" name="Brightness" value="3.5" />
-			<uniform type="vec3" name="Color" value="1 0 1" />
 			<uniform type="float" name="SampleRate" value="0.006" />
 			<uniform type="sampler2D" name="ExitCoords" link="exit_coords" />
 			<uniform type="sampler3D" name="Volume" link="volume" />
+			<uniform type="float" name="Weight" value="5.0" />
+			<uniform type="float" name="Markers[0]" value="0.25" /> <!-- BG -->
+			<uniform type="float" name="Markers[1]" value="0.38" /> <!-- GY -->
+			<uniform type="float" name="Markers[2]" value="0.42" /> <!-- YO -->
+			<uniform type="float" name="Markers[3]" value="0.82" /> <!-- OR -->
 			<cull faces="front">
 				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 				<boolean operation="AND" of="cubes" selectable="false" />
