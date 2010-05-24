@@ -18,8 +18,10 @@ htmldir     := @htmldir@
 
 # Tools
 CXX         := @CXX@
-CXXFLAGS     = -g $(includes) $(DEFS)
-LIBS        := @LIBS@
+DEPS_CFLAGS := @DEPS_CFLAGS@
+CXXFLAGS     = -g $(includes) $(DEFS) $(DEPS_CFLAGS)
+DEPS_LIBS   := @DEPS_CFLAGS@
+LIBS        := @LIBS@ $(DEPS_LIBS)
 ARFLAGS     := -cr
 INSTALL     := @INSTALL@
 DEFS        := @DEFS@ \

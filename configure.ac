@@ -13,6 +13,7 @@ if test -z $SED; then
 	echo " Sed is required to build Gander.                 "
 	echo "--------------------------------------------------"
 fi
+PKG_PROG_PKG_CONFIG
 
 # Check for GNU Make
 echo -n "Checking for GNU Make..."
@@ -25,10 +26,10 @@ for i in "$MAKE" make gmake gnumake; do
 done
 if test -z $make_command; then
 	echo " no"
-	echo "--------------------------------------------------"
-	echo " GNU Make is required to build Gander.            "
-	echo " Please visit http://www.gnu.org/software/make/   "
-	echo "--------------------------------------------------"
+	echo "-------------------------------------------------------"
+	echo " GNU Make is required to build Gander.                 "
+	echo " Please visit http://www.gnu.org/software/make/        "
+	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 else
 	echo " yes"
@@ -37,25 +38,39 @@ fi
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
 
-# Check for Glut
-error_no_glut() {
-	echo "--------------------------------------------------"
-	echo " Glut (glut) is required to install Gander.       "
-	echo " Try 'sudo apt-get install freeglut3-dev'         "
-	echo " Or visit 'http://freeglut.sourceforge.net'       "
-	echo "--------------------------------------------------"
+# Check for GTKmm
+error_no_gtkmm() {
+	echo "no"
+	echo "-------------------------------------------------------"
+	echo " GTKmm (gtkmm-2.4) is required to build Gander.        "
+	echo " Try 'sudo apt-get install libgtkmm-2.4-dev'           "
+	echo " Or visit 'http://www.gtkmm.org/'                      "
+	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-AC_SEARCH_LIBS([glutInit], [glut], , [error_no_glut])
-AC_CHECK_HEADER([GL/glut.h], , [error_no_glut])
+echo -n "checking for gtkmm-2.4... "
+PKG_CHECK_EXISTS([gtkmm-2.4],[echo "yes"],error_no_gtkmm)
+
+# Check for GTKmm
+error_no_gtkglmm() {
+	echo "no"
+	echo "-------------------------------------------------------"
+	echo " GTKGLmm (gtkglextmm-1.2) is required to build Gander. "
+	echo " Try 'sudo apt-get install libgtkglextmm-x11-1.2-dev'  "
+	echo " Or visit 'http://projects.gnome.org/gtkglext/'        "
+	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
+}
+echo -n "checking for gtkglextmm-1.2... "
+PKG_CHECK_EXISTS([gtkglextmm-1.2],[echo "yes"],error_no_gtkglmm)
 
 # Check for DevIL
 error_no_devil() {
-	echo "--------------------------------------------------"
-	echo " DevIL (ILUT) is required to install Gander.      "
-	echo " Try 'sudo apt-get install libdevil-dev'          "
-	echo " Or visit 'http://openil.sourceforge.net'         "
-	echo "--------------------------------------------------"
+	echo "-------------------------------------------------------"
+	echo " DevIL (ILUT) is required to install Gander.           "
+	echo " Try 'sudo apt-get install libdevil-dev'               "
+	echo " Or visit 'http://openil.sourceforge.net'              "
+	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
 AC_SEARCH_LIBS([ilGetInteger], [IL], , [error_no_devil])
@@ -80,10 +95,11 @@ AC_SUBST([modules])
 
 # Finish
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
+PKG_CHECK_MODULES([DEPS], [gtkmm-2.4 gtkglextmm-1.2])
 AC_OUTPUT
 
 echo \
-"------------------------------------------------------------
+"--------------------------------------------------------------
  ${PACKAGE_NAME} ${PACKAGE_VERSION}
 
  prefix      ${prefix}
@@ -94,4 +110,4 @@ echo \
  modules     ${modules}
  
  Now type 'make' then 'sudo make install'
--------------------------------------------------------------"
+--------------------------------------------------------------"
