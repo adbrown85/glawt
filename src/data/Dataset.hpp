@@ -53,6 +53,7 @@ public:
 	void* getData();
 	int getDepth() const;
 	string getFilename() const;
+	GLint getFootprint() const;
 	DatasetHeader getHeader() const;
 	int getLength() const;
 	int getHeight() const;
@@ -93,6 +94,9 @@ inline void* Dataset::getData() {return data;}
 
 /** @return Path to the file the dataset was loaded from. */
 inline string Dataset::getFilename() const {return header.getFilename();}
+
+/** @return Size in memory of the data. */
+inline GLint Dataset::getFootprint() const {return length * block;}
 
 /** @return Header as read from the file. */
 inline DatasetHeader Dataset::getHeader() const {return header;}

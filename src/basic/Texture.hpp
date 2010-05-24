@@ -6,15 +6,12 @@
  */
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
-#include <cassert>
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
-#include <stack>
-#include <sstream>
 #include <string>
-#include <typeinfo>
-#include <vector>
+#include <list>
+#include <queue>
+#include <GL/gl.h>
 #include "Node.hpp"                     // Base class
 using namespace std;
 
@@ -39,14 +36,18 @@ public:
 	virtual void apply();
 	virtual void associate();
 	virtual string getFilename() const;
+	virtual GLint getFootprint() const;
 	virtual GLuint getHandle() const;
+	virtual GLint getRawFootprint() const = 0;
 	virtual string getName() const;
 	static int getNumberOfActiveUnits();
 	virtual GLenum getType() const;
 	virtual int getUnit() const;
+	virtual bool isCompressed() const;
 	static void pause();
 	virtual void remove();
 	static void restart();
+	static list<Texture*> search(Node *node);
 	virtual string toString() const;
 protected:
 	GLenum type;

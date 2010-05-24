@@ -56,6 +56,32 @@ void Texture::associate() {
 }
 
 
+/** @return How much memory the texture uses. */
+GLint Texture::getFootprint() const {
+	
+	GLint fp;
+	
+	if (isCompressed()) {
+		glActiveTexture(GL_TEXTURE0 + unit);
+		glGetTexLevelParameteriv(type,0,GL_TEXTURE_COMPRESSED_IMAGE_SIZE,&fp);
+	} else {
+		fp = getRawFootprint();
+	}
+	return fp;
+}
+
+
+/** Checks if the texture was successfully compressed. */
+bool Texture::isCompressed() const {
+	
+	GLint compressed;
+	
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glGetTexLevelParameteriv(type, 0, GL_TEXTURE_COMPRESSED, &compressed);
+	return compressed;
+}
+
+
 /** Temporarily disables texturing on all active units. */
 void Texture::pause() {
 	
@@ -91,6 +117,30 @@ void Texture::restart() {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glEnable(active_units[i]);
 	}
+}
+
+
+/** Discover all texture nodes under a node. */
+list<Texture*> Texture::search(Node *node) {
+	
+	Node::iterator it;
+	list<Texture*> T;
+	Texture* t;
+	queue<Node*> Q;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		t = dynamic_cast<Texture*>(node);
+		if (t != NULL) {
+			T.push_back(t);
+		}
+		for (it=node->begin(); it!=node->end(); ++it) {
+			Q.push(*it);
+		}
+		Q.pop();
+	}
+	return T;
 }
 
 

@@ -29,6 +29,7 @@ public:
 	virtual ~Octree();
 	virtual void associate();
 	virtual void finalize();
+	virtual GLint getRawFootprint() const;
 	virtual void store(OctreeNode *node,
 	                   int index,
 	                   int depth);
@@ -43,5 +44,7 @@ private:
 	string link;
 };
 
+/** How much memory the texture uses if uncompressed. */
+inline GLint Octree::getRawFootprint() const {return size;}
 
 #endif

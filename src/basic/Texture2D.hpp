@@ -24,6 +24,7 @@ public:
 	Texture2D(const Tag &tag);
 	virtual void associate();
 	static Texture2D* find(Node *node, const string &name);
+	virtual GLint getRawFootprint() const;
 	virtual int getSize() const;
 	virtual string toString() const;
 protected:

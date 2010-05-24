@@ -91,6 +91,13 @@ void Texture2D::generate() {
 }
 
 
+/** How much memory the texture uses if uncompressed. */
+GLint Texture2D::getRawFootprint() const {
+	
+	return 0;
+}
+
+
 /** Initializes required libraries, currently just DevIL.
  * 
  * Checks that DevIL libraries being run by the user are not older than the 

@@ -7,9 +7,9 @@
 #ifndef TEXTURE3D_HPP
 #define TEXTURE3D_HPP
 #include <cstdlib>
-#include <iomanip>
 #include <iostream>
 #include <string>
+#include <ctime>                        // For clocking compression
 #include "Dataset.hpp"
 #include "Tag.hpp"
 #include "Texture.hpp"
@@ -27,10 +27,14 @@ public:
 	virtual void finalize();
 	static Texture3D* find(Node *node, const string &name);
 	virtual Dataset* getDataset();
-	virtual int getDepth() const;
-	virtual int getHeight() const;
+	virtual GLenum getInternalFormat() const;
+	virtual GLint getRawFootprint() const;
 	virtual int getWidth() const;
+	virtual int getHeight() const;
+	virtual int getDepth() const;
+	virtual string toString() const;
 private:
+	bool compress;
 	Dataset *dataset;
 };
 

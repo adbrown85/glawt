@@ -11,6 +11,9 @@
 Texture3D::Texture3D(const Tag &tag) : Texture(GL_TEXTURE_3D, tag) {
 	
 	dataset = new Dataset(filename);
+	if (!tag.get("compress", compress, false)) {
+		compress = false;
+	}
 }
 
 
@@ -24,6 +27,8 @@ Texture3D::~Texture3D() {
 /** Loads the dataset into texture memory. */
 void Texture3D::finalize() {
 	
+	clock_t ticks;
+	
 	// Load the dataset
 	dataset->load();
 	
@@ -34,9 +39,13 @@ void Texture3D::finalize() {
 	glBindTexture(GL_TEXTURE_3D, handle);
 	
 	// Pass the texture to OpenGL
+	if (compress) {
+		ticks = clock();
+		cerr << "[Texture3D] Compressing texture... ";
+	}
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
-	             GL_LUMINANCE,            // Internal format
+	             getInternalFormat(),     // Internal format
 	             dataset->getWidth(),     // Width
 	             dataset->getHeight(),    // Height
 	             dataset->getDepth(),     // Depth
@@ -44,6 +53,16 @@ void Texture3D::finalize() {
 	             GL_LUMINANCE,            // Format
 	             dataset->getType(),      // Type
 	             dataset->getData());     // Data
+	if (compress) {
+		cerr << ((double)(clock()-ticks))/CLOCKS_PER_SEC << "s" << endl;
+		if (isCompressed()) {
+			cerr << "[Texture3D] Successfully compressed texture." << endl;
+		} else {
+			cerr << "[Texture3D] Did not compress texture." << endl;
+		}
+	}
+	cerr << "[Texture3D] Footprint = " << fixed << setprecision(2)
+	     << ((float)getFootprint() / 1048576) << " MB" << endl;
 	
 	// Set parameters
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -68,5 +87,30 @@ Texture3D* Texture3D::find(Node *node, const string &name) {
 		}
 	}
 	return NULL;
+}
+
+
+/** How much memory the texture uses if uncompressed. */
+GLint Texture3D::getRawFootprint() const {
+	
+	return dataset->getFootprint();
+}
+
+
+/** @return Type based on compress flag. */
+GLenum Texture3D::getInternalFormat() const {
+	
+	return compress ? GL_COMPRESSED_RGB : GL_LUMINANCE;
+}
+
+
+/** Adds the <i>compress</i> flag to the node's description. */
+string Texture3D::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Texture::toString();
+	stream << " compress=" << compress?'T':'F';
+	return stream.str();
 }
 
