@@ -11,7 +11,7 @@
  * 
  * @param scene Pointer to the Scene to work with.
  */
-Interpreter::Interpreter(Scene *scene) {
+Interpreter::Interpreter(Scene *scene, Canvas *canvas) {
 	
 	map<int,handler_0> handlersZero;
 	map<int,handler_0>::iterator h0;
@@ -23,6 +23,7 @@ Interpreter::Interpreter(Scene *scene) {
 	
 	// Initialize
 	this->scene = scene;
+	this->canvas = canvas;
 	
 	// Load delegates
 	delegates.push_back(new Cameraman());
@@ -101,7 +102,7 @@ void Interpreter::run(int command) {
 	// Hand off to delegate
 	hi = handlersZero.find(command);
 	if (hi != handlersZero.end())
-		(hi->second)(scene, command);
+		(hi->second)(scene, canvas, command);
 }
 
 
@@ -124,7 +125,7 @@ void Interpreter::run(int command,
 	// Hand off to delegate
 	hi = handlersFloat.find(command);
 	if (hi != handlersFloat.end())
-		(hi->second)(scene, command, argument);
+		(hi->second)(scene, canvas, command, argument);
 }
 
 
@@ -147,6 +148,6 @@ void Interpreter::run(int command,
 	// Hand off to delegate
 	hi = handlersString.find(command);
 	if (hi != handlersString.end())
-		(hi->second)(scene, command, argument);
+		(hi->second)(scene, canvas, command, argument);
 }
 

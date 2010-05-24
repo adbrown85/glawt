@@ -26,7 +26,7 @@ using namespace std;
 class Keyboard : public Control {
 public:
 	Keyboard(Interpreter *interpreter);
-	static void character(unsigned char key, int x, int y);
+	static void character(int key, int x, int y);
 	static void special(int key, int x, int y);
 	virtual void install();
 	Binding* lookup(int key, int mod);
@@ -40,20 +40,22 @@ private:
 /** Adds all the default keyboard bindings to Gander. */
 inline void Keyboard::initBindings() {
 	
-	add(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
-	add(Binding(GLUT_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));
-	add(Binding(GLUT_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
-	add(Binding(GLUT_KEY_UP, 0, Command::CIRCLE_UP, 5.0f));
-	add(Binding(GLUT_KEY_HOME, 0, Command::RESET));
-	add(Binding(27, 0, Command::EXIT));
-	add(Binding('Q', GLUT_ACTIVE_ALT, Command::EXIT));
-	add(Binding('A', 0, Command::SELECT_ALL));
-	add(Binding('D', 0, Command::DESELECT));
-	add(Binding('H', 0, Command::HIDE));
-	add(Binding('V', 0, Command::SHOW_ALL));
-	add(Binding('I', 0, Command::INFORMATION));
-	add(Binding('T', 0, Command::TRANSLATE));
-	add(Binding('S', 0, Command::SCALE));
+	add(Binding(CANVAS_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
+	add(Binding(CANVAS_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));
+	add(Binding(CANVAS_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
+	add(Binding(CANVAS_KEY_UP, 0, Command::CIRCLE_UP, 5.0f));
+	//add(Binding(CANVAS_KEY_HOME, 0, Command::RESET));
+	add(Binding(CANVAS_ESCAPE, 0, Command::EXIT));
+	add(Binding(CANVAS_q, CANVAS_MOD_ALT, Command::EXIT));
+/*
+	add(Binding(CANVAS_a, 0, Command::SELECT_ALL));
+	add(Binding(CANVAS_d, 0, Command::DESELECT));
+	add(Binding(CANVAS_h, 0, Command::HIDE));
+	add(Binding(CANVAS_v, 0, Command::SHOW_ALL));
+	add(Binding(CANVAS_i, 0, Command::INFORMATION));
+	add(Binding(CANVAS_t, 0, Command::TRANSLATE));
+	add(Binding(CANVAS_s, 0, Command::SCALE));
+*/
 	// add(Binding('C', GLUT_ACTIVE_ALT, Command::COPY));
 	// add(Binding('V', GLUT_ACTIVE_ALT, Command::PASTE));
 	// add(Binding('X', GLUT_ACTIVE_ALT, Command::CUT));

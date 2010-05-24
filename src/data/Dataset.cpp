@@ -356,7 +356,7 @@ void DatasetViewer::draw() {
 	
 	// Slice index
 	stream << slice;
-	Window::write(stream.str());
+	//Window::write(stream.str());
 	
 	// Reset raster position
 	glMatrixMode(GL_PROJECTION);
@@ -383,7 +383,7 @@ void DatasetViewer::goToNext() {
 	if (slice == dataset->getDepth()-1)
 		slice = -1;
 	++slice;
-	Window::refresh();
+	canvas->refresh();
 }
 
 
@@ -393,16 +393,16 @@ void DatasetViewer::goToPrevious() {
 	if (slice == 0)
 		slice = dataset->getDepth();
 	--slice;
-	Window::refresh();
+	canvas->refresh();
 }
 
 
 /** Draws a slice to the screen. */
 void DatasetViewer::onDisplay(void) {
 	
-	Window::clear();
+	instance->canvas->clear();
 	instance->draw();
-	Window::flush();
+	instance->canvas->flush();
 }
 
 
@@ -410,12 +410,12 @@ void DatasetViewer::onDisplay(void) {
 void DatasetViewer::onMouse(int button, int state, int x, int y) {
 	
 	// Ignore down state
-	if (state == GLUT_DOWN) {
+	if (state == CANVAS_DOWN) {
 		return;
 	}
 	
 	// Standard buttons
-	if (button == GLUT_LEFT_BUTTON) {
+	if (button == CANVAS_LEFT_BUTTON) {
 		Index index(instance->height-y, x, instance->slice);
 		switch (instance->type) {
 		case GL_UNSIGNED_BYTE:
@@ -434,9 +434,9 @@ void DatasetViewer::onMouse(int button, int state, int x, int y) {
 	}
 	
 	// Wheel
-	else if (button == GLUT_UP_BUTTON) {
+	else if (button == CANVAS_WHEEL_UP) {
 		instance->goToNext();
-	} else if (button == GLUT_DOWN_BUTTON) {
+	} else if (button == CANVAS_WHEEL_DOWN) {
 		instance->goToPrevious();
 	}
 }
@@ -446,12 +446,12 @@ void DatasetViewer::onMouse(int button, int state, int x, int y) {
 void DatasetViewer::onSpecial(int key, int x, int y) {
 	
 	switch(key) {
-	case GLUT_KEY_UP:
-	case GLUT_KEY_RIGHT:
+	case CANVAS_KEY_UP:
+	case CANVAS_KEY_RIGHT:
 		instance->goToNext();
 		break;
-	case GLUT_KEY_DOWN:
-	case GLUT_KEY_LEFT:
+	case CANVAS_KEY_DOWN:
+	case CANVAS_KEY_LEFT:
 		instance->goToPrevious();
 		break;
 	}
@@ -472,17 +472,21 @@ void DatasetViewer::setDataset(Dataset *dataset) {
 /** Creates and runs the window. */
 void DatasetViewer::start() {
 	
-	instance = this;
+	Gtk::Window window;
 	
-	// Create the window
-	Window::create(dataset->getFilename(), width, height);
+	// Create the canvas
+	canvas = new Canvas(width, height);
+	canvas->setDisplayCallback(&onDisplay);
+	canvas->setMouseCallback(&onMouse);
+	canvas->setKeyboardCallback(&onSpecial);
 	
-	// Set callbacks
-	Window::setDisplay(&onDisplay);
-	Window::setSpecial(&onSpecial);
-	Window::setMouse(&onMouse);
+	// Add to window
+	window.set_title(dataset->getFilename());
+	window.add(*canvas);
+	window.show_all();
 	
 	// Run
-	Window::start();
+	instance = this;
+	Gtk::Main::run(window);
 }
 

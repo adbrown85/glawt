@@ -13,11 +13,11 @@
 #include <sstream>
 #include <typeinfo>
 #include <vector>
-#include <GL/gl.h>
 #include "NodeException.hpp"
 #include "Identifiable.hpp"
 #include "Tag.hpp"
 #include "Text.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -124,6 +124,17 @@ public:
 	virtual void setVisible(bool visible) = 0;
 	virtual void toggleSelected() = 0;
 	virtual void toggleVisible() = 0;
+};
+
+
+/**
+ * @interface Dependent
+ * @ingroup graph
+ * @brief %Node that depends on the view to perform its operation.
+ */
+class Dependent {
+public:
+	virtual void setCanvas(Canvas *canvas) = 0;
 };
 
 #endif

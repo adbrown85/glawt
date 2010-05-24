@@ -13,7 +13,7 @@
 #include "FileUtility.hpp"
 #include "Scene.hpp"
 #include "Traverser.hpp"
-#include "Window.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -26,19 +26,20 @@ public:
 	static void display(void);
 	static string getFilename();
 	static Scene* getScene();
-	static void keyboard(unsigned char key, int x, int y);
+	static void keyboard(int key, int x, int y);
+	static void mouse(int button, int state, int x, int y);
 	static void init(int argc, char *argv[]);
 	static void open(const string &filename);
 	static void start();
 private:
 	static Traverser *traverser;
 	static Scene scene;
+	static Canvas *canvas;
 };
 
 
 inline Scene* Tester::getScene() {return &scene;}
 inline string Tester::getFilename() {return scene.getFilename();}
-inline void Tester::init(int argc, char *argv[]) {Window::init(argc, argv);}
 
 
 #endif

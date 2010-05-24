@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Attachment.hpp"
-#include "Window.hpp"
+#include "Canvas.hpp"
 
 
 class AttachmentTest {

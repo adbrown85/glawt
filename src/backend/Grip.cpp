@@ -27,18 +27,14 @@ Grip::Grip() {
 
 
 /** Rotates the current selection. */
-void Grip::rotate(Scene *scene,
-                  int command,
-                  float argument) {
+void Grip::rotate(Scene *scene, Canvas *canvas, int command, float argument) {
 	
 	cout << "Grip::rotate(Scene*,int)" << endl;
 }
 
 
 /** Scales the current selection. */
-void Grip::scale(Scene *scene,
-                 int command,
-                 float argument) {
+void Grip::scale(Scene *scene, Canvas *canvas, int command, float argument) {
 	
 	Node *node;
 	Selection selection;
@@ -75,6 +71,7 @@ void Grip::scale(Scene *scene,
 
 /** Translates the current selection. */
 void Grip::translate(Scene *scene,
+                     Canvas *canvas,
                      int command,
                      float argument) {
 	

@@ -19,8 +19,8 @@ using namespace std;
 class Compositor : public Delegate {
 public :
 	Compositor();
-	static void hide(Scene *scene, int command);
-	static void showAll(Scene *scene, int command);
+	static void hide(Scene *scene, Canvas *canvas, int command);
+	static void showAll(Scene *scene, Canvas *canvas, int command);
 	static void showAll(Node *node);
 };
 

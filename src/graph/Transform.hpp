@@ -8,7 +8,7 @@
 #define TRANSFORM_HPP
 #include <cstdlib>
 #include <iostream>
-#include <GL/glut.h>
+#include <GL/gl.h>
 #include "Matrix.hpp"
 using namespace std;
 

@@ -16,6 +16,7 @@ Control::Control(Interpreter *interpreter) {
 	// Initialize
 	this->interpreter = interpreter;
 	this->scene = interpreter->getScene();
+	this->canvas = interpreter->getCanvas();
 }
 
 

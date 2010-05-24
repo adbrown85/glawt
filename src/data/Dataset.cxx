@@ -151,7 +151,8 @@ int main(int argc, char *argv[]) {
 		dataset = new Dataset(filename);
 		dataset->load();
 		dataset->print();
-		Window::init(argc, argv);
+		Gtk::Main kit(argc, argv);
+		Canvas::init(argc, argv);
 		viewer = new DatasetViewer();
 		viewer->setDataset(dataset);
 		viewer->start();

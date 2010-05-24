@@ -27,14 +27,14 @@ using namespace std;
 class Producer : public Delegate {
 public:
 	Producer();
-	static void copy(Scene *scene, int command);
-	static void cut(Scene *scene, int command);
-	static void duplicate(Scene *scene, int command);
-	static void list(Scene *scene, int command);
-	static void open(Scene *scene, int command, string filename);
-	static void paste(Scene *scene, int command);
-	static void quit(Scene *scene, int command);
-	static void save(Scene *scene, int command);
+	static void copy(Scene *scene, Canvas *canvas, int command);
+	static void cut(Scene *scene, Canvas *canvas, int command);
+	static void duplicate(Scene *scene, Canvas *canvas, int command);
+	static void list(Scene *scene, Canvas *canvas, int command);
+	static void open(Scene *s, Canvas *c, int command, const string &arg);
+	static void paste(Scene *scene, Canvas *canvas, int command);
+	static void quit(Scene *scene, Canvas *canvas, int command);
+	static void save(Scene *scene, Canvas *canvas, int command);
 };
 
 

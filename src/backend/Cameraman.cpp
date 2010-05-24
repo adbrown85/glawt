@@ -37,83 +37,75 @@ Cameraman::Cameraman() {
 
 
 /** Fits items in the view. */
-void Cameraman::fit(Scene *scene,
-                    int cmd) {
+void Cameraman::fit(Scene *scene, Canvas *canvas, int cmd) {
 	
 	cout << "Cameraman::fit(int)" << endl;
 }
 
 
 /** Resets the view's rotation. */
-void Cameraman::reset(Scene *scene,
-                      int cmd) {
+void Cameraman::reset(Scene *scene, Canvas *canvas, int cmd) {
 	
-	Window::reset();
+	canvas->reset();
 }
 
 
 /** Rotates the camera around the scene.
  * 
- * @param scene Pointer to the current scene.
  * @param cmd Command (should be in CIRCLE family).
  * @param amt Amount to rotate the camera.
  */
-void Cameraman::rotate(Scene *scene,
-                       int cmd,
-                       float amt) {
+void Cameraman::rotate(Scene *scene, Canvas *canvas, int cmd, float amt) {
 	
 	// Rotate according to command
 	switch (cmd) {
 	case Command::CIRCLE_X :
-		Window::rotate( amt, Vector(1.0,0.0,0.0)); break;
+		canvas->rotate( amt, Vector(1.0,0.0,0.0)); break;
 	case Command::CIRCLE_Y :
-		Window::rotate(-amt, Vector(0.0,1.0,0.0)); break;
+		canvas->rotate(-amt, Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_LEFT :
-		Window::rotate(-fabs(amt), Vector(0.0,1.0,0.0)); break;
+		canvas->rotate(-fabs(amt), Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_RIGHT :
-		Window::rotate( fabs(amt), Vector(0.0,1.0,0.0)); break;
+		canvas->rotate( fabs(amt), Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_UP :
-		Window::rotate(-fabs(amt), Vector(1.0,0.0,0.0)); break;
+		canvas->rotate(-fabs(amt), Vector(1.0,0.0,0.0)); break;
 	case Command::CIRCLE_DOWN :
-		Window::rotate( fabs(amt), Vector(1.0,0.0,0.0)); break;
+		canvas->rotate( fabs(amt), Vector(1.0,0.0,0.0)); break;
 	}
 }
 
 
 /** Moves the camera.
  * 
- * @param scene Pointer to the current scene.
  * @param cmd Command (either BOOM, TRACK, or ZOOM family).
  * @param amt Amount to move the camera.
  */
-void Cameraman::translate(Scene *scene,
-                          int cmd,
-                          float amt) {
+void Cameraman::translate(Scene *scene, Canvas *canvas, int cmd, float amt) {
 	
 	switch (cmd) {
 	case Command::BOOM :
-		Window::translate(0.0,       amt *0.011, 0.0);
+		canvas->translate(0.0,       amt *0.011, 0.0);
 		break;
 	case Command::BOOM_DOWN :
-		Window::translate(0.0, -fabs(amt)*0.011, 0.0);
+		canvas->translate(0.0, -fabs(amt)*0.011, 0.0);
 		break;
 	case Command::BOOM_UP :
-		Window::translate(0.0, +fabs(amt)*0.011, 0.0);
+		canvas->translate(0.0, +fabs(amt)*0.011, 0.0);
 		break;
 	case Command::TRACK :
-		Window::translate(     -amt *0.011, 0.0, 0.0);
+		canvas->translate(     -amt *0.011, 0.0, 0.0);
 		break;
 	case Command::TRACK_LEFT :
-		Window::translate(+fabs(amt)*0.011, 0.0, 0.0);
+		canvas->translate(+fabs(amt)*0.011, 0.0, 0.0);
 		break;
 	case Command::TRACK_RIGHT :
-		Window::translate(-fabs(amt)*0.011, 0.0, 0.0);
+		canvas->translate(-fabs(amt)*0.011, 0.0, 0.0);
 		break;
 	case Command::ZOOM_IN :
-		Window::translate(0.0, 0.0, +amt);
+		canvas->translate(0.0, 0.0, +amt);
 		break;
 	case Command::ZOOM_OUT :
-		Window::translate(0.0, 0.0, -amt);
+		canvas->translate(0.0, 0.0, -amt);
 		break;
 	}
 }

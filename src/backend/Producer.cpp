@@ -14,40 +14,40 @@ Producer::Producer() {
 	type = "Producer";
 	
 	// Add zero-argument handlers
-	handlersZero[Command::COPY] = &Producer::copy;
-	handlersZero[Command::CUT] = &Producer::cut;
-	handlersZero[Command::DUPLICATE] = &Producer::duplicate;
 	handlersZero[Command::EXIT] = &Producer::quit;
-	handlersZero[Command::PASTE] = &Producer::paste;
-	handlersZero[Command::SAVE] = &Producer::save;
 	handlersZero[Command::LIST] = &Producer::list;
+	//handlersZero[Command::COPY] = &Producer::copy;
+	//handlersZero[Command::CUT] = &Producer::cut;
+	//handlersZero[Command::DUPLICATE] = &Producer::duplicate;
+	//handlersZero[Command::PASTE] = &Producer::paste;
+	//handlersZero[Command::SAVE] = &Producer::save;
 	
 	// Add string-argument handlers
 	handlersString[Command::OPEN] = &Producer::open;
 }
 
 
-void Producer::list(Scene *scene, int command) {
+void Producer::list(Scene *scene, Canvas *canvas, int command) {
 	
 	scene->print();
 }
 
 
-void Producer::copy(Scene *scene, int command) {
+void Producer::copy(Scene *scene, Canvas *canvas, int command) {
 	
-	cout << "Producer::cmdCopy(Scene*,int)" << endl;
+	cout << "Producer::cmdCopy(int)" << endl;
 }
 
 
-void Producer::duplicate(Scene *scene, int command) {
+void Producer::duplicate(Scene *scene, Canvas *canvas, int command) {
 	
-	cout << "Producer::cmdDuplicate(Scene*,int)" << endl;
+	cout << "Producer::cmdDuplicate(int)" << endl;
 }
 
 
-void Producer::cut(Scene *scene, int command) {
+void Producer::cut(Scene *scene, Canvas *canvas, int command) {
 	
-	cout << "Producer::cmdCut(Scene*,int)" << endl;
+	cout << "Producer::cmdCut(int)" << endl;
 }
 
 
@@ -55,7 +55,10 @@ void Producer::cut(Scene *scene, int command) {
  * 
  * @throws Exception if scene is NULL.
  */
-void Producer::open(Scene *scene, int command, string filename) {
+void Producer::open(Scene *scene,
+                    Canvas *canvas,
+                    int command,
+                    const string &filename) {
 	
 	// Check for bad input
 	if (scene == NULL) {
@@ -73,19 +76,19 @@ void Producer::open(Scene *scene, int command, string filename) {
 }
 
 
-void Producer::paste(Scene *scene, int command) {
+void Producer::paste(Scene *scene, Canvas *canvas, int command) {
 	
-	cout << "Producer::cmdPaste(Scene*,int)" << endl;
+	cout << "Producer::cmdPaste(int)" << endl;
 }
 
 
-void Producer::save(Scene *scene, int command) {
+void Producer::save(Scene *scene, Canvas *canvas, int command) {
 	
-	cout << "Producer::cmdSave(Scene*,int)" << endl;
+	cout << "Producer::cmdSave(int)" << endl;
 }
 
 
-void Producer::quit(Scene *scene, int command) {
+void Producer::quit(Scene *scene, Canvas *canvas, int command) {
 	
 	exit(0);
 }

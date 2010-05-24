@@ -7,21 +7,68 @@
 #include "Tester.hpp"
 Scene Tester::scene;
 Traverser *Tester::traverser;
+Canvas *Tester::canvas;
 
 
-/** GLUT display callback. */
+/** OpenGL display callback. */
 void Tester::display(void) {
 	
 	// Clear
-	Window::clear();
+	canvas->clear();
 	
 	// Draw
-	Window::applyView();
+	canvas->applyView();
 	traverser->start();
-	Window::write(scene.getFilename());
+	//canvas->write(scene.getFilename());
 	
 	// Finish
-	Window::flush();
+	canvas->flush();
+}
+
+
+/** Callback for key presses. */
+void Tester::keyboard(int key, int x, int y) {
+	
+	switch(key) {
+	case CANVAS_KEY_UP:
+		canvas->rotate(-CANVAS_ROTATE_AMOUNT, Vector(1.0,0.0,0.0));
+		break;
+	case CANVAS_KEY_RIGHT:
+		canvas->rotate(+CANVAS_ROTATE_AMOUNT, Vector(0.0,1.0,0.0));
+		break;
+	case CANVAS_KEY_DOWN:
+		canvas->rotate(+CANVAS_ROTATE_AMOUNT, Vector(1.0,0.0,0.0));
+		break;
+	case CANVAS_KEY_LEFT:
+		canvas->rotate(-CANVAS_ROTATE_AMOUNT, Vector(0.0,1.0,0.0));
+		break;
+	case CANVAS_R:
+		canvas->reset();
+		break;
+	case CANVAS_MINUS:
+		canvas->translate(Vector(0,0,-1));
+		break;
+	case CANVAS_PLUS:
+	case CANVAS_EQUALS:
+		canvas->translate(Vector(0,0,+1));
+		break;
+	case CANVAS_ESCAPE:
+	case CANVAS_Q:
+		exit(0);
+	}
+}
+
+
+void Tester::init(int argc, char *argv[]) {
+	
+	Canvas::init(argc, argv);
+}
+
+
+/** Callback for mouse clicks. */
+void Tester::mouse(int button, int state, int x, int y) {
+	
+	cerr << "Clicked at (" << x << "," << y << ")." << endl;
 }
 
 
@@ -35,11 +82,13 @@ void Tester::open(const string &filename) {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Create window
-	Window::create(filename);
-	Window::setDisplay(&display);
+	// Create the canvas
+	canvas = new Canvas();
+	canvas->setDisplayCallback(&display);
+	canvas->setKeyboardCallback(&keyboard);
+	canvas->setMouseCallback(&mouse);
 	
-	// Open and prepare
+	// Open and prepare scene
 	try {
 		scene.open(filename);
 		scene.prepare();
@@ -55,8 +104,13 @@ void Tester::open(const string &filename) {
 /** Starts the window's main loop, catching any exceptions. */
 void Tester::start() {
 	
+	Gtk::Window window;
+	
 	try {
-		Window::start();
+		window.set_title("Tester");
+		window.add(*canvas);
+		window.show_all();
+		Gtk::Main::run(window);
 	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);

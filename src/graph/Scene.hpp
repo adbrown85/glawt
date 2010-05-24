@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include <GL/glut.h>
+#include <GL/gl.h>
 #include <map>
 #include <queue>
 #include <stack>

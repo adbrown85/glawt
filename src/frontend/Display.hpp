@@ -20,7 +20,7 @@
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
-#include "Window.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -48,8 +48,8 @@ private:
 	Painter *painter;
 	vector<Control*> controls;
 	double footprint;
+	Canvas *canvas;
 };
-
 
 inline Interpreter* Display::getInterpreter() {return interpreter;}
 

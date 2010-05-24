@@ -17,6 +17,7 @@
 #include "Director.hpp"
 #include "Grip.hpp"
 #include "Producer.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -36,9 +37,10 @@ typedef void (*interpreter_listener)(int);
  */
 class Interpreter : public Delegate {
 public:
-	Interpreter(Scene *scene);
+	Interpreter(Scene *scene, Canvas *canvas);
 	~Interpreter();
 	virtual void addListener(int command, interpreter_listener);
+	Canvas* getCanvas() const;
 	Scene* getScene() const;
 	void print();
 	virtual void run(int command);
@@ -47,9 +49,12 @@ public:
 	void setScene(Scene *scene);
 private:
 	Scene *scene;
+	Canvas *canvas;
 	map<int,interpreter_listener> listeners;
 	vector<Delegate*> delegates;
 };
+
+inline Canvas* Interpreter::getCanvas() const {return canvas;}
 
 inline Scene* Interpreter::getScene() const {return scene;}
 

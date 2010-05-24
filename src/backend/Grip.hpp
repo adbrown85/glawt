@@ -24,9 +24,9 @@ using namespace std;
 class Grip : public Delegate {
 public :
 	Grip();
-	static void rotate(Scene *scene, int cmd, float argument);
-	static void scale(Scene *scene, int cmd, float argument);
-	static void translate(Scene *scene, int cmd, float argument);
+	static void rotate(Scene *scene, Canvas *canvas, int cmd, float argument);
+	static void scale(Scene *scene, Canvas *canvas, int cmd, float argument);
+	static void translate(Scene *scene, Canvas *canvas, int cmd, float argument);
 };
 
 

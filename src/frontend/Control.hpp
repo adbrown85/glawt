@@ -36,6 +36,7 @@ protected:
 	Interpreter *interpreter;
 	multimap<int,Binding> bindings;
 	Scene *scene;
+	Canvas *canvas;
 	string type;
 	vector<Manipulator*> manipulators;
 };

@@ -16,13 +16,8 @@ MouseHelper::MouseHelper(Interpreter *interpreter) : Control(interpreter) {
 
 int MouseHelper::getModifier() {
 	
-	int modifier;
-	
-	// Get modifiers from GLUT and remove Shift
-	modifier = glutGetModifiers();
-	if (modifier == 1 || modifier == 5)
-		modifier -= 1;
-	return modifier;
+	// Get modifiers from canvas
+	return canvas->getModifier();
 }
 
 

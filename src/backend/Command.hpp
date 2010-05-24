@@ -10,17 +10,8 @@
 #include <map>
 #include <string>
 #include "Scene.hpp"
+#include "Canvas.hpp"
 using namespace std;
-
-
-/* Function pointer for a command with no arguments. */
-typedef void(*handler_0)(Scene*,int);
-
-/* Function pointer for a command with a float argument. */
-typedef void(*handler_f)(Scene*,int,float);
-
-/* Function pointer for a command with a string argument. */
-typedef void(*handler_s)(Scene*,int,string);
 
 
 /**
@@ -108,6 +99,16 @@ inline void Command::setNames() {
 }
 
 
+/* Function pointer for a command with no arguments. */
+typedef void(*handler_0)(Scene*,Canvas*,int);
+
+/* Function pointer for a command with a float argument. */
+typedef void(*handler_f)(Scene*,Canvas*,int,float);
+
+/* Function pointer for a command with a string argument. */
+typedef void(*handler_s)(Scene*,Canvas*,int,const string&);
+
+
 /**
  * @interface Delegate
  * @ingroup backend
@@ -127,6 +128,8 @@ public:
 	map<int,handler_s> getHandlersString();
 	string getType() const;
 protected:
+	Canvas *canvas;
+	Scene *scene;
 	string type;
 	map<int,handler_0> handlersZero;
 	map<int,handler_f> handlersFloat;
@@ -142,7 +145,7 @@ inline map<int,handler_f> Delegate::getHandlersFloat() {return handlersFloat;}
 /** @return All the string-argument handlers this delegate contains. */
 inline map<int,handler_s> Delegate::getHandlersString() {return handlersString;}
 
-/** @return Name of the delegate */
+/** @return Name of the delegate. */
 inline string Delegate::getType() const {return type;}
 
 

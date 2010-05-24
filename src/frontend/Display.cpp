@@ -13,8 +13,9 @@ Display::Display(Interpreter *interpreter) {
 	Display::obj = this;
 	
 	// Initialize attributes
+	this->canvas = interpreter->getCanvas();
 	this->interpreter = interpreter;
-	this->painter = new Painter(interpreter->getScene());
+	this->painter = new Painter(canvas, interpreter->getScene());
 	
 	// Initialize overlay attributes
 	this->useOverlay = false;
@@ -25,7 +26,7 @@ Display::Display(Interpreter *interpreter) {
 	
 	// Register functions
 	interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
-	Window::setDisplay(&Display::display);
+	canvas->setDisplayCallback(&Display::display);
 }
 
 
@@ -67,7 +68,7 @@ void Display::computeFootprint() {
 void Display::display(void) {
 	
 	// Clear
-	Window::clear();
+	obj->canvas->clear();
 	
 	// Paint scene and overlay
 	obj->painter->start();
@@ -75,14 +76,14 @@ void Display::display(void) {
 		obj->overlay();
 	
 	// Flush
-	Window::flush();
+	obj->canvas->flush();
 }
 
 
 /** Refreshes the display. */
 void Display::idle(void) {
 	
-	Window::refresh();
+	obj->canvas->refresh();
 }
 
 
@@ -93,6 +94,7 @@ void Display::overlay() {
 	ostringstream stream;
 	
 	// Update values
+/*
 	++frames;
 	time = glutGet(GLUT_ELAPSED_TIME);
 	if (time - timeStarted > 1000) {
@@ -100,23 +102,24 @@ void Display::overlay() {
 		frames = 0;
 		timeStarted = time;
 	}
+*/
 	
 	// Draw text
-	stream << "fps       " << framesPerSecond;
-	Window::write(stream.str(), 15, 30);
+	//stream << "fps       " << framesPerSecond;
+	//Window::write(stream.str(), 15, 30);
 	stream.str("");
 	stream << fixed << setprecision(2);
 	stream << "footprint " << footprint << " MB";
-	Window::write(stream.str(), 15, 50);
+	//Window::write(stream.str(), 15, 50);
 }
 
 
 void Display::toggleOverlay(int command) {
 	
 	obj->useOverlay = !obj->useOverlay;
-	if (obj->useOverlay)
-		Window::setIdle(&Display::idle);
-	else
-		Window::setIdle(NULL);
+	//if (obj->useOverlay)
+		//obj->canvas->setIdle(&Display::idle);
+	//else
+		//obj->canvas->setIdle(NULL);
 }
 

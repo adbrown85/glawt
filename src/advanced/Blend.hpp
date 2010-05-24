@@ -15,7 +15,7 @@
 #include "Node.hpp"
 #include "Tag.hpp"
 #include "Translate.hpp"
-#include "Window.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -27,8 +27,6 @@ public:
 	Blend(const Tag &tag) : Applicable(tag) {}
 	virtual void apply();
 	virtual void remove();
-protected:
-	void sortChildren();
 private:
 	list<Translate*> translates;
 };

@@ -17,11 +17,10 @@
 #include <map>
 #include <sstream>
 #include <utility>
-#include <GL/gl.h>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
 #include "Tag.hpp"
-#include "Window.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 
@@ -156,6 +155,7 @@ private:
 	Dataset *dataset;
 	GLenum type;
 	int slice, width, height, depth;
+	Canvas *canvas;
 	static DatasetViewer *instance;
 };
 

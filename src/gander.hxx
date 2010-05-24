@@ -13,7 +13,6 @@
 #include <GL/glut.h>
 #include "Display.hpp"
 #include "Keyboard.hpp"
-#include "Menu.hpp"
 #include "Mouse.hpp"
 #include "DatasetHeader.hpp"
 #include "DatasetWriter.hpp"
@@ -67,6 +66,7 @@ protected:
 	void onRange();
 	void onSlices();
 	void parse();
+	static void setup();
 	void usage();
 private:
 	int argc;
@@ -75,6 +75,8 @@ private:
 	Interpreter *interpreter;
 	Scene *scene;
 	string inFilename, option, outFilename, parameter, title;
+	Canvas *canvas;
+	static Gander *instance;
 };
 
 

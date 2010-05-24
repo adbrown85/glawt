@@ -25,8 +25,8 @@ Mouse::Mouse(Interpreter *interpreter) : Control(interpreter),
 void Mouse::install() {
 	
 	// Register callbacks
-	glutMouseFunc(Mouse::onClick);
-	glutMotionFunc(Mouse::onDrag);
+	canvas->setMouseCallback(Mouse::onClick);
+	canvas->setDragCallback(Mouse::onDrag);
 	
 	// Install helpers
 	clickHelper.install();
@@ -38,37 +38,37 @@ void Mouse::install() {
 void Mouse::initBindings() {
 	
 	// Add bindings for mouse wheel
-	add(Binding(GLUT_UP_BUTTON, 0, Command::ZOOM_IN, 1.0f, GLUT_DOWN));
-	add(Binding(GLUT_DOWN_BUTTON, 0, Command::ZOOM_OUT, 1.0f, GLUT_DOWN));
+	add(Binding(CANVAS_WHEEL_UP, 0, Command::ZOOM_IN, 1.0f, CANVAS_DOWN));
+	add(Binding(CANVAS_WHEEL_DOWN, 0, Command::ZOOM_OUT, 1.0f, CANVAS_DOWN));
 	
 	// Add bindings for left button
-	add(Binding(GLUT_LEFT_BUTTON,
-	            GLUT_ACTIVE_ALT,
+	add(Binding(CANVAS_LEFT_BUTTON,
+	            CANVAS_MOD_ALT,
 	            Command::GRAB,
 	            &(data.itemID),
-	            GLUT_DOWN));
-	add(Binding(GLUT_LEFT_BUTTON,
-	            GLUT_ACTIVE_ALT,
+	            CANVAS_DOWN));
+	add(Binding(CANVAS_LEFT_BUTTON,
+	            CANVAS_MOD_ALT,
 	            Command::MANIPULATE,
-	            GLUT_DOWN));
-	add(Binding(GLUT_LEFT_BUTTON,
+	            CANVAS_DOWN));
+	add(Binding(CANVAS_LEFT_BUTTON,
 	            0,
 	            Command::CIRCLE_Y,
 	            -1.0f,
 	            'x'));
-	add(Binding(GLUT_LEFT_BUTTON,
+	add(Binding(CANVAS_LEFT_BUTTON,
 	            0,
 	            Command::CIRCLE_X,
 	            -1.0f,
 	            'y'));
 	
 	// Add bindings for middle button
-	add(Binding(GLUT_MIDDLE_BUTTON,
+	add(Binding(CANVAS_MIDDLE_BUTTON,
 	            0,
 	            Command::TRACK,
 	            -1.0f,
 	            'x'));
-	add(Binding(GLUT_MIDDLE_BUTTON,
+	add(Binding(CANVAS_MIDDLE_BUTTON,
 	            0,
 	            Command::BOOM,
 	            1.0f,

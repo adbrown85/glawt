@@ -20,7 +20,7 @@ Compositor::Compositor() {
 
 
 /** Hides the items currently selected. */
-void Compositor::hide(Scene *scene, int cmd) {
+void Compositor::hide(Scene *scene, Canvas *canvas, int cmd) {
 	
 	Selection selection;
 	Selection::iterator it;
@@ -34,7 +34,7 @@ void Compositor::hide(Scene *scene, int cmd) {
 
 
 /** Shows all the %Drawable nodes in the scene. */
-void Compositor::showAll(Scene *scene, int cmd) {
+void Compositor::showAll(Scene *scene, Canvas *canvas, int cmd) {
 	
 	showAll(scene->getRoot());
 }

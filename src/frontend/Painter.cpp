@@ -9,11 +9,12 @@ Scene *Painter::outline=NULL;
 bool Painter::tried=false;
 
 
-Painter::Painter(Scene *scene, GLenum mode) : Traverser(scene) {
+Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 	
 	string filename(GANDER_DATA_DIR);
 	
-	this->mode = mode;
+	this->mode = GL_RENDER;
+	setCanvas(canvas);
 	
 	if (!tried) {
 		try {
@@ -79,7 +80,7 @@ void Painter::onDrawable(Drawable *node) {
 				if ((*mi)->isEnabled()) {
 					if (mode == GL_SELECT)
 						glPushName((*mi)->getID());
-					(*mi)->draw(node);
+					(*mi)->draw(node, getCanvas());
 				}
 			}
 		glPopAttrib();
@@ -94,7 +95,7 @@ void Painter::onDrawable(Drawable *node) {
 /** Paints all the items in a scene. */
 void Painter::start() {
 	
-	Window::applyView();
+	getCanvas()->applyView();
 	Traverser::start();
 }
 

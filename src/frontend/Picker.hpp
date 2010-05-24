@@ -31,7 +31,7 @@ using namespace std;
  */
 class Picker {
 public:
-	Picker(Scene *scene);
+	Picker(Scene *scene, Canvas *canvas);
 	void addManipulators(vector<Manipulator*> manipulators);
 	pair<GLuint,GLuint> pick(int x, int y);
 protected:

@@ -25,9 +25,7 @@ Director::Director() {
 
 
 /** Picks an item in the scene by its ID number. */
-void Director::grab(Scene *scene,
-                    int cmd,
-                    float id) {
+void Director::grab(Scene *scene, Canvas *canvas, int cmd, float id) {
 	
 	Identifiable *identifiable;
 	Drawable *drawable;
@@ -47,16 +45,14 @@ void Director::grab(Scene *scene,
 
 
 /** Iterates through the items in the scene. */
-void Director::iterate(Scene *scene,
-                       int cmd) {
+void Director::iterate(Scene *scene, Canvas *canvas, int cmd) {
 	
 	cout << "Director::cmdIterate(Scene*,int)" << endl;
 }
 
 
 /** Selects all or none. */
-void Director::select(Scene *scene,
-                      int cmd) {
+void Director::select(Scene *scene, Canvas *canvas, int cmd) {
 	
 	switch (cmd) {
 	case Command::SELECT_ALL :
@@ -68,6 +64,6 @@ void Director::select(Scene *scene,
 	default :
 		break;
 	}
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 

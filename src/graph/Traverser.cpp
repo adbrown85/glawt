@@ -10,6 +10,29 @@
 Traverser::Traverser(Scene *scene) {
 	
 	this->scene = scene;
+	this->canvas = NULL;
+	findDependents();
+}
+
+
+/** Finds nodes that are dependent on the canvas. */
+void Traverser::findDependents() {
+	
+	Node *node;
+	Node::iterator it;
+	queue<Node*> Q;
+	Dependent *d;
+	
+	Q.push(scene->getRoot());
+	while (!Q.empty()) {
+		node = Q.front();
+		d = dynamic_cast<Dependent*>(node);
+		if (d != NULL)
+			dependents.push_back(d);
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push(*it);
+		Q.pop();
+	}
 }
 
 
@@ -33,13 +56,15 @@ void Traverser::onDrawable(Drawable *drawable) {
 
 void Traverser::start() {
 	
-	Node *root;
+	list<Dependent*>::iterator it;
 	
-	root = scene->getRoot();
-	if (root == NULL) {
-		throw Exception("[Traverser] Scene's root is NULL.");
+	// Set canvas
+	for (it=dependents.begin(); it!=dependents.end(); ++it) {
+		(*it)->setCanvas(canvas);
 	}
-	traverseNode(root);
+	
+	// Traverse
+	traverseNode(scene->getRoot());
 }
 
 

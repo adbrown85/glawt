@@ -72,7 +72,7 @@ Manipulator::~Manipulator() {
  * 
  * @param shapeID ID of the shape to use for the depth component.
  */
-float Manipulator::findPixelFactor(GLuint shapeID) {
+float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 	
 	float pixelsPerUnit, depth, screenX;
 	Node *node;
@@ -80,21 +80,21 @@ float Manipulator::findPixelFactor(GLuint shapeID) {
 	
 	// Get depth of the shape
 	node = dynamic_cast<Node*>(Identifiable::findByID(shapeID));
-	depth = node->getDepth() + Window::getPosition().z;
+	depth = node->getDepth() + canvas->getPosition().z;
 	
 	// Transform unit vector at that depth to clip space
 	proj = Transform::getProjectionMatrix() * Vector(1,0,depth,1);
 	clip = proj / proj.w;
 	
 	// Calculate how many pixels that represents on screen
-	screenX = ((clip.x + 1.0) * 0.5) * Window::getWidth();
-	pixelsPerUnit = screenX - (Window::getWidth() * 0.5);
+	screenX = ((clip.x + 1.0) * 0.5) * canvas->getWidth();
+	pixelsPerUnit = screenX - (canvas->getWidth() * 0.5);
 	return 1 / pixelsPerUnit;
 }
 
 
 /** Draws the manipulator. */
-void Manipulator::draw(Node *node) const {
+void Manipulator::draw(Node *node, Canvas *canvas) const {
 	
 	if (traverser == NULL)
 		return;
@@ -115,7 +115,7 @@ void Manipulator::draw(Node *node) const {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
-	Window::applyView();
+	canvas->applyView();
 	glTranslatef(position.x, position.y, position.z);
 	traverser->start();
 	glPopMatrix();
@@ -127,14 +127,14 @@ void Manipulator::draw(Node *node) const {
  * @param movement Difference between current and last cursor positions.
  * @param shapeID ID of the shape the manipulator is attached to.
  */
-void Manipulator::use(const Vector &movement, GLuint shapeID) {
+void Manipulator::use(const Vector &movement, GLuint shapeID, Canvas *canvas) {
 	
 	float dotProduct, pixelFactor, amount;
 	Vector viewAxis;
 	
 	// Calculate amount
-	pixelFactor = findPixelFactor(shapeID);
-	viewAxis = Window::getRotationMatrix() * axis;
+	pixelFactor = findPixelFactor(canvas, shapeID);
+	viewAxis = canvas->getRotationMatrix() * axis;
 	dotProduct = dot(normalize(movement), normalize(viewAxis));
 	amount = movement.length() * dotProduct * pixelFactor;
 	

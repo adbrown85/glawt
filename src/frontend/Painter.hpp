@@ -20,7 +20,6 @@
 #include "Traverser.hpp"
 #include "Scene.hpp"               // Rotating camera and accessing root node
 #include "Vector.hpp"
-#include "Window.hpp"
 using namespace std;
 
 
@@ -32,7 +31,7 @@ using namespace std;
  */
 class Painter : public Traverser {
 public:
-	Painter(Scene *scene, GLenum mode=GL_RENDER);
+	Painter(Canvas *canvas, Scene *scene);
 	void addManipulator(Manipulator *manipulator);
 	virtual void start();
 	void setMode(GLenum mode);

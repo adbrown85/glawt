@@ -28,14 +28,14 @@ public:
 	            float bias=1.0,
 	            const string &warning="May not be able to use manipulator.");
 	virtual ~Manipulator();
-	virtual void draw(Node *node) const;
-	static float findPixelFactor(GLuint shapeID);
+	virtual void draw(Node *node, Canvas *canvas) const;
+	static float findPixelFactor(Canvas *canvas, GLuint shapeID);
 	virtual Vector getAxis() const;
 	virtual int getCommand() const;
 	virtual bool isEnabled() const;
 	virtual void setEnabled(bool enabled);
 	virtual void setInterpreter(Interpreter *interpreter);
-	virtual void use(const Vector &movement, GLuint shapeID);
+	virtual void use(const Vector &movement, GLuint shapeID, Canvas *canvas);
 protected:
 	bool enabled;
 	float bias;
@@ -44,6 +44,7 @@ protected:
 	Scene *widget;
 	Traverser *traverser;
 	Vector axis, offset;
+	Canvas *canvas;
 };
 
 /** @return Direction the manipulator is oriented in. */

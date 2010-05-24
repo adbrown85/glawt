@@ -14,6 +14,7 @@
 #include "Attachment.hpp"               // Look up attachment location
 #include "Outputs.hpp"                  // Add attachment, look up position
 #include "Program.hpp"                  // Bind location in current program
+#include <GL/gl.h>
 using namespace std;
 
 

@@ -10,8 +10,7 @@ bool Binding::loaded=false;
 map<int,string> Binding::triggerNames;
 
 
-/**
- * Creates a keyboard binding for a command with no argument.
+/** Creates a keyboard binding for a command with no argument.
  * 
  * @param trigger Key pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -26,8 +25,7 @@ Binding::Binding(int trigger,
 }
 
 
-/**
- * Creates a keyboard binding for a command with an argument.
+/** Creates a keyboard binding for a command with an argument.
  * 
  * @param trigger Key pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -44,8 +42,7 @@ Binding::Binding(int trigger,
 }
 
 
-/**
- * Creates a mouse binding for a command with no argument.
+/** Creates a mouse binding for a command with no argument.
  * 
  * @param trigger Button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -62,8 +59,7 @@ Binding::Binding(int trigger,
 }
 
 
-/**
- * Creates a mouse binding for a command with a floating-point argument.
+/** Creates a mouse binding for a command with a floating-point argument.
  * 
  * @param trigger Button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -82,8 +78,7 @@ Binding::Binding(int trigger,
 }
 
 
-/**
- * Creates a mouse binding for a command with an unsigned integer argument.
+/** Creates a mouse binding for a command with an unsigned integer argument.
  * 
  * @param trigger Button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -94,7 +89,7 @@ Binding::Binding(int trigger,
 Binding::Binding(int trigger,
                  int modifier,
                  int command,
-                 unsigned int *argument,
+                 GLuint *argument,
                  int state) {
 	
 	// Initialize using a state and an argument
@@ -102,8 +97,7 @@ Binding::Binding(int trigger,
 }
 
 
-/**
- * Returns the value of the binding's argument.
+/** Returns the value of the binding's argument.
  * 
  * @note If the argument holds a pointer to a variable, the pointer is first 
  * dereferenced.
@@ -118,27 +112,23 @@ float Binding::getArgument() const {
 }
 
 
-/**
- * Returns a printable version of the modifier.
- */
+/** @return Printable version of the modifier. */
 string Binding::getModifierStr() const {
 	
 	string str="";
 	
 	// Lookup and return name
 	switch (modifier) {
-		case 0                 : str = "None"; break;
-		case GLUT_ACTIVE_CTRL  : str = "Ctrl"; break;
-		case GLUT_ACTIVE_ALT   : str = "Alt"; break;
-		case GLUT_ACTIVE_SHIFT : str = "Shift"; break;
+		case 0                  : str = "None"; break;
+		case CANVAS_MOD_CONTROL : str = "Ctrl"; break;
+		case CANVAS_MOD_ALT     : str = "Alt"; break;
+		case CANVAS_MOD_SHIFT   : str = "Shift"; break;
 	}
 	return str;
 }
 
 
-/**
- * Returns the name of a key or binding.
- */
+/** @return Name of a key or binding. */
 string Binding::getTriggerStr() const {
 	
 	map<int,string>::const_iterator n;
@@ -158,19 +148,14 @@ string Binding::getTriggerStr() const {
 }
 
 
-/**
- * Determines if this Binding should be used for when the mouse is dragged.
- * 
- * Does so by checking if state is equal to 'x' or 'y'.
- */
+/** @return True if this Binding should be used for mouse dragging. */
 bool Binding::hasDrag() const {
 	
 	return (state == 'x' || state == 'y');
 }
 
 
-/**
- * Initializes the required attributes for a binding.
+/** Initializes the required attributes for a binding.
  * 
  * @param trigger Key or button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -196,8 +181,7 @@ void Binding::init(int trigger,
 }
 
 
-/**
- * Initializes the required attributes for a binding.
+/** Initializes the required attributes for a binding.
  * 
  * @param trigger Key or button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -221,8 +205,7 @@ void Binding::init(int trigger,
 }
 
 
-/**
- * Initializes the required attributes for a binding.
+/** Initializes the required attributes for a binding.
  * 
  * @param trigger Key or button pressed by user.
  * @param modifier Modifier key held while pressing trigger (0 if none).
@@ -234,7 +217,7 @@ void Binding::init(int trigger,
                    int modifier,
                    int command,
                    int state,
-                   unsigned int *argument) {
+                   GLuint *argument) {
 	
 	// Set standard attributes
 	init(trigger, modifier, command, state);
@@ -246,30 +229,23 @@ void Binding::init(int trigger,
 }
 
 
-/**
- * Initializes the formatted names of triggers.
- */
+/** Initializes the formatted names of triggers. */
 void Binding::initTriggerNames() {
 	
-	triggerNames[27] = "Esc";
-	triggerNames[GLUT_KEY_LEFT] = "Left";
-	triggerNames[GLUT_KEY_RIGHT] = "Right";
-	triggerNames[GLUT_KEY_UP] = "Up";
-	triggerNames[GLUT_KEY_DOWN] = "Down";
-	triggerNames[GLUT_LEFT_BUTTON] = "Left";
-	triggerNames[GLUT_MIDDLE_BUTTON] = "Middle";
-	triggerNames[GLUT_RIGHT_BUTTON] = "Right";
-	triggerNames[GLUT_UP_BUTTON] = "Wheel Up";
-	triggerNames[GLUT_DOWN_BUTTON] = "Wheel Down";
-	triggerNames['\t'] = "Tab";
-	triggerNames[GLUT_KEY_HOME] = "Home";
-	triggerNames[GLUT_KEY_END] = "End";
-	triggerNames[GLUT_KEY_INSERT] = "Insert";
+	triggerNames[CANVAS_ESCAPE] = "Esc";
+	triggerNames[CANVAS_KEY_LEFT] = "Left";
+	triggerNames[CANVAS_KEY_RIGHT] = "Right";
+	triggerNames[CANVAS_KEY_UP] = "Up";
+	triggerNames[CANVAS_KEY_DOWN] = "Down";
+	triggerNames[CANVAS_LEFT_BUTTON] = "Left";
+	triggerNames[CANVAS_MIDDLE_BUTTON] = "Middle";
+	triggerNames[CANVAS_RIGHT_BUTTON] = "Right";
+	triggerNames[CANVAS_WHEEL_UP] = "Wheel Up";
+	triggerNames[CANVAS_WHEEL_DOWN] = "Wheel Down";
 }
 
 
-/**
- * Determines if the trigger should be printed as is as a character, or should 
+/** Determines if the trigger should be printed as is as a character, or should 
  * be replaced with a formatted name.
  * 
  * @return True if trigger is not in the 'triggerNames' map.
@@ -284,11 +260,8 @@ bool Binding::isCharacter(int trigger) {
 }
 
 
-/**
- * Prints the binding.
- */
-ostream& operator<<(ostream& stream,
-                    const Binding &b) {
+/** Prints the binding. */
+ostream& operator<<(ostream& stream, const Binding &b) {
 	
 	string str;
 	

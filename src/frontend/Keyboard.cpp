@@ -17,30 +17,22 @@ Keyboard::Keyboard(Interpreter *interpreter) :
 }
 
 
-/**
- * Installs the controls into the current context.
- */
+/** Installs the controls into the current context. */
 void Keyboard::install() {
 	
 	// Register callbacks
-	glutKeyboardFunc(Keyboard::character);
-	glutSpecialFunc(Keyboard::special);
+	canvas->setKeyboardCallback(&Keyboard::character);
 }
 
 
-/**
- * Handles character keys.
- */
-void Keyboard::character(unsigned char key,
-                         int x,
-                         int y) {
+/** Handles character keys. */
+void Keyboard::character(int key, int x, int y) {
 	
 	obj->trigger(static_cast<int>(toupper(key)));
 }
 
 
-/**
- * Looks up a Binding by its keyboard key and modifier.
+/** Looks up a Binding by its keyboard key and modifier.
  * 
  * Needed because the map is a multimap with keys being keyboard keys, and 
  * multiple keyboard keys can be included if the modifiers are considered.  
@@ -69,9 +61,7 @@ Binding* Keyboard::lookup(int key,
 }
 
 
-/**
- * Handles special keys.
- */
+/** Handles special keys. */
 void Keyboard::special(int key,
                        int x,
                        int y) {
@@ -80,18 +70,14 @@ void Keyboard::special(int key,
 }
 
 
-/**
- * Triggers a command.
- */
+/** Triggers a command. */
 void Keyboard::trigger(int key) {
 	
 	Binding *binding;
 	int modifier;
 	
 	// Lookup command by key and modifier
-	modifier = glutGetModifiers();
-	if (modifier == 1 || modifier == 5)
-		modifier -= 1;
+	modifier = canvas->getModifier();
 	binding = lookup(key, modifier);
 	if (binding == NULL)
 		return;
@@ -101,6 +87,6 @@ void Keyboard::trigger(int key) {
 		interpreter->run(binding->getCommand(), binding->getArgument());
 	else
 		interpreter->run(binding->getCommand());
-	glutPostRedisplay();
+	canvas->refresh();
 }
 

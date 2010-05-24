@@ -19,9 +19,9 @@ using namespace std;
 class Director : public Delegate {
 public:
 	Director();
-	static void grab(Scene *scene, int cmd, float id);
-	static void iterate(Scene *scene, int cmd);
-	static void select(Scene *scene, int cmd);
+	static void grab(Scene *scene, Canvas *canvas, int cmd, float id);
+	static void iterate(Scene *scene, Canvas *canvas, int cmd);
+	static void select(Scene *scene, Canvas *canvas, int cmd);
 };
 
 

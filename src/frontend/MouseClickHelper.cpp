@@ -10,7 +10,7 @@
 /** Creates a new MouseClickHelper control. */
 MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
                                    MouseHelper(interpreter),
-                                   picker(scene) {
+                                   picker(scene,canvas) {
 	
 	type = "MouseClickHelper";
 }
@@ -61,9 +61,9 @@ void MouseClickHelper::pickItem() {
 	data->manipulator = NULL;
 	
 	// For normal clicks
-	if (data->button == GLUT_LEFT_BUTTON
-	      || data->button == GLUT_MIDDLE_BUTTON
-	      || data->button == GLUT_RIGHT_BUTTON) {
+	if (data->button == CANVAS_LEFT_BUTTON
+	      || data->button == CANVAS_MIDDLE_BUTTON
+	      || data->button == CANVAS_RIGHT_BUTTON) {
 		
 		// Pick the item
 		result = picker.pick(data->x, data->y);
@@ -132,6 +132,6 @@ void MouseClickHelper::tryBinding(Binding *binding) {
 	} else {
 		interpreter->run(binding->getCommand());
 	}
-	glutPostRedisplay();
+	canvas->refresh();
 }
 

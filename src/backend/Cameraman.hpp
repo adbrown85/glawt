@@ -11,7 +11,6 @@
 #include <iostream>
 #include <map>
 #include "Command.hpp"
-#include "Window.hpp"
 using namespace std;
 
 
@@ -22,10 +21,10 @@ using namespace std;
 class Cameraman : public Delegate {
 public:
 	Cameraman();
-	static void fit(Scene *scene, int command);
-	static void reset(Scene *scene, int command);
-	static void rotate(Scene *scene, int command, float amount);
-	static void translate(Scene *scene, int command, float amount);
+	static void fit(Scene *scene, Canvas *canvas, int command);
+	static void reset(Scene *scene, Canvas *canvas, int command);
+	static void rotate(Scene *s, Canvas *c, int command, float amount);
+	static void translate(Scene *s, Canvas *c, int command, float amount);
 };
 
 

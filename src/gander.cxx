@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gander.hxx"
+Gander *Gander::instance=NULL;
 
 
 /** Creates an instance of the application. */
@@ -41,13 +42,16 @@ void Gander::banner() {
 
 void Gander::onCompile() {
 	
-	// Create window
-	Window::init(argc, argv);
-	Window::create(title);
+	Canvas *canvas;
+	
+	// Create canvas
+	Gtk::Main kit(argc, argv);
+	Canvas::init(argc, argv);
+	canvas = new Canvas();
 	
 	// Open scene
 	scene = new Scene();
-	interpreter = new Interpreter(scene);
+	interpreter = new Interpreter(scene, canvas);
 	interpreter->run(Command::OPEN, inFilename);
 }
 
@@ -70,24 +74,34 @@ void Gander::onConvert() {
  */
 void Gander::onDisplay() {
 	
+	Gtk::Window window;
+	
 	// Create window
-	Window::init(argc, argv);
-	Window::create(title);
+	Canvas::init(argc, argv);
+	canvas = new Canvas();
+	instance = this;
+	
+	// Add to window
+	window.set_title(title);
+	window.add(*canvas);
+	window.show_all();
 	
 	// Open scene
+	canvas->begin();
 	scene = new Scene();
-	interpreter = new Interpreter(scene);
+	interpreter = new Interpreter(scene, canvas);
 	interpreter->run(Command::OPEN, inFilename);
 	interpreter->run(Command::LIST);
 	
 	// Add display and controls
 	display = new Display(interpreter);
 	display->add(new Keyboard(interpreter));
-	display->add(new Menu(interpreter));
+	//display->add(new Menu(interpreter));
 	display->add(new Mouse(interpreter));
+	canvas->end();
 	
-	// Start
-	Window::start();
+	// Run
+	Gtk::Main::run(window);
 }
 
 
@@ -144,8 +158,8 @@ void Gander::onSlices() {
 	DatasetViewer viewer;
 	
 	// View dataset
-	Window::init(argc, argv);
-	dataset.load();
+	Gtk::Main kit(argc, argv);
+	Canvas::init(argc, argv);
 	viewer.setDataset(&dataset);
 	viewer.start();
 }
@@ -225,6 +239,7 @@ void Gander::usage() {
 
 int main(int argc, char *argv[]) {
 	
+	Gtk::Main kit(argc, argv);
 	Gander gander(argc, argv);
 	
 	try {

@@ -23,6 +23,7 @@ int main(int argc,
 	Factory::install("cube", &createNode);
 	
 	// Start
+	Gtk::Main kit(argc, argv);
 	Tester::init(argc, argv);
 	Tester::open("Tester.xml");
 	Tester::start();

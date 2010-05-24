@@ -7,11 +7,12 @@
 #include "Picker.hpp"
 
 
-Picker::Picker(Scene *scene) {
+Picker::Picker(Scene *scene, Canvas *canvas) {
 	
 	// Initialize fields
 	this->scene = scene;
-	this->painter = new Painter(scene, GL_SELECT);
+	this->painter = new Painter(canvas, scene);
+	this->painter->setMode(GL_SELECT);
 }
 
 

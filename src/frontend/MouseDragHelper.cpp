@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "MouseDragHelper.hpp"
-char MouseDragHelper::directions[2] = {'x', 'y'};
+char MouseDragHelper::directions[2] = {'x','y'};
 
 
 /**
@@ -69,7 +69,7 @@ void MouseDragHelper::onDrag(int x, int y) {
 	
 	// Dragging a manipulator
 	if (data->manipulator != NULL)
-		data->manipulator->use(movement, data->shapeID);
+		data->manipulator->use(movement, data->shapeID, canvas);
 	
 	// Dragging on the screen
 	else {
@@ -79,7 +79,7 @@ void MouseDragHelper::onDrag(int x, int y) {
 	
 	// Finish
 	updateLastData();
-	glutPostRedisplay();
+	canvas->refresh();
 }
 
 
@@ -118,7 +118,7 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 		// Determine amount to drag
 		amount = movement.get(i) * 
 		         axis.get(i) *
-		         (fabs(Window::getPosition().z) / 45 * 1.75 + 1.0) *
+		         (fabs(canvas->getPosition().z) / 45 * 1.75 + 1.0) *
 		         binding->getArgument();
 		
 		// Run the command
