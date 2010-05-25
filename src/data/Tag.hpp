@@ -22,9 +22,13 @@ using namespace std;
  */
 class Tag {
 public:
+	typedef map<string,string>::iterator iterator;
+public:
 	Tag();
 	Tag(const string &name);
+	iterator begin();
 	void clear();
+	iterator end();
 	bool get(const string &key,
 	         bool &value,
 	         bool required=true) const;
@@ -69,18 +73,15 @@ private:
 	string filename, name;
 };
 
-
+inline Tag::iterator Tag::begin() {return attributes.begin();}
+inline Tag::iterator Tag::end() {return attributes.end();}
 inline string Tag::getFilename() const {return filename;}
 inline int Tag::getLine() const {return line;}
 inline string Tag::getName() const {return name;}
 inline bool Tag::isClosing() const {return closing;}
 
-
-/**
- * Indicates if the tag was created with a trailing slash.
- */
+/** Indicates if the tag was created with a trailing slash. */
 inline bool Tag::isLeaf() const {return leaf;}
-
 
 inline void Tag::setClosing(bool closing) {this->closing = closing;}
 inline void Tag::setFilename(const string &filename) {this->filename = filename;}

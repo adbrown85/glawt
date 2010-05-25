@@ -15,6 +15,7 @@ Gander::Gander(int argc, char *argv[]) {
 	this->display = NULL;
 	this->interpreter = NULL;
 	this->scene = NULL;
+	this->canvas = NULL;
 }
 
 
@@ -26,6 +27,8 @@ Gander::~Gander() {
 		delete interpreter;
 	if (scene != NULL)
 		delete scene;
+	if (canvas != NULL)
+		delete canvas;
 }
 
 
@@ -41,10 +44,7 @@ void Gander::banner() {
 
 void Gander::onCompile() {
 	
-	Canvas *canvas;
-	
 	// Create canvas
-	Gtk::Main kit(argc, argv);
 	Canvas::init(argc, argv);
 	canvas = new Canvas();
 	
@@ -74,32 +74,41 @@ void Gander::onConvert() {
 void Gander::onDisplay() {
 	
 	Gtk::Window window;
-	Canvas *canvas;
+	Gtk::HBox box;
+	SceneInspector inspector;
 	
-	// Create window
+	// Create widgets
 	Canvas::init(argc, argv);
 	canvas = new Canvas();
-	
-	// Add to window
 	window.set_title(title);
-	window.add(*canvas);
+	
+	// Pack
+	box.pack_start(inspector);
+	box.pack_start(*canvas, Gtk::PACK_SHRINK);
+	window.add(box);
 	window.show_all();
+	
+	// Start OpenGL calls
 	canvas->begin();
 	
 	// Open scene
 	scene = new Scene();
 	interpreter = new Interpreter(scene, canvas);
 	interpreter->run(Command::OPEN, inFilename);
-	interpreter->run(Command::LIST);
 	
 	// Add display and controls
 	display = new Display(interpreter);
 	display->add(new Keyboard(interpreter));
-	//display->add(new Menu(interpreter));
 	display->add(new Mouse(interpreter));
 	
-	// Run
+	// Finish OpenGL calls
 	canvas->end();
+	
+	// Finalize widgets
+	inspector.setScene(scene);
+	inspector.update();
+	
+	// Run
 	Gtk::Main::run(window);
 }
 

@@ -144,6 +144,7 @@ bool Canvas::on_button_press_event(GdkEventButton *event) {
 	updateModifer(event->state);
 	
 	// Run callback
+	grab_focus();
 	mouseButtonPressed = true;
 	if (mouse != NULL) {
 		(*mouse)(mouseButton, CANVAS_DOWN, event->x, event->y);
@@ -163,6 +164,7 @@ bool Canvas::on_button_release_event(GdkEventButton *event) {
 	updateModifer(event->state);
 	
 	// Run callback
+	grab_focus();
 	mouseButtonPressed = false;
 	if (mouse != NULL) {
 		(*mouse)(mouseButton, CANVAS_UP, event->x, event->y);
@@ -178,8 +180,11 @@ bool Canvas::on_button_release_event(GdkEventButton *event) {
  */
 bool Canvas::on_key_press_event(GdkEventKey *event) {
 	
-	// Run callback
+	// Update
 	updateModifer(event->state);
+	
+	// Run callback
+	grab_focus();
 	if (keyboard != NULL) {
 		(*keyboard)(event->keyval, lastMouseX, lastMouseY);
 	}
@@ -217,8 +222,11 @@ bool Canvas::on_motion_notify_event(GdkEventMotion *event) {
 		return false;
 	}
 	
-	// Run callback
+	// Update
 	updateModifer(event->state);
+	
+	// Run callback
+	grab_focus();
 	if (drag != NULL) {
 		(*drag)(event->x, event->y);
 		lastMouseMotionEventTime = event->time;
@@ -244,6 +252,7 @@ bool Canvas::on_scroll_event(GdkEventScroll *event) {
 	}
 	
 	// Run callback
+	grab_focus();
 	if (mouse != NULL) {
 		(*mouse)(mouseWheel, CANVAS_UP, event->x, event->y);
 	}

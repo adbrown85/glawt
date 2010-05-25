@@ -14,6 +14,7 @@
 #include "Display.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
+#include "SceneInspector.hpp"
 #include "DatasetHeader.hpp"
 #include "DatasetWriter.hpp"
 #include "DatasetAnalyzer.hpp"
@@ -66,13 +67,13 @@ protected:
 	void onRange();
 	void onSlices();
 	void parse();
-	static void setup();
 	void usage();
 private:
 	int argc;
 	char **argv;
 	Display *display;
 	Interpreter *interpreter;
+	Canvas *canvas;
 	Scene *scene;
 	string inFilename, option, outFilename, parameter, title;
 };
