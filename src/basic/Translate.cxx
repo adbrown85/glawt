@@ -8,7 +8,6 @@
 #include "Translate.hpp"
 #include "BasicFactory.hpp"
 #include "Tester.hpp"
-#include "Window.hpp"
 
 
 /** Unit test for Translate. */

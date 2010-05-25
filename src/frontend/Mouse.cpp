@@ -38,18 +38,14 @@ void Mouse::install() {
 void Mouse::initBindings() {
 	
 	// Add bindings for mouse wheel
-	add(Binding(CANVAS_WHEEL_UP, 0, Command::ZOOM_IN, 1.0f, CANVAS_DOWN));
-	add(Binding(CANVAS_WHEEL_DOWN, 0, Command::ZOOM_OUT, 1.0f, CANVAS_DOWN));
+	add(Binding(CANVAS_WHEEL_UP, 0, Command::ZOOM_IN, 1.0f, CANVAS_UP));
+	add(Binding(CANVAS_WHEEL_DOWN, 0, Command::ZOOM_OUT, 1.0f, CANVAS_UP));
 	
 	// Add bindings for left button
 	add(Binding(CANVAS_LEFT_BUTTON,
-	            CANVAS_MOD_ALT,
+	            CANVAS_MOD_CONTROL,
 	            Command::GRAB,
 	            &(data.itemID),
-	            CANVAS_DOWN));
-	add(Binding(CANVAS_LEFT_BUTTON,
-	            CANVAS_MOD_ALT,
-	            Command::MANIPULATE,
 	            CANVAS_DOWN));
 	add(Binding(CANVAS_LEFT_BUTTON,
 	            0,

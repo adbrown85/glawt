@@ -22,11 +22,12 @@
 #define CANVAS_ROTATE_AMOUNT 5.0
 #define CANVAS_DOWN 1
 #define CANVAS_UP 0
-#define CANVAS_LEFT_BUTTON 0
-#define CANVAS_MIDDLE_BUTTON 1
-#define CANVAS_RIGHT_BUTTON 2
-#define CANVAS_WHEEL_DOWN 3
-#define CANVAS_WHEEL_UP 4
+#define CANVAS_NONE -1
+#define CANVAS_LEFT_BUTTON 1
+#define CANVAS_MIDDLE_BUTTON 2
+#define CANVAS_RIGHT_BUTTON 3
+#define CANVAS_WHEEL_DOWN 4
+#define CANVAS_WHEEL_UP 5
 #define CANVAS_KEY_UP GDK_Up
 #define CANVAS_KEY_DOWN GDK_Down
 #define CANVAS_KEY_LEFT GDK_Left
@@ -88,6 +89,8 @@ public:
 	void setSetupCallback(setup_cb_t setup);
 	void translate(const Vector &move);
 	void translate(float x, float y, float z);
+protected:
+	void updateModifer(guint state);
 private:
 	bool mouseButtonPressed;
 	int height, width;

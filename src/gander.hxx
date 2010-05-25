@@ -75,8 +75,6 @@ private:
 	Interpreter *interpreter;
 	Scene *scene;
 	string inFilename, option, outFilename, parameter, title;
-	Canvas *canvas;
-	static Gander *instance;
 };
 
 

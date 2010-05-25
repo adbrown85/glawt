@@ -173,7 +173,7 @@ void Binding::init(int trigger,
 	loaded = true;
 	
 	// Set standard attributes
-	this->trigger = isCharacter(trigger) ? toupper(trigger) : trigger;
+	this->trigger = trigger;
 	this->modifier = modifier;
 	this->command = command;
 	this->state = state;

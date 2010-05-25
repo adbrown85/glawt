@@ -5,7 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Shader.hpp"
-#include "Window.hpp"
 #include "BasicFactory.hpp"
 Node *program, *shader;
 

@@ -15,10 +15,6 @@ Canvas::Canvas(int width, int height) {
 	this->height = height;
 	set_size_request(width, height);
 	
-	// Focus
-	set_can_focus(true);
-	grab_focus();
-	
 	// Events
 	add_events(Gdk::KEY_PRESS_MASK);
 	add_events(Gdk::BUTTON_PRESS_MASK);
@@ -82,6 +78,10 @@ void Canvas::on_realize() {
 	glWindow = get_gl_window();
 	window = get_window();
 	
+	// Focus
+	set_can_focus(true);
+	grab_focus();
+	
 	// Start of OpenGL calls
 	begin();
 	
@@ -139,32 +139,16 @@ void Canvas::check() {
  */
 bool Canvas::on_button_press_event(GdkEventButton *event) {
 	
-	grab_focus();
-	
 	// Update button
-	if (event->state & GDK_BUTTON1_MASK) {
-		mouseButton = CANVAS_LEFT_BUTTON;
-	} else if (event->state & GDK_BUTTON2_MASK) {
-		mouseButton = CANVAS_MIDDLE_BUTTON;
-	} else {
-		mouseButton = CANVAS_RIGHT_BUTTON;
-	}
-	
-	// Update modifier
-	if (event->state & GDK_CONTROL_MASK) {
-		modifier = CANVAS_MOD_CONTROL;
-	} else if (event->state & GDK_SHIFT_MASK) {
-		modifier = CANVAS_MOD_SHIFT;
-	} else if (event->state & GDK_MOD1_MASK) {
-		modifier = CANVAS_MOD_ALT;
-	}
+	mouseButton = event->button;
+	updateModifer(event->state);
 	
 	// Run callback
 	mouseButtonPressed = true;
 	if (mouse != NULL) {
 		(*mouse)(mouseButton, CANVAS_DOWN, event->x, event->y);
 	}
-	return false;
+	return true;
 }
 
 
@@ -174,30 +158,16 @@ bool Canvas::on_button_press_event(GdkEventButton *event) {
  */
 bool Canvas::on_button_release_event(GdkEventButton *event) {
 	
-	// Update button
-	if (event->state & GDK_BUTTON1_MASK) {
-		mouseButton = CANVAS_LEFT_BUTTON;
-	} else if (event->state & GDK_BUTTON2_MASK) {
-		mouseButton = CANVAS_MIDDLE_BUTTON;
-	} else {
-		mouseButton = CANVAS_RIGHT_BUTTON;
-	}
-	
-	// Update modifier
-	if (event->state & GDK_CONTROL_MASK) {
-		modifier = CANVAS_MOD_CONTROL;
-	} else if (event->state & GDK_SHIFT_MASK) {
-		modifier = CANVAS_MOD_SHIFT;
-	} else if (event->state & GDK_MOD1_MASK) {
-		modifier = CANVAS_MOD_ALT;
-	}
+	// Update
+	mouseButton = event->button;
+	updateModifer(event->state);
 	
 	// Run callback
 	mouseButtonPressed = false;
 	if (mouse != NULL) {
 		(*mouse)(mouseButton, CANVAS_UP, event->x, event->y);
 	}
-	return false;
+	return true;
 }
 
 
@@ -208,16 +178,8 @@ bool Canvas::on_button_release_event(GdkEventButton *event) {
  */
 bool Canvas::on_key_press_event(GdkEventKey *event) {
 	
-	// Update modifier
-	if (event->state & GDK_CONTROL_MASK) {
-		modifier = CANVAS_MOD_CONTROL;
-	} else if (event->state & GDK_SHIFT_MASK) {
-		modifier = CANVAS_MOD_SHIFT;
-	} else if (event->state & GDK_MOD1_MASK) {
-		modifier = CANVAS_MOD_ALT;
-	}
-	
 	// Run callback
+	updateModifer(event->state);
 	if (keyboard != NULL) {
 		(*keyboard)(event->keyval, lastMouseX, lastMouseY);
 	}
@@ -250,19 +212,16 @@ bool Canvas::on_motion_notify_event(GdkEventMotion *event) {
 	
 	// Check if event should be discarded
 	if (!mouseButtonPressed) {
-		lastMouseX = event->x;
-		lastMouseY = event->y;
 		return false;
 	} if ((event->time - lastMouseMotionEventTime) < 10) {
 		return false;
 	}
 	
 	// Run callback
+	updateModifer(event->state);
 	if (drag != NULL) {
-		(*drag)(event->x-lastMouseX, event->y-lastMouseY);
+		(*drag)(event->x, event->y);
 		lastMouseMotionEventTime = event->time;
-		lastMouseX = event->x;
-		lastMouseY = event->y;
 	}
 	return false;
 }
@@ -276,12 +235,15 @@ bool Canvas::on_motion_notify_event(GdkEventMotion *event) {
  */
 bool Canvas::on_scroll_event(GdkEventScroll *event) {
 	
+	// Update
+	updateModifer(event->state);
 	if (event->direction == GDK_SCROLL_UP) {
 		mouseWheel = CANVAS_WHEEL_UP;
 	} else {
 		mouseWheel = CANVAS_WHEEL_DOWN;
 	}
 	
+	// Run callback
 	if (mouse != NULL) {
 		(*mouse)(mouseWheel, CANVAS_UP, event->x, event->y);
 	}
@@ -314,4 +276,17 @@ void Canvas::translate(const Vector &move) {
 	refresh();
 }
 
+
+void Canvas::updateModifer(guint state) {
+	
+	if (state & GDK_CONTROL_MASK) {
+		modifier = CANVAS_MOD_CONTROL;
+	} else if (state & GDK_SHIFT_MASK) {
+		modifier = CANVAS_MOD_SHIFT;
+	} else if (state & GDK_MOD1_MASK) {
+		modifier = CANVAS_MOD_ALT;
+	} else {
+		modifier = 0;
+	}
+}
 

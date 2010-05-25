@@ -28,7 +28,7 @@ void Keyboard::install() {
 /** Handles character keys. */
 void Keyboard::character(int key, int x, int y) {
 	
-	obj->trigger(static_cast<int>(toupper(key)));
+	obj->trigger(key);
 }
 
 

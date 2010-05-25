@@ -5,7 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gander.hxx"
-Gander *Gander::instance=NULL;
 
 
 /** Creates an instance of the application. */
@@ -75,19 +74,19 @@ void Gander::onConvert() {
 void Gander::onDisplay() {
 	
 	Gtk::Window window;
+	Canvas *canvas;
 	
 	// Create window
 	Canvas::init(argc, argv);
 	canvas = new Canvas();
-	instance = this;
 	
 	// Add to window
 	window.set_title(title);
 	window.add(*canvas);
 	window.show_all();
+	canvas->begin();
 	
 	// Open scene
-	canvas->begin();
 	scene = new Scene();
 	interpreter = new Interpreter(scene, canvas);
 	interpreter->run(Command::OPEN, inFilename);
@@ -98,9 +97,9 @@ void Gander::onDisplay() {
 	display->add(new Keyboard(interpreter));
 	//display->add(new Menu(interpreter));
 	display->add(new Mouse(interpreter));
-	canvas->end();
 	
 	// Run
+	canvas->end();
 	Gtk::Main::run(window);
 }
 
