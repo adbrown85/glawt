@@ -50,10 +50,12 @@ void SceneView::build(Node *node) {
 	tree.append(node);
 	
 	// Add children
-	tree.push();
-	for (it=node->begin(); it!=node->end(); ++it)
-		build(*it);
-	tree.pop();
+	if (node->areChildrenPrintable()) {
+		tree.push();
+		for (it=node->begin(); it!=node->end(); ++it)
+			build(*it);
+		tree.pop();
+	}
 }
 
 
