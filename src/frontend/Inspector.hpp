@@ -27,6 +27,7 @@ public:
 	void onRowChange(const Gtk::TreeModel::Path&, Gtk::TreeViewColumn*);
 	void onRowCollapsed(const Gtk::TreeModel::iterator&,
 	                    const Gtk::TreeModel::Path&);
+	void setNode(Node *node);
 	void setScene(Scene *scene);
 	void update();
 protected:

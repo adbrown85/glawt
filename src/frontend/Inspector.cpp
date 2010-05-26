@@ -99,6 +99,19 @@ void SceneView::onRowCollapsed(const Gtk::TreeModel::iterator& rowIter,
 }
 
 
+void SceneView::setNode(Node *node) {
+	
+	Gtk::TreeModel::iterator row;
+	
+	row = tree.search(node);
+	if (row) {
+		view.get_selection()->select(row);
+	} else {
+		cout << "Didn't find it..." << endl;
+	}
+}
+
+
 /** Sets up the view inside a scrolled window. */
 NodeView::NodeView() {
 	
@@ -214,6 +227,10 @@ void Inspector::onNodeEvent(NodeEvent &event) {
 	
 	if (event.getSource() == nodeView.getNode()) {
 		nodeView.update();
+	} else {
+		sceneView.setNode(event.getSource());
+		//nodeView.setNode(event.getSource());
+		//nodeView.update();
 	}
 }
 
@@ -259,6 +276,7 @@ void Inspector::update() {
 		(*it)->addListener(this);
 	}
 	
-	// Connect signals
+	// Listen to scene selection changes
+	scene->getSelection().addListener(this);
 }
 

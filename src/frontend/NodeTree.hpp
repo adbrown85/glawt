@@ -36,6 +36,10 @@ public:
 	void pop();
 	void print();
 	void push();
+	Gtk::TreeModel::iterator search(Node *node);
+	Gtk::TreeModel::iterator search(Node *node,
+	                                Gtk::TreeModel::iterator row,
+	                                Gtk::TreeModel::iterator pEnd);
 protected:
 	void appendBaseRow(Node *node);
 	void appendChildRow(Node *node);

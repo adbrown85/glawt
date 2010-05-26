@@ -98,3 +98,45 @@ void NodeTree::push() {
 	parents.push(current);
 }
 
+
+Gtk::TreeModel::iterator NodeTree::search(Node *node) {
+	
+	Gtk::TreeModel::Children rows=model->children();
+	Gtk::TreeModel::Children::iterator it;
+	Gtk::TreeModel::iterator result;
+	
+	for (it=rows.begin(); it!=rows.end(); ++it) {
+		result = search(node, it, rows.end());
+		if (result) {
+			return result;
+		}
+	}
+	return rows.end();
+}
+
+
+Gtk::TreeModel::iterator NodeTree::search(Node *node,
+                                          Gtk::TreeModel::iterator row,
+                                          Gtk::TreeModel::iterator pEnd) {
+	
+	Gtk::TreeModel::Children rows=row->children();
+	Gtk::TreeModel::iterator result;
+	Gtk::TreeModel::Children::iterator it;
+	int address;
+	
+	// Check self
+	address = (*row)[columns.address];
+	if (address == reinterpret_cast<int>(node)) {
+		return row;
+	}
+	
+	// Check children
+	for (it=rows.begin(); it!=rows.end(); ++it) {
+		result = search(node, it, rows.end());
+		if (result) {
+			return result;
+		}
+	}
+	return pEnd;
+}
+
