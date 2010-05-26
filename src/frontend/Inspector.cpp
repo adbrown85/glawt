@@ -207,11 +207,19 @@ void Inspector::onEditValue(const string& path, const string& text) {
 	
 	using System::log;
 	Gtk::TreeModel::iterator it;
-	string key;
+	string key, val;
 	
 	// Figure out what attribute it was
 	it = nodeView.getTreeModel()->get_iter(path);
 	key = (*it)[AttributeTree::columns.key];
+	val = (*it)[AttributeTree::columns.value];
+	
+	// Check if user even changed it
+	if (text == val) {
+		return;
+	}
+	
+	// Try to change it
 	if (nodeView.getNode()->setAttribute(pair<string,string>(key,text))) {
 		nodeView.update();
 		if (canvas != NULL) {
