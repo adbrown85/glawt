@@ -35,13 +35,18 @@ SceneView::SceneView() {
 /** Adds all the scene's nodes to the view. */
 void SceneView::update() {
 	
+	Node::iterator it;
+	Node *root;
+	
 	// Validate
 	if (scene == NULL) {
 		throw Exception("[SceneView] Scene has not been set.");
 	}
 	
 	// Build the tree
-	build(scene->getRoot());
+	root = scene->getRoot();
+	for (it=root->begin(); it!=root->end(); ++it)
+		build(*it);
 	view.expand_all();
 }
 
