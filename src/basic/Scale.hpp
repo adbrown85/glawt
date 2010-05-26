@@ -29,6 +29,7 @@ public:
 	virtual void applyTo(Matrix &matrix);
 	static Scale* find(Node *node);
 	virtual void remove();
+	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
 private:
 	float value;

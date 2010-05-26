@@ -31,6 +31,7 @@ public:
 	virtual void applyTo(Matrix &matrix);
 	static Translate* find(Node *node);
 	virtual void remove();
+	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
 protected:
 	virtual void sortByDepthEnd(Matrix &matrix);

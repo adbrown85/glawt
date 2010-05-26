@@ -91,6 +91,32 @@ void Translate::remove() {
 }
 
 
+/** Sets "x", "y", or "z". */
+bool Translate::setAttribute(pair<string,string> attribute) {
+	
+	bool changed=false;
+	string key=Text::toLower(attribute.first);
+	
+	if (key == "x") {
+		x = atof(attribute.second.c_str());
+		changed = true;
+	} else if (key == "y") {
+		y = atof(attribute.second.c_str());
+		changed = true;
+	} else if (key == "z") {
+		z = atof(attribute.second.c_str());
+		changed = true;
+	}
+	
+	if (changed) {
+		fireEvent();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 /** Forms a string from the object's attributes. */
 string Translate::toString() const {
 	
