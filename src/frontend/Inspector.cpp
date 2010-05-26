@@ -25,6 +25,8 @@ SceneView::SceneView() {
 	// Connect signals
 	view.signal_row_activated().connect(
 		sigc::mem_fun(*this,&SceneView::onRowChange)
+	); view.signal_row_collapsed().connect(
+		sigc::mem_fun(*this,&SceneView::onRowCollapsed)
 	);
 	
 	// Pack
@@ -71,6 +73,7 @@ void SceneView::build(Node *node) {
 }
 
 
+/** Collapses or expands the entire subtree on a double click. */
 void SceneView::onRowChange(const Gtk::TreeModel::Path& path,
                             Gtk::TreeViewColumn* column) {
 	
@@ -79,6 +82,19 @@ void SceneView::onRowChange(const Gtk::TreeModel::Path& path,
 		view.collapse_row(path);
 	} else {
 		view.expand_row(path, true);
+	}
+}
+
+
+/** Selects the row if the previously selected row was under it. */
+void SceneView::onRowCollapsed(const Gtk::TreeModel::iterator& rowIter,
+                               const Gtk::TreeModel::Path& rowPath) {
+	
+	Gtk::TreeModel::iterator selIter;
+	
+	selIter = view.get_selection()->get_selected();
+	if (!selIter) {
+		view.get_selection()->select(rowIter);
 	}
 }
 
@@ -161,8 +177,8 @@ Inspector::Inspector() {
 	set_size_request(250, -1);
 	
 	// Update attributes when node changes
-	sceneView.getTreeView().signal_cursor_changed().connect(
-		sigc::mem_fun(*this,&Inspector::onCursorChange)
+	sceneView.getTreeView().get_selection()->signal_changed().connect(
+		sigc::mem_fun(*this,&Inspector::onNodeSelectionChange)
 	);
 	
 	// Make attribute value renderer editable
@@ -171,24 +187,6 @@ Inspector::Inspector() {
 	renderer->signal_edited().connect(
 		sigc::mem_fun(*this, &Inspector::onEditValue)
 	);
-}
-
-
-void Inspector::onCursorChange() {
-	
-	Glib::RefPtr<Gtk::TreeSelection> selection;
-	Gtk::TreeModel::iterator it;
-	int address;
-	Node *node;
-	
-	selection = sceneView.getTreeView().get_selection();
-	it = selection->get_selected();
-	if (it) {
-		address = (*it)[NodeTree::columns.address];
-		node = reinterpret_cast<Node*>(address);
-		nodeView.setNode(node);
-		nodeView.update();
-	}
 }
 
 
@@ -220,6 +218,25 @@ void Inspector::onNodeEvent(NodeEvent &event) {
 }
 
 
+/** Updates the attribute view if the selected node changes. */
+void Inspector::onNodeSelectionChange() {
+	
+	Glib::RefPtr<Gtk::TreeSelection> selection;
+	Gtk::TreeModel::iterator it;
+	int address;
+	Node *node;
+	
+	selection = sceneView.getTreeView().get_selection();
+	it = selection->get_selected();
+	if (it) {
+		address = (*it)[NodeTree::columns.address];
+		node = reinterpret_cast<Node*>(address);
+		nodeView.setNode(node);
+		nodeView.update();
+	}
+}
+
+
 void Inspector::update() {
 	
 	using System::log;
@@ -241,5 +258,7 @@ void Inspector::update() {
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->addListener(this);
 	}
+	
+	// Connect signals
 }
 

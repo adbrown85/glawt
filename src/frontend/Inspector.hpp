@@ -25,6 +25,8 @@ public:
 	SceneView();
 	Gtk::TreeView& getTreeView();
 	void onRowChange(const Gtk::TreeModel::Path&, Gtk::TreeViewColumn*);
+	void onRowCollapsed(const Gtk::TreeModel::iterator&,
+	                    const Gtk::TreeModel::Path&);
 	void setScene(Scene *scene);
 	void update();
 protected:
@@ -65,12 +67,12 @@ inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 class Inspector : public Gtk::Frame, public NodeListener {
 public:
 	Inspector();
-	void onCursorChange();
 	void onEditValue(const string& path, const string& text);
 	void setScene(Scene *scene);
 	void setCanvas(Canvas *canvas);
 	void update();
 	virtual void onNodeEvent(NodeEvent &event);
+	void onNodeSelectionChange();
 private:
 	Scene *scene;
 	Canvas *canvas;
