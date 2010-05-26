@@ -150,10 +150,12 @@ string Texture::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << name << "'"
-	       << " unit='" << unit << "'"
-	       << " handle='" << handle << "'"
-	       << " file='" << filename << "'";
+	if (!name.empty())
+		stream << " name='" << name << "'";
+	stream << " unit='" << unit << "'"
+	       << " handle='" << handle << "'";
+	if (!filename.empty())
+		stream << " file='" << filename << "'";
 	return stream.str();
 }
 
