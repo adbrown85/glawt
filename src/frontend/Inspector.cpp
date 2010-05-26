@@ -16,11 +16,11 @@ SceneView::SceneView() {
 	// Create the view
 	view.set_model(tree.getModel());
 	view.append_column("Nodes", tree.columns.name);
+	view.set_search_column(tree.columns.name);
 	
 	// Add the view with scroll bars
 	scroller.add(view);
 	scroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-	//scroller.set_size_request(250, 350);
 	
 	// Connect signals
 	view.signal_row_activated().connect(
