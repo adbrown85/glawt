@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <gtkmm.h>
+#include "Log.hpp"
 using namespace std;
 using Glib::RefPtr;
 
@@ -17,9 +18,10 @@ using Glib::RefPtr;
 /** @brief Widget for displaying the log.
  * @ingroup frontend
  */
-class LogBook : public Gtk::Frame {
+class LogBook : public Gtk::Frame, public LogListener {
 public:
 	LogBook();
+	virtual void onLogUpdate(const string &text);
 private:
 	RefPtr<Gtk::TextBuffer> buffer;
 	Gtk::TextView view;

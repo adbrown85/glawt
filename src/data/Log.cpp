@@ -10,15 +10,38 @@ namespace System {
 }
 
 
+Log::Log() {
+	
+	buff << fixed << setprecision(2);
+}
+
+
+void Log::addListener(LogListener *listener) {
+	
+	listeners.push_back(listener);
+}
+
+
+void Log::fireUpdate(const string &text) {
+	
+	list<LogListener*>::iterator it;
+	
+	for (it=listeners.begin(); it!=listeners.end(); ++it) {
+		(*it)->onLogUpdate(text);
+	}
+}
+
+
 Log& Log::operator<<(manip_func_t manip) {
 	
+	(*manip)(cerr);
 	if (manip == (manip_func_t)endl) {
 		lines.push_back(buff.str());
+		fireUpdate(buff.str());
 		buff.str("");
 	} else {
 		(*manip)(buff);
 	}
-	(*manip)(cerr);
 	return *this;
 }
 
@@ -41,9 +64,7 @@ Log& Log::operator<<(int number) {
 
 Log& Log::operator<<(double number) {
 	
-	buff << fixed << setprecision(2);
 	buff << number;
-	cerr << fixed << setprecision(2);
 	cerr << number;
 	return *this;
 }

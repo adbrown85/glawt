@@ -19,6 +19,12 @@ using namespace std;
 typedef basic_ostream< char,char_traits<char> > char_ostream_t;
 typedef char_ostream_t& (*manip_func_t)(char_ostream_t&);
 
+/* Interface for receiving updates from the log. */
+class LogListener {
+public:
+	virtual void onLogUpdate(const string &text) = 0;
+};
+
 
 /** @brief Utility for logging messages.
  * @ingroup data
@@ -28,8 +34,11 @@ class Log {
 public:
 	typedef list<string>::iterator iterator;
 public:
+	Log();
+	void addListener(LogListener *listener);
 	iterator begin();
 	iterator end();
+	void fireUpdate(const string& text);
 	Log& operator<<(const string& text);
 	Log& operator<<(int number);
 	Log& operator<<(double number);
@@ -37,6 +46,7 @@ public:
 private:
 	list<string> lines;
 	ostringstream buff;
+	list<LogListener*> listeners;
 };
 inline Log::iterator Log::begin() {return lines.begin();}
 inline Log::iterator Log::end() {return lines.end();}

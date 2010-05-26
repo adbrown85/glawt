@@ -8,6 +8,16 @@
 using System::log;
 
 
+/* Fake to test log listener */
+class FakeLogListener : public LogListener {
+public:
+	virtual void onLogUpdate(const string &text);
+};
+void FakeLogListener::onLogUpdate(const string &text) {
+	cout << "Log updated!" << endl;
+}
+
+
 int main(int argc, char *argv[]) {
 	
 	Log::iterator it;
@@ -20,6 +30,7 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
+	log.addListener(new FakeLogListener());
 	log << "This is a message!" << endl;
 	log << "This is a message with a " << 1.5 << endl;
 	log << "This is a message with a " << 1 << endl;
