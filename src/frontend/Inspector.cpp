@@ -223,7 +223,6 @@ void Inspector::onNodeEvent(NodeEvent &event) {
 void Inspector::update() {
 	
 	using System::log;
-	Node *root;
 	list<Transformation*>::iterator it;
 	
 	// Validate
@@ -233,17 +232,12 @@ void Inspector::update() {
 		log << "[Inspector] No canvas specified to refresh." << endl;
 	}
 	
-	// Get the root
-	root = scene->getRoot();
-	
-	// Update both of the views
+	// Update scene view
 	sceneView.setScene(scene);
 	sceneView.update();
-	nodeView.setNode(root);
-	nodeView.update();
 	
 	// Listen to transform changes
-	transforms = Transformation::search(root);
+	transforms = Transformation::search(scene->getRoot());
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->addListener(this);
 	}
