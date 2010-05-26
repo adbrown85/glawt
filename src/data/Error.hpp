@@ -13,6 +13,7 @@
 #include <GL/glut.h>
 #include "Exception.hpp"
 #include "Preprocessor.hpp"
+#include "Log.hpp"
 using namespace std;
 
 

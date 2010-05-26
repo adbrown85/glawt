@@ -70,6 +70,7 @@ void Error::print(GLchar *log,
 void Error::printLine(const string &line,
                       const map<int,const Preprocessor*> &code) {
 	
+	using System::log;
 	int handle, lineNum;
 	ostringstream stream;
 	const Preprocessor *preprocessor;
@@ -82,7 +83,7 @@ void Error::printLine(const string &line,
 	if (line.empty())
 		return;
 	if (!fitsPattern(line) || lineNum == 0) {
-		cerr << line << endl;
+		log << line << endl;
 		return;
 	}
 	
@@ -97,9 +98,9 @@ void Error::printLine(const string &line,
 	preprocessor = it->second;
 	
 	// Print line substituting file and line number
-	cerr << preprocessor->getFileForLine(lineNum) << ":" 
-	     << preprocessor->getRealLineNumber(lineNum) << ":"
-	     << findMessage(line)
-	     << endl;
+	log << preprocessor->getFileForLine(lineNum) << ":" 
+	    << preprocessor->getRealLineNumber(lineNum) << ":"
+	    << findMessage(line)
+	    << endl;
 }
 

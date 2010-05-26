@@ -16,6 +16,7 @@
 #include "Matrix.hpp"
 #include "Quaternion.hpp"
 #include "Vector.hpp"
+#include "Log.hpp"
 #define CANVAS_WIDTH 512
 #define CANVAS_HEIGHT 512
 #define CANVAS_ZOOM -10.0
@@ -44,6 +45,7 @@
 #define CANVAS_MOD_ALT GDK_Alt_L
 #define CANVAS_MOD_SHIFT GDK_Shift_L
 using namespace std;
+//using System::log;
 
 
 /* Callback definitions */

@@ -194,6 +194,7 @@ void Inspector::onCursorChange() {
 
 void Inspector::onEditValue(const string& path, const string& text) {
 	
+	using System::log;
 	Gtk::TreeModel::iterator it;
 	string key;
 	
@@ -206,18 +207,20 @@ void Inspector::onEditValue(const string& path, const string& text) {
 			canvas->refresh();
 		}
 	} else {
-		cerr << "[Inspector] New value was not accepted by node." << endl;
+		log << "[Inspector] New value was not accepted by node." << endl;
 	}
 }
 
 
 void Inspector::update() {
 	
+	using System::log;
+	
 	// Validate
 	if (scene == NULL) {
 		throw Exception("[Inspector] No scene was loaded.");
 	} if (canvas == NULL) {
-		cerr << "[Inspector] No canvas specified to refresh." << endl;
+		log << "[Inspector] No canvas specified to refresh." << endl;
 	}
 	
 	// Update both of the views

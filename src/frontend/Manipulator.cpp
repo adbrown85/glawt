@@ -21,6 +21,8 @@ Manipulator::Manipulator(char axis,
                          float bias,
                          const string &warning) {
 	
+	using System::log;
+	
 	// Initialize
 	this->command = command;
 	this->enabled = true;
@@ -49,9 +51,9 @@ Manipulator::Manipulator(char axis,
 		delete widget;
 		widget = NULL;
 		traverser = NULL;
-		cerr << "[Manipulator] Problem opening '" << filename << "'." << endl;
-		cerr << "[Manipulator] " << warning << endl;
-		cerr << "[Manipulator] Try installing Gander again." << endl;
+		log << "[Manipulator] Problem opening '" << filename << "'." << endl;
+		log << "[Manipulator] " << warning << endl;
+		log << "[Manipulator] Try installing Gander again." << endl;
 	}
 }
 

@@ -235,9 +235,10 @@ void Dataset::load(bool raw) {
 
 void Dataset::normalize() {
 	
+	using System::log;
 	clock_t beg, end;
 	
-	cerr << "[Dataset] Normalizing... ";
+	log << "[Dataset] Normalizing... ";
 	beg = clock();
 	switch (type) {
 	case GL_UNSIGNED_SHORT:
@@ -245,7 +246,7 @@ void Dataset::normalize() {
 		break;
 	}
 	end = clock();
-	cerr << (((double)end-beg)/CLOCKS_PER_SEC) << "s" << endl;
+	log << (((double)end-beg)/CLOCKS_PER_SEC) << "s" << endl;
 }
 
 

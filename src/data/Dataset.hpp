@@ -21,7 +21,9 @@
 #include "Index.hpp"
 #include "Tag.hpp"
 #include "Canvas.hpp"
+#include "Log.hpp"
 using namespace std;
+//using System::log;
 
 
 /**

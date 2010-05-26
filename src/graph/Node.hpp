@@ -18,6 +18,7 @@
 #include "Tag.hpp"
 #include "Text.hpp"
 #include "Canvas.hpp"
+#include "Log.hpp"
 using namespace std;
 
 
