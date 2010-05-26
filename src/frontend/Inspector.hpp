@@ -1,11 +1,11 @@
 /*
- * SceneInspector.hpp
+ * Inspector.hpp
  *
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-#ifndef SCENEINSPECTOR_HPP
-#define SCENEINSPECTOR_HPP
+#ifndef INSPECTOR_HPP
+#define INSPECTOR_HPP
 #include <cstdlib>
 #include <iostream>
 #include <gtkmm.h>
@@ -60,9 +60,9 @@ inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 
 
 /** Pane showing scene overview and node details. */
-class SceneInspector : public Gtk::VPaned {
+class Inspector : public Gtk::VPaned {
 public:
-	SceneInspector();
+	Inspector();
 	void onCursorChange();
 	void onEditValue(const string& path, const string& text);
 	void setScene(Scene *scene);
@@ -74,7 +74,7 @@ private:
 	NodeView nodeView;
 	SceneView sceneView;
 };
-inline void SceneInspector::setScene(Scene *s) {scene = s;}
-inline void SceneInspector::setCanvas(Canvas *c) {canvas = c;}
+inline void Inspector::setScene(Scene *s) {scene = s;}
+inline void Inspector::setCanvas(Canvas *c) {canvas = c;}
 
 #endif

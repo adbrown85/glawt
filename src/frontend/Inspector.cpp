@@ -1,10 +1,10 @@
 /*
- * SceneInspector.cpp
+ * Inspector.cpp
  * 
  * Author
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
-#include "SceneInspector.hpp"
+#include "Inspector.hpp"
 
 
 /** Sets up the view inside a scrolled window. */
@@ -140,7 +140,7 @@ Gtk::CellRendererText* NodeView::getRenderer(const string &name) {
 }
 
 
-SceneInspector::SceneInspector() {
+Inspector::Inspector() {
 	
 	Gtk::CellRendererText *renderer;
 	
@@ -154,19 +154,19 @@ SceneInspector::SceneInspector() {
 	
 	// Update attributes when node changes
 	sceneView.getTreeView().signal_cursor_changed().connect(
-		sigc::mem_fun(*this,&SceneInspector::onCursorChange)
+		sigc::mem_fun(*this,&Inspector::onCursorChange)
 	);
 	
 	// Make attribute value renderer editable
 	renderer = nodeView.getRenderer("value");
 	renderer->property_editable() = true;
 	renderer->signal_edited().connect(
-		sigc::mem_fun(*this, &SceneInspector::onEditValue)
+		sigc::mem_fun(*this, &Inspector::onEditValue)
 	);
 }
 
 
-void SceneInspector::onCursorChange() {
+void Inspector::onCursorChange() {
 	
 	Glib::RefPtr<Gtk::TreeSelection> selection;
 	Gtk::TreeModel::iterator it;
@@ -184,7 +184,7 @@ void SceneInspector::onCursorChange() {
 }
 
 
-void SceneInspector::onEditValue(const string& path, const string& text) {
+void Inspector::onEditValue(const string& path, const string& text) {
 	
 	Gtk::TreeModel::iterator it;
 	string key;
@@ -198,18 +198,18 @@ void SceneInspector::onEditValue(const string& path, const string& text) {
 			canvas->refresh();
 		}
 	} else {
-		cerr << "[SceneInspector] New value was not accepted by node." << endl;
+		cerr << "[Inspector] New value was not accepted by node." << endl;
 	}
 }
 
 
-void SceneInspector::update() {
+void Inspector::update() {
 	
 	// Validate
 	if (scene == NULL) {
-		throw Exception("[SceneInspector] No scene was loaded.");
+		throw Exception("[Inspector] No scene was loaded.");
 	} if (canvas == NULL) {
-		cerr << "[SceneInspector] No canvas specified to refresh." << endl;
+		cerr << "[Inspector] No canvas specified to refresh." << endl;
 	}
 	
 	// Update both of the views

@@ -75,7 +75,7 @@ void Gander::onDisplay() {
 	
 	Gtk::Window window;
 	Gtk::HBox box;
-	SceneInspector inspector;
+	Inspector inspector;
 	
 	// Create widgets
 	Canvas::init(argc, argv);

@@ -14,7 +14,7 @@
 #include "Display.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
-#include "SceneInspector.hpp"
+#include "Inspector.hpp"
 #include "DatasetHeader.hpp"
 #include "DatasetWriter.hpp"
 #include "DatasetAnalyzer.hpp"
