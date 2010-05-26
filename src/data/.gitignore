@@ -5,6 +5,7 @@ DatasetHeader
 DatasetWriter
 Exception
 FileUtility
+Log
 Matrix
 OctreeBuilder
 OctreeNode
