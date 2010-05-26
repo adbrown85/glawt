@@ -37,3 +37,24 @@ void Transformation::fireEvent() {
 	notifier.fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 
+
+list<Transformation*> Transformation::search(Node *node) {
+	
+	queue<Node*> Q;
+	Node::iterator it;
+	list<Transformation*> L;
+	Transformation *transform;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		transform = dynamic_cast<Transformation*>(node);
+		if (transform != NULL)
+			L.push_back(transform);
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push(*it);
+		Q.pop();
+	}
+	return L;
+}
+

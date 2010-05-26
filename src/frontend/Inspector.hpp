@@ -14,6 +14,8 @@
 #include "NodeTree.hpp"
 #include "AttributeTree.hpp"
 #include "Scene.hpp"
+#include "NodeEvent.hpp"
+#include "Transformation.hpp"
 using namespace std;
 
 
@@ -60,7 +62,7 @@ inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 
 
 /** Pane showing scene overview and node details. */
-class Inspector : public Gtk::Frame {
+class Inspector : public Gtk::Frame, public NodeListener {
 public:
 	Inspector();
 	void onCursorChange();
@@ -68,12 +70,14 @@ public:
 	void setScene(Scene *scene);
 	void setCanvas(Canvas *canvas);
 	void update();
+	virtual void onNodeEvent(NodeEvent &event);
 private:
 	Scene *scene;
 	Canvas *canvas;
 	NodeView nodeView;
 	SceneView sceneView;
 	Gtk::VPaned pane;
+	list<Transformation*> transforms;
 };
 inline void Inspector::setScene(Scene *s) {scene = s;}
 inline void Inspector::setCanvas(Canvas *c) {canvas = c;}

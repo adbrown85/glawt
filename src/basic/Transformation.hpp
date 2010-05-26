@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <list>                         // Storing listeners
+#include <queue>                        // Searching
 #include "Node.hpp"
 #include "NodeEvent.hpp"
 #include "Matrix.hpp"
@@ -28,6 +29,7 @@ public:
 	virtual void apply() = 0;
 	virtual void applyTo(Matrix &matrix) = 0;
 	virtual void remove() = 0;
+	static list<Transformation*> search(Node *node);
 private:
 	NodeNotifier notifier;
 };
