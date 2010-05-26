@@ -14,7 +14,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "Log.hpp"
+#include "Error.hpp"
 #include "Node.hpp"
 #include "Program.hpp"
 #include "Preprocessor.hpp"

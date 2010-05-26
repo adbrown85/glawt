@@ -1,19 +1,19 @@
 /*
- * Log.cpp
+ * Error.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Log.hpp"
+#include "Error.hpp"
 
 
-int Log::findHandle(const string &line) {
+int Error::findHandle(const string &line) {
 	
 	return line[0] - 48;
 }
 
 
-int Log::findLine(const string &line) {
+int Error::findLine(const string &line) {
 	
 	int beg, end;
 	string token;
@@ -25,7 +25,7 @@ int Log::findLine(const string &line) {
 }
 
 
-string Log::findMessage(const string &line) {
+string Error::findMessage(const string &line) {
 	
 	int beg;
 	
@@ -35,15 +35,15 @@ string Log::findMessage(const string &line) {
 }
 
 
-bool Log::fitsPattern(const string &line) {
+bool Error::fitsPattern(const string &line) {
 	
 	return Text::count(line,':') == 2;
 }
 
 
-void Log::print(GLchar *log,
-                int handle,
-                const Preprocessor &preprocessor) {
+void Error::print(GLchar *log,
+                  int handle,
+                  const Preprocessor &preprocessor) {
 	
 	map<int,const Preprocessor*> code;
 	
@@ -52,8 +52,8 @@ void Log::print(GLchar *log,
 }
 
 
-void Log::print(GLchar *log,
-                const map<int,const Preprocessor*> &code) {
+void Error::print(GLchar *log,
+                  const map<int,const Preprocessor*> &code) {
 	
 	string line;
 	stringstream stream(log);
@@ -67,8 +67,8 @@ void Log::print(GLchar *log,
 }
 
 
-void Log::printLine(const string &line,
-                    const map<int,const Preprocessor*> &code) {
+void Error::printLine(const string &line,
+                      const map<int,const Preprocessor*> &code) {
 	
 	int handle, lineNum;
 	ostringstream stream;
@@ -91,7 +91,7 @@ void Log::printLine(const string &line,
 	it = code.find(0);
 	if (it == code.end()) {
 		Exception e;
-		e << "[Log] Could not find code of handle '" << handle << "'.";
+		e << "[Error] Could not find code of handle '" << handle << "'.";
 		throw e;
 	}
 	preprocessor = it->second;

@@ -168,7 +168,7 @@ void Shader::log() const {
 	log = new GLchar[count+1];
 	glGetShaderInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
-	Log::print(log, handle, preprocessor);
+	Error::print(log, handle, preprocessor);
 	
 	// Finish
 	delete[] log;

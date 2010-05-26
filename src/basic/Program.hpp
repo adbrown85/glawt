@@ -13,7 +13,7 @@
 #include <vector>
 #include <GL/glut.h>
 #include "Node.hpp"
-#include "Log.hpp"
+#include "Error.hpp"
 #include "Preprocessor.hpp"
 #include "NodeEvent.hpp"
 using namespace std;

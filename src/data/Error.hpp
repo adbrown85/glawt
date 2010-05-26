@@ -1,11 +1,11 @@
 /*
- * Log.hpp
+ * Error.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef LOG_HPP
-#define LOG_HPP
+#ifndef ERROR_HPP
+#define ERROR_HPP
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
@@ -18,9 +18,9 @@ using namespace std;
 
 /**
  * @ingroup data
- * @brief Utility for processing error logs.
+ * @brief Utility for processing error messages.
  */
-class Log {
+class Error {
 public:
 	static void print(GLchar *log,
 	                  int handle,
