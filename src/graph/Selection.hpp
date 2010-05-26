@@ -12,6 +12,7 @@
 #include <set>
 #include "Identifiable.hpp"
 #include "Node.hpp"
+#include "NodeEvent.hpp"
 using namespace std;
 
 
@@ -24,12 +25,16 @@ public:
 	typedef set<Drawable*,Identifiable::Comparator>::iterator iterator;
 	void add(Drawable *item);
 	void addAll(Node *node);
+	void addListener(NodeListener *listener);
 	iterator begin();
 	void clear();
+	void fireEvent();
 	iterator end();
 	void remove(Drawable *item);
 private:
 	set<Drawable*,Identifiable::Comparator> items;
+	NodeNotifier notifier;
+	Drawable *active;
 };
 
 /** @return iterator to the beginning of the selection. */

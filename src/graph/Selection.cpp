@@ -17,6 +17,8 @@ void Selection::add(Drawable *item) {
 	// Select it
 	item->setSelected(true);
 	items.insert(item);
+	active = item;
+	fireEvent();
 }
 
 
@@ -36,6 +38,12 @@ void Selection::addAll(Node *node) {
 }
 
 
+void Selection::addListener(NodeListener *listener) {
+	
+	notifier.addListener(listener, NodeEvent::MODIFY);
+}
+
+
 /** Removes all the items from the selection. */
 void Selection::clear() {
 	
@@ -45,6 +53,12 @@ void Selection::clear() {
 	for (si=items.begin(); si!=items.end(); ++si)
 		(*si)->setSelected(false);
 	items.clear();
+}
+
+
+void Selection::fireEvent() {
+	
+	notifier.fireEvent(NodeEvent(active, NodeEvent::MODIFY));
 }
 
 

@@ -39,7 +39,7 @@ public:
 	void addToSelection(Drawable *drawable);
 	string getFilename() const;
 	Node* getRoot() const;
-	Selection getSelection() const;
+	Selection& getSelection();
 	void open(string filename);
 	void prepare();
 	void removeAllFromSelection();
@@ -68,7 +68,7 @@ inline string Scene::getFilename() const {return filename;}
 inline Node* Scene::getRoot() const {return root;}
 
 /** @return pointers to all the selected nodes in the scene */
-inline Selection Scene::getSelection() const {return selection;}
+inline Selection& Scene::getSelection() {return selection;}
 
 /** Deselects all the nodes in the scene. */
 inline void Scene::removeAllFromSelection() {selection.clear();}
