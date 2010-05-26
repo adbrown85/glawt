@@ -85,7 +85,7 @@ NodeView::NodeView() {
 	// Create the view
 	view.set_model(tree.getModel());
 	view.append_column("Key", tree.columns.key);
-	view.append_column_editable("Value", tree.columns.value);
+	view.append_column("Value", tree.columns.value);
 	view.set_grid_lines(Gtk::TREE_VIEW_GRID_LINES_HORIZONTAL);
 	
 	// Create the scroller
@@ -122,26 +122,42 @@ void NodeView::update() {
 }
 
 
+Gtk::CellRendererText* NodeView::getRenderer(const string &name) {
+	
+	Gtk::CellRenderer *renderer;
+	
+	if (Text::toLower(name) == "key") {
+		renderer = view.get_column_cell_renderer(0);
+	} else {
+		renderer = view.get_column_cell_renderer(1);
+	}
+	return (Gtk::CellRendererText*)renderer;
+}
+
+
 SceneInspector::SceneInspector() {
+	
+	Gtk::CellRendererText *renderer;
+	
+	// Fields
+	scene = NULL;
+	canvas = NULL;
 	
 	// Add parts
 	add1(sceneView);
 	add2(nodeView);
 	
-	// Connect signals
+	// Update attributes when node changes
 	sceneView.getTreeView().signal_cursor_changed().connect(
 		sigc::mem_fun(*this,&SceneInspector::onCursorChange)
 	);
-}
-
-
-void SceneInspector::update() {
 	
-	// Update both of the views
-	sceneView.setScene(scene);
-	sceneView.update();
-	nodeView.setNode(scene->getRoot());
-	nodeView.update();
+	// Make attribute value renderer editable
+	renderer = nodeView.getRenderer("value");
+	renderer->property_editable() = true;
+	renderer->signal_edited().connect(
+		sigc::mem_fun(*this, &SceneInspector::onEditValue)
+	);
 }
 
 
@@ -160,5 +176,41 @@ void SceneInspector::onCursorChange() {
 		nodeView.setNode(node);
 		nodeView.update();
 	}
+}
+
+
+void SceneInspector::onEditValue(const string& path, const string& text) {
+	
+	Gtk::TreeModel::iterator it;
+	string key;
+	
+	// Figure out what attribute it was
+	it = nodeView.getTreeModel()->get_iter(path);
+	key = (*it)[AttributeTree::columns.key];
+	if (nodeView.getNode()->setAttribute(pair<string,string>(key,text))) {
+		nodeView.update();
+		if (canvas != NULL) {
+			canvas->refresh();
+		}
+	} else {
+		cerr << "[SceneInspector] New value was not accepted by node." << endl;
+	}
+}
+
+
+void SceneInspector::update() {
+	
+	// Validate
+	if (scene == NULL) {
+		throw Exception("[SceneInspector] No scene was loaded.");
+	} if (canvas == NULL) {
+		cerr << "[SceneInspector] No canvas specified to refresh." << endl;
+	}
+	
+	// Update both of the views
+	sceneView.setScene(scene);
+	sceneView.update();
+	nodeView.setNode(scene->getRoot());
+	nodeView.update();
 }
 

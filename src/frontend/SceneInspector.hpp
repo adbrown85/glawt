@@ -41,15 +41,22 @@ inline Gtk::TreeView& SceneView::getTreeView() {return view;}
 class NodeView : public Gtk::VBox {
 public:
 	NodeView();
+	Gtk::TreeView& getTreeView();
+	RefPtr<Gtk::TreeStore> getTreeModel();
+	Node* getNode() const;
 	void setNode(Node *node);
 	void update();
+	Gtk::CellRendererText* getRenderer(const string &name);
 private:
 	Gtk::ScrolledWindow scroller;
 	AttributeTree tree;
 	Gtk::TreeView view;
 	Node *node;
 };
+inline Node* NodeView::getNode() const {return node;}
 inline void NodeView::setNode(Node *n) {node = n;}
+inline Gtk::TreeView& NodeView::getTreeView() {return view;}
+inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 
 
 /** Pane showing scene overview and node details. */
@@ -57,13 +64,17 @@ class SceneInspector : public Gtk::VPaned {
 public:
 	SceneInspector();
 	void onCursorChange();
+	void onEditValue(const string& path, const string& text);
 	void setScene(Scene *scene);
+	void setCanvas(Canvas *canvas);
 	void update();
 private:
 	Scene *scene;
+	Canvas *canvas;
 	NodeView nodeView;
 	SceneView sceneView;
 };
 inline void SceneInspector::setScene(Scene *s) {scene = s;}
+inline void SceneInspector::setCanvas(Canvas *c) {canvas = c;}
 
 #endif

@@ -106,6 +106,7 @@ void Gander::onDisplay() {
 	
 	// Finalize widgets
 	inspector.setScene(scene);
+	inspector.setCanvas(canvas);
 	inspector.update();
 	
 	// Run

@@ -12,6 +12,7 @@
 #include <gtkmm.h>
 #include "Text.hpp"
 using namespace std;
+using Glib::RefPtr;
 
 
 /* Columns of the tree */
@@ -32,14 +33,14 @@ public:
 public:
 	AttributeTree();
 	void append(const string &key, const string &value);
-	Glib::RefPtr<Gtk::TreeStore> getModel() const {return model;}
+	RefPtr<Gtk::TreeStore> getModel() const {return model;}
 	void pop();
 	void print();
 	void push();
 protected:
 	void print(const Gtk::TreeModel::Row &row, int depth);
 private:
-	Glib::RefPtr<Gtk::TreeStore> model;
+	RefPtr<Gtk::TreeStore> model;
 	stack<Gtk::TreeModel::iterator> parents;
 	Gtk::TreeModel::iterator current;
 };

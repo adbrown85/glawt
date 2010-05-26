@@ -53,6 +53,7 @@ public:
 	Tag getTag() const;
 	bool hasChildren() const;
 	friend ostream& operator<<(ostream &stream, const Node &node);
+	virtual bool setAttribute(pair<string,string> attribute);
 	void setDepth(float depth);
 	void setParent(Node *parent);
 	virtual string toString() const;
@@ -76,6 +77,7 @@ inline float Node::getDepth() const {return depth;}
 inline Node* Node::getParent() const {return parent;}
 inline Tag Node::getTag() const {return tag;}
 inline bool Node::hasChildren() const {return !children.empty();}
+inline bool Node::setAttribute(pair<string,string> a) {return false;}
 inline void Node::setDepth(float depth) {this->depth = depth;}
 inline void Node::setParent(Node *parent) {this->parent = parent;}
 

@@ -21,6 +21,16 @@ void UniformFloat::apply() {
 }
 
 
+bool UniformFloat::setAttribute(pair<string,string> attrib) {
+	
+	if (Text::toLower(attrib.first) == "value") {
+		value = atof(attrib.second.c_str());
+		return true;
+	}
+	return false;
+}
+
+
 string UniformFloat::toString() const {
 	
 	ostringstream stream;
