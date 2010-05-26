@@ -24,6 +24,7 @@ class SceneView : public Gtk::Frame {
 public:
 	SceneView();
 	Gtk::TreeView& getTreeView();
+	RefPtr<Gtk::TreeStore> getTreeModel();
 	void onRowChange(const Gtk::TreeModel::Path&, Gtk::TreeViewColumn*);
 	void onRowCollapsed(const Gtk::TreeModel::iterator&,
 	                    const Gtk::TreeModel::Path&);
@@ -40,6 +41,7 @@ private:
 };
 inline void SceneView::setScene(Scene *s) {scene = s;}
 inline Gtk::TreeView& SceneView::getTreeView() {return view;}
+inline RefPtr<Gtk::TreeStore> SceneView::getTreeModel(){return tree.getModel();}
 
 
 /** Tree view to examine a single node. */

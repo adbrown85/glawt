@@ -106,8 +106,7 @@ void SceneView::setNode(Node *node) {
 	row = tree.search(node);
 	if (row) {
 		view.get_selection()->select(row);
-	} else {
-		cout << "Didn't find it..." << endl;
+		view.scroll_to_row(getTreeModel()->get_path(row));
 	}
 }
 
@@ -237,8 +236,6 @@ void Inspector::onNodeEvent(NodeEvent &event) {
 		nodeView.update();
 	} else {
 		sceneView.setNode(event.getSource());
-		//nodeView.setNode(event.getSource());
-		//nodeView.update();
 	}
 }
 
