@@ -13,8 +13,8 @@ uniform int WindowSize=512;
 uniform float SampleRate=0.006;
 uniform float Brightness=1.0;
 uniform vec3[5] Colors=vec3[5](BLUE,GREEN,YELLOW,ORANGE,RED);
-uniform float[5] Markers=float[5](0.2, 0.3, 0.4, 0.6, 0.8);
-uniform float Weight=2.0;
+uniform float[5] Transfer=float[5](0.2, 0.3, 0.4, 0.6, 0.8);
+uniform float Opacity=2.0;
 uniform sampler2D ExitCoords;
 uniform sampler3D Volume;
 
@@ -25,12 +25,12 @@ out vec4 FragColor;
 
 vec3 transfer(float value) {
 	
-	if (value < Markers[0]) {
+	if (value < Transfer[0]) {
 		return Colors[0];
 	}
 	for (int i=1; i<4; ++i) {
-		if (value < Markers[i]) {
-			value = smoothstep(Markers[i-1], Markers[i], value);
+		if (value < Transfer[i]) {
+			value = smoothstep(Transfer[i-1], Transfer[i], value);
 			return mix(Colors[i-1], Colors[i], value);
 		}
 	}
@@ -62,6 +62,6 @@ void main() {
 		}
 		t += SampleRate;
 	}
-	FragColor.a *= Weight;
+	FragColor.a *= Opacity;
 }
 
