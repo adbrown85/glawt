@@ -15,6 +15,7 @@
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
 #include "Inspector.hpp"
+#include "LogBook.hpp"
 #include "DatasetHeader.hpp"
 #include "DatasetWriter.hpp"
 #include "DatasetAnalyzer.hpp"

@@ -18,7 +18,7 @@ using namespace std;
 
 
 /** Tree view made up of the nodes in the scene. */
-class SceneView : public Gtk::VBox {
+class SceneView : public Gtk::Frame {
 public:
 	SceneView();
 	Gtk::TreeView& getTreeView();
@@ -38,7 +38,7 @@ inline Gtk::TreeView& SceneView::getTreeView() {return view;}
 
 
 /** Tree view to examine a single node. */
-class NodeView : public Gtk::VBox {
+class NodeView : public Gtk::Frame {
 public:
 	NodeView();
 	Gtk::TreeView& getTreeView();
@@ -60,7 +60,7 @@ inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 
 
 /** Pane showing scene overview and node details. */
-class Inspector : public Gtk::VPaned {
+class Inspector : public Gtk::Frame {
 public:
 	Inspector();
 	void onCursorChange();
@@ -73,6 +73,7 @@ private:
 	Canvas *canvas;
 	NodeView nodeView;
 	SceneView sceneView;
+	Gtk::VPaned pane;
 };
 inline void Inspector::setScene(Scene *s) {scene = s;}
 inline void Inspector::setCanvas(Canvas *c) {canvas = c;}

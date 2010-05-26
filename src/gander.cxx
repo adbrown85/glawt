@@ -74,8 +74,10 @@ void Gander::onConvert() {
 void Gander::onDisplay() {
 	
 	Gtk::Window window;
-	Gtk::HBox box;
+	Gtk::HBox hBox;
+	Gtk::VBox vBox;
 	Inspector inspector;
+	LogBook logBook;
 	
 	// Create widgets
 	Canvas::init(argc, argv);
@@ -83,9 +85,11 @@ void Gander::onDisplay() {
 	window.set_title(title);
 	
 	// Pack
-	box.pack_start(inspector);
-	box.pack_start(*canvas, Gtk::PACK_SHRINK);
-	window.add(box);
+	vBox.pack_start(*canvas, Gtk::PACK_SHRINK);
+	vBox.pack_start(logBook);
+	hBox.pack_start(inspector);
+	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
+	window.add(hBox);
 	window.show_all();
 	
 	// Start OpenGL calls

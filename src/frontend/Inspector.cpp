@@ -20,7 +20,7 @@ SceneView::SceneView() {
 	// Add the view with scroll bars
 	scroller.add(view);
 	scroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-	scroller.set_size_request(250, 350);
+	//scroller.set_size_request(250, 350);
 	
 	// Connect signals
 	view.signal_row_activated().connect(
@@ -28,7 +28,9 @@ SceneView::SceneView() {
 	);
 	
 	// Pack
-	pack_start(scroller);
+	add(scroller);
+	set_shadow_type(Gtk::SHADOW_ETCHED_OUT);
+	set_border_width(1);
 }
 
 
@@ -96,10 +98,12 @@ NodeView::NodeView() {
 	// Create the scroller
 	scroller.add(view);
 	scroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-	scroller.set_size_request(250, 150);
+	scroller.set_size_request(-1, 150);
 	
 	// Pack
-	pack_start(scroller);
+	add(scroller);
+	set_shadow_type(Gtk::SHADOW_ETCHED_OUT);
+	set_border_width(1);
 }
 
 
@@ -148,9 +152,13 @@ Inspector::Inspector() {
 	scene = NULL;
 	canvas = NULL;
 	
-	// Add parts
-	add1(sceneView);
-	add2(nodeView);
+	// Pack
+	pane.pack1(sceneView);
+	pane.pack2(nodeView, Gtk::SHRINK);
+	add(pane);
+	set_shadow_type(Gtk::SHADOW_ETCHED_OUT);
+	set_border_width(2);
+	set_size_request(250, -1);
 	
 	// Update attributes when node changes
 	sceneView.getTreeView().signal_cursor_changed().connect(
