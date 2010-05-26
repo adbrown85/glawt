@@ -22,6 +22,11 @@ SceneView::SceneView() {
 	scroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 	scroller.set_size_request(250, 350);
 	
+	// Connect signals
+	view.signal_row_activated().connect(
+		sigc::mem_fun(*this,&SceneView::onRowChange)
+	);
+	
 	// Pack
 	pack_start(scroller);
 }
@@ -59,6 +64,18 @@ void SceneView::build(Node *node) {
 }
 
 
+void SceneView::onRowChange(const Gtk::TreeModel::Path& path,
+                            Gtk::TreeViewColumn* column) {
+	
+	
+	if (view.row_expanded(path)) {
+		view.collapse_row(path);
+	} else {
+		view.expand_row(path, true);
+	}
+}
+
+
 /** Sets up the view inside a scrolled window. */
 NodeView::NodeView() {
 	
@@ -67,7 +84,8 @@ NodeView::NodeView() {
 	
 	// Create the view
 	view.set_model(tree.getModel());
-	view.append_column("Attributes", tree.columns.text);
+	view.append_column("Key", tree.columns.key);
+	view.append_column_editable("Value", tree.columns.value);
 	view.set_grid_lines(Gtk::TREE_VIEW_GRID_LINES_HORIZONTAL);
 	
 	// Create the scroller
@@ -98,7 +116,7 @@ void NodeView::update() {
 	// Build the list
 	tag = Parser::create(node->toString());
 	for (it=tag.begin(); it!=tag.end(); ++it) {
-		tree.add(it->first + "='" + it->second + "'");
+		tree.append(it->first, it->second);
 	}
 	view.expand_all();
 }
@@ -111,9 +129,7 @@ SceneInspector::SceneInspector() {
 	add2(nodeView);
 	
 	// Connect signals
-	sceneView.getTreeView().signal_row_activated().connect(
-		sigc::mem_fun(*this,&SceneInspector::onRowChange)
-	); sceneView.getTreeView().signal_cursor_changed().connect(
+	sceneView.getTreeView().signal_cursor_changed().connect(
 		sigc::mem_fun(*this,&SceneInspector::onCursorChange)
 	);
 }
@@ -126,19 +142,6 @@ void SceneInspector::update() {
 	sceneView.update();
 	nodeView.setNode(scene->getRoot());
 	nodeView.update();
-}
-
-
-void SceneInspector::onRowChange(const Gtk::TreeModel::Path& path,
-                                 Gtk::TreeViewColumn* column) {
-	
-	Gtk::TreeView *tv=&(sceneView.getTreeView());
-	
-	if (tv->row_expanded(path)) {
-		tv->collapse_row(path);
-	} else {
-		tv->expand_row(path, true);
-	}
 }
 
 

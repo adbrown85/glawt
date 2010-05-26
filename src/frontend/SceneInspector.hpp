@@ -12,7 +12,7 @@
 #include <map>
 #include <string>
 #include "NodeTree.hpp"
-#include "TextTree.hpp"
+#include "AttributeTree.hpp"
 #include "Scene.hpp"
 using namespace std;
 
@@ -22,6 +22,7 @@ class SceneView : public Gtk::VBox {
 public:
 	SceneView();
 	Gtk::TreeView& getTreeView();
+	void onRowChange(const Gtk::TreeModel::Path&, Gtk::TreeViewColumn*);
 	void setScene(Scene *scene);
 	void update();
 protected:
@@ -44,7 +45,7 @@ public:
 	void update();
 private:
 	Gtk::ScrolledWindow scroller;
-	TextTree tree;
+	AttributeTree tree;
 	Gtk::TreeView view;
 	Node *node;
 };
@@ -55,8 +56,6 @@ inline void NodeView::setNode(Node *n) {node = n;}
 class SceneInspector : public Gtk::VPaned {
 public:
 	SceneInspector();
-	void onRowChange(const Gtk::TreeModel::Path &path,
-	                 Gtk::TreeViewColumn *column);
 	void onCursorChange();
 	void setScene(Scene *scene);
 	void update();
