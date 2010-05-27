@@ -5,64 +5,116 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Canvas.hpp"
-#include <gtkmm/main.h>
-#include <gtkmm/window.h>
-Canvas *canvas;
+#define CANVAS_MOD_CONTROL 10
+#define CANVAS_MOD_ALT 20
+#define CANVAS_MOD_SHIFT 30
 
 
-void display() {
+/* Fake canvas with required implementations. */
+class FakeCanvas : public Canvas {
+public:
+	FakeCanvas(int width, int height) : Canvas(width,height) {}
+	virtual void flush() {}
+	virtual void refresh() {}
+	void updateState(CanvasState state) {this->state = state;}
+};
+
+/* Fake canvas listener. */
+class FakeCanvasListener : public CanvasListener {
+public:
+	FakeCanvasListener(const string &name) {this->name = name;}
+	virtual void onCanvasEvent(const CanvasEvent &event) {
+		cout << name << " received event..." << endl;
+		cout << "  " << event.type << endl;
+		cout << "  " << event.state.x << " " << event.state.y << endl;
+		cout << "  " << event.state.combo.trigger << " "
+		             << event.state.combo.modifier << " "
+		             << event.state.combo.action << endl;
+	}
+private:
+	string name;
+};
+
+/* Test for canvas using fakes. */
+class CanvasTest {
+public:
+	void setUp();
+	void tearDown();
+	void testEvent();
+private:
+	Canvas *canvas;
+};
+
+/* Creates the canvas. */
+void CanvasTest::setUp() {
 	
-	glClearColor(0.0, 1.0, 0.0, 1.0);
-	canvas->clear();
-	
-	canvas->flush();
+	canvas = new FakeCanvas(512, 512);
 }
 
-
-void mouse(int button, int state, int x, int y) {
+/* Deletes the canvas. */
+void CanvasTest::tearDown() {
 	
-	cout << "mouse(int,int,int,int)" << endl;
+	delete canvas;
 }
 
-
-void keyboard(int key, int x, int y) {
+/* Tests that the listener receives the events. */
+void CanvasTest::testEvent() {
 	
-	cout << "key(int,int,int)" << endl;
-}
-
-
-void drag(int x, int y) {
+	CanvasState state;
 	
-	cout << "drag(int,int)" << endl;
-}
-
-
-void createAndShowGUI() {
+	// Add listeners
+	canvas->addListener(new FakeCanvasListener("mous"), CanvasEvent::BUTTON);
+	canvas->addListener(new FakeCanvasListener("keyb"), CanvasEvent::KEY);
+	canvas->addListener(new FakeCanvasListener("pain"), CanvasEvent::DISPLAY);
+	canvas->addListener(new FakeCanvasListener("main"), CanvasEvent::SETUP);
 	
-	Gtk::Window window;
+	// Fire event
+	state.x = 100;
+	state.y = 200;
+	state.combo.action = CANVAS_DOWN;
+	state.combo.modifier = CANVAS_MOD_ALT;
+	state.combo.trigger = CANVAS_LEFT_BUTTON;
+	((FakeCanvas*)canvas)->updateState(state);
+	canvas->fireEvent(CanvasEvent::BUTTON);
 	
-	// Create the canvas
-	canvas = new Canvas();
-	canvas->setDisplayCallback(&display);
-	canvas->setMouseCallback(&mouse);
-	canvas->setKeyboardCallback(&keyboard);
-	canvas->setDragCallback(&drag);
-	
-	// Add to window
-	window.set_title("Canvas");
-	window.add(*canvas);
-	window.show_all();
-	Gtk::Main::run(window);
+	// Fire event
+	state.x = 50;
+	state.y = 4000;
+	state.combo.action = CANVAS_UP;
+	state.combo.modifier = CANVAS_MOD_CONTROL;
+	state.combo.trigger = CANVAS_RIGHT_BUTTON;
+	((FakeCanvas*)canvas)->updateState(state);
+	canvas->fireEvent(CanvasEvent::KEY);
 }
 
 
 int main(int argc, char *argv[]) {
 	
-	Gtk::Main kit(argc, argv);
-	Canvas::init(argc, argv);
+	CanvasTest test;
 	
-	// Create window with canvas
-	createAndShowGUI();
+	// Start
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "Canvas" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
+	
+	// Test
+	try {
+		test.setUp();
+		test.testEvent();
+		test.tearDown();
+	} catch (Exception &e) {
+		cerr << e << endl;
+		exit(1);
+	}
+	
+	// Finish
+	cout << endl;
+	cout << "****************************************" << endl;
+	cout << "Canvas" << endl;
+	cout << "****************************************" << endl;
+	cout << endl;
 	return 0;
 }
 
