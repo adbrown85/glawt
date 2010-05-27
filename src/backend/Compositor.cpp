@@ -8,19 +8,15 @@
 
 
 /** Adds the commands this delegate supports and sets up handlers. */
-Compositor::Compositor() {
+Compositor::Compositor(Scene *scene, Canvas *canvas) {
 	
-	// Set type
-	type = "Compositor";
-	
-	// Add handlers
-	handlersZero[Command::HIDE] = &Compositor::hide;
-	handlersZero[Command::SHOW_ALL] = &Compositor::showAll;
+	this->scene = scene;
+	this->canvas = canvas;
 }
 
 
 /** Hides the items currently selected. */
-void Compositor::hide(Scene *scene, Canvas *canvas, int cmd) {
+void Compositor::hide(int cmd) {
 	
 	Selection selection;
 	Selection::iterator it;
@@ -34,7 +30,7 @@ void Compositor::hide(Scene *scene, Canvas *canvas, int cmd) {
 
 
 /** Shows all the %Drawable nodes in the scene. */
-void Compositor::showAll(Scene *scene, Canvas *canvas, int cmd) {
+void Compositor::showAll(int cmd) {
 	
 	showAll(scene->getRoot());
 }

@@ -31,13 +31,13 @@ using namespace std;
  * 
  * @todo Need to deallocate manipulators.
  */
-class Mouse : public Control {
+class Mouse : public Control, public CommandListener {
 public:
 	Mouse(Interpreter *interpreter);
 	virtual void install();
 	static void onClick(int button, int action, int x, int y);
 	static void onDrag(int x, int y);
-	static void onModeChange(int command);
+	virtual void onCommandEvent(int command);
 protected:
 	void initBindings();
 	void initData();

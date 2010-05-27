@@ -28,7 +28,7 @@ using namespace std;
  * @ingroup frontend
  * @brief 3D display for items in a scene.
  */
-class Display {
+class Display : public CommandListener {
 public:
 	Display(Interpreter *interpreter);
 	void add(Control *control);
@@ -36,7 +36,8 @@ public:
 	static void display(void);
 	Interpreter* getInterpreter();
 	static void idle(void);
-	static void toggleOverlay(int command);
+	virtual void onCommandEvent(int command);
+	static void toggleOverlay();
 protected:
 	void overlay();
 private:

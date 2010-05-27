@@ -7,25 +7,16 @@
 #include "Director.hpp"
 
 
-/** Adds the commands this delegate supports and sets up handlers. */
-Director::Director() {
+/** Stores the scene and canvas. */
+Director::Director(Scene *scene, Canvas *canvas) {
 	
-	// Set type
-	type = "Director";
-	
-	// Add zero-argument handlers
-	handlersZero[Command::DESELECT] = &Director::select;
-	handlersZero[Command::NEXT] = &Director::iterate;
-	handlersZero[Command::PREVIOUS] = &Director::iterate;
-	handlersZero[Command::SELECT_ALL] = &Director::select;
-	
-	// Add float-argument handlers
-	handlersFloat[Command::GRAB] = &Director::grab;
+	this->scene = scene;
+	this->canvas = canvas;
 }
 
 
 /** Picks an item in the scene by its ID number. */
-void Director::grab(Scene *scene, Canvas *canvas, int cmd, float id) {
+void Director::grab(int cmd, float id) {
 	
 	Identifiable *identifiable;
 	Drawable *drawable;
@@ -45,14 +36,14 @@ void Director::grab(Scene *scene, Canvas *canvas, int cmd, float id) {
 
 
 /** Iterates through the items in the scene. */
-void Director::iterate(Scene *scene, Canvas *canvas, int cmd) {
+void Director::iterate(int cmd) {
 	
 	cout << "Director::cmdIterate(Scene*,int)" << endl;
 }
 
 
 /** Selects all or none. */
-void Director::select(Scene *scene, Canvas *canvas, int cmd) {
+void Director::select(int cmd) {
 	
 	switch (cmd) {
 	case Command::SELECT_ALL :
@@ -61,9 +52,6 @@ void Director::select(Scene *scene, Canvas *canvas, int cmd) {
 	case Command::DESELECT :
 		scene->removeAllFromSelection();
 		break;
-	default :
-		break;
 	}
-	//glutPostRedisplay();
 }
 

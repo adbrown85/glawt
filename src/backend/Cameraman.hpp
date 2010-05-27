@@ -14,17 +14,19 @@
 using namespace std;
 
 
-/**
+/** @brief Worker responsible for moving or rotating the camera.
  * @ingroup backend
- * @brief %Delegate responsible for moving or rotating the camera.
  */
-class Cameraman : public Delegate {
+class Cameraman {
 public:
-	Cameraman();
-	static void fit(Scene *scene, Canvas *canvas, int command);
-	static void reset(Scene *scene, Canvas *canvas, int command);
-	static void rotate(Scene *s, Canvas *c, int command, float amount);
-	static void translate(Scene *s, Canvas *c, int command, float amount);
+	Cameraman(Scene *scene, Canvas *canvas);
+	void fit(int command);
+	void reset(int command);
+	void rotate(int command, float amount);
+	void translate(int command, float amount);
+private:
+	Canvas *canvas;
+	Scene *scene;
 };
 
 

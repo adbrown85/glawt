@@ -7,34 +7,23 @@
 #include "Grip.hpp"
 
 
-/** Adds the handlers Grip supports. */
-Grip::Grip() {
+/** Stores the inputs. */
+Grip::Grip(Scene *scene, Canvas *canvas) {
 	
-	// Set type
-	type = "Grip";
-	
-	// Add float handlers
-	handlersFloat[Command::ROTATE_X] = &Grip::rotate;
-	handlersFloat[Command::ROTATE_Y] = &Grip::rotate;
-	handlersFloat[Command::ROTATE_Z] = &Grip::rotate;
-	handlersFloat[Command::SCALE_X] = &Grip::scale;
-	handlersFloat[Command::SCALE_Y] = &Grip::scale;
-	handlersFloat[Command::SCALE_Z] = &Grip::scale;
-	handlersFloat[Command::TRANSLATE_X] = &Grip::translate;
-	handlersFloat[Command::TRANSLATE_Y] = &Grip::translate;
-	handlersFloat[Command::TRANSLATE_Z] = &Grip::translate;
+	this->scene = scene;
+	this->canvas = canvas;
 }
 
 
 /** Rotates the current selection. */
-void Grip::rotate(Scene *scene, Canvas *canvas, int command, float argument) {
+void Grip::rotate(int command, float argument) {
 	
 	cout << "Grip::rotate(Scene*,int)" << endl;
 }
 
 
 /** Scales the current selection. */
-void Grip::scale(Scene *scene, Canvas *canvas, int command, float argument) {
+void Grip::scale(int command, float argument) {
 	
 	Node *node;
 	Selection selection;
@@ -70,10 +59,7 @@ void Grip::scale(Scene *scene, Canvas *canvas, int command, float argument) {
 
 
 /** Translates the current selection. */
-void Grip::translate(Scene *scene,
-                     Canvas *canvas,
-                     int command,
-                     float argument) {
+void Grip::translate(int command, float argument) {
 	
 	Node *node;
 	Selection selection;
@@ -83,15 +69,15 @@ void Grip::translate(Scene *scene,
 	
 	// Determine change
 	switch(command) {
-		case Command::TRANSLATE_X :
-			change.x = argument;
-			break;
-		case Command::TRANSLATE_Y :
-			change.y = argument;
-			break;
-		case Command::TRANSLATE_Z :
-			change.z = argument;
-			break;
+	case Command::TRANSLATE_X :
+		change.x = argument;
+		break;
+	case Command::TRANSLATE_Y :
+		change.y = argument;
+		break;
+	case Command::TRANSLATE_Z :
+		change.z = argument;
+		break;
 	}
 	
 	// Apply change

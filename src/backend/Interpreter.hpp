@@ -9,25 +9,25 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include <algorithm>
-#include <map>
-#include <vector>
+#include <map>                          // Storing listeners
 #include "Cameraman.hpp"
 #include "Compositor.hpp"
 #include "Director.hpp"
 #include "Grip.hpp"
 #include "Producer.hpp"
-#include "Canvas.hpp"
 using namespace std;
 
 
-/* Function pointer listener to be called on a specific command. */
-typedef void (*interpreter_listener)(int);
+/* Interface for an object that wants to be notified of a command. */
+class CommandListener {
+public:
+	virtual void onCommandEvent(int command) = 0;
+};
 
 
-/**
+/** @brief Interprets commands and passes them on to workers.
  * @ingroup backend
- * @brief Interprets commands and passes them on to other %Delegates.
+ * @warning Currently only supports one listener per command.
  * 
  * @see Cameraman
  * @see Compositor
@@ -35,30 +35,33 @@ typedef void (*interpreter_listener)(int);
  * @see Grip
  * @see Producer
  */
-class Interpreter : public Delegate {
+class Interpreter {
 public:
 	Interpreter(Scene *scene, Canvas *canvas);
 	~Interpreter();
-	virtual void addListener(int command, interpreter_listener);
+	void addListener(CommandListener *listener, int command);
+	void fireEvent(int command);
 	Canvas* getCanvas() const;
 	Scene* getScene() const;
-	void print();
-	virtual void run(int command);
-	virtual void run(int command, float argument);
-	virtual void run(int command, string argument);
+	void run(int command);
+	void run(int command, float argument);
+	void run(int command, string argument);
+	void setCanvas(Canvas *canvas);
 	void setScene(Scene *scene);
 private:
 	Scene *scene;
 	Canvas *canvas;
-	map<int,interpreter_listener> listeners;
-	vector<Delegate*> delegates;
+	map<int,CommandListener*> listeners;
+	Cameraman *cameraman;
+	Compositor *compositor;
+	Director *director;
+	Grip *grip;
+	Producer *producer;
 };
-
 inline Canvas* Interpreter::getCanvas() const {return canvas;}
-
 inline Scene* Interpreter::getScene() const {return scene;}
-
-inline void Interpreter::setScene(Scene *scene) {this->scene = scene;}
+inline void Interpreter::setCanvas(Canvas *c) {canvas = c;}
+inline void Interpreter::setScene(Scene *s) {scene = s;}
 
 
 #endif

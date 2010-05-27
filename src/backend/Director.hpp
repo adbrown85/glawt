@@ -12,16 +12,18 @@
 using namespace std;
 
 
-/**
+/** @brief %Worker responsible for selecting items in the scene.
  * @ingroup backend
- * @brief %Delegate responsible for selecting items in the scene.
  */
-class Director : public Delegate {
+class Director {
 public:
-	Director();
-	static void grab(Scene *scene, Canvas *canvas, int cmd, float id);
-	static void iterate(Scene *scene, Canvas *canvas, int cmd);
-	static void select(Scene *scene, Canvas *canvas, int cmd);
+	Director(Scene *scene, Canvas *canvas);
+	void grab(int cmd, float id);
+	void iterate(int cmd);
+	void select(int cmd);
+private:
+	Canvas *canvas;
+	Scene *scene;
 };
 
 

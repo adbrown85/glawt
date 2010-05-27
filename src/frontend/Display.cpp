@@ -25,7 +25,7 @@ Display::Display(Interpreter *interpreter) {
 	computeFootprint();
 	
 	// Register functions
-	interpreter->addListener(Command::INFORMATION, &Display::toggleOverlay);
+	interpreter->addListener(this, Command::INFORMATION);
 	canvas->setDisplayCallback(&Display::display);
 }
 
@@ -87,6 +87,17 @@ void Display::idle(void) {
 }
 
 
+/** Handles command events. */
+void Display::onCommandEvent(int command) {
+	
+	switch (command) {
+	case Command::INFORMATION:
+		toggleOverlay();
+		break;
+	}
+}
+
+
 /** Draws the overlay on the display. */
 void Display::overlay() {
 	
@@ -114,7 +125,8 @@ void Display::overlay() {
 }
 
 
-void Display::toggleOverlay(int command) {
+/** Switches the overlay on and off. */
+void Display::toggleOverlay() {
 	
 	obj->useOverlay = !obj->useOverlay;
 	//if (obj->useOverlay)

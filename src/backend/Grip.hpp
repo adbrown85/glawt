@@ -13,20 +13,21 @@
 #include "Command.hpp"
 #include "Scale.hpp"
 #include "Translate.hpp"
-#include "Vector.hpp"
 using namespace std;
 
 
-/**
+/** @brief Worker responsible for moving individual items around the scene.
  * @ingroup backend
- * @brief %Delegate responsible for moving individual items around the scene.
  */
-class Grip : public Delegate {
-public :
-	Grip();
-	static void rotate(Scene *scene, Canvas *canvas, int cmd, float argument);
-	static void scale(Scene *scene, Canvas *canvas, int cmd, float argument);
-	static void translate(Scene *scene, Canvas *canvas, int cmd, float argument);
+class Grip {
+public:
+	Grip(Scene *scene, Canvas *canvas);
+	void rotate(int cmd, float argument);
+	void scale(int cmd, float argument);
+	void translate(int cmd, float argument);
+private:
+	Canvas *canvas;
+	Scene *scene;
 };
 
 

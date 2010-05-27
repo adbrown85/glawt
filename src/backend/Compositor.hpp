@@ -12,16 +12,18 @@
 using namespace std;
 
 
-/**
+/** @brief Worker responsible for hiding and showing items.
  * @ingroup backend
- * @brief %Delegate responsible for hiding and showing items.
  */
-class Compositor : public Delegate {
-public :
-	Compositor();
-	static void hide(Scene *scene, Canvas *canvas, int command);
-	static void showAll(Scene *scene, Canvas *canvas, int command);
-	static void showAll(Node *node);
+class Compositor {
+public:
+	Compositor(Scene *scene, Canvas *canvas);
+	void hide(int command);
+	void showAll(int command);
+	void showAll(Node *node);
+private:
+	Canvas *canvas;
+	Scene *scene;
 };
 
 

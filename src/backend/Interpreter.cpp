@@ -7,147 +7,150 @@
 #include "Interpreter.hpp"
 
 
-/** Initializes the scene, loads the delegates, and adds commands from each.
- * 
- * @param scene Pointer to the Scene to work with.
- */
+/** Stores the inputs and sets up all the workers. */
 Interpreter::Interpreter(Scene *scene, Canvas *canvas) {
 	
-	map<int,handler_0> handlersZero;
-	map<int,handler_0>::iterator h0;
-	map<int,handler_f> handlersFloat;
-	map<int,handler_f>::iterator hf;
-	map<int,handler_s> handlersString;
-	map<int,handler_s>::iterator hs;
-	vector<Delegate*>::iterator di;
-	
-	// Initialize
+	// Fields
 	this->scene = scene;
 	this->canvas = canvas;
 	
-	// Load delegates
-	delegates.push_back(new Cameraman());
-	delegates.push_back(new Compositor());
-	delegates.push_back(new Director());
-	delegates.push_back(new Grip());
-	delegates.push_back(new Producer());
-	
-	// Add commands from each delegate {
-	for (di=delegates.begin(); di!=delegates.end(); di++) {
-		handlersZero = (*di)->getHandlersZero();
-		for (h0=handlersZero.begin(); h0!=handlersZero.end(); ++h0)
-			this->handlersZero[h0->first] = h0->second;
-		handlersFloat = (*di)->getHandlersFloat();
-		for (hf=handlersFloat.begin(); hf!=handlersFloat.end(); ++hf)
-			this->handlersFloat[hf->first] = hf->second;
-		handlersString = (*di)->getHandlersString();
-		for (hs= handlersString.begin(); hs!=handlersString.end(); ++hs)
-			this->handlersString[hs->first] = hs->second;
-	}
+	// Delegates
+	cameraman = new Cameraman(scene, canvas);
+	compositor = new Compositor(scene, canvas);
+	director = new Director(scene, canvas);
+	grip = new Grip(scene, canvas);
+	producer = new Producer(scene, canvas);
 }
 
 
-/** Cleans up the delegates. */
+/** Deletes all the workers. */
 Interpreter::~Interpreter() {
 	
-	// Clean up
-	for (size_t i=0; i<delegates.size(); i++)
-		delete delegates[i];
+	delete cameraman;
+	delete compositor;
+	delete director;
+	delete grip;
+	delete producer;
 }
 
 
 /** Adds a callback that will be called when a command is issued. */
-void Interpreter::addListener(int command,
-                              interpreter_listener function) {
+void Interpreter::addListener(CommandListener *listener, int command) {
 	
-	listeners[command] = function;
+	listeners[command] = listener;
 }
 
 
-/** Prints the commands. */
-void Interpreter::print() {
+/** Calls the listener for a command. */
+void Interpreter::fireEvent(int command) {
 	
-	map<int,handler_0>::iterator h0;
-	map<int,handler_f>::iterator hf;
-	map<int,handler_s>::iterator hs;
-	string commandName;
+	map<int,CommandListener*>::iterator it;
 	
-	// Get commands
-	cout << "Zero-argument handlers: " << endl;
-	for (h0=handlersZero.begin(); h0!=handlersZero.end(); ++h0)
-		cout << "  " << Command::getName(h0->first) << endl;
-	cout << "Float-argument handlers: " << endl;
-	for (hf=handlersFloat.begin(); hf!=handlersFloat.end(); ++hf)
-		cout << "  " << Command::getName(hf->first) << endl;
-	cout << "String-argument handlers: " << endl;
-	for (hs=handlersString.begin(); hs!=handlersString.end(); ++hs)
-		cout << "  " << Command::getName(hf->first) << endl;
+	it = listeners.find(command);
+	if (it != listeners.end()) {
+		(it->second)->onCommandEvent(command);
+	}
 }
 
 
-/** Runs a command by calling a delegate's method.
- * 
- * @param command Enumerated type from 'Command.hpp'.
- */
+/** Runs a command by handing it off to a worker. */
 void Interpreter::run(int command) {
 	
-	map<int,interpreter_listener>::iterator li;
-	map<int,handler_0>::iterator hi;
-	
 	// Check for listener
-	li = listeners.find(command);
-	if (li != listeners.end())
-		(li->second)(command);
+	fireEvent(command);
 	
-	// Hand off to delegate
-	hi = handlersZero.find(command);
-	if (hi != handlersZero.end())
-		(hi->second)(scene, canvas, command);
+	// Hand off to worker
+	switch (command) {
+	case Command::FIT_SELECTED:
+	case Command::FIT_ALL:
+		cameraman->fit(command);
+		break;
+	case Command::RESET:
+		cameraman->reset(command);
+		break;
+	case Command::HIDE:
+		compositor->hide(command);
+		break;
+	case Command::SHOW_ALL:
+		compositor->showAll(command);
+		break;
+	case Command::DESELECT:
+	case Command::SELECT_ALL:
+		director->select(command);
+		break;
+	case Command::NEXT:
+	case Command::PREVIOUS:
+		director->iterate(command);
+		break;
+	case Command::EXIT:
+		producer->quit(command);
+		break;
+	case Command::LIST:
+		producer->list(command);
+		break;
+	}
 }
 
 
-/** Runs a command by handing it off to a delegate.
- * 
- * @param command Enumerated type from 'Command.hpp'.
- * @param argument Argument to the command.
- */
-void Interpreter::run(int command,
-                      float argument) {
-	
-	map<int,interpreter_listener>::iterator li;
-	map<int,handler_f>::iterator hi;
+/** Runs a command by handing it off to a worker. */
+void Interpreter::run(int command, float argument) {
 	
 	// Check for listener
-	li = listeners.find(command);
-	if (li != listeners.end())
-		(li->second)(command);
+	fireEvent(command);
 	
-	// Hand off to delegate
-	hi = handlersFloat.find(command);
-	if (hi != handlersFloat.end())
-		(hi->second)(scene, canvas, command, argument);
+	// Hand off to worker
+	switch (command) {
+	case Command::CIRCLE_X:
+	case Command::CIRCLE_Y:
+	case Command::CIRCLE_LEFT:
+	case Command::CIRCLE_RIGHT:
+	case Command::CIRCLE_DOWN:
+	case Command::CIRCLE_UP:
+		cameraman->rotate(command, argument);
+		break;
+	case Command::BOOM:
+	case Command::BOOM_DOWN:
+	case Command::BOOM_UP:
+	case Command::ZOOM_IN:
+	case Command::ZOOM_OUT:
+	case Command::TRACK:
+	case Command::TRACK_LEFT:
+	case Command::TRACK_RIGHT:
+		cameraman->translate(command, argument);
+		break;
+	case Command::GRAB:
+		director->grab(command, argument);
+		break;
+	case Command::ROTATE_X:
+	case Command::ROTATE_Y:
+	case Command::ROTATE_Z:
+		grip->rotate(command, argument);
+		break;
+	case Command::SCALE_X:
+	case Command::SCALE_Y:
+	case Command::SCALE_Z:
+		grip->scale(command, argument);
+		break;
+	case Command::TRANSLATE_X:
+	case Command::TRANSLATE_Y:
+	case Command::TRANSLATE_Z:
+		grip->translate(command, argument);
+		break;
+	}
 }
 
 
-/** Runs a command by handing it off to a delegate.
- * 
- * @param command Enumerated type from 'Command.hpp'.
- * @param argument Argument to the command.
- */
-void Interpreter::run(int command,
-                      string argument) {
-	
-	map<int,interpreter_listener>::iterator li;
-	map<int,handler_s>::iterator hi;
+/** Runs a command by handing it off to a worker. */
+void Interpreter::run(int command, string argument) {
 	
 	// Check for listener
-	li = listeners.find(command);
-	if (li != listeners.end())
-		(li->second)(command);
+	fireEvent(command);
 	
-	// Hand off to delegate
-	hi = handlersString.find(command);
-	if (hi != handlersString.end())
-		(hi->second)(scene, canvas, command, argument);
+	// Hand off to worker
+	switch (command) {
+	case Command::OPEN:
+		producer->open(command, argument);
+		break;
+	}
 }
 

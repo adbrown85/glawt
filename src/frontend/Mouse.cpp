@@ -104,39 +104,41 @@ void Mouse::initManipulators() {
 	dragHelper.setManipulators(manipulators);
 	
 	// Add listeners
-	interpreter->addListener(Command::TRANSLATE, &onModeChange);
-	interpreter->addListener(Command::SCALE, &onModeChange);
-	interpreter->addListener(Command::ROTATE, &onModeChange);
+	interpreter->addListener(this, Command::TRANSLATE);
+	interpreter->addListener(this, Command::SCALE);
+	interpreter->addListener(this, Command::ROTATE);
 }
 
 
-/** GLUT callback for mouse clicks. */
+/** Callback for mouse clicks. */
 void Mouse::onClick(int button, int state, int x, int y) {
 	
 	obj->clickHelper.onClick(button, state, x, y);
 }
 
 
-/** GLUT callback for when the mouse is dragged. */
+/** Callback for when the mouse is dragged. */
 void Mouse::onDrag(int x, int y) {
 	
 	obj->dragHelper.onDrag(x, y);
 }
 
 
-void Mouse::onModeChange(int command) {
+/** Handles commands. */
+void Mouse::onCommandEvent(int command) {
 	
 	switch (command) {
 	case Command::TRANSLATE:
-		obj->enableTranslateManipulators();
+		enableTranslateManipulators();
 		break;
 	case Command::SCALE:
-		obj->enableScaleManipulators();
+		enableScaleManipulators();
 		break;
 	}
 }
 
 
+/** Use all the scale manipulators. */
 void Mouse::enableScaleManipulators() {
 	
 	vector<Manipulator*>::iterator it;
@@ -155,6 +157,7 @@ void Mouse::enableScaleManipulators() {
 }
 
 
+/** Use all the translate manipulators. */
 void Mouse::enableTranslateManipulators() {
 	
 	vector<Manipulator*>::iterator it;

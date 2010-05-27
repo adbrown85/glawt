@@ -8,33 +8,30 @@
 #define PRODUCER_HPP
 #include <cstdlib>
 #include <iostream>
-#include <map>
-#include <stack>
 #include <string>
-#include <typeinfo>
-#include <vector>
 #include "Command.hpp"
 #include "AdvancedFactory.hpp"
 #include "BasicFactory.hpp"
-#include "Translate.hpp"
 using namespace std;
 
 
-/**
+/** @brief Worker responsible for creating and storing scenes.
  * @ingroup backend
- * @brief  %Delegate responsible for creating and storing scenes.
  */
-class Producer : public Delegate {
+class Producer {
 public:
-	Producer();
-	static void copy(Scene *scene, Canvas *canvas, int command);
-	static void cut(Scene *scene, Canvas *canvas, int command);
-	static void duplicate(Scene *scene, Canvas *canvas, int command);
-	static void list(Scene *scene, Canvas *canvas, int command);
-	static void open(Scene *s, Canvas *c, int command, const string &arg);
-	static void paste(Scene *scene, Canvas *canvas, int command);
-	static void quit(Scene *scene, Canvas *canvas, int command);
-	static void save(Scene *scene, Canvas *canvas, int command);
+	Producer(Scene *scene, Canvas *canvas);
+	void copy(int command);
+	void cut(int command);
+	void duplicate(int command);
+	void list(int command);
+	void open(int command, const string &arg);
+	void paste(int command);
+	void quit(int command);
+	void save(int command);
+private:
+	Canvas *canvas;
+	Scene *scene;
 };
 
 
