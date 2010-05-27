@@ -42,7 +42,8 @@ void Tester::keyboard(int key, int x, int y) {
 	case CANVAS_KEY_LEFT:
 		canvas->rotate(-CANVAS_ROTATE_AMOUNT, Vector(0.0,1.0,0.0));
 		break;
-	case CANVAS_R:
+	case 'r':
+	case 'R':
 		canvas->reset();
 		break;
 	case CANVAS_MINUS:
@@ -53,7 +54,8 @@ void Tester::keyboard(int key, int x, int y) {
 		canvas->translate(Vector(0,0,+1));
 		break;
 	case CANVAS_ESCAPE:
-	case CANVAS_Q:
+	case 'Q':
+	case 'q':
 		exit(0);
 	}
 }

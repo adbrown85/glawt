@@ -11,8 +11,11 @@
 #include <string>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <gtkmm.h>
-#include <gtkglmm.h>
+#include <glibmm/refptr.h>
+#include <gdkmm/window.h>
+#include <gdk/gdkkeysyms.h>
+#include <gtkmm/gl/init.h>
+#include <gtkmm/gl/drawingarea.h>
 #include "Matrix.hpp"
 #include "Quaternion.hpp"
 #include "Vector.hpp"
@@ -33,10 +36,6 @@
 #define CANVAS_KEY_DOWN GDK_Down
 #define CANVAS_KEY_LEFT GDK_Left
 #define CANVAS_KEY_RIGHT GDK_Right
-#define CANVAS_R GDK_R
-#define CANVAS_r GDK_r
-#define CANVAS_Q GDK_Q
-#define CANVAS_q GDK_q
 #define CANVAS_MINUS GDK_minus
 #define CANVAS_PLUS GDK_plus
 #define CANVAS_EQUALS GDK_equal
@@ -45,7 +44,6 @@
 #define CANVAS_MOD_ALT GDK_Alt_L
 #define CANVAS_MOD_SHIFT GDK_Shift_L
 using namespace std;
-//using System::log;
 
 
 /* Callback definitions */

@@ -167,14 +167,24 @@ void Gander::onRange() {
 
 void Gander::onSlices() {
 	
-	Dataset dataset(inFilename);
-	DatasetViewer viewer;
-	
-	// View dataset
+	// Initialize
 	Gtk::Main kit(argc, argv);
 	Canvas::init(argc, argv);
+	
+	// Create the dataset and viewer
+	Dataset dataset(inFilename);
+	dataset.load();
+	DatasetViewer viewer;
 	viewer.setDataset(&dataset);
-	viewer.start();
+	
+	// Pack in window
+	Gtk::Window window;
+	window.set_title(dataset.getFilename());
+	window.add(viewer);
+	window.show_all_children();
+	
+	// Run
+	Gtk::Main::run(window);
 }
 
 

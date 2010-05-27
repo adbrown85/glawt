@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <gtkmm/main.h>
+#include <gtkmm/window.h>
 #include "Node.hpp"
 #include "FileUtility.hpp"
 #include "Scene.hpp"

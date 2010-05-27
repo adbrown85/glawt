@@ -17,13 +17,12 @@
 #include <map>
 #include <sstream>
 #include <utility>
+#include <GL/gl.h>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
 #include "Tag.hpp"
-#include "Canvas.hpp"
 #include "Log.hpp"
 using namespace std;
-//using System::log;
 
 
 /**
@@ -140,26 +139,6 @@ inline int Dataset::getDepth() const {return depth;}
 
 /** Prints the header of the dataset. */
 inline void Dataset::print() const {header.print();}
-
-
-/** Utility for viewing a dataset. */
-class DatasetViewer {
-public:
-	void draw();
-	void goToNext();
-	void goToPrevious();
-	static void onDisplay(void);
-	static void onMouse(int button, int state, int x, int y);
-	static void onSpecial(int key, int x, int y);
-	void setDataset(Dataset *dataset);
-	void start();
-private:
-	Dataset *dataset;
-	GLenum type;
-	int slice, width, height, depth;
-	Canvas *canvas;
-	static DatasetViewer *instance;
-};
 
 
 

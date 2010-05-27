@@ -16,9 +16,10 @@
 #include "Mouse.hpp"
 #include "Inspector.hpp"
 #include "LogBook.hpp"
-#include "DatasetHeader.hpp"
-#include "DatasetWriter.hpp"
 #include "DatasetAnalyzer.hpp"
+#include "DatasetHeader.hpp"
+#include "DatasetViewer.hpp"
+#include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
 using namespace std;
 

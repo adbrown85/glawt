@@ -5,6 +5,8 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Canvas.hpp"
+#include <gtkmm/main.h>
+#include <gtkmm/window.h>
 Canvas *canvas;
 
 
@@ -35,17 +37,9 @@ void drag(int x, int y) {
 }
 
 
-bool onScrollEvent(GdkEventScroll* event) {
-	
-	cout << "onScrollEvent()" << endl;
-	return false;
-}
-
-
 void createAndShowGUI() {
 	
 	Gtk::Window window;
-	Gtk::EventBox box;
 	
 	// Create the canvas
 	canvas = new Canvas();
@@ -54,14 +48,9 @@ void createAndShowGUI() {
 	canvas->setKeyboardCallback(&keyboard);
 	canvas->setDragCallback(&drag);
 	
-	// Create events
-	box.add_events(Gdk::SCROLL_MASK);
-	box.signal_scroll_event().connect(sigc::ptr_fun(&onScrollEvent));
-	
 	// Add to window
 	window.set_title("Canvas");
-	box.add(*canvas);
-	window.add(box);
+	window.add(*canvas);
 	window.show_all();
 	Gtk::Main::run(window);
 }
