@@ -7,14 +7,13 @@
 #include <cstring>
 #include "Dataset.hpp"
 #include "DatasetViewer.hpp"
+#include "CanvasGTK.hpp"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
 
 int main(int argc, char *argv[]) {
 	
-	Dataset *dataset;
-	DatasetViewer *viewer;
 	string filename;
 	
 	// Handle arguments
@@ -36,23 +35,26 @@ int main(int argc, char *argv[]) {
 	
 	try {
 		
-		// Set up the dataset
-		dataset = new Dataset(filename);
-		dataset->load();
-		dataset->print();
-		
-		// Set up window
+		// Initialize
 		Gtk::Main kit(argc, argv);
-		Canvas::init(argc, argv);
-		Gtk::Window window;
+		Gtk::GL::init(argc, argv);
+		
+		// Set up the dataset
+		Dataset dataset(filename);
+		dataset.load();
+		dataset.print();
 		
 		// Create the viewer
-		viewer = new DatasetViewer();
-		viewer->setDataset(dataset);
+		CanvasGTK canvas(dataset.getWidth(), dataset.getHeight());
+		DatasetViewer viewer;
+		viewer.setCanvas(&canvas);
+		viewer.setDataset(&dataset);
+		viewer.load();
 		
 		// Pack
-		window.set_title(dataset->getFilename());
-		window.add(*viewer);
+		Gtk::Window window;
+		window.set_title(dataset.getFilename());
+		window.add(canvas);
 		window.show_all_children();
 		
 		// Run

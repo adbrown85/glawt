@@ -23,6 +23,20 @@
 #define CANVAS_RIGHT_BUTTON 3
 #define CANVAS_WHEEL_DOWN 4
 #define CANVAS_WHEEL_UP 5
+// GTK -- Eventually define differently for Glut
+#include <gdk/gdkkeysyms.h>
+#define CANVAS_KEY_UP GDK_Up
+#define CANVAS_KEY_DOWN GDK_Down
+#define CANVAS_KEY_LEFT GDK_Left
+#define CANVAS_KEY_RIGHT GDK_Right
+#define CANVAS_MINUS GDK_minus
+#define CANVAS_PLUS GDK_plus
+#define CANVAS_EQUALS GDK_equal
+#define CANVAS_ESCAPE GDK_Escape
+#define CANVAS_MOD_CONTROL GDK_Control_L
+#define CANVAS_MOD_ALT GDK_Alt_L
+#define CANVAS_MOD_SHIFT GDK_Shift_L
+#define CANVAS_MOD_NONE 0
 using namespace std;
 
 
@@ -64,7 +78,8 @@ public:
 	void fireEvent(int type);
 	virtual void flush() = 0;
 	Camera* getCamera();
-	Vector getSize();
+	int getHeight();
+	int getWidth();
 	virtual void refresh() = 0;
 protected:
 	bool isMouseButtonPressed;
@@ -81,8 +96,11 @@ inline void Canvas::clear() {glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);}
 /** @return Pointer to the canvas's camera. */
 inline Camera* Canvas::getCamera() {return &camera;}
 
-/** @return Width and height of the canvas. */
-inline Vector Canvas::getSize() {return Vector(width,height);}
+/** @return Height of the canvas. */
+inline int Canvas::getHeight() {return height;}
+
+/** @return Width of the canvas. */
+inline int Canvas::getWidth() {return width;}
 
 
 #endif

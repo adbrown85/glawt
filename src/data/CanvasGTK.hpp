@@ -1,11 +1,11 @@
 /*
- * Canvas.hpp
+ * CanvasGTK.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CANVAS_HPP
-#define CANVAS_HPP
+#ifndef CANVASGTK_HPP
+#define CANVASGTK_HPP
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -13,22 +13,9 @@
 #include <GL/glu.h>
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>
-#include <gdk/gdkkeysyms.h>
 #include <gtkmm/gl/init.h>
 #include <gtkmm/gl/drawingarea.h>
 #include "Canvas.hpp"
-#define CANVAS_KEY_UP GDK_Up
-#define CANVAS_KEY_DOWN GDK_Down
-#define CANVAS_KEY_LEFT GDK_Left
-#define CANVAS_KEY_RIGHT GDK_Right
-#define CANVAS_MINUS GDK_minus
-#define CANVAS_PLUS GDK_plus
-#define CANVAS_EQUALS GDK_equal
-#define CANVAS_ESCAPE GDK_Escape
-#define CANVAS_MOD_CONTROL GDK_Control_L
-#define CANVAS_MOD_ALT GDK_Alt_L
-#define CANVAS_MOD_SHIFT GDK_Shift_L
-#define CANVAS_MOD_NONE 0
 using namespace std;
 
 
@@ -60,13 +47,17 @@ private:
 };
 
 /** Signal start of OpenGL commands. */
-inline void Canvas::begin() {glDrawable->gl_begin(glContext);}
+inline void CanvasGTK::begin() {glDrawable->gl_begin(glContext);}
 
 /** Signal end of OpenGL commands. */
-inline void Canvas::end() {glDrawable->gl_end();}
+inline void CanvasGTK::end() {glDrawable->gl_end();}
 
 /** Forces the canvas to push all the pixels to the screen. */
-inline void Canvas::flush() {glWindow->swap_buffers();}
+inline void CanvasGTK::flush() {glWindow->swap_buffers();}
+
+/** Forces the canvas to be redrawn. */
+inline void CanvasGTK::refresh() {window->invalidate_rect(get_allocation(),0);}
+
 
 
 #endif

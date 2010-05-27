@@ -5,42 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "DatasetViewer.hpp"
-DatasetViewer *DatasetViewer::instance=NULL;
-
-
-DatasetViewer::DatasetViewer() {
-	
-	instance = this;
-}
-
-
-/** Draws a slice to the screen. */
-void DatasetViewer::draw() {
-	
-	ostringstream stream;
-	char *data;
-	
-	// Slice index
-	stream << slice;
-	//Window::write(stream.str());
-	
-	// Reset raster position
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-		glLoadIdentity();
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-			glLoadIdentity();
-			glRasterPos2f(-1.0, -1.0);
-		glPopMatrix();
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	
-	// Draw pixels
-	data = reinterpret_cast<char*>(dataset->getData());
-	data += slice * width * height * dataset->getBlock();
-	glDrawPixels(width, height, GL_LUMINANCE, dataset->getType(), data);
-}
 
 
 /** Shows the next slice in the dataset. */
@@ -63,71 +27,113 @@ void DatasetViewer::goToPrevious() {
 }
 
 
-/** Draws a slice to the screen. */
-void DatasetViewer::onDisplay(void) {
+/** Handles the incoming canvas event. */
+void DatasetViewer::onCanvasEvent(const CanvasEvent &event) {
 	
-	instance->canvas->clear();
-	instance->draw();
-	instance->canvas->flush();
+	switch (event.type) {
+	case CanvasEvent::BUTTON :
+		onCanvasEventButton(event);
+		break;
+	case CanvasEvent::DISPLAY :
+		onCanvasEventDisplay(event);
+		break;
+	case CanvasEvent::KEY :
+		onCanvasEventKey(event);
+		break;
+	}
 }
 
 
 /** Prints the value in the volume under the cursor. */
-void DatasetViewer::onMouse(int button, int state, int x, int y) {
+void DatasetViewer::onCanvasEventButton(const CanvasEvent &event) {
 	
 	// Ignore down state
-	if (state == CANVAS_DOWN) {
+	if (event.state.combo.action == CANVAS_DOWN) {
 		return;
 	}
 	
 	// Standard buttons
-	if (button == CANVAS_LEFT_BUTTON) {
-		Index index(instance->height-y, x, instance->slice);
-		switch (instance->type) {
+	if (event.state.combo.trigger == CANVAS_LEFT_BUTTON) {
+		Index index((height-(event.state.y)), (event.state.x), slice);
+		switch (type) {
 		case GL_UNSIGNED_BYTE:
-			cout << (int)instance->dataset->getAsByte(index) << endl;
+			cout << (int)(dataset->getAsByte(index)) << endl;
 			break;
 		case GL_SHORT:
-			cout << instance->dataset->getAsShort(index) << endl;
+			cout << dataset->getAsShort(index) << endl;
 			break;
 		case GL_UNSIGNED_SHORT:
-			cout << instance->dataset->getAsUnsignedShort(index) << endl;
+			cout << dataset->getAsUnsignedShort(index) << endl;
 			break;
 		case GL_FLOAT:
-			cout << instance->dataset->getAsFloat(index) << endl;
+			cout << dataset->getAsFloat(index) << endl;
 			break;
 		}
 	}
 	
 	// Wheel
-	else if (button == CANVAS_WHEEL_UP) {
-		instance->goToNext();
-	} else if (button == CANVAS_WHEEL_DOWN) {
-		instance->goToPrevious();
+	else if (event.state.combo.trigger == CANVAS_WHEEL_UP) {
+		goToNext();
+	} else if (event.state.combo.trigger == CANVAS_WHEEL_DOWN) {
+		goToPrevious();
 	}
+}
+
+
+/** Draws a slice to the screen. */
+void DatasetViewer::onCanvasEventDisplay(const CanvasEvent &event) {
+	
+	ostringstream stream;
+	char *data;
+	
+	// Clear
+	canvas->clear();
+	
+	// Slice index
+	stream << slice;
+	//Window::write(stream.str());
+	
+	// Reset raster position
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+			glLoadIdentity();
+			glRasterPos2f(-1.0, -1.0);
+		glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	
+	// Draw pixels
+	data = reinterpret_cast<char*>(dataset->getData());
+	data += slice * width * height * dataset->getBlock();
+	glDrawPixels(width, height, GL_LUMINANCE, dataset->getType(), data);
+	
+	// Flush
+	canvas->flush();
 }
 
 
 /** Changes the slice. */
-void DatasetViewer::onSpecial(int key, int x, int y) {
+void DatasetViewer::onCanvasEventKey(const CanvasEvent &event) {
 	
-	switch(key) {
+	switch(event.state.combo.trigger) {
 	case CANVAS_KEY_UP:
 	case CANVAS_KEY_RIGHT:
-		instance->goToNext();
+		goToNext();
 		break;
 	case CANVAS_KEY_DOWN:
 	case CANVAS_KEY_LEFT:
-		instance->goToPrevious();
+		goToPrevious();
 		break;
 	}
 }
 
 
-void DatasetViewer::setDataset(Dataset *dataset) {
+void DatasetViewer::load() {
 	
-	// Set up fields
-	this->dataset = dataset;
+	// Set fields
 	this->width = dataset->getWidth();
 	this->height = dataset->getHeight();
 	this->depth = dataset->getDepth();
@@ -135,12 +141,8 @@ void DatasetViewer::setDataset(Dataset *dataset) {
 	this->slice = 0;
 	
 	// Create the canvas
-	canvas = new Canvas(width, height);
-	canvas->setDisplayCallback(&onDisplay);
-	canvas->setMouseCallback(&onMouse);
-	canvas->setKeyboardCallback(&onSpecial);
-	
-	// Pack
-	add(*canvas);
+	canvas->addListener(this, CanvasEvent::DISPLAY);
+	canvas->addListener(this, CanvasEvent::BUTTON);
+	canvas->addListener(this, CanvasEvent::KEY);
 }
 

@@ -8,7 +8,7 @@
 
 
 /** Initializes the widget. */
-Canvas::Canvas(int width, int height) : Canvas(width,height) {
+CanvasGTK::CanvasGTK(int width, int height) : Canvas(width,height) {
 	
 	// Size
 	set_size_request(width, height);
@@ -24,14 +24,14 @@ Canvas::Canvas(int width, int height) : Canvas(width,height) {
 	mode = Gdk::GL::MODE_RGBA | Gdk::GL::MODE_DEPTH | Gdk::GL::MODE_DOUBLE;
 	glConfig = Gdk::GL::Config::create(mode);
 	if (!glConfig) {
-		throw "[Canvas] Cannot find an OpenGL-capable visual.";
+		throw "[CanvasGTK] Cannot find an OpenGL-capable visual.";
 	}
 	set_gl_capability(glConfig);
 }
 
 
 /** Initializes OpenGL. */
-void Canvas::on_realize() {
+void CanvasGTK::on_realize() {
 	
 	Gtk::GL::DrawingArea::on_realize();
 	
@@ -47,13 +47,13 @@ void Canvas::on_realize() {
 	
 	// Set up the camera
 	begin();
-	camera.load();
+	getCamera()->load(getWidth(), getHeight());
 	end();
 }
 
 
 /** Widget needs to be redrawn. */
-bool Canvas::on_expose_event(GdkEventExpose *event) {
+bool CanvasGTK::on_expose_event(GdkEventExpose *event) {
 	
 	begin();
 	fireEvent(CanvasEvent::DISPLAY);
@@ -72,7 +72,7 @@ bool Canvas::on_expose_event(GdkEventExpose *event) {
  *     y       Y location of the pointer relative to the widget (top=0)
  *     state   Bitmask state of modifier keys and buttons (GdkModifierType)
  */
-bool Canvas::on_button_press_event(GdkEventButton *event) {
+bool CanvasGTK::on_button_press_event(GdkEventButton *event) {
 	
 	// Update
 	state.x = event->x;
@@ -93,7 +93,7 @@ bool Canvas::on_button_press_event(GdkEventButton *event) {
  * 
  * @see on_button_press_event
  */
-bool Canvas::on_button_release_event(GdkEventButton *event) {
+bool CanvasGTK::on_button_release_event(GdkEventButton *event) {
 	
 	// Update
 	state.x = event->x;
@@ -116,12 +116,10 @@ bool Canvas::on_button_release_event(GdkEventButton *event) {
  * one of the arrow keys is pressed GTK doesn't change the focus to another 
  * widget.
  */
-bool Canvas::on_key_press_event(GdkEventKey *event) {
+bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 	
 	// Update
-	state.x = event->x;
-	state.y = event->y;
-	state.combo.trigger = event->key;
+	state.combo.trigger = event->keyval;
 	updateModifer(event->state);
 	
 	// Fire event
@@ -152,16 +150,18 @@ bool Canvas::on_key_press_event(GdkEventKey *event) {
  *     y      Y location of the pointer relative to the widget (top=0)
  *     state  Bitmask state of modifier keys and buttons (GdkModifierType)
  */
-bool Canvas::on_motion_notify_event(GdkEventMotion *event) {
+bool CanvasGTK::on_motion_notify_event(GdkEventMotion *event) {
 	
-	// Only consider dragging
+	// Update
+	state.x = event->x;
+	state.y = event->y;
+	
+	// Check if just moving
 	if (!isMouseButtonPressed) {
 		return false;
 	}
 	
 	// Update
-	state.x = event->x;
-	state.y = event->y;
 	updateModifer(event->state);
 	
 	// Run callback
@@ -177,7 +177,7 @@ bool Canvas::on_motion_notify_event(GdkEventMotion *event) {
  *     direction  One of GDK_SCROLL_{UP|DOWN|LEFT|RIGHT}
  *     state      Bitmask state of modifier keys and buttons (GdkModifierType)
  */
-bool Canvas::on_scroll_event(GdkEventScroll *event) {
+bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 	
 	// Update
 	if (event->direction == GDK_SCROLL_UP) {
@@ -189,22 +189,22 @@ bool Canvas::on_scroll_event(GdkEventScroll *event) {
 	
 	// Run callback
 	grab_focus();
-	fireEvent(CanvasEvent::button, );
+	fireEvent(CanvasEvent::BUTTON);
 	return false;
 }
 
 
 /** Assigns the modifer according to the state of a GDK event. */
-void Canvas::updateModifer(guint state) {
+void CanvasGTK::updateModifer(guint state) {
 	
 	if (state & GDK_CONTROL_MASK) {
-		state.combo.modifier = CANVAS_MOD_CONTROL;
+		this->state.combo.modifier = CANVAS_MOD_CONTROL;
 	} else if (state & GDK_SHIFT_MASK) {
-		state.combo.modifier = CANVAS_MOD_SHIFT;
+		this->state.combo.modifier = CANVAS_MOD_SHIFT;
 	} else if (state & GDK_MOD1_MASK) {
-		state.combo.modifier = CANVAS_MOD_ALT;
+		this->state.combo.modifier = CANVAS_MOD_ALT;
 	} else {
-		state.combo.modifier = CANVAS_MOD_NONE;
+		this->state.combo.modifier = CANVAS_MOD_NONE;
 	}
 }
 

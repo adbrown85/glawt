@@ -18,23 +18,25 @@ using namespace std;
 /** @brief Utility for viewing a dataset.
  * @ingroup data
  */
-class DatasetViewer : public Gtk::Frame {
+class DatasetViewer : public Gtk::Frame, public CanvasListener {
 public:
-	DatasetViewer();
-	void draw();
 	void goToNext();
 	void goToPrevious();
-	static void onDisplay(void);
-	static void onMouse(int button, int state, int x, int y);
-	static void onSpecial(int key, int x, int y);
+	void load();
+	void onCanvasEvent(const CanvasEvent &event);
+	void onCanvasEventButton(const CanvasEvent &event);
+	void onCanvasEventDisplay(const CanvasEvent &event);
+	void onCanvasEventKey(const CanvasEvent &event);
+	void setCanvas(Canvas *canvas);
 	void setDataset(Dataset *dataset);
 private:
 	Dataset *dataset;
 	GLenum type;
 	int slice, width, height, depth;
 	Canvas *canvas;
-	static DatasetViewer *instance;
 };
+inline void DatasetViewer::setCanvas(Canvas *c) {canvas = c;}
+inline void DatasetViewer::setDataset(Dataset *d) {dataset = d;}
 
 
 #endif
