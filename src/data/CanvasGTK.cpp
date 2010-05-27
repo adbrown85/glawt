@@ -121,6 +121,7 @@ bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 	
 	// Update
 	state.combo.trigger = event->keyval;
+	state.combo.action = CANVAS_DOWN;
 	updateModifer(event->state);
 	
 	// Fire event

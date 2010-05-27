@@ -71,8 +71,10 @@ void BindingTest::testArgument() {
 	binding = new Binding(combo, Command::COPY, &number);
 	
 	// Get the argument
-	cout << "  " << binding->getArgument() << endl;
-	assert(binding->getArgument() == number);
+	if (binding->hasArgument()) {
+		cout << "  " << binding->getArgument() << endl;
+		assert(binding->getArgument() == number);
+	}
 	delete binding;
 }
 

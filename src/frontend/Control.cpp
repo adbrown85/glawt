@@ -47,6 +47,7 @@ Binding* Control::getBinding(const Combo& combo) {
 	
 	map<Combo,Binding>::iterator it;
 	
+	it = bindings.find(combo);
 	if (it != bindings.end()) {
 		return &(it->second);
 	} else {

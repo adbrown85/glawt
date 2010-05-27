@@ -21,16 +21,56 @@ Mouse::Mouse(Delegate *delegate) : Control(delegate), picker(scene,canvas) {
 	for (it=manips.begin(); it!=manips.end(); ++it)
 		(*it)->setDelegate(delegate);
 	
-	// Set up picking and dragging
+	// Set up picking
 	picker.addManipulators(manips);
-	camera = canvas->getCamera();
 	
 	// Add listeners
-	canvas->addListener(this, CanvasEvent::BUTTON);
-	canvas->addListener(this, CanvasEvent::DRAG);
 	delegate->addListener(this, Command::TRANSLATE);
 	delegate->addListener(this, Command::SCALE);
 	delegate->addListener(this, Command::ROTATE);
+}
+
+
+void Mouse::dragApply() {
+	
+	float amount;
+	
+	// Apply drag in both directions
+	for (int i=0; i<2; ++i) {
+		if (dragBindings[i] == NULL)
+			continue;
+		amount = findDragAmount(i);
+		if (fabs(amount) > 0.001)
+			delegate->run(dragBindings[i]->getCommand(), amount);
+	}
+}
+
+
+/** Decides which axis the user should be allowed to drag in. */
+void Mouse::dragDecide() {
+	
+	char labels[2]={'x','y'};
+	
+	// Find the bindings for each axis direction
+	axis.set(1.0, 1.0);
+	for (int i=0; i<2; ++i) {
+		state.combo.action = labels[i];
+		dragBindings[i] = getBinding(state.combo);
+	}
+	
+	// Unset one of the bindings if can't use unconstrained
+	for (int i=0; i<2; ++i) {
+		if (dragBindings[i] != NULL) {
+			if (fabs(direction[i]) > fabs(direction[!i])) {
+				if (!useUnconstrained(dragBindings[i]->getCommand())) {
+					axis.set(0.0, 0.0);
+					axis[i] = 1.0;
+					dragBindings[!i] = NULL;
+					break;
+				}
+			}
+		}
+	}
 }
 
 
@@ -76,15 +116,14 @@ float Mouse::findDragAmount(int i) {
 	
 	float factor;
 	
-	factor = fabs(camera->getPosition().z) / 80 + 1;
-	return movement[i] * axis[i] * factor * binding->getArgument();
+	factor = canvas->getCamera()->getPosition().z * -0.15;
+	return movement[i] * axis[i] * factor * dragBindings[i]->getArgument();
 }
 
 
 /** Installs the control into the current context. */
 void Mouse::install() {
 	
-	// Register callbacks
 	canvas->addListener(this, CanvasEvent::BUTTON);
 	canvas->addListener(this, CanvasEvent::DRAG);
 }
@@ -110,7 +149,6 @@ void Mouse::onCanvasEventButton(const CanvasEvent &event) {
 	// Update
 	state = event.state;
 	binding = getBinding(state.combo);
-	glReadPixels(state.x,state.y, 1,1, GL_DEPTH_COMPONENT, GL_FLOAT, &(depth));
 	
 	// Reset dragging
 	iteration = 0;
@@ -134,14 +172,12 @@ void Mouse::onCanvasEventButton(const CanvasEvent &event) {
 	
 	// Finish
 	last = state;
+	canvas->refresh();
 }
 
 
 /** Handles mouse dragging. */
 void Mouse::onCanvasEventDrag(const CanvasEvent &event) {
-	
-	float amount;
-	int i;
 	
 	// Update
 	state = event.state;
@@ -156,20 +192,11 @@ void Mouse::onCanvasEventDrag(const CanvasEvent &event) {
 	// Dragging on the screen
 	else {
 		if (iteration < 10) {
-			decideAxis();
+			direction = direction + movement;
+		} else if (iteration == 10) {
+			dragDecide();
 		} else {
-			if (axis.x > 1.0) {
-				state.combo.action = 'x';
-				i = 0;
-			} else if (axis.y > 1.0) {
-				state.combo.action = 'y';
-				i = 1;
-			}
-			binding = getBinding(state.combo);
-			amount = findDragAmount(i);
-			if (amount > 0.001) {
-				delegate->run(binding->getCommand(), amount);
-			}
+			dragApply();
 		}
 	}
 	
@@ -212,36 +239,4 @@ void Mouse::pickItem() {
 	if (identifiable != NULL)
 		manip = dynamic_cast<Manipulator*>(identifiable);
 }
-
-
-/** Decides which axis the user should be allowed to drag in. */
-void Mouse::decideAxis() {
-	
-	// Wait for direction to increase before deciding on axis
-	if (direction.length() >= 3.0) {
-		direction = direction + movement;
-		if (fabs(direction.y) > fabs(direction.x))
-			axis.set(0.0, 1.0);
-		else
-			axis.set(1.0, 0.0);
-	}
-}
-
-
-/** @return True if dragging motion should be constrained to one direction. */
-/*
-bool Mouse::useConstrained() {
-	
-	Binding *binding;
-	map<Combo,>::iterator it;
-	
-	it = bindings.find(state.combo);
-	if (it != bindings.end()) {
-		binding = &(it->second);
-		return (binding->getCommand() == Command::CIRCLE_X) ||
-		       (binding->getCommand() == Command::CIRCLE_Y)
-	}
-	return false;
-}
-*/
 

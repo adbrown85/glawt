@@ -5,9 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Canvas.hpp"
-#define CANVAS_MOD_CONTROL 10
-#define CANVAS_MOD_ALT 20
-#define CANVAS_MOD_SHIFT 30
 
 
 /* Fake canvas with required implementations. */

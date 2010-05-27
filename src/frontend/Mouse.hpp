@@ -29,21 +29,21 @@ public:
 protected:
 	void addBindings();
 	void addManipulators();
-	void decideAxis();
+	void dragApply();
+	void dragDecide();
 	void enableScaleManipulators();
 	void enableTranslateManipulators();
 	float findDragAmount(int i);
 	void pickItem();
+	bool useUnconstrained(int command);
 private:
-	Camera *camera;
-	Binding *binding;
+	Binding *binding, *dragBindings[2];
 	CanvasState state, last;
-	float depth;
 	GLuint itemID, shapeID;
 	Manipulator *manip;
 	Vector axis, direction, movement;
 	Picker picker;
-	int iteration;
+	int iteration, index;
 };
 
 
@@ -56,13 +56,13 @@ inline void Mouse::addBindings() {
 	combo.trigger = CANVAS_WHEEL_UP;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = CANVAS_UP;
-	add(Binding(combo, Command::ZOOM_IN, 1.0f));
+	add(Binding(combo, Command::ZOOM_IN, 0.5f));
 	
 	// Mouse wheel down
 	combo.trigger = CANVAS_WHEEL_DOWN;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = CANVAS_UP;
-	add(Binding(combo, Command::ZOOM_OUT, 1.0f));
+	add(Binding(combo, Command::ZOOM_OUT, 0.5f));
 	
 	// Ctrl + Left button
 	combo.trigger = CANVAS_LEFT_BUTTON;
@@ -74,25 +74,25 @@ inline void Mouse::addBindings() {
 	combo.trigger = CANVAS_LEFT_BUTTON;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = 'x';
-	add(Binding(combo, Command::CIRCLE_Y, -1.0f));
+	add(Binding(combo, Command::CIRCLE_Y, -1.5f));
 	
 	// Left button drag in y
 	combo.trigger = CANVAS_LEFT_BUTTON;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = 'y';
-	add(Binding(combo, Command::CIRCLE_X, -1.0f));
+	add(Binding(combo, Command::CIRCLE_X, -1.5f));
 	
 	// Middle button drag in x
 	combo.trigger = CANVAS_MIDDLE_BUTTON;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = 'x';
-	add(Binding(combo, Command::TRACK, -1.0f));
+	add(Binding(combo, Command::TRACK, -0.8f));
 	
 	// Middle button drag in y
 	combo.trigger = CANVAS_MIDDLE_BUTTON;
 	combo.modifier = CANVAS_MOD_NONE;
 	combo.action = 'y';
-	add(Binding(combo, Command::BOOM, 1.0f));
+	add(Binding(combo, Command::BOOM, 0.8f));
 }
 
 
@@ -107,5 +107,13 @@ inline void Mouse::addManipulators() {
 	add(new Manipulator('y', Command::SCALE_Y, "ui/ScaleY.xml", 2));
 	add(new Manipulator('z', Command::SCALE_Z, "ui/ScaleZ.xml", 2));
 }
+
+
+/** Commands that should not be constrained to one axis. */
+inline bool Mouse::useUnconstrained(int command) {
+	
+	return (command == Command::BOOM) || (command == Command::TRACK);
+}
+
 
 #endif

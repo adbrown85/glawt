@@ -25,15 +25,14 @@ void Keyboard::install() {
 void Keyboard::onCanvasEvent(const CanvasEvent &event) {
 	
 	Binding *binding;
-	map<Combo,Binding>::iterator it;
 	
 	// Lookup binding
-	it = bindings.find(event.state.combo);
-	if (it == bindings.end())
+	binding = getBinding(event.state.combo);
+	if (binding == NULL) {
 		return;
+	}
 	
 	// Run command with argument if it has one
-	binding = &(it->second);
 	if (binding->hasArgument())
 		delegate->run(binding->getCommand(), binding->getArgument());
 	else
