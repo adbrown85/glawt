@@ -18,11 +18,9 @@ void Director::grab(int cmd, float id) {
 	if (identifiable != NULL) {
 		drawable = dynamic_cast<Drawable*>(identifiable);
 		if (drawable != NULL) {
-/*
 			if (drawable->isSelected())
 				scene->removeFromSelection(drawable);
 			else
-*/
 				scene->addToSelection(drawable);
 		}
 	}
