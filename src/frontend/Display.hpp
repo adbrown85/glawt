@@ -16,7 +16,7 @@
 #include "Exception.hpp"
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
-#include "Interpreter.hpp"         // Send commands
+#include "Delegate.hpp"         // Send commands
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
@@ -30,11 +30,11 @@ using namespace std;
  */
 class Display : public CommandListener {
 public:
-	Display(Interpreter *interpreter);
+	Display(Delegate *delegate);
 	void add(Control *control);
 	void computeFootprint();
 	static void display(void);
-	Interpreter* getInterpreter();
+	Delegate* getDelegate();
 	static void idle(void);
 	virtual void onCommandEvent(int command);
 	static void toggleOverlay();
@@ -43,7 +43,7 @@ protected:
 private:
 	static Display *obj;
 	bool useOverlay;
-	Interpreter *interpreter;
+	Delegate *delegate;
 	unsigned long timeStarted;
 	int frames, framesPerSecond;
 	Painter *painter;
@@ -52,7 +52,7 @@ private:
 	Canvas *canvas;
 };
 
-inline Interpreter* Display::getInterpreter() {return interpreter;}
+inline Delegate* Display::getDelegate() {return delegate;}
 
 
 #endif

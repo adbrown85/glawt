@@ -11,22 +11,20 @@
 #include <iostream>
 #include <map>
 #include "Command.hpp"
+#include "Worker.hpp"
 using namespace std;
 
 
 /** @brief Worker responsible for moving or rotating the camera.
  * @ingroup backend
  */
-class Cameraman {
+class Cameraman : public Worker {
 public:
-	Cameraman(Scene *scene, Canvas *canvas);
+	Cameraman(Scene *s, Canvas *c) : Worker(s,c) {}
 	void fit(int command);
 	void reset(int command);
 	void rotate(int command, float amount);
 	void translate(int command, float amount);
-private:
-	Canvas *canvas;
-	Scene *scene;
 };
 
 

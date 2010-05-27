@@ -8,8 +8,8 @@
 Keyboard *Keyboard::obj=NULL;
 
 
-Keyboard::Keyboard(Interpreter *interpreter) : 
-                   Control(interpreter) {
+Keyboard::Keyboard(Delegate *delegate) : 
+                   Control(delegate) {
 	
 	Keyboard::obj = this;
 	type = "Keyboard";
@@ -84,9 +84,9 @@ void Keyboard::trigger(int key) {
 	
 	// Run command with argument if it has one
 	if (binding->hasArgument())
-		interpreter->run(binding->getCommand(), binding->getArgument());
+		delegate->run(binding->getCommand(), binding->getArgument());
 	else
-		interpreter->run(binding->getCommand());
+		delegate->run(binding->getCommand());
 	canvas->refresh();
 }
 

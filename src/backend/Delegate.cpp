@@ -1,20 +1,20 @@
 /*
- * Interpreter.cpp
+ * Delegate.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Interpreter.hpp"
+#include "Delegate.hpp"
 
 
 /** Stores the inputs and sets up all the workers. */
-Interpreter::Interpreter(Scene *scene, Canvas *canvas) {
+Delegate::Delegate(Scene *scene, Canvas *canvas) {
 	
 	// Fields
 	this->scene = scene;
 	this->canvas = canvas;
 	
-	// Delegates
+	// Workers
 	cameraman = new Cameraman(scene, canvas);
 	compositor = new Compositor(scene, canvas);
 	director = new Director(scene, canvas);
@@ -24,7 +24,7 @@ Interpreter::Interpreter(Scene *scene, Canvas *canvas) {
 
 
 /** Deletes all the workers. */
-Interpreter::~Interpreter() {
+Delegate::~Delegate() {
 	
 	delete cameraman;
 	delete compositor;
@@ -35,14 +35,14 @@ Interpreter::~Interpreter() {
 
 
 /** Adds a callback that will be called when a command is issued. */
-void Interpreter::addListener(CommandListener *listener, int command) {
+void Delegate::addListener(CommandListener *listener, int command) {
 	
 	listeners[command] = listener;
 }
 
 
 /** Calls the listener for a command. */
-void Interpreter::fireEvent(int command) {
+void Delegate::fireEvent(int command) {
 	
 	map<int,CommandListener*>::iterator it;
 	
@@ -54,7 +54,7 @@ void Interpreter::fireEvent(int command) {
 
 
 /** Runs a command by handing it off to a worker. */
-void Interpreter::run(int command) {
+void Delegate::run(int command) {
 	
 	// Check for listener
 	fireEvent(command);
@@ -93,7 +93,7 @@ void Interpreter::run(int command) {
 
 
 /** Runs a command by handing it off to a worker. */
-void Interpreter::run(int command, float argument) {
+void Delegate::run(int command, float argument) {
 	
 	// Check for listener
 	fireEvent(command);
@@ -141,7 +141,7 @@ void Interpreter::run(int command, float argument) {
 
 
 /** Runs a command by handing it off to a worker. */
-void Interpreter::run(int command, string argument) {
+void Delegate::run(int command, string argument) {
 	
 	// Check for listener
 	fireEvent(command);

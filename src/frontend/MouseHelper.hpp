@@ -32,7 +32,7 @@ struct MouseData {
  */
 class MouseHelper : public Control {
 public:
-	MouseHelper(Interpreter *interpreter);
+	MouseHelper(Delegate *delegate);
 	virtual int getModifier();
 	virtual void install() {};
 	virtual void setData(MouseData *data);

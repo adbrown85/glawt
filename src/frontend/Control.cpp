@@ -9,14 +9,14 @@
 
 /** Creates a new control using the specified Delegate to run commands.
  * 
- * @param interpreter Class that will run commands
+ * @param delegate Class that will run commands
  */
-Control::Control(Interpreter *interpreter) {
+Control::Control(Delegate *delegate) {
 	
 	// Initialize
-	this->interpreter = interpreter;
-	this->scene = interpreter->getScene();
-	this->canvas = interpreter->getCanvas();
+	this->delegate = delegate;
+	this->scene = delegate->getScene();
+	this->canvas = delegate->getCanvas();
 }
 
 

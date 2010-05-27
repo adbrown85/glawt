@@ -26,7 +26,7 @@ Manipulator::Manipulator(char axis,
 	// Initialize
 	this->command = command;
 	this->enabled = true;
-	this->interpreter = NULL;
+	this->delegate = NULL;
 	this->bias = bias;
 	
 	// Initialize axis and offset
@@ -142,7 +142,7 @@ void Manipulator::use(const Vector &movement, GLuint shapeID, Canvas *canvas) {
 	
 	// Perform command
 	if (fabs(dotProduct) > 0.5) {
-		interpreter->run(command, amount * bias);
+		delegate->run(command, amount * bias);
 	}
 }
 

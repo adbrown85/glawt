@@ -11,8 +11,8 @@ char MouseDragHelper::directions[2] = {'x','y'};
 /**
  * Creates a new MouseDragHelper control.
  */
-MouseDragHelper::MouseDragHelper(Interpreter *interpreter) :
-                                 MouseHelper(interpreter) {
+MouseDragHelper::MouseDragHelper(Delegate *delegate) :
+                                 MouseHelper(delegate) {
 	
 	type = "MouseDragHelper";
 }
@@ -123,7 +123,7 @@ void MouseDragHelper::tryBinding(Binding *binding) {
 		
 		// Run the command
 		if (amount != 0.0)
-			interpreter->run(binding->getCommand(), amount);
+			delegate->run(binding->getCommand(), amount);
 	}
 }
 

@@ -9,21 +9,19 @@
 #include <cstdlib>
 #include <iostream>
 #include "Command.hpp"
+#include "Worker.hpp"
 using namespace std;
 
 
 /** @brief %Worker responsible for selecting items in the scene.
  * @ingroup backend
  */
-class Director {
+class Director : public Worker {
 public:
-	Director(Scene *scene, Canvas *canvas);
+	Director(Scene *s, Canvas *c) : Worker(s,c) {}
 	void grab(int cmd, float id);
 	void iterate(int cmd);
 	void select(int cmd);
-private:
-	Canvas *canvas;
-	Scene *scene;
 };
 
 

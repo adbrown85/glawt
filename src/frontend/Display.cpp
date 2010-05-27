@@ -8,14 +8,14 @@
 Display *Display::obj=NULL;
 
 
-Display::Display(Interpreter *interpreter) {
+Display::Display(Delegate *delegate) {
 	
 	Display::obj = this;
 	
 	// Initialize attributes
-	this->canvas = interpreter->getCanvas();
-	this->interpreter = interpreter;
-	this->painter = new Painter(canvas, interpreter->getScene());
+	this->canvas = delegate->getCanvas();
+	this->delegate = delegate;
+	this->painter = new Painter(canvas, delegate->getScene());
 	
 	// Initialize overlay attributes
 	this->useOverlay = false;
@@ -25,7 +25,7 @@ Display::Display(Interpreter *interpreter) {
 	computeFootprint();
 	
 	// Register functions
-	interpreter->addListener(this, Command::INFORMATION);
+	delegate->addListener(this, Command::INFORMATION);
 	canvas->setDisplayCallback(&Display::display);
 }
 
@@ -53,7 +53,7 @@ void Display::computeFootprint() {
 	list<Texture*>::iterator it;
 	
 	// Initialize
-	scene = interpreter->getScene();
+	scene = delegate->getScene();
 	textures = Texture::search(scene->getRoot());
 	
 	// Accumulate

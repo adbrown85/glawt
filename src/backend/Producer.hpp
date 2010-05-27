@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include "Command.hpp"
+#include "Worker.hpp"
 #include "AdvancedFactory.hpp"
 #include "BasicFactory.hpp"
 using namespace std;
@@ -18,9 +19,9 @@ using namespace std;
 /** @brief Worker responsible for creating and storing scenes.
  * @ingroup backend
  */
-class Producer {
+class Producer : public Worker {
 public:
-	Producer(Scene *scene, Canvas *canvas);
+	Producer(Scene *s, Canvas *c) : Worker(s,c) {}
 	void copy(int command);
 	void cut(int command);
 	void duplicate(int command);
@@ -29,9 +30,6 @@ public:
 	void paste(int command);
 	void quit(int command);
 	void save(int command);
-private:
-	Canvas *canvas;
-	Scene *scene;
 };
 
 

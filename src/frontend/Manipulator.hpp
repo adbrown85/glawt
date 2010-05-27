@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 #include <GL/glut.h>
-#include "Interpreter.hpp"              // For sending commands to scene
+#include "Delegate.hpp"              // For sending commands to scene
 #include "Vector.hpp"                   // For axis
 #include "Transform.hpp"                // Projection matrix
 #include "Traverser.hpp"
@@ -34,13 +34,13 @@ public:
 	virtual int getCommand() const;
 	virtual bool isEnabled() const;
 	virtual void setEnabled(bool enabled);
-	virtual void setInterpreter(Interpreter *interpreter);
+	virtual void setDelegate(Delegate *delegate);
 	virtual void use(const Vector &movement, GLuint shapeID, Canvas *canvas);
 protected:
 	bool enabled;
 	float bias;
 	int command;
-	Interpreter *interpreter;
+	Delegate *delegate;
 	Scene *widget;
 	Traverser *traverser;
 	Vector axis, offset;
@@ -60,7 +60,7 @@ inline bool Manipulator::isEnabled() const {return enabled;}
 inline void Manipulator::setEnabled(bool enabled) {this->enabled = enabled;}
 
 /** Changes the object to send commands to. */
-inline void Manipulator::setInterpreter(Interpreter *i) {this->interpreter = i;}
+inline void Manipulator::setDelegate(Delegate *i) {this->delegate = i;}
 
 
 #endif

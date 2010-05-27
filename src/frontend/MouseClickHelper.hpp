@@ -22,7 +22,7 @@ using namespace std;
  */
 class MouseClickHelper : public MouseHelper {
 public:
-	MouseClickHelper(Interpreter *interpreter);
+	MouseClickHelper(Delegate *delegate);
 	virtual void onClick(int button, int state, int x, int y);
 	virtual void setBindings(multimap<int,Binding> bindings);
 	virtual void setManipulators(vector<Manipulator*> manipulators);

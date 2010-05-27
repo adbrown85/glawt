@@ -17,7 +17,7 @@
 #include "Binding.hpp"
 #include "Command.hpp"
 #include "Control.hpp"
-#include "Interpreter.hpp"
+#include "Delegate.hpp"
 #include "Manipulator.hpp"
 #include "MouseClickHelper.hpp"
 #include "MouseDragHelper.hpp"
@@ -33,7 +33,7 @@ using namespace std;
  */
 class Mouse : public Control, public CommandListener {
 public:
-	Mouse(Interpreter *interpreter);
+	Mouse(Delegate *delegate);
 	virtual void install();
 	static void onClick(int button, int action, int x, int y);
 	static void onDrag(int x, int y);

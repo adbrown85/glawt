@@ -9,7 +9,7 @@
 #include <map>
 #include "Binding.hpp"
 #include "Command.hpp"
-#include "Interpreter.hpp"
+#include "Delegate.hpp"
 #include "MouseDragHelper.hpp"
 #include "Scene.hpp"
 using namespace std;
@@ -52,7 +52,7 @@ void addBindings(multimap<int,Binding> &bins) {
 int main(int argc,
          char *argv[]) {
 	
-	Interpreter *interpreter;
+	Delegate *delegate;
 	MouseDragHelper *mdh;
 	Scene *scene;
 	multimap<int,Binding> bins;
@@ -66,8 +66,8 @@ int main(int argc,
 	
 	// Initialize
 	scene = new Scene();
-	interpreter = new Interpreter(scene);
-	mdh = new MouseDragHelper(interpreter);
+	delegate = new Delegate(scene);
+	mdh = new MouseDragHelper(delegate);
 	addBindings(bins);
 	
 	// Test install

@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 #include "Binding.hpp"
-#include "Interpreter.hpp"
+#include "Delegate.hpp"
 #include "Manipulator.hpp"
 using namespace std;
 
@@ -24,7 +24,7 @@ using namespace std;
  */
 class Control {
 public:
-	Control(Interpreter *interpreter);
+	Control(Delegate *delegate);
 	virtual ~Control();
 	virtual void add(const Binding &binding);
 	virtual void add(Manipulator *manipulator);
@@ -33,7 +33,7 @@ public:
 	virtual void print();
 	virtual void setManipulators(vector<Manipulator*> manipulators);
 protected:
-	Interpreter *interpreter;
+	Delegate *delegate;
 	multimap<int,Binding> bindings;
 	Scene *scene;
 	Canvas *canvas;

@@ -8,8 +8,8 @@
 
 
 /** Creates a new MouseClickHelper control. */
-MouseClickHelper::MouseClickHelper(Interpreter *interpreter) :
-                                   MouseHelper(interpreter),
+MouseClickHelper::MouseClickHelper(Delegate *delegate) :
+                                   MouseHelper(delegate),
                                    picker(scene,canvas) {
 	
 	type = "MouseClickHelper";
@@ -128,9 +128,9 @@ void MouseClickHelper::tryBinding(Binding *binding) {
 	
 	// Issue the command
 	if (binding->hasArgument()) {
-		interpreter->run(binding->getCommand(), binding->getArgument());
+		delegate->run(binding->getCommand(), binding->getArgument());
 	} else {
-		interpreter->run(binding->getCommand());
+		delegate->run(binding->getCommand());
 	}
 	canvas->refresh();
 }

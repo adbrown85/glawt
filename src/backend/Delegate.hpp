@@ -1,11 +1,11 @@
 /*
- * Interpreter.hpp
+ * Delegate.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef INTERPRETER_HPP
-#define INTERPRETER_HPP
+#ifndef DELEGATE_HPP
+#define DELEGATE_HPP
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -35,10 +35,10 @@ public:
  * @see Grip
  * @see Producer
  */
-class Interpreter {
+class Delegate {
 public:
-	Interpreter(Scene *scene, Canvas *canvas);
-	~Interpreter();
+	Delegate(Scene *scene, Canvas *canvas);
+	~Delegate();
 	void addListener(CommandListener *listener, int command);
 	void fireEvent(int command);
 	Canvas* getCanvas() const;
@@ -58,10 +58,10 @@ private:
 	Grip *grip;
 	Producer *producer;
 };
-inline Canvas* Interpreter::getCanvas() const {return canvas;}
-inline Scene* Interpreter::getScene() const {return scene;}
-inline void Interpreter::setCanvas(Canvas *c) {canvas = c;}
-inline void Interpreter::setScene(Scene *s) {scene = s;}
+inline Canvas* Delegate::getCanvas() const {return canvas;}
+inline Scene* Delegate::getScene() const {return scene;}
+inline void Delegate::setCanvas(Canvas *c) {canvas = c;}
+inline void Delegate::setScene(Scene *s) {scene = s;}
 
 
 #endif

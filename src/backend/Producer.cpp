@@ -7,14 +7,6 @@
 #include "Producer.hpp"
 
 
-/** Stores the inputs. */
-Producer::Producer(Scene *scene, Canvas *canvas) {
-	
-	this->scene = scene;
-	this->canvas = canvas;
-}
-
-
 /** Prints the scene. */
 void Producer::list(int command) {
 	

@@ -25,7 +25,7 @@ using namespace std;
  */
 class Keyboard : public Control {
 public:
-	Keyboard(Interpreter *interpreter);
+	Keyboard(Delegate *delegate);
 	static void character(int key, int x, int y);
 	static void special(int key, int x, int y);
 	virtual void install();

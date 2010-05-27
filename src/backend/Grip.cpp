@@ -7,14 +7,6 @@
 #include "Grip.hpp"
 
 
-/** Stores the inputs. */
-Grip::Grip(Scene *scene, Canvas *canvas) {
-	
-	this->scene = scene;
-	this->canvas = canvas;
-}
-
-
 /** Rotates the current selection. */
 void Grip::rotate(int command, float argument) {
 	

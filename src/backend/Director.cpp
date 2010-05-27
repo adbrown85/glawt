@@ -7,14 +7,6 @@
 #include "Director.hpp"
 
 
-/** Stores the scene and canvas. */
-Director::Director(Scene *scene, Canvas *canvas) {
-	
-	this->scene = scene;
-	this->canvas = canvas;
-}
-
-
 /** Picks an item in the scene by its ID number. */
 void Director::grab(int cmd, float id) {
 	

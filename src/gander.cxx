@@ -13,7 +13,7 @@ Gander::Gander(int argc, char *argv[]) {
 	this->argc = argc;
 	this->argv = argv;
 	this->display = NULL;
-	this->interpreter = NULL;
+	this->delegate = NULL;
 	this->scene = NULL;
 	this->canvas = NULL;
 }
@@ -23,8 +23,8 @@ Gander::~Gander() {
 	
 	if (display != NULL)
 		delete display;
-	if (interpreter != NULL)
-		delete interpreter;
+	if (delegate != NULL)
+		delete delegate;
 	if (scene != NULL)
 		delete scene;
 	if (canvas != NULL)
@@ -50,8 +50,8 @@ void Gander::onCompile() {
 	
 	// Open scene
 	scene = new Scene();
-	interpreter = new Interpreter(scene, canvas);
-	interpreter->run(Command::OPEN, inFilename);
+	delegate = new Delegate(scene, canvas);
+	delegate->run(Command::OPEN, inFilename);
 }
 
 
@@ -97,13 +97,13 @@ void Gander::onDisplay() {
 	
 	// Open scene
 	scene = new Scene();
-	interpreter = new Interpreter(scene, canvas);
-	interpreter->run(Command::OPEN, inFilename);
+	delegate = new Delegate(scene, canvas);
+	delegate->run(Command::OPEN, inFilename);
 	
 	// Add display and controls
-	display = new Display(interpreter);
-	display->add(new Keyboard(interpreter));
-	display->add(new Mouse(interpreter));
+	display = new Display(delegate);
+	display->add(new Keyboard(delegate));
+	display->add(new Mouse(delegate));
 	
 	// Finish OpenGL calls
 	canvas->end();

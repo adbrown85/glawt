@@ -73,7 +73,7 @@ private:
 	int argc;
 	char **argv;
 	Display *display;
-	Interpreter *interpreter;
+	Delegate *delegate;
 	Canvas *canvas;
 	Scene *scene;
 	string inFilename, option, outFilename, parameter, title;

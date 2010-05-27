@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-#include "Interpreter.hpp"
+#include "Delegate.hpp"
 #include "Keyboard.hpp"
 //#include "Menu.hpp"
 #include "Mouse.hpp"
@@ -19,7 +19,7 @@ int main(int argc,
 	
 	Display *display;
 	Scene *scene;
-	Interpreter *interpreter;
+	Delegate *delegate;
 	
 	// Banner
 	cout << endl;
@@ -36,14 +36,14 @@ int main(int argc,
 		
 		// Open scene
 		scene = new Scene();
-		interpreter = new Interpreter(scene);
-		interpreter->run(Command::OPEN, "Display.xml");
+		delegate = new Delegate(scene);
+		delegate->run(Command::OPEN, "Display.xml");
 		
 		// Add display and controls
-		display = new Display(interpreter);
-		display->add(new Keyboard(interpreter));
-		display->add(new Menu(interpreter));
-		display->add(new Mouse(interpreter));
+		display = new Display(delegate);
+		display->add(new Keyboard(delegate));
+		display->add(new Menu(delegate));
+		display->add(new Mouse(delegate));
 		
 		// Start
 		Window::start();

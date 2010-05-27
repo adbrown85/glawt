@@ -7,14 +7,6 @@
 #include "Cameraman.hpp"
 
 
-/** Stores the inputs */
-Cameraman::Cameraman(Scene *scene, Canvas *canvas) {
-	
-	this->scene = scene;
-	this->canvas = canvas;
-}
-
-
 /** Fits items in the view. */
 void Cameraman::fit(int cmd) {
 	

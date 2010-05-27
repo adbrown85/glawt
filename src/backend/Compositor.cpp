@@ -7,14 +7,6 @@
 #include "Compositor.hpp"
 
 
-/** Adds the commands this delegate supports and sets up handlers. */
-Compositor::Compositor(Scene *scene, Canvas *canvas) {
-	
-	this->scene = scene;
-	this->canvas = canvas;
-}
-
-
 /** Hides the items currently selected. */
 void Compositor::hide(int cmd) {
 	
@@ -32,23 +24,20 @@ void Compositor::hide(int cmd) {
 /** Shows all the %Drawable nodes in the scene. */
 void Compositor::showAll(int cmd) {
 	
-	showAll(scene->getRoot());
-}
-
-
-/** Recursively shows a node and its children. */
-void Compositor::showAll(Node *node) {
-	
 	Drawable *drawable;
+	Node *node;
 	Node::iterator it;
+	queue<Node*> Q;
 	
-	// Show node
-	drawable = dynamic_cast<Drawable*>(node);
-	if (drawable != NULL)
-		drawable->setVisible(true);
-	
-	// Show children
-	for (it=node->begin(); it!=node->end(); ++it)
-		showAll(*it);
+	Q.push(scene->getRoot());
+	while (!Q.empty()) {
+		node = Q.front();
+		drawable = dynamic_cast<Drawable*>(node);
+		if (drawable != NULL)
+			drawable->setVisible(true);
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push(*it);
+		Q.pop();
+	}
 }
 

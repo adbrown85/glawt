@@ -8,9 +8,9 @@
 Mouse *Mouse::obj=NULL;
 
 
-Mouse::Mouse(Interpreter *interpreter) : Control(interpreter),
-                                         clickHelper(interpreter),
-                                         dragHelper(interpreter) {
+Mouse::Mouse(Delegate *delegate) : Control(delegate),
+                                   clickHelper(delegate),
+                                   dragHelper(delegate) {
 	
 	Mouse::obj = this;
 	
@@ -98,15 +98,15 @@ void Mouse::initManipulators() {
 	// Initialize
 	enableTranslateManipulators();
 	for (size_t i=0; i<manipulators.size(); ++i) {
-		manipulators[i]->setInterpreter(interpreter);
+		manipulators[i]->setDelegate(delegate);
 	}
 	clickHelper.setManipulators(manipulators);
 	dragHelper.setManipulators(manipulators);
 	
 	// Add listeners
-	interpreter->addListener(this, Command::TRANSLATE);
-	interpreter->addListener(this, Command::SCALE);
-	interpreter->addListener(this, Command::ROTATE);
+	delegate->addListener(this, Command::TRANSLATE);
+	delegate->addListener(this, Command::SCALE);
+	delegate->addListener(this, Command::ROTATE);
 }
 
 
