@@ -12,7 +12,7 @@ void Sort::apply() {
 	
 	list<Translate*>::iterator it;
 	
-	rotation = canvas->getRotationMatrix();
+	rotation = canvas->getCamera()->getRotation();
 	for (it=translates.begin(); it!=translates.end(); ++it) {
 		position = rotation * *(*it);
 		(*it)->setDepth(position.z);

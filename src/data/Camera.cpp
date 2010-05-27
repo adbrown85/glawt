@@ -28,6 +28,9 @@ void Camera::apply() {
 /** Initializes OpenGL. */
 void Camera::load(int width, int height) {
 	
+	// Set defaults
+	reset();
+	
 	// Enable options
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);

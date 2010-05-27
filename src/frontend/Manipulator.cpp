@@ -82,7 +82,7 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 	
 	// Get depth of the shape
 	node = dynamic_cast<Node*>(Identifiable::findByID(shapeID));
-	depth = node->getDepth() + canvas->getPosition().z;
+	depth = node->getDepth() + canvas->getCamera()->getPosition().z;
 	
 	// Transform unit vector at that depth to clip space
 	proj = Transform::getProjectionMatrix() * Vector(1,0,depth,1);
@@ -117,7 +117,7 @@ void Manipulator::draw(Node *node, Canvas *canvas) const {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
-	canvas->applyView();
+	canvas->getCamera()->apply();
 	glTranslatef(position.x, position.y, position.z);
 	traverser->start();
 	glPopMatrix();
@@ -136,7 +136,7 @@ void Manipulator::use(const Vector &movement, GLuint shapeID, Canvas *canvas) {
 	
 	// Calculate amount
 	pixelFactor = findPixelFactor(canvas, shapeID);
-	viewAxis = canvas->getRotationMatrix() * axis;
+	viewAxis = canvas->getCamera()->getRotation() * axis;
 	dotProduct = dot(normalize(movement), normalize(viewAxis));
 	amount = movement.length() * dotProduct * pixelFactor;
 	

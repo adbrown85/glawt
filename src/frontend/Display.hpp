@@ -16,7 +16,7 @@
 #include "Exception.hpp"
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
-#include "Delegate.hpp"         // Send commands
+#include "Delegate.hpp"            // Send commands
 #include "Manipulator.hpp"         // Draw UI widgets for controls
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
@@ -24,24 +24,22 @@
 using namespace std;
 
 
-/**
+/** @brief 3D display for items in a scene.
  * @ingroup frontend
- * @brief 3D display for items in a scene.
  */
-class Display : public CommandListener {
+class Display : public CanvasListener, CommandListener {
 public:
 	Display(Delegate *delegate);
 	void add(Control *control);
 	void computeFootprint();
-	static void display(void);
+	virtual void onCanvasEvent(const CanvasEvent &event);
 	Delegate* getDelegate();
-	static void idle(void);
+	void idle(void);
 	virtual void onCommandEvent(int command);
-	static void toggleOverlay();
+	void toggleOverlay();
 protected:
 	void overlay();
 private:
-	static Display *obj;
 	bool useOverlay;
 	Delegate *delegate;
 	unsigned long timeStarted;

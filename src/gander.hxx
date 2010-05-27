@@ -10,7 +10,6 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-#include <GL/glut.h>
 #include "Display.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
@@ -21,6 +20,7 @@
 #include "DatasetViewer.hpp"
 #include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
+#include "CanvasGTK.hpp"
 using namespace std;
 
 
@@ -53,13 +53,15 @@ using namespace std;
 /**
  * @brief Main application.
  */
-class Gander {
+class Gander : public CanvasListener {
 public:
 	Gander(int argc, char *argv[]);
 	~Gander();
 	void start();
 protected:
 	void banner();
+	void onCanvasEvent(const CanvasEvent &event);
+	void onCanvasEventSetup(const CanvasEvent &event);
 	void onCompile();
 	void onConvert();
 	void onDisplay();

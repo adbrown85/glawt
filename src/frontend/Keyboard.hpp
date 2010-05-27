@@ -9,54 +9,121 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-#include <cctype>
-#include <map>
-#include <utility>
-#include <vector>
-#include <GL/glut.h>
+#include <cctype>                       // Check if triggers are printable
 #include "Control.hpp"
 #include "Scene.hpp"
 using namespace std;
 
 
-/**
+/** @brief %Keyboard control for a canvas.
  * @ingroup frontend
- * @brief %Keyboard control for the %Display.
  */
-class Keyboard : public Control {
+class Keyboard : public Control, public CanvasListener {
 public:
 	Keyboard(Delegate *delegate);
-	static void character(int key, int x, int y);
-	static void special(int key, int x, int y);
 	virtual void install();
-	Binding* lookup(int key, int mod);
-	void trigger(int key);
+	virtual void onCanvasEvent(const CanvasEvent &event);
 protected:
-	void initBindings();
-private:
-	static Keyboard *obj;
+	void addBindings();
 };
 
-/** Adds all the default keyboard bindings to Gander. */
-inline void Keyboard::initBindings() {
+/** Adds all the default keyboard bindings. */
+inline void Keyboard::addBindings() {
 	
-	add(Binding(CANVAS_KEY_LEFT, 0, Command::CIRCLE_LEFT, 5.0f));
-	add(Binding(CANVAS_KEY_RIGHT, 0, Command::CIRCLE_RIGHT, 5.0f));
-	add(Binding(CANVAS_KEY_DOWN, 0, Command::CIRCLE_DOWN, 5.0f));
-	add(Binding(CANVAS_KEY_UP, 0, Command::CIRCLE_UP, 5.0f));
-	//add(Binding(CANVAS_KEY_HOME, 0, Command::RESET));
-	add(Binding(CANVAS_ESCAPE, 0, Command::EXIT));
+	Combo combo;
+	
+	// Left arrow
+	combo.trigger = CANVAS_KEY_LEFT;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::CIRCLE_LEFT, 5.0f));
+	
+	// Right arrow
+	combo.trigger = CANVAS_KEY_RIGHT;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::CIRCLE_RIGHT, 5.0f));
+	
+	// Down arrow
+	combo.trigger = CANVAS_KEY_DOWN;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::CIRCLE_DOWN, 5.0f));
+	
+	// Up arrow
+	combo.trigger = CANVAS_KEY_UP;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::CIRCLE_UP, 5.0f));
+	
+	// Escape
+	combo.trigger = CANVAS_ESCAPE;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::EXIT));
+	
+	// Ctrl + q
+	combo.trigger = 'q';
+	combo.modifier = CANVAS_MOD_CONTROL;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::EXIT));
+	
+	// Minus
+	combo.trigger = CANVAS_MINUS;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::ZOOM_OUT, 1.0f));
+	
+	// Plus
+	combo.trigger = CANVAS_EQUALS;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::ZOOM_IN, +1.0f));
+	
+	// a
+	combo.trigger = 'a';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::SELECT_ALL));
+	
+	// d
+	combo.trigger = 'd';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::DESELECT));
+	
+	// h
+	combo.trigger = 'h';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::HIDE));
+	
+	// v
+	combo.trigger = 'v';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::SHOW_ALL));
+	
+	// i
+	combo.trigger = 'i';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::INFORMATION));
+	
+	// t
+	combo.trigger = 't';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::TRANSLATE));
+	
+	// s
+	combo.trigger = 's';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	add(Binding(combo, Command::SCALE));
+	
 	//add(Binding('Q', CANVAS_MOD_CONTROL, Command::EXIT));
-	add(Binding('q', CANVAS_MOD_CONTROL, Command::EXIT));
-	add(Binding(CANVAS_MINUS, 0, Command::ZOOM_OUT, 1.0f));
-	add(Binding(CANVAS_EQUALS, 0, Command::ZOOM_IN, +1.0f));
-	add(Binding('a', 0, Command::SELECT_ALL));
-	add(Binding('d', 0, Command::DESELECT));
-	add(Binding('h', 0, Command::HIDE));
-	add(Binding('v', 0, Command::SHOW_ALL));
-	add(Binding('i', 0, Command::INFORMATION));
-	add(Binding('t', 0, Command::TRANSLATE));
-	add(Binding('s', 0, Command::SCALE));
+	//add(Binding(CANVAS_KEY_HOME, 0, Command::RESET));
 	// add(Binding('C', GLUT_ACTIVE_ALT, Command::COPY));
 	// add(Binding('V', GLUT_ACTIVE_ALT, Command::PASTE));
 	// add(Binding('X', GLUT_ACTIVE_ALT, Command::CUT));

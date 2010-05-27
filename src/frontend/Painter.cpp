@@ -96,7 +96,7 @@ void Painter::onDrawable(Drawable *node) {
 /** Paints all the items in a scene. */
 void Painter::start() {
 	
-	getCanvas()->applyView();
+	getCanvas()->getCamera()->apply();
 	Traverser::start();
 }
 

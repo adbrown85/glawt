@@ -45,9 +45,10 @@ void CanvasGTK::on_realize() {
 	set_can_focus(true);
 	grab_focus();
 	
-	// Set up the camera
+	// Set up
 	begin();
 	getCamera()->load(getWidth(), getHeight());
+	fireEvent(CanvasEvent::SETUP);
 	end();
 }
 

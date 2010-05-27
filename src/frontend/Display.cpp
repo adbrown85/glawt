@@ -5,12 +5,9 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Display.hpp"
-Display *Display::obj=NULL;
 
 
 Display::Display(Delegate *delegate) {
-	
-	Display::obj = this;
 	
 	// Initialize attributes
 	this->canvas = delegate->getCanvas();
@@ -24,9 +21,9 @@ Display::Display(Delegate *delegate) {
 	this->framesPerSecond = 0;
 	computeFootprint();
 	
-	// Register functions
+	// Add listeners
 	delegate->addListener(this, Command::INFORMATION);
-	canvas->setDisplayCallback(&Display::display);
+	canvas->addListener(this, CanvasEvent::DISPLAY);
 }
 
 
@@ -36,12 +33,13 @@ Display::Display(Delegate *delegate) {
  */
 void Display::add(Control *control) {
 	
-	vector<Manipulator*> manipulators;
+	list<Manipulator*> manips;
+	list<Manipulator*>::iterator it;
 	
 	control->install();
-	manipulators = control->getManipulators();
-	for (size_t j=0; j<manipulators.size(); j++)
-		painter->addManipulator(manipulators[j]);
+	manips = control->getManipulators();
+	for (it=manips.begin(); it!=manips.end(); ++it)
+		painter->addManipulator(*it);
 }
 
 
@@ -65,26 +63,28 @@ void Display::computeFootprint() {
 
 
 /** Draws the scene in the window. */
-void Display::display(void) {
+void Display::onCanvasEvent(const CanvasEvent &event) {
 	
 	// Clear
-	obj->canvas->clear();
+	canvas->clear();
 	
 	// Paint scene and overlay
-	obj->painter->start();
-	if (obj->useOverlay)
-		obj->overlay();
+	painter->start();
+	if (useOverlay)
+		overlay();
 	
 	// Flush
-	obj->canvas->flush();
+	canvas->flush();
 }
 
 
 /** Refreshes the display. */
+/*
 void Display::idle(void) {
 	
-	obj->canvas->refresh();
+	canvas->refresh();
 }
+*/
 
 
 /** Handles command events. */
@@ -128,7 +128,7 @@ void Display::overlay() {
 /** Switches the overlay on and off. */
 void Display::toggleOverlay() {
 	
-	obj->useOverlay = !obj->useOverlay;
+	useOverlay = !useOverlay;
 	//if (obj->useOverlay)
 		//obj->canvas->setIdle(&Display::idle);
 	//else

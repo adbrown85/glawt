@@ -15,33 +15,32 @@
 #include "FileUtility.hpp"
 #include "Scene.hpp"
 #include "Traverser.hpp"
-#include "Canvas.hpp"
+#include "CanvasGTK.hpp"
 using namespace std;
 
 
-/**
+/** @brief Utility for testing nodes.
  * @ingroup graph
- * @brief Utility for testing nodes.
  */
-class Tester {
+class Tester : public CanvasListener {
 public:
-	static void display(void);
-	static string getFilename();
-	static Scene* getScene();
-	static void keyboard(int key, int x, int y);
-	static void mouse(int button, int state, int x, int y);
-	static void init(int argc, char *argv[]);
-	static void open(const string &filename);
-	static void start();
+	void display(void);
+	string getFilename();
+	Scene* getScene();
+	void onCanvasEvent(const CanvasEvent &event);
+	void onCanvasEventDisplay(const CanvasEvent &event);
+	void onCanvasEventKey(const CanvasEvent &event);
+	void open(const string &filename);
+	void start();
 private:
-	static Traverser *traverser;
-	static Scene scene;
-	static Canvas *canvas;
+	Traverser *traverser;
+	Scene *scene;
+	Canvas *canvas;
+	Camera *camera;
 };
 
-
-inline Scene* Tester::getScene() {return &scene;}
-inline string Tester::getFilename() {return scene.getFilename();}
+inline Scene* Tester::getScene() {return scene;}
+inline string Tester::getFilename() {return scene->getFilename();}
 
 
 #endif

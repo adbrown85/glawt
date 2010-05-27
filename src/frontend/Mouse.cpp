@@ -5,145 +5,41 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Mouse.hpp"
-Mouse *Mouse::obj=NULL;
 
 
-Mouse::Mouse(Delegate *delegate) : Control(delegate),
-                                   clickHelper(delegate),
-                                   dragHelper(delegate) {
+Mouse::Mouse(Delegate *delegate) : Control(delegate), picker(scene,canvas) {
 	
-	Mouse::obj = this;
+	list<Manipulator*>::iterator it;
 	
+	// Set name
 	this->type = "Mouse";
-	initBindings();
-	initData();
-	initManipulators();
-}
-
-
-/** Installs the control into the current context. */
-void Mouse::install() {
 	
-	// Register callbacks
-	canvas->setMouseCallback(Mouse::onClick);
-	canvas->setDragCallback(Mouse::onDrag);
-	
-	// Install helpers
-	clickHelper.install();
-	dragHelper.install();
-}
-
-
-/** Installs the bindings for the mouse. */
-void Mouse::initBindings() {
-	
-	// Add bindings for mouse wheel
-	add(Binding(CANVAS_WHEEL_UP, 0, Command::ZOOM_IN, 1.0f, CANVAS_UP));
-	add(Binding(CANVAS_WHEEL_DOWN, 0, Command::ZOOM_OUT, 1.0f, CANVAS_UP));
-	
-	// Add bindings for left button
-	add(Binding(CANVAS_LEFT_BUTTON,
-	            CANVAS_MOD_CONTROL,
-	            Command::GRAB,
-	            &(data.itemID),
-	            CANVAS_DOWN));
-	add(Binding(CANVAS_LEFT_BUTTON,
-	            0,
-	            Command::CIRCLE_Y,
-	            -1.0f,
-	            'x'));
-	add(Binding(CANVAS_LEFT_BUTTON,
-	            0,
-	            Command::CIRCLE_X,
-	            -1.0f,
-	            'y'));
-	
-	// Add bindings for middle button
-	add(Binding(CANVAS_MIDDLE_BUTTON,
-	            0,
-	            Command::TRACK,
-	            -1.0f,
-	            'x'));
-	add(Binding(CANVAS_MIDDLE_BUTTON,
-	            0,
-	            Command::BOOM,
-	            1.0f,
-	            'y'));
-	
-	// Copy to helpers
-	clickHelper.setBindings(bindings);
-	dragHelper.setBindings(bindings);
-}
-
-
-/** Shares the mouse data with the helpers. */
-void Mouse::initData() {
-	
-	clickHelper.setData(&data);
-	dragHelper.setData(&data);
-}
-
-
-/** Installs the manipulators to show for selected items. */
-void Mouse::initManipulators() {
-	
-	// Add
-	add(new Manipulator('x', Command::TRANSLATE_X, "ui/TranslateX.xml"));
-	add(new Manipulator('y', Command::TRANSLATE_Y, "ui/TranslateY.xml"));
-	add(new Manipulator('z', Command::TRANSLATE_Z, "ui/TranslateZ.xml"));
-	add(new Manipulator('x', Command::SCALE_X, "ui/ScaleX.xml", 2));
-	add(new Manipulator('y', Command::SCALE_Y, "ui/ScaleY.xml", 2));
-	add(new Manipulator('z', Command::SCALE_Z, "ui/ScaleZ.xml", 2));
-	
-	// Initialize
+	// Add bindings and manipulators
+	addManipulators();
+	addBindings();
 	enableTranslateManipulators();
-	for (size_t i=0; i<manipulators.size(); ++i) {
-		manipulators[i]->setDelegate(delegate);
-	}
-	clickHelper.setManipulators(manipulators);
-	dragHelper.setManipulators(manipulators);
+	for (it=manips.begin(); it!=manips.end(); ++it)
+		(*it)->setDelegate(delegate);
+	
+	// Set up picking and dragging
+	picker.addManipulators(manips);
+	camera = canvas->getCamera();
 	
 	// Add listeners
+	canvas->addListener(this, CanvasEvent::BUTTON);
+	canvas->addListener(this, CanvasEvent::DRAG);
 	delegate->addListener(this, Command::TRANSLATE);
 	delegate->addListener(this, Command::SCALE);
 	delegate->addListener(this, Command::ROTATE);
 }
 
 
-/** Callback for mouse clicks. */
-void Mouse::onClick(int button, int state, int x, int y) {
-	
-	obj->clickHelper.onClick(button, state, x, y);
-}
-
-
-/** Callback for when the mouse is dragged. */
-void Mouse::onDrag(int x, int y) {
-	
-	obj->dragHelper.onDrag(x, y);
-}
-
-
-/** Handles commands. */
-void Mouse::onCommandEvent(int command) {
-	
-	switch (command) {
-	case Command::TRANSLATE:
-		enableTranslateManipulators();
-		break;
-	case Command::SCALE:
-		enableScaleManipulators();
-		break;
-	}
-}
-
-
 /** Use all the scale manipulators. */
 void Mouse::enableScaleManipulators() {
 	
-	vector<Manipulator*>::iterator it;
+	list<Manipulator*>::iterator it;
 	
-	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
+	for (it=manips.begin(); it!=manips.end(); ++it) {
 		switch ((*it)->getCommand()) {
 		case Command::SCALE_X:
 		case Command::SCALE_Y:
@@ -160,9 +56,9 @@ void Mouse::enableScaleManipulators() {
 /** Use all the translate manipulators. */
 void Mouse::enableTranslateManipulators() {
 	
-	vector<Manipulator*>::iterator it;
+	list<Manipulator*>::iterator it;
 	
-	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
+	for (it=manips.begin(); it!=manips.end(); ++it) {
 		switch ((*it)->getCommand()) {
 		case Command::TRANSLATE_X:
 		case Command::TRANSLATE_Y:
@@ -174,4 +70,178 @@ void Mouse::enableTranslateManipulators() {
 		}
 	}
 }
+
+
+float Mouse::findDragAmount(int i) {
+	
+	float factor;
+	
+	factor = fabs(camera->getPosition().z) / 80 + 1;
+	return movement[i] * axis[i] * factor * binding->getArgument();
+}
+
+
+/** Installs the control into the current context. */
+void Mouse::install() {
+	
+	// Register callbacks
+	canvas->addListener(this, CanvasEvent::BUTTON);
+	canvas->addListener(this, CanvasEvent::DRAG);
+}
+
+
+/** Handles incoming events from the canvas. */
+void Mouse::onCanvasEvent(const CanvasEvent &event) {
+	
+	switch (event.type) {
+	case CanvasEvent::BUTTON:
+		onCanvasEventButton(event);
+		break;
+	case CanvasEvent::DRAG:
+		onCanvasEventDrag(event);
+		break;
+	}
+}
+
+
+/** Handles mouse clicks. */
+void Mouse::onCanvasEventButton(const CanvasEvent &event) {
+	
+	// Update
+	state = event.state;
+	binding = getBinding(state.combo);
+	glReadPixels(state.x,state.y, 1,1, GL_DEPTH_COMPONENT, GL_FLOAT, &(depth));
+	
+	// Reset dragging
+	iteration = 0;
+	axis.set(0.0, 0.0);
+	direction.set(0.0, 0.0);
+	
+	// Pick item for normal clicks
+	if (state.combo.trigger != CANVAS_WHEEL_DOWN
+	      && state.combo.trigger != CANVAS_WHEEL_UP) {
+		pickItem();
+	}
+	
+	// Run binding
+	if (binding != NULL) {
+		if (binding->hasArgument()) {
+			delegate->run(binding->getCommand(), binding->getArgument());
+		} else {
+			delegate->run(binding->getCommand());
+		}
+	}
+	
+	// Finish
+	last = state;
+}
+
+
+/** Handles mouse dragging. */
+void Mouse::onCanvasEventDrag(const CanvasEvent &event) {
+	
+	float amount;
+	int i;
+	
+	// Update
+	state = event.state;
+	++iteration;
+	movement.set((state.x-last.x), -(state.y-last.y));
+	
+	// Dragging a manipulator
+	if (manip != NULL) {
+		manip->use(movement, shapeID, canvas);
+	}
+	
+	// Dragging on the screen
+	else {
+		if (iteration < 10) {
+			decideAxis();
+		} else {
+			if (axis.x > 1.0) {
+				state.combo.action = 'x';
+				i = 0;
+			} else if (axis.y > 1.0) {
+				state.combo.action = 'y';
+				i = 1;
+			}
+			binding = getBinding(state.combo);
+			amount = findDragAmount(i);
+			if (amount > 0.001) {
+				delegate->run(binding->getCommand(), amount);
+			}
+		}
+	}
+	
+	// Finish
+	last = state;
+	canvas->refresh();
+}
+
+
+/** Handles incoming events from the delegate. */
+void Mouse::onCommandEvent(int command) {
+	
+	switch (command) {
+	case Command::TRANSLATE:
+		enableTranslateManipulators();
+		break;
+	case Command::SCALE:
+		enableScaleManipulators();
+		break;
+	}
+}
+
+
+/** Finds the item ID and shape ID, and checks if item was manipulaor. */
+void Mouse::pickItem() {
+	
+	Identifiable *identifiable;
+	pair<GLuint,GLuint> result;
+	
+	// Initialize
+	manip = NULL;
+	
+	// Pick the item
+	result = picker.pick(state.x, state.y);
+	itemID = result.first;
+	shapeID = result.second;
+	
+	// Check if a manipulator
+	identifiable = Identifiable::findByID(itemID);
+	if (identifiable != NULL)
+		manip = dynamic_cast<Manipulator*>(identifiable);
+}
+
+
+/** Decides which axis the user should be allowed to drag in. */
+void Mouse::decideAxis() {
+	
+	// Wait for direction to increase before deciding on axis
+	if (direction.length() >= 3.0) {
+		direction = direction + movement;
+		if (fabs(direction.y) > fabs(direction.x))
+			axis.set(0.0, 1.0);
+		else
+			axis.set(1.0, 0.0);
+	}
+}
+
+
+/** @return True if dragging motion should be constrained to one direction. */
+/*
+bool Mouse::useConstrained() {
+	
+	Binding *binding;
+	map<Combo,>::iterator it;
+	
+	it = bindings.find(state.combo);
+	if (it != bindings.end()) {
+		binding = &(it->second);
+		return (binding->getCommand() == Command::CIRCLE_X) ||
+		       (binding->getCommand() == Command::CIRCLE_Y)
+	}
+	return false;
+}
+*/
 

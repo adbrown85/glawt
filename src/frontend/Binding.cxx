@@ -8,20 +8,79 @@
 #include <cfloat>
 #include <climits>
 #include <iostream>
-#include <vector>
 #include "Binding.hpp"
 using namespace std;
 
 
-/**
- * Unit test for Binding.
- */
-int main(int argc,
-         char *argv[]) {
+/* Test for Binding. */
+class BindingTest {
+public:
+	void setUp();
+	void testArgument();
+	void testPrint();
+private:
+	list<Binding> bindings;
+};
+
+/* Create a few bindings. */
+void BindingTest::setUp() {
+	
+	Combo combo;
+	
+	cout << "Setting up..." << endl;
+	
+	// Left arrow
+	combo.trigger = CANVAS_KEY_LEFT;
+	combo.modifier = CANVAS_MOD_CONTROL;
+	combo.action = CANVAS_DOWN;
+	bindings.push_back(Binding(combo, Command::CIRCLE_LEFT));
+	
+	// Right arrow
+	combo.trigger = CANVAS_ESCAPE;
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	bindings.push_back(Binding(combo, Command::EXIT));
+}
+
+/* Print all of them. */
+void BindingTest::testPrint() {
+	
+	list<Binding>::iterator it;
+	
+	cout << "\nTesting print..." << endl;
+	
+	// Print
+	for (it=bindings.begin(); it!=bindings.end(); ++it) {
+		cout << "  " << it->toString() << endl;
+	}
+}
+
+/* Make sure pointer arguments are dereferenced. */
+void BindingTest::testArgument() {
 	
 	Binding *binding;
-	vector<Binding> bins;
+	Combo combo;
 	unsigned int number=5;
+	
+	cout << "\nTesting argument..." << endl;
+	
+	// Make binding
+	combo.trigger = 'Q';
+	combo.modifier = CANVAS_MOD_NONE;
+	combo.action = CANVAS_DOWN;
+	binding = new Binding(combo, Command::COPY, &number);
+	
+	// Get the argument
+	cout << "  " << binding->getArgument() << endl;
+	assert(binding->getArgument() == number);
+	delete binding;
+}
+
+
+/* Run the test. */
+int main(int argc, char *argv[]) {
+	
+	BindingTest test;
 	
 	// Start
 	cout << endl;
@@ -30,31 +89,16 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Check constructors
-	cout << endl;
-	cout << "Checking constructors:" << endl;
-	bins.push_back(Binding(27, 0, Command::EXIT));
-	bins.push_back(Binding(GLUT_KEY_LEFT, 0, Command::CIRCLE_LEFT));
-	bins.push_back(Binding(GLUT_KEY_RIGHT, GLUT_ACTIVE_ALT, Command::CIRCLE_RIGHT));
-	bins.push_back(Binding(GLUT_LEFT_BUTTON, GLUT_ACTIVE_SHIFT, Command::CIRCLE_UP));
-	bins.push_back(Binding('\t', 0, Command::NEXT, 5.0f));
-	bins.push_back(Binding('C', GLUT_ACTIVE_CTRL, Command::COPY));
-	for (size_t i=0; i<bins.size(); i++)
-		cout << "  " << bins[i] << endl;
+	// Test
+	try {
+		test.setUp();
+		test.testPrint();
+		test.testArgument();
+	} catch (Exception &e) {
+		cerr << e << endl;
+		exit(1);
+	}
 	
-	// Check argument
-	cout << endl;
-	cout << "Checking arguments:" << endl;
-	binding = new Binding('E', 0, Command::COPY, &number, GLUT_DOWN);
-	cout << "  " << binding->getArgument() << endl;
-	assert(binding->getArgument() == number);
-	delete binding;
-	
-	// Check maximums
-	cout << endl;
-	cout << "Checking maximums:" << endl;
-	cout << "  Float: " << (unsigned int)FLT_MAX << endl;
-	cout << "  Unsigned integer: " << UINT_MAX << endl;
 	
 	// Finish
 	cout << endl;
@@ -62,5 +106,6 @@ int main(int argc,
 	cout << "Binding" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
+	return 0;
 }
 

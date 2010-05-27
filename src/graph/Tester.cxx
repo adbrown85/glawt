@@ -16,6 +16,12 @@ Node* createNode(const Tag &tag) {
 int main(int argc,
          char *argv[]) {
 	
+	Tester tester;
+	
+	// Initialize
+	Gtk::Main kit(argc, argv);
+	Gtk::GL::init(argc, argv);
+	
 	// Install tags
 	Factory::install("program", &createNode);
 	Factory::install("shader", &createNode);
@@ -23,10 +29,8 @@ int main(int argc,
 	Factory::install("cube", &createNode);
 	
 	// Start
-	Gtk::Main kit(argc, argv);
-	Tester::init(argc, argv);
-	Tester::open("Tester.xml");
-	Tester::start();
+	tester.open("Tester.xml");
+	tester.start();
 	
 	// Finish
 	return 0;

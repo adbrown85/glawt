@@ -16,53 +16,49 @@
 using namespace std;
 
 
-/** Maps a combination of keys or buttons to a command.
+/** @brief Maps a combination of keys or buttons to a command.
  * @ingroup frontend
  */
 class Binding {
 public:
-	Binding(int trigger, int modifier, int command);
-	Binding(int trigger, int modifier, int command, float arg);
-	Binding(int trigger, int modifier, int command, int state);
-	Binding(int trigger, int modifier, int command, float arg, int state);
-	Binding(int trigger, int modifier, int command, GLuint *arg, int state);
+	Binding(const Combo &combo, int command);
+	Binding(const Combo &combo, int command, float arg);
+	Binding(const Combo &combo, int command, GLuint *arg);
 	float getArgument() const;
+	Combo& getCombo();
 	int getCommand() const;
-	string getCommandStr() const;
-	int getModifier() const;
-	string getModifierStr() const;
-	int getState() const;
-	int getTrigger() const;
-	string getTriggerStr() const;
 	bool hasArgument() const;
-	bool hasDrag() const;
-	bool hasModifier() const;
-	bool isCharacter() const;
-	friend ostream& operator<<(ostream& stream, const Binding &b);
+	string toString() const;
 protected:
-	void init(int trigger, int modifier, int command, int state);
-	void init(int trigger, int modifier, int command, int state, float arg);
-	void init(int trigger, int modifier, int command, int state, GLuint *arg);
-	static bool isCharacter(int trigger);
-	static void initTriggerNames();
+	static void load();
+	static map<int,string> names;
+	static bool loaded;
 private:
 	bool hasArg;
-	int command, modifier, state, trigger;
+	Combo combo;
+	int command;
 	unsigned int *argi;
 	float argf;
-	static bool loaded;
-	static map<int,string> triggerNames;
 };
 
+inline Combo& Binding::getCombo() {return combo;}
 inline int Binding::getCommand() const {return command;}
-inline string Binding::getCommandStr() const {return Command::getName(command);}
-inline int Binding::getModifier() const {return modifier;}
-inline int Binding::getState() const {return state;}
-inline int Binding::getTrigger() const {return trigger;}
 inline bool Binding::hasArgument() const {return hasArg;}
-inline bool Binding::hasModifier() const {return modifier != 0;}
-inline bool Binding::isCharacter() const {return isCharacter(this->trigger);}
 
+/** Initializes the formatted names of triggers. */
+inline void Binding::load() {
+	
+	names[CANVAS_ESCAPE] = "Esc";
+	names[CANVAS_KEY_LEFT] = "Left";
+	names[CANVAS_KEY_RIGHT] = "Right";
+	names[CANVAS_KEY_UP] = "Up";
+	names[CANVAS_KEY_DOWN] = "Down";
+	names[CANVAS_LEFT_BUTTON] = "Left";
+	names[CANVAS_MIDDLE_BUTTON] = "Middle";
+	names[CANVAS_RIGHT_BUTTON] = "Right";
+	names[CANVAS_WHEEL_UP] = "Wheel Up";
+	names[CANVAS_WHEEL_DOWN] = "Wheel Down";
+}
 
 
 

@@ -9,12 +9,10 @@
 #include <cfloat>
 #include <climits>
 #include <cstdlib>
-#include <GL/glut.h>
 #include <iostream>
 #include <map>
 #include <typeinfo>
 #include <utility>
-#include <vector>
 #include "Exception.hpp"
 #include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
@@ -32,7 +30,7 @@ using namespace std;
 class Picker {
 public:
 	Picker(Scene *scene, Canvas *canvas);
-	void addManipulators(vector<Manipulator*> manipulators);
+	void addManipulators(list<Manipulator*> manipulators);
 	pair<GLuint,GLuint> pick(int x, int y);
 protected:
 	pair<GLuint,GLuint> chooseItem();

@@ -8,14 +8,24 @@
 #define CONTROL_HPP
 #include <cstdlib>
 #include <iostream>
-#include <map>
 #include <string>
-#include <utility>
-#include <vector>
+#include <map>                          // Storing bindings
+#include <utility>                      // Pair
+#include <list>                         // Storing manipulators
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
 using namespace std;
+
+
+/* Functor for comparing combos. */
+class ComboComparator {
+public:
+	bool compareTriggers(const Combo &A, const Combo &B);
+	bool compareModifiers(const Combo &A, const Combo &B);
+	bool compareActions(const Combo &A, const Combo &B);
+	bool operator()(const Combo &A, const Combo &B);
+};
 
 
 /**
@@ -26,20 +36,63 @@ class Control {
 public:
 	Control(Delegate *delegate);
 	virtual ~Control();
-	virtual void add(const Binding &binding);
+	virtual void add(Binding binding);
 	virtual void add(Manipulator *manipulator);
-	virtual vector<Manipulator*> getManipulators() const;
+	Binding* getBinding(const Combo &combo);
+	virtual list<Manipulator*> getManipulators() const;
 	virtual void install() = 0;
 	virtual void print();
-	virtual void setManipulators(vector<Manipulator*> manipulators);
+	virtual void setManipulators(list<Manipulator*> manipulators);
 protected:
 	Delegate *delegate;
-	multimap<int,Binding> bindings;
+	map<Combo,Binding,ComboComparator> bindings;
 	Scene *scene;
 	Canvas *canvas;
 	string type;
-	vector<Manipulator*> manipulators;
+	list<Manipulator*> manips;
 };
+
+/* Get and set the control's manipulators. */
+inline list<Manipulator*> Control::getManipulators() const {return manips;}
+inline void Control::setManipulators(list<Manipulator*> m) {manips = m;}
+
+/* Compares two combos by comparing their triggers, modifiers, and actions. */
+inline bool ComboComparator::operator()(const Combo &A, const Combo &B) {
+	return compareTriggers(A, B);
+}
+
+/* Compares the triggers of two combos. */
+inline bool ComboComparator::compareTriggers(const Combo &A, const Combo &B) {
+	if (A.trigger < B.trigger) {
+		return true;
+	} else if (A.trigger > B.trigger) {
+		return false;
+	} else {
+		return compareModifiers(A, B);
+	}
+}
+
+/* Compares the modifiers of two combos. */
+inline bool ComboComparator::compareModifiers(const Combo &A, const Combo &B) {
+	if (A.modifier < B.modifier) {
+		return true;
+	} else if (A.modifier > B.modifier) {
+		return false;
+	} else {
+		return compareActions(A, B);
+	}
+}
+
+/* Compares the actions of two combos. */
+inline bool ComboComparator::compareActions(const Combo &A, const Combo &B) {
+	if (A.action < B.action) {
+		return true;
+	} else if (A.action > B.action) {
+		return false;
+	} else {
+		return false;
+	}
+}
 
 
 #endif

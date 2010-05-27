@@ -7,10 +7,7 @@
 #include "Control.hpp"
 
 
-/** Creates a new control using the specified Delegate to run commands.
- * 
- * @param delegate Class that will run commands
- */
+/** Creates a new control using the specified delegate to run commands. */
 Control::Control(Delegate *delegate) {
 	
 	// Initialize
@@ -23,39 +20,45 @@ Control::Control(Delegate *delegate) {
 /** Deallocates the manipulators. */
 Control::~Control() {
 	
+	list<Manipulator*>::iterator it;
+	
 	// Delete each manipulator
-	for (size_t i=0; i<manipulators.size(); ++i)
-		delete manipulators[i];
+	for (it=manips.begin(); it!=manips.end(); ++it)
+		delete (*it);
+	manips.clear();
 }
 
 
-/** Adds a Binding to the control.
- * 
- * @param binding Binding to add (creates a copy).
- */
-void Control::add(const Binding &binding) {
+/** Adds a Binding to the control. */
+void Control::add(Binding binding) {
 	
-	bindings.insert(pair<int,Binding>(binding.getTrigger(), binding));
+	bindings.insert(pair<Combo,Binding>(binding.getCombo(), binding));
 }
 
 
 /** Adds a Manipulator to the control. */
-void Control::add(Manipulator *manipulator) {
+void Control::add(Manipulator *manip) {
 	
-	manipulators.push_back(manipulator);
+	manips.push_back(manip);
 }
 
 
-vector<Manipulator*> Control::getManipulators() const {
+Binding* Control::getBinding(const Combo& combo) {
 	
-	return manipulators;
+	map<Combo,Binding>::iterator it;
+	
+	if (it != bindings.end()) {
+		return &(it->second);
+	} else {
+		return NULL;
+	}
 }
 
 
 /** Print each Binding attached to the control. */
 void Control::print() {
 	
-	multimap<int,Binding>::iterator bi;
+	map<Combo,Binding>::iterator it;
 	
 	// Add type of control
 	if (!type.empty())
@@ -63,13 +66,7 @@ void Control::print() {
 	
 	// Print each binding
 	cout << "Bindings:" << endl;
-	for (bi=bindings.begin(); bi!=bindings.end(); bi++)
-		cout << "  " << bi->second << endl;
-}
-
-
-void Control::setManipulators(vector<Manipulator*> manipulators) {
-	
-	this->manipulators = manipulators;
+	for (it=bindings.begin(); it!=bindings.end(); ++it)
+		cout << "  " << it->second.toString() << endl;
 }
 

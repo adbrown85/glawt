@@ -17,7 +17,7 @@ void Cameraman::fit(int cmd) {
 /** Resets the view's rotation. */
 void Cameraman::reset(int cmd) {
 	
-	canvas->reset();
+	canvas->getCamera()->reset();
 }
 
 
@@ -31,17 +31,17 @@ void Cameraman::rotate(int cmd, float amt) {
 	// Rotate according to command
 	switch (cmd) {
 	case Command::CIRCLE_X :
-		canvas->rotate( amt, Vector(1.0,0.0,0.0)); break;
+		canvas->getCamera()->rotate( amt, Vector(1.0,0.0,0.0)); break;
 	case Command::CIRCLE_Y :
-		canvas->rotate(-amt, Vector(0.0,1.0,0.0)); break;
+		canvas->getCamera()->rotate(-amt, Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_LEFT :
-		canvas->rotate(-fabs(amt), Vector(0.0,1.0,0.0)); break;
+		canvas->getCamera()->rotate(-fabs(amt), Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_RIGHT :
-		canvas->rotate( fabs(amt), Vector(0.0,1.0,0.0)); break;
+		canvas->getCamera()->rotate( fabs(amt), Vector(0.0,1.0,0.0)); break;
 	case Command::CIRCLE_UP :
-		canvas->rotate(-fabs(amt), Vector(1.0,0.0,0.0)); break;
+		canvas->getCamera()->rotate(-fabs(amt), Vector(1.0,0.0,0.0)); break;
 	case Command::CIRCLE_DOWN :
-		canvas->rotate( fabs(amt), Vector(1.0,0.0,0.0)); break;
+		canvas->getCamera()->rotate( fabs(amt), Vector(1.0,0.0,0.0)); break;
 	}
 }
 
@@ -55,28 +55,28 @@ void Cameraman::translate(int cmd, float amt) {
 	
 	switch (cmd) {
 	case Command::BOOM :
-		canvas->translate(0.0,       amt *0.011, 0.0);
+		canvas->getCamera()->move(Vector(0.0,       amt *0.011, 0.0));
 		break;
 	case Command::BOOM_DOWN :
-		canvas->translate(0.0, -fabs(amt)*0.011, 0.0);
+		canvas->getCamera()->move(Vector(0.0, -fabs(amt)*0.011, 0.0));
 		break;
 	case Command::BOOM_UP :
-		canvas->translate(0.0, +fabs(amt)*0.011, 0.0);
+		canvas->getCamera()->move(Vector(0.0, +fabs(amt)*0.011, 0.0));
 		break;
 	case Command::TRACK :
-		canvas->translate(     -amt *0.011, 0.0, 0.0);
+		canvas->getCamera()->move(Vector(     -amt *0.011, 0.0, 0.0));
 		break;
 	case Command::TRACK_LEFT :
-		canvas->translate(+fabs(amt)*0.011, 0.0, 0.0);
+		canvas->getCamera()->move(Vector(+fabs(amt)*0.011, 0.0, 0.0));
 		break;
 	case Command::TRACK_RIGHT :
-		canvas->translate(-fabs(amt)*0.011, 0.0, 0.0);
+		canvas->getCamera()->move(Vector(-fabs(amt)*0.011, 0.0, 0.0));
 		break;
 	case Command::ZOOM_IN :
-		canvas->translate(0.0, 0.0, +amt);
+		canvas->getCamera()->move(Vector(0.0, 0.0, +amt));
 		break;
 	case Command::ZOOM_OUT :
-		canvas->translate(0.0, 0.0, -amt);
+		canvas->getCamera()->move(Vector(0.0, 0.0, -amt));
 		break;
 	}
 }

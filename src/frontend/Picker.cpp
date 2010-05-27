@@ -16,10 +16,12 @@ Picker::Picker(Scene *scene, Canvas *canvas) {
 }
 
 
-void Picker::addManipulators(vector<Manipulator*> manipulators) {
+void Picker::addManipulators(list<Manipulator*> manips) {
 	
-	for (size_t i=0; i<manipulators.size(); ++i) {
-		painter->addManipulator(manipulators[i]);
+	list<Manipulator*>::iterator it;
+	
+	for (it=manips.begin(); it!=manips.end(); ++it) {
+		painter->addManipulator(*it);
 	}
 }
 

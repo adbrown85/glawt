@@ -42,11 +42,35 @@ void Gander::banner() {
 }
 
 
+void Gander::onCanvasEvent(const CanvasEvent &event) {
+	
+	switch (event.type) {
+	case CanvasEvent::SETUP:
+		onCanvasEventSetup(event);
+		break;
+	}
+}
+
+
+void Gander::onCanvasEventSetup(const CanvasEvent &event) {
+	
+	// Open scene
+	scene = new Scene();
+	delegate = new Delegate(scene, canvas);
+	delegate->run(Command::OPEN, inFilename);
+	
+	// Add display and controls
+	display = new Display(delegate);
+	display->add(new Keyboard(delegate));
+	display->add(new Mouse(delegate));
+}
+
+
 void Gander::onCompile() {
 	
 	// Create canvas
-	Canvas::init(argc, argv);
-	canvas = new Canvas();
+	Gtk::GL::init(argc, argv);
+	canvas = new CanvasGTK();
 	
 	// Open scene
 	scene = new Scene();
@@ -80,33 +104,18 @@ void Gander::onDisplay() {
 	LogBook logBook;
 	
 	// Create widgets
-	Canvas::init(argc, argv);
-	canvas = new Canvas();
+	Gtk::GL::init(argc, argv);
+	canvas = new CanvasGTK();
 	window.set_title(title);
+	canvas->addListener(this, CanvasEvent::SETUP);
 	
 	// Pack
-	vBox.pack_start(*canvas, Gtk::PACK_SHRINK);
+	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
 	vBox.pack_start(logBook);
 	hBox.pack_start(inspector);
 	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
 	window.add(hBox);
 	window.show_all();
-	
-	// Start OpenGL calls
-	canvas->begin();
-	
-	// Open scene
-	scene = new Scene();
-	delegate = new Delegate(scene, canvas);
-	delegate->run(Command::OPEN, inFilename);
-	
-	// Add display and controls
-	display = new Display(delegate);
-	display->add(new Keyboard(delegate));
-	display->add(new Mouse(delegate));
-	
-	// Finish OpenGL calls
-	canvas->end();
 	
 	// Finalize widgets
 	inspector.setScene(scene);
@@ -169,18 +178,20 @@ void Gander::onSlices() {
 	
 	// Initialize
 	Gtk::Main kit(argc, argv);
-	Canvas::init(argc, argv);
+	Gtk::GL::init(argc, argv);
 	
 	// Create the dataset and viewer
 	Dataset dataset(inFilename);
 	dataset.load();
 	DatasetViewer viewer;
+	viewer.setCanvas(canvas);
 	viewer.setDataset(&dataset);
+	viewer.load();
 	
 	// Pack in window
 	Gtk::Window window;
 	window.set_title(dataset.getFilename());
-	window.add(viewer);
+	window.add(*((CanvasGTK*)canvas));
 	window.show_all_children();
 	
 	// Run
