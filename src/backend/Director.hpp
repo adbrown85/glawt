@@ -6,10 +6,8 @@
  */
 #ifndef DIRECTOR_HPP
 #define DIRECTOR_HPP
-#include <cstdlib>
-#include <iostream>
-#include "Command.hpp"
-#include "Worker.hpp"
+#include "common.h"
+#include "Worker.hpp"                   // Base class
 using namespace std;
 
 

@@ -6,9 +6,7 @@
  */
 #ifndef FULLSCREEN_HPP
 #define FULLSCREEN_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Node.hpp"
 #include "SimpleDrawable.hpp"
 

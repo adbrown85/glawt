@@ -6,12 +6,9 @@
  */
 #ifndef LOG_HPP
 #define LOG_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <iomanip>                      // For floats
 #include <list>                         // Storing lines
-#include <sstream>                      // Storing text
 using namespace std;
 
 

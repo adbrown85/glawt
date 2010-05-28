@@ -6,12 +6,8 @@
  */
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
-#include <cstdlib>
-#include <GL/glut.h>
+#include "common.h"
 #include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <vector>
 #include <glibmm/timer.h>
 #include "Exception.hpp"

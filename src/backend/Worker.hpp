@@ -6,14 +6,14 @@
  */
 #ifndef WORKER_HPP
 #define WORKER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include "Scene.hpp"
-#include "Canvas.hpp"
+#include "common.h"
+#include "Command.hpp"
 using namespace std;
 
 
+/** @brief Base class for an object that performs commands on the scene.
+ * @ingroup backend
+ */
 class Worker {
 public:
 	Worker(Scene *scene, Canvas *canvas);

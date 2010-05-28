@@ -6,13 +6,10 @@
  */
 #ifndef PREPROCESSOR_HPP
 #define PREPROCESSOR_HPP
-#include <cstdlib>
+#include "common.h"
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <map>
-#include <sstream>
-#include <string>
 #include <stack>
 #include <vector>
 #include "Exception.hpp"

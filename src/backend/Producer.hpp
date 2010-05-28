@@ -6,11 +6,8 @@
  */
 #ifndef PRODUCER_HPP
 #define PRODUCER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include "Command.hpp"
-#include "Worker.hpp"
+#include "common.h"
+#include "Worker.hpp"                   // Base class
 #include "AdvancedFactory.hpp"
 #include "BasicFactory.hpp"
 using namespace std;

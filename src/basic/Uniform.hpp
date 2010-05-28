@@ -6,12 +6,9 @@
  */
 #ifndef UNIFORM_HPP
 #define UNIFORM_HPP
-#include <GL/glut.h>
+#include "common.h"
 #include <iomanip>
-#include <iostream>
 #include <set>
-#include <sstream>
-#include <string>
 #include "Matrix.hpp"
 #include "Node.hpp"
 #include "Program.hpp"

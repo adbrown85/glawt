@@ -6,11 +6,8 @@
  */
 #ifndef TAG_HPP
 #define TAG_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <map>
-#include <sstream>
-#include <string>
 #include "Text.hpp"
 #include "Exception.hpp"
 using namespace std;

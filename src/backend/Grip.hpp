@@ -6,12 +6,8 @@
  */
 #ifndef GRIP_HPP
 #define GRIP_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <typeinfo>
-#include "Command.hpp"
-#include "Worker.hpp"
+#include "common.h"
+#include "Worker.hpp"                   // Base class
 #include "Scale.hpp"
 #include "Translate.hpp"
 using namespace std;

@@ -6,8 +6,7 @@
  */
 #ifndef NODETREE_HPP
 #define NODETREE_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <stack>
 #include <gtkmm.h>
 #include "Node.hpp"

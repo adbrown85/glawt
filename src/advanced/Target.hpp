@@ -6,10 +6,7 @@
  */
 #ifndef TARGET_HPP
 #define TARGET_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include "Attachment.hpp"               // Base class
 #include "Texture2D.hpp"                // Backer
 using namespace std;

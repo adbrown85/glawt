@@ -6,10 +6,7 @@
  */
 #ifndef BASICFACTORY_HPP
 #define BASICFACTORY_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <sstream>
+#include "common.h"
 #include <map>
 #include "Factory.hpp"
 #include "NodeException.hpp"

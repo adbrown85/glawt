@@ -6,9 +6,7 @@
  */
 #ifndef NODEEVENT_HPP
 #define NODEEVENT_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <map>                          // Storing listeners
 #include <list>                         // Storing listeners
 #include "Node.hpp"

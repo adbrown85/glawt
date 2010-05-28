@@ -6,9 +6,7 @@
  */
 #ifndef NUMERIC_HPP
 #define NUMERIC_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <cmath>                        // sin, cos
 #include <list>                         // Storing points
 #include "Vector.hpp"                   // Storing points

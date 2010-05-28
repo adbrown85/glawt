@@ -6,9 +6,7 @@
  */
 #ifndef ATTACHMENT_HPP
 #define ATTACHMENT_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Node.hpp"                     // Base class
 #include "Framebuffer.hpp"              // Attach to framebuffer
 using namespace std;

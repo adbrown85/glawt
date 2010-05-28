@@ -6,12 +6,8 @@
  */
 #ifndef OCTREENODE_HPP
 #define OCTREENODE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include <vector>
-#include <GL/glut.h>
 using namespace std;
 
 

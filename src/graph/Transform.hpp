@@ -6,9 +6,7 @@
  */
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
-#include <cstdlib>
-#include <iostream>
-#include <GL/gl.h>
+#include "common.h"
 #include "Matrix.hpp"
 using namespace std;
 

@@ -6,11 +6,7 @@
  */
 #ifndef FRAMEBUFFER_HPP
 #define FRAMEBUFFER_HPP
-#include <cstdlib>
-#include <GL/glut.h>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include <list>                         // Storing attachments
 #include "Node.hpp"
 #include "Texture2D.hpp"

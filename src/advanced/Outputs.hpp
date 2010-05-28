@@ -6,12 +6,9 @@
  */
 #ifndef OUTPUTS_HPP
 #define OUTPUTS_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <list>                         // Storing attachments
+#include "common.h"
 #include <algorithm>                    // Finding attachments
+#include <list>                         // Storing attachments
 #include "Attachment.hpp"
 using namespace std;
 

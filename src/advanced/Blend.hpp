@@ -6,12 +6,9 @@
  */
 #ifndef BLEND_HPP
 #define BLEND_HPP
+#include "common.h"
 #include <algorithm>
-#include <cstdlib>
-#include <iostream>
 #include <list>
-#include <string>
-#include <GL/glut.h>
 #include "Node.hpp"
 #include "Tag.hpp"
 #include "Translate.hpp"

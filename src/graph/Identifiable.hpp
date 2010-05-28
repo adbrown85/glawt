@@ -6,8 +6,7 @@
  */
 #ifndef IDENTIFIABLE_HPP
 #define IDENTIFIABLE_HPP
-#include <iostream>
-#include <sstream>
+#include "common.h"
 #include <vector>
 using namespace std;
 

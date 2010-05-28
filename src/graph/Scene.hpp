@@ -6,14 +6,10 @@
  */
 #ifndef SCENE_HPP
 #define SCENE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/gl.h>
+#include "common.h"
 #include <map>
 #include <queue>
 #include <stack>
-#include <sstream>
 #include <vector>
 #include "Exception.hpp"
 #include "Factory.hpp"

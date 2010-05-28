@@ -6,11 +6,8 @@
  */
 #ifndef CANVAS_HPP
 #define CANVAS_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <algorithm>                    // For find
-#include <GL/gl.h>
 #include <GL/glu.h>
 #include "Log.hpp"
 #include "Camera.hpp"

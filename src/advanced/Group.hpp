@@ -6,9 +6,7 @@
  */
 #ifndef GROUP_HPP
 #define GROUP_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Node.hpp"
 #include "Tag.hpp"
 using namespace std;

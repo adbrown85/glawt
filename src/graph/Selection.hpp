@@ -6,8 +6,7 @@
  */
 #ifndef SELECTION_HPP
 #define SELECTION_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <list>
 #include <set>
 #include "Identifiable.hpp"

@@ -6,12 +6,10 @@
  */
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <map>                          // Storing bindings
-#include <utility>                      // Pair
 #include <list>                         // Storing manipulators
+#include <utility>                      // Pair
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"

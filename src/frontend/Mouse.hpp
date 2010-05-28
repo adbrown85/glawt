@@ -6,9 +6,7 @@
  */
 #ifndef MOUSE_HPP
 #define MOUSE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Control.hpp"
 #include "Picker.hpp"
 using namespace std;

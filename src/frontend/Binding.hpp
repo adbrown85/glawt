@@ -6,11 +6,9 @@
  */
 #ifndef BINDING_HPP
 #define BINDING_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <map>
+#include "common.h"
 #include <iomanip>
+#include <map>
 #include "Command.hpp"
 #include "Canvas.hpp"
 using namespace std;

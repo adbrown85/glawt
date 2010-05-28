@@ -6,9 +6,8 @@
  */
 #ifndef VLBMAKER_HPP
 #define VLBMAKER_HPP
-#include <cstdlib>
+#include "common.h"
 #include <fstream>
-#include <iostream>
 #include "DatasetHeader.hpp"
 using namespace std;
 

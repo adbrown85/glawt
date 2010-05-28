@@ -6,11 +6,8 @@
  */
 #ifndef COMPOSITOR_HPP
 #define COMPOSITOR_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <queue>                        // For showing all
-#include "Command.hpp"
+#include "common.h"
+#include <queue>                        // Searching
 #include "Worker.hpp"
 using namespace std;
 

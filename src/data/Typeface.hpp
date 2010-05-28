@@ -6,10 +6,7 @@
  */
 #ifndef TYPEFACE_HPP
 #define TYPEFACE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/gl.h>
+#include "common.h"
 #include <gdkmm/gl/font.h>
 using namespace std;
 using Glib::RefPtr;

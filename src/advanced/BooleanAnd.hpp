@@ -6,9 +6,7 @@
  */
 #ifndef BOOLEANAND_HPP
 #define BOOLEANAND_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Boolean.hpp"
 #include "UniformSampler.hpp"
 #include "Factory.hpp"

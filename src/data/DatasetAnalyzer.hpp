@@ -6,12 +6,9 @@
  */
 #ifndef DATASETANALYZER_HPP
 #define DATASETANALYZER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <iomanip>
 #include <utility>
-#include <GL/gl.h>
 #include "Dataset.hpp"
 using namespace std;
 

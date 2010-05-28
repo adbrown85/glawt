@@ -6,8 +6,7 @@
  */
 #ifndef TRANSFORMATION_HPP
 #define TRANSFORMATION_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <list>                         // Storing listeners
 #include <queue>                        // Searching
 #include "Node.hpp"

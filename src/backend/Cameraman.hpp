@@ -6,12 +6,8 @@
  */
 #ifndef CAMERAMAN_HPP
 #define CAMERAMAN_HPP
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-#include <map>
-#include "Command.hpp"
-#include "Worker.hpp"
+#include "common.h"
+#include "Worker.hpp"                   // Base class
 using namespace std;
 
 

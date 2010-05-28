@@ -6,9 +6,7 @@
  */
 #ifndef HEXAHEDRON_HPP
 #define HEXAHEDRON_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <list>
 #include "Shape.hpp"
 using namespace std;

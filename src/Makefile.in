@@ -21,7 +21,7 @@ CXX         := @CXX@
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS     = -g $(includes) $(DEFS) $(DEPS_CFLAGS)
 DEPS_LIBS   := @DEPS_LIBS@
-LIBS        := @LIBS@ $(DEPS_LIBS)
+LIBS        := @LIBS@ $(DEPS_LIBS) -lGLEW
 ARFLAGS     := -cr
 INSTALL     := @INSTALL@
 DEFS        := @DEFS@ \
@@ -30,7 +30,7 @@ DEFS        := @DEFS@ \
                -DGANDER_DATA_DIR='"$(datadir)/$(tarname)"'
 
 # Files
-includes    := ${foreach i,$(modules),-I$(i)/}
+includes    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir)
 sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
 objects     := ${subst .cpp,.o,$(sources)}
 headers     := ${subst .cpp,.hpp,$(sources)}

@@ -6,9 +6,7 @@
  */
 #ifndef DATASETWRITER_HPP
 #define DATASETWRITER_HPP
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
+#include "common.h"
 #include "Dataset.hpp"
 using namespace std;
 

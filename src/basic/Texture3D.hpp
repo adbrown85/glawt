@@ -6,9 +6,7 @@
  */
 #ifndef TEXTURE3D_HPP
 #define TEXTURE3D_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <ctime>                        // For clocking compression
 #include "Dataset.hpp"
 #include "Tag.hpp"

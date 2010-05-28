@@ -6,9 +6,7 @@
  */
 #ifndef TESTER_HPP
 #define TESTER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 #include "Node.hpp"

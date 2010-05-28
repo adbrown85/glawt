@@ -6,9 +6,7 @@
  */
 #ifndef LOGBOOK_HPP
 #define LOGBOOK_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <gtkmm.h>
 #include "Log.hpp"
 using namespace std;

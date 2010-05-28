@@ -6,8 +6,7 @@
  */
 #ifndef TEXTTREE_HPP
 #define TEXTTREE_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <stack>
 #include <gtkmm.h>
 using namespace std;

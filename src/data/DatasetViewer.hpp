@@ -6,9 +6,7 @@
  */
 #ifndef DATASETVIEWER_HPP
 #define DATASETVIEWER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <gtkmm/frame.h>
 #include "Dataset.hpp"
 #include "Canvas.hpp"

@@ -6,9 +6,7 @@
  */
 #ifndef BOX_HPP
 #define BOX_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Hexahedron.hpp"
 using namespace std;
 

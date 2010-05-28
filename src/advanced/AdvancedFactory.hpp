@@ -6,9 +6,7 @@
  */
 #ifndef ADVANCEDFACTORY_HPP
 #define ADVANCEDFACTORY_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Factory.hpp"
 #include "BasicFactory.hpp"
 #include "Bind.hpp"

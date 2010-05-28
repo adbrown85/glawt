@@ -6,9 +6,9 @@
  */
 #ifndef MATRIX_HPP
 #define MATRIX_HPP
+#include "common.h"
 #include <cmath>
 #include <iomanip>
-#include <iostream>
 #include "Vector.hpp"
 using namespace std;
 

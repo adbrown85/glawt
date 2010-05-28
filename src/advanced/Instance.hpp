@@ -6,14 +6,10 @@
  */
 #ifndef INSTANCE_HPP
 #define INSTANCE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include <list>
 #include <map>
 #include <queue>
-#include <GL/glut.h>
 #include "Node.hpp"
 #include "Group.hpp"
 #include "Uniform.hpp"

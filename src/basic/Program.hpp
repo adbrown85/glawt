@@ -6,12 +6,9 @@
  */
 #ifndef PROGRAM_HPP
 #define PROGRAM_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <cstring>
 #include <vector>
-#include <GL/glut.h>
 #include "Node.hpp"
 #include "Error.hpp"
 #include "Preprocessor.hpp"

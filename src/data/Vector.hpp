@@ -6,9 +6,9 @@
  */
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
+#include "common.h"
 #include <cmath>
 #include <iomanip>
-#include <iostream>
 #include "Exception.hpp"
 using namespace std;
 

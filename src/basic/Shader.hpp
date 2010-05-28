@@ -6,13 +6,9 @@
  */
 #ifndef SHADER_HPP
 #define SHADER_HPP
-#include <cstdlib>
+#include "common.h"
 #include <cstring>
 #include <fstream>
-#include <GL/glut.h>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <vector>
 #include "Error.hpp"
 #include "Node.hpp"

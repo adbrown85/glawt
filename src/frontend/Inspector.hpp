@@ -6,11 +6,9 @@
  */
 #ifndef INSPECTOR_HPP
 #define INSPECTOR_HPP
-#include <cstdlib>
-#include <iostream>
-#include <gtkmm.h>
+#include "common.h"
 #include <map>
-#include <string>
+#include <gtkmm.h>
 #include "NodeTree.hpp"
 #include "AttributeTree.hpp"
 #include "Scene.hpp"

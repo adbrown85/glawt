@@ -6,9 +6,7 @@
  */
 #ifndef TRAVERSER_HPP
 #define TRAVERSER_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Exception.hpp"
 #include "Node.hpp"
 #include "Scene.hpp"

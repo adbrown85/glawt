@@ -6,11 +6,8 @@
  */
 #ifndef MANIPULATOR_HPP
 #define MANIPULATOR_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/glut.h>
-#include "Delegate.hpp"              // For sending commands to scene
+#include "common.h"
+#include "Delegate.hpp"                 // For sending commands to scene
 #include "Vector.hpp"                   // For axis
 #include "Transform.hpp"                // Projection matrix
 #include "Traverser.hpp"

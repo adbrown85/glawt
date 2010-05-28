@@ -6,11 +6,7 @@
  */
 #ifndef CULL_HPP
 #define CULL_HPP
-#include <cstdlib>
-#include <GL/glut.h>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include "Node.hpp"
 using namespace std;
 

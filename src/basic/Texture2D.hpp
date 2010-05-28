@@ -6,12 +6,8 @@
  */
 #ifndef TEXTURE2D_HPP
 #define TEXTURE2D_HPP
-#include <cstdlib>
-#include <GL/glut.h>
+#include "common.h"
 #include <IL/ilut.h>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include "Texture.hpp"
 
 

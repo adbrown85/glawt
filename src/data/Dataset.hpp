@@ -6,18 +6,14 @@
  */
 #ifndef DATASET_HPP
 #define DATASET_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <cstring>
 #include <climits>
 #include <cfloat>
 #include <fstream>
 #include <iomanip>
 #include <map>
-#include <sstream>
 #include <utility>
-#include <GL/gl.h>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
 #include "Tag.hpp"

@@ -6,12 +6,9 @@
  */
 #ifndef FILEUTILITY_HPP
 #define FILEUTILITY_HPP
+#include "common.h"
 #include <cctype>
-#include <cstdlib>
 #include <cstring>
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <vector>
 #include "Exception.hpp"
 using namespace std;

@@ -6,11 +6,8 @@
  */
 #ifndef EXCEPTION_HPP
 #define EXCEPTION_HPP
-#include <cstdlib>
+#include "common.h"
 #include <exception>
-#include <iostream>
-#include <sstream>
-#include <string>
 using namespace std;
 
 

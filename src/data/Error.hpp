@@ -6,11 +6,7 @@
  */
 #ifndef ERROR_HPP
 #define ERROR_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <GL/glut.h>
+#include "common.h"
 #include "Exception.hpp"
 #include "Preprocessor.hpp"
 #include "Log.hpp"

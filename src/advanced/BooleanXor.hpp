@@ -6,12 +6,10 @@
  */
 #ifndef BOOLEANXOR_HPP
 #define BOOLEANXOR_HPP
+#include "common.h"
 #include <algorithm>
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include "Boolean.hpp"
 #include <climits>
+#include "Boolean.hpp"
 using namespace std;
 
 

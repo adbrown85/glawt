@@ -6,11 +6,8 @@
  */
 #ifndef TEXT_HPP
 #define TEXT_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <map>
-#include <sstream>
-#include <string>
 using namespace std;
 
 

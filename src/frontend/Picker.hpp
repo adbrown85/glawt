@@ -6,10 +6,9 @@
  */
 #ifndef PICKER_HPP
 #define PICKER_HPP
+#include "common.h"
 #include <cfloat>
 #include <climits>
-#include <cstdlib>
-#include <iostream>
 #include <map>
 #include <typeinfo>
 #include <utility>

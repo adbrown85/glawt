@@ -6,11 +6,9 @@
  */
 #ifndef PARSER_HPP
 #define PARSER_HPP
+#include "common.h"
 #include <fstream>
-#include <iostream>
 #include <map>
-#include <sstream>
-#include <string>
 #include <vector>
 #include "Exception.hpp"
 #include "Tag.hpp"

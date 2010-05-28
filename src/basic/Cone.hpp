@@ -6,9 +6,7 @@
  */
 #ifndef CONE_HPP
 #define CONE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Shape.hpp"                    // Base class
 #include "Numeric.hpp"                  // Calculating circle
 using namespace std;

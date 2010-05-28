@@ -6,11 +6,8 @@
  */
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <map>
-#include <sstream>
-#include <string>
 #include <vector>
 #include "NodeException.hpp"
 #include "FileUtility.hpp"

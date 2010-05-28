@@ -6,8 +6,7 @@
  */
 #ifndef ATTRIBUTETREE_HPP
 #define ATTRIBUTETREE_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 #include <stack>
 #include <gtkmm.h>
 #include "Text.hpp"

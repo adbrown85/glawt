@@ -6,9 +6,7 @@
  */
 #ifndef SORT_HPP
 #define SORT_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <algorithm>                    // For sort
 #include <list>                         // For storing translate nodes
 #include "Node.hpp"

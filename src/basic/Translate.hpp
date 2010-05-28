@@ -6,11 +6,7 @@
  */
 #ifndef TRANSLATE_HPP
 #define TRANSLATE_HPP
-#include <cstdlib>
-#include <GL/glut.h>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include "Matrix.hpp"
 #include "Tag.hpp"
 #include "Transformation.hpp"

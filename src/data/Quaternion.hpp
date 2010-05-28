@@ -6,10 +6,9 @@
  */
 #ifndef QUATERNION_HPP
 #define QUATERNION_HPP
+#include "common.h"
 #include <cmath>
 #include <iomanip>
-#include <iostream>
-#include <sstream>
 #include "Matrix.hpp"
 #include "Vector.hpp"
 #include "Numeric.hpp"

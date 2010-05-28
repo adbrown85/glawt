@@ -6,9 +6,7 @@
  */
 #ifndef KEYBOARD_HPP
 #define KEYBOARD_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <cctype>                       // Check if triggers are printable
 #include "Control.hpp"
 #include "Scene.hpp"

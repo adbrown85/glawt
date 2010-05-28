@@ -6,10 +6,7 @@
  */
 #ifndef SIMPLEDRAWABLE_HPP
 #define SIMPLEDRAWABLE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <sstream>
+#include "common.h"
 #include "Node.hpp"
 using namespace std;
 

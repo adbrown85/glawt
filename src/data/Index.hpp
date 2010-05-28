@@ -6,8 +6,7 @@
  */
 #ifndef INDEX_HPP
 #define INDEX_HPP
-#include <cstdlib>
-#include <iostream>
+#include "common.h"
 using namespace std;
 
 

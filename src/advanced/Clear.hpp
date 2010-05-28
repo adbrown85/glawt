@@ -6,11 +6,7 @@
  */
 #ifndef CLEAR_HPP
 #define CLEAR_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <GL/gl.h>
+#include "common.h"
 #include "Node.hpp"
 using namespace std;
 

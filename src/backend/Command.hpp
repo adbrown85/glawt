@@ -6,9 +6,8 @@
  */
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
-#include <iostream>
-#include <map>
-#include <string>
+#include "common.h"
+#include <map>                          // Storing names
 #include "Scene.hpp"
 #include "Canvas.hpp"
 using namespace std;

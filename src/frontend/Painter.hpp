@@ -6,11 +6,8 @@
  */
 #ifndef PAINTER_HPP
 #define PAINTER_HPP
-#include <cstdlib>
-#include <GL/glut.h>
-#include <iostream>
+#include "common.h"
 #include <vector>
-//#include "BasicFactory.hpp"        // Outline selected items
 #include "Manipulator.hpp"         // Drawing manipulators for selection
 #include "Matrix.hpp"              // Rotating camera
 #include "Node.hpp"                // Traversing the scene graph

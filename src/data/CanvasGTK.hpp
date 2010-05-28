@@ -6,10 +6,7 @@
  */
 #ifndef CANVASGTK_HPP
 #define CANVASGTK_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/gl.h>
+#include "common.h"
 #include <GL/glu.h>
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>

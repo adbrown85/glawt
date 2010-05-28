@@ -6,10 +6,7 @@
  */
 #ifndef OCTREE_HPP
 #define OCTREE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include "Dataset.hpp"
 #include "OctreeBuilder.hpp"
 #include "OctreeNode.hpp"

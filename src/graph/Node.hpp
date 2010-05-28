@@ -6,11 +6,8 @@
  */
 #ifndef NODE_HPP
 #define NODE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <algorithm>
-#include <sstream>
 #include <typeinfo>
 #include <vector>
 #include "NodeException.hpp"

@@ -6,12 +6,10 @@
  */
 #ifndef DATASETHEADER_HPP
 #define DATASETHEADER_HPP
-#include <cstdlib>
+#include "common.h"
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <sstream>
-#include <string>
 #include <vector>
 #include "Exception.hpp"
 #include "Vector.hpp"

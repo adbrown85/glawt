@@ -6,10 +6,7 @@
  */
 #ifndef NODEEXCEPTION_HPP
 #define NODEEXCEPTION_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include "Exception.hpp"
 #include "Tag.hpp"
 using namespace std;

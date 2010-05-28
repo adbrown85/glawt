@@ -6,10 +6,7 @@
  */
 #ifndef WIREFRAME_HPP
 #define WIREFRAME_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/glut.h>
+#include "common.h"
 #include "Node.hpp"
 using namespace std;
 

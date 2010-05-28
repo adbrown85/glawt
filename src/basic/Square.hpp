@@ -6,9 +6,7 @@
  */
 #ifndef SQUARE_HPP
 #define SQUARE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Shape.hpp"                    // Base class
 using namespace std;
 

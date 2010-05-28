@@ -6,10 +6,7 @@
  */
 #ifndef BOOLEAN_HPP
 #define BOOLEAN_HPP
-#include <cstdlib>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "common.h"
 #include <limits>                       // Calculating result
 #include <queue>                        // Finding shapes
 #include <vector>                       // Storing shapes and extents

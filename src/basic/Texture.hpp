@@ -6,12 +6,9 @@
  */
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <list>
 #include <queue>
-#include <GL/gl.h>
 #include "Node.hpp"                     // Base class
 using namespace std;
 

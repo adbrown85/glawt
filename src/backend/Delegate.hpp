@@ -6,9 +6,7 @@
  */
 #ifndef DELEGATE_HPP
 #define DELEGATE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include <map>                          // Storing listeners
 #include "Cameraman.hpp"
 #include "Compositor.hpp"

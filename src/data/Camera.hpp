@@ -6,10 +6,7 @@
  */
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <GL/gl.h>
+#include "common.h"
 #include <GL/glu.h>
 #include "Matrix.hpp"
 #include "Quaternion.hpp"

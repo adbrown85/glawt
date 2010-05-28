@@ -6,12 +6,8 @@
  */
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <sstream>
+#include "common.h"
 #include <list>                         // For attributes
-#include <GL/gl.h>
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"

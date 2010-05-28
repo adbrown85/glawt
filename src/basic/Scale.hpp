@@ -6,11 +6,7 @@
  */
 #ifndef SCALE_HPP
 #define SCALE_HPP
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <GL/glut.h>
+#include "common.h"
 #include "Transformation.hpp"
 #include "Vector.hpp"
 using namespace std;
