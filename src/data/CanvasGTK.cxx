@@ -68,6 +68,7 @@ void FakeCanvasListener::onDisplayEvent(const CanvasEvent &event) {
 	
 	glClearColor(0.0, 1.0, 0.0, 1.0);
 	canvas->clear();
+	canvas->write("This is some text!");
 	canvas->flush();
 }
 

@@ -91,7 +91,7 @@ void DatasetViewer::onCanvasEventDisplay(const CanvasEvent &event) {
 	
 	// Slice index
 	stream << slice;
-	//Window::write(stream.str());
+	canvas->write(stream.str());
 	
 	// Reset raster position
 	glMatrixMode(GL_PROJECTION);

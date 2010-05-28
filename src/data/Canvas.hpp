@@ -81,6 +81,7 @@ public:
 	int getHeight();
 	int getWidth();
 	virtual void refresh() = 0;
+	virtual void write(const string &text, int x=15, int y=30) = 0;
 protected:
 	bool isMouseButtonPressed;
 	CanvasState state;

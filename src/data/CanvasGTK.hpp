@@ -16,6 +16,7 @@
 #include <gtkmm/gl/init.h>
 #include <gtkmm/gl/drawingarea.h>
 #include "Canvas.hpp"
+#include "Typeface.hpp"
 using namespace std;
 
 
@@ -33,6 +34,7 @@ public:
 	virtual bool on_motion_notify_event(GdkEventMotion *event);
 	virtual bool on_scroll_event(GdkEventScroll *event);
 	virtual void refresh();
+	virtual void write(const string &text, int x=15, int y=30);
 protected:
 	void begin();
 	void end();
@@ -44,6 +46,7 @@ private:
 	Glib::RefPtr<Gdk::GL::Drawable> glDrawable;
 	Glib::RefPtr<Gdk::GL::Window> glWindow;
 	Glib::RefPtr<Gdk::Window> window;
+	Typeface typeface;
 };
 
 /** Signal start of OpenGL commands. */

@@ -101,7 +101,7 @@ void Display::onCommandEvent(int command) {
 /** Draws the overlay on the display. */
 void Display::overlay() {
 	
-	int time;
+	//int time;
 	ostringstream stream;
 	
 	// Update values
@@ -121,7 +121,7 @@ void Display::overlay() {
 	stream.str("");
 	stream << fixed << setprecision(2);
 	stream << "footprint " << footprint << " MB";
-	//Window::write(stream.str(), 15, 50);
+	canvas->write(stream.str(), 15, 50);
 }
 
 

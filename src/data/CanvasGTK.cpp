@@ -48,6 +48,7 @@ void CanvasGTK::on_realize() {
 	// Set up
 	begin();
 	getCamera()->load(getWidth(), getHeight());
+	typeface.load("courier 8");
 	fireEvent(CanvasEvent::SETUP);
 	end();
 }
@@ -208,5 +209,32 @@ void CanvasGTK::updateModifer(guint state) {
 	} else {
 		this->state.combo.modifier = CANVAS_MOD_NONE;
 	}
+}
+
+
+void CanvasGTK::write(const string &text, int x, int y) {
+	
+	float xf, yf;
+	int viewport[4];
+	
+	// Calculate position
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	xf = ((float)viewport[2] - x) / viewport[2];
+	yf = ((float)viewport[3] - y) / viewport[3];
+	
+	// Set position
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+			glLoadIdentity();
+			glRasterPos2f(-xf, yf);
+		glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	
+	// Draw text
+	typeface.write(text);
 }
 
