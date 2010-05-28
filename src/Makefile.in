@@ -12,25 +12,25 @@ bindir      := @bindir@
 srcdir      := @srcdir@
 datarootdir := @datarootdir@
 datadir     := @datadir@
-modules     := @modules@
 docdir      := @docdir@
 htmldir     := @htmldir@
+modules     := @modules@
 
 # Tools
 CXX         := @CXX@
+INCLUDES    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir) -I$(srcdir)/..
+DEFS        := @DEFS@
+DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)/$(tarname)"'
 DEPS_CFLAGS := @DEPS_CFLAGS@
-CXXFLAGS     = -g $(includes) $(DEFS) $(DEPS_CFLAGS)
+CXXFLAGS    := $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
+LIBS        := @LIBS@
+LIBS_EXTRA  := 
 DEPS_LIBS   := @DEPS_LIBS@
-LIBS        := @LIBS@ $(DEPS_LIBS) -lGLEW
+LDFLAGS     := $(LIBS) $(LIBS_EXTRA) $(DEPS_LIBS)
 ARFLAGS     := -cr
 INSTALL     := @INSTALL@
-DEFS        := @DEFS@ \
-               -DGL_GLEXT_PROTOTYPES \
-               -DILUT_USE_OPENGL \
-               -DGANDER_DATA_DIR='"$(datadir)/$(tarname)"'
 
 # Files
-includes    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir)
 sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
 objects     := ${subst .cpp,.o,$(sources)}
 headers     := ${subst .cpp,.hpp,$(sources)}
@@ -74,14 +74,14 @@ $(archive): ${notdir $(objects)}
 # Tests
 %: %.cxx %.o
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LIBS)
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${dir $<}${notdir $@} $< $(archive)
 tests: ${notdir $(tests)}
 ${notdir $(tests)}:
 
 # Application
 $(application): gander.cxx gander.hxx ${notdir $(objects)}
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(LIBS) -o $@ $< $(archive)
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(archive)
 
 # Installation
 .PHONY: install-bin uninstall-bin

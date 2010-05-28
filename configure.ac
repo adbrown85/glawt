@@ -51,7 +51,7 @@ error_no_gtkmm() {
 echo -n "checking for gtkmm-2.4... "
 PKG_CHECK_EXISTS([gtkmm-2.4],[echo "yes"],error_no_gtkmm)
 
-# Check for GTKmm
+# Check for GTKGLmm
 error_no_gtkglmm() {
 	echo "no"
 	echo "-------------------------------------------------------"
@@ -79,6 +79,18 @@ AC_SEARCH_LIBS([ilutGetInteger], [ILUT], , [error_no_devil])
 AC_CHECK_HEADER([IL/il.h], , [error_no_devil])
 AC_CHECK_HEADER([IL/ilu.h], , [error_no_devil])
 AC_CHECK_HEADER([IL/ilut.h], , [error_no_devil])
+
+# Check for GLEW
+error_no_glew() {
+	echo "-------------------------------------------------------"
+	echo " DevIL (ILUT) is required to install Gander.           "
+	echo " Try 'sudo apt-get install libdevil-dev'               "
+	echo " Or visit 'http://openil.sourceforge.net'              "
+	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
+}
+AC_SEARCH_LIBS([glewInit], [GLEW], , [error_no_glew])
+AC_CHECK_HEADER([GL/glew.h], , [error_no_glew])
 
 # Checks for library functions
 AC_CHECK_FUNCS([pow])
