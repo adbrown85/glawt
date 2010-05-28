@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <algorithm>                    // For find
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "Log.hpp"
@@ -52,10 +53,10 @@ struct CanvasState {
 };
 
 /* Change in the state of the canvas and what caused it. */
-#define CANVAS_EVENT_TYPE_SIZE 6
+#define CANVAS_EVENT_TYPE_SIZE 5
 class Canvas;
 struct CanvasEvent {
-	enum {SETUP,DISPLAY,KEY,BUTTON,DRAG,IDLE};
+	enum {SETUP,DISPLAY,KEY,BUTTON,DRAG};
 	int type;
 	Canvas *source;
 	CanvasState state;
@@ -81,8 +82,10 @@ public:
 	int getHeight();
 	int getWidth();
 	virtual void refresh() = 0;
+	virtual void setAutomaticallyRefresh(bool automaticRefresh) = 0;
 	virtual void write(const string &text, int x=15, int y=30) = 0;
 protected:
+	bool automaticallyRefresh, started;
 	bool isMouseButtonPressed;
 	CanvasState state;
 private:

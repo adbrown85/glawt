@@ -24,6 +24,9 @@ Display::Display(Delegate *delegate) {
 	// Add listeners
 	delegate->addListener(this, Command::INFORMATION);
 	canvas->addListener(this, CanvasEvent::DISPLAY);
+	
+	// Start timer
+	timer.start();
 }
 
 
@@ -78,15 +81,6 @@ void Display::onCanvasEvent(const CanvasEvent &event) {
 }
 
 
-/** Refreshes the display. */
-/*
-void Display::idle(void) {
-	
-	canvas->refresh();
-}
-*/
-
-
 /** Handles command events. */
 void Display::onCommandEvent(int command) {
 	
@@ -101,27 +95,25 @@ void Display::onCommandEvent(int command) {
 /** Draws the overlay on the display. */
 void Display::overlay() {
 	
-	//int time;
+	double seconds;
 	ostringstream stream;
 	
-	// Update values
-/*
+	// Update
 	++frames;
-	time = glutGet(GLUT_ELAPSED_TIME);
-	if (time - timeStarted > 1000) {
+	seconds = timer.elapsed();
+	if (seconds > 1) {
 		framesPerSecond = frames;
 		frames = 0;
-		timeStarted = time;
+		timer.reset();
 	}
-*/
 	
 	// Draw text
-	//stream << "fps       " << framesPerSecond;
-	//Window::write(stream.str(), 15, 30);
+	stream << "fps       " << framesPerSecond;
+	canvas->write(stream.str(), 15, 50);
 	stream.str("");
 	stream << fixed << setprecision(2);
 	stream << "footprint " << footprint << " MB";
-	canvas->write(stream.str(), 15, 50);
+	canvas->write(stream.str(), 15, 100);
 }
 
 
@@ -129,9 +121,6 @@ void Display::overlay() {
 void Display::toggleOverlay() {
 	
 	useOverlay = !useOverlay;
-	//if (obj->useOverlay)
-		//obj->canvas->setIdle(&Display::idle);
-	//else
-		//obj->canvas->setIdle(NULL);
+	canvas->setAutomaticallyRefresh(useOverlay);
 }
 

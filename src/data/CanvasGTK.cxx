@@ -12,6 +12,7 @@
 /* Fake canvas listener. */
 class FakeCanvasListener : public CanvasListener {
 public:
+	FakeCanvasListener() {frames = 0;}
 	virtual void onCanvasEvent(const CanvasEvent &event);
 	void onDisplayEvent(const CanvasEvent &event);
 	void onButtonEvent(const CanvasEvent &event);
@@ -20,6 +21,7 @@ public:
 	void setCanvas(Canvas *canvas) {this->canvas = canvas;}
 private:
 	Canvas *canvas;
+	GLuint frames;
 };
 
 
@@ -66,6 +68,15 @@ void FakeCanvasListener::onButtonEvent(const CanvasEvent &event) {
 
 void FakeCanvasListener::onDisplayEvent(const CanvasEvent &event) {
 	
+	cout << "FakeCanvasListener::onDisplayEvent" << endl;
+	
+	// Update frames
+	++frames;
+	if (frames > 30) {
+		canvas->setAutomaticallyRefresh(false);
+	}
+	
+	// Draw
 	glClearColor(0.0, 1.0, 0.0, 1.0);
 	canvas->clear();
 	canvas->write("This is some text!");
@@ -116,6 +127,7 @@ void createAndShowGUI() {
 	canvas->addListener(listener, CanvasEvent::DISPLAY);
 	canvas->addListener(listener, CanvasEvent::DRAG);
 	canvas->addListener(listener, CanvasEvent::KEY);
+	canvas->setAutomaticallyRefresh(true);
 	
 	// Add to window
 	window.set_title("Canvas");

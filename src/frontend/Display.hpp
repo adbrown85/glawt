@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <glibmm/timer.h>
 #include "Exception.hpp"
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
@@ -34,7 +35,6 @@ public:
 	void computeFootprint();
 	virtual void onCanvasEvent(const CanvasEvent &event);
 	Delegate* getDelegate();
-	void idle(void);
 	virtual void onCommandEvent(int command);
 	void toggleOverlay();
 protected:
@@ -48,6 +48,7 @@ private:
 	vector<Control*> controls;
 	double footprint;
 	Canvas *canvas;
+	Glib::Timer timer;
 };
 
 inline Delegate* Display::getDelegate() {return delegate;}

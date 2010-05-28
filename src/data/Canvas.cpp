@@ -12,6 +12,9 @@ Canvas::Canvas(int width, int height) {
 	
 	this->width = width;
 	this->height = height;
+	this->automaticallyRefresh = false;
+	this->isMouseButtonPressed = false;
+	this->started = false;
 }
 
 

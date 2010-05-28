@@ -132,6 +132,48 @@ bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 }
 
 
+bool CanvasGTK::on_idle() {
+	
+	fireEvent(CanvasEvent::DISPLAY);
+	refresh();
+	window->process_updates(false);
+}
+
+
+bool CanvasGTK::on_map_event(GdkEventAny *event) {
+	
+	started = true;
+	if (automaticallyRefresh) {
+		connectIdle();
+	}
+	return true;
+}
+
+
+void CanvasGTK::connectIdle() {
+	
+	using System::log;
+	
+	if (!idle.connected()) {
+		log << "[CanvasGTK] Connecting idle function." << endl;
+		idle = Glib::signal_idle().connect(
+			sigc::mem_fun(*this, &CanvasGTK::on_idle), GDK_PRIORITY_REDRAW
+		);
+	}
+}
+
+
+void CanvasGTK::disconnectIdle() {
+	
+	using System::log;
+	
+	if (idle.connected()) {
+		log << "[CanvasGTK] Disconnecting idle function." << endl;
+		idle.disconnect();
+	}
+}
+
+
 /** When the mouse moves in the widget.
  * 
  * Because there is no distinct dragging event, we just return if no button 
@@ -194,6 +236,18 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 	grab_focus();
 	fireEvent(CanvasEvent::BUTTON);
 	return false;
+}
+
+
+/** Determines if events should be continuously sent to display listeners. */
+void CanvasGTK::setAutomaticallyRefresh(bool automaticallyRefresh) {
+	
+	this->automaticallyRefresh = automaticallyRefresh;
+	if (started && automaticallyRefresh) {
+		connectIdle();
+	} else {
+		disconnectIdle();
+	}
 }
 
 

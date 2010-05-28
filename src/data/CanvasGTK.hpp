@@ -30,14 +30,19 @@ public:
 	virtual void on_realize();
 	virtual bool on_button_press_event(GdkEventButton *event);
 	virtual bool on_button_release_event(GdkEventButton *event);
+	virtual bool on_idle();
 	virtual bool on_key_press_event(GdkEventKey *event);
+	virtual bool on_map_event(GdkEventAny *event);
 	virtual bool on_motion_notify_event(GdkEventMotion *event);
 	virtual bool on_scroll_event(GdkEventScroll *event);
 	virtual void refresh();
+	virtual void setAutomaticallyRefresh(bool automaticallyRefresh);
 	virtual void write(const string &text, int x=15, int y=30);
 protected:
 	void begin();
 	void end();
+	void connectIdle();
+	void disconnectIdle();
 	void updateModifer(guint state);
 private:
 	Gdk::GL::ConfigMode mode;
@@ -47,6 +52,7 @@ private:
 	Glib::RefPtr<Gdk::GL::Window> glWindow;
 	Glib::RefPtr<Gdk::Window> window;
 	Typeface typeface;
+	sigc::connection idle;
 };
 
 /** Signal start of OpenGL commands. */
@@ -60,6 +66,7 @@ inline void CanvasGTK::flush() {glWindow->swap_buffers();}
 
 /** Forces the canvas to be redrawn. */
 inline void CanvasGTK::refresh() {window->invalidate_rect(get_allocation(),0);}
+
 
 
 
