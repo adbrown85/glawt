@@ -13,9 +13,7 @@
 using namespace std;
 
 
-/**
- * @ingroup advanced
- * @brief %Boolean AND operation of two shapes.
+/** @brief %Boolean AND operation of two shapes.
  * 
  * <b>XML Name</b>
  *   - @e boolean
@@ -71,6 +69,8 @@ using namespace std;
  * transformations on the boolean, as the points are outputted in modelview 
  * space.  The user should be sure to provide a uniform specifying the 
  * modelview projection matrix however.
+ * 
+ * @ingroup advanced
  */
 class BooleanAnd : public Boolean {
 public:

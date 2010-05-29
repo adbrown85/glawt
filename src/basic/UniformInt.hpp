@@ -10,9 +10,8 @@
 using namespace std;
 
 
-/**
+/** @brief Container for GLSL integer uniform variables.
  * @ingroup basic
- * @brief Container for GLSL integer uniform variables.
  */
 class UniformInt : public Uniform {
 public:

@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief Cone made from triangles.
  * @ingroup basic
- * @brief Cone made from triangles.
  */
 class Cone : public Shape {
 public:

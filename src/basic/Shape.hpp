@@ -31,9 +31,8 @@ struct ShapeTraits {
 };
 
 
-/**
+/** @brief Base class for a 3D object in the scene.
  * @ingroup basic
- * @brief Base class for a 3D object in the scene.
  * 
  * Uses a vertex buffer for drawing.  If <i>usage</i> is 
  * <tt>GL_STATIC_DRAW</tt>, a buffer will only be generated once for each 

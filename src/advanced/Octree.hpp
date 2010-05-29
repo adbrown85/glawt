@@ -16,9 +16,8 @@
 using namespace std;
 
 
-/**
+/** @brief 1D texture holding empty-space skipping information.
  * @ingroup advanced
- * @brief 1D texture holding empty-space skipping information.
  */
 class Octree : public Texture {
 public:

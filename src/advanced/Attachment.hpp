@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief Abstract base class for an item attached to the framebuffer.
  * @ingroup advanced
- * @brief Abstract base class for an item attached to the framebuffer.
  */
 class Attachment : public Attachable {
 public:

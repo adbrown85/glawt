@@ -18,10 +18,9 @@ using namespace std;
  */
 class Vector {
 public:
-	
 	int size;
 	float x, y, z, w;
-	
+public:
 	Vector();
 	Vector(float value);
 	Vector(float x, float y);
@@ -48,9 +47,7 @@ public:
 	friend ostream& operator<<(ostream& out, const Vector& A);
 	float& operator[](int i);
 	float operator[](int i) const;
-	
 	float length() const;
-	
 	float get(int i) const;
 	void set(float x, float y);
 	void set(float x, float y, float z);
@@ -58,14 +55,11 @@ public:
 };
 
 
-Vector cross(const Vector& A,
-             const Vector& B);
-float dot(const Vector& A,
-          const Vector &B);
-Vector min(const Vector &A,
-           const Vector &B);
-Vector max(const Vector &A,
-           const Vector &B);
+/* Global function for vectors. */
+Vector cross(const Vector& A, const Vector& B);
+float dot(const Vector& A, const Vector &B);
+Vector min(const Vector &A, const Vector &B);
+Vector max(const Vector &A, const Vector &B);
 Vector normalize(Vector vector);
 
 

@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
+/** @brief Six-sided shape.
  * @ingroup basic
- * @brief Six-sided shape.
  * 
  * %Hexahedron is an abstract base class for a six-sided shape.  It provides 
  * points and normals, but no texture coordinates.

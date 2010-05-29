@@ -14,9 +14,7 @@
 using namespace std;
 
 
-/**
- * @ingroup advanced
- * @brief Binds a fragment shader output variable to location in a framebuffer.
+/** @brief Binds a fragment shader output variable to location in a framebuffer.
  * 
  * Although the built-in <i>gl_FragData</i> array can be used to render to 
  * framebuffer attachments directly by their index, it has been deprecated in 
@@ -65,6 +63,7 @@ using namespace std;
  *   &lt;/texture>
  * </pre>
  * 
+ * @ingroup advanced
  * @see Framebuffer
  * @see Attachment
  * @see Target

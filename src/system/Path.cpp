@@ -7,11 +7,7 @@
 #include "Path.hpp"
 
 
-/** Builds a path from its parts.
- * 
- * @param root Root of the path.
- * @param parts Parts of the path.
- */
+/** Builds a path from its @e parts prepended by @e root. */
 string Path::build(const string &root, vector<string> &parts) {
 	
 	ostringstream path;
@@ -71,6 +67,7 @@ string Path::getDirname(const string& path) {
 }
 
 
+/** @return Text after the last '.' in @e path. */
 string Path::getExtension(const string &path) {
 	
 	size_t pos;
@@ -212,6 +209,7 @@ string Path::mergePaths(const string &root,
 }
 
 
+/** @return String with environment variables in @e path replaced. */
 string Path::expand(const string &path) {
 	
 	char *value;
@@ -261,13 +259,8 @@ string Path::stripRoot(const string &path) {
 }
 
 
-/** Splits a filename up into tokens.
- * 
- * @param filename Path to split up.
- * @param tokens Parts of the path.
- */
-void Path::tokenize(const string &filename,
-                    vector<string> &tokens) {
+/** Splits @e filename up into @e tokens. */
+void Path::tokenize(const string &filename, vector<string> &tokens) {
 	
 	char *token, *buffer;
 	

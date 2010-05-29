@@ -12,9 +12,7 @@
 using namespace std;
 
 
-/**
- * @ingroup advanced
- * @brief Offscreen render location backed by a texture.
+/** @brief Offscreen render location backed by a texture.
  * 
  * Attaches itself to a color attachment of a Framebuffer.  When the 
  * framebuffer is active, any rendering done to that attachment will be stored 
@@ -57,6 +55,7 @@ using namespace std;
  * <b>Notes</b>
  *   - If <i>name</i> is not set explicity it will be set to <i>link</i>.
  * 
+ * @ingroup advanced
  * @see Framebuffer
  * @see Attachment
  * @see Bind

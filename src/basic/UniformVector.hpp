@@ -10,9 +10,8 @@
 using namespace std;
 
 
-/**
+/** @brief Container for GLSL vector uniform variables.
  * @ingroup basic
- * @brief Container for GLSL vector uniform variables.
  */
 class UniformVector : public Uniform {
 public:

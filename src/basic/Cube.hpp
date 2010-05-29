@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
+/** @brief Six-sided shape with 3D texture coordinates.
  * @ingroup basic
- * @brief Six-sided shape with 3D texture coordinates.
  */
 class Cube : public Hexahedron {
 public:

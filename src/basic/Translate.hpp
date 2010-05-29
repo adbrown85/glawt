@@ -14,9 +14,8 @@
 using namespace std;
 
 
-/**
+/** @brief %Node that moves items in the scene.
  * @ingroup basic
- * @brief %Node that moves items in the scene.
  */
 class Translate : public Transformation,
                   public Vector {

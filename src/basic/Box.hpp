@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
+/** @brief Six-sided shape with 2D texture coordinates for each face.
  * @ingroup basic
- * @brief Six-sided shape with 2D texture coordinates for each face.
  */
 class Box : public Hexahedron {
 public:

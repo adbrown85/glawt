@@ -13,10 +13,9 @@
 #include "Matrix.hpp"
 
 
-/**
+/** @brief Operation that changes size, position, or orientation of objects.
  * @interface Transformation
  * @ingroup basic
- * @brief Operation that changes the size, position, or orientation of objects.
  */
 class Transformation : public Applicable {
 public:

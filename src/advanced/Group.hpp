@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief Reusable collection of nodes.
  * @ingroup advanced
- * @brief Reusable collection of nodes.
  */
 class Group : public Node {
 public:

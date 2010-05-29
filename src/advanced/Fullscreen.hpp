@@ -11,9 +11,8 @@
 #include "SimpleDrawable.hpp"
 
 
-/**
+/** @brief Polygon that takes up the entire window.
  * @ingroup advanced
- * @brief Polygon that takes up the entire window.
  */
 class Fullscreen : public SimpleDrawable {
 public:

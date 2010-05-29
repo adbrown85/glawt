@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief Activates framebuffer attachments.
  * @ingroup advanced
- * @brief Activates framebuffer attachments.
  */
 class Outputs : public Applicable {
 public:

@@ -31,20 +31,7 @@ inline Index::Index(int i, int j, int k) : i(i), j(j), k(k) {}
 
 inline void Index::set(int v) {this->i = v; this->j = v; this->k = v;}
 
-
-/*
-inline Index& Index::operator=(const Index &B) {
-	
-	this->i = B.i;
-	this->j = B.j;
-	this->k = B.k;
-	return *this;
-}
-*/
-
-
 inline Index operator+(const Index &A, const Index &B) {
-	
 	return Index(A.i+B.i, A.j+B.j, A.k+B.k);
 }
 

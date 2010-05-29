@@ -111,8 +111,7 @@ void OctreeBuilder::buildNodeAsLeaf(const Index &center,
 }
 
 
-/**
- * Computes the height of the tree required for a dataset.
+/** Computes the height of the tree required for a dataset.
  * 
  * Calculated as (log base 8 of the total samples) - 1;
  * 

@@ -158,10 +158,9 @@ bool Preprocessor::isVersion(const string &line) {
 }
 
 
-/**
- * Loads a file into the parser's lines vector.
+/** Loads a file into the parser's lines vector.
  * 
- * @throws const_char* if the file cannot be opened.
+ * @throws Exception if the file cannot be opened.
  */
 void Preprocessor::load(const string &filename) {
 	
@@ -189,9 +188,7 @@ void Preprocessor::load(const string &filename) {
 }
 
 
-/**
- * @throws const_char* if the token has already been defined
- */
+/** @throws Exception if the token has already been defined */
 void Preprocessor::onDefine(const string &line) {
 	
 	map<string,string>::iterator it;

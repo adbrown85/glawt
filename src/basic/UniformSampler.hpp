@@ -10,9 +10,8 @@
 using namespace std;
 
 
-/**
+/** @brief Container for GLSL sampler uniform variables.
  * @ingroup basic
- * @brief Container for GLSL sampler uniform variables.
  */
 class UniformSampler : public Uniform {
 public:

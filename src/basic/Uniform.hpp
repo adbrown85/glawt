@@ -19,9 +19,8 @@
 using namespace std;
 
 
-/**
+/** @brief Abstract base class for GLSL uniform variables.
  * @ingroup basic
- * @brief Abstract base class for GLSL uniform variables.
  */
 class Uniform : public Applicable {
 public:

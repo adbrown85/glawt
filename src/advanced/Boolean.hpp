@@ -25,13 +25,13 @@ struct Extent {
 };
 
 
-/**
- * @ingroup advanced
- * @brief Combines shapes in different ways to create a new one.
+/** @brief Combines shapes in different ways to create a new one.
  * 
  * To create a concrete operation, subclass %Boolean and implement 
  * isTangible() and updateAttributes().  Of course, make sure to pass the 
  * right number of vertices and all the attribute names in the constructor.
+ * 
+ * @ingroup advanced
  */
 class Boolean : public Hexahedron {
 public:

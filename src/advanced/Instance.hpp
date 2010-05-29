@@ -27,9 +27,8 @@ struct UniformSnapshot {
 	int location;
 };
 
-/**
+/** @brief Redraws all the nodes of a group with different characteristics.
  * @ingroup advanced
- * @brief Redraws all the nodes of a group with different characteristics.
  */
 class Instance : public Applicable {
 public:

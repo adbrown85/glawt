@@ -15,22 +15,15 @@ using namespace std;
  */
 class Text {
 public:
-	static int count(const string &text,
-	                 char character);
-	static bool endsWith(const string &text,
-	                     char character);
-	static int findFirstNotWordCharacter(const string &text,
-	                                     int pos=0);
-	static pair<int,int> findFirstWord(const string &text,
-	                                   int pos=0);
-	static int findFirstWordCharacter(const string &text,
-	                                  int pos=0);
+	static int count(const string &text, char character);
+	static bool endsWith(const string &text, char character);
+	static int findFirstNotWordCharacter(const string &text, int pos=0);
+	static pair<int,int> findFirstWord(const string &text, int pos=0);
+	static int findFirstWordCharacter(const string &text, int pos=0);
 	static string indent(int times);
-	static string replace(const string &text,
-	                      map<string,string> &dictionary);
-	static string toLower(const string &original);
-	static string trim(const string &text,
-	                   const string &characters=" ");
+	static string replace(const string &text, map<string,string> &dictionary);
+	static string toLower(string txt);
+	static string trim(const string &text, const string &characters=" ");
 };
 
 

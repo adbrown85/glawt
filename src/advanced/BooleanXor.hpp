@@ -13,14 +13,14 @@
 using namespace std;
 
 
-/**
- * @ingroup advanced
- * @brief Exclusive OR boolean operator for two shapes.
+/** @brief Exclusive OR boolean operator for two shapes.
  * 
  * Uses the following vertex attributes:
  *   - MCVertex
  *   - MCNormal
  *   - TexCoord0
+ * 
+ * @ingroup advanced
  */
 class BooleanXor : public Boolean {
 public:

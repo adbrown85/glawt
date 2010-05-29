@@ -10,9 +10,8 @@
 using namespace std;
 
 
-/**
+/** @brief Container for GLSL floating-point uniform variables.
  * @ingroup basic
- * @brief Container for GLSL floating-point uniform variables.
  */
 class UniformFloat : public Uniform {
 public:

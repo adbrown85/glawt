@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief %Texture node for images.
  * @ingroup basic
- * @brief %Texture node for images.
  */
 class Texture2D : public Texture {
 public:

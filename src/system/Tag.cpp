@@ -7,15 +7,14 @@
 #include "Tag.hpp"
 
 
-/**
- * Creates a new, normal tag.
- */
+/** Creates an empty tag. */
 Tag::Tag() {
 	
 	clear();
 }
 
 
+/** Creates a tag named @e name. */
 Tag::Tag(const string &name) {
 	
 	clear();
@@ -23,9 +22,7 @@ Tag::Tag(const string &name) {
 }
 
 
-/**
- * Resets the tag to an empty state.
- */
+/** Resets the tag to an empty state. */
 void Tag::clear() {
 	
 	// Reset attributes
@@ -37,11 +34,7 @@ void Tag::clear() {
 }
 
 
-/**
- * @throws const_char* if the tag doesn't have an attribute.
- * 
- * @param key Name of the attribute.
- */
+/** @throws Exception if tag doesn't have an attribute named @e key. */
 void Tag::error(string key) const {
 	
 	Exception e;
@@ -55,14 +48,8 @@ void Tag::error(string key) const {
 }
 
 
-/**
- * @throws const_char* if an attribute can't be converted to a type.
- * 
- * @param key Name of the attribute.
- * @param type Type trying to convert to.
- */
-void Tag::error(string key,
-                string type) const {
+/** @throws Exception if attribute @e key can't be converted to a @e type. */
+void Tag::error(string key, string type) const {
 	
 	Exception e;
 	
@@ -76,16 +63,8 @@ void Tag::error(string key,
 }
 
 
-/**
- * Gets the value of an attribute as a boolean.
- * 
- * @param key Name of the attribute.
- * @param value Boolean to store the value in.
- * @param required If attribute is not found, throw an error.
- */
-bool Tag::get(const string &key,
-              bool &value,
-              bool required) const {
+/** Gets the value of an attribute as a boolean. */
+bool Tag::get(const string &key, bool &value, bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	string text;
@@ -111,16 +90,8 @@ bool Tag::get(const string &key,
 }
 
 
-/**
- * Gets the value of an attribute as a character.
- * 
- * @param key Name of the attribute.
- * @param value Character to store the value in.
- * @param required If attribute is not found, throw an error.
- */
-bool Tag::get(const string &key,
-              char &value,
-              bool required) const {
+/** Gets the value of an attribute as a character. */
+bool Tag::get(const string &key, char &value, bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -138,16 +109,8 @@ bool Tag::get(const string &key,
 }
 
 
-/**
- * Gets the value of an attribute as a float.
- * 
- * @param key Name of the attribute.
- * @param value Float to store the value in.
- * @param required If attribute is not found, throw an error.
- */
-bool Tag::get(const string &key,
-              float &value,
-              bool required) const {
+/** Gets the value of an attribute as a float. */
+bool Tag::get(const string &key, float &value, bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -165,9 +128,8 @@ bool Tag::get(const string &key,
 }
 
 
-bool Tag::get(const string &key,
-              float value[4],
-              bool required) const {
+/** Gets the value of a four-value float array. */
+bool Tag::get(const string &key, float value[4], bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	stringstream stream;
@@ -190,16 +152,8 @@ bool Tag::get(const string &key,
 }
 
 
-/**
- * Gets the value of an attribute as an integer.
- * 
- * @param key Name of the attribute.
- * @param value Integer to store the value in.
- * @param required If attribute is not found, throw an error.
- */
-bool Tag::get(const string &key,
-              int &value,
-              bool required) const {
+/** Gets the value of an attribute as an integer. */
+bool Tag::get(const string &key, int &value, bool required) const {
 	
 	map<string,string>::const_iterator ai;
 	
@@ -217,8 +171,7 @@ bool Tag::get(const string &key,
 }
 
 
-/**
- * Gets the value of an attribute as a string.
+/** Gets the value of an attribute as a string.
  * 
  * @param key Name of the attribute.
  * @param value String to store the value in.
@@ -250,12 +203,14 @@ bool Tag::get(const string &key,
 }
 
 
+/** @return String describing the location of the tag in the file. */
 string Tag::getLocation() const {
 	
 	return toLocation(filename, line);
 }
 
 
+/** @return String describing the location of a tag in the file. */
 string Tag::toLocation(string filename, int line) {
 	
 	ostringstream stream;
@@ -265,6 +220,7 @@ string Tag::toLocation(string filename, int line) {
 }
 
 
+/** @return True if the tag has an attribute named @e name */
 bool Tag::hasAttribute(const string &name) const {
 	
 	map<string,string>::const_iterator it;
@@ -274,25 +230,15 @@ bool Tag::hasAttribute(const string &name) const {
 }
 
 
-/**
- * Gets and sets an attribute in the tag.
- * 
- * @param key Reference to the name of the attribute.
- */
+/** Gets and sets an attribute in the tag. */
 string& Tag::operator[](const string &key) {
 	
 	return attributes[Text::toLower(key)];
 }
 
 
-/**
- * Prints the %Tag to a stream.
- * 
- * @param stream Stream to print to.
- * @param tag XML tag.
- */
-ostream& operator<<(ostream &stream,
-                    const Tag &tag) {
+/** Prints @e tag to @e stream. */
+ostream& operator<<(ostream &stream, const Tag &tag) {
 	
 	map<string,string>::const_iterator ai;
 	

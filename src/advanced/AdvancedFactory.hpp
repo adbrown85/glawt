@@ -27,9 +27,8 @@
 using namespace std;
 
 
-/**
+/** @brief %Factory for creating more esoteric nodes not used by all files.
  * @ingroup advanced
- * @brief %Factory for creating more esoteric nodes not used by all files.
  */
 class AdvancedFactory : public Factory {
 public:

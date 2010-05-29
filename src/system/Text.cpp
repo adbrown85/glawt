@@ -7,8 +7,8 @@
 #include "Text.hpp"
 
 
-int Text::count(const string &text,
-                char character) {
+/** @return Number of occurrences of @e character in @e text. */
+int Text::count(const string &text, char character) {
 	
 	int times;
 	
@@ -22,8 +22,8 @@ int Text::count(const string &text,
 }
 
 
-bool Text::endsWith(const string &text,
-                    char character) {
+/** @return True if @e character is at the last position of @e text. */
+bool Text::endsWith(const string &text, char character) {
 	
 	int last;
 	
@@ -32,14 +32,12 @@ bool Text::endsWith(const string &text,
 }
 
 
-/**
- * @return position of first character in string that can be part of a word.
+/** @return Position of first character in text that can be part of a word.
  * 
  * @param text String to search
  * @param pos Position to start from
  */
-int Text::findFirstWordCharacter(const string &text,
-                                 int pos) {
+int Text::findFirstWordCharacter(const string &text, int pos) {
 	
 	int length;
 	
@@ -53,14 +51,12 @@ int Text::findFirstWordCharacter(const string &text,
 }
 
 
-/**
- * @return position of first character in string that cannot be part of a word.
+/** @return Position of first character in text that cannot be part of a word.
  * 
  * @param text String to search
  * @param pos Position to start from
  */
-int Text::findFirstNotWordCharacter(const string &text,
-                                    int pos) {
+int Text::findFirstNotWordCharacter(const string &text, int pos) {
 	
 	int length;
 	
@@ -74,14 +70,12 @@ int Text::findFirstNotWordCharacter(const string &text,
 }
 
 
-/**
- * @return start of the first word and its length.
+/** @return Start of the first word and its length.
  * 
  * @param text String to search
  * @param pos Position to search from
  */
-pair<int,int> Text::findFirstWord(const string &text,
-                                  int pos) {
+pair<int,int> Text::findFirstWord(const string &text, int pos) {
 	
 	int beg, end;
 	
@@ -97,6 +91,7 @@ pair<int,int> Text::findFirstWord(const string &text,
 }
 
 
+/** @return String with @e times * 2 spaces. */
 string Text::indent(int times) {
 	
 	ostringstream stream;
@@ -107,13 +102,7 @@ string Text::indent(int times) {
 }
 
 
-/**
- * Replaces occurences of tokens in a string with their replacements.
- * 
- * @param text String to search
- * @param dictionary Map with tokens and their replacements
- * @return string with the replacements made
- */
+/** @return Copy of @e text with keys in @e dictionary replaced with values. */
 string Text::replace(const string &text,
                      map<string,string> &dictionary) {
 	
@@ -138,26 +127,21 @@ string Text::replace(const string &text,
 }
 
 
-/**
- * Converts each character of a string to lowercase.
- * 
- * @param original String to convert.
- */
-string Text::toLower(const string &original) {
+/** @return String with each character in @e text converted to lowercase. */
+string Text::toLower(string text) {
 	
 	int length;
-	string temp(original);
 	
 	// Convert each character
-	length = temp.length();
+	length = text.length();
 	for (int i=0; i<length; ++i)
-		temp[i] = tolower(temp[i]);
-	return temp;
+		text[i] = tolower(text[i]);
+	return text;
 }
 
 
-string Text::trim(const string &text,
-                  const string &characters) {
+/** @return Copy of @e text with @e characters removed from start and end. */
+string Text::trim(const string &text, const string &characters) {
 	
 	size_t beg, end;
 	

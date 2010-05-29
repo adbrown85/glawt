@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
+/** @brief Removes back or front-facing polygons.
  * @ingroup advanced
- * @brief Removes back or front-facing polygons.
  */
 class Cull : public Applicable {
 public:

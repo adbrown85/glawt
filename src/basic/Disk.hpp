@@ -12,9 +12,8 @@
 using namespace std;
 
 
-/**
+/** @brief Circular disk made from a triangle fan.
  * @ingroup basic
- * @brief Circular disk made from a triangle fan.
  */
 class Disk : public Shape {
 public:

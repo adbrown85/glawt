@@ -19,9 +19,8 @@ struct Chain {
 };
 
 
-/**
+/** @brief Container for offscreen rendering targets.
  * @ingroup advanced
- * @brief Container for offscreen rendering targets.
  * 
  * Replaces the default framebuffer with an external framebuffer object 
  * comprised of a number of attachments.  When the framebuffer is active, 
