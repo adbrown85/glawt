@@ -63,6 +63,7 @@ error_no_gtkglmm() {
 }
 echo -n "checking for gtkglextmm-1.2... "
 PKG_CHECK_EXISTS([gtkglextmm-1.2],[echo "yes"],error_no_gtkglmm)
+AC_DEFINE([HAVE_GTK], [1], [Define to 1 if GTKGLmm is available.])
 
 # Check for DevIL
 error_no_devil() {

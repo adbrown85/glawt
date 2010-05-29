@@ -1,5 +1,5 @@
 /*
- * Dataset.cxx
+ * DatasetViewer.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Dataset" << endl;
+	cout << "DatasetViewer" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	

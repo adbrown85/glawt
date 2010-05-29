@@ -7,6 +7,7 @@
 #ifndef INSPECTOR_HPP
 #define INSPECTOR_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <gtkmm.h>
 #include "NodeTree.hpp"
 #include "AttributeTree.hpp"
@@ -86,4 +87,5 @@ private:
 inline void Inspector::setScene(Scene *s) {scene = s;}
 inline void Inspector::setCanvas(Canvas *c) {canvas = c;}
 
+#endif  // HAVE_GTK
 #endif

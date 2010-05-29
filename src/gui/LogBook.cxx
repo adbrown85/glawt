@@ -9,6 +9,7 @@
 
 int main(int argc, char *argv[]) {
 	
+#ifdef HAVE_GTK
 	Gtk::Main kit(argc, argv);
 	Gtk::Window window;
 	LogBook logBook;
@@ -25,6 +26,7 @@ int main(int argc, char *argv[]) {
 	
 	// Run
 	Gtk::Main::run(window);
+#endif
 	return 0;
 }
 

@@ -5,6 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 #include "AttributeTree.hpp"
+#ifdef HAVE_GTK
 AttributeTreeColumns AttributeTree::columns;
 
 
@@ -51,8 +52,7 @@ void AttributeTree::print() {
 }
 
 
-void AttributeTree::print(const Gtk::TreeModel::Row &row,
-                          int depth) {
+void AttributeTree::print(const Gtk::TreeModel::Row &row, int depth) {
 	
 	Gtk::TreeModel::Children children=row.children();
 	Gtk::TreeModel::Children::iterator it;
@@ -76,3 +76,5 @@ void AttributeTree::push() {
 	parents.push(current);
 }
 
+
+#endif

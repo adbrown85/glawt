@@ -21,7 +21,7 @@
 #define CANVAS_RIGHT_BUTTON 3
 #define CANVAS_WHEEL_DOWN 4
 #define CANVAS_WHEEL_UP 5
-// GTK -- Eventually define differently for Glut
+#ifdef HAVE_GTK
 #include <gdk/gdkkeysyms.h>
 #define CANVAS_KEY_UP GDK_Up
 #define CANVAS_KEY_DOWN GDK_Down
@@ -35,6 +35,7 @@
 #define CANVAS_MOD_ALT GDK_Alt_L
 #define CANVAS_MOD_SHIFT GDK_Shift_L
 #define CANVAS_MOD_NONE 0
+#endif
 using namespace std;
 
 

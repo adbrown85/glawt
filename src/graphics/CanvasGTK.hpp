@@ -7,6 +7,7 @@
 #ifndef CANVASGTK_HPP
 #define CANVASGTK_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <GL/glu.h>
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>
@@ -67,6 +68,5 @@ inline void CanvasGTK::flush() {glWindow->swap_buffers();}
 inline void CanvasGTK::refresh() {window->invalidate_rect(get_allocation(),0);}
 
 
-
-
+#endif
 #endif

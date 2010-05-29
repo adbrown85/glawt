@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "LogBook.hpp"
+#ifdef HAVE_GTK
 
 
 LogBook::LogBook() {
@@ -38,3 +39,5 @@ void LogBook::onLogUpdate(const string &text) {
 	view.scroll_to(end, 0.0);
 }
 
+
+#endif

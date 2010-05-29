@@ -7,7 +7,6 @@
 #ifndef DATASETVIEWER_HPP
 #define DATASETVIEWER_HPP
 #include "common.h"
-#include <gtkmm/frame.h>
 #include "Dataset.hpp"
 #include "Canvas.hpp"
 using namespace std;
@@ -16,7 +15,7 @@ using namespace std;
 /** @brief Utility for viewing a dataset.
  * @ingroup graphics
  */
-class DatasetViewer : public Gtk::Frame, public CanvasListener {
+class DatasetViewer : public CanvasListener {
 public:
 	void goToNext();
 	void goToPrevious();

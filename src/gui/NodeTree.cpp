@@ -5,6 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 #include "NodeTree.hpp"
+#ifdef HAVE_GTK
 NodeTreeColumns NodeTree::columns;
 
 
@@ -68,8 +69,7 @@ void NodeTree::print() {
 }
 
 
-void NodeTree::print(const Gtk::TreeModel::Row &row,
-                     int depth) {
+void NodeTree::print(const Gtk::TreeModel::Row &row, int depth) {
 	
 	Gtk::TreeModel::Children children=row.children();
 	Gtk::TreeModel::Children::iterator it;
@@ -140,3 +140,5 @@ Gtk::TreeModel::iterator NodeTree::search(Node *node,
 	return pEnd;
 }
 
+
+#endif

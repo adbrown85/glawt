@@ -69,8 +69,10 @@ void Gander::onCanvasEventSetup(const CanvasEvent &event) {
 void Gander::onCompile() {
 	
 	// Create canvas
+#ifdef HAVE_GTK
 	Gtk::GL::init(argc, argv);
 	canvas = new CanvasGTK();
+#endif
 	
 	// Open scene
 	scene = new Scene();
@@ -97,6 +99,7 @@ void Gander::onConvert() {
  */
 void Gander::onDisplay() {
 	
+#ifdef HAVE_GTK
 	Gtk::Window window;
 	Gtk::HBox hBox;
 	Gtk::VBox vBox;
@@ -124,6 +127,7 @@ void Gander::onDisplay() {
 	
 	// Run
 	Gtk::Main::run(window);
+#endif
 }
 
 
@@ -176,26 +180,31 @@ void Gander::onRange() {
 
 void Gander::onSlices() {
 	
-	// Initialize
-	Gtk::Main kit(argc, argv);
-	Gtk::GL::init(argc, argv);
-	
-	// Create the dataset and viewer
+	// Load the dataset
 	Dataset dataset(inFilename);
 	dataset.load();
+	dataset.print();
+	
+	// Initialize window
+#ifdef HAVE_GTK
+	Gtk::GL::init(argc, argv);
+	Gtk::Window window;
+	CanvasGTK canvas(dataset.getWidth(), dataset.getHeight());
+#endif
+	
+	// Create the viewer
 	DatasetViewer viewer;
-	viewer.setCanvas(canvas);
+	viewer.setCanvas(&canvas);
 	viewer.setDataset(&dataset);
 	viewer.load();
 	
-	// Pack in window
-	Gtk::Window window;
+	// Pack and run window
+#ifdef HAVE_GTK
 	window.set_title(dataset.getFilename());
-	window.add(*((CanvasGTK*)canvas));
+	window.add(canvas);
 	window.show_all_children();
-	
-	// Run
 	Gtk::Main::run(window);
+#endif
 }
 
 
@@ -273,7 +282,9 @@ void Gander::usage() {
 
 int main(int argc, char *argv[]) {
 	
+#ifdef HAVE_GTK
 	Gtk::Main kit(argc, argv);
+#endif
 	Gander gander(argc, argv);
 	
 	try {

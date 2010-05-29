@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "CanvasGTK.hpp"
+#ifdef HAVE_GTK
 
 
 /** Initializes the widget. */
@@ -300,3 +301,5 @@ void CanvasGTK::write(const string &text, int x, int y) {
 	typeface.write(text);
 }
 
+
+#endif

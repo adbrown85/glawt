@@ -131,6 +131,7 @@ void DatasetViewer::onCanvasEventKey(const CanvasEvent &event) {
 }
 
 
+/** Copies attributes from the dataset and adds listeners to the canvas. */
 void DatasetViewer::load() {
 	
 	// Set fields
