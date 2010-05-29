@@ -7,7 +7,6 @@
 #ifndef TEXTURE_HPP
 #define TEXTURE_HPP
 #include "common.h"
-#include <queue>
 #include "Node.hpp"                     // Base class
 using namespace std;
 

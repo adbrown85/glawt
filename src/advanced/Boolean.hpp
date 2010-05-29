@@ -8,7 +8,6 @@
 #define BOOLEAN_HPP
 #include "common.h"
 #include <limits>                       // Calculating result
-#include <queue>                        // Finding shapes
 #include <vector>                       // Storing shapes and extents
 #include "Group.hpp"
 #include "Shape.hpp"

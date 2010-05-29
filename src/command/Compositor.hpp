@@ -7,7 +7,6 @@
 #ifndef COMPOSITOR_HPP
 #define COMPOSITOR_HPP
 #include "common.h"
-#include <queue>                        // Searching
 #include "Worker.hpp"
 using namespace std;
 

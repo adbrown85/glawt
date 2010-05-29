@@ -7,7 +7,6 @@
 #ifndef INSTANCE_HPP
 #define INSTANCE_HPP
 #include "common.h"
-#include <queue>
 #include "Node.hpp"
 #include "Group.hpp"
 #include "Uniform.hpp"

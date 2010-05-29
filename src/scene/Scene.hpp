@@ -7,7 +7,6 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 #include "common.h"
-#include <queue>
 #include <stack>
 #include <vector>
 #include "Exception.hpp"

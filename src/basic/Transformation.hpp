@@ -7,7 +7,6 @@
 #ifndef TRANSFORMATION_HPP
 #define TRANSFORMATION_HPP
 #include "common.h"
-#include <queue>                        // Searching
 #include "Node.hpp"
 #include "NodeEvent.hpp"
 #include "Matrix.hpp"

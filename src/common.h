@@ -12,6 +12,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <queue>
 #include <sstream>
 #include <string>
 #include <GL/glew.h>
