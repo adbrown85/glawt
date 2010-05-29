@@ -15,6 +15,7 @@
 #include "Canvas.hpp"
 #include "Typeface.hpp"
 using namespace std;
+using System::glog;
 
 
 /** @brief Area in a window that can be drawn to using GTK GL.

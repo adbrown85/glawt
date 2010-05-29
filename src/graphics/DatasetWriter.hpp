@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Dataset.hpp"
 using namespace std;
+using System::glog;
 
 
 /** @brief Creates a dataset from a text file or another dataset.

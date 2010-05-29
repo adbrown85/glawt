@@ -47,7 +47,7 @@ private:
 inline Log::iterator Log::begin() {return lines.begin();}
 inline Log::iterator Log::end() {return lines.end();}
 namespace System {
-	extern Log log;
+	extern Log glog;
 }
 
 #endif

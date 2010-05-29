@@ -18,7 +18,6 @@ DatasetWriter::DatasetWriter() {
 
 void DatasetWriter::write() {
 	
-	using System::log;
 	clock_t ticks;
 	ofstream file;
 	
@@ -39,7 +38,7 @@ void DatasetWriter::write() {
 	header->setDepth(dataset->getDepth() / jump);
 	
 	// Write to file
-	log << "[DatasetWriter] Writing to '" << output << "'... ";
+	glog << "[DatasetWriter] Writing to '" << output << "'... ";
 	ticks = clock();
 	file.open(output.c_str(), ios_base::binary);
 	writeHeader(file);
@@ -54,7 +53,7 @@ void DatasetWriter::write() {
 	delete header;
 	dataset = NULL;
 	header = NULL;
-	log << (((double)clock()-ticks)/CLOCKS_PER_SEC) << "s" << endl;
+	glog << (((double)clock()-ticks)/CLOCKS_PER_SEC) << "s" << endl;
 }
 
 

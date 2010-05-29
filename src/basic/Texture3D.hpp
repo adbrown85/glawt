@@ -12,11 +12,11 @@
 #include "Tag.hpp"
 #include "Texture.hpp"
 using namespace std;
+using System::glog;
 
 
-/**
+/** @brief %Texture node for volumes.
  * @ingroup basic
- * @brief %Texture node for volumes.
  */
 class Texture3D : public Texture {
 public:

@@ -5,7 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Log.hpp"
-using System::log;
+using System::glog;
 
 
 /* Fake to test log listener */
@@ -30,10 +30,10 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	log.addListener(new FakeLogListener());
-	log << "This is a message!" << endl;
-	log << "This is a message with a " << 1.5 << endl;
-	log << "This is a message with a " << 1 << endl;
+	clog.addListener(new FakeLogListener());
+	glog << "This is a message!" << endl;
+	glog << "This is a message with a " << 1.5 << endl;
+	glog << "This is a message with a " << 1 << endl;
 	
 	for (it=log.begin(); it!=log.end(); ++it) {
 		cout << "  " << *it << endl;

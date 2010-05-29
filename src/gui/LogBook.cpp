@@ -9,8 +9,6 @@
 
 LogBook::LogBook() {
 	
-	using System::log;
-	
 	// Set up text view
 	view.property_cursor_visible() = false;
 	buffer = view.get_buffer();
@@ -26,13 +24,12 @@ LogBook::LogBook() {
 	set_border_width(2);
 	
 	// Add listener
-	log.addListener(this);
+	glog.addListener(this);
 }
 
 
 void LogBook::onLogUpdate(const string &text) {
 	
-	using System::log;
 	Log::iterator it;
 	Gtk::TextIter end;
 	

@@ -17,6 +17,7 @@
 #include "Texture.hpp"
 #include "Transform.hpp"
 using namespace std;
+using System::glog;
 
 
 /**

@@ -9,6 +9,8 @@
 #include "common.h"
 #include <IL/ilut.h>
 #include "Texture.hpp"
+using namespace std;
+using System::glog;
 
 
 /**

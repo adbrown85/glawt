@@ -152,8 +152,6 @@ void Texture2D::initLibraries() {
  */
 void Texture2D::load() {
 	
-	using System::log;
-	
 	// Initialize DevIL
 	try {
 		initLibraries();
@@ -167,7 +165,7 @@ void Texture2D::load() {
 	ilGenImages(1, &image);
 	ilBindImage(image);
 	if (ilLoadImage(filename.c_str())) {
-		log << "[Texture2D] DevIL loaded '" << filename << "'." << endl;
+		glog << "[Texture2D] DevIL loaded '" << filename << "'." << endl;
 	} else {
 		NodeException e(tag);
 		e << "[Texture2D] DevIL could not load '" << filename << "'.";

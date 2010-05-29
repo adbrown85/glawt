@@ -6,7 +6,7 @@
  */
 #include "Log.hpp"
 namespace System {
-	Log log;
+	Log glog;
 }
 
 

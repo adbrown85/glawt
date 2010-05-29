@@ -27,7 +27,6 @@ Texture3D::~Texture3D() {
 /** Loads the dataset into texture memory. */
 void Texture3D::finalize() {
 	
-	using System::log;
 	clock_t ticks;
 	
 	// Load the dataset
@@ -42,7 +41,7 @@ void Texture3D::finalize() {
 	// Pass the texture to OpenGL
 	if (compress) {
 		ticks = clock();
-		log << "[Texture3D] Compressing texture... ";
+		glog << "[Texture3D] Compressing texture... ";
 	}
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
@@ -55,15 +54,15 @@ void Texture3D::finalize() {
 	             dataset->getType(),      // Type
 	             dataset->getData());     // Data
 	if (compress) {
-		log << ((double)(clock()-ticks))/CLOCKS_PER_SEC << "s" << endl;
+		glog << ((double)(clock()-ticks))/CLOCKS_PER_SEC << "s" << endl;
 		if (isCompressed()) {
-			log << "[Texture3D] Successfully compressed texture." << endl;
+			glog << "[Texture3D] Successfully compressed texture." << endl;
 		} else {
-			log << "[Texture3D] Did not compress texture." << endl;
+			glog << "[Texture3D] Did not compress texture." << endl;
 		}
 	}
-	log << "[Texture3D] Footprint = " 
-	    << ((double)getFootprint() / 1048576) << " MB" << endl;
+	glog << "[Texture3D] Footprint = " 
+	     << ((double)getFootprint() / 1048576) << " MB" << endl;
 	
 	// Set parameters
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

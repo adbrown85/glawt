@@ -11,6 +11,7 @@
 #include "Log.hpp"
 using namespace std;
 using Glib::RefPtr;
+using System::glog;
 
 
 /** @brief Widget for displaying the log.

@@ -11,6 +11,8 @@
 #include "Vector.hpp"                   // For axis
 #include "Transform.hpp"                // Projection matrix
 #include "Traverser.hpp"
+using namespace std;
+using System::glog;
 
 
 /** @brief Abstract base class for an item that manipulates other items.

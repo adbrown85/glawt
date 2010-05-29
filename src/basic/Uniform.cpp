@@ -43,14 +43,12 @@ void Uniform::associate() {
  */
 void Uniform::finalize() {
 	
-	using System::log;
-	
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
 	if (location == -1) {
-		log << tag.getFilename() << ":" << tag.getLine() << ": ";
-		log << "[Uniform] Location for uniform '" << name
-		    << "' cannot be found." << endl;
+		glog << tag.getFilename() << ":" << tag.getLine() << ": ";
+		glog << "[Uniform] Location for uniform '" << name
+		     << "' cannot be found." << endl;
 	}
 }
 

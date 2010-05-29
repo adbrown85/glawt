@@ -11,7 +11,6 @@ bool Painter::tried=false;
 
 Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 	
-	using System::log;
 	string filename(GANDER_DATA_DIR);
 	
 	this->mode = GL_RENDER;
@@ -27,9 +26,9 @@ Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 		} catch (Exception e) {
 			delete outline;
 			outline = NULL;
-			log << "[Painter] Problem opening '" << filename << "'." << endl;
-			log << "[Painter] Selected shapes will not be outlined." << endl;
-			log << "[Painter] Try installing Gander again." << endl;
+			glog << "[Painter] Problem opening '" << filename << "'." << endl;
+			glog << "[Painter] Selected shapes will not be outlined." << endl;
+			glog << "[Painter] Try installing Gander again." << endl;
 		}
 		tried = true;
 	}
