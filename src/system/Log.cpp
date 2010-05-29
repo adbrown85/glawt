@@ -5,9 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Log.hpp"
-namespace System {
-	Log glog;
-}
+Log glog;
 
 
 Log::Log() {

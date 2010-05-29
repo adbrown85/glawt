@@ -11,7 +11,6 @@
 #include "Preprocessor.hpp"
 #include "Log.hpp"
 using namespace std;
-using System::glog;
 
 
 /** @brief Utility for processing error messages.

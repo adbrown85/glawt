@@ -14,7 +14,6 @@
 #include "NodeEvent.hpp"
 #include "Transformation.hpp"
 using namespace std;
-using System::glog;
 
 
 /* Tree view made up of the nodes in the scene. */

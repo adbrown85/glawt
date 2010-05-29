@@ -10,7 +10,6 @@
 #include <IL/ilut.h>
 #include "Texture.hpp"
 using namespace std;
-using System::glog;
 
 
 /**

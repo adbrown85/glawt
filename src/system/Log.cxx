@@ -5,7 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Log.hpp"
-using System::glog;
 
 
 /* Fake to test log listener */

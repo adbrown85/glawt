@@ -46,8 +46,9 @@ private:
 };
 inline Log::iterator Log::begin() {return lines.begin();}
 inline Log::iterator Log::end() {return lines.end();}
-namespace System {
-	extern Log glog;
-}
+
+
+/** Global log for Gander. */
+extern Log glog;
 
 #endif

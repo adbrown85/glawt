@@ -17,7 +17,6 @@
 #include "Tag.hpp"
 #include "Log.hpp"
 using namespace std;
-using System::glog;
 
 
 /** @brief Loads and holds volumetric data.

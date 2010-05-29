@@ -12,7 +12,6 @@
 #include "Tag.hpp"
 #include "Texture.hpp"
 using namespace std;
-using System::glog;
 
 
 /** @brief %Texture node for volumes.
