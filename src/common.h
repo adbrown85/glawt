@@ -10,6 +10,8 @@
 // Common includes
 #include <cstdlib>
 #include <iostream>
+#include <list>
+#include <map>
 #include <sstream>
 #include <string>
 #include <GL/glew.h>

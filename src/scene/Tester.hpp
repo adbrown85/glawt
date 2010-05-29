@@ -10,7 +10,7 @@
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 #include "Node.hpp"
-#include "FileUtility.hpp"
+#include "Path.hpp"
 #include "Scene.hpp"
 #include "Traverser.hpp"
 #include "CanvasGTK.hpp"
@@ -18,7 +18,7 @@ using namespace std;
 
 
 /** @brief Utility for testing nodes.
- * @ingroup graph
+ * @ingroup scene
  */
 class Tester : public CanvasListener {
 public:

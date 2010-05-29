@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Base class for a node that can be drawn on screen.
+/** @brief Base class for a node that can be drawn on screen.
+ * @ingroup scene
  */
 class SimpleDrawable : public Drawable {
 public:

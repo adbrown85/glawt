@@ -25,7 +25,7 @@ Shader::Shader(const Tag &tag) : Node(tag) {
 	if (type != "") {
 		type = Text::toLower(type);
 	} else {
-		string extension = Text::toLower(FileUtility::getExtension(filename));
+		string extension = Text::toLower(Path::getExtension(filename));
 		if (extension == "frag")
 			this->type = "fragment";
 		else if (extension == "vert")

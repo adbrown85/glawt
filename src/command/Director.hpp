@@ -11,8 +11,8 @@
 using namespace std;
 
 
-/** @brief %Worker responsible for selecting items in the scene.
- * @ingroup backend
+/** @brief Responsible for selecting items in the scene.
+ * @ingroup command
  */
 class Director : public Worker {
 public:

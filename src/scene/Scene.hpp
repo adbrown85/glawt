@@ -7,7 +7,6 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 #include "common.h"
-#include <map>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -15,17 +14,16 @@
 #include "Factory.hpp"
 #include "Matrix.hpp"
 #include "Node.hpp"
-#include "FileUtility.hpp"
 #include "Parser.hpp"
+#include "Path.hpp"
 #include "Quaternion.hpp"
 #include "Selection.hpp"
 #include "Vector.hpp"
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Collection of nodes opened from a file.
+/** @brief Collection of nodes opened from a file.
+ * @ingroup scene
  */
 class Scene {
 public:

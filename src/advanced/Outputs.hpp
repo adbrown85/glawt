@@ -8,7 +8,6 @@
 #define OUTPUTS_HPP
 #include "common.h"
 #include <algorithm>                    // Finding attachments
-#include <list>                         // Storing attachments
 #include "Attachment.hpp"
 using namespace std;
 

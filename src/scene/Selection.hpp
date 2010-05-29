@@ -7,7 +7,6 @@
 #ifndef SELECTION_HPP
 #define SELECTION_HPP
 #include "common.h"
-#include <list>
 #include <set>
 #include "Identifiable.hpp"
 #include "Node.hpp"
@@ -15,9 +14,8 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Collection of selected items.
+/** @brief Collection of selected items.
+ * @ingroup scene
  */
 class Selection {
 public:

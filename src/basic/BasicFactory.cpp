@@ -75,7 +75,7 @@ Node* BasicFactory::createTexture(const Tag &tag) {
 	
 	// Create based on file extension
 	tag.get("file", filename, false, false);
-	extension = FileUtility::getExtension(filename);
+	extension = Path::getExtension(filename);
 	if (Text::toLower(extension) == "vlb") {
 		return new Texture3D(tag);
 	} else {

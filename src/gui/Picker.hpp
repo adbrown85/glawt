@@ -9,22 +9,16 @@
 #include "common.h"
 #include <cfloat>
 #include <climits>
-#include <map>
 #include <typeinfo>
-#include <utility>
-#include "Exception.hpp"
-#include "Identifiable.hpp"        // Picking IDs
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
 #include "Node.hpp"                // Checking depth
 #include "Painter.hpp"             // Paints items into pick buffers
-#include "Scene.hpp"               // Pass root node to Painter
 #define PICK_BUFFER_SIZE 32
 using namespace std;
 
 
-/**
- * @ingroup frontend
- * @brief Determines which item is under the mouse cursor.
+/** @brief Determines which item is under the mouse cursor.
+ * @ingroup gui
  */
 class Picker {
 public:

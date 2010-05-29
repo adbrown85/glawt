@@ -11,8 +11,8 @@
 using namespace std;
 
 
-/** @brief Worker responsible for moving or rotating the camera.
- * @ingroup backend
+/** @brief Responsible for moving or rotating the camera.
+ * @ingroup command
  */
 class Cameraman : public Worker {
 public:

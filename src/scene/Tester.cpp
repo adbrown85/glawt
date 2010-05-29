@@ -77,7 +77,7 @@ void Tester::open(const string &filename) {
 	// Print
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << FileUtility::getBasename(filename) << endl;
+	cout << Path::getBasename(filename) << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	

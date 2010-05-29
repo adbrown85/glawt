@@ -11,9 +11,8 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Utility for manipulating the transformation stack.
+/** @brief Utility for manipulating the transformation stack.
+ * @ingroup scene
  */
 class Transform {
 public:

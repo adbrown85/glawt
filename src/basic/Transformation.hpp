@@ -7,7 +7,6 @@
 #ifndef TRANSFORMATION_HPP
 #define TRANSFORMATION_HPP
 #include "common.h"
-#include <list>                         // Storing listeners
 #include <queue>                        // Searching
 #include "Node.hpp"
 #include "NodeEvent.hpp"

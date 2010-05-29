@@ -8,7 +8,6 @@
 #define BLEND_HPP
 #include "common.h"
 #include <algorithm>
-#include <list>
 #include "Node.hpp"
 #include "Tag.hpp"
 #include "Translate.hpp"

@@ -71,7 +71,7 @@ void Scene::open(string filename) {
 	
 	// Parse file
 	this->filename = filename;
-	filename = FileUtility::replaceEnvironmentVariable(filename);
+	filename = Path::expand(filename);
 	parser.open(filename);
 	
 	// Look through tags

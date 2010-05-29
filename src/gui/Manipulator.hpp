@@ -13,9 +13,8 @@
 #include "Traverser.hpp"
 
 
-/**
- * @ingroup frontend
- * @brief Abstract base class for an item that manipulates other items.
+/** @brief Abstract base class for an item that manipulates other items.
+ * @ingroup gui
  */
 class Manipulator : public Identifiable {
 public:

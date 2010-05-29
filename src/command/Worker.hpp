@@ -12,7 +12,7 @@ using namespace std;
 
 
 /** @brief Base class for an object that performs commands on the scene.
- * @ingroup backend
+ * @ingroup command
  */
 class Worker {
 public:

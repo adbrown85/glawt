@@ -13,8 +13,8 @@
 using namespace std;
 
 
-/** @brief Worker responsible for moving individual items around the scene.
- * @ingroup backend
+/** @brief Responsible for moving individual items around the scene.
+ * @ingroup command
  */
 class Grip : public Worker {
 public:

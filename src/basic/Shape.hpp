@@ -7,7 +7,6 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 #include "common.h"
-#include <list>                         // For attributes
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"

@@ -13,9 +13,8 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Utility to walk through nodes that consolidates rules.
+/** @brief Utility to walk through nodes that consolidates rules.
+ * @ingroup scene
  */
 class Traverser {
 public:

@@ -8,7 +8,6 @@
 #define SORT_HPP
 #include "common.h"
 #include <algorithm>                    // For sort
-#include <list>                         // For storing translate nodes
 #include "Node.hpp"
 #include "Translate.hpp"
 #include "Canvas.hpp"

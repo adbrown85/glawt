@@ -35,7 +35,7 @@ void Disk::updateBufferPoints() {
 	list<Vector>::iterator it;
 	
 	// Calculate
-	points = Numeric::calculateCircle(0.5, getCount()-2);
+	points = Math::computeCircle(0.5, getCount()-2);
 	points.push_front(Vector(0,0,0,1));
 	points.push_back(Vector(0.5,0,0,1));
 	

@@ -20,9 +20,8 @@
 using namespace std;
 
 
-/**
- * @ingroup frontend
- * @brief Paints all the items to the screen or pick buffer.
+/** @brief Paints all the items to the screen or pick buffer.
+ * @ingroup gui
  * 
  * @warning Does not flush to the buffer.
  */

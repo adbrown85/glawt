@@ -11,10 +11,9 @@
 using namespace std;
 
 
-/**
+/** @brief Interface for an object that has a unique ID number.
  * @interface Identifiable
- * @ingroup graph
- * @brief Interface for an object that has a unique ID number.
+ * @ingroup scene
  */
 class Identifiable {
 public:

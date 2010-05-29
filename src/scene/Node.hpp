@@ -19,9 +19,8 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief Basic element of the scene graph.
+/** @brief Basic element of the scene graph.
+ * @ingroup scene
  */
 class Node {
 public:
@@ -80,10 +79,9 @@ inline void Node::setDepth(float depth) {this->depth = depth;}
 inline void Node::setParent(Node *parent) {this->parent = parent;}
 
 
-/**
+/** @brief %Node that can be applied, and then removed.
  * @interface Applicable
- * @ingroup graph
- * @brief %Node that can be applied, and then removed.
+ * @ingroup scene
  */
 class Applicable : public Node {
 public:
@@ -93,10 +91,9 @@ public:
 };
 
 
-/**
+/** @brief %Node that can be attached to another node.
  * @interface Attachable
- * @ingroup graph
- * @brief %Node that can be attached to another node.
+ * @ingroup scene
  */
 class Attachable : public Node {
 public:
@@ -107,10 +104,9 @@ public:
 };
 
 
-/**
+/** @brief %Node that can be drawn and identified on screen.
  * @interface Drawable
- * @ingroup graph
- * @brief %Node that can be drawn and identified on screen.
+ * @ingroup scene
  */
 class Drawable : public Node,
                  public Identifiable {
@@ -127,10 +123,9 @@ public:
 };
 
 
-/**
+/** @brief %Node that depends on the view to perform its operation.
  * @interface Dependent
- * @ingroup graph
- * @brief %Node that depends on the view to perform its operation.
+ * @ingroup scene
  */
 class Dependent {
 public:

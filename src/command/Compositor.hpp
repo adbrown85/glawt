@@ -12,8 +12,8 @@
 using namespace std;
 
 
-/** @brief Worker responsible for hiding and showing items.
- * @ingroup backend
+/** @brief Responsible for hiding and showing items.
+ * @ingroup command
  */
 class Compositor : public Worker {
 public:

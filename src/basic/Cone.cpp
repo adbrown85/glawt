@@ -37,7 +37,7 @@ void Cone::updateBufferPoints() {
 	
 	// Initialize
 	P = new GLfloat[getCount()][3];
-	points = Numeric::calculateCircle(0.5, getCount() / 3);
+	points = Math::computeCircle(0.5, getCount() / 3);
 	points.push_back(Vector(0.5,0,0,1));
 	
 	// Fill array
@@ -70,7 +70,7 @@ void Cone::updateBufferNormals() {
 	
 	// Initialize
 	N = new GLfloat[getCount()][3];
-	points = Numeric::calculateCircle(0.5, getCount() / 3);
+	points = Math::computeCircle(0.5, getCount() / 3);
 	points.push_back(Vector(0.5,0,0,1));
 	
 	// Fill array

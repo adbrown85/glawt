@@ -7,10 +7,9 @@
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
 #include "common.h"
-#include <map>
 #include <vector>
 #include "NodeException.hpp"
-#include "FileUtility.hpp"
+#include "Path.hpp"
 #include "Node.hpp"
 #include "Parser.hpp"
 #include "Tag.hpp"
@@ -21,9 +20,8 @@ using namespace std;
 typedef Node* (*creator_t)(const Tag &tag);
 
 
-/**
- * @ingroup graph
- * @brief Creates nodes from XML tags.
+/** @brief Creates nodes from XML tags.
+ * @ingroup scene
  */
 class Factory {
 public:

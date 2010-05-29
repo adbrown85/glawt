@@ -23,7 +23,7 @@ public:
 
 
 /** @brief Hierarchy of text.
- * @ingroup frontend
+ * @ingroup gui
  */
 class NodeTree {
 public:

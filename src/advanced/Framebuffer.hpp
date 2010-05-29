@@ -7,7 +7,6 @@
 #ifndef FRAMEBUFFER_HPP
 #define FRAMEBUFFER_HPP
 #include "common.h"
-#include <list>                         // Storing attachments
 #include "Node.hpp"
 #include "Texture2D.hpp"
 

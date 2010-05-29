@@ -13,7 +13,7 @@ using namespace std;
 
 
 /** @brief %Mouse control for the %Display.
- * @ingroup frontend
+ * @ingroup gui
  */
 class Mouse : public Control,
               public CanvasListener, public CommandListener {

@@ -8,14 +8,13 @@
 #define BINDING_HPP
 #include "common.h"
 #include <iomanip>
-#include <map>
 #include "Command.hpp"
 #include "Canvas.hpp"
 using namespace std;
 
 
 /** @brief Maps a combination of keys or buttons to a command.
- * @ingroup frontend
+ * @ingroup gui
  */
 class Binding {
 public:

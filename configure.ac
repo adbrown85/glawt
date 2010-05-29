@@ -102,7 +102,7 @@ AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
 # Manual variables
-modules='data scene basic advanced command gui'
+modules='system graphics scene basic advanced command gui'
 AC_SUBST([modules])
 
 # Finish

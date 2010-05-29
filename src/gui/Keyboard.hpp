@@ -14,7 +14,7 @@ using namespace std;
 
 
 /** @brief %Keyboard control for a canvas.
- * @ingroup frontend
+ * @ingroup gui
  */
 class Keyboard : public Control, public CanvasListener {
 public:

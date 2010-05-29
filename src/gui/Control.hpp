@@ -7,9 +7,6 @@
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 #include "common.h"
-#include <map>                          // Storing bindings
-#include <list>                         // Storing manipulators
-#include <utility>                      // Pair
 #include "Binding.hpp"
 #include "Delegate.hpp"
 #include "Manipulator.hpp"
@@ -26,9 +23,8 @@ public:
 };
 
 
-/**
- * @ingroup frontend
- * @brief Interface installed into a %Display that controls the scene.
+/** @brief Interface installed into a %Display that controls the scene.
+ * @ingroup gui
  */
 class Control {
 public:

@@ -13,8 +13,8 @@
 using namespace std;
 
 
-/** @brief Worker responsible for creating and storing scenes.
- * @ingroup backend
+/** @brief Responsible for creating and storing scenes.
+ * @ingroup command
  */
 class Producer : public Worker {
 public:

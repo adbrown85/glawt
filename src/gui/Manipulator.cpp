@@ -72,6 +72,7 @@ Manipulator::~Manipulator() {
 
 /** Calculates how a pixel compares to a global unit.
  * 
+ * @param canvas Canvas to take camera position from.
  * @param shapeID ID of the shape to use for the depth component.
  */
 float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
@@ -128,6 +129,7 @@ void Manipulator::draw(Node *node, Canvas *canvas) const {
  * 
  * @param movement Difference between current and last cursor positions.
  * @param shapeID ID of the shape the manipulator is attached to.
+ * @param canvas Canvas to take camera position from.
  */
 void Manipulator::use(const Vector &movement, GLuint shapeID, Canvas *canvas) {
 	

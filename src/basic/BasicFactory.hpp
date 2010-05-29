@@ -7,7 +7,6 @@
 #ifndef BASICFACTORY_HPP
 #define BASICFACTORY_HPP
 #include "common.h"
-#include <map>
 #include "Factory.hpp"
 #include "NodeException.hpp"
 #include "Box.hpp"

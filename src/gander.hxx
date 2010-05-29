@@ -6,10 +6,7 @@
  */
 #ifndef GANDER_HXX
 #define GANDER_HXX
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <string>
+#include "common.h"
 #include "Display.hpp"
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
@@ -24,8 +21,7 @@
 using namespace std;
 
 
-/**
- * @mainpage
+/** @mainpage
  * @image html gander.png
  * 
  * <table align="center" border="0" style="width:34em"><tr><td>
@@ -43,16 +39,17 @@ using namespace std;
  * target="_blank">Git repository</a>.
  * </td></tr></table>
  * 
- * @defgroup data Data
- * @defgroup graph Graph
+ * @defgroup system System
+ * @defgroup graphics Graphics
+ * @defgroup scene Scene
  * @defgroup basic Basic
  * @defgroup advanced Advanced
- * @defgroup backend Backend
- * @defgroup frontend Frontend
+ * @defgroup command Command
+ * @defgroup gui GUI
  */
-/**
- * @brief Main application.
- */
+ 
+ 
+/** @brief Main application. */
 class Gander : public CanvasListener {
 public:
 	Gander(int argc, char *argv[]);

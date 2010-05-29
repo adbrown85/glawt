@@ -7,7 +7,6 @@
 #ifndef DELEGATE_HPP
 #define DELEGATE_HPP
 #include "common.h"
-#include <map>                          // Storing listeners
 #include "Cameraman.hpp"
 #include "Compositor.hpp"
 #include "Director.hpp"
@@ -24,7 +23,7 @@ public:
 
 
 /** @brief Interprets commands and passes them on to workers.
- * @ingroup backend
+ * @ingroup command
  * @warning Currently only supports one listener per command.
  * 
  * @see Cameraman

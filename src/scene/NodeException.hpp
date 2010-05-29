@@ -12,11 +12,11 @@
 using namespace std;
 
 
-/**
- * @ingroup graph
- * @brief %Exception thrown from a node.
+/** @brief %Exception thrown from a node.
  * 
  * Automatically initializes the exception's message to the tag's location.
+ * 
+ * @ingroup scene
  */
 class NodeException : public Exception {
 public:

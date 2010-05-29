@@ -7,14 +7,12 @@
 #ifndef NODEEVENT_HPP
 #define NODEEVENT_HPP
 #include "common.h"
-#include <map>                          // Storing listeners
-#include <list>                         // Storing listeners
 #include "Node.hpp"
 using namespace std;
 
 
 /** @brief Event originating from a node.
- * @ingroup graph
+ * @ingroup scene
  */
 class NodeEvent {
 public:
@@ -29,7 +27,7 @@ private:
 
 
 /** @brief Object that is notified by a node.
- * @ingroup graph
+ * @ingroup scene
  * @interface NodeListener
  */
 class NodeListener {
@@ -39,7 +37,7 @@ public:
 
 
 /** @brief Utility for notifying listeners of node events.
- * @ingroup graph
+ * @ingroup scene
  */
 class NodeNotifier {
 public:

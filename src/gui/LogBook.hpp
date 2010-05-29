@@ -14,7 +14,7 @@ using Glib::RefPtr;
 
 
 /** @brief Widget for displaying the log.
- * @ingroup frontend
+ * @ingroup gui
  */
 class LogBook : public Gtk::Frame, public LogListener {
 public:

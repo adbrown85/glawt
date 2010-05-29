@@ -65,9 +65,9 @@ Tag Factory::filter(Tag tag,
 	
 	if (tag.hasAttribute("file")) {
 		path = tag["file"];
-		path = FileUtility::replaceEnvironmentVariable(path);
+		path = Path::expand(path);
 		if (!xmlFilename.empty()) {
-			path = FileUtility::getRelativePath(xmlFilename, path);
+			path = Path::getRelativePath(xmlFilename, path);
 		}
 		tag["file"] = path;
 	}

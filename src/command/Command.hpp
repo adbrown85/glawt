@@ -7,14 +7,13 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 #include "common.h"
-#include <map>                          // Storing names
 #include "Scene.hpp"
 #include "Canvas.hpp"
 using namespace std;
 
 
 /** @brief %Commands passed to work with the %Scene.
- * @ingroup backend
+ * @ingroup command
  */
 class Command {
 public:

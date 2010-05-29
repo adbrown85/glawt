@@ -7,7 +7,6 @@
 #ifndef INSPECTOR_HPP
 #define INSPECTOR_HPP
 #include "common.h"
-#include <map>
 #include <gtkmm.h>
 #include "NodeTree.hpp"
 #include "AttributeTree.hpp"
@@ -17,7 +16,7 @@
 using namespace std;
 
 
-/** Tree view made up of the nodes in the scene. */
+/* Tree view made up of the nodes in the scene. */
 class SceneView : public Gtk::Frame {
 public:
 	SceneView();
@@ -42,7 +41,7 @@ inline Gtk::TreeView& SceneView::getTreeView() {return view;}
 inline RefPtr<Gtk::TreeStore> SceneView::getTreeModel(){return tree.getModel();}
 
 
-/** Tree view to examine a single node. */
+/* Tree view to examine a single node. */
 class NodeView : public Gtk::Frame {
 public:
 	NodeView();
@@ -64,7 +63,9 @@ inline Gtk::TreeView& NodeView::getTreeView() {return view;}
 inline RefPtr<Gtk::TreeStore> NodeView::getTreeModel() {return tree.getModel();}
 
 
-/** Pane showing scene overview and node details. */
+/** @brief Pane showing scene overview and node details.
+ * @ingroup gui
+ */
 class Inspector : public Gtk::Frame, public NodeListener {
 public:
 	Inspector();

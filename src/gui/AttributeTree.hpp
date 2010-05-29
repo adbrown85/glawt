@@ -24,7 +24,7 @@ public:
 
 
 /** @brief Hierarchy of text.
- * @ingroup frontend
+ * @ingroup gui
  */
 class AttributeTree {
 public:
