@@ -82,6 +82,8 @@ public:
 	int getHeight();
 	int getWidth();
 	virtual void refresh() = 0;
+	virtual void primeStart() = 0;
+	virtual void primeFinish() = 0;
 	virtual void setAutomaticallyRefresh(bool automaticRefresh) = 0;
 	virtual void write(const string &text, int x=15, int y=30) = 0;
 protected:

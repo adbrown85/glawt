@@ -49,18 +49,9 @@ void CanvasGTK::on_realize() {
 	// Start
 	begin();
 	
-	// Extensions
-	GLenum err = glewInit();
-	if (err != GLEW_OK) {
-		throw Exception("[CanvasGTK] Could not initialize GLEW");
-	}
-	
 	// Camera and type
 	getCamera()->load(getWidth(), getHeight());
 	typeface.load("courier 8");
-	
-	// Listeners
-	fireEvent(CanvasEvent::SETUP);
 	
 	// Finish
 	end();

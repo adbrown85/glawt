@@ -11,6 +11,7 @@
 #include <GL/glu.h>
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>
+#include <gtkmm/main.h>
 #include <gtkmm/gl/init.h>
 #include <gtkmm/gl/drawingarea.h>
 #include "Canvas.hpp"
@@ -35,6 +36,8 @@ public:
 	virtual bool on_map_event(GdkEventAny *event);
 	virtual bool on_motion_notify_event(GdkEventMotion *event);
 	virtual bool on_scroll_event(GdkEventScroll *event);
+	virtual void primeStart();
+	virtual void primeFinish();
 	virtual void refresh();
 	virtual void setAutomaticallyRefresh(bool automaticallyRefresh);
 	virtual void write(const string &text, int x=15, int y=30);
@@ -66,6 +69,12 @@ inline void CanvasGTK::flush() {glWindow->swap_buffers();}
 
 /** Forces the canvas to be redrawn. */
 inline void CanvasGTK::refresh() {window->invalidate_rect(get_allocation(),0);}
+
+/** Allows the client to do some setup before starting the canvas. */
+inline void CanvasGTK::primeStart() {begin();}
+
+/** Allows the client to declare its setup is finished. */
+inline void CanvasGTK::primeFinish() {end();}
 
 
 #endif

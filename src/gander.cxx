@@ -42,42 +42,24 @@ void Gander::banner() {
 }
 
 
-void Gander::onCanvasEvent(const CanvasEvent &event) {
-	
-	switch (event.type) {
-	case CanvasEvent::SETUP:
-		onCanvasEventSetup(event);
-		break;
-	}
-}
-
-
-void Gander::onCanvasEventSetup(const CanvasEvent &event) {
-	
-	// Open scene
-	scene = new Scene();
-	delegate = new Delegate(scene, canvas);
-	delegate->run(Command::OPEN, inFilename);
-	
-	// Add display and controls
-	display = new Display(delegate);
-	display->add(new Keyboard(delegate));
-	display->add(new Mouse(delegate));
-}
-
-
 void Gander::onCompile() {
 	
-	// Create canvas
 #ifdef HAVE_GTK
+	Gtk::Window window;
+	
+	// Create widgets
 	Gtk::GL::init(argc, argv);
 	canvas = new CanvasGTK();
+	
+	// Pack
+	window.add(*((CanvasGTK*)canvas));
+	window.show_all();
 #endif
 	
-	// Open scene
-	scene = new Scene();
-	delegate = new Delegate(scene, canvas);
-	delegate->run(Command::OPEN, inFilename);
+	// Do setup
+	canvas->primeStart();
+	prime();
+	canvas->primeFinish();
 }
 
 
@@ -110,7 +92,6 @@ void Gander::onDisplay() {
 	Gtk::GL::init(argc, argv);
 	canvas = new CanvasGTK();
 	window.set_title(title);
-	canvas->addListener(this, CanvasEvent::SETUP);
 	
 	// Pack
 	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
@@ -119,6 +100,11 @@ void Gander::onDisplay() {
 	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
 	window.add(hBox);
 	window.show_all();
+	
+	// Prime the canvas
+	canvas->primeStart();
+	prime();
+	canvas->primeFinish();
 	
 	// Finalize widgets
 	inspector.setScene(scene);
@@ -230,6 +216,29 @@ void Gander::parse() {
 		usage();
 		exit(1);
 	}
+}
+
+
+/** Loads GLEW, opens the scene, and creates the display. */
+void Gander::prime() {
+	
+	GLenum err;
+	
+	// Load GLEW
+	err = glewInit();
+	if (err != GLEW_OK) {
+		throw Exception("[Gander] Could not initialize GLEW");
+	}
+	
+	// Open scene
+	scene = new Scene();
+	delegate = new Delegate(scene, canvas);
+	delegate->run(Command::OPEN, inFilename);
+	
+	// Add display and controls
+	display = new Display(delegate);
+	display->add(new Keyboard(delegate));
+	display->add(new Mouse(delegate));
 }
 
 

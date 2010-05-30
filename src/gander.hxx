@@ -50,15 +50,13 @@ using namespace std;
  
  
 /** @brief Main application. */
-class Gander : public CanvasListener {
+class Gander {
 public:
 	Gander(int argc, char *argv[]);
 	~Gander();
 	void start();
 protected:
 	void banner();
-	void onCanvasEvent(const CanvasEvent &event);
-	void onCanvasEventSetup(const CanvasEvent &event);
 	void onCompile();
 	void onConvert();
 	void onDisplay();
@@ -68,6 +66,7 @@ protected:
 	void onRange();
 	void onSlices();
 	void parse();
+	void prime();
 	void usage();
 private:
 	int argc;
