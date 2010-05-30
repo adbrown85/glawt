@@ -49,8 +49,8 @@ protected:
 	void findGroup();
 	virtual void findShapes();
 	void findTransforms();
-	bool isOverlapped();
-	bool isSubstantial(const Extent &extent);
+	bool isOverlapped() const;
+	static bool isSubstantial(const Extent &extent);
 	virtual void updateBuffer();
 protected:
 	bool tangible;

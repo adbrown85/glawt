@@ -215,7 +215,7 @@ void Boolean::findTransforms() {
 
 
 /** Determines if the shapes intersect each other using overlap attribute. */
-bool Boolean::isOverlapped() {
+bool Boolean::isOverlapped() const {
 	
 	return min(overlap.upper,overlap.lower) == overlap.lower
 	         && isSubstantial(overlap);
