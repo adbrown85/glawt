@@ -60,6 +60,7 @@ public:
 	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
 	virtual void draw() const;
+	void draw(int first, int number) const;
 	virtual void finalize();
 	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;

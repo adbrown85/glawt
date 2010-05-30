@@ -61,8 +61,15 @@ void Shape::associate() {
 }
 
 
-/** Renders the shape. */
+/** Renders the entire shape. */
 void Shape::draw() const {
+	
+	draw(0, count);
+}
+
+
+/** Renders part of the shape. */
+void Shape::draw(int first, int number) const {
 	
 	list<VertexAttribute>::const_iterator it;
 	
@@ -79,7 +86,7 @@ void Shape::draw() const {
 	}
 	
 	// Draw
-	glDrawArrays(mode, 0, count);
+	glDrawArrays(mode, first, number);
 	
 	// Disable buffer and attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
