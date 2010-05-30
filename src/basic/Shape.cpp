@@ -54,10 +54,12 @@ void Shape::associate() {
 	
 	// Find transforms and update position
 	Transformation::findAll(getParent(), transforms);
-	//for (it=transforms.begin(); it!=transforms.end(); ++it) {
-	//	(*it)->addListener(this);
-	//}
-	//updatePosition();
+/*
+	for (it=transforms.begin(); it!=transforms.end(); ++it) {
+		(*it)->addListener(this);
+	}
+	updatePosition();
+*/
 }
 
 

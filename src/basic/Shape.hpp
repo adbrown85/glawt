@@ -71,13 +71,13 @@ public:
 	virtual void setAttributes(list<VertexAttribute> &attributes);
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
+	virtual void updatePosition();
 protected:
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
 	virtual void setCount(GLuint count);
 	virtual void updateBuffer() = 0;
-	virtual void updatePosition();
 private:
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
