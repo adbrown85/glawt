@@ -129,7 +129,13 @@ public:
  */
 class Dependent {
 public:
-	virtual void setCanvas(Canvas *canvas) = 0;
+	virtual void setCanvas(Canvas *canvas);
+protected:
+	Canvas* getCanvas() const;
+private:
+	Canvas *canvas;
 };
+inline Canvas* Dependent::getCanvas() const {return canvas;}
+inline void Dependent::setCanvas(Canvas *c) {canvas = c;}
 
 #endif

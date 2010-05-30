@@ -23,16 +23,11 @@ public:
 	virtual void apply();
 	virtual void associate();
 	virtual void remove() {}
-	virtual void setCanvas(Canvas *canvas);
 private:
-	Canvas *canvas;
 	list<Translate*> translates;
 	Matrix rotation;
 	Vector position;
 };
-
-/** Sets the canvas to calculate the depth with. */
-inline void Sort::setCanvas(Canvas *c) {canvas = c;}
 
 
 #endif
