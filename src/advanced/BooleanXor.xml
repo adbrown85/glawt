@@ -11,38 +11,35 @@
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="left">
 			<uniform type="vec4" name="Color" value="1 0 1 1" />
-			<uniform type="sampler2D" name="unit" link="crate" />
 		</cube>
 	</translate>
 	<translate x="+1" y="+0.5" z="-0.5">
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube name="right">
 			<uniform type="vec4" name="Color" value="0 1 1 1" />
-			<uniform type="sampler2D" name="unit" link="stone" />
 		</cube>
 	</translate>
 </group>
 
 
-<texture name="crate" file="../../textures/crate.jpg">
-<texture name="stone" file="../../textures/stone.jpg">
-	<program>
-		<shader file="../../glsl/basic.vert" />
-		<shader file="../../glsl/basic.frag" />
-		<uniform type="mat4" name="MVMatrix" as="modelview" />
+<program>
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
+	<uniform type="mat4" name="MVMatrix" as="modelview" />
+	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+	<uniform type="mat4" name="NormalMatrix" as="normal" />
+	<uniform type="vec3" name="LightPosition" value="15 15 15" />
+	<uniform type="float" name="Ambient" value="0.2" />
+	<boolean operation="XOR" of="cubes" />
+</program>
+<program>
+	<shader file="../../glsl/color.vert" />
+	<shader file="../../glsl/color.frag" />
+	<wireframe faces="front">
+		<instance of="cubes" />
+		<uniform type="vec4" name="Color" value="1 1 1 1" />
 		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="mat4" name="NormalMatrix" as="normal" />
-		<uniform type="vec3" name="LightPosition" value="15 15 15" />
-		<uniform type="float" name="Ambient" value="0.2" />
-		<boolean operation="XOR" of="cubes" selectable="false" take="right"/>
-	</program>
-	<program>
-		<shader file="../../glsl/color.vert" />
-		<shader file="../../glsl/color.frag" />
-		<wireframe>
-			<instance of="cubes" />
-		</wireframe>
-	</program>
-</texture>
-</texture>
+		<boolean operation="AND" of="cubes" />
+	</wireframe>
+</program>
 

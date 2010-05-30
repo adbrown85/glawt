@@ -7,72 +7,134 @@
 #include "BooleanXor.hpp"
 
 
-void BooleanXor::associate() {
+/** Sets the @e only attribute. */
+BooleanXor::BooleanXor(const Tag &tag) : Boolean(tag,getTraits()) {
 	
-	Boolean::associate();
-	findTake();
+	string only;
+	
+	// Only
+	tag.get("only", only, false, true);
+	if (only.empty()) {
+		this->only = ALL;
+	} else if (only == "behind") {
+		this->only = BEHIND;
+	} else if (only == "forward") {
+		this->only = FORWARD;
+	} else if (only == "beside") {
+		this->only = BESIDE;
+	} else {
+		NodeException e(tag);
+		e << "[BooleanXOR] 'only' must be 'behind', 'forward', or 'beside'.";
+		throw e;
+	}
 }
 
 
+/** Creates the pieces by knifing at the intersection point of each axis. */
 void BooleanXor::calculate() {
 	
 	Extent A, B;
-	pair<Extent,Extent> result;
 	
-	// Initialize
+	// Explode the two pieces
 	pieces.clear();
-	A = extents[ take];
-	B = extents[!take];
+	A = extents[0];
+	B = extents[1];
+	explode(A, 0, pieces);
+	explode(B, 0, pieces);
+}
+
+
+void BooleanXor::draw() const {
 	
-	// Split
-	for (int i=0; i<3; ++i) {
-		if (A.lower[i] < B.lower[i]) {
-			if (A.upper[i] > B.lower[i]) {
-				result = knife(A, B.lower[i], i);
-				if (isSubstantial(result.first)) {
-					pieces.push_back(result.first);
-					A = result.second;
-				}
-			}
-		} else {
-			if (B.lower[i] < A.lower[i]) {
-				result = knife(A, B.upper[i], i);
-				if (isSubstantial(result.second)) {
-					pieces.push_back(result.second);
-					A = result.first;
-				}
-			}
-		}
+	Matrix rotation;
+	
+	// Get rotation from the canvas
+	rotation = getCanvas()->getCamera()->getRotation();
+	
+	// Draw depending on overlap
+	if (isOverlapped()) {
+		drawWhenOverlapped(rotation);
+	} else {
+		drawWhenNotOverlapped(rotation);
 	}
 }
 
 
-/** Searches for the shape the operation should limit its output to.
- * 
- * @throws NodeException if a shape matching @e only cannot be found.
- */
-void BooleanXor::findTake() {
+void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 	
-	string text;
+	float depths[2];
+	int i, offset;
+	vector<Extent>::const_iterator it;
 	
-	// Get name of shape
-	tag.get("take", text, true, false);
+	// Find which shape is farthest back
+	for (it=extents.begin(); it!=extents.end(); ++it) {
+		i = distance(extents.begin(), it);
+		depths[i] = ((rotation*(it->upper)).z + (rotation*(it->lower)).z) * 0.5;
+	}
+	i = (depths[1] < depths[0]) ? 1 : 0;
 	
-	// Look through list of shapes for it
-	take = UINT_MAX;
-	for (size_t i=0; i<shapes.size(); ++i) {
-		if (shapes[i]->getName() == text) {
-			take = i;
-			break;
+	// Only draw that one
+	Shape::draw(i*24, 24);
+}
+
+
+void BooleanXor::drawWhenOverlapped(Matrix &rotation) const {
+	
+	float oDepth, pDepth;
+	int offset;
+	list<Extent>::const_iterator it;
+	
+	// Calculate depth of overlap
+	oDepth = ((rotation*overlap.upper).z + (rotation*overlap.lower).z) * 0.5; 
+	
+	// Only draw pieces behind overlap
+	offset = 0;
+	for (it=pieces.begin(); it!=pieces.end(); ++it) {
+		pDepth = ((rotation*it->upper).z + (rotation*it->lower).z) * 0.5;
+		if (pDepth < oDepth) {
+			Shape::draw(offset, 24);
 		}
+		offset += 24;
+	}
+}
+
+
+void BooleanXor::addPiece(list<Extent> &pieces, const Extent &piece) {
+	
+	if (isSubstantial(piece)) {
+		pieces.push_back(piece);
+	}
+}
+
+
+void BooleanXor::explode(const Extent &piece, int d, list<Extent> &pieces) {
+	
+	bool low;
+	pair<Extent,Extent> result;
+	
+	// Knife the piece
+	low = ((overlap.lower[d] - piece.lower[d]) > 0.0001);
+	if (low) {
+		result = knife(piece, overlap.lower[d], d);
+	} else {
+		result = knife(piece, overlap.upper[d], d);
 	}
 	
-	// Make sure it was found
-	if (take == UINT_MAX) {
-		NodeException e(tag);
-		e << "[BooleanXor] Could not find shape named '" << text << "'.";
-		throw e;
+	// Z direction ends it
+	if (d == 2) {
+		if (fabs(piece.lower.x - overlap.lower.x) < 0.0001
+		      && fabs(piece.lower.y - overlap.lower.y) < 0.0001) {
+			addPiece(pieces, low ? result.first : result.second);
+		} else {
+			addPiece(pieces, result.first);
+			addPiece(pieces, result.second);
+		}
+		return;
 	}
+	
+	// Recurse on X and Y directions
+	explode(result.first, d+1, pieces);
+	explode(result.second, d+1, pieces);
 }
 
 
@@ -80,7 +142,7 @@ ShapeTraits BooleanXor::getTraits() {
 	
 	ShapeTraits traits;
 	
-	traits.count = 72;
+	traits.count = BOOLEAN_XOR_COUNT;
 	traits.mode = GL_QUADS;
 	traits.usage = GL_DYNAMIC_DRAW;
 	traits.attributes.push_back("MCVertex");
@@ -90,6 +152,7 @@ ShapeTraits BooleanXor::getTraits() {
 }
 
 
+/** @return Two pieces of @e extent cut at @e at along the @e on axis. */
 pair<Extent,Extent> BooleanXor::knife(const Extent &extent, float at, int on) {
 	
 	Extent l, u;
@@ -112,9 +175,13 @@ pair<Extent,Extent> BooleanXor::knife(const Extent &extent, float at, int on) {
 string BooleanXor::toString() const {
 	
 	ostringstream stream;
+	string only;
 	
 	stream << Boolean::toString();
-	stream << " take='" << take << "'";
+	tag.get("only", only, false, true);
+	if (!only.empty()) {
+		stream << " only='" << only << "'";
+	}
 	return stream.str();
 }
 
@@ -135,10 +202,11 @@ void BooleanXor::updateBufferPoints() {
 		setCount(tally);
 	}
 	
-	// Otherwise send just the shape itself
+	// Otherwise send just the shapes themselves
 	else {
-		toArray(points, extents[take].lower, extents[take].upper);
-		setCount(24);
+		toArray(points+ 0, extents[0].lower, extents[0].upper);
+		toArray(points+24, extents[1].lower, extents[1].upper);
+		setCount(48);
 	}
 	
 	// Send to buffer
@@ -148,12 +216,13 @@ void BooleanXor::updateBufferPoints() {
 
 void BooleanXor::updateBufferNormals() {
 	
-	GLfloat normals[72][3];
+	int i;
+	GLfloat normals[BOOLEAN_XOR_COUNT][3];
 	
 	// Fill array with normals
-	toNormals(normals);
-	toNormals(normals+24);
-	toNormals(normals+48);
+	for (int i=0; i<BOOLEAN_XOR_COUNT; i+=24) {
+		toNormals(normals+i);
+	}
 	
 	// Send to buffer
 	setBufferData("MCNormal", normals);
@@ -162,26 +231,28 @@ void BooleanXor::updateBufferNormals() {
 
 void BooleanXor::updateBufferCoords() {
 	
-	int off;
-	list<Extent>::iterator it;
+	int index, offset;
+	list<Extent>::iterator p;
 	Vector lower(0,0,1), upper(1,1,0);
 	
 	// Calculate coordinates of each piece based on extent of total shape
 	if (isOverlapped()) {
-		off = 0;
-		for (it=pieces.begin(); it!=pieces.end(); ++it) {
-			upper = (it->upper - extents[take].lower) / extents[take].diagonal;
+		offset = 0;
+		for (p=pieces.begin(); p!=pieces.end(); ++p) {
+			index = p->index;
+			upper = (p->upper - extents[index].lower) / extents[index].diagonal;
 			upper.z = 1.0 - upper.z;
-			lower = (it->lower - extents[take].lower) / extents[take].diagonal;
+			lower = (p->lower - extents[index].lower) / extents[index].diagonal;
 			lower.z = 1.0 - lower.z;
-			toArray(coords+off, lower, upper);
-			off += 24;
+			toArray(coords+offset, lower, upper);
+			offset += 24;
 		}
 	}
 	
 	// Or if not overlapped just send regular coordinates
 	else {
-		toArray(coords, lower, upper);
+		toArray(coords+ 0, lower, upper);
+		toArray(coords+24, lower, upper);
 	}
 	
 	// Send to buffer
