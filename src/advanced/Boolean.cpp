@@ -20,6 +20,7 @@ Boolean::Boolean(const Tag &tag,
 	// Get tag attributes
 	tag.get("of", of);
 	tag.get("operation", operation);
+	selectable = false;
 	
 	// Check operations will work correctly
 	if (numeric_limits<float>::is_signed) {
