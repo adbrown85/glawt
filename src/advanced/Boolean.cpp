@@ -101,6 +101,7 @@ void Boolean::calculateExtents(Node *node) {
 		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
 		extent.diagonal = extent.upper - extent.lower;
 		extent.label = shape->getID();
+		extent.index = extents.size();
 		extents.push_back(extent);
 	}
 	

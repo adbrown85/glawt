@@ -20,7 +20,7 @@ using namespace std;
 /* Upper and lower boundaries of a shape. */
 struct Extent {
 	Vector upper, lower, diagonal;
-	int label;
+	int label, index;
 };
 
 
