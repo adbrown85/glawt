@@ -22,6 +22,7 @@
 #include "Instance.hpp"
 #include "Octree.hpp"
 #include "Outputs.hpp"
+#include "Screen.hpp"
 #include "Sort.hpp"
 #include "Target.hpp"
 using namespace std;
@@ -44,6 +45,7 @@ public:
 	static Node* createInstance(const Tag &tag);
 	static Node* createOctree(const Tag &tag);
 	static Node* createOutputs(const Tag &tag);
+	static Node* createScreen(const Tag &tag);
 	static Node* createSort(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
 private:

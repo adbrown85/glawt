@@ -20,7 +20,6 @@ struct Chain {
 
 
 /** @brief Container for offscreen rendering targets.
- * @ingroup advanced
  * 
  * Replaces the default framebuffer with an external framebuffer object 
  * comprised of a number of attachments.  When the framebuffer is active, 
@@ -30,12 +29,16 @@ struct Chain {
  * 
  * %Framebuffer cannot be used by itself.  Make sure to place one or more 
  * Attachment nodes under the framebuffer, such as Target.  Also, you will 
- * need to use Outputs and Bind to direct fragments to the correct location.  
- * Lastly, a Clear node is usually needed directly after the ending 
- * framebuffer tag.
+ * need to use Outputs and Bind to direct fragments to the correct location.
  * 
  * <b>XML Name</b>
  *   - framebuffer
+ * 
+ * <b>OpenGL functions</b>
+ *   - <tt>glGenFramebuffers</tt>
+ *   - <tt>glDeleteFramebuffers</tt>
+ *   - <tt>glBindFramebuffer</tt>
+ *   - <tt>glCheckFramebufferStatus</tt>
  * 
  * <b>XML Example</b>
  * <pre>
@@ -46,14 +49,16 @@ struct Chain {
  *   &lt;clear />
  * </pre>
  * 
- * <b>Notes</b>
- *   - A Clear node is usually needed directly after the ending framebuffer tag
+ * @note Clear is usually needed directly after the ending framebuffer tag
+ * @note Screen can be used to temporarily disable the framebuffer
  * 
+ * @ingroup advanced
  * @see Attachment
  * @see Target
  * @see Outputs
  * @see Bind
  * @see Clear
+ * @see Screen
  */
 class Framebuffer : public Applicable {
 public:
