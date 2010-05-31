@@ -12,7 +12,7 @@
 using namespace std;
 
 
-/** @brief Cone made from triangles.
+/** @brief Tapered cylinder made from triangles.
  * @ingroup basic
  */
 class Cone : public Shape {

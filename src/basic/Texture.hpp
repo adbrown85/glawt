@@ -12,7 +12,6 @@ using namespace std;
 
 
 /** @brief OpenGL texture node.
- * @ingroup basic
  * 
  * Abstract base class for textures of various dimensions.  Provides some
  * basic texture capability, including finding an open texture unit and binding
@@ -21,6 +20,7 @@ using namespace std;
  * 
  * @note Add @e unit to @c GL_TEXTURE0 when passing directly to OpenGL.
  * 
+ * @ingroup basic
  * @see Texture2D
  * @see Texture3D
  */
