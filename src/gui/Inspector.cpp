@@ -152,9 +152,13 @@ void NodeView::update() {
 	tree.getModel()->clear();
 	
 	// Build the list
-	tag = Parser::create(node->toString());
-	for (it=tag.begin(); it!=tag.end(); ++it) {
-		tree.append(it->first, it->second);
+	try {
+		tag = Parser::create(node->toString());
+		for (it=tag.begin(); it!=tag.end(); ++it) {
+			tree.append(it->first, it->second);
+		}
+	} catch (Exception &e) {
+		glog << "[Inspector] Could not load attributes." << endl;
 	}
 	view.expand_all();
 }
