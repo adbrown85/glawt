@@ -36,11 +36,12 @@ protected:
 	void drawWhenOverlapped(Matrix &rotation) const;
 	void explode(const Extent &piece, int d, list<Extent> &pieces);
 	pair<Extent,Extent> knife(const Extent &extent, float at, int on);
+	bool isDrawn(float aDepth, float bDepth) const;
 	virtual void updateBufferPoints();
 	virtual void updateBufferNormals();
 	virtual void updateBufferCoords();
 private:
-	enum {ALL,BEHIND,BESIDE,FORWARD};
+	enum {ALL,BEHIND,FORWARD};
 private:
 	GLfloat points[BOOLEAN_XOR_COUNT][3], coords[BOOLEAN_XOR_COUNT][3];
 	int only;

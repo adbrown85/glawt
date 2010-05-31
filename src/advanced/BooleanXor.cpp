@@ -20,11 +20,11 @@ BooleanXor::BooleanXor(const Tag &tag) : Boolean(tag,getTraits()) {
 		this->only = BEHIND;
 	} else if (only == "forward") {
 		this->only = FORWARD;
-	} else if (only == "beside") {
-		this->only = BESIDE;
+	} else if (only == "all") {
+		this->only = ALL;
 	} else {
 		NodeException e(tag);
-		e << "[BooleanXOR] 'only' must be 'behind', 'forward', or 'beside'.";
+		e << "[BooleanXOR] 'only' must be 'behind', 'forward', or 'all'.";
 		throw e;
 	}
 }
@@ -73,7 +73,7 @@ void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 		i = distance(extents.begin(), it);
 		depths[i] = (rotation * ((it->upper+it->lower)*0.5)).z;
 	}
-	i = (depths[1] < depths[0]) ? 1 : 0;
+	i = isDrawn(depths[1],depths[0]) ? 1 : 0;
 	
 	// Only draw that one
 	Shape::draw(i*24, 24);
@@ -95,7 +95,7 @@ void BooleanXor::drawWhenOverlapped(Matrix &rotation) const {
 	// Calculate depths of pieces and sort using map if behind overlap
 	for (li=pieces.begin(); li!=pieces.end(); ++li) {
 		pDepth = (rotation * ((li->upper+li->lower)*0.5)).z;
-		if (pDepth < oDepth) {
+		if (isDrawn(pDepth, oDepth)) {
 			offset = distance(pieces.begin(),li) * 24;
 			sorted.insert(pair<float,int>(pDepth, offset));
 		}
@@ -104,6 +104,17 @@ void BooleanXor::drawWhenOverlapped(Matrix &rotation) const {
 	// Draw the pieces
 	for (mi=sorted.begin(); mi!=sorted.end(); ++mi) {
 		Shape::draw(mi->second, 24);
+	}
+}
+
+
+/** @return True if A should be drawn when compared to B. */
+bool BooleanXor::isDrawn(float aDepth, float bDepth) const {
+	
+	switch (only) {
+	case BEHIND:  return aDepth <  bDepth;
+	case FORWARD: return aDepth >= bDepth;
+	case ALL:     return true;
 	}
 }
 

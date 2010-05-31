@@ -6,6 +6,7 @@
 -->
 
 
+<!-- Cubes driving boolean operations -->
 <group name="cubes">
 	<translate x="-1">
 		<uniform type="mat4" name="MVPMatrix" />
@@ -21,7 +22,7 @@
 	</translate>
 </group>
 
-
+<!-- Boolean XOR behind intersection -->
 <program>
 	<shader file="../../glsl/basic.vert" />
 	<shader file="../../glsl/basic.frag" />
@@ -30,8 +31,19 @@
 	<uniform type="mat4" name="NormalMatrix" />
 	<uniform type="vec3" name="LightPosition" value="15 15 15" />
 	<uniform type="float" name="Ambient" value="0.2" />
-	<boolean operation="XOR" of="cubes" />
+	<boolean operation="XOR" of="cubes" only="behind" />
 </program>
+
+<!-- Boolean XOR in front of intersection -->
+<program>
+	<shader file="../../glsl/color.vert" />
+	<shader file="../../glsl/color.frag" />
+	<uniform type="mat4" name="MVPMatrix" />
+	<uniform type="vec4" name="Color" value="1 1 0 1" />
+	<boolean operation="XOR" of="cubes" only="forward" />
+</program>
+
+<!-- Boolean AND for reference -->
 <program>
 	<shader file="../../glsl/color.vert" />
 	<shader file="../../glsl/color.frag" />
