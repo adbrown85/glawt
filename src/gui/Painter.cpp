@@ -54,9 +54,14 @@ void Painter::onDrawable(Drawable *node) {
 		return;
 	
 	// Load the name if selecting then draw
-	if (mode == GL_SELECT)
+	if (mode == GL_SELECT) {
 		glLoadName(node->getID());
-	Traverser::onDrawable(node);
+		if (node->isSelectable()) {
+			Traverser::onDrawable(node);
+		}
+	} else {
+		Traverser::onDrawable(node);
+	}
 	
 	// Stop if not selected
 	if (!node->isSelected())
