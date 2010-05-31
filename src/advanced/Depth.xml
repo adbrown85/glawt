@@ -1,0 +1,24 @@
+<!--
+ * Depth.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="../../glsl/coordinates.vert" />
+	<shader file="../../glsl/coordinates.frag" />
+	<depth mode="greater">
+		<translate x="+3.0">
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" />
+			</cube>
+		</translate>
+		<translate x="-3.0">
+			<cube style="2D">
+				<uniform type="mat4" name="MVPMatrix" />
+			</cube>
+		</translate>
+	</depth>
+</program>

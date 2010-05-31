@@ -16,6 +16,7 @@
 #include "BooleanXor.hpp"
 #include "Clear.hpp"
 #include "Cull.hpp"
+#include "Depth.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
 #include "Group.hpp"
@@ -39,6 +40,7 @@ public:
 	static Node* createBlend(const Tag &tag);
 	static Node* createClear(const Tag &tag);
 	static Node* createCull(const Tag &tag);
+	static Node* createDepth(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
 	static Node* createGroup(const Tag &tag);

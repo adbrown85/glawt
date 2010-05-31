@@ -22,6 +22,7 @@ void AdvancedFactory::install() {
 	Factory::install("bind", &createBind);
 	Factory::install("clear", &createClear);
 	Factory::install("cull", &createCull);
+	Factory::install("depth", &createDepth);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
 	Factory::install("group", &createGroup);
@@ -60,6 +61,8 @@ Node* AdvancedFactory::createBoolean(const Tag &tag) {
 Node* AdvancedFactory::createCull(const Tag &t) {return new Cull(t);}
 
 Node* AdvancedFactory::createClear(const Tag &t) {return new Clear(t);}
+
+Node* AdvancedFactory::createDepth(const Tag &t) {return new Depth(t);}
 
 Node* AdvancedFactory::createFramebuffer(const Tag &t) {return new Framebuffer(t);}
 
