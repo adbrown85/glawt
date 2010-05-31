@@ -11,6 +11,7 @@ Picker::Picker(Scene *scene, Canvas *canvas) {
 	
 	// Initialize fields
 	this->scene = scene;
+	this->canvas = canvas;
 	this->painter = new Painter(canvas, scene);
 	this->painter->setMode(GL_SELECT);
 }
@@ -35,7 +36,8 @@ pair<GLuint,GLuint> Picker::chooseItem() {
 	
 	float depth, closestDepth;
 	Identifiable *identifiable;
-	Node *node;
+	Matrix rotation;
+	Shape *shape;
 	map<GLuint,GLuint>::iterator pi;
 	pair<GLuint,GLuint> closestPair;
 	
@@ -48,12 +50,13 @@ pair<GLuint,GLuint> Picker::chooseItem() {
 	
 	// Otherwise find closest to screen
 	closestDepth = FLT_MIN;
+	rotation = canvas->getCamera()->getRotation();
 	for (pi=ids.begin(); pi!=ids.end(); ++pi) {
 		identifiable = Identifiable::findByID(pi->first);
-		node = dynamic_cast<Node*>(identifiable);
-		if (node == NULL)
+		shape = dynamic_cast<Shape*>(identifiable);
+		if (shape == NULL)
 			break;
-		depth = node->getDepth();
+		depth = (rotation * shape->getPosition()).z;
 		if (depth > closestDepth) {
 			closestDepth = depth;
 			closestPair = *pi;

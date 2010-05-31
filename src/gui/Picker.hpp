@@ -34,6 +34,7 @@ private:
 	GLuint buf[PICK_BUFFER_SIZE];
 	map<GLuint,GLuint> ids;
 	Painter *painter;
+	Canvas *canvas;
 	Scene *scene;
 };
 
