@@ -8,11 +8,20 @@
 
 
 /** @throws NodeException if matrix type not supported. */
-UniformMatrix::UniformMatrix(const Tag &tag) :
-                             Uniform(tag) {
+UniformMatrix::UniformMatrix(const Tag &tag) : Uniform(tag) {
 	
-	// Find link
-	tag.get("as", as);
+	// Find matrix type
+	if (tag.get("as", as, false)) {
+		setTypeFromAs();
+	} else {
+		setTypeFromName();
+	}
+}
+
+
+/** @throws NodeException if @e as not supported. */
+void UniformMatrix::setTypeFromAs() {
+	
 	if (as == "modelview") {
 		matrixType = MODELVIEW;
 	} else if (as == "projection") {
@@ -26,6 +35,27 @@ UniformMatrix::UniformMatrix(const Tag &tag) :
 	} else {
 		NodeException e(tag);
 		e << "[UniformMatrix] Matrix '" << as << "' not supported.";
+		throw e;
+	}
+}
+
+
+/** @throws NodeException if default name not supported. */
+void UniformMatrix::setTypeFromName() {
+	
+	if (name == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME) {
+		matrixType = MODELVIEW_PROJECTION;
+	} else if (name == DEFAULT_MODELVIEW_MATRIX_NAME) {
+		matrixType = MODELVIEW;
+	} else if (name == DEFAULT_NORMAL_MATRIX_NAME) {
+		matrixType = NORMAL;
+	} else if (name == DEFAULT_PROJECTION_MATRIX_NAME) {
+		matrixType = PROJECTION;
+	} else if (name == DEFAULT_IDENTITY_MATRIX_NAME) {
+		matrixType = IDENTITY;
+	} else {
+		NodeException e(tag);
+		e << "[UniformMatrix] Unrecognized default name and no 'as' attribute.";
 		throw e;
 	}
 }
