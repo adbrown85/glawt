@@ -67,7 +67,7 @@ public:
 	virtual GLuint getCount() const;
 	virtual GLuint getLimit() const;
 	virtual string getName() const;
-	virtual Vector getPosition() const;
+	virtual Vector getPosition();
 	virtual Program* getProgram() const;
 	virtual void onNodeEvent(NodeEvent &event);
 	virtual void setAttributes(list<VertexAttribute> &attributes);
@@ -82,6 +82,7 @@ protected:
 	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
+	bool valid;
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count, limit;
@@ -105,14 +106,11 @@ inline GLuint Shape::getLimit() const {return limit;}
 /** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
 
-/** @return Position of the item in the scene. */
-inline Vector Shape::getPosition() const {return position;}
-
 /** @return Program the shape sends vertex attributes to. */
 inline Program* Shape::getProgram() const {return program;}
 
-/** Updates the position when a transform changes. */
-inline void Shape::onNodeEvent(NodeEvent &event) {updatePosition();}
+/** Invalidates the position when a transform changes. */
+inline void Shape::onNodeEvent(NodeEvent &event) {valid = false;}
 
 /** Set attributes in use for this shape. */
 inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}

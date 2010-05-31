@@ -25,6 +25,9 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	this->usage = traits.usage;
 	tag.get("name", name, false, false);
 	
+	// Internals
+	this->valid = false;
+	
 	// Store vertex attributes
 	block = count * 3 * sizeof(GLfloat);
 	for (it=traits.attributes.begin(); it!=traits.attributes.end(); ++it) {
@@ -55,12 +58,10 @@ void Shape::associate() {
 	
 	// Find transforms and update position
 	Transformation::findAll(getParent(), transforms);
-/*
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->addListener(this);
 	}
 	updatePosition();
-*/
 }
 
 
@@ -152,6 +153,27 @@ GLuint Shape::getOffset(const string &name) const {
 }
 
 
+/** @return Model-matrix position of the item in the scene.
+ * 
+ * Lazily calculates the position only when requested and the position is 
+ * determined to be invalid.  Currently this is implemented by adding 
+ * listeners to all the Transform ancestors of the shape.  When one of the 
+ * transforms is modified a flag is set to invalid.  After the position is 
+ * requested and calculated again the flag is set to valid.  This way it can 
+ * be requested multiple times but only calculated once when it is needed.
+ * 
+ * @note To find the depth of the shape on screen, multiply this value by the 
+ * current canvas' rotation matrix and take the <i>z</i> component.
+ */
+Vector Shape::getPosition() {
+	
+	if (!valid) {
+		updatePosition();
+	}
+	return position;
+}
+
+
 /** Checks if a buffer already exists for a concrete shape. */
 bool Shape::isBufferStored(const string &className) {
 	
@@ -192,7 +214,7 @@ string Shape::toString() const {
 }
 
 
-/** Updates the position. */
+/** Updates the position and validates the position. */
 void Shape::updatePosition() {
 	
 	list<Transformation*>::iterator it;
@@ -203,5 +225,8 @@ void Shape::updatePosition() {
 		(*it)->applyTo(matrix);
 	}
 	position = matrix * Vector(0,0,0,1);
+	
+	// Position is valid until a transform changes
+	valid = true;
 }
 
