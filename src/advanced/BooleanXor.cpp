@@ -44,6 +44,7 @@ void BooleanXor::calculate() {
 }
 
 
+/** Draw the pieces or one of the shapes according to overlap and depth. */
 void BooleanXor::draw() const {
 	
 	Matrix rotation;
@@ -60,16 +61,17 @@ void BooleanXor::draw() const {
 }
 
 
+/** Draws one of the shapes according to depth. */
 void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 	
 	float depths[2];
-	int i, offset;
+	int i;
 	vector<Extent>::const_iterator it;
 	
 	// Find which shape is farthest back
 	for (it=extents.begin(); it!=extents.end(); ++it) {
 		i = distance(extents.begin(), it);
-		depths[i] = ((rotation*(it->upper)).z + (rotation*(it->lower)).z) * 0.5;
+		depths[i] = (rotation * ((it->upper+it->lower)*0.5)).z;
 	}
 	i = (depths[1] < depths[0]) ? 1 : 0;
 	
@@ -78,27 +80,35 @@ void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 }
 
 
+/** Draw some of the pieces according to depth. */
 void BooleanXor::drawWhenOverlapped(Matrix &rotation) const {
 	
 	float oDepth, pDepth;
 	int offset;
-	list<Extent>::const_iterator it;
+	list<Extent>::const_iterator li;
+	multimap<float,int> sorted;
+	multimap<float,int>::iterator mi;
 	
 	// Calculate depth of overlap
-	oDepth = ((rotation*overlap.upper).z + (rotation*overlap.lower).z) * 0.5; 
+	oDepth = (rotation * ((overlap.upper+overlap.lower)*0.5)).z; 
 	
-	// Only draw pieces behind overlap
-	offset = 0;
-	for (it=pieces.begin(); it!=pieces.end(); ++it) {
-		pDepth = ((rotation*it->upper).z + (rotation*it->lower).z) * 0.5;
+	// Calculate depths of pieces and sort using map if behind overlap
+	for (li=pieces.begin(); li!=pieces.end(); ++li) {
+		pDepth = (rotation * ((li->upper+li->lower)*0.5)).z;
 		if (pDepth < oDepth) {
-			Shape::draw(offset, 24);
+			offset = distance(pieces.begin(),li) * 24;
+			sorted.insert(pair<float,int>(pDepth, offset));
 		}
-		offset += 24;
+	}
+	
+	// Draw the pieces
+	for (mi=sorted.begin(); mi!=sorted.end(); ++mi) {
+		Shape::draw(mi->second, 24);
 	}
 }
 
 
+/** Adds @e piece to @e pieces only if it's substantial. */
 void BooleanXor::addPiece(list<Extent> &pieces, const Extent &piece) {
 	
 	if (isSubstantial(piece)) {
@@ -107,6 +117,7 @@ void BooleanXor::addPiece(list<Extent> &pieces, const Extent &piece) {
 }
 
 
+/** Recursively splits a piece. */
 void BooleanXor::explode(const Extent &piece, int d, list<Extent> &pieces) {
 	
 	bool low;
