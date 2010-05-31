@@ -41,25 +41,27 @@
 					<boolean operation="AND" of="cubes" selectable="false" />
 				</cull>
 			</program>
+			<screen>
+				<program>
+					<shader file="volume.vert" />
+					<shader file="volume.frag" />
+					<uniform type="int" name="WindowSize" value="512" />
+					<uniform type="sampler2D" name="ExitCoords" link="exit_coords" />
+					<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+					<cull faces="front">
+						<boolean operation="AND" of="cubes" selectable="false">
+							<uniform type="sampler3D" name="Volume" link="volume" />
+							<uniform type="float" name="SampleRate" value="0.006" />
+							<uniform type="float" name="Opacity" value="5.0" />
+							<uniform type="float" name="Transfer[0]" value="0.25" />
+							<uniform type="float" name="Transfer[1]" value="0.38" />
+							<uniform type="float" name="Transfer[2]" value="0.42" />
+							<uniform type="float" name="Transfer[3]" value="0.82" />
+						</boolean>
+					</cull>
+				</program>
+			</screen>
 		</framebuffer>
-		<program>
-			<shader file="volume.vert" />
-			<shader file="volume.frag" />
-			<uniform type="int" name="WindowSize" value="512" />
-			<uniform type="sampler2D" name="ExitCoords" link="exit_coords" />
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<cull faces="front">
-				<boolean operation="AND" of="cubes" selectable="false">
-					<uniform type="sampler3D" name="Volume" link="volume" />
-					<uniform type="float" name="SampleRate" value="0.006" />
-					<uniform type="float" name="Opacity" value="5.0" />
-					<uniform type="float" name="Transfer[0]" value="0.25" />
-					<uniform type="float" name="Transfer[1]" value="0.38" />
-					<uniform type="float" name="Transfer[2]" value="0.42" />
-					<uniform type="float" name="Transfer[3]" value="0.82" />
-				</boolean>
-			</cull>
-		</program>
 	</texture>
 	</texture>
 	<wireframe faces="front">

@@ -9,9 +9,8 @@
 #include "Ray.glsl"
 
 /* Uniforms */
-uniform int WindowSize;
-uniform float SampleRate;
-uniform float Transfer;
+uniform int CanvasSize=512;
+uniform float SampleRate=0.01;
 uniform sampler2D EndCoords0;
 uniform sampler2D EndCoords1;
 uniform sampler3D Volume0;
@@ -35,7 +34,7 @@ void main() {
 	vec4 sample;
 	
 	// Initialize direction and times
-	exit = (texture(EndCoords0, gl_FragCoord.xy/WindowSize)).xyz;
+	exit = (texture(EndCoords0, gl_FragCoord.xy/CanvasSize)).xyz;
 	d = normalize(exit - Origin0);
 	times = (exit - Origin0) / d;
 	tExit = min(times.x, min(times.y, times.z));
@@ -45,13 +44,13 @@ void main() {
 	t = 0.0;
 	while (t < tExit) {
 		sample = texture(Volume0, Origin0+(d*t));
-		sample.a = sample.x * Transfer;
+		sample.a = sample.x;
 		sample *= vec4(Color0.rgb,1.0);
 		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
 		}
 		sample = texture(Volume1, Origin1+(d*t));
-		sample.a = sample.x * 0.5;
+		sample.a = sample.x;
 		sample *= vec4(Color1.rgb,1.0);
 		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
