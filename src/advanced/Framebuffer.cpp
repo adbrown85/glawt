@@ -10,14 +10,18 @@
 /** Initializes the chains in the framebuffer. */
 Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
 	
+	Chain chain;
+	
 	// Handle
 	this->handle = 0;
 	
 	// Chains
-	Chain chain;
 	chain.base = GL_COLOR_ATTACHMENT0;
 	chain.max = getMaxColorAttachments();
 	chains["color"] = chain;
+	chain.base = GL_DEPTH_ATTACHMENT;
+	chain.max = 1;
+	chains["depth"] = chain;
 }
 
 

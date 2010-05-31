@@ -7,7 +7,11 @@
 #include "Attachment.hpp"
 
 
-/** Initializes the name of the attachment. */
+/** Initializes the name of the attachment.
+ * 
+ * @param tag XML tag with optional @e name attribute.
+ * @param type Either "color" or "depth"
+ */
 Attachment::Attachment(const Tag &tag,
                        const string &type) : Attachable(tag) {
 	
@@ -66,9 +70,11 @@ string Attachment::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " framebuffer='" << framebuffer->getHandle() << "'"
-	       << " name='" << name << "'"
-	       << " index='" << index << "'"
+	stream << " framebuffer='" << framebuffer->getHandle() << "'";
+	if (!name.empty()) {
+		stream << " name='" << name << "'";
+	}
+	stream << " index='" << index << "'"
 	       << " type='" << type << "'";
 	return stream.str();
 }

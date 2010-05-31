@@ -30,6 +30,7 @@ public:
 protected:
 	virtual void associate();
 	virtual void setName(const string &name);
+	virtual void setType(const string &type);
 private:
 	Framebuffer *framebuffer;
 	GLint index;
@@ -57,6 +58,9 @@ inline void Attachment::setIndex(GLint index) {this->index = index;}
 
 /** Sets the user-defined name of the attachment. */
 inline void Attachment::setName(const string &name) {this->name = name;}
+
+/** Sets the user-defined name of the attachment. */
+inline void Attachment::setType(const string &t) {type = t;}
 
 
 #endif

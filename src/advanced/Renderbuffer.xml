@@ -1,0 +1,48 @@
+<!--
+ * Renderbuffer.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<!-- Group of cubes -->
+<group name="cubes">
+	<translate x="-1">
+		<uniform type="mat4" name="MVPMatrix" />
+		<cube selectable="false"/>
+	</translate>
+	<translate x="+1">
+		<uniform type="mat4" name="MVPMatrix" />
+		<cube selectable="false"/>
+	</translate>
+</group>
+
+
+<texture name="mytexture" size="512">
+	
+	<!-- Draw cubes into texture -->
+	<framebuffer>
+		<renderbuffer type="depth" size="512" />
+		<target link="mytexture" />
+		<clear />
+		<program>
+			<shader file="../../glsl/coordinates.vert" />
+			<shader file="../../glsl/coordinates.frag" />
+			<instance of="cubes" />
+		</program>
+	</framebuffer>
+	<clear />
+	
+	<!-- Draw texture onto box -->
+	<program>
+		<shader file="../../glsl/texture.vert" />
+		<shader file="../../glsl/texture.frag" />
+		<translate>
+			<uniform type="mat4" name="MVPMatrix" />
+			<uniform type="sampler2D" name="unit" link="mytexture" />
+			<box />
+		</translate>
+	</program>
+</texture>
+ 

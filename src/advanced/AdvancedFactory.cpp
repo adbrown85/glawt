@@ -29,6 +29,7 @@ void AdvancedFactory::install() {
 	Factory::install("instance", &createInstance);
 	Factory::install("octree", &createOctree);
 	Factory::install("outputs", &createOutputs);
+	Factory::install("renderbuffer", &createRenderbuffer);
 	Factory::install("screen", &createScreen);
 	Factory::install("sort", &createSort);
 	Factory::install("target", &createTarget);
@@ -75,6 +76,8 @@ Node* AdvancedFactory::createInstance(const Tag &t) {return new Instance(t);}
 Node* AdvancedFactory::createOctree(const Tag &t) {return new Octree(t);}
 
 Node* AdvancedFactory::createOutputs(const Tag &t) {return new Outputs(t);}
+
+Node* AdvancedFactory::createRenderbuffer(const Tag &t) {return new Renderbuffer(t);}
 
 Node* AdvancedFactory::createScreen(const Tag &t) {return new Screen(t);}
 
