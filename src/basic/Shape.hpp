@@ -65,6 +65,7 @@ public:
 	virtual void finalize();
 	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;
+	virtual GLuint getLimit() const;
 	virtual string getName() const;
 	virtual Vector getPosition() const;
 	virtual Program* getProgram() const;
@@ -78,11 +79,12 @@ protected:
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
 	virtual void setCount(GLuint count);
+	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
-	GLuint block, buffer, count;
+	GLuint block, buffer, count, limit;
 	static map<string,GLuint> buffers;
 	map<string,GLuint> offsets;
 	Program *program;
@@ -96,6 +98,9 @@ inline list<VertexAttribute> Shape::getAttributes() const {return attributes;}
 
 /** @return Number of vertices in the shape. */
 inline GLuint Shape::getCount() const {return count;}
+
+/** @return Number of vertices that will be drawn. */
+inline GLuint Shape::getLimit() const {return limit;}
 
 /** @return User-assigned name of the shape. */
 inline string Shape::getName() const {return name;}
@@ -114,6 +119,9 @@ inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}
 
 /** Sets the number of vertices in the shape. */
 inline void Shape::setCount(GLuint c) {count = c;}
+
+/** Sets the number of vertices that will be drawn. */
+inline void Shape::setLimit(GLuint l) {limit = l;}
 
 /** Sets the program to send vertex attributes to. */
 inline void Shape::setProgram(Program *p) {program = p;}

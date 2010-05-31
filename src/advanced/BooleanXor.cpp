@@ -210,14 +210,14 @@ void BooleanXor::updateBufferPoints() {
 			toArray(points+tally, it->lower, it->upper);
 			tally += 24;
 		}
-		setCount(tally);
+		setLimit(tally);
 	}
 	
 	// Otherwise send just the shapes themselves
 	else {
 		toArray(points+ 0, extents[0].lower, extents[0].upper);
 		toArray(points+24, extents[1].lower, extents[1].upper);
-		setCount(48);
+		setLimit(48);
 	}
 	
 	// Send to buffer

@@ -20,6 +20,7 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	
 	// Copy
 	this->count = traits.count;
+	this->limit = traits.count;
 	this->mode = traits.mode;
 	this->usage = traits.usage;
 	tag.get("name", name, false, false);
@@ -66,7 +67,7 @@ void Shape::associate() {
 /** Renders the entire shape. */
 void Shape::draw() const {
 	
-	draw(0, count);
+	draw(0, limit);
 }
 
 
