@@ -237,6 +237,20 @@ string& Tag::operator[](const string &key) {
 }
 
 
+/** Gets an attribute in the tag. */
+string Tag::operator[](const string &key) const {
+	
+	map<string,string>::const_iterator it;
+	
+	it = attributes.find(key);
+	if (it != attributes.end()) {
+		return it->second;
+	} else {
+		return "";
+	}
+}
+
+
 /** Prints @e tag to @e stream. */
 ostream& operator<<(ostream &stream, const Tag &tag) {
 	

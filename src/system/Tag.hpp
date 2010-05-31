@@ -52,6 +52,7 @@ public:
 	bool isLeaf() const;
 	friend ostream& operator<<(ostream &stream, const Tag &tag);
 	string& operator[](const string &key);
+	string operator[](const string &key) const;
 	void setClosing(bool leaf);
 	void setLeaf(bool leaf);
 	void setLine(int line);
