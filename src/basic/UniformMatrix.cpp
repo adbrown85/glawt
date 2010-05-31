@@ -45,14 +45,19 @@ void UniformMatrix::setTypeFromName() {
 	
 	if (name == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME) {
 		matrixType = MODELVIEW_PROJECTION;
+		as = "modelviewprojection";
 	} else if (name == DEFAULT_MODELVIEW_MATRIX_NAME) {
 		matrixType = MODELVIEW;
+		as = "modelview";
 	} else if (name == DEFAULT_NORMAL_MATRIX_NAME) {
 		matrixType = NORMAL;
+		as = "normal";
 	} else if (name == DEFAULT_PROJECTION_MATRIX_NAME) {
 		matrixType = PROJECTION;
+		as = "projection";
 	} else if (name == DEFAULT_IDENTITY_MATRIX_NAME) {
 		matrixType = IDENTITY;
+		as = "identity";
 	} else {
 		NodeException e(tag);
 		e << "[UniformMatrix] Unrecognized default name and no 'as' attribute.";
