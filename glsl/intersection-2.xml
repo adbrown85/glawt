@@ -28,28 +28,36 @@
 	</translate>
 </group>
 
+
 <!-- Begin volumes -->
 <texture name="head" file="../textures/head128.vlb">
 <texture name="bunny" file="../textures/bunny128.vlb">
 
-<!-- Boolean XOR behind intersection -->
+
+<!-- Begin render targets -->
 <texture name="coords" size="512" >
-	<framebuffer>
-		<renderbuffer type="depth" size="512" />
-		<target link="coords" />
-		<clear />
-		<program>
-			<shader file="coordinates.vert" />
-			<shader file="coordinates.frag" />
-			<cull faces="back">
-				<boolean operation="XOR" of="cubes" only="behind">
-					<uniform type="mat4" name="MVPMatrix" />
-				</boolean>
-			</cull>
-		</program>
-	</framebuffer>
+
+
+<!-- Begin offscreen framebuffer -->
+<framebuffer>
+	<renderbuffer type="depth" size="512" />
+	<target link="coords" />
 	<clear />
-	<blend>
+
+
+<!-- Begin coordinates program -->
+<program>
+	<shader file="coordinates.vert" />
+	<shader file="coordinates.frag" />
+
+
+<!-- Boolean XOR behind intersection -->
+<cull faces="back">
+	<boolean operation="XOR" of="cubes" only="behind">
+		<uniform type="mat4" name="MVPMatrix" />
+	</boolean>
+</cull>
+<screen>
 	<program>
 		<shader file="volume.vert" />
 		<shader file="volume.frag" />
@@ -62,11 +70,36 @@
 		</depth>
 		</cull>
 	</program>
-	</blend>
+</screen>
+
+
+<!-- Boolean AND as intersection -->
+<screen>
+	<program>
+		<shader file="color.vert" />
+		<shader file="color.frag" />
+		<wireframe faces="front">
+			<uniform type="mat4" name="MVPMatrix" />
+			<uniform type="vec4" name="Color" value="1 1 1 1" />
+			<boolean operation="AND" of="cubes" />
+		</wireframe>
+	</program>
+</screen>
+
+
+<!-- End coordinates program -->
+</program>
+
+
+<!-- End offscreen framebuffer -->
+</framebuffer>
+
+
+<!-- End render targets -->
 </texture>
 
+
 <!-- Outlines -->
-<blend>
 <program>
 	<shader file="color.vert" />
 	<shader file="color.frag" />
@@ -76,37 +109,9 @@
 		</wireframe>
 	</depth>
 </program>
-</blend>
+
 
 <!-- End volumes -->
 </texture>
 </texture>
-
-
-<!-- Boolean XOR in front of intersection -->
-<!--
-<program>
-	<shader file="../../glsl/color.vert" />
-	<shader file="../../glsl/color.frag" />
-	<uniform type="mat4" name="MVPMatrix" />
-	<uniform type="vec4" name="Color" value="1 1 0 1" />
-	<boolean operation="XOR" of="cubes" only="forward" />
-</program>
--->
-
-<!-- Boolean AND for reference -->
-<!--
-<program>
-	<shader file="../../glsl/color.vert" />
-	<shader file="../../glsl/color.frag" />
-	<depth mode="less">
-		<wireframe faces="front">
-			<instance of="cubes" />
-			<uniform type="vec4" name="Color" value="1 1 1 1" />
-			<uniform type="mat4" name="MVPMatrix" />
-			<boolean operation="AND" of="cubes" />
-		</wireframe>
-	</depth>
-</program>
--->
 
