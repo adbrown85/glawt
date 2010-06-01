@@ -16,15 +16,27 @@ void Factory::check(const Tag &tag) {
 }
 
 
-void Factory::install(const string &name,
-                      creator_t creator) {
+void Factory::install(const string &name, creator_t creator) {
 	
 	creators[name] = creator;
 }
 
 
-Node* Factory::create(const Tag &tag,
-                      const string &xmlFilename) {
+/** Creates copy of @e node as if it were read at line number @e line. */
+Node* Factory::copy(Node *node, int line) {
+	
+	Tag tag;
+	
+	// Copy tag with new line
+	tag = node->getTag();
+	tag.setLine(line);
+	
+	// Finish
+	return create(tag);
+}
+
+
+Node* Factory::create(const Tag &tag, const string &xmlFilename) {
 	
 	creator_t creator;
 	map<string,creator_t>::iterator it;
@@ -40,8 +52,7 @@ Node* Factory::create(const Tag &tag,
 }
 
 
-Node* Factory::create(const string &text,
-                      const string &xmlFilename) {
+Node* Factory::create(const string &text, const string &xmlFilename) {
 	
 	return create(Parser::create(text), xmlFilename);
 }
@@ -58,8 +69,7 @@ void Factory::error(const Tag &tag) {
 }
 
 
-Tag Factory::filter(Tag tag,
-                    const string &xmlFilename) {
+Tag Factory::filter(Tag tag, const string &xmlFilename) {
 	
 	string path;
 	
