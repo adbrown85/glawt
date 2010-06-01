@@ -1,88 +1,145 @@
 <!--
- * intersection.xml
+ * intersection-2.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
 -->
 
 
+<!-- Cubes driving boolean operations -->
 <group name="cubes">
 	<translate x="-1">
-	<scale>
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
+		<uniform type="mat4" name="MVPMatrix" />
 		<cube name="left">
-			<uniform type="vec4" name="Color" value="1 0 1 0.4" />
-			<uniform type="sampler3D" name="Volume" link="bunny" />
-		</cube>
-	</scale>
-	</translate>
-	<translate x="+1">
-	<scale>
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<cube name="right">
-			<uniform type="vec4" name="Color" value="0 1 1 0.4" />
+			<uniform type="vec4" name="Color" value="1 0 1 1" />
 			<uniform type="sampler3D" name="Volume" link="head" />
+			<uniform type="float" name="Opacity" value="5" />
 		</cube>
-	</scale>
+	</translate>
+	<translate x="+1" y="+0.5" z="-0.5">
+		<uniform type="mat4" name="MVPMatrix" />
+		<cube name="right">
+			<uniform type="vec4" name="Color" value="0 1 1 1" />
+			<uniform type="sampler3D" name="Volume" link="bunny" />
+			<uniform type="float" name="Opacity" value="2" />
+		</cube>
 	</translate>
 </group>
 
 
-
-<texture name="bunny" file="../textures/bunny128.vlb">
+<!-- Begin volumes -->
 <texture name="head" file="../textures/head128.vlb">
-	<texture name="end_coords" size="512">
+<texture name="bunny" file="../textures/bunny128.vlb">
+
+
+<!-- Begin render targets -->
+<texture name="coords" size="512" >
+
+
+<!-- Begin offscreen framebuffer -->
+<framebuffer>
+	<renderbuffer type="depth" size="512" />
+	<target link="coords" />
+
+
+<!-- Begin coordinates program -->
+<program>
+	<shader file="coordinates.vert" />
+	<shader file="coordinates.frag" />
+	<uniform type="mat4" name="MVPMatrix" />
+
+
+<!-- Boolean XOR behind intersection -->
+<clear />
+<depth mode="less">
+	<boolean operation="XOR" of="cubes" only="behind" />
+</depth>
+<screen>
+	<blend>
 		<program>
-			<shader file="coordinates.vert" />
-			<shader file="coordinates.frag" />
-			
-			<!-- Pieces of XOR behind AND -->
-<!--
-			<framebuffer>
-				<target link="end_coords" />
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-				<boolean operation="XOR" of="cubes" take="left" />
-			</framebuffer>
--->
-			<program>
-				<shader file="basic.vert" />
-				<shader file="basic.frag" />
-				<uniform type="mat4" name="MVMatrix" as="modelview" />
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-				<uniform type="mat4" name="NormalMatrix" as="normal" />
-				<uniform type="vec3" name="LightPosition" value="15 15 15" />
-				<uniform type="float" name="Ambient" value="0.2" />
-				<boolean operation="XOR" of="cubes" take="left" />
-			</program>
-			
-			<!-- AND -->
-<!--
-			<framebuffer>
-				<target link="end_coords" />
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-				<boolean operation="AND" of="cubes" />
-			</framebuffer>
-			<program>
-				<shader file="intersection.vert" />
-				<shader file="intersection.frag" />
-				<uniform type="sampler2D" name="EndCoords0" link="end_coords" />
-				<cull faces="front">
-					<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-					<boolean operation="AND" of="cubes" />
-				</cull>
-			</program>
--->
-			
-			<!-- Outlines -->
-			<program>
-				<shader file="color.vert" />
-				<shader file="color.frag" />
-				<wireframe faces="front">
-					<instance of="cubes" />
-				</wireframe>
-			</program>
-			
+			<shader file="volume.vert" />
+			<shader file="volume.frag" />
+			<cull faces="front">
+				<depth mode="greater">
+					<uniform type="mat4" name="MVPMatrix" />
+					<uniform type="sampler2D" name="ExitCoords" link="coords" />
+					<boolean operation="XOR" of="cubes" only="behind" />
+				</depth>
+			</cull>
 		</program>
-	</texture>
+	</blend>
+</screen>
+
+
+<!-- Boolean AND as intersection -->
+<clear />
+<depth mode="less">
+	<boolean operation="AND" of="cubes" />
+</depth>
+<screen>
+	<blend>
+		<program>
+			<shader file="intersection.vert" />
+			<shader file="intersection.frag" />
+			<cull faces="front">
+				<depth mode="less">
+					<uniform type="mat4" name="MVPMatrix" />
+					<uniform type="sampler2D" name="EndCoords0" link="coords" />
+					<boolean operation="AND" of="cubes" />
+				</depth>
+			</cull>
+		</program>
+	</blend>
+</screen>
+
+
+<!-- Boolean XOR in front of intersection -->
+<clear />
+<depth mode="less">
+	<boolean operation="XOR" of="cubes" only="forward" />
+</depth>
+<screen>
+	<blend>
+		<program>
+			<shader file="volume.vert" />
+			<shader file="volume.frag" />
+			<cull faces="front">
+				<depth mode="greater">
+					<uniform type="mat4" name="MVPMatrix" />
+					<uniform type="sampler2D" name="ExitCoords" link="coords" />
+					<boolean operation="XOR" of="cubes" only="forward" />
+				</depth>
+			</cull>
+		</program>
+	</blend>
+</screen>
+
+
+<!-- End coordinates program -->
+</program>
+
+
+<!-- End offscreen framebuffer -->
+</framebuffer>
+
+
+<!-- End render targets -->
+</texture>
+
+
+<!-- Outlines -->
+<program>
+	<shader file="color.vert" />
+	<shader file="color.frag" />
+	<depth mode="less">
+		<wireframe faces="front">
+			<instance of="cubes" />
+		</wireframe>
+	</depth>
+</program>
+
+
+<!-- End volumes -->
 </texture>
 </texture>
+
