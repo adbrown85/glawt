@@ -14,8 +14,7 @@ float Boolean::FLT_INF;
  * @throws Exception if @e operation attribute not present
  * @throws NodeException if float is not signed
  */
-Boolean::Boolean(const Tag &tag,
-                 ShapeTraits traits) : Hexahedron(tag,traits) {
+Boolean::Boolean(const Tag &tag, ShapeTraits traits) : Hexahedron(tag,traits) {
 	
 	// Get tag attributes
 	tag.get("of", of);
@@ -37,7 +36,47 @@ Boolean::Boolean(const Tag &tag,
 }
 
 
-/** Finds the group, shapes, and transforms needed by the operation.
+/** Deletes all the uniforms stored. */
+Boolean::~Boolean() {
+	
+	list<Uniform*>::iterator it;
+	
+	// Delete each uniform
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			delete (*it);
+		}
+	}
+}
+
+
+/** Applies all the uniforms for all of the shapes. */
+void Boolean::applyUniforms() const {
+	
+	list<Uniform*>::const_iterator it;
+	
+	// Apply each uniform for each shape
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			(*it)->apply();
+		}
+	}
+}
+
+
+/** Applies all the uniforms for one of the shapes. */
+void Boolean::applyUniforms(int i) const {
+	
+	list<Uniform*>::const_iterator it;
+	
+	// Apply each uniform for shape
+	for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+		(*it)->apply();
+	}
+}
+
+
+/** Finds the group, shapes, transforms, and uniforms needed by the operation.
  * 
  * @throws NodeException from Shape::associate()
  */
@@ -49,6 +88,25 @@ void Boolean::associate() {
 	findGroup();
 	findShapes();
 	findTransforms();
+	findUniforms();
+	
+	// Associate
+	associateUniforms();
+}
+
+
+/** Associates all the uniforms. */
+void Boolean::associateUniforms() {
+	
+	list<Uniform*>::iterator it;
+	
+	// Associate each uniform
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			(*it)->setParent(this);
+			(*it)->associate();
+		}
+	}
 }
 
 
@@ -140,11 +198,25 @@ void Boolean::draw() const {
 }
 
 
-/** Calculates and then creates the shape. */
+/** Creates the shape and finalizes all the uniforms. */
 void Boolean::finalize() {
 	
 	calculate();
 	Hexahedron::finalize();
+	finalizeUniforms();
+}
+
+
+/** Finalizes all the stored uniforms. */
+void Boolean::finalizeUniforms() {
+	
+	list<Uniform*>::iterator it;
+	
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			(*it)->finalize();
+		}
+	}
 }
 
 
@@ -211,6 +283,27 @@ void Boolean::findTransforms() {
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
+	}
+}
+
+
+/** Finds uniforms of the shapes, then copies and stores them. */
+void Boolean::findUniforms() {
+	
+	Node::iterator it;
+	Shape *shape;
+	Uniform *uniform;
+	
+	// Copy and store uniforms for each shape
+	for (int i=0; i<2; ++i) {
+		shape = shapes[i];
+		for (it=shape->begin(); it!=shape->end(); ++it) {
+			uniform = dynamic_cast<Uniform*>(*it);
+			if (uniform != NULL) {
+				uniform = (Uniform*)Factory::copy(uniform, tag.getLine());
+				uniforms[i].push_back(uniform);
+			}
+		}
 	}
 }
 

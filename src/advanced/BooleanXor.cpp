@@ -30,44 +30,6 @@ BooleanXor::BooleanXor(const Tag &tag) : Boolean(tag,getTraits()) {
 }
 
 
-/** Deletes all the uniforms stored. */
-BooleanXor::~BooleanXor() {
-	
-	list<Uniform*>::iterator it;
-	
-	for (int i=0; i<2; ++i) {
-		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
-			delete (*it);
-		}
-	}
-}
-
-
-/** Stores uniforms for each shape. */
-void BooleanXor::associate() {
-	
-	Boolean::associate();
-	
-	Node::iterator it;
-	Shape *shape;
-	Uniform *uniform;
-	
-	// Copy and store uniforms for each shape
-	for (int i=0; i<2; ++i) {
-		shape = shapes[i];
-		for (it=shape->begin(); it!=shape->end(); ++it) {
-			uniform = dynamic_cast<Uniform*>(*it);
-			if (uniform != NULL) {
-				uniform = (Uniform*)Factory::create(uniform->getTag());
-				uniform->setParent(this);
-				uniform->associate();
-				uniforms[i].push_back(uniform);
-			}
-		}
-	}
-}
-
-
 /** Creates the pieces by knifing at the intersection point of each axis. */
 void BooleanXor::calculate() {
 	
@@ -95,18 +57,6 @@ void BooleanXor::draw() const {
 		drawWhenOverlapped(rotation);
 	} else {
 		drawWhenNotOverlapped(rotation);
-	}
-}
-
-
-/** Applies all the uniforms for one of the shapes. */
-void BooleanXor::applyUniforms(int i) const {
-	
-	list<Uniform*>::const_iterator it;
-	
-	// Apply each uniform
-	for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
-		(*it)->apply();
 	}
 }
 
@@ -211,21 +161,6 @@ void BooleanXor::explode(const Extent &piece, int d, list<Extent> &pieces) {
 	// Recurse on X and Y directions
 	explode(result.first, d+1, pieces);
 	explode(result.second, d+1, pieces);
-}
-
-
-/** Finalizes all the stored uniforms. */
-void BooleanXor::finalize() {
-	
-	Boolean::finalize();
-	
-	list<Uniform*>::iterator it;
-	
-	for (int i=0; i<2; ++i) {
-		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
-			(*it)->finalize();
-		}
-	}
 }
 
 

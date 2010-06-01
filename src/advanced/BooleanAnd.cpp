@@ -7,11 +7,11 @@
 #include "BooleanAnd.hpp"
 
 
-/** Finds required connections to other nodes. */
+/** Calls base then renames the uniforms. */
 void BooleanAnd::associate() {
 	
 	Boolean::associate();
-	findUniforms();
+	renameUniforms();
 }
 
 
@@ -22,35 +22,11 @@ void BooleanAnd::calculateTangible() {
 }
 
 
-/** Finds and copies uniforms from each shape. */
-void BooleanAnd::findUniforms() {
+/** Applies all the copied uniforms, then calls base. */
+void BooleanAnd::draw() const {
 	
-	Node *node;
-	Uniform *uniform;
-	ostringstream stream;
-	Tag tag;
-	
-	// For each child under each shape
-	for (size_t i=0; i<shapes.size(); ++i) {
-		Node::iterator it;
-		for (it=shapes[i]->begin(); it!=shapes[i]->end(); ++it) {
-			
-			// See if it's a uniform
-			uniform = dynamic_cast<Uniform*>(*it);
-			if (uniform == NULL) {
-				continue;
-			}
-			
-			// If so, copy it
-			tag = uniform->getTag();
-			tag.setLine(this->tag.getLine());
-			stream.str("");
-			stream << tag["name"] << i;
-			tag["name"] = stream.str();
-			node = Factory::create(tag);
-			addChild(node);
-		}
-	}
+	applyUniforms();
+	Boolean::draw();
 }
 
 
@@ -67,6 +43,24 @@ ShapeTraits BooleanAnd::getTraits() {
 	traits.attributes.push_back("TexCoord0");
 	traits.attributes.push_back("TexCoord1");
 	return traits;
+}
+
+
+/** Appends index number to each uniform so they can be used simultaneously. */
+void BooleanAnd::renameUniforms() {
+	
+	list<Uniform*>::iterator it;
+	ostringstream stream;
+	Tag tag;
+	
+	// Append index number to each uniform
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			stream.str();
+			stream << getName() << i;
+			(*it)->setName(stream.str());
+		}
+	}
 }
 
 

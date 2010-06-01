@@ -76,10 +76,11 @@ class BooleanAnd : public Boolean {
 public:
 	BooleanAnd(const Tag &tag) : Boolean(tag,getTraits()) {}
 	virtual void associate();
+	virtual void draw() const;
 	static ShapeTraits getTraits();
 protected:
 	virtual void calculateTangible();
-	virtual void findUniforms();
+	virtual void renameUniforms();
 	virtual void updateBufferPoints();
 	virtual void updateBufferCoords();
 private:

@@ -14,6 +14,8 @@
 #include "Transformation.hpp"
 #include "Transform.hpp"
 #include "Hexahedron.hpp"
+#include "Factory.hpp"
+#include "Uniform.hpp"
 using namespace std;
 
 
@@ -35,20 +37,26 @@ struct Extent {
 class Boolean : public Hexahedron {
 public:
 	Boolean(const Tag &tag, ShapeTraits traits);
+	virtual ~Boolean();
 	virtual void associate();
 	virtual void draw() const;
 	virtual void finalize();
 	virtual void onNodeEvent(NodeEvent &event);
 	virtual string toString() const;
 protected:
+	void applyUniforms() const;
+	void applyUniforms(int i) const;
+	void associateUniforms();
 	void calculate();
 	void calculateExtents();
 	void calculateExtents(Node *node);
 	void calculateOverlap();
 	virtual void calculateTangible() = 0;
+	void finalizeUniforms();
 	void findGroup();
-	virtual void findShapes();
+	void findShapes();
 	void findTransforms();
+	void findUniforms();
 	bool isOverlapped() const;
 	static bool isSubstantial(const Extent &extent);
 	virtual void updateBuffer();
@@ -58,6 +66,7 @@ protected:
 	Group *group;
 	vector<Shape*> shapes;
 	vector<Extent> extents;
+	list<Uniform*> uniforms[2];
 	Matrix mvm;
 	string of, operation;
 	static float FLT_INF;
