@@ -56,8 +56,8 @@ void BooleanAnd::renameUniforms() {
 	// Append index number to each uniform
 	for (int i=0; i<2; ++i) {
 		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
-			stream.str();
-			stream << getName() << i;
+			stream.str("");
+			stream << (*it)->getName() << i;
 			(*it)->setName(stream.str());
 		}
 	}
