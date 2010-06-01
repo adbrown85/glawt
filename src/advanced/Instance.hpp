@@ -11,6 +11,7 @@
 #include "Group.hpp"
 #include "Uniform.hpp"
 #include "Shape.hpp"
+#include "Suppressor.hpp"
 using namespace std;
 
 
@@ -52,6 +53,8 @@ protected:
 	void storeShapes();
 	void storeUniforms();
 private:
+	bool suppress;
+	Suppressor suppressor;
 	Group *group;
 	string of;
 	map<Shape*,ShapeSnapshot> shapes;

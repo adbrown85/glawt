@@ -22,7 +22,7 @@ using namespace std;
 /** @brief Abstract base class for GLSL uniform variables.
  * @ingroup basic
  */
-class Uniform : public Applicable {
+class Uniform : public Applicable, public Suppressable {
 public:
 	Uniform(const Tag &tag);
 	virtual void associate();
@@ -36,6 +36,7 @@ public:
 	void setName(const string &name);
 	void setProgram(Program *program);
 	virtual string toString() const;
+	virtual bool wasSuppressed() const;
 protected:
 	GLint location;
 	Program *program;

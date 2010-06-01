@@ -7,10 +7,14 @@
 #include "Instance.hpp"
 
 
-/** Initializes the <i>of</i> attribute. */
+/** Initializes the @e and @e suppress attributes. */
 Instance::Instance(const Tag &tag) : Applicable(tag) {
 	
 	tag.get("of", of);
+	if (!tag.get("suppress", suppress, false)) {
+		suppress = true;
+	}
+	suppressor.setEnabled(suppress);
 }
 
 
@@ -58,6 +62,7 @@ void Instance::finalize() {
 	assignParents();
 	restoreShapes();
 	restoreUniforms();
+	suppressor.start();
 }
 
 
@@ -66,6 +71,9 @@ void Instance::finalizeAfter() {
 	
 	storeShapes();
 	storeUniforms();
+	if (suppressor.check() > 0) {
+		suppressor.print(getTag());
+	}
 }
 
 
@@ -132,8 +140,10 @@ void Instance::findUniforms() {
 	while (!q.empty()) {
 		node = q.front();
 		uniform = dynamic_cast<Uniform*>(node);
-		if (uniform != NULL)
+		if (uniform != NULL) {
 			uniforms[uniform] = UniformSnapshot();
+			suppressor.add(uniform);
+		}
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();
@@ -189,13 +199,14 @@ void Instance::storeUniforms() {
 }
 
 
-/** @return String comprised of the object's attributes. */
+/** @return Adds @e of and @e suppress attributes to description. */
 string Instance::toString() const {
 	
 	ostringstream stream;
 	
 	stream << Applicable::toString();
-	stream << " of='" << of << "'";
+	stream << " of='" << of << "'"
+	       << " suppress='" << (suppress?'T':'F') << "'";
 	return stream.str();
 }
 

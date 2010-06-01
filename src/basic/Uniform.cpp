@@ -7,10 +7,7 @@
 #include "Uniform.hpp"
 
 
-/** Creates a new %Uniform from an XML tag.
- * 
- * @param tag XML tag with "type", "name", "value", and "link" information.
- */
+/** Initializes "program", "type", "name", "link", and "suppress" attributes. */
 Uniform::Uniform(const Tag &tag) : Applicable(tag) {
 	
 	// Initialize
@@ -39,16 +36,16 @@ void Uniform::associate() {
 
 /** Finds the variable's location in the program.
  * 
- * @warning if location for uniform cannot be found
+ * @throws NodeException if location for uniform cannot be found
  */
 void Uniform::finalize() {
 	
 	// Look up location
 	location = glGetUniformLocation(program->getHandle(), name.c_str());
-	if (location == -1) {
-		glog << tag.getFilename() << ":" << tag.getLine() << ": ";
-		glog << "[Uniform] Location for uniform '" << name
-		     << "' cannot be found." << endl;
+	if (location == -1 && !isSuppressed()) {
+		NodeException e(tag);
+		e << "[Uniform] Location for uniform '" << name << "' cannot be found.";
+		throw e;
 	}
 }
 
@@ -66,5 +63,12 @@ string Uniform::toString() const {
 		stream << " link='" << link << "'";
 	}
 	return stream.str();
+}
+
+
+/** @return True if the uniform was suppressed. */
+bool Uniform::wasSuppressed() const {
+	
+	return (location == -1) && isSuppressed();
 }
 

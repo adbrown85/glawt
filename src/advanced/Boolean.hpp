@@ -16,6 +16,7 @@
 #include "Hexahedron.hpp"
 #include "Factory.hpp"
 #include "Uniform.hpp"
+#include "Suppressor.hpp"
 using namespace std;
 
 
@@ -58,8 +59,9 @@ protected:
 	void findTransforms();
 	void findUniforms();
 	bool isOverlapped() const;
-	static bool isSubstantial(const Extent &extent);
 	virtual void updateBuffer();
+protected:
+	static bool isSubstantial(const Extent &extent);
 protected:
 	bool tangible;
 	Extent overlap;
@@ -69,6 +71,8 @@ protected:
 	list<Uniform*> uniforms[2];
 	Matrix mvm;
 	string of, operation;
+	Suppressor suppressor;
+protected:
 	static float FLT_INF;
 };
 

@@ -138,4 +138,21 @@ private:
 inline Canvas* Dependent::getCanvas() const {return canvas;}
 inline void Dependent::setCanvas(Canvas *c) {canvas = c;}
 
+
+/** @brief %Node that can have its exceptions suppressed.
+ * @ingroup scene
+ */
+class Suppressable {
+public:
+	Suppressable();
+	virtual bool isSuppressed() const;
+	virtual void setSuppress(bool suppress);
+	virtual bool wasSuppressed() const = 0;
+private:
+	bool suppress;
+};
+inline Suppressable::Suppressable() {suppress = false;}
+inline bool Suppressable::isSuppressed() const {return suppress;}
+inline void Suppressable::setSuppress(bool s) {suppress = true;}
+
 #endif

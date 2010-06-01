@@ -207,15 +207,24 @@ void Boolean::finalize() {
 }
 
 
-/** Finalizes all the stored uniforms. */
+/** Suppresses then finalizes all the stored uniforms. */
 void Boolean::finalizeUniforms() {
 	
 	list<Uniform*>::iterator it;
 	
+	// Suppress
+	suppressor.start();
+	
+	// Finalize
 	for (int i=0; i<2; ++i) {
 		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
 			(*it)->finalize();
 		}
+	}
+	
+	// Check
+	if (suppressor.check() > 0) {
+		suppressor.print(getTag());
 	}
 }
 
@@ -302,6 +311,7 @@ void Boolean::findUniforms() {
 			if (uniform != NULL) {
 				uniform = (Uniform*)Factory::copy(uniform, tag.getLine());
 				uniforms[i].push_back(uniform);
+				suppressor.add(uniform);
 			}
 		}
 	}
