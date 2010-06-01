@@ -30,6 +30,44 @@ BooleanXor::BooleanXor(const Tag &tag) : Boolean(tag,getTraits()) {
 }
 
 
+/** Deletes all the uniforms stored. */
+BooleanXor::~BooleanXor() {
+	
+	list<Uniform*>::iterator it;
+	
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			delete (*it);
+		}
+	}
+}
+
+
+/** Stores uniforms for each shape. */
+void BooleanXor::associate() {
+	
+	Boolean::associate();
+	
+	Node::iterator it;
+	Shape *shape;
+	Uniform *uniform;
+	
+	// Copy and store uniforms for each shape
+	for (int i=0; i<2; ++i) {
+		shape = shapes[i];
+		for (it=shape->begin(); it!=shape->end(); ++it) {
+			uniform = dynamic_cast<Uniform*>(*it);
+			if (uniform != NULL) {
+				uniform = (Uniform*)Factory::create(uniform->getTag());
+				uniform->setParent(this);
+				uniform->associate();
+				uniforms[i].push_back(uniform);
+			}
+		}
+	}
+}
+
+
 /** Creates the pieces by knifing at the intersection point of each axis. */
 void BooleanXor::calculate() {
 	
@@ -61,6 +99,18 @@ void BooleanXor::draw() const {
 }
 
 
+/** Applies all the uniforms for one of the shapes. */
+void BooleanXor::applyUniforms(int i) const {
+	
+	list<Uniform*>::const_iterator it;
+	
+	// Apply each uniform
+	for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+		(*it)->apply();
+	}
+}
+
+
 /** Draws one of the shapes according to depth. */
 void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 	
@@ -76,6 +126,7 @@ void BooleanXor::drawWhenNotOverlapped(Matrix &rotation) const {
 	i = isDrawn(depths[1],depths[0]) ? 1 : 0;
 	
 	// Only draw that one
+	applyUniforms(i);
 	Shape::draw(i*24, 24);
 }
 
@@ -86,24 +137,27 @@ void BooleanXor::drawWhenOverlapped(Matrix &rotation) const {
 	float oDepth, pDepth;
 	int offset;
 	list<Extent>::const_iterator li;
-	multimap<float,int> sorted;
+	multimap<float,int> sorted[2];
 	multimap<float,int>::iterator mi;
 	
 	// Calculate depth of overlap
 	oDepth = (rotation * ((overlap.upper+overlap.lower)*0.5)).z; 
 	
-	// Calculate depths of pieces and sort using map if behind overlap
+	// Calculate depths of pieces and sort using map
 	for (li=pieces.begin(); li!=pieces.end(); ++li) {
 		pDepth = (rotation * ((li->upper+li->lower)*0.5)).z;
 		if (isDrawn(pDepth, oDepth)) {
 			offset = distance(pieces.begin(),li) * 24;
-			sorted.insert(pair<float,int>(pDepth, offset));
+			sorted[li->index].insert(pair<float,int>(pDepth, offset));
 		}
 	}
 	
 	// Draw the pieces
-	for (mi=sorted.begin(); mi!=sorted.end(); ++mi) {
-		Shape::draw(mi->second, 24);
+	for (int i=0; i<2; ++i) {
+		applyUniforms(i);
+		for (mi=sorted[i].begin(); mi!=sorted[i].end(); ++mi) {
+			Shape::draw(mi->second, 24);
+		}
 	}
 }
 
@@ -157,6 +211,21 @@ void BooleanXor::explode(const Extent &piece, int d, list<Extent> &pieces) {
 	// Recurse on X and Y directions
 	explode(result.first, d+1, pieces);
 	explode(result.second, d+1, pieces);
+}
+
+
+/** Finalizes all the stored uniforms. */
+void BooleanXor::finalize() {
+	
+	Boolean::finalize();
+	
+	list<Uniform*>::iterator it;
+	
+	for (int i=0; i<2; ++i) {
+		for (it=uniforms[i].begin(); it!=uniforms[i].end(); ++it) {
+			(*it)->finalize();
+		}
+	}
 }
 
 

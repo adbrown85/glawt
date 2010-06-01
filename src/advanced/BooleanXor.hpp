@@ -9,6 +9,8 @@
 #include "common.h"
 #include <algorithm>                    // For 'swap'
 #include "Boolean.hpp"
+#include "Uniform.hpp"
+#include "Factory.hpp"
 #define BOOLEAN_XOR_COUNT 336
 using namespace std;
 
@@ -25,11 +27,15 @@ using namespace std;
 class BooleanXor : public Boolean, public Dependent {
 public:
 	BooleanXor(const Tag &tag);
+	~BooleanXor();
+	virtual void associate();
 	virtual void draw() const;
+	virtual void finalize();
 	static ShapeTraits getTraits();
 	virtual string toString() const;
 protected:
 	void addPiece(list<Extent> &pieces, const Extent &piece);
+	void applyUniforms(int i) const;
 	virtual void calculate();
 	virtual void calculateTangible();
 	void drawWhenNotOverlapped(Matrix &rotation) const;
@@ -46,6 +52,7 @@ private:
 	GLfloat points[BOOLEAN_XOR_COUNT][3], coords[BOOLEAN_XOR_COUNT][3];
 	int only;
 	list<Extent> pieces;
+	list<Uniform*> uniforms[2];
 };
 
 /** Assumed to be always visible (for now). */
