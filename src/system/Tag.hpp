@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Text.hpp"
 #include "Exception.hpp"
+#include "Vector.hpp"
 using namespace std;
 
 
@@ -35,6 +36,9 @@ public:
 	         bool required=true) const;
 	bool get(const string &key,
 	         float value[4],
+	         bool required=true) const;
+	bool get(const string &key,
+	         Vector &value,
 	         bool required=true) const;
 	bool get(const string &key,
 	         int &value,

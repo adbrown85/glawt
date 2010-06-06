@@ -171,6 +171,26 @@ bool Tag::get(const string &key, int &value, bool required) const {
 }
 
 
+bool Tag::get(const string &key, Vector &value, bool required) const {
+	
+	map<string,string>::const_iterator ai;
+	stringstream stream;
+	
+	// Find and convert
+	ai = attributes.find(key);
+	if (ai != attributes.end()) {
+		stream << ai->second;
+		for (int i=0; i<4 && stream; ++i)
+			stream >> value[i];
+		return true;
+	}
+	else if (required) {
+		error(key);
+	}
+	return false;
+}
+
+
 /** Gets the value of an attribute as a string.
  * 
  * @param key Name of the attribute.
