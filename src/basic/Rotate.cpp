@@ -13,10 +13,8 @@
  */
 Rotate::Rotate(const Tag &tag) : Transformation(tag) {
 	
-	tag.get("angle", angle, false);
-	tag.get("x", axis.x, false);
-	tag.get("y", axis.y, false);
-	tag.get("z", axis.z, false);
+	tag.get("angle", angle, true);
+	tag.get("axis", axis, true);
 }
 
 
@@ -32,7 +30,7 @@ void Rotate::applyTo(Matrix &matrix) {
 	
 	Quaternion quaternion(angle, axis);
 	
-	// matrix = matrix * quaternion.getMatrix();
+	matrix = matrix * quaternion.getMatrix();
 }
 
 

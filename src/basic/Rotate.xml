@@ -1,0 +1,16 @@
+<!--
+ * Rotate.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<program>
+	<shader file="../../glsl/coordinates.vert" />
+	<shader file="../../glsl/coordinates.frag" />
+	<rotate axis="1 0 0" angle="-45">
+		<uniform type="mat4" name="MVPMatrix" />
+		<square />
+	</rotate>
+</program>
