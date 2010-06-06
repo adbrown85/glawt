@@ -46,6 +46,7 @@ using namespace std;
  * <pre>
  *   &lt;framebuffer>
  *     &lt;renderbuffer type="depth" size="512" />
+ *     &lt;clear />
  *   &lt;/framebuffer>
  * </pre>
  * 
