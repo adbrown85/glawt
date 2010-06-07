@@ -20,13 +20,6 @@
 using namespace std;
 
 
-/* Upper and lower boundaries of a shape. */
-struct Extent {
-	Vector upper, lower, diagonal;
-	int label, index;
-};
-
-
 /** @brief Combines shapes in different ways to create a new one.
  * 
  * To create a concrete operation, subclass %Boolean and implement 

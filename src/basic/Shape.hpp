@@ -7,6 +7,7 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 #include "common.h"
+#include <cfloat>
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
@@ -14,6 +15,13 @@
 #include "Transformation.hpp"
 #include "Transform.hpp"
 using namespace std;
+
+
+/* Upper and lower boundaries of a shape. */
+struct Extent {
+	Vector upper, lower, diagonal;
+	int label, index;
+};
 
 
 /* Vertex attribute. */
@@ -65,6 +73,7 @@ public:
 	virtual void finalize();
 	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;
+	virtual Extent getExtent();
 	virtual GLuint getLimit() const;
 	virtual string getName() const;
 	virtual Vector getPosition();
@@ -73,7 +82,7 @@ public:
 	virtual void setAttributes(list<VertexAttribute> &attributes);
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
-	virtual void updatePosition();
+	virtual void updatePositionExtent();
 protected:
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
@@ -90,6 +99,7 @@ private:
 	map<string,GLuint> offsets;
 	Program *program;
 	string name;
+	Extent extent;
 	Vector position;
 	list<Transformation*> transforms;
 };

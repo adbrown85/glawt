@@ -61,7 +61,7 @@ void Shape::associate() {
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->addListener(this);
 	}
-	updatePosition();
+	updatePositionExtent();
 }
 
 
@@ -168,9 +168,22 @@ GLuint Shape::getOffset(const string &name) const {
 Vector Shape::getPosition() {
 	
 	if (!valid) {
-		updatePosition();
+		updatePositionExtent();
 	}
 	return position;
+}
+
+
+/** @return Model-matrix boundaries of the item in the scene.
+ * 
+ * @see getPosition()
+ */
+Extent Shape::getExtent() {
+	
+	if (!valid) {
+		updatePositionExtent();
+	}
+	return extent;
 }
 
 
@@ -214,19 +227,35 @@ string Shape::toString() const {
 }
 
 
-/** Updates the position and validates the position. */
-void Shape::updatePosition() {
+/** Updates the position and extent, then validates the position. */
+void Shape::updatePositionExtent() {
 	
 	list<Transformation*>::iterator it;
 	Matrix matrix;
+	Vector point;
+	float v[2]={-0.5,+0.5};
 	
-	// Calculate position by applying each transform
+	// Concatenate transformations
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->applyTo(matrix);
 	}
-	position = matrix * Vector(0,0,0,1);
 	
-	// Position is valid until a transform changes
+	// Calculate extent and position
+	extent.upper = Vector(-FLT_MAX, -FLT_MAX, -FLT_MAX, 1);
+	extent.lower = Vector(+FLT_MAX, +FLT_MAX, +FLT_MAX, 1);
+	for (int i=0; i<2; ++i) {
+		for (int j=0; j<2; ++j) {
+			for (int k=0; k<2; ++k) {
+				point = matrix * Vector(v[i],v[j],v[k],1);
+				extent.upper = max(extent.upper, point);
+				extent.lower = min(extent.lower, point);
+			}
+		}
+	}
+	extent.diagonal = extent.upper - extent.lower;
+	position = (extent.upper + extent.lower) * 0.5;
+	
+	// Extent and position are valid until a transform changes
 	valid = true;
 }
 
