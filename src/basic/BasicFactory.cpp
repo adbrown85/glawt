@@ -21,6 +21,7 @@ void BasicFactory::install() {
 	Factory::install("cone", &createCone);
 	Factory::install("cube", &createCube);
 	Factory::install("disk", &createDisk);
+	Factory::install("group", &createGroup);
 	Factory::install("line", &createLine);
 	Factory::install("program", &createProgram);
 	Factory::install("rotate", &createRotate);
@@ -55,6 +56,8 @@ Node* BasicFactory::createCone(const Tag &tag) {return new Cone(tag);}
 Node* BasicFactory::createCube(const Tag &tag) {return new Cube(tag);}
 
 Node* BasicFactory::createDisk(const Tag &tag) {return new Disk(tag);}
+
+Node* BasicFactory::createGroup(const Tag &t) {return new Group(t);}
 
 Node* BasicFactory::createLine(const Tag &tag) {return new Line(tag);}
 
