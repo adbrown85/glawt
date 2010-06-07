@@ -9,13 +9,16 @@
 
 /** Creates a new %Translate from an XML tag.
  * 
- * @param tag XML tag with "x", "y", and "z" values.
+ * @param tag XML tag with "value", "x", "y", or "z" attributes.
  */
 Translate::Translate(const Tag &tag) : Transformation(tag) {
 	
-	tag.get("x", value.x, false);
-	tag.get("y", value.y, false);
-	tag.get("z", value.z, false);
+	if (!tag.get("value", value, false)) {
+		tag.get("x", value.x, false);
+		tag.get("y", value.y, false);
+		tag.get("z", value.z, false);
+	}
+	value.w = 1.0;
 }
 
 
