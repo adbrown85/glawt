@@ -19,27 +19,10 @@ void NodeTree::append(Node *node) {
 	
 	// Add as base or child row
 	if (parents.empty()) {
-		appendBaseRow(node);
+		current = model->append();
 	} else {
-		appendChildRow(node);
+		current = model->append((parents.top())->children());
 	}
-}
-
-
-void NodeTree::appendBaseRow(Node *node) {
-	
-	current = model->append();
-	(*current)[columns.address] = reinterpret_cast<int>(node);
-	(*current)[columns.name] = node->getClassName();
-}
-
-
-void NodeTree::appendChildRow(Node *node) {
-	
-	Gtk::TreeModel::iterator parent;
-	
-	parent = parents.top();
-	current = model->append(parent->children());
 	(*current)[columns.address] = reinterpret_cast<int>(node);
 	(*current)[columns.name] = node->getClassName();
 }
