@@ -13,7 +13,7 @@ using namespace std;
 
 
 /** @brief Utility for suppressing exceptions of other nodes.
- * @ingroup advanced
+ * @ingroup scene
  */
 class Suppressor {
 public:
