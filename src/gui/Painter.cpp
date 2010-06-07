@@ -48,6 +48,7 @@ void Painter::onDrawable(Drawable *node) {
 	
 	Program *program;
 	vector<Manipulator*>::iterator mi;
+	Shape *shape;
 	
 	// Stop if not visible
 	if (!node->isVisible())
@@ -73,23 +74,26 @@ void Painter::onDrawable(Drawable *node) {
 		program->remove();
 	
 	// Draw outline and manipulators
-	glPushAttrib(GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-		if (outline != NULL) {
-			Traverser::traverseNode(outline->getRoot());
-		}
-		glPushAttrib(GL_POLYGON_BIT);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-				if ((*mi)->isEnabled()) {
-					if (mode == GL_SELECT)
-						glPushName((*mi)->getID());
-					(*mi)->draw(node, getCanvas());
-				}
+	shape = dynamic_cast<Shape*>(node);
+	if (shape != NULL) {
+		glPushAttrib(GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LESS);
+			if (outline != NULL) {
+				Traverser::traverseNode(outline->getRoot());
 			}
+			glPushAttrib(GL_POLYGON_BIT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
+					if ((*mi)->isEnabled()) {
+						if (mode == GL_SELECT)
+							glPushName((*mi)->getID());
+						(*mi)->draw(shape, getCanvas());
+					}
+				}
+			glPopAttrib();
 		glPopAttrib();
-	glPopAttrib();
+	}
 	
 	// Restore shaders
 	if (program != NULL)
