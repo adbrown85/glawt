@@ -9,12 +9,14 @@
 
 /** Creates a new %Rotate from an XML tag.
  * 
- * @param tag XML tag with "angle", "x", "y", and "z" values.
+ * @param tag XML tag with "angle" and "axis" values.
  */
 Rotate::Rotate(const Tag &tag) : Transformation(tag) {
 	
 	tag.get("angle", angle, true);
 	tag.get("axis", axis, true);
+	axis = normalize(axis);
+	quaternion.set(angle, axis);
 }
 
 
@@ -27,8 +29,6 @@ void Rotate::apply() {
 
 
 void Rotate::applyTo(Matrix &matrix) {
-	
-	Quaternion quaternion(angle, axis);
 	
 	matrix = matrix * quaternion.getMatrix();
 }

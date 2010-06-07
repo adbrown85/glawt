@@ -26,6 +26,7 @@ public:
 private:
 	float angle;
 	Vector axis;
+	Quaternion quaternion;
 };
 
 
