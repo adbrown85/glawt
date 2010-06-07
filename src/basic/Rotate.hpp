@@ -7,6 +7,7 @@
 #ifndef ROTATE_HPP
 #define ROTATE_HPP
 #include "common.h"
+#include <iomanip>
 #include "Transformation.hpp"
 #include "Vector.hpp"
 #include "Quaternion.hpp"

@@ -46,11 +46,11 @@ string Rotate::toString() const {
 	
 	ostringstream stream;
 	
+	stream << fixed << setprecision(2);
+	
 	stream << Node::toString();
 	stream << " angle='" << angle << "'"
-	       << " x='" << axis.x << "'"
-	       << " y='" << axis.y << "'"
-	       << " z='" << axis.z << "'";
+	       << " axis='" << axis.x << " " << axis.y << " " << axis.z << "'";
 	return stream.str();
 }
 

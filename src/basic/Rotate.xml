@@ -9,7 +9,7 @@
 <program>
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
-	<rotate axis="0 1 0" angle="30">
+	<rotate axis="1 1 0" angle="30">
 		<uniform type="mat4" name="MVPMatrix" />
 		<square />
 	</rotate>
