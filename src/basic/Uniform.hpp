@@ -22,7 +22,8 @@ using namespace std;
 /** @brief Abstract base class for GLSL uniform variables.
  * @ingroup basic
  */
-class Uniform : public Applicable, public Suppressable {
+class Uniform : public Node,
+                public Applicable, public Suppressable {
 public:
 	Uniform(const Tag &tag);
 	virtual void associate();

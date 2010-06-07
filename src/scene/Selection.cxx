@@ -6,14 +6,20 @@
  */
 #include <iostream>
 #include "Selection.hpp"
-#include "SimpleDrawable.hpp"
 #define NUMBER_OF_NODES 4
 
 
-class FakeDrawable : public SimpleDrawable {
+class FakeDrawable : public Node, public Drawable {
 public:
-	FakeDrawable(const Tag &tag) : SimpleDrawable(tag) {}
+	FakeDrawable(const Tag &tag) : Node(tag) {}
 	void draw() const {}
+	virtual bool isSelectable() const {return true;}
+	virtual bool isSelected() const {return false;}
+	virtual bool isVisible() const {return true;}
+	virtual void setSelected(bool selected) {}
+	virtual void setVisible(bool visible) {}
+	virtual void toggleSelected() {}
+	virtual void toggleVisible() {}
 };
 
 
@@ -78,7 +84,7 @@ void SelectionTest::testIterator() {
 void SelectionTest::testRemove() {
 	
 	int id=3;
-	Drawable *node;
+	FakeDrawable *node;
 	
 	// Remove a node
 	cout << "\nRemoving node " << id << "..." << endl;

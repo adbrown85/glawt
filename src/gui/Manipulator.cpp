@@ -94,8 +94,8 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 }
 
 
-/** Draws the manipulator around @e shape in @e canvas. */
-void Manipulator::draw(Shape *shape, Canvas *canvas) const {
+/** Draws the manipulator around @e transformable in @e canvas. */
+void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	
 	Vector position;
 	Extent extent;
@@ -105,8 +105,8 @@ void Manipulator::draw(Shape *shape, Canvas *canvas) const {
 		return;
 	
 	// Compute position
-	extent = shape->getExtent();
-	position = shape->getPosition() + (extent.diagonal * offset);
+	extent = transformable->getExtent();
+	position = transformable->getPosition() + (extent.diagonal * offset);
 	
 	// Draw at position
 	glMatrixMode(GL_MODELVIEW);

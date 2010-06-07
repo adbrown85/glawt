@@ -8,16 +8,24 @@
 
 
 /** Adds a single item to the selection. */
-void Selection::add(Drawable *item) {
+void Selection::add(Node *node) {
+	
+	Drawable *drawable;
+	
+	// Cast
+	drawable = dynamic_cast<Drawable*>(node);
+	if (!drawable) {
+		return;
+	}
 	
 	// Make sure selectable and visible
-	if (!item->isSelectable() || !item->isVisible())
+	if (!drawable->isSelectable() || !drawable->isVisible())
 		return;
 	
 	// Select it
-	item->setSelected(true);
-	items.insert(item);
-	active = item;
+	drawable->setSelected(true);
+	items.insert(drawable);
+	active = node;
 	fireEvent();
 }
 
@@ -26,11 +34,9 @@ void Selection::add(Drawable *item) {
 void Selection::addAll(Node *node) {
 	
 	Node::iterator it;
-	Drawable *drawable;
 	
-	// Add item if drawable
-	if ((drawable = dynamic_cast<Drawable*>(node)))
-		add(drawable);
+	// Add node
+	add(node);
 	
 	// Add children
 	for (it=node->begin(); it!=node->end(); ++it)
@@ -63,15 +69,22 @@ void Selection::fireEvent() {
 
 
 /** Removes a single item from the selection. */
-void Selection::remove(Drawable *item) {
+void Selection::remove(Node *node) {
 	
-	iterator si;
+	iterator it;
+	Drawable *drawable;
+	
+	// Cast
+	drawable = dynamic_cast<Drawable*>(node);
+	if (!drawable) {
+		return;
+	}
 	
 	// Find and erase the item
-	si = items.find(item);
-	if (si != items.end()) {
-		item->setSelected(false);
-		items.erase(si);
+	it = items.find(drawable);
+	if (it != items.end()) {
+		drawable->setSelected(false);
+		items.erase(it);
 	}
 }
 

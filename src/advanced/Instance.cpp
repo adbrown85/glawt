@@ -8,7 +8,7 @@
 
 
 /** Initializes the @e and @e suppress attributes. */
-Instance::Instance(const Tag &tag) : Applicable(tag) {
+Instance::Instance(const Tag &tag) : Node(tag) {
 	
 	tag.get("of", of);
 	if (!tag.get("suppress", suppress, false)) {
@@ -204,7 +204,7 @@ string Instance::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Applicable::toString();
+	stream << Node::toString();
 	stream << " of='" << of << "'"
 	       << " suppress='" << (suppress?'T':'F') << "'";
 	return stream.str();

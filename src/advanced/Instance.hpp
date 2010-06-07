@@ -30,7 +30,7 @@ struct UniformSnapshot {
 /** @brief Redraws all the nodes of a group with different characteristics.
  * @ingroup advanced
  */
-class Instance : public Applicable {
+class Instance : public Node, public Applicable {
 public:
 	Instance(const Tag &tag);
 	virtual void apply();

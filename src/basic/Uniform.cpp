@@ -8,7 +8,7 @@
 
 
 /** Initializes "program", "type", "name", "link", and "suppress" attributes. */
-Uniform::Uniform(const Tag &tag) : Applicable(tag) {
+Uniform::Uniform(const Tag &tag) : Node(tag) {
 	
 	// Initialize
 	program = NULL;

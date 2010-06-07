@@ -24,7 +24,7 @@ using namespace std;
  * @see Texture2D
  * @see Texture3D
  */
-class Texture : public Applicable {
+class Texture : public Node, public Applicable {
 public:
 	Texture(GLenum type, const Tag &tag);
 	virtual void apply();

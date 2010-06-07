@@ -32,8 +32,8 @@ public:
 	virtual void start();
 	void setMode(GLenum mode);
 protected:
-	virtual void onApplicable(Applicable *node);
-	virtual void onDrawable(Drawable *node);
+	virtual void onApplicable(Node *node, Applicable *applicable);
+	virtual void onDrawable(Node *node, Drawable *drawable);
 private:
 	static bool tried;
 	GLenum mode;

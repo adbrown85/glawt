@@ -7,14 +7,13 @@
 #include "Cull.hpp"
 
 
-/**
- * Creates a new %Cull object from a tag.
+/** Creates a new %Cull object from a tag.
  * 
  * @param tag XML tag containing "faces" attribute.
  * @throws Exception if @e faces attribute not supported.
  * @throws NodeException if value for @e faces attribute not supported.
  */
-Cull::Cull(const Tag &tag) : Applicable(tag) {
+Cull::Cull(const Tag &tag) : Node(tag) {
 	
 	// Handle faces and enabled
 	tag.get("faces", facesString, true);
@@ -35,9 +34,7 @@ Cull::Cull(const Tag &tag) : Applicable(tag) {
 }
 
 
-/**
- * Enables culling.
- */
+/** Enables culling. */
 void Cull::apply() {
 	
 	if (enabled) {
@@ -49,9 +46,7 @@ void Cull::apply() {
 }
 
 
-/**
- * Restores backface culling.
- */
+/** Restores backface culling. */
 void Cull::remove() {
 	
 	glEnable(GL_CULL_FACE);
@@ -59,9 +54,7 @@ void Cull::remove() {
 }
 
 
-/**
- * Forms a string from the object's attributes.
- */
+/** Forms a string from the object's attributes. */
 string Cull::toString() const {
 	
 	ostringstream stream;

@@ -7,21 +7,12 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 #include "common.h"
-#include <cfloat>
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
-#include "NodeEvent.hpp"
 #include "Transformation.hpp"
 #include "Transform.hpp"
 using namespace std;
-
-
-/* Upper and lower boundaries of a shape. */
-struct Extent {
-	Vector upper, lower, diagonal;
-	int label, index;
-};
 
 
 /* Vertex attribute. */
@@ -63,8 +54,7 @@ struct ShapeTraits {
  * 
  * @ingroup basic
  */
-class Shape : public SimpleDrawable,
-              public NodeListener {
+class Shape : public SimpleDrawable {
 public:
 	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
@@ -73,16 +63,12 @@ public:
 	virtual void finalize();
 	virtual list<VertexAttribute> getAttributes() const;
 	virtual GLuint getCount() const;
-	virtual Extent getExtent();
 	virtual GLuint getLimit() const;
 	virtual string getName() const;
-	virtual Vector getPosition();
 	virtual Program* getProgram() const;
-	virtual void onNodeEvent(NodeEvent &event);
 	virtual void setAttributes(list<VertexAttribute> &attributes);
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
-	virtual void updatePositionExtent();
 protected:
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
@@ -91,7 +77,6 @@ protected:
 	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
-	bool valid;
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count, limit;
@@ -99,9 +84,6 @@ private:
 	map<string,GLuint> offsets;
 	Program *program;
 	string name;
-	Extent extent;
-	Vector position;
-	list<Transformation*> transforms;
 };
 
 /** @return Attributes in use for this shape. */
@@ -118,9 +100,6 @@ inline string Shape::getName() const {return name;}
 
 /** @return Program the shape sends vertex attributes to. */
 inline Program* Shape::getProgram() const {return program;}
-
-/** Invalidates the position when a transform changes. */
-inline void Shape::onNodeEvent(NodeEvent &event) {valid = false;}
 
 /** Set attributes in use for this shape. */
 inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}

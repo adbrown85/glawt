@@ -8,7 +8,7 @@
 
 
 /** Initializes the chains in the framebuffer. */
-Framebuffer::Framebuffer(const Tag &tag) : Applicable(tag) {
+Framebuffer::Framebuffer(const Tag &tag) : Node(tag) {
 	
 	Chain chain;
 	

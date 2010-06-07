@@ -9,7 +9,7 @@ Program *Program::current=NULL;
 
 
 /** Creates a new %Program from an XML tag. */
-Program::Program(const Tag& tag) : Applicable(tag) {
+Program::Program(const Tag& tag) : Node(tag) {
 	
 	handle = 0;
 }

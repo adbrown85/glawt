@@ -8,7 +8,7 @@
 
 
 /** Clears the @e locations array. */
-Outputs::Outputs(const Tag &tag) : Applicable(tag) {
+Outputs::Outputs(const Tag &tag) : Node(tag) {
 	
 	locations = NULL;
 	n = 0;
@@ -133,7 +133,7 @@ string Outputs::toString() const {
 	list<Attachment*>::const_iterator it;
 	ostringstream stream;
 	
-	stream << Applicable::toString();
+	stream << Node::toString();
 	stream << " locations='";
 	for (it=attachments.begin(); it!=attachments.end(); ++it) {
 		i = distance(attachments.begin(), it);

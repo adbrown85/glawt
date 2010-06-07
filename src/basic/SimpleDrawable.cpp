@@ -8,7 +8,7 @@
 
 
 /** Initializes the selected, visible, and selectable attributes. */
-SimpleDrawable::SimpleDrawable(const Tag &tag) : Drawable(tag) {
+SimpleDrawable::SimpleDrawable(const Tag &tag) : SimpleTransformable(tag) {
 	
 	// Initialize attributes
 	this->selected = false;

@@ -19,7 +19,7 @@ using namespace std;
 /** @brief GLSL program that %Shaders and %Uniform variables are connected to.
  * @ingroup basic
  */
-class Program : public Applicable {
+class Program : public Node, public Applicable {
 public:
 	Program(const Tag& tag);
 	virtual void addCode(int handle, const Preprocessor *preprocessor);

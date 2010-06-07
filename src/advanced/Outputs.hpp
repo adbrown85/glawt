@@ -15,7 +15,7 @@ using namespace std;
 /** @brief Activates framebuffer attachments.
  * @ingroup advanced
  */
-class Outputs : public Applicable {
+class Outputs : public Node, public Applicable {
 public:
 	Outputs(const Tag &tag);
 	~Outputs();

@@ -20,7 +20,7 @@ using namespace std;
  * 
  * @ingroup advanced
  */
-class Clear : public Applicable {
+class Clear : public Node, public Applicable {
 public:
 	Clear(const Tag &tag);
 	virtual void apply();

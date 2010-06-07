@@ -12,16 +12,18 @@ void Director::grab(int cmd, float id) {
 	
 	Identifiable *identifiable;
 	Drawable *drawable;
+	Node *node;
 	
 	// Find item and set selected
 	identifiable = Identifiable::findByID(static_cast<int>(id));
 	if (identifiable != NULL) {
+		node = dynamic_cast<Node*>(identifiable);
 		drawable = dynamic_cast<Drawable*>(identifiable);
-		if (drawable != NULL) {
+		if (node != NULL && drawable != NULL) {
 			if (drawable->isSelected())
-				scene->removeFromSelection(drawable);
+				scene->removeFromSelection(node);
 			else
-				scene->addToSelection(drawable);
+				scene->addToSelection(node);
 		}
 	}
 }

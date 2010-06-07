@@ -11,7 +11,7 @@
  * 
  * @throws NodeException if value for @e mode unrecognized.
  */
-Depth::Depth(const Tag &tag) : Applicable(tag) {
+Depth::Depth(const Tag &tag) : Node(tag) {
 	
 	string mode;
 	
@@ -69,7 +69,7 @@ string Depth::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Applicable::toString();
+	stream << Node::toString();
 	stream << " mode='" << Text::toLower(tag["mode"]) << "'";
 	stream << " clear='" << clear << "'";
 	return stream.str();
