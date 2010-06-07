@@ -70,19 +70,6 @@ void Translate::applyTo(Matrix &matrix) {
 }
 
 
-/** Remove the translation from the matrix after sorting. */
-void Translate::sortByDepthEnd(Matrix &matrix) {
-	
-	Matrix transMatrix(1.0, 0.0, 0.0,  -x,
-	                   0.0, 1.0, 0.0,  -y,
-	                   0.0, 0.0, 1.0,  -z,
-	                   0.0, 0.0, 0.0, 1.0);
-	
-	// Remove translation
-	matrix = matrix * transMatrix;
-}
-
-
 /** Restores transformation that was in effect before translate was applied. */
 void Translate::remove() {
 	
