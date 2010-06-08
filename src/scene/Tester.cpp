@@ -68,11 +68,14 @@ void Tester::onCanvasEventKey(const CanvasEvent &event) {
 	case 'q':
 		exit(0);
 	}
+	canvas->refresh();
 }
 
 
 /** Creates a window, opens the scene, and prepares it. */
 void Tester::open(const string &filename) {
+	
+	GLenum err;
 	
 	// Print
 	cout << endl;
@@ -81,20 +84,40 @@ void Tester::open(const string &filename) {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Create the canvas and get the camera
+	// Create the canvas and get camera
 	canvas = new CanvasGTK();
 	canvas->addListener(this, CanvasEvent::DISPLAY);
 	canvas->addListener(this, CanvasEvent::KEY);
 	camera = canvas->getCamera();
 	
-	// Open and prepare scene
 	try {
+		
+		// Pack window
+		window = new Gtk::Window();
+		window->set_title("Tester");
+		window->add(*canvas);
+		window->show_all();
+		
+		// Start setup
+		canvas->primeStart();
+		
+		// Load GLEW
+		err = glewInit();
+		if (err != GLEW_OK) {
+			throw Exception("[Tester] Could not initialize GLEW");
+		}
+		
+		// Open and prepare scene
 		scene = new Scene();
 		scene->open(filename);
 		scene->prepare();
 		scene->print();
 		traverser = new Traverser(scene);
-	} catch (Exception &e) {
+		
+		// End setup
+		canvas->primeFinish();
+	}
+	catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);
 	}
@@ -104,13 +127,8 @@ void Tester::open(const string &filename) {
 /** Starts the window's main loop, catching any exceptions. */
 void Tester::start() {
 	
-	Gtk::Window window;
-	
 	try {
-		window.set_title("Tester");
-		window.add(*((CanvasGTK*)canvas));
-		window.show_all();
-		Gtk::Main::run(window);
+		Gtk::Main::run(*window);
 	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);

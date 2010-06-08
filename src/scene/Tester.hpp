@@ -22,7 +22,6 @@ using namespace std;
  */
 class Tester : public CanvasListener {
 public:
-	void display(void);
 	string getFilename();
 	Scene* getScene();
 	void onCanvasEvent(const CanvasEvent &event);
@@ -33,8 +32,9 @@ public:
 private:
 	Traverser *traverser;
 	Scene *scene;
-	Canvas *canvas;
+	CanvasGTK *canvas;
 	Camera *camera;
+	Gtk::Window *window;
 };
 
 inline Scene* Tester::getScene() {return scene;}
