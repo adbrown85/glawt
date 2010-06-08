@@ -62,6 +62,15 @@ Node* Node::findRoot(Node *node) {
 }
 
 
+string Node::getAttribute(const string &key) const {
+	
+	Tag tag;
+	
+	tag = Parser::create(toString());
+	return tag[key];
+}
+
+
 string Node::getClassName() const {
 	
 	string className;

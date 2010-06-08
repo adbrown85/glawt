@@ -16,6 +16,7 @@
 #include "Text.hpp"
 #include "Canvas.hpp"
 #include "Log.hpp"
+#include "Parser.hpp"
 using namespace std;
 
 
@@ -43,6 +44,7 @@ public:
 	virtual void finalize() {}
 	virtual void finalizeAfter() {}
 	static Node* findRoot(Node *node);
+	virtual string getAttribute(const string &key) const;
 	vector<Node*> getChildren() const;
 	string getClassName() const;
 	float getDepth() const;
