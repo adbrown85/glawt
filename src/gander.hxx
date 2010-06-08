@@ -18,6 +18,7 @@
 #include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
 #include "CanvasGTK.hpp"
+#include "Menu.hpp"
 using namespace std;
 
 
@@ -75,6 +76,7 @@ private:
 	Delegate *delegate;
 	Canvas *canvas;
 	Scene *scene;
+	Menu *menu;
 	string inFilename, option, outFilename, parameter, title;
 };
 
