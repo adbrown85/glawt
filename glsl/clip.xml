@@ -31,7 +31,7 @@
 	<wireframe faces="back">
 		<instance of="cubes" />
 	</wireframe>
-	<texture name="volume" file="../textures/head256.vlb" compress="true">
+	<texture name="volume" file="../textures/head128.vlb" compress="true">
 	<texture name="exit_coords" size="512">
 		<framebuffer>
 			<target link="exit_coords" />
