@@ -18,27 +18,15 @@
 	<uniform type="vec3" name="LightPosition" link="spot" />
 	<uniform type="float" name="Ambient" link="spot.ambient" />
 	<translate x="-2">
-		<cube>
-			<uniform type="mat4" name="MVPMatrix" />
-			<uniform type="mat4" name="MVMatrix" />
-			<uniform type="mat4" name="NormalMatrix" />
-		</cube>
+		<cube />
 	</translate>
 	<translate x="+2">
-		<cube>
-			<uniform type="mat4" name="MVPMatrix" />
-			<uniform type="mat4" name="MVMatrix" />
-			<uniform type="mat4" name="NormalMatrix" />
-		</cube>
+		<cube />
 	</translate>
 	<translate y="-2">
 		<rotate axis="1 0 0" angle="-90">
 			<scale x="5.0" y="5.0">
-				<square>
-					<uniform type="mat4" name="MVPMatrix" />
-					<uniform type="mat4" name="MVMatrix" />
-					<uniform type="mat4" name="NormalMatrix" />
-				</square>
+				<square />
 			</scale>
 		</rotate>
 	</translate>

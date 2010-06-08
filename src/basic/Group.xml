@@ -8,7 +8,6 @@
 
 <group name="cubes">
 	<translate x="-2.0">
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<cube />
 	</translate>
 	<translate x="+2.0">

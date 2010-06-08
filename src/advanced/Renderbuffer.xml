@@ -9,12 +9,14 @@
 <!-- Group of cubes -->
 <group name="cubes">
 	<translate x="-1">
-		<uniform type="mat4" name="MVPMatrix" />
-		<cube selectable="false"/>
+		<cube selectable="false">
+			<uniform type="mat4" name="MVPMatrix" />
+		</cube>
 	</translate>
 	<translate x="+1">
-		<uniform type="mat4" name="MVPMatrix" />
-		<cube selectable="false"/>
+		<cube selectable="false">
+			<uniform type="mat4" name="MVPMatrix" />
+		</cube>
 	</translate>
 </group>
 
@@ -39,7 +41,6 @@
 		<shader file="../../glsl/texture.vert" />
 		<shader file="../../glsl/texture.frag" />
 		<translate>
-			<uniform type="mat4" name="MVPMatrix" />
 			<uniform type="sampler2D" name="unit" link="mytexture" />
 			<box />
 		</translate>

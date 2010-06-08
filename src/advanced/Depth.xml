@@ -11,14 +11,10 @@
 	<shader file="../../glsl/coordinates.frag" />
 	<depth mode="greater">
 		<translate x="+3.0">
-			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" />
-			</cube>
+			<box />
 		</translate>
 		<translate x="-3.0">
-			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" />
-			</cube>
+			<box />
 		</translate>
 	</depth>
 </program>

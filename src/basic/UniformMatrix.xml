@@ -12,9 +12,6 @@
 	<program>
 		<shader type="vertex" file="../../glsl/basic.vert" />
 		<shader type="fragment" file="../../glsl/basic.frag" />
-		<uniform type="mat4" name="MVMatrix" as="modelview" />
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-		<uniform type="mat3" name="NormalMatrix" as="normal" />
 		<uniform type="vec3" name="LightPosition" value="10.0 10.0 10.0" />
 		<cube />
 	</program>

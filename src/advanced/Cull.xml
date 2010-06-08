@@ -6,13 +6,10 @@
 -->
 
 
-<cull faces="back">
+<cull faces="front">
 	<program>
 		<shader type="vertex" file="../../glsl/coordinates.vert"/>
 		<shader type="fragment" file="../../glsl/coordinates.frag"/>
-		<!-- <translate x="+0.5" z="-2" y="+0.5"> -->
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<cube />
-		<!-- </translate> -->
+		<cube />
 	</program>
 </cull>
