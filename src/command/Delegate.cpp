@@ -68,6 +68,9 @@ void Delegate::run(int command) {
 	case Command::RESET:
 		cameraman->reset(command);
 		break;
+	case Command::REFRESH:
+		cameraman->refresh(command);
+		break;
 	case Command::HIDE:
 		compositor->hide(command);
 		break;

@@ -14,6 +14,13 @@ void Cameraman::fit(int cmd) {
 }
 
 
+/** Refreshes the display. */
+void Cameraman::refresh(int cmd) {
+	
+	canvas->refresh();
+}
+
+
 /** Resets the view's rotation. */
 void Cameraman::reset(int cmd) {
 	
