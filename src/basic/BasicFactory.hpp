@@ -14,6 +14,7 @@
 #include "Cone.hpp"
 #include "Disk.hpp"
 #include "Group.hpp"
+#include "Light.hpp"
 #include "Line.hpp"
 #include "Program.hpp"
 #include "Rotate.hpp"
@@ -44,6 +45,7 @@ public:
 	static Node* createCube(const Tag &tag);
 	static Node* createDisk(const Tag &tag);
 	static Node* createGroup(const Tag &tag);
+	static Node* createLight(const Tag &tag);
 	static Node* createLine(const Tag &tag);
 	static Node* createProgram(const Tag &tag);
 	static Node* createRotate(const Tag &tag);
