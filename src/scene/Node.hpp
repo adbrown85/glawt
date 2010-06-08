@@ -173,4 +173,24 @@ inline Suppressable::Suppressable() {suppress = false;}
 inline bool Suppressable::isSuppressed() const {return suppress;}
 inline void Suppressable::setSuppress(bool s) {suppress = true;}
 
+
+/** @brief %Node with a name.
+ * @interface Nameable
+ * @ingroup scene
+ */
+class Nameable {
+public:
+	virtual string getName() const;
+	virtual bool hasName() const;
+	virtual void setName(const string &name);
+	static Node* search(Node *node, const string &name);
+private:
+	string name;
+};
+inline string Nameable::getName() const {return name;}
+inline bool Nameable::hasName() const {return !name.empty();}
+inline void Nameable::setName(const string &n) {name = n;}
+
+
+
 #endif
