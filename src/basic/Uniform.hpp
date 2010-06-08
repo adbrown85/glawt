@@ -32,6 +32,9 @@ public:
 	GLint getLocation() const;
 	string getName() const;
 	Program* getProgram() const;
+	static map<string,GLenum> getUniformsFor(Program *program);
+	static string getTypeNameFor(GLenum type);
+	static bool isMatrixType(GLenum type);
 	virtual void remove() {};
 	void setLocation(GLint location);
 	void setName(const string &name);
