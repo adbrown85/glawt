@@ -42,6 +42,7 @@ public:
 	void set(float x, float y);
 	void set(float x, float y, float z);
 	void set(float x, float y, float z, float w);
+	void toArray(float array[4]);
 public:
 	friend bool operator==(const Vector &A, const Vector &B);
 	friend Vector operator+(const Vector &A, const Vector &B);

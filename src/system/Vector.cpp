@@ -435,3 +435,11 @@ void Vector::set(float x, float y, float z, float w) {
 	size = 4;
 }
 
+
+void Vector::toArray(float array[4]) {
+	
+	for (int i=0; i<4; ++i) {
+		array[i] = get(i);
+	}
+}
+
