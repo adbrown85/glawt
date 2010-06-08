@@ -12,13 +12,20 @@
 int main(int argc,
          char *argv[]) {
 	
+	Tester tester;
+	
+	// Initialize
+	Gtk::Main kit(argc, argv);
+	Gtk::GL::init(argc, argv);
+	
 	// Install tags
 	BasicFactory::install();
 	
+	// Open
+	tester.open("Uniform.xml");
+	
 	// Start
-	Tester::init(argc, argv);
-	Tester::open("Uniform.xml");
-	Tester::start();
+	tester.start();
 	
 	// Finish
 	return 0;
