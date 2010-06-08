@@ -6,24 +6,21 @@
 -->
 
 
-
 <program>
 	<shader file="halfmoon.vert" />
 	<shader file="halfmoon.frag" />
 	<blend>
-	<sort>
-		<translate x="+3.0">
-		<scale>
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<box />
-		</scale>
-		</translate>
-		<translate x="-3.0">
-		<scale>
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			<box />
-		</scale>
-		</translate>
-	</sort>
+		<sort>
+			<translate x="+3.0">
+				<scale>
+					<box />
+				</scale>
+			</translate>
+			<translate x="-3.0">
+				<scale>
+					<box />
+				</scale>
+			</translate>
+		</sort>
 	</blend>
 </program>

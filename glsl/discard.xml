@@ -9,6 +9,5 @@
 <program>
 	<shader file="discard.vert" />
 	<shader file="discard.frag" />
-	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 	<cube />
 </program>
