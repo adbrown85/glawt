@@ -24,6 +24,9 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	this->mode = traits.mode;
 	this->usage = traits.usage;
 	tag.get("name", name, false, false);
+	if (!tag.get("defaults", defaults, false)) {
+		defaults = true;
+	}
 	
 	// Store vertex attributes
 	block = count * 3 * sizeof(GLfloat);
@@ -51,6 +54,38 @@ void Shape::associate() {
 		NodeException e(tag);
 		e << "[Shape] No shader program found to bind attributes to.";
 		throw e;
+	}
+}
+
+
+void Shape::checkForDefaultUniforms() {
+	
+	int tally;
+	map<string,GLenum> uniforms;
+	map<string,GLenum>::iterator it;
+	ostringstream stream;
+	Node *node;
+	
+	// Try to add missing default uniforms
+	tally = 0;
+	uniforms = Uniform::getUniformsFor(program);
+	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
+		if (UniformMatrix::isDefault(it->first, it->second)) {
+			if (!UniformMatrix::hasChild(this, it->first)) {
+				stream.str("");
+				stream << "uniform type='mat4' name='" << it->first << "'";
+				node = Factory::create(stream.str());
+				addChild(node);
+				node->associate();
+				++tally;
+			}
+		}
+	}
+	
+	// Confirm
+	if (tally > 0) {
+		glog << tag.getLocation();
+		glog << " [Shape] Added " << tally << " default uniforms." << endl;
 	}
 }
 
@@ -123,6 +158,11 @@ void Shape::finalize() {
 			it = attributes.erase(it);
 		else
 			++it;
+	}
+	
+	// Check for defaults
+	if (defaults) {
+		checkForDefaultUniforms();
 	}
 }
 

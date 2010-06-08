@@ -12,6 +12,8 @@
 #include "Program.hpp"
 #include "Transformation.hpp"
 #include "Transform.hpp"
+#include "UniformMatrix.hpp"
+#include "Factory.hpp"
 using namespace std;
 
 
@@ -70,6 +72,7 @@ public:
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
 protected:
+	void checkForDefaultUniforms();
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
@@ -77,6 +80,7 @@ protected:
 	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
+	bool defaults;
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count, limit;
