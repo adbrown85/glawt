@@ -8,13 +8,136 @@
 #include <cassert>
 
 
-int main(int argc,
-         char *argv[]) {
+class TextTest {
+public:
+	void setUp();
+	void testCount();
+	void testFirstWord();
+	void testFirstWordCharacter();
+	void testFirstNotWordCharacter();
+	void testReplacements();
+	void testTrim();
+	void testSplit();
+protected:
+	void testFirstWordWith(const string &text, int first, int length);
+};
+
+
+void TextTest::setUp() {
+	
+	cout << "Setting up..." << endl;
+}
+
+
+void TextTest::testCount() {
+	
+	int result;
+	
+	cout << "\nTesting count..." << endl;
+	result = Text::count("abracadabra", 'a');
+	cout << "  " << result << endl;
+	assert(result == 5);
+}
+
+
+void TextTest::testFirstWordCharacter() {
+	
+	int pos;
+	string text;
+	
+	cout << "\nTesting first word character" << endl;
+	text = "    (foo)";
+	pos = Text::findFirstWordCharacter(text, 0);
+	cout << "  " << pos << endl;
+	assert(pos == 5);
+}
+
+
+void TextTest::testFirstNotWordCharacter() {
+	
+	int pos;
+	string text;
+	
+	cout << "\nNext first not word character" << endl;
+	text = "    (foo)";
+	pos = Text::findFirstNotWordCharacter(text, pos+1);
+	cout << "  " << pos << endl;
+	assert(pos == 8);
+}
+
+
+void TextTest::testFirstWord() {
+	
+	cout << "\nFirst word" << endl;
+	testFirstWordWith("    (foo)", 5, 3);
+	testFirstWordWith(" 78 * 45", -1, 0);
+	testFirstWordWith(" 123foobar", 4, 6);
+}
+
+
+void TextTest::testFirstWordWith(const string &text, int first, int length) {
+	
+	pair<int,int> bounds;
+	
+	bounds = Text::findFirstWord(text, 0);
+	cout << "  " << bounds.first << " " << bounds.second << endl;
+	assert(bounds.first  == first );
+	assert(bounds.second == length);
+	if (bounds.second != 0) {
+		cout << "  " << text.substr(bounds.first,bounds.second) << endl;
+	}
+}
+
+
+void TextTest::testReplacements() {
+	
+	map<string,string> dictionary;
+	string result;
+	
+	cout << "\nReplacements" << endl;
+	dictionary["PI_CONSTANT"] = "3.14";
+	dictionary["E_CONSTANT"] = "2.72";
+	result = Text::replace("4*PI_CONSTANT + E_CONSTANT BLAH", dictionary);
+	cout << "  " << result << endl;
+	assert(result == "4*3.14 + 2.72 BLAH");
+}
+
+
+void TextTest::testTrim() {
+	
+	string result;
+	
+	cout << "\nTrim" << endl;
+	result = Text::trim("  blah blah blah  ");
+	cout << "  '" << result << "'" << endl;
+	assert(result == "blah blah blah");
+	result = Text::trim("  \"blah blah blah\"  ", "'\" ");
+	cout << "  '" << result << "'" << endl;
+	assert(result == "blah blah blah");
+}
+
+
+void TextTest::testSplit() {
+	
+	pair<string,string> result;
+	
+	cout << "\nSplit" << endl;
+	result = Text::split("spot.ambient", '.');
+	cout << "  " << result.first << endl;
+	cout << "  " << result.second << endl;
+	assert(result.first == "spot");
+	assert(result.second == "ambient");
+}
+
+
+
+int main(int argc, char *argv[]) {
 	
 	int pos, result;
-	map<string,string> dictionary;
 	pair<int,int> bounds;
 	string text;
+	
+	TextTest test;
 	
 	// Start
 	cout << endl;
@@ -23,62 +146,15 @@ int main(int argc,
 	cout << "****************************************" << endl;
 	cout << endl;
 	
-	// Count
-	cout << "Count" << endl;
-	result = Text::count("abracadabra", 'a');
-	cout << "  " << result << endl;
-	assert(result == 5);
-	
-	// First word character
-	cout << "\nFirst word character" << endl;
-	text = "    (foo)";
-	pos = Text::findFirstWordCharacter(text, 0);
-	cout << "  " << pos << endl;
-	assert(pos == 5);
-	
-	// Next first not word character
-	cout << "\nNext first not word character" << endl;
-	text = "    (foo)";
-	pos = Text::findFirstNotWordCharacter(text, pos+1);
-	cout << "  " << pos << endl;
-	assert(pos == 8);
-	
-	// First word
-	cout << "\nFirst word" << endl;
-	text = "    (foo)";
-	bounds = Text::findFirstWord(text, 0);
-	cout << "  " << bounds.first << " " << bounds.second << endl;
-	cout << "  " << text.substr(bounds.first,bounds.second) << endl;
-	assert(bounds.first == 5);
-	assert(bounds.second == 3);
-	
-	// First word with none
-	cout << "\nFirst word with none" << endl;
-	bounds = Text::findFirstWord(" 78 * 45", 0);
-	cout << "  " << bounds.first << " " << bounds.second << endl;
-	assert(bounds.first == -1);
-	assert(bounds.second == 0);
-	
-	// First word with nothing after it
-	cout << "\nFirst word with nothing after it" << endl;
-	bounds = Text::findFirstWord(" 123foobar", 0);
-	cout << "  " << bounds.first << " " << bounds.second << endl;
-	assert(bounds.first == 4);
-	assert(bounds.second == 6);
-	
-	// Replacements
-	cout << "\nReplacements" << endl;
-	dictionary["SOME_CONSTANT"] = "3.14";
-	dictionary["ALSO_CONSTANT"] = "1.76";
-	text = Text::replace("4*SOME_CONSTANT + ALSO_CONSTANT BLAH", dictionary);
-	cout << text << endl;
-	
-	// Trim
-	cout << "\nTrim" << endl;
-	text = Text::trim("  blah blah blah  ");
-	cout << "'" << text << "'" << endl;
-	text = Text::trim("  \"blah blah blah\"  ", "'\" ");
-	cout << "'" << text << "'" << endl;
+	// Test
+	test.setUp();
+	test.testCount();
+	test.testFirstWordCharacter();
+	test.testFirstNotWordCharacter();
+	test.testFirstWord();
+	test.testReplacements();
+	test.testTrim();
+	test.testSplit();
 	
 	// End
 	cout << endl;

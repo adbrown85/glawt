@@ -22,6 +22,7 @@ public:
 	static int findFirstWordCharacter(const string &text, int pos=0);
 	static string indent(int times);
 	static string replace(const string &text, map<string,string> &dictionary);
+	static pair<string,string> split(const string &text, char at);
 	static string toLower(string txt);
 	static string trim(const string &text, const string &characters=" ");
 };
