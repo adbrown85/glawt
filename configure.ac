@@ -1,6 +1,6 @@
 # Initialize
 AC_PREREQ([2.65])
-AC_INIT([Gander], [1.0], [adb1413@rit.edu], , [http://gander.sourceforge.net])
+AC_INIT([Gander], [0.95], [adb1413@rit.edu], , [http://gander.sourceforge.net])
 AC_CONFIG_SRCDIR([src/gander.cxx])
 AC_CONFIG_HEADERS([config.h:config.in])
 
