@@ -75,7 +75,9 @@ string Binding::toString() const {
 	it = names.find(combo.trigger);
 	if (it != names.end()) {
 		stream << it->second;
-	} else if (isprint(combo.trigger)) {
+	} else if (isalpha(combo.trigger)) {
+		stream << ((char)combo.trigger);
+	} else {
 		stream << combo.trigger;
 	}
 	
