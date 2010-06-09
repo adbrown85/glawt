@@ -11,6 +11,7 @@
 #include <GL/glu.h>
 #include "Log.hpp"
 #include "Camera.hpp"
+#include "Combo.hpp"
 #define CANVAS_WIDTH 512
 #define CANVAS_HEIGHT 512
 #define CANVAS_DOWN 1
@@ -38,11 +39,6 @@
 #endif
 using namespace std;
 
-
-/* Button or key with modifier and if trigger is up or down. */
-struct Combo {
-	int trigger, modifier, action;
-};
 
 /* Current mouse coordinates and combination. */
 struct CanvasState {
