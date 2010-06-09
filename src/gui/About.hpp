@@ -16,6 +16,7 @@ using namespace std;
  */
 class About {
 public:
+	static string getIconFilename();
 	static void show(Gtk::Window *parent=NULL);
 };
 
