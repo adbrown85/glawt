@@ -11,6 +11,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/uimanager.h>
 #include "Delegate.hpp"
+#include "About.hpp"
 using namespace std;
 using Glib::RefPtr;
 
@@ -31,6 +32,7 @@ public:
 	void onActionViewZoomOut();
 	void onActionViewInformation();
 	void onActionViewReset();
+	void onActionHelpAbout();
 protected:
 	void initActionGroup();
 	void initUIManager();

@@ -93,6 +93,16 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionViewInformation)
 	);
+	
+	// Help menu
+	actionGroup->add(Gtk::Action::create("MenuHelp", "_Help"));
+	actionGroup->add(
+		Gtk::Action::create(
+			"HelpAbout", "_About",
+			"Information about the program."
+		),
+		sigc::mem_fun(*this, &Menu::onActionHelpAbout)
+	);
 }
 
 
@@ -125,6 +135,9 @@ void Menu::initUIManager() {
 		"      <menuitem action='ViewResetCamera' />"
 		"      <separator />"
 		"      <menuitem action='ViewInformation' />"
+		"    </menu>"
+		"    <menu action='MenuHelp'>"
+		"      <menuitem action='HelpAbout' />"
 		"    </menu>"
 		"  </menubar>"
 		"  <toolbar name='ToolBar'>"
@@ -225,5 +238,11 @@ void Menu::onActionViewInformation() {
 		delegate->run(Command::INFORMATION);
 		delegate->run(Command::REFRESH);
 	}
+}
+
+
+void Menu::onActionHelpAbout() {
+	
+	About::show();
 }
 
