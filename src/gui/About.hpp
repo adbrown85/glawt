@@ -11,7 +11,7 @@
 using namespace std;
 
 
-/** @brief Utility for showing the About dialog.
+/** @brief Utility for showing the %About dialog.
  * @ingroup gui
  */
 class About {
