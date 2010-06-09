@@ -22,8 +22,20 @@ void Menu::initActionGroup() {
 	// Create
 	actionGroup = Gtk::ActionGroup::create();
 	
+	// Submenus
+	initActionGroupFile();
+	initActionGroupEdit();
+	initActionGroupView();
+	initActionGroupHelp();
+}
+
+
+void Menu::initActionGroupFile() {
+	
 	// File menu
 	actionGroup->add(Gtk::Action::create("MenuFile", "_File"));
+	
+	// Quit
 	actionGroup->add(
 		Gtk::Action::create(
 			"FileQuit", Gtk::Stock::QUIT, "_Quit",
@@ -31,9 +43,15 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionFileQuit)
 	);
+}
+
+
+void Menu::initActionGroupEdit() {
 	
 	// Edit menu
 	actionGroup->add(Gtk::Action::create("MenuEdit", "_Edit"));
+	
+	// Select all
 	actionGroup->add(
 		Gtk::Action::create(
 			"EditSelectAll", Gtk::Stock::SELECT_ALL, "Select _All",
@@ -41,30 +59,31 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionEditSelectAll)
 	);
+	
+	// Deselect
 	actionGroup->add(
-		Gtk::Action::create(
-			"EditDeselect", "Deselect",
-			"Deselect all objects"
-		),
+		Gtk::Action::create("EditDeselect", "Deselect", "Deselect objects"),
 		sigc::mem_fun(*this, &Menu::onActionEditDeselect)
 	);
+	
+	// Hide
 	actionGroup->add(
-		Gtk::Action::create(
-			"EditHide", "_Hide",
-			"Hide an object"
-		),
+		Gtk::Action::create("EditHide", "_Hide", "Hide an object"),
 		sigc::mem_fun(*this, &Menu::onActionEditHide)
 	);
 	actionGroup->add(
-		Gtk::Action::create(
-			"EditShowAll", "_Show All",
-			"Show all the objects."
-		),
+		Gtk::Action::create("EditShowAll", "_Show All", "Show all objects"),
 		sigc::mem_fun(*this, &Menu::onActionEditShowAll)
 	);
+}
+
+
+void Menu::initActionGroupView() {
 	
 	// View menu
 	actionGroup->add(Gtk::Action::create("MenuView", "_View"));
+	
+	// Zoom in
 	actionGroup->add(
 		Gtk::Action::create(
 			"ViewZoomIn", Gtk::Stock::ZOOM_IN, "Zoom _In",
@@ -72,6 +91,8 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionViewZoomIn)
 	);
+	
+	// Zoom out
 	actionGroup->add(
 		Gtk::Action::create(
 			"ViewZoomOut", Gtk::Stock::ZOOM_OUT, "Zoom _Out",
@@ -79,13 +100,17 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionViewZoomOut)
 	);
+	
+	// Reset
 	actionGroup->add(
 		Gtk::Action::create(
 			"ViewResetCamera", "_Reset",
-			"Reset camera to its original position and rotation."
+			"Reset camera to original position and rotation."
 		),
 		sigc::mem_fun(*this, &Menu::onActionViewReset)
 	);
+	
+	// Information
 	actionGroup->add(
 		Gtk::Action::create(
 			"ViewInformation", "_Information",
@@ -93,9 +118,15 @@ void Menu::initActionGroup() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionViewInformation)
 	);
+}
+
+
+void Menu::initActionGroupHelp() {
 	
 	// Help menu
 	actionGroup->add(Gtk::Action::create("MenuHelp", "_Help"));
+	
+	// About
 	actionGroup->add(
 		Gtk::Action::create(
 			"HelpAbout", "_About",

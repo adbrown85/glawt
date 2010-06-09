@@ -35,6 +35,10 @@ public:
 	void onActionHelpAbout();
 protected:
 	void initActionGroup();
+	void initActionGroupFile();
+	void initActionGroupEdit();
+	void initActionGroupView();
+	void initActionGroupHelp();
 	void initUIManager();
 private:
 	Delegate *delegate;
