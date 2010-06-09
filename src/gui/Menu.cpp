@@ -293,7 +293,7 @@ void Menu::onActionViewInformation() {
 
 void Menu::onActionHelpAbout() {
 	
-	About::show();
+	About::show(window);
 }
 
 

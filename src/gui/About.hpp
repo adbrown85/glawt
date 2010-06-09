@@ -16,7 +16,7 @@ using namespace std;
  */
 class About {
 public:
-	static void show();
+	static void show(Gtk::Window *parent=NULL);
 };
 
 

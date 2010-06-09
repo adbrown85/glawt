@@ -7,7 +7,8 @@
 #include "About.hpp"
 
 
-void About::show() {
+/** Shows an %About dialog parented to @e window. */
+void About::show(Gtk::Window *parent) {
 	
 	Gtk::AboutDialog dialog;
 	vector<string> authors;
@@ -25,6 +26,9 @@ void About::show() {
 	dialog.set_authors(authors);
 	
 	// Run
+	if (parent != NULL) {
+		dialog.set_transient_for(*parent);
+	}
 	dialog.run();
 }
 
