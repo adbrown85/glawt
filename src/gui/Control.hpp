@@ -26,6 +26,7 @@ public:
 	virtual map<Combo,Binding> getBindings();
 	virtual list<Manipulator*> getManipulators() const;
 	virtual void install() = 0;
+	virtual void load() = 0;
 	virtual void print();
 	virtual void setManipulators(list<Manipulator*> manipulators);
 protected:

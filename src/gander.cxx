@@ -99,6 +99,8 @@ void Gander::onDisplay() {
 	scene = new Scene();
 	delegate = new Delegate(scene, canvas);
 	menu = new Menu(delegate);
+	controls.push_back(new Mouse(delegate));
+	controls.push_back(new Keyboard(delegate));
 	window.set_title(title);
 	
 	// Pack
@@ -233,6 +235,7 @@ void Gander::parse() {
 void Gander::prime() {
 	
 	GLenum err;
+	list<Control*>::iterator it;
 	
 	// Load GLEW
 	err = glewInit();
@@ -245,8 +248,10 @@ void Gander::prime() {
 	
 	// Add display and controls
 	display = new Display(delegate);
-	display->add(new Keyboard(delegate));
-	display->add(new Mouse(delegate));
+	for (it=controls.begin(); it!=controls.end(); ++it) {
+		(*it)->load();
+		display->add(*it);
+	}
 }
 
 

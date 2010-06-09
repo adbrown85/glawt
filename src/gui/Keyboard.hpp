@@ -20,6 +20,7 @@ class Keyboard : public Control, public CanvasListener {
 public:
 	Keyboard(Delegate *delegate);
 	virtual void install();
+	virtual void load() {}
 	virtual void onCanvasEvent(const CanvasEvent &event);
 protected:
 	void addBindings();

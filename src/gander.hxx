@@ -71,6 +71,7 @@ protected:
 private:
 	int argc;
 	char **argv;
+	list<Control*> controls;
 	Display *display;
 	Delegate *delegate;
 	Canvas *canvas;
