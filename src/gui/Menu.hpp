@@ -12,6 +12,7 @@
 #include <gtkmm/uimanager.h>
 #include "Delegate.hpp"
 #include "About.hpp"
+#include "ShortcutsDialog.hpp"
 using namespace std;
 using Glib::RefPtr;
 
@@ -21,7 +22,7 @@ using Glib::RefPtr;
  */
 class Menu {
 public:
-	Menu(Delegate *delegate);
+	Menu(Delegate *delegate, Gtk::Window *window, list<Control*> controls);
 	Gtk::Widget* getMenuBar() const;
 	void onActionFileQuit();
 	void onActionEditHide();
@@ -33,6 +34,7 @@ public:
 	void onActionViewInformation();
 	void onActionViewReset();
 	void onActionHelpAbout();
+	void onActionHelpShortcuts();
 protected:
 	void initActionGroup();
 	void initActionGroupFile();
@@ -45,6 +47,8 @@ private:
 	RefPtr<Gtk::UIManager> uiManager;
 	RefPtr<Gtk::MenuBar> menuBar;
 	RefPtr<Gtk::ActionGroup> actionGroup;
+	ShortcutsDialog *shortcutsDialog;
+	Gtk::Window *window;
 };
 
 

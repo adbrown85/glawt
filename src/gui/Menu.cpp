@@ -8,9 +8,18 @@
 
 
 /** Initializes the ActionGroup and UIManager. */
-Menu::Menu(Delegate *delegate) {
+Menu::Menu(Delegate *delegate,
+           Gtk::Window *window,
+           list<Control*> controls) {
 	
+	// Commands
 	this->delegate = delegate;
+	
+	// Helpers
+	this->window = window;
+	shortcutsDialog = new ShortcutsDialog(window, controls);
+	
+	// UI
 	initActionGroup();
 	initUIManager();
 }
@@ -134,6 +143,15 @@ void Menu::initActionGroupHelp() {
 		),
 		sigc::mem_fun(*this, &Menu::onActionHelpAbout)
 	);
+	
+	// Shortcuts
+	actionGroup->add(
+		Gtk::Action::create(
+			"HelpShortcuts", "_Shortcuts",
+			"Mouse and keyboard controls"
+		),
+		sigc::mem_fun(*this, &Menu::onActionHelpShortcuts)
+	);
 }
 
 
@@ -169,6 +187,7 @@ void Menu::initUIManager() {
 		"    </menu>"
 		"    <menu action='MenuHelp'>"
 		"      <menuitem action='HelpAbout' />"
+		"      <menuitem action='HelpShortcuts' />"
 		"    </menu>"
 		"  </menubar>"
 		"  <toolbar name='ToolBar'>"
@@ -275,5 +294,12 @@ void Menu::onActionViewInformation() {
 void Menu::onActionHelpAbout() {
 	
 	About::show();
+}
+
+
+void Menu::onActionHelpShortcuts() {
+	
+	shortcutsDialog->run();
+	shortcutsDialog->hide();
 }
 

@@ -15,6 +15,7 @@ int main(int argc,
 	Gtk::Main kit(argc, argv);
 	Gtk::Window window;
 	Menu *menu;
+	list<Control*> controls;
 	
 	// Start
 	cout << endl;
@@ -24,7 +25,7 @@ int main(int argc,
 	cout << endl;
 	
 	// Test
-	menu = new Menu(NULL);
+	menu = new Menu(NULL, &window, controls);
 	window.set_title("Menu Test");
 	window.add(*(menu->getMenuBar()));
 	window.show_all();

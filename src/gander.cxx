@@ -98,9 +98,9 @@ void Gander::onDisplay() {
 	canvas = new CanvasGTK();
 	scene = new Scene();
 	delegate = new Delegate(scene, canvas);
-	menu = new Menu(delegate);
 	controls.push_back(new Mouse(delegate));
 	controls.push_back(new Keyboard(delegate));
+	menu = new Menu(delegate, &window, controls);
 	window.set_title(title);
 	
 	// Pack
