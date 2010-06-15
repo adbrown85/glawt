@@ -91,6 +91,7 @@ $(distdir):
 	@cp src/advanced/*.frag $(distdir)/src/advanced
 	@cp src/advanced/*.vert $(distdir)/src/advanced
 	@cp src/basic/*.glsl $(distdir)/src/basic
+	@cp src/system/*.glsl $(distdir)/src/system
 	@echo "    doc"
 	@mkdir $(distdir)/doc
 	@cp doc/Makefile.in $(distdir)/doc
