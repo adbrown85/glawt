@@ -74,5 +74,12 @@ void main() {
 		}
 		t += SampleRate;
 	}
-	FragColor.a *= Opacity;
+	
+	// Fix opacity
+	if (FragColor.a > 0.1) {
+		FragColor.a = 1.0;
+	} else {
+		FragColor.a = 0.0;
+	}
 }
+
