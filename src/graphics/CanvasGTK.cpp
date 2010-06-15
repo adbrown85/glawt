@@ -43,7 +43,7 @@ void CanvasGTK::on_realize() {
 	window = get_window();
 	
 	// Focus
-	set_can_focus(true);
+	set_flags(Gtk::CAN_FOCUS);
 	grab_focus();
 	
 	// Start
