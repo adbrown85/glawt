@@ -75,6 +75,8 @@ $(distdir):
 	@cp configure $(distdir)
 	@cp config.in $(distdir)
 	@cp install-sh $(distdir)
+	@cp config.guess $(distdir)
+	@cp config.sub $(distdir)
 	@cp src/Makefile.in $(distdir)/src
 	@cp src/gander.*xx $(distdir)/src
 	@cp src/common.h $(distdir)/src

@@ -4,6 +4,9 @@ AC_INIT([Gander], [0.95], [adb1413@rit.edu], , [http://gander.sourceforge.net])
 AC_CONFIG_SRCDIR([src/gander.cxx])
 AC_CONFIG_HEADERS([config.h:config.in])
 
+# Check system
+AC_CANONICAL_SYSTEM
+
 # Checks for programs
 AC_PROG_CXX
 AC_PROG_INSTALL
@@ -89,6 +92,11 @@ AC_TYPE_SIZE_T
 # Manual variables
 modules='system graphics scene basic advanced command gui'
 AC_SUBST([modules])
+
+# Compiler switches
+if test $build_os = "mingw32"; then
+	CXXFLAGS="$CXXFLAGS -Wl,--enable-auto-import"
+fi
 
 # Finish
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
