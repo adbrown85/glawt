@@ -74,14 +74,14 @@ $(archive): ${notdir $(objects)}
 # Tests
 %: %.cxx %.o
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o ${dir $<}${notdir $@} $< $(archive)
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
 tests: ${notdir $(tests)}
 ${notdir $(tests)}:
 
 # Application
 $(application): gander.cxx gander.hxx ${notdir $(objects)}
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $< $(archive)
+	@$(CXX) $(CXXFLAGS) -o $@ $< $(archive) $(LDFLAGS)
 
 # Installation
 .PHONY: install-bin uninstall-bin
