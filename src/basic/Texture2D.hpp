@@ -7,8 +7,8 @@
 #ifndef TEXTURE2D_HPP
 #define TEXTURE2D_HPP
 #include "common.h"
-#include <IL/ilut.h>
 #include "Texture.hpp"
+#include "Image.hpp"
 using namespace std;
 
 
@@ -19,17 +19,14 @@ class Texture2D : public Texture {
 public:
 	Texture2D(const Tag &tag);
 	virtual void associate();
+	virtual void finalize();
 	static Texture2D* find(Node *node, const string &name);
 	virtual GLint getRawFootprint() const;
 	virtual int getSize() const;
 	virtual string toString() const;
-protected:
-	virtual void generate();
-	static void initLibraries();
-	virtual void load();
 private:
-	static bool librariesLoaded;
-	ILuint image;
+	Image *image;
+	GLenum format;
 	int size;
 };
 
