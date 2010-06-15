@@ -22,7 +22,7 @@ using namespace std;
  * @ingroup advanced
  * @see Framebuffer
  */
-class Screen : public Applicable {
+class Screen : public Node, public Applicable {
 public:
 	Screen(const Tag &tag);
 	virtual void apply();

@@ -18,6 +18,7 @@ class Cameraman : public Worker {
 public:
 	Cameraman(Scene *s, Canvas *c) : Worker(s,c) {}
 	void fit(int command);
+	void refresh(int command);
 	void reset(int command);
 	void rotate(int command, float amount);
 	void translate(int command, float amount);

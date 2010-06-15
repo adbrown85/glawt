@@ -8,13 +8,15 @@
 #define SIMPLEDRAWABLE_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "SimpleTransformable.hpp"
 using namespace std;
 
 
 /** @brief Base class for a node that can be drawn on screen.
- * @ingroup scene
+ * @ingroup basic
  */
-class SimpleDrawable : public Drawable {
+class SimpleDrawable : public SimpleTransformable,
+                       public Drawable {
 public:
 	SimpleDrawable(const Tag &tag);
 	virtual void draw() const = 0;

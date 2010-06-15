@@ -9,13 +9,11 @@
 <!-- Cubes driving boolean operations -->
 <group name="cubes">
 	<translate x="-1">
-		<uniform type="mat4" name="MVPMatrix" />
 		<cube name="left">
 			<uniform type="vec4" name="Color" value="1 0 1 1" />
 		</cube>
 	</translate>
 	<translate x="+1" y="+0.5" z="-0.5">
-		<uniform type="mat4" name="MVPMatrix" />
 		<cube name="right">
 			<uniform type="vec4" name="Color" value="0 1 1 1" />
 		</cube>
@@ -30,9 +28,6 @@
 	<depth mode="greater">
 		<cull faces="front">
 -->
-			<uniform type="mat4" name="MVPMatrix" />
-			<uniform type="mat4" name="MVMatrix" />
-			<uniform type="mat4" name="NormalMatrix" />
 			<uniform type="vec4" name="LightPosition" value="15 15 15 1" />
 			<uniform type="float" name="Ambient" value="0.4" />
 			<boolean operation="XOR" of="cubes" only="behind" />
@@ -47,7 +42,6 @@
 <program>
 	<shader file="../../glsl/color.vert" />
 	<shader file="../../glsl/color.frag" />
-	<uniform type="mat4" name="MVPMatrix" />
 	<uniform type="vec4" name="Color" value="1 1 0 1" />
 	<boolean operation="XOR" of="cubes" only="forward" />
 </program>
@@ -78,7 +72,6 @@
 		<wireframe faces="front">
 			<instance of="cubes" />
 			<uniform type="vec4" name="Color" value="1 1 1 1" />
-			<uniform type="mat4" name="MVPMatrix" />
 			<boolean operation="AND" of="cubes" />
 		</wireframe>
 <!--

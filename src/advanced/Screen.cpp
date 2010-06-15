@@ -8,7 +8,7 @@
 
 
 /** Clears the framebuffer pointer. */
-Screen::Screen(const Tag &tag) : Applicable(tag) {
+Screen::Screen(const Tag &tag) : Node(tag) {
 	
 	framebuffer = NULL;
 }

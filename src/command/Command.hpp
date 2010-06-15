@@ -25,7 +25,7 @@ public:
 		FIT_SELECTED, FIT_ALL,
 		TRACK, TRACK_LEFT, TRACK_RIGHT,
 		ZOOM_IN, ZOOM_OUT,
-		RESET,
+		RESET, REFRESH,
 		ROTATE, ROTATE_X, ROTATE_Y, ROTATE_Z,
 		SCALE, SCALE_X, SCALE_Y, SCALE_Z,
 		TRANSLATE, TRANSLATE_X, TRANSLATE_Y, TRANSLATE_Z,
@@ -64,6 +64,7 @@ inline void Command::setNames() {
 	names[ZOOM_IN] = "Zoom In";
 	names[ZOOM_OUT] = "Zoom Out";
 	names[RESET] = "Reset Camera";
+	names[REFRESH] = "Refresh Display";
 	names[ROTATE] = "Rotate";
 	names[ROTATE_X] = "Rotate X";
 	names[ROTATE_Y] = "Rotate Y";

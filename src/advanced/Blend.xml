@@ -10,15 +10,13 @@
 	<shader file="../../glsl/halfmoon.vert" />
 	<shader file="../../glsl/halfmoon.frag" />
 	<blend>
-		<translate x="+3.0">
-			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			</cube>
-		</translate>
-		<translate x="-3.0">
-			<cube style="2D">
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
-			</cube>
-		</translate>
+		<sort>
+			<translate x="-3.0">
+				<box />
+			</translate>
+			<translate x="+3.0">
+				<box />
+			</translate>
+		</sort>
 	</blend>
 </program>

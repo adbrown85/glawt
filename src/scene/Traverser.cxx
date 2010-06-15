@@ -8,19 +8,25 @@
 #include "Factory.hpp"
 #include "Parser.hpp"
 #include "Tag.hpp"
-#include "SimpleDrawable.hpp"
 
 
-class FakeDrawable : public SimpleDrawable {
+class FakeDrawable : public Node, public Drawable {
 public: 
-	FakeDrawable(const Tag &tag) : SimpleDrawable(tag) {name = tag.getName();}
+	FakeDrawable(const Tag &tag) : Node(tag) {name = tag.getName();}
 	virtual void draw() const {cout << "  " << name << endl;}
+	virtual bool isSelectable() const {return true;}
+	virtual bool isSelected() const {return false;}
+	virtual bool isVisible() const {return true;}
+	virtual void setSelected(bool selected) {}
+	virtual void setVisible(bool visible) {}
+	virtual void toggleSelected() {}
+	virtual void toggleVisible() {}
 	virtual string toString() const {return Node::toString() + " " + name;}
 	string name;
 };
-class FakeApplicable : public Applicable {
+class FakeApplicable : public Node, public Applicable {
 public:
-	FakeApplicable(const Tag &tag) : Applicable(tag) {name = tag.getName();}
+	FakeApplicable(const Tag &tag) : Node(tag) {name = tag.getName();}
 	virtual void apply() {cout << "  " << name << endl;}
 	virtual void remove() {cout << "  " << name << endl;}
 	virtual string toString() const {return Node::toString() + " " + name;}
@@ -38,18 +44,18 @@ public:
 class FakeTraverser : public Traverser {
 public:
 	FakeTraverser(Scene *scene) : Traverser(scene) {};
-	virtual void onApplicable(Applicable *applicable);
-	virtual void onDrawable(Drawable *drawable);
+	virtual void onApplicable(Node *node, Applicable *applicable);
+	virtual void onDrawable(Node *node, Drawable *drawable);
 };
-void FakeTraverser::onApplicable(Applicable *node) {
+void FakeTraverser::onApplicable(Node *node, Applicable *applicable) {
 	cout << "  FakeTraverser::onApplicable" << endl;
 	cout << "  " << node->getClassName() << endl;
-	Traverser::onApplicable(node);
+	Traverser::onApplicable(node, applicable);
 }
-void FakeTraverser::onDrawable(Drawable *node) {
+void FakeTraverser::onDrawable(Node *node, Drawable *drawable) {
 	cout << "  FakeTraverser::onDrawable" << endl;
 	cout << "  " << node->getClassName() << endl;
-	Traverser::onDrawable(node);
+	Traverser::onDrawable(node, drawable);
 }
 
 

@@ -28,9 +28,12 @@ struct UniformSnapshot {
 };
 
 /** @brief Redraws all the nodes of a group with different characteristics.
+ * 
+ * @warning Default uniforms on shapes in an instance may not work correctly.
+ * 
  * @ingroup advanced
  */
-class Instance : public Applicable {
+class Instance : public Node, public Applicable {
 public:
 	Instance(const Tag &tag);
 	virtual void apply();

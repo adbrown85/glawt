@@ -17,20 +17,22 @@ using namespace std;
 /** @brief %Node that moves items in the scene.
  * @ingroup basic
  */
-class Translate : public Transformation,
-                  public Vector {
+class Translate : public Transformation {
 public:
 	Translate(const Tag &tag);
 	void add(const Vector &B);
 	virtual void apply();
 	virtual void applyTo(Matrix &matrix);
 	static Translate* find(Node *node);
+	virtual Vector getValue() const;
 	virtual void remove();
 	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
-protected:
-	virtual void sortByDepthEnd(Matrix &matrix);
+private:
+	Vector value;
 };
+
+inline Vector Translate::getValue() const {return value;}
 
 
 #endif

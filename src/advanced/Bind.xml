@@ -18,7 +18,6 @@
 				<bind name="FragColor" to="back_coords" />
 			</outputs>
 			<clear r="0.8" g="0.8" b="0.8" />
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="front">
 				<cube />
 			</cull>
@@ -30,7 +29,6 @@
 				<bind name="FragColor" to="front_coords" />
 			</outputs>
 			<clear r="0.4" g="0.4" b="0.4" />
-			<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 			<cull faces="back">
 				<cube />
 			</cull>
@@ -40,10 +38,10 @@
 	<program>
 		<shader file="../../glsl/multitexture.vert" />
 		<shader file="../../glsl/multitexture.frag" />
-		<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 		<uniform type="sampler2D" name="left" link="back_coords" />
 		<uniform type="sampler2D" name="right" link="front_coords" />
 		<box />
 	</program>
+</texture>
 </texture>
  

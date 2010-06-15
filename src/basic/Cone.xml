@@ -14,6 +14,6 @@
 	<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 	<uniform type="mat4" name="MVMatrix" as="modelview" />
 	<uniform type="mat3" name="NormalMatrix" as="normal" />
-	<cone />
-	<disk />
+	<cone defaults="false" />
+	<disk defaults="false" />
 </program>

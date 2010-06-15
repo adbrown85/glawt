@@ -14,7 +14,7 @@ using namespace std;
 /** @brief Causes only the edges of shapes to be drawn.
  * @ingroup basic
  */
-class Wireframe : public Applicable {
+class Wireframe : public Node, public Applicable {
 public:
 	Wireframe(const Tag &tag);
 	virtual void apply();

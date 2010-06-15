@@ -71,6 +71,9 @@ class UniformMatrix : public Uniform {
 public:
 	UniformMatrix(const Tag &tag);
 	virtual void apply();
+	static bool hasChild(Node *node, const string &name);
+	static bool isDefault(const string &name, GLenum type);
+	static bool isDefaultName(const string &name);
 	virtual string toString() const;
 protected:
 	void setTypeFromAs();

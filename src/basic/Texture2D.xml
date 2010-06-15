@@ -14,7 +14,6 @@
 		<shader file="../../glsl/texture.frag" />
 		<translate x="0.5">
 			<square>
-				<uniform type="mat4" name="MVPMatrix" as="modelviewprojection" />
 				<uniform type="sampler2D" name="unit" link="crate" />
 			</square>
 		</translate>

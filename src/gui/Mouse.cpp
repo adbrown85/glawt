@@ -7,27 +7,28 @@
 #include "Mouse.hpp"
 
 
-Mouse::Mouse(Delegate *delegate) : Control(delegate), picker(scene,canvas) {
+Mouse::Mouse(Delegate *delegate) : Control(delegate) {
 	
-	list<Manipulator*>::iterator it;
-	
-	// Set name
+	// Basics
 	this->type = "Mouse";
+	this->picker = NULL;
+	this->loaded = false;
 	
-	// Add bindings and manipulators
-	addManipulators();
+	// Add bindings
 	addBindings();
-	enableTranslateManipulators();
-	for (it=manips.begin(); it!=manips.end(); ++it)
-		(*it)->setDelegate(delegate);
-	
-	// Set up picking
-	picker.addManipulators(manips);
 	
 	// Add listeners
 	delegate->addListener(this, Command::TRANSLATE);
 	delegate->addListener(this, Command::SCALE);
 	delegate->addListener(this, Command::ROTATE);
+}
+
+
+Mouse::~Mouse() {
+	
+	if (picker != NULL) {
+		delete picker;
+	}
 }
 
 
@@ -121,11 +122,37 @@ float Mouse::findDragAmount(int i) {
 }
 
 
-/** Installs the control into the current context. */
+/** Installs the control into the current context.
+ * 
+ * @throws Exception if load() was not called first.
+ */
 void Mouse::install() {
 	
 	canvas->addListener(this, CanvasEvent::BUTTON);
 	canvas->addListener(this, CanvasEvent::DRAG);
+	if (!loaded) {
+		throw Exception("[Mouse] Need to call load before install.");
+	}
+}
+
+
+/** Sets up picking and manipulators. */
+void Mouse::load() {
+	
+	list<Manipulator*>::iterator it;
+	
+	// Add manipulators
+	addManipulators();
+	enableTranslateManipulators();
+	for (it=manips.begin(); it!=manips.end(); ++it)
+		(*it)->setDelegate(delegate);
+	
+	// Set up picking
+	picker = new Picker(scene, canvas);
+	picker->addManipulators(manips);
+	
+	// Finish
+	loaded = true;
 }
 
 
@@ -230,7 +257,7 @@ void Mouse::pickItem() {
 	manip = NULL;
 	
 	// Pick the item
-	result = picker.pick(state.x, state.y);
+	result = picker->pick(state.x, state.y);
 	itemID = result.first;
 	shapeID = result.second;
 	

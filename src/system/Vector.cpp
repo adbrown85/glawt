@@ -294,7 +294,7 @@ ostream& operator<<(ostream &out, const Vector &A) {
 }
 
 
-/** @throws const_char* if the index is out of bounds. */
+/** @throws Exception if the index is out of bounds. */
 float& Vector::operator[](int i) {
 	
 	// Return correct component
@@ -309,7 +309,7 @@ float& Vector::operator[](int i) {
 }
 
 
-/** @throws const_char* if the index is out of bounds. */
+/** @throws Exception if the index is out of bounds. */
 float Vector::operator[](int i) const {
 	
 	// Return correct component
@@ -349,7 +349,7 @@ float dot(const Vector &A, const Vector &B) {
 }
 
 
-/** @throws const_char* if index out of bounds. */
+/** @throws Exception if index out of bounds. */
 float Vector::get(int i) const {
 	
 	// Return correct component
@@ -433,5 +433,13 @@ void Vector::set(float x, float y, float z, float w) {
 	this->z = z;
 	this->w = w;
 	size = 4;
+}
+
+
+void Vector::toArray(float array[4]) {
+	
+	for (int i=0; i<4; ++i) {
+		array[i] = get(i);
+	}
 }
 

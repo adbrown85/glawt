@@ -12,8 +12,8 @@
 using namespace std;
 
 
-/** @brief Reusable collection of nodes.
- * @ingroup advanced
+/** @brief Collection of nodes.
+ * @ingroup basic
  */
 class Group : public Node {
 public:
@@ -26,7 +26,6 @@ public:
 private:
 	string name;
 };
-
 
 inline bool Group::areChildrenTraversable() const {return false;}
 inline bool Group::areChildrenPreparable() const {return false;}

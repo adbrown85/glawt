@@ -16,9 +16,9 @@
  * @interface Transformation
  * @ingroup basic
  */
-class Transformation : public Applicable {
+class Transformation : public Node, public Applicable {
 public:
-	Transformation(const Tag &tag) : Applicable(tag) {}
+	Transformation(const Tag &tag) : Node(tag) {}
 	virtual void addListener(NodeListener *listener);
 	static void findAll(Node *node, list<Transformation*> &L);
 	virtual void fireEvent();

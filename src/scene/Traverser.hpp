@@ -13,7 +13,7 @@
 using namespace std;
 
 
-/** @brief Utility to walk through nodes that consolidates rules.
+/** @brief Utility to walk through nodes.
  * @ingroup scene
  */
 class Traverser {
@@ -23,8 +23,8 @@ public:
 protected:
 	void findDependents();
 	Canvas* getCanvas() const;
-	virtual void onApplicable(Applicable *node);
-	virtual void onDrawable(Drawable *node);
+	virtual void onApplicable(Node *node, Applicable *applicable);
+	virtual void onDrawable(Node *node, Drawable *drawable);
 	void traverseChildren(Node *node);
 	void traverseNode(Node *node);
 	void setCanvas(Canvas *canvas);

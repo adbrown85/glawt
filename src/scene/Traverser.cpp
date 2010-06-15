@@ -36,19 +36,19 @@ void Traverser::findDependents() {
 }
 
 
-void Traverser::onApplicable(Applicable *node) {
+void Traverser::onApplicable(Node *node, Applicable *applicable) {
 	
 	// Apply, do children, then remove
-	node->apply();
+	applicable->apply();
 	traverseChildren(node);
-	node->remove();
+	applicable->remove();
 }
 
 
-void Traverser::onDrawable(Drawable *drawable) {
+void Traverser::onDrawable(Node *node, Drawable *drawable) {
 	
 	// Do children then draw it
-	traverseChildren(drawable);
+	traverseChildren(node);
 	if (drawable->isVisible())
 		drawable->draw();
 }
@@ -105,9 +105,9 @@ void Traverser::traverseNode(Node *node) {
 	
 	// Determine if node is applicable or drawable
 	if ((applicable = dynamic_cast<Applicable*>(node))) {
-		onApplicable(applicable);
+		onApplicable(node, applicable);
 	} else if ((drawable = dynamic_cast<Drawable*>(node))) {
-		onDrawable(drawable);
+		onDrawable(node, drawable);
 	} else {
 		traverseChildren(node);
 	}

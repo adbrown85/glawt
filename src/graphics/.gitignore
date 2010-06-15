@@ -4,6 +4,7 @@ Dataset
 DatasetAnalyzer
 DatasetHeader
 DatasetWriter
+Image
 OctreeBuilder
 OctreeNode
 Quaternion

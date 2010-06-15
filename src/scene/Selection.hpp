@@ -20,18 +20,18 @@ using namespace std;
 class Selection {
 public:
 	typedef set<Drawable*,Identifiable::Comparator>::iterator iterator;
-	void add(Drawable *item);
+	void add(Node *node);
 	void addAll(Node *node);
 	void addListener(NodeListener *listener);
 	iterator begin();
 	void clear();
 	void fireEvent();
 	iterator end();
-	void remove(Drawable *item);
+	void remove(Node *node);
 private:
 	set<Drawable*,Identifiable::Comparator> items;
 	NodeNotifier notifier;
-	Drawable *active;
+	Node *active;
 };
 
 /** @return iterator to the beginning of the selection. */

@@ -29,14 +29,14 @@ public:
 	Scene();
 	~Scene();
 	void addAllToSelection();
-	void addToSelection(Drawable *drawable);
+	void addToSelection(Node *node);
 	string getFilename() const;
 	Node* getRoot() const;
 	Selection& getSelection();
 	void open(string filename);
 	void prepare();
 	void removeAllFromSelection();
-	void removeFromSelection(Drawable *drawable);
+	void removeFromSelection(Node *node);
 	void print();
 	void setRoot(Node *node);
 protected:
@@ -52,7 +52,7 @@ private:
 inline void Scene::addAllToSelection() {selection.addAll(root);}
 
 /** Selects a single item in the scene. */
-inline void Scene::addToSelection(Drawable *d) {selection.add(d);}
+inline void Scene::addToSelection(Node *node) {selection.add(node);}
 
 /** @return file the scene was opened from */
 inline string Scene::getFilename() const {return filename;}
@@ -67,6 +67,6 @@ inline Selection& Scene::getSelection() {return selection;}
 inline void Scene::removeAllFromSelection() {selection.clear();}
 
 /** Deselects a single node in the scene */
-inline void Scene::removeFromSelection(Drawable *d) {selection.remove(d);}
+inline void Scene::removeFromSelection(Node *node) {selection.remove(node);}
 
 #endif

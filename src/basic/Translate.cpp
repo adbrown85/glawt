@@ -9,24 +9,25 @@
 
 /** Creates a new %Translate from an XML tag.
  * 
- * @param tag XML tag with "x", "y", and "z" values.
+ * @param tag XML tag with "value", "x", "y", or "z" attributes.
  */
 Translate::Translate(const Tag &tag) : Transformation(tag) {
 	
-	// Initialize
-	tag.get("x", x, false);
-	tag.get("y", y, false);
-	tag.get("z", z, false);
+	if (!tag.get("value", value, false)) {
+		tag.get("x", value.x, false);
+		tag.get("y", value.y, false);
+		tag.get("z", value.z, false);
+	}
+	value.w = 1.0;
 }
 
 
 /** Adds a vector to this translation. */
 void Translate::add(const Vector &B) {
 	
-	// Add components
-	x += B.x;
-	y += B.y;
-	z += B.z;
+	value.x += B.x;
+	value.y += B.y;
+	value.z += B.z;
 	fireEvent();
 }
 
@@ -34,9 +35,8 @@ void Translate::add(const Vector &B) {
 /** Performs the translation. */
 void Translate::apply() {
 	
-	// Translate
 	glPushMatrix();
-	glTranslatef(x, y, z);
+	glTranslatef(value.x, value.y, value.z);
 }
 
 
@@ -60,9 +60,9 @@ Translate* Translate::find(Node *node) {
 /** Add the translate to the matrix before sorting. */
 void Translate::applyTo(Matrix &matrix) {
 	
-	Matrix T(1.0, 0.0, 0.0,  +x,
-	         0.0, 1.0, 0.0,  +y,
-	         0.0, 0.0, 1.0,  +z,
+	Matrix T(1.0, 0.0, 0.0,  +value.x,
+	         0.0, 1.0, 0.0,  +value.y,
+	         0.0, 0.0, 1.0,  +value.z,
 	         0.0, 0.0, 0.0, 1.0);
 	
 	// Add in translation
@@ -70,41 +70,27 @@ void Translate::applyTo(Matrix &matrix) {
 }
 
 
-/** Remove the translation from the matrix after sorting. */
-void Translate::sortByDepthEnd(Matrix &matrix) {
-	
-	Matrix transMatrix(1.0, 0.0, 0.0,  -x,
-	                   0.0, 1.0, 0.0,  -y,
-	                   0.0, 0.0, 1.0,  -z,
-	                   0.0, 0.0, 0.0, 1.0);
-	
-	// Remove translation
-	matrix = matrix * transMatrix;
-}
-
-
 /** Restores transformation that was in effect before translate was applied. */
 void Translate::remove() {
 	
-	// Restore
 	glPopMatrix();
 }
 
 
-/** Sets "x", "y", or "z". */
+/** Sets "x", "y", or "z" in value. */
 bool Translate::setAttribute(pair<string,string> attribute) {
 	
 	bool changed=false;
 	string key=Text::toLower(attribute.first);
 	
 	if (key == "x") {
-		x = atof(attribute.second.c_str());
+		value.x = atof(attribute.second.c_str());
 		changed = true;
 	} else if (key == "y") {
-		y = atof(attribute.second.c_str());
+		value.y = atof(attribute.second.c_str());
 		changed = true;
 	} else if (key == "z") {
-		z = atof(attribute.second.c_str());
+		value.z = atof(attribute.second.c_str());
 		changed = true;
 	}
 	
@@ -124,9 +110,9 @@ string Translate::toString() const {
 	
 	// Build string
 	stream << Node::toString();
-	stream << " x='" << x << "'"
-	       << " y='" << y << "'"
-	       << " z='" << z << "'";
+	stream << " x='" << value.x << "'"
+	       << " y='" << value.y << "'"
+	       << " z='" << value.z << "'";
 	return stream.str();
 }
 

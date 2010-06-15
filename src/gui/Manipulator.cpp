@@ -94,23 +94,19 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 }
 
 
-/** Draws the manipulator. */
-void Manipulator::draw(Node *node, Canvas *canvas) const {
+/** Draws the manipulator around @e transformable in @e canvas. */
+void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	
+	Vector position;
+	Extent extent;
+	
+	// Make sure widget was loaded correctly
 	if (traverser == NULL)
 		return;
 	
-	Matrix matrix;
-	list<Transformation*> transforms;
-	list<Transformation*>::iterator it;
-	Vector position;
-	
 	// Compute position
-	Transformation::findAll(node, transforms);
-	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->applyTo(matrix);
-	}
-	position = matrix * offset;
+	extent = transformable->getExtent();
+	position = transformable->getPosition() + (extent.diagonal * offset);
 	
 	// Draw at position
 	glMatrixMode(GL_MODELVIEW);

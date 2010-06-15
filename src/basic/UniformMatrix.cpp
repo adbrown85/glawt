@@ -19,6 +19,38 @@ UniformMatrix::UniformMatrix(const Tag &tag) : Uniform(tag) {
 }
 
 
+bool UniformMatrix::hasChild(Node *node, const string &name) {
+	
+	Node::iterator it;
+	UniformMatrix *uniform;
+	
+	for (it=node->begin(); it!=node->end(); ++it) {
+		uniform = dynamic_cast<UniformMatrix*>((*it));
+		if ((uniform != NULL) && (uniform->getName() == name)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool UniformMatrix::isDefault(const string &name, GLenum type) {
+	
+	return isMatrixType(type) && isDefaultName(name);
+}
+
+
+/** @return True if @e name matches one of the default matrix names. */
+bool UniformMatrix::isDefaultName(const string &name) {
+	
+	return ((name == DEFAULT_MODELVIEW_MATRIX_NAME)
+	        || (name == DEFAULT_PROJECTION_MATRIX_NAME)
+	        || (name == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME)
+	        || (name == DEFAULT_NORMAL_MATRIX_NAME)
+	        || (name == DEFAULT_IDENTITY_MATRIX_NAME));
+}
+
+
 /** @throws NodeException if @e as not supported. */
 void UniformMatrix::setTypeFromAs() {
 	

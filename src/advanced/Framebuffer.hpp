@@ -60,7 +60,7 @@ struct Chain {
  * @see Clear
  * @see Screen
  */
-class Framebuffer : public Applicable {
+class Framebuffer : public Node, public Applicable {
 public:
 	Framebuffer(const Tag &tag);
 	virtual ~Framebuffer();

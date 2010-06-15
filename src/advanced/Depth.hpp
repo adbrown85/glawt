@@ -48,7 +48,7 @@ using namespace std;
  * 
  * @ingroup advanced
  */
-class Depth : public Applicable {
+class Depth : public Node, public Applicable {
 public:
 	Depth(const Tag &tag);
 	virtual void apply();

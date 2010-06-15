@@ -18,6 +18,7 @@
 #include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
 #include "CanvasGTK.hpp"
+#include "Menu.hpp"
 using namespace std;
 
 
@@ -25,17 +26,16 @@ using namespace std;
  * @image html gander.png
  * 
  * <table align="center" border="0" style="width:34em"><tr><td>
- * This document describes the C++ classes that make up Gander.  We suggest 
+ * This document describes the C++ classes that make up %Gander.  We suggest 
  * starting with the @e Modules page, which gives a good overview of how the 
- * application is divided up into several different layers, starting at the 
- * bottom with @e Data and moving all the way up to @e Graph, @e Backend, 
- * @e Frontend, and finally @e %gander.</p>
+ * application is divided up.</p>
  * 
  * After that, check out the <i>Class Hierarchy</i> to get a better idea of 
  * how the classes work together, or go ahead and dive in to the actual 
  * classes themselves.
  * 
- * For the latest source code, check out our <a href="http://gander.git.sf.net" 
+ * For the latest source code, check out our <a 
+ * href="http://gander.git.sourceforge.net/git/gitweb.cgi?p=gander/gander" 
  * target="_blank">Git repository</a>.
  * </td></tr></table>
  * 
@@ -71,10 +71,12 @@ protected:
 private:
 	int argc;
 	char **argv;
+	list<Control*> controls;
 	Display *display;
 	Delegate *delegate;
 	Canvas *canvas;
 	Scene *scene;
+	Menu *menu;
 	string inFilename, option, outFilename, parameter, title;
 };
 

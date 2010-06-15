@@ -25,7 +25,7 @@ public:
 	            float bias=1.0,
 	            const string &warning="May not be able to use manipulator.");
 	virtual ~Manipulator();
-	virtual void draw(Node *node, Canvas *canvas) const;
+	virtual void draw(Transformable *transformable, Canvas *canvas) const;
 	static float findPixelFactor(Canvas *canvas, GLuint shapeID);
 	virtual Vector getAxis() const;
 	virtual int getCommand() const;

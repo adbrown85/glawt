@@ -103,8 +103,7 @@ string Text::indent(int times) {
 
 
 /** @return Copy of @e text with keys in @e dictionary replaced with values. */
-string Text::replace(const string &text,
-                     map<string,string> &dictionary) {
+string Text::replace(const string &text, map<string,string> &dictionary) {
 	
 	map<string,string>::iterator it;
 	pair<int,int> bounds;
@@ -124,6 +123,19 @@ string Text::replace(const string &text,
 		}
 	}
 	return textCopy;
+}
+
+
+/** @return Pair of strings before and after the first occurence of @e at. */
+pair<string,string> Text::split(const string &text, char at) {
+	
+	size_t pos;
+	pair<string,string> couple;
+	
+	pos = text.find(at);
+	couple.first = text.substr(0, pos);
+	couple.second = text.substr(pos+1);
+	return couple;
 }
 
 

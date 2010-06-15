@@ -8,7 +8,7 @@
 
 
 /** Initialize the three color components. */
-Clear::Clear(const Tag &tag) : Applicable(tag) {
+Clear::Clear(const Tag &tag) : Node(tag) {
 	
 	// Initialize
 	tag.get("r", r, false);
@@ -30,7 +30,7 @@ string Clear::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Applicable::toString();
+	stream << Node::toString();
 	stream << " r='" << r << "'"
 	       << " g='" << g << "'"
 	       << " b='" << b << "'";

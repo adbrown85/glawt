@@ -22,7 +22,8 @@ using namespace std;
 /** @brief Abstract base class for GLSL uniform variables.
  * @ingroup basic
  */
-class Uniform : public Applicable, public Suppressable {
+class Uniform : public Node,
+                public Applicable, public Suppressable {
 public:
 	Uniform(const Tag &tag);
 	virtual void associate();
@@ -31,6 +32,9 @@ public:
 	GLint getLocation() const;
 	string getName() const;
 	Program* getProgram() const;
+	static map<string,GLenum> getUniformsFor(Program *program);
+	static string getTypeNameFor(GLenum type);
+	static bool isMatrixType(GLenum type);
 	virtual void remove() {};
 	void setLocation(GLint location);
 	void setName(const string &name);

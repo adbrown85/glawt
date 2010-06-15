@@ -24,7 +24,7 @@ distdir     := $(tarname)-$(version)
 tarball     := $(tarname)-$(version).tar.gz
 
 # Targets to pass down
-src_targets := all clean tests install uninstall depend gander $(modules) 
+src_targets := all clean tests install uninstall gander $(modules) 
 doc_targets := html install-html
 .PHONY: $(src_targets) $(doc_targets)
 .DEFAULT: all
@@ -47,6 +47,8 @@ install-data:
 	@$(INSTALL) -m 0644 textures/chunk.vlb $(datadir)/textures
 	@$(INSTALL) -m 0644 textures/empty.vlb $(datadir)/textures
 	@$(INSTALL) -m 0644 textures/bunny128.vlb $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/brain128.vlb $(datadir)/textures
+	@$(INSTALL) -m 0644 textures/head128.vlb $(datadir)/textures
 	@$(INSTALL) -m 0644 textures/crate.jpg $(datadir)/textures
 	@$(INSTALL) -m 0644 textures/stone.jpg $(datadir)/textures
 	@echo "    ui"
@@ -64,7 +66,7 @@ $(tarball): FORCE $(distdir)
 	@echo "  Packaging tarball..."
 	@tar -czf $(tarball) $(distdir)
 	@$(RM) -r $(distdir)
-$(distdir): depend
+$(distdir):
 	@echo "  Copying files..."
 	@echo "    src"
 	@mkdir $(distdir)
@@ -74,22 +76,22 @@ $(distdir): depend
 	@cp config.in $(distdir)
 	@cp install-sh $(distdir)
 	@cp src/Makefile.in $(distdir)/src
-	@cp src/depend $(distdir)/src
 	@cp src/gander.*xx $(distdir)/src
+	@cp src/common.h $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \
         cp src/$${i}/*.cpp $(distdir)/src/$${i}; \
         cp src/$${i}/*.hpp $(distdir)/src/$${i}; \
         cp src/$${i}/*.cxx $(distdir)/src/$${i}; \
+    done
+	@for i in advanced basic command gui scene system; do \
         cp src/$${i}/*.xml $(distdir)/src/$${i}; \
     done
 	@cp src/advanced/*.frag $(distdir)/src/advanced
 	@cp src/advanced/*.vert $(distdir)/src/advanced
 	@cp src/basic/*.glsl $(distdir)/src/basic
-	@cp src/data/*.glsl $(distdir)/src/data
-	@cp src/data/*.in $(distdir)/src/data
-	@cp src/data/*.out $(distdir)/src/data
+	@cp src/system/*.glsl $(distdir)/src/system
 	@echo "    doc"
 	@mkdir $(distdir)/doc
 	@cp doc/Makefile.in $(distdir)/doc
@@ -104,6 +106,8 @@ $(distdir): depend
 	@cp textures/chunk.vlb $(distdir)/textures
 	@cp textures/empty.vlb $(distdir)/textures
 	@cp textures/bunny128.vlb $(distdir)/textures
+	@cp textures/brain128.vlb $(distdir)/textures
+	@cp textures/head128.vlb $(distdir)/textures
 	@cp textures/crate.jpg $(distdir)/textures
 	@cp textures/stone.jpg $(distdir)/textures
 	@echo "    ui"

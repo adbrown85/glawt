@@ -7,7 +7,6 @@
 -->
 
 
-
 <texture file="../textures/crate.jpg" name="crate">
 	<program>
 		<shader file="coordinates.frag"/>

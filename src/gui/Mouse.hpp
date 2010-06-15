@@ -19,7 +19,9 @@ class Mouse : public Control,
               public CanvasListener, public CommandListener {
 public:
 	Mouse(Delegate *delegate);
+	virtual ~Mouse();
 	virtual void install();
+	virtual void load();
 	virtual void onCanvasEvent(const CanvasEvent &event);
 	virtual void onCanvasEventButton(const CanvasEvent &event);
 	virtual void onCanvasEventDrag(const CanvasEvent &event);
@@ -40,8 +42,9 @@ private:
 	GLuint itemID, shapeID;
 	Manipulator *manip;
 	Vector axis, direction, movement;
-	Picker picker;
+	Picker *picker;
 	int iteration, index;
+	bool loaded;
 };
 
 

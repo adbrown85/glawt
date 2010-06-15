@@ -62,6 +62,15 @@ Node* Node::findRoot(Node *node) {
 }
 
 
+string Node::getAttribute(const string &key) const {
+	
+	Tag tag;
+	
+	tag = Parser::create(toString());
+	return tag[key];
+}
+
+
 string Node::getClassName() const {
 	
 	string className;
@@ -87,5 +96,25 @@ string Node::toString() const {
 	// Make string
 	stream << getClassName();
 	return stream.str();
+}
+
+
+Node* Nameable::search(Node *node, const string &name) {
+	
+	Nameable *nameable;
+	Node::iterator it;
+	queue<Node*> Q;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		nameable = dynamic_cast<Nameable*>(node);
+		if ((nameable != NULL) && (nameable->getName() == name))
+			return node;
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push(*it);
+		Q.pop();
+	}
+	return NULL;
 }
 

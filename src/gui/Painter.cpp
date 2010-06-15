@@ -35,36 +35,37 @@ Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 }
 
 
-void Painter::onApplicable(Applicable *node) {
+void Painter::onApplicable(Node *node, Applicable *applicable) {
 	
 	// Only continue if not a framebuffer node
 	if (mode == GL_SELECT && !node->areChildrenSelectable())
 		return;
-	Traverser::onApplicable(node);
+	Traverser::onApplicable(node, applicable);
 }
 
 
-void Painter::onDrawable(Drawable *node) {
+void Painter::onDrawable(Node *node, Drawable *drawable) {
 	
 	Program *program;
 	vector<Manipulator*>::iterator mi;
+	Transformable *transformable;
 	
 	// Stop if not visible
-	if (!node->isVisible())
+	if (!drawable->isVisible())
 		return;
 	
 	// Load the name if selecting then draw
 	if (mode == GL_SELECT) {
-		glLoadName(node->getID());
-		if (node->isSelectable()) {
-			Traverser::onDrawable(node);
+		glLoadName(drawable->getID());
+		if (drawable->isSelectable()) {
+			Traverser::onDrawable(node, drawable);
 		}
 	} else {
-		Traverser::onDrawable(node);
+		Traverser::onDrawable(node, drawable);
 	}
 	
 	// Stop if not selected
-	if (!node->isSelected())
+	if (!drawable->isSelected())
 		return;
 	
 	// Disable shaders
@@ -73,23 +74,26 @@ void Painter::onDrawable(Drawable *node) {
 		program->remove();
 	
 	// Draw outline and manipulators
-	glPushAttrib(GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-		if (outline != NULL) {
-			Traverser::traverseNode(outline->getRoot());
-		}
-		glPushAttrib(GL_POLYGON_BIT);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
-				if ((*mi)->isEnabled()) {
-					if (mode == GL_SELECT)
-						glPushName((*mi)->getID());
-					(*mi)->draw(node, getCanvas());
-				}
+	transformable = dynamic_cast<Transformable*>(node);
+	if (transformable != NULL) {
+		glPushAttrib(GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LESS);
+			if (outline != NULL) {
+				Traverser::traverseNode(outline->getRoot());
 			}
+			glPushAttrib(GL_POLYGON_BIT);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				for (mi=manipulators.begin(); mi!=manipulators.end(); ++mi) {
+					if ((*mi)->isEnabled()) {
+						if (mode == GL_SELECT)
+							glPushName((*mi)->getID());
+						(*mi)->draw(transformable, getCanvas());
+					}
+				}
+			glPopAttrib();
 		glPopAttrib();
-	glPopAttrib();
+	}
 	
 	// Restore shaders
 	if (program != NULL)

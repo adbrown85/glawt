@@ -10,6 +10,7 @@
 #include <cstring>
 #include <climits>
 #include <cfloat>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include "DatasetHeader.hpp"

@@ -17,6 +17,7 @@ class UniformFloat : public Uniform {
 public:
 	UniformFloat(const Tag &tag);
 	virtual void apply();
+	virtual void associate();
 	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
 private:

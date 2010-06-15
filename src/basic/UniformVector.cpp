@@ -7,12 +7,14 @@
 #include "UniformVector.hpp"
 
 
-/** @throws NodeException if the @e type is not supported. */
-UniformVector::UniformVector(const Tag &tag) :
-                             Uniform(tag) {
+/** Initializes the type and value (or link).
+ * 
+ * @throws NodeException if @e type is not supported.
+ * @throws NodeException if @e value or @e link not specified.
+ */
+UniformVector::UniformVector(const Tag &tag) : Uniform(tag) {
 	
-	// Initialize
-	tag.get("value", value, true);
+	// Type
 	if (type == "vec3") {
 		size = 3;
 	} else if (type == "vec4") {
@@ -22,6 +24,47 @@ UniformVector::UniformVector(const Tag &tag) :
 		e << "[UniformVector] '" << type << "' not supported.";
 		throw e;
 	}
+	
+	// Value or link
+	if (!tag.get("value", value, false)) {
+		if (!tag.get("link", link, false)) {
+			NodeException e(tag);
+			e << "[UniformVector] Need 'value' or 'link' attribute.";
+			throw e;
+		}
+	}
+}
+
+
+void UniformVector::associate() {
+	
+	Uniform::associate();
+	
+	Node *node;
+	Transformable *transformable;
+	
+	// Doesn't have link
+	if (link.empty())
+		return;
+	
+	// Find the link
+	node = Nameable::search(findRoot(this), link);
+	if (node == NULL) {
+		NodeException e(tag);
+		e << "[UniformVector] Could not find node named '" << link << "'.";
+		throw e;
+	}
+	
+	// Make it transformable
+	transformable = dynamic_cast<Transformable*>(node);
+	if (transformable == NULL) {
+		NodeException e(tag);
+		e << "[UniformVector] Node '" << link << "' is not transformable.";
+		throw e;
+	}
+	
+	// Set value from position
+	transformable->getPosition().toArray(value);
 }
 
 
@@ -48,10 +91,11 @@ string UniformVector::toString() const {
 	
 	stream << Uniform::toString();
 	stream << " value='" << value[0];
-	for (int i=1; i<size; ++i) {
+	for (int i=1; i<size; ++i)
 		stream << " " << value[i];
-	}
 	stream << "'";
+	if (!link.empty())
+		stream << " link='" << link << "'";
 	return stream.str();
 }
 

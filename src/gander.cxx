@@ -16,6 +16,7 @@ Gander::Gander(int argc, char *argv[]) {
 	this->delegate = NULL;
 	this->scene = NULL;
 	this->canvas = NULL;
+	this->menu = NULL;
 }
 
 
@@ -29,6 +30,8 @@ Gander::~Gander() {
 		delete scene;
 	if (canvas != NULL)
 		delete canvas;
+	if (menu != NULL)
+		delete menu;
 }
 
 
@@ -50,6 +53,8 @@ void Gander::onCompile() {
 	// Create widgets
 	Gtk::GL::init(argc, argv);
 	canvas = new CanvasGTK();
+	scene = new Scene();
+	delegate = new Delegate(scene, canvas);
 	
 	// Pack
 	window.add(*((CanvasGTK*)canvas));
@@ -84,13 +89,18 @@ void Gander::onDisplay() {
 #ifdef HAVE_GTK
 	Gtk::Window window;
 	Gtk::HBox hBox;
-	Gtk::VBox vBox;
+	Gtk::VBox mainBox, vBox;
 	Inspector inspector;
 	LogBook logBook;
 	
 	// Create widgets
 	Gtk::GL::init(argc, argv);
 	canvas = new CanvasGTK();
+	scene = new Scene();
+	delegate = new Delegate(scene, canvas);
+	controls.push_back(new Mouse(delegate));
+	controls.push_back(new Keyboard(delegate));
+	menu = new Menu(delegate, &window, controls);
 	window.set_title(title);
 	
 	// Pack
@@ -98,7 +108,10 @@ void Gander::onDisplay() {
 	vBox.pack_start(logBook);
 	hBox.pack_start(inspector);
 	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
-	window.add(hBox);
+	mainBox.pack_start(*(menu->getMenuBar()), Gtk::PACK_SHRINK);
+	mainBox.pack_start(hBox);
+	window.add(mainBox);
+	window.set_icon_from_file(About::getIconFilename());
 	window.show_all();
 	
 	// Prime the canvas
@@ -223,6 +236,7 @@ void Gander::parse() {
 void Gander::prime() {
 	
 	GLenum err;
+	list<Control*>::iterator it;
 	
 	// Load GLEW
 	err = glewInit();
@@ -231,14 +245,14 @@ void Gander::prime() {
 	}
 	
 	// Open scene
-	scene = new Scene();
-	delegate = new Delegate(scene, canvas);
 	delegate->run(Command::OPEN, inFilename);
 	
 	// Add display and controls
 	display = new Display(delegate);
-	display->add(new Keyboard(delegate));
-	display->add(new Mouse(delegate));
+	for (it=controls.begin(); it!=controls.end(); ++it) {
+		(*it)->load();
+		display->add(*it);
+	}
 }
 
 

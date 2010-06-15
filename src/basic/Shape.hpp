@@ -10,9 +10,10 @@
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
-#include "NodeEvent.hpp"
 #include "Transformation.hpp"
 #include "Transform.hpp"
+#include "UniformMatrix.hpp"
+#include "Factory.hpp"
 using namespace std;
 
 
@@ -55,8 +56,7 @@ struct ShapeTraits {
  * 
  * @ingroup basic
  */
-class Shape : public SimpleDrawable,
-              public NodeListener {
+class Shape : public SimpleDrawable {
 public:
 	Shape(const Tag &tag, ShapeTraits traits);
 	virtual void associate();
@@ -67,14 +67,12 @@ public:
 	virtual GLuint getCount() const;
 	virtual GLuint getLimit() const;
 	virtual string getName() const;
-	virtual Vector getPosition();
 	virtual Program* getProgram() const;
-	virtual void onNodeEvent(NodeEvent &event);
 	virtual void setAttributes(list<VertexAttribute> &attributes);
 	virtual void setProgram(Program *program);
 	virtual string toString() const;
-	virtual void updatePosition();
 protected:
+	void checkForDefaultUniforms();
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
@@ -82,7 +80,7 @@ protected:
 	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
-	bool valid;
+	bool defaults;
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count, limit;
@@ -90,8 +88,6 @@ private:
 	map<string,GLuint> offsets;
 	Program *program;
 	string name;
-	Vector position;
-	list<Transformation*> transforms;
 };
 
 /** @return Attributes in use for this shape. */
@@ -108,9 +104,6 @@ inline string Shape::getName() const {return name;}
 
 /** @return Program the shape sends vertex attributes to. */
 inline Program* Shape::getProgram() const {return program;}
-
-/** Invalidates the position when a transform changes. */
-inline void Shape::onNodeEvent(NodeEvent &event) {valid = false;}
 
 /** Set attributes in use for this shape. */
 inline void Shape::setAttributes(list<VertexAttribute> &a) {attributes = a;}

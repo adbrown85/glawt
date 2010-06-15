@@ -75,7 +75,7 @@ int main(int argc,
 	
 	// Handle arguments
 	if (argc == 1) {
-		filename = "../../textures/bear.vlb";
+		filename = "../../textures/bunny128.vlb";
 		threshold = 0;
 	} else if (argc == 3) {
 		filename = argv[1];

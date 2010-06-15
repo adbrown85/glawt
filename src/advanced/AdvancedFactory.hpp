@@ -19,7 +19,6 @@
 #include "Depth.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
-#include "Group.hpp"
 #include "Instance.hpp"
 #include "Octree.hpp"
 #include "Outputs.hpp"
@@ -44,7 +43,6 @@ public:
 	static Node* createDepth(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
-	static Node* createGroup(const Tag &tag);
 	static Node* createInstance(const Tag &tag);
 	static Node* createOctree(const Tag &tag);
 	static Node* createOutputs(const Tag &tag);

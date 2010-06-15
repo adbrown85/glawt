@@ -16,6 +16,7 @@
 #include "Text.hpp"
 #include "Canvas.hpp"
 #include "Log.hpp"
+#include "Parser.hpp"
 using namespace std;
 
 
@@ -43,6 +44,7 @@ public:
 	virtual void finalize() {}
 	virtual void finalizeAfter() {}
 	static Node* findRoot(Node *node);
+	virtual string getAttribute(const string &key) const;
 	vector<Node*> getChildren() const;
 	string getClassName() const;
 	float getDepth() const;
@@ -83,9 +85,8 @@ inline void Node::setParent(Node *parent) {this->parent = parent;}
  * @interface Applicable
  * @ingroup scene
  */
-class Applicable : public Node {
+class Applicable {
 public:
-	Applicable(const Tag &tag) : Node(tag) {}
 	virtual void apply() = 0;
 	virtual void remove() = 0;
 };
@@ -104,14 +105,30 @@ public:
 };
 
 
+/* Upper and lower boundaries of an object. */
+struct Extent {
+	Vector upper, lower, diagonal;
+	int label, index;
+};
+
+
+/** @brief %Node that can be positioned and sized.
+ * @interface Transformable
+ * @ingroup scene
+ */
+class Transformable {
+public:
+	virtual Extent getExtent() = 0;
+	virtual Vector getPosition() = 0;
+};
+
+
 /** @brief %Node that can be drawn and identified on screen.
  * @interface Drawable
  * @ingroup scene
  */
-class Drawable : public Node,
-                 public Identifiable {
+class Drawable : public Identifiable {
 public:
-	Drawable(const Tag &tag) : Node(tag) {}
 	virtual void draw() const = 0;
 	virtual bool isSelectable() const = 0;
 	virtual bool isSelected() const = 0;
@@ -129,17 +146,20 @@ public:
  */
 class Dependent {
 public:
+	Dependent();
 	virtual void setCanvas(Canvas *canvas);
 protected:
 	Canvas* getCanvas() const;
 private:
 	Canvas *canvas;
 };
+inline Dependent::Dependent() {canvas = NULL;}
 inline Canvas* Dependent::getCanvas() const {return canvas;}
 inline void Dependent::setCanvas(Canvas *c) {canvas = c;}
 
 
 /** @brief %Node that can have its exceptions suppressed.
+ * @interface Suppressable
  * @ingroup scene
  */
 class Suppressable {
@@ -154,5 +174,25 @@ private:
 inline Suppressable::Suppressable() {suppress = false;}
 inline bool Suppressable::isSuppressed() const {return suppress;}
 inline void Suppressable::setSuppress(bool s) {suppress = true;}
+
+
+/** @brief %Node with a name.
+ * @interface Nameable
+ * @ingroup scene
+ */
+class Nameable {
+public:
+	virtual string getName() const;
+	virtual bool hasName() const;
+	virtual void setName(const string &name);
+	static Node* search(Node *node, const string &name);
+private:
+	string name;
+};
+inline string Nameable::getName() const {return name;}
+inline bool Nameable::hasName() const {return !name.empty();}
+inline void Nameable::setName(const string &n) {name = n;}
+
+
 
 #endif

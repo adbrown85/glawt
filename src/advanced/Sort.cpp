@@ -14,7 +14,7 @@ void Sort::apply() {
 	
 	rotation = getCanvas()->getCamera()->getRotation();
 	for (it=translates.begin(); it!=translates.end(); ++it) {
-		position = rotation * (*(*it));
+		position = rotation * (*it)->getValue();
 		(*it)->setDepth(position.z);
 	}
 	sort(children.begin(), children.end(), Node::compare);

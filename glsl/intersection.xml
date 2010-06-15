@@ -9,15 +9,15 @@
 <!-- Cubes driving boolean operations -->
 <group name="cubes">
 	<translate x="-1">
-		<uniform type="mat4" name="MVPMatrix" />
 		<cube name="left">
+			<uniform type="mat4" name="MVPMatrix" />
 			<uniform type="vec4" name="Color" value="1 0 1 1" />
 			<uniform type="sampler3D" name="Volume" link="head" />
 		</cube>
 	</translate>
 	<translate x="+1" y="+0.5" z="-0.5">
-		<uniform type="mat4" name="MVPMatrix" />
 		<cube name="right">
+			<uniform type="mat4" name="MVPMatrix" />
 			<uniform type="vec4" name="Color" value="0 1 1 1" />
 			<uniform type="sampler3D" name="Volume" link="bunny" />
 		</cube>
@@ -50,7 +50,7 @@
 <!-- Boolean XOR behind intersection -->
 <clear />
 <depth mode="less">
-	<boolean operation="XOR" of="cubes" only="behind" />
+	<boolean operation="XOR" of="cubes" only="behind" defaults="false" />
 </depth>
 <screen>
 	<program>
@@ -70,7 +70,7 @@
 <!-- Boolean AND as intersection -->
 <clear />
 <depth mode="less">
-	<boolean operation="AND" of="cubes" />
+	<boolean operation="AND" of="cubes" defaults="false" />
 </depth>
 <screen>
 	<blend>
@@ -92,7 +92,7 @@
 <!-- Boolean XOR in front of intersection -->
 <clear />
 <depth mode="less">
-	<boolean operation="XOR" of="cubes" only="forward" />
+	<boolean operation="XOR" of="cubes" only="forward" defaults="false" />
 </depth>
 <screen>
 	<blend>
@@ -101,7 +101,6 @@
 			<shader file="volume.frag" />
 			<cull faces="front">
 				<depth mode="greater">
-					<uniform type="mat4" name="MVPMatrix" />
 					<uniform type="sampler2D" name="ExitCoords" link="coords" />
 					<boolean operation="XOR" of="cubes" only="forward" />
 				</depth>

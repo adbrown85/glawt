@@ -24,9 +24,9 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	this->mode = traits.mode;
 	this->usage = traits.usage;
 	tag.get("name", name, false, false);
-	
-	// Internals
-	this->valid = false;
+	if (!tag.get("defaults", defaults, false)) {
+		defaults = true;
+	}
 	
 	// Store vertex attributes
 	block = count * 3 * sizeof(GLfloat);
@@ -46,7 +46,7 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
  */
 void Shape::associate() {
 	
-	list<Transformation*>::iterator it;
+	SimpleDrawable::associate();
 	
 	// Find program
 	program = Program::find(parent);
@@ -55,13 +55,38 @@ void Shape::associate() {
 		e << "[Shape] No shader program found to bind attributes to.";
 		throw e;
 	}
+}
+
+
+void Shape::checkForDefaultUniforms() {
 	
-	// Find transforms and update position
-	Transformation::findAll(getParent(), transforms);
-	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->addListener(this);
+	int tally;
+	map<string,GLenum> uniforms;
+	map<string,GLenum>::iterator it;
+	ostringstream stream;
+	Node *node;
+	
+	// Try to add missing default uniforms
+	tally = 0;
+	uniforms = Uniform::getUniformsFor(program);
+	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
+		if (UniformMatrix::isDefault(it->first, it->second)) {
+			if (!UniformMatrix::hasChild(this, it->first)) {
+				stream.str("");
+				stream << "uniform type='mat4' name='" << it->first << "'";
+				node = Factory::create(stream.str());
+				addChild(node);
+				node->associate();
+				++tally;
+			}
+		}
 	}
-	updatePosition();
+	
+	// Confirm
+	if (tally > 0) {
+		glog << tag.getLocation();
+		glog << " [Shape] Added " << tally << " default uniforms." << endl;
+	}
 }
 
 
@@ -134,6 +159,11 @@ void Shape::finalize() {
 		else
 			++it;
 	}
+	
+	// Check for defaults
+	if (defaults) {
+		checkForDefaultUniforms();
+	}
 }
 
 
@@ -150,27 +180,6 @@ GLuint Shape::getOffset(const string &name) const {
 		e << "[Shape] Unrecognized vertex attribute name '" << name << "'.";
 		throw e;
 	}
-}
-
-
-/** @return Model-matrix position of the item in the scene.
- * 
- * Lazily calculates the position only when requested and the position is 
- * determined to be invalid.  Currently this is implemented by adding 
- * listeners to all the Transform ancestors of the shape.  When one of the 
- * transforms is modified a flag is set to invalid.  After the position is 
- * requested and calculated again the flag is set to valid.  This way it can 
- * be requested multiple times but only calculated once when it is needed.
- * 
- * @note To find the depth of the shape on screen, multiply this value by the 
- * current canvas' rotation matrix and take the <i>z</i> component.
- */
-Vector Shape::getPosition() {
-	
-	if (!valid) {
-		updatePosition();
-	}
-	return position;
 }
 
 
@@ -211,22 +220,5 @@ string Shape::toString() const {
 		stream << " name='" << name << "'";
 	}
 	return stream.str();
-}
-
-
-/** Updates the position and validates the position. */
-void Shape::updatePosition() {
-	
-	list<Transformation*>::iterator it;
-	Matrix matrix;
-	
-	// Calculate position by applying each transform
-	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->applyTo(matrix);
-	}
-	position = matrix * Vector(0,0,0,1);
-	
-	// Position is valid until a transform changes
-	valid = true;
 }
 

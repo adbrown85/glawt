@@ -45,16 +45,19 @@ inline bool Binding::hasArgument() const {return hasArg;}
 /** Initializes the formatted names of triggers. */
 inline void Binding::load() {
 	
+	names[CANVAS_MINUS] = "-";
+	names[CANVAS_PLUS] = "+";
+	names[CANVAS_EQUALS] = "=";
 	names[CANVAS_ESCAPE] = "Esc";
 	names[CANVAS_KEY_LEFT] = "Left";
 	names[CANVAS_KEY_RIGHT] = "Right";
 	names[CANVAS_KEY_UP] = "Up";
 	names[CANVAS_KEY_DOWN] = "Down";
-	names[CANVAS_LEFT_BUTTON] = "Left";
-	names[CANVAS_MIDDLE_BUTTON] = "Middle";
-	names[CANVAS_RIGHT_BUTTON] = "Right";
-	names[CANVAS_WHEEL_UP] = "Wheel Up";
-	names[CANVAS_WHEEL_DOWN] = "Wheel Down";
+	names[CANVAS_LEFT_BUTTON] = "LMB";
+	names[CANVAS_MIDDLE_BUTTON] = "MMB";
+	names[CANVAS_RIGHT_BUTTON] = "RMB";
+	names[CANVAS_WHEEL_UP] = "MWU";
+	names[CANVAS_WHEEL_DOWN] = "MWD";
 }
 
 

@@ -1,6 +1,6 @@
 # Initialize
 AC_PREREQ([2.65])
-AC_INIT([Gander], [1.0], [adb1413@rit.edu], , [http://gander.sourceforge.net])
+AC_INIT([Gander], [0.95], [adb1413@rit.edu], , [http://gander.sourceforge.net])
 AC_CONFIG_SRCDIR([src/gander.cxx])
 AC_CONFIG_HEADERS([config.h:config.in])
 
@@ -64,22 +64,6 @@ error_no_gtkglmm() {
 echo -n "checking for gtkglextmm-1.2... "
 PKG_CHECK_EXISTS([gtkglextmm-1.2],[echo "yes"],error_no_gtkglmm)
 AC_DEFINE([HAVE_GTK], [1], [Define to 1 if GTKGLmm is available.])
-
-# Check for DevIL
-error_no_devil() {
-	echo "-------------------------------------------------------"
-	echo " DevIL (ILUT) is required to install Gander.           "
-	echo " Try 'sudo apt-get install libdevil-dev'               "
-	echo " Or visit 'http://openil.sourceforge.net'              "
-	echo "-------------------------------------------------------"
-	(exit 1); exit 1;
-}
-AC_SEARCH_LIBS([ilGetInteger], [IL], , [error_no_devil])
-AC_SEARCH_LIBS([iluGetInteger], [ILU], , [error_no_devil])
-AC_SEARCH_LIBS([ilutGetInteger], [ILUT], , [error_no_devil])
-AC_CHECK_HEADER([IL/il.h], , [error_no_devil])
-AC_CHECK_HEADER([IL/ilu.h], , [error_no_devil])
-AC_CHECK_HEADER([IL/ilut.h], , [error_no_devil])
 
 # Check for GLEW
 error_no_glew() {

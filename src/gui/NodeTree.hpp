@@ -12,6 +12,7 @@
 #include <gtkmm.h>
 #include "Node.hpp"
 using namespace std;
+using Glib::RefPtr;
 
 
 /* Columns of the tree */
@@ -23,7 +24,7 @@ public:
 };
 
 
-/** @brief Hierarchy of text.
+/** @brief Hierarchy of nodes.
  * @ingroup gui
  */
 class NodeTree {
@@ -32,7 +33,7 @@ public:
 public:
 	NodeTree();
 	void append(Node *node);
-	Glib::RefPtr<Gtk::TreeStore> getModel() const;
+	RefPtr<Gtk::TreeStore> getModel() const;
 	void pop();
 	void print();
 	void push();
@@ -41,15 +42,13 @@ public:
 	                                Gtk::TreeModel::iterator row,
 	                                Gtk::TreeModel::iterator pEnd);
 protected:
-	void appendBaseRow(Node *node);
-	void appendChildRow(Node *node);
 	void print(const Gtk::TreeModel::Row &row, int depth);
 private:
-	Glib::RefPtr<Gtk::TreeStore> model;
+	RefPtr<Gtk::TreeStore> model;
 	stack<Gtk::TreeModel::iterator> parents;
 	Gtk::TreeModel::iterator current;
 };
-inline Glib::RefPtr<Gtk::TreeStore> NodeTree::getModel() const {return model;}
+inline RefPtr<Gtk::TreeStore> NodeTree::getModel() const {return model;}
 
 
 #endif  // HAVE_GTK

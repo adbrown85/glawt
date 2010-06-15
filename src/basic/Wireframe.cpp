@@ -7,7 +7,7 @@
 #include "Wireframe.hpp"
 
 
-Wireframe::Wireframe(const Tag &tag) : Applicable(tag) {
+Wireframe::Wireframe(const Tag &tag) : Node(tag) {
 	
 	if (!tag.get("faces", faces, false)) {
 		faces = "both";
@@ -49,7 +49,7 @@ string Wireframe::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Applicable::toString();
+	stream << Node::toString();
 	stream << " faces='" << faces << "'";
 	return stream.str();
 }
