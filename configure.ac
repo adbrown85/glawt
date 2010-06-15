@@ -84,9 +84,9 @@ AC_CHECK_HEADER([IL/ilut.h], , [error_no_devil])
 # Check for GLEW
 error_no_glew() {
 	echo "-------------------------------------------------------"
-	echo " DevIL (ILUT) is required to install Gander.           "
-	echo " Try 'sudo apt-get install libdevil-dev'               "
-	echo " Or visit 'http://openil.sourceforge.net'              "
+	echo " GLEW (GLEW) is required to install Gander.            "
+	echo " Try 'sudo apt-get install libglew-dev'                "
+	echo " Or visit 'http://glew.sourceforge.net/'               "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
