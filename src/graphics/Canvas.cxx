@@ -14,6 +14,10 @@ public:
 	virtual void flush() {}
 	virtual void refresh() {}
 	void updateState(CanvasState state) {this->state = state;}
+	virtual void primeStart() {}
+	virtual void primeFinish() {}
+	virtual void setAutomaticallyRefresh(bool automaticRefresh) {}
+	virtual void write(const string &text, int x=15, int y=30) {}
 };
 
 /* Fake canvas listener. */
