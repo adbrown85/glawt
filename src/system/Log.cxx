@@ -29,12 +29,12 @@ int main(int argc, char *argv[]) {
 	cout << endl;
 	
 	// Test
-	clog.addListener(new FakeLogListener());
+	glog.addListener(new FakeLogListener());
 	glog << "This is a message!" << endl;
 	glog << "This is a message with a " << 1.5 << endl;
 	glog << "This is a message with a " << 1 << endl;
 	
-	for (it=log.begin(); it!=log.end(); ++it) {
+	for (it=glog.begin(); it!=glog.end(); ++it) {
 		cout << "  " << *it << endl;
 	}
 	
