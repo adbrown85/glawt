@@ -20,11 +20,12 @@ class Typeface {
 public:
 	Typeface();
 	int getHeight() const;
-	void load(const string &descriptor);
+	bool load(const string &descriptor);
 	void write(const string &text);
 private:
 	GLuint base;
 	int height;
+	RefPtr<Pango::Font> font;
 };
 
 /** @return Number of pixels from descender to ascender. */
