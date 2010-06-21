@@ -8,6 +8,7 @@
 #define ABOUT_HPP
 #include "common.h"
 #include <gtkmm/aboutdialog.h>
+#include "Resources.hpp"
 using namespace std;
 
 
@@ -16,7 +17,6 @@ using namespace std;
  */
 class About {
 public:
-	static string getIconFilename();
 	static void show(Gtk::Window *parent=NULL);
 };
 

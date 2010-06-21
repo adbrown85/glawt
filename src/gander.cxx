@@ -111,7 +111,7 @@ void Gander::onDisplay() {
 	mainBox.pack_start(*(menu->getMenuBar()), Gtk::PACK_SHRINK);
 	mainBox.pack_start(hBox);
 	window.add(mainBox);
-	window.set_icon_from_file(About::getIconFilename());
+	window.set_icon_from_file(Resources::getSquareIconFilename());
 	window.show_all();
 	
 	// Prime the canvas
