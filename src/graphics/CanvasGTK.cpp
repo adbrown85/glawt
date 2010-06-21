@@ -51,7 +51,7 @@ void CanvasGTK::on_realize() {
 	
 	// Camera and type
 	getCamera()->load(getWidth(), getHeight());
-	typeface.load("courier 8");
+	typeface.load("monospace 8");
 	
 	// Finish
 	end();
