@@ -25,7 +25,7 @@ CanvasGTK::CanvasGTK(int width, int height) : Canvas(width,height) {
 	mode = Gdk::GL::MODE_RGBA | Gdk::GL::MODE_DEPTH | Gdk::GL::MODE_DOUBLE;
 	glConfig = Gdk::GL::Config::create(mode);
 	if (!glConfig) {
-		throw "[CanvasGTK] Cannot find an OpenGL-capable visual.";
+		throw Exception("[CanvasGTK] Cannot find an OpenGL-capable visual.");
 	}
 	set_gl_capability(glConfig);
 }
