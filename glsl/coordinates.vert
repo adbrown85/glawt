@@ -11,7 +11,7 @@ in vec3 TexCoord0;
 in vec3 TexCoord1;
 out vec3 Coord0;
 out vec3 Coord1;
-invariant gl_Position;
+//invariant gl_Position;
 
 
 void main() {

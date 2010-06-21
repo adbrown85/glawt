@@ -9,7 +9,7 @@ uniform mat4 MVPMatrix;
 in vec4 MCVertex;
 in vec4 TexCoord0;
 out vec4 TexCoord;
-invariant gl_Position;
+//invariant gl_Position;
 
 
 

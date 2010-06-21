@@ -15,7 +15,7 @@ in vec3 TexCoord0;
 
 /* Outputs */
 out vec3 Origin;
-invariant gl_Position;
+//invariant gl_Position;
 
 
 /** Sets the position and texture coordinates. */

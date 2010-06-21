@@ -15,7 +15,7 @@ in vec4 TexCoord0;
 
 /* Outputs */
 out vec3 Coord;
-invariant gl_Position;
+//invariant gl_Position;
 
 
 /** Computes the vertex position and texture coordinates. */
