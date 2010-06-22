@@ -20,7 +20,7 @@ modules     := @modules@
 CXX         := @CXX@
 INCLUDES    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir) -I$(srcdir)/..
 DEFS        := @DEFS@
-DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)/$(tarname)"'
+DEFS_EXTRA  := -DGANDER_DATA_DIR='$(datadir)'
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS        := @LIBS@
