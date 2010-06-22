@@ -22,7 +22,7 @@ INSTALL     := @INSTALL@
 modules     := @modules@
 distdir     := $(tarname)-$(version)
 tarball     := $(tarname)-$(version).tar.gz
-application := $(tarname)
+application := src/$(tarname)
 
 # Targets to pass down
 src_targets := all clean tests gander $(modules) 
