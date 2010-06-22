@@ -93,9 +93,14 @@ AC_TYPE_SIZE_T
 modules='system graphics scene basic advanced command gui'
 AC_SUBST([modules])
 
-# Compiler switches
+# OS-specific compiler switches
 if test $build_os = "mingw32"; then
-	CXXFLAGS="$CXXFLAGS -Wl,--enable-auto-import"
+	extra_ldflags="-Wl,--enable-auto-import"
+	if test -z "$LDFLAGS"; then
+		LDFLAGS="$extra_ldflags"
+	else
+		LDFLAGS="$LDFLAGS $extra_ldflags"
+	fi
 fi
 
 # Finish
@@ -110,6 +115,7 @@ echo \
  prefix      ${prefix}
  CXX         ${CXX}
  CXXFLAGS    ${CXXFLAGS}
+ LDFLAGS     ${LDFLAGS}
  LIBS        ${LIBS}
  DEFS        ${DEFS}
  modules     ${modules}
