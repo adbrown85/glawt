@@ -11,7 +11,7 @@ exec_prefix := @exec_prefix@
 bindir      := @bindir@
 srcdir      := @srcdir@
 datarootdir := @datarootdir@
-datadir     := @datadir@/$(tarname)
+datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
 

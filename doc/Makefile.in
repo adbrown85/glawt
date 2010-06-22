@@ -13,8 +13,8 @@ bindir      := @bindir@
 srcdir      := @srcdir@
 datarootdir := @datarootdir@
 datadir     := @datadir@
-docdir      := @docdir@$
-htmldir     := @htmldir@/html
+docdir      := @docdir@
+htmldir     := @htmldir@
 
 # Tools
 INSTALL     := @INSTALL@

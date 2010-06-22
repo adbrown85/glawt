@@ -103,6 +103,18 @@ if test $build_os = "mingw32"; then
 	fi
 fi
 
+# Prefixes
+baseprefix=`basename $prefix`
+baseprefix_low=`echo $baseprefix | tr '[[:upper:]]' '[[:lower:]]'`
+if test $baseprefix_low = $PACKAGE_TARNAME; then
+	datadir='${datarootdir}'
+	docdir='${prefix}'/doc
+else
+	datadir='${datarootdir}'/$PACKAGE_TARNAME
+	docdir='${datarootdir}'/doc/$PACKAGE_TARNAME
+fi
+htmldir='${docdir}'/html
+
 # Finish
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
 PKG_CHECK_MODULES([DEPS], [gtkmm-2.4 gtkglextmm-1.2])
@@ -113,6 +125,10 @@ echo \
  ${PACKAGE_NAME} ${PACKAGE_VERSION}
 
  prefix      ${prefix}
+ datarootdir ${datarootdir}
+ datadir     ${datadir}
+ docdir      ${docdir}
+ htmldir     ${htmldir}
  CXX         ${CXX}
  CXXFLAGS    ${CXXFLAGS}
  LDFLAGS     ${LDFLAGS}
