@@ -25,7 +25,7 @@ tarball     := $(tarname)-$(version).tar.gz
 application := $(tarname)
 
 # Targets to pass down
-src_targets := all clean tests install uninstall gander $(modules) 
+src_targets := all clean tests gander $(modules) 
 doc_targets := html install-html
 .PHONY: $(src_targets) $(doc_targets)
 .DEFAULT: all
