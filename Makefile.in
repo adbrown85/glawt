@@ -94,6 +94,7 @@ $(distdir):
         cp src/$${i}/*.cpp $(distdir)/src/$${i}; \
         cp src/$${i}/*.hpp $(distdir)/src/$${i}; \
         cp src/$${i}/*.cxx $(distdir)/src/$${i}; \
+        cp src/$${i}/*.d $(distdir)/src/$${i}; \
     done
 	@for i in advanced basic command gui scene system; do \
         cp src/$${i}/*.xml $(distdir)/src/$${i}; \

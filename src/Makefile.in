@@ -54,8 +54,6 @@ clean:
 	@$(RM) $(tests)
 	@echo "  Removing application..."
 	@$(RM) $(application)
-	@echo "  Removing dependencies..."
-	@$(RM) $(depends)
 
 # Modules
 .PHONY: $(modules)
