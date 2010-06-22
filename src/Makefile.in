@@ -83,18 +83,6 @@ $(application): gander.cxx gander.hxx ${notdir $(objects)}
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) -o $@ $< $(archive) $(LDFLAGS)
 
-# Installation
-.PHONY: install-bin uninstall-bin
-install: install-bin
-install-bin:
-	@echo "  Installing application in $(bindir)..."
-	@$(INSTALL) -d $(bindir)
-	@$(INSTALL) -m 0755 $(application) $(bindir)
-uninstall: uninstall-bin
-uninstall-bin:
-	@echo "  Uninstalling application from $(bindir)..."
-	@$(RM) $(bindir)/$(application)
-
 # Dependencies (recompile based on objects b/c of inheritance)
 %.d: %.hpp
 	@echo "  Generating dependencies for $<..."

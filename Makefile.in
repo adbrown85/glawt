@@ -22,6 +22,7 @@ INSTALL     := @INSTALL@
 modules     := @modules@
 distdir     := $(tarname)-$(version)
 tarball     := $(tarname)-$(version).tar.gz
+application := $(tarname)
 
 # Targets to pass down
 src_targets := all clean tests install uninstall gander $(modules) 
@@ -34,8 +35,12 @@ $(doc_targets):
 	@$(MAKE) -C doc $@
 
 # Installation
-.PHONY: install-data uninstall-data
-install: install-data
+.PHONY: install-bin install-data uninstall-bin uninstall-data
+install: install-bin install-data
+install-bin:
+	@echo "  Installing application in $(bindir)..."
+	@$(INSTALL) -d $(bindir)
+	@$(INSTALL) -m 0755 $(application) $(bindir)
 install-data:
 	@echo "  Installing data to $(datadir)..."
 	@$(INSTALL) -d $(datadir)
@@ -54,7 +59,10 @@ install-data:
 	@echo "    ui"
 	@$(INSTALL) -d $(datadir)/ui
 	@$(INSTALL) -m 0644 ui/* $(datadir)/ui
-uninstall: uninstall-data
+uninstall: uninstall-bin uninstall-data
+uninstall-bin:
+	@echo "  Uninstalling application from $(bindir)..."
+	@$(RM) $(bindir)/$(application)
 uninstall-data:
 	@echo "  Uninstalling data from $(datadir)/..."
 	@$(RM) -r $(datadir)
