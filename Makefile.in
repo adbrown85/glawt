@@ -21,8 +21,11 @@ INSTALL     := @INSTALL@
 # Files
 modules     := @modules@
 distdir     := $(tarname)-$(version)
-tarball     := $(tarname)-$(version).tar.gz
+tarball     := $(tarname)-$(version)-src.tar.gz
+zipfile     := $(tarname)-$(version)-src.zip
 application := src/$(tarname)
+winbuild    := $(tarname)-win-build.zip
+winbuilddir := win
 
 # Targets to pass down
 src_targets := all clean tests gander $(modules) 
@@ -69,11 +72,20 @@ uninstall-data:
 
 # Distribution
 .PHONY: FORCE dist distcheck
-dist: $(tarball)
-$(tarball): FORCE $(distdir)
+dist: FORCE $(distdir) $(tarball) $(zipfile) $(winbuild) CLEANUP
+FORCE:
+	@-$(RM) $(tarball) &> /dev/null
+	@-$(RM) $(zipfile) &> /dev/null
+	@-$(RM) -r $(distdir) &> /dev/null
+	@-$(RM) $(winbuild) &> /dev/null
+CLEANUP:
+	@$(RM) -r $(distdir)
+$(tarball): 
 	@echo "  Packaging tarball..."
 	@tar -czf $(tarball) $(distdir)
-	@$(RM) -r $(distdir)
+$(zipfile):
+	@echo "  Packaging zipfile..."
+	@zip -r $(zipfile) $(distdir) > /dev/null
 $(distdir):
 	@echo "  Copying files..."
 	@echo "    src"
@@ -124,9 +136,9 @@ $(distdir):
 	@echo "    ui"
 	@mkdir $(distdir)/ui
 	@cp ui/* $(distdir)/ui
-FORCE:
-	@-$(RM) $(tarball) &> /dev/null
-	@-$(RM) -r $(distdir) &> /dev/null
+$(winbuild):
+	@echo "  Zipping Windows build environment..."
+	@cd $(winbuilddir) && zip -r ../$(winbuild) * > /dev/null
 distcheck: $(tarball)
 	@echo "  Unpacking and checking tarball."
 	@tar -zxf $(tarball) $(distdir)
@@ -145,3 +157,4 @@ distclean: clean
 	@$(RM) config.h
 	@$(RM) config.in~
 	@$(RM) $(tarball)
+	@$(RM) $(winbuild)
