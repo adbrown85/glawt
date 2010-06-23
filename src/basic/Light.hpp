@@ -14,7 +14,7 @@
 using namespace std;
 
 
-/** @brief Light that has intensities and can be transformed.
+/** @brief %Light that has intensities and can be transformed.
  * @ingroup basic
  */
 class Light : public SimpleTransformable, public Nameable {
