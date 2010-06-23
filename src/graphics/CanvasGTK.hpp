@@ -7,7 +7,6 @@
 #ifndef CANVASGTK_HPP
 #define CANVASGTK_HPP
 #include "common.h"
-#ifdef HAVE_GTK
 #include <GL/glu.h>
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>
@@ -77,5 +76,4 @@ inline void CanvasGTK::primeStart() {begin();}
 inline void CanvasGTK::primeFinish() {end();}
 
 
-#endif
 #endif

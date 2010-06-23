@@ -7,11 +7,9 @@
 #include <cstring>
 #include "Dataset.hpp"
 #include "DatasetViewer.hpp"
-#ifdef HAVE_GTK
 #include "CanvasGTK.hpp"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
-#endif
 
 
 int main(int argc, char *argv[]) {
@@ -43,12 +41,10 @@ int main(int argc, char *argv[]) {
 		dataset.print();
 		
 		// Initialize window
-#ifdef HAVE_GTK
 		Gtk::Main kit(argc, argv);
 		Gtk::GL::init(argc, argv);
 		Gtk::Window window;
 		CanvasGTK canvas(dataset.getWidth(), dataset.getHeight());
-#endif
 		
 		// Create the viewer
 		DatasetViewer viewer;
@@ -57,12 +53,10 @@ int main(int argc, char *argv[]) {
 		viewer.load();
 		
 		// Pack and run window
-#ifdef HAVE_GTK
 		window.set_title(dataset.getFilename());
 		window.add(canvas);
 		window.show_all_children();
 		Gtk::Main::run(window);
-#endif
 	}
 	catch (Exception &e) {
 		cerr << e << endl;

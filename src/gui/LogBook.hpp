@@ -7,7 +7,6 @@
 #ifndef LOGBOOK_HPP
 #define LOGBOOK_HPP
 #include "common.h"
-#ifdef HAVE_GTK
 #include <gtkmm.h>
 #include "Log.hpp"
 using namespace std;
@@ -28,5 +27,4 @@ private:
 };
 
 
-#endif  // HAVE_GTK
 #endif

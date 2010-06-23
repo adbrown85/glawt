@@ -13,7 +13,6 @@
 int main(int argc,
          char *argv[]) {
 	
-#ifdef HAVE_GTK
 	Gtk::Main kit(argc, argv);
 	Gtk::Window window;
 	Inspector inspector;
@@ -30,7 +29,6 @@ int main(int argc,
 	window.show_all_children();
 	inspector.update();
 	Gtk::Main::run(window);
-#endif
 	return 0;
 }
 

@@ -7,7 +7,6 @@
 #ifndef TYPEFACE_HPP
 #define TYPEFACE_HPP
 #include "common.h"
-#ifdef HAVE_GTK
 #include <gdkmm/gl/font.h>
 using namespace std;
 using Glib::RefPtr;
@@ -32,5 +31,4 @@ private:
 inline int Typeface::getHeight() const {return height;}
 
 
-#endif
 #endif
