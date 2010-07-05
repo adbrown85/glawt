@@ -42,10 +42,13 @@ VPATH       := @modules@
 depends     := ${subst .cpp,.d,$(sources)}
 
 # General phony targets
-.PHONY: all clean tests install uninstall
+.PHONY: all clean mostlyclean tests install uninstall
 .DEFAULT: all
 all: $(application)
-clean:
+clean: mostlyclean
+	@echo "  Removing dependencies..."
+	@$(RM) $(depends)
+mostlyclean:
 	@echo "  Removing objects..."
 	@$(RM) $(objects)
 	@echo "  Removing archive..."

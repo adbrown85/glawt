@@ -28,7 +28,7 @@ winbuild    := $(tarname)-win-build.zip
 winbuilddir := win
 
 # Targets to pass down
-src_targets := all clean tests gander $(modules) 
+src_targets := all clean mostlyclean tests gander $(modules) 
 doc_targets := html install-html
 .PHONY: $(src_targets) $(doc_targets)
 .DEFAULT: all
