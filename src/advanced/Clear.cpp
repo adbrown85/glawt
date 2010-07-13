@@ -10,18 +10,37 @@
 /** Initialize the three color components. */
 Clear::Clear(const Tag &tag) : Node(tag) {
 	
-	// Initialize
-	tag.get("r", r, false);
-	tag.get("g", g, false);
-	tag.get("b", b, false);
+	bool hasColor=true, hasDepth=true;
+	
+	// Color
+	if (!tag.get("color", color, false)) {
+		hasColor = false;
+		color = Vector(0.0, 0.0, 0.0, 1.0);
+	}
+	
+	// Depth
+	if (!tag.get("depth", depth, false)) {
+		hasDepth = false;
+		depth = 1.0;
+	}
+	
+	// Mask
+	if (hasColor && !hasDepth) {
+		mask = GL_COLOR_BUFFER_BIT;
+	} else if (hasDepth && !hasColor) {
+		mask = GL_DEPTH_BUFFER_BIT;
+	} else {
+		mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
+	}
 }
 
 
 /** Clears the current framebuffer with the node's color. */
 void Clear::apply() {
 	
-	glClearColor(r, g, b, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(color.x, color.y, color.z, color.w);
+	glClearDepth(depth);
+	glClear(mask);
 }
 
 
@@ -31,9 +50,15 @@ string Clear::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " r='" << r << "'"
-	       << " g='" << g << "'"
-	       << " b='" << b << "'";
+	if (mask & GL_COLOR_BUFFER_BIT) {
+		stream << " color='" << color.x << " "
+		                     << color.y << " "
+		                     << color.z << " "
+		                     << color.w << "'";
+	}
+	if (mask & GL_DEPTH_BUFFER_BIT) {
+		stream << " depth='" << depth << "'";
+	}
 	return stream.str();
 }
 

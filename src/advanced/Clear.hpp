@@ -18,6 +18,11 @@ using namespace std;
  * automatically.  However, when working with framebuffer objects, it does 
  * sometimes become necessary when doing multiple passes.
  * 
+ * <b>OpenGL Functions</b>
+ *   - glClear
+ *   - glClearColor
+ *   - glClearDepth
+ * 
  * @ingroup advanced
  */
 class Clear : public Node, public Applicable {
@@ -27,7 +32,9 @@ public:
 	virtual void remove() {}
 	virtual string toString() const;
 private:
-	float r, g, b;
+	GLbitfield mask;
+	float depth;
+	Vector color;
 };
 
 

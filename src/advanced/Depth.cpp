@@ -18,28 +18,20 @@ Depth::Depth(const Tag &tag) : Node(tag) {
 	tag.get("mode", mode, true, true);
 	if (mode == "never") {
 		this->mode = GL_NEVER;
-		this->clear = 1.0;
 	} else if (mode == "less") {
 		this->mode = GL_LESS;
-		this->clear = 1.0;
 	} else if (mode == "equal") {
 		this->mode = GL_EQUAL;
-		this->clear = 1.0;
 	} else if (mode == "lequal") {
 		this->mode = GL_LEQUAL;
-		this->clear = 1.0;
 	} else if (mode == "greater") {
 		this->mode = GL_GREATER;
-		this->clear = 0.0;
 	} else if (mode == "notequal") {
 		this->mode = GL_NOTEQUAL;
-		this->clear = 0.0;
 	} else if (mode == "gequal") {
 		this->mode = GL_GEQUAL;
-		this->clear = 0.0;
 	} else if (mode == "always") {
 		this->mode = GL_ALWAYS;
-		this->clear = 1.0;
 	} else {
 		NodeException e(tag);
 		e << "[Depth] Value '" << mode << "' for mode unrecognized.";
@@ -52,8 +44,6 @@ Depth::Depth(const Tag &tag) : Node(tag) {
 void Depth::apply() {
 	
 	glDepthFunc(mode);
-	glClearDepth(clear);
-	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 
@@ -71,7 +61,6 @@ string Depth::toString() const {
 	
 	stream << Node::toString();
 	stream << " mode='" << Text::toLower(tag["mode"]) << "'";
-	stream << " clear='" << clear << "'";
 	return stream.str();
 }
 
