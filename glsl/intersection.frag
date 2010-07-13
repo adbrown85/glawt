@@ -43,12 +43,12 @@ vec3 transfer(float value) {
 }
 
 
-/** Samples the volumes from front face to back face. */
+/** Samples the volumes from back face to front face. */
 void main() {
 	
 	float t, tExit;
 	vec3 d, exit, times;
-	vec4 sample;
+	vec4 sample, sample0, sample1;
 	
 	// Initialize direction and times
 	exit = (texture(EndCoords0, gl_FragCoord.xy/CanvasSize)).xyz;
@@ -60,26 +60,27 @@ void main() {
 	FragColor = vec4(0,0,0,0);
 	t = 0.0;
 	while (t < tExit) {
-		sample = texture(Volume0, Origin0+(d*t));
-		sample.a = sample.x;
-		sample.xyz = transfer(sample.a) * Brightness;
-		if (sample.a > 0.1) {
-			FragColor = mix(FragColor, sample, sample.a);
-		}
-		sample = texture(Volume1, Origin1+(d*t));
-		sample.a = sample.x;
-		sample.xyz = transfer(sample.a) * Brightness;
+		sample0 = texture(Volume0, Origin0+(d*t));
+		sample0.a = sample0.x;
+		sample0.xyz = transfer(sample0.a) * Brightness;
+		sample1 = texture(Volume1, Origin1+(d*t));
+		sample1.a = sample1.x;
+		sample1.xyz = transfer(sample1.a) * Brightness;
+		sample = mix(sample0, sample1, sample1.a);
 		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
 		}
 		t += SampleRate;
 	}
+	FragColor.a *= Opacity;
 	
 	// Fix opacity
+/*
 	if (FragColor.a > 0.1) {
 		FragColor.a = 1.0;
 	} else {
 		FragColor.a = 0.0;
 	}
+*/
 }
 

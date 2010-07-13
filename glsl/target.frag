@@ -8,7 +8,7 @@
 
 /* Uniforms */
 uniform sampler2D Target;
-uniform int Size;
+uniform int Size=512;
 
 /* Outputs */
 out vec4 FragColor;

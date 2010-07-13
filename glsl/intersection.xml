@@ -31,68 +31,75 @@
 
 
 <!-- Begin render targets -->
-<texture name="coords" size="512" >
+<texture name="coords" size="512">
+<texture name="results" size="512">
 
 
 <!-- Begin offscreen framebuffer -->
 <framebuffer>
 	<renderbuffer type="depth" size="512" />
 	<target link="coords" />
+	<target link="results" />
 
 
 <!-- Begin coordinates program -->
 <program>
 	<shader file="coordinates.vert" />
 	<shader file="coordinates.frag" />
-	<uniform type="mat4" name="MVPMatrix" />
+	<outputs>
+		<bind name="FragColor" to="coords" />
+	</outputs>
 
 
 <!-- Boolean XOR behind intersection -->
+<!--
 <clear />
 <depth mode="less">
-	<boolean operation="XOR" of="cubes" only="behind" defaults="false" />
-</depth>
-<screen>
-	<program>
-		<shader file="volume.vert" />
-		<shader file="volume.frag" />
-		<cull faces="front">
-			<depth mode="greater">
-				<uniform type="mat4" name="MVPMatrix" />
-				<uniform type="sampler2D" name="ExitCoords" link="coords" />
-				<boolean operation="XOR" of="cubes" only="behind" />
-			</depth>
-		</cull>
-	</program>
-</screen>
-
-
-<!-- Boolean AND as intersection -->
-<clear />
-<depth mode="less">
-	<boolean operation="AND" of="cubes" defaults="false" />
+	<boolean operation="XOR" of="cubes" only="behind" />
 </depth>
 <screen>
 	<blend>
 		<program>
-			<shader file="intersection.vert" />
-			<shader file="intersection.frag" />
+			<shader file="volume.vert" />
+			<shader file="volume.frag" />
 			<cull faces="front">
-				<depth mode="always">
+				<depth mode="greater">
 					<uniform type="mat4" name="MVPMatrix" />
-					<uniform type="sampler2D" name="EndCoords0" link="coords" />
-					<boolean operation="AND" of="cubes" />
+					<uniform type="sampler2D" name="ExitCoords" link="coords" />
+					<boolean operation="XOR" of="cubes" only="behind" />
 				</depth>
 			</cull>
 		</program>
 	</blend>
 </screen>
+-->
+
+
+<!-- Boolean AND as intersection -->
+<clear />
+<depth mode="less">
+	<boolean operation="AND" of="cubes" />
+</depth>
+<program>
+	<shader file="intersection.vert" />
+	<shader file="intersection.frag" />
+	<outputs>
+		<bind name="FragColor" to="results" />
+	</outputs>
+	<cull faces="front">
+		<uniform type="sampler2D" name="EndCoords0" link="coords" />
+		<depth mode="always">
+			<boolean operation="AND" of="cubes" />
+		</depth>
+	</cull>
+</program>
 
 
 <!-- Boolean XOR in front of intersection -->
+<!--
 <clear />
 <depth mode="less">
-	<boolean operation="XOR" of="cubes" only="forward" defaults="false" />
+	<boolean operation="XOR" of="cubes" only="forward" />
 </depth>
 <screen>
 	<blend>
@@ -108,6 +115,7 @@
 		</program>
 	</blend>
 </screen>
+-->
 
 
 <!-- End coordinates program -->
@@ -118,7 +126,18 @@
 </framebuffer>
 
 
+<!-- Show results -->
+<program>
+	<shader file="target.vert" />
+	<shader file="target.frag" />
+	<instance of="cubes">
+		<uniform type="sampler2D" name="Target" link="results" />
+	</instance>
+</program>
+
+
 <!-- End render targets -->
+</texture>
 </texture>
 
 

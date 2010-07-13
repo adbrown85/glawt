@@ -10,7 +10,7 @@
 
 /* Uniforms */
 uniform int WindowSize=512;
-uniform float SampleRate=0.006;
+uniform float SampleRate=0.01;
 uniform float Brightness=1.0;
 uniform vec3[5] Colors=vec3[5](BLUE,GREEN,YELLOW,ORANGE,RED);
 uniform float[5] Transfer=float[5](0.2, 0.3, 0.4, 0.6, 0.8);
@@ -65,10 +65,12 @@ void main() {
 	FragColor.a *= Opacity;
 	
 	// Fix opacity
+/*
 	if (FragColor.a > 0.1) {
 		FragColor.a = 1.0;
 	} else {
 		FragColor.a = 0.0;
 	}
+*/
 }
 
