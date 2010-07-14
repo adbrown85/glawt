@@ -18,5 +18,8 @@ out vec4 FragColor;
 void main() {
 	
 	FragColor = texture(Target, gl_FragCoord.xy/Size);
+	if (FragColor.a == 0) {
+		discard;
+	}
 }
 
