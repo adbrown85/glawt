@@ -7,27 +7,29 @@
 #ifndef FULLSCREEN_HPP
 #define FULLSCREEN_HPP
 #include "common.h"
-#include "Node.hpp"
-#include "SimpleDrawable.hpp"
+#include "Shape.hpp"
 
 
-/** @brief Polygon that takes up the entire window.
+/** @brief Rectangle that takes up the entire window.
+ * 
+ * Automatically adds a uniform that sets the modelviewprojection matrix in 
+ * the program to the identity matrix.
+ * 
  * @ingroup advanced
  */
-class Fullscreen : public SimpleDrawable {
+class Fullscreen : public Shape {
 public:
 	Fullscreen(const Tag &tag);
-	virtual void draw() const;
+	virtual bool isSelectable() const;
 protected:
-	virtual void initCoordinates();
-	virtual void initIndices();
-	virtual void initPoints();
-private:
-	static bool loaded;
-	static GLfloat coordinates[4][3];
-	static GLfloat points[4][3];
-	static GLubyte indices[4];
+	static ShapeTraits getTraits();
+	virtual void updateBuffer();
+	virtual void updateBufferCoords();
+	virtual void updateBufferNormals();
+	virtual void updateBufferPoints();
 };
+
+inline bool Fullscreen::isSelectable() const {return false;}
 
 
 #endif
