@@ -9,6 +9,7 @@
 /* Uniforms */
 uniform sampler2D Target;
 uniform int Size=512;
+uniform float Opacity=1.0;
 
 /* Outputs */
 out vec4 FragColor;
@@ -21,5 +22,6 @@ void main() {
 	if (FragColor.a == 0) {
 		discard;
 	}
+	FragColor.a *= Opacity;
 }
 
