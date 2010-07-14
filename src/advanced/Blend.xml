@@ -10,13 +10,15 @@
 	<shader file="../../glsl/halfmoon.vert" />
 	<shader file="../../glsl/halfmoon.frag" />
 	<blend>
-		<sort>
-			<translate x="-3.0">
-				<box />
-			</translate>
-			<translate x="+3.0">
-				<box />
-			</translate>
-		</sort>
+		<depth mode="always">
+			<sort>
+				<translate x="-3.0">
+					<box />
+				</translate>
+				<translate x="+3.0">
+					<box />
+				</translate>
+			</sort>
+		</depth>
 	</blend>
 </program>

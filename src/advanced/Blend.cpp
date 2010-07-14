@@ -11,7 +11,6 @@
 void Blend::apply() {
 	
 	glEnable(GL_BLEND);
-	glDepthFunc(GL_ALWAYS);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -19,7 +18,6 @@ void Blend::apply() {
 /** Disables blending. */
 void Blend::remove() {
 	
-	glDepthFunc(GL_LESS);
 	glDisable(GL_BLEND);
 }
 
