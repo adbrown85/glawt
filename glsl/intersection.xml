@@ -12,14 +12,14 @@
 		<translate x="-1">
 			<cube name="left">
 				<uniform type="mat4" name="MVPMatrix" />
-				<uniform type="vec4" name="Color" value="1 0 1 0.2" />
+				<uniform type="vec4" name="Color" value="1 0 1 0.5" />
 				<uniform type="sampler3D" name="Volume" link="bunny" />
 			</cube>
 		</translate>
 		<translate x="+1" y="+0.5" z="-0.5">
 			<cube name="right">
 				<uniform type="mat4" name="MVPMatrix" />
-				<uniform type="vec4" name="Color" value="0 1 1 0.2" />
+				<uniform type="vec4" name="Color" value="0 1 1 0.5" />
 				<uniform type="sampler3D" name="Volume" link="head" />
 			</cube>
 		</translate>
@@ -55,9 +55,8 @@
 <outputs>
 	<bind name="FragColor" to="coords" />
 </outputs>
-<depth mode="always">
-	<boolean operation="XOR" of="cubes" only="behind" />
-</depth>
+<clear depth="1.0" />
+<boolean operation="XOR" of="cubes" only="behind" />
 <program>
 	<shader file="volume.vert" />
 	<shader file="volume.frag" />
@@ -79,9 +78,8 @@
 <outputs>
 	<bind name="FragColor" to="coords" />
 </outputs>
-<depth mode="always">
-	<boolean operation="AND" of="cubes" />
-</depth>
+<clear depth="1.0" />
+<boolean operation="AND" of="cubes" />
 <program>
 	<shader file="intersection.vert" />
 	<shader file="intersection.frag" />
@@ -89,10 +87,12 @@
 		<bind name="FragColor" to="results" />
 	</outputs>
 	<cull faces="front">
-		<clear depth="1.0" />
-		<uniform type="sampler2D" name="EndCoords0" link="coords" />
-		<uniform type="sampler2D" name="Results" link="results" />
-		<boolean operation="AND" of="cubes" />
+		<depth mode="greater">
+			<clear depth="0.0" />
+			<uniform type="sampler2D" name="EndCoords0" link="coords" />
+			<uniform type="sampler2D" name="Results" link="results" />
+			<boolean operation="AND" of="cubes" />
+		</depth>
 	</cull>
 </program>
 
@@ -101,9 +101,8 @@
 <outputs>
 	<bind name="FragColor" to="coords" />
 </outputs>
-<depth mode="always">
-	<boolean operation="XOR" of="cubes" only="forward" />
-</depth>
+<clear depth="1.0" />
+<boolean operation="XOR" of="cubes" only="forward" />
 <program>
 	<shader file="volume.vert" />
 	<shader file="volume.frag" />
@@ -127,20 +126,16 @@
 
 <!-- End offscreen framebuffer -->
 </framebuffer>
+<clear depth="1.0" />
 
 
 <!-- Show results -->
-<blend>
-	<program>
-		<shader file="target.vert" />
-		<shader file="target.frag" />
-		<uniform type="sampler2D" name="Target" link="results" />
-		<uniform type="float" name="Opacity" value="1.5" />
-		<depth mode="less">
-			<fullscreen />
-		</depth>
-	</program>
-</blend>
+<program>
+	<shader file="target.vert" />
+	<shader file="target.frag" />
+	<uniform type="sampler2D" name="Target" link="results" />
+	<instance of="cubes" />
+</program>
 
 
 <!-- End render targets -->
@@ -148,8 +143,7 @@
 </texture>
 
 
-<!-- Outlines -->
-<clear depth="1.0" />
+<!-- Outlines and manipulators -->
 <blend>
 	<program>
 		<shader file="wireframe.vert" />
