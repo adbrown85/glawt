@@ -15,7 +15,7 @@ Clear::Clear(const Tag &tag) : Node(tag) {
 	// Color
 	if (!tag.get("color", color, false)) {
 		hasColor = false;
-		color = Vector(0.0, 0.0, 0.0, 1.0);
+		color = Vector(0.0, 0.0, 0.0, 0.0);
 	}
 	
 	// Depth
