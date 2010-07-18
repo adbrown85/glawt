@@ -7,7 +7,12 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-// Common includes
+// Configuration file
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+// C++ STL
 #include <cstdlib>
 #include <iostream>
 #include <list>
@@ -15,16 +20,18 @@
 #include <queue>
 #include <sstream>
 #include <string>
-#include <GL/glew.h>
-#include <GL/gl.h>
 
-// Configuration file
-#ifdef HAVE_CONFIG_H
-#include "config.h"
+// GLEW
+#ifdef HAVE_GLEW
+#include <GL/glew.h>
 #endif
 
-// Common defines
+// OpenGL
+#include <GL/gl.h>
+
+// GLUT
+#ifdef HAVE_GLUT
 #define GL_GLEXT_PROTOTYPES
-#define ILUT_USE_OPENGL
+#endif
 
 #endif

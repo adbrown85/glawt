@@ -1,5 +1,11 @@
 /* config.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if GLEW is available. */
+#undef HAVE_GLEW
+
+/* Define to 1 if GLUT is available. */
+#undef HAVE_GLUT
+
 /* Define to 1 if GTKGLmm is available. */
 #undef HAVE_GTK
 
@@ -12,6 +18,9 @@
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
+
+/* Define to 1 if GDK Pixbufs are available. */
+#undef HAVE_PIXBUFS
 
 /* Define to 1 if you have the `pow' function. */
 #undef HAVE_POW

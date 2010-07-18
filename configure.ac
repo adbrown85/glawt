@@ -41,44 +41,98 @@ fi
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
 
-# Check for GTKmm
-error_no_gtkmm() {
-	echo "no"
-	echo "-------------------------------------------------------"
-	echo " GTKmm (gtkmm-2.4) is required to build Gander.        "
-	echo " Try 'sudo apt-get install libgtkmm-2.4-dev'           "
-	echo " Or visit 'http://www.gtkmm.org/'                      "
-	echo "-------------------------------------------------------"
-	(exit 1); exit 1;
-}
-echo -n "checking for gtkmm-2.4... "
-PKG_CHECK_EXISTS([gtkmm-2.4],[echo "yes"],error_no_gtkmm)
+# Check for options
+glut_help='Use GLUT instead of GTKGL.'
+AC_ARG_WITH(glut, AS_HELP_STRING([--with-glut], [$glut_help]))
+glew_help='Do not try to load new OpenGL features.'
+AC_ARG_WITH(glew, AS_HELP_STRING([--without-glew], [$glew_help]))
+images_help='No support for loading 2D images as textures.'
+AC_ARG_ENABLE(images, AS_HELP_STRING([--disable-images], [$images_help]))
 
 # Check for GTKGLmm
 error_no_gtkglmm() {
 	echo "no"
 	echo "-------------------------------------------------------"
-	echo " GTKGLmm (gtkglextmm-1.2) is required to build Gander. "
+	echo " GTKGLextmm is needed for OpenGL by default.           "
 	echo " Try 'sudo apt-get install libgtkglextmm-x11-1.2-dev'  "
 	echo " Or visit 'http://projects.gnome.org/gtkglext/'        "
+	echo " Alternatively, add '--with-glut' to use GLUT instead. "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-echo -n "checking for gtkglextmm-1.2... "
-PKG_CHECK_EXISTS([gtkglextmm-1.2],[echo "yes"],error_no_gtkglmm)
-AC_DEFINE([HAVE_GTK], [1], [Define to 1 if GTKGLmm is available.])
+if test "x$with_glut" != 'xyes'; then
+	echo -n "checking for gtkglextmm-1.2... "
+	PKG_CHECK_EXISTS([gtkglextmm-1.2], [echo "yes"], [error_no_gtkglmm])
+	AC_DEFINE([HAVE_GTK], [1], [Define to 1 if GTKGLmm is available.])
+fi
+
+# Check for GLUT
+error_no_glut() {
+	echo "-------------------------------------------------------"
+	echo " You chose GLUT for OpenGL but it can't be found.      "
+	echo " Try 'sudo apt-get install freeglut3-dev'              "
+	echo " Or visit 'http://freeglut.sourceforge.net'            "
+	echo " Remove '--with-glut' to use GTKGLextmm instead.       "
+	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
+}
+if test "x$with_glut" = 'xyes'; then
+	AC_SEARCH_LIBS([glutInit], [glut], , [error_no_glut])
+	AC_CHECK_HEADER([GL/glut.h], , [error_no_glut])
+	AC_DEFINE([HAVE_GLUT], [1], [Define to 1 if GLUT is available.])
+	echo "-------------------------------------------------------"
+	echo " You chose to use GLUT instead of GTKGLextmm.          "
+	echo " Some features requiring GTK will not be available:    "
+	echo "   - Side panel for examining scene                    "
+	echo "   - Bottom panel showing status messages              "
+	echo "-------------------------------------------------------"
+fi
 
 # Check for GLEW
 error_no_glew() {
 	echo "-------------------------------------------------------"
-	echo " GLEW (GLEW) is required to install Gander.            "
+	echo " GLEW is usually needed to load some OpenGL features.  "
 	echo " Try 'sudo apt-get install libglew-dev'                "
 	echo " Or visit 'http://glew.sourceforge.net/'               "
+	echo " Alternatively, add '--without-glew' to ignore.        "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-AC_SEARCH_LIBS([glewInit], [GLEW], , [error_no_glew])
-AC_CHECK_HEADER([GL/glew.h], , [error_no_glew])
+if test "x$with_glew" != 'xno'; then
+	AC_SEARCH_LIBS([glewInit], [GLEW], , [error_no_glew])
+	AC_CHECK_HEADER([GL/glew.h], , [error_no_glew])
+	AC_DEFINE([HAVE_GLEW], [1], [Define to 1 if GLEW is available.])
+else
+	echo "-------------------------------------------------------"
+	echo " You chose to disable GLEW.                            "
+	echo " Some OpenGL features may not be available.            "
+	echo " Note disabling GLEW is not recommended on Windows or  "
+	echo " if you are using GTKGLextmm.  However, users          "
+	echo " targeting Linux machines with older video cards may   "
+	echo " have better results using just GLUT without GLEW.     "
+	echo "-------------------------------------------------------"
+fi
+
+# Check for images
+error_no_pixbufs() {
+	echo "-------------------------------------------------------"
+	echo " GDK Pixbufs are needed to load images for textures.   "
+	echo " Try 'sudo apt-get install libgtkmm-2.4-dev'           "
+	echo " Or visit 'http://www.gtkmm.org/'                      "
+	echo " Alternatively, add '--disable-images' to ignore.      "
+	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
+}
+if test "x$enable_images" != 'xno'; then
+	echo -n "checking for gdkmm-2.4... "
+	PKG_CHECK_EXISTS([gdkmm-2.4], [echo "yes"], [error_no_pixbufs])
+	AC_DEFINE([HAVE_PIXBUFS], [1], [Define to 1 if GDK Pixbufs are available.])
+else
+	echo "-------------------------------------------------------"
+	echo " You chose to disable images.                          "
+	echo " Loading images for textures will not be available.    "
+	echo "-------------------------------------------------------"
+fi
 
 # Checks for library functions
 AC_CHECK_FUNCS([pow])
