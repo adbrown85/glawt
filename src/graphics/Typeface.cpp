@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Typeface.hpp"
+#ifdef HAVE_GTK
 
 
 /** Generates enough display lists for each character. */
@@ -45,3 +46,5 @@ void Typeface::write(const string &text) {
 	}
 }
 
+
+#endif
