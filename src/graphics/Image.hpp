@@ -7,6 +7,7 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 #include "common.h"
+#ifdef HAVE_PIXBUFS
 #include <gdkmm/pixbuf.h>
 #include "Exception.hpp"
 using namespace std;
@@ -54,4 +55,5 @@ inline int Image::getWidth() const {return width;}
 inline int Image::getHeight() const {return height;}
 
 
+#endif // HAVE_PIXBUFS
 #endif

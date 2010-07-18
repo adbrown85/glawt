@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Image.hpp"
+#ifdef HAVE_PIXBUFS
 
 
 /** Initialize filename and load the image. */
@@ -57,4 +58,7 @@ void Image::unpack() {
 		}
 	}
 }
+
+
+#endif // HAVE_PIXBUFS
 
