@@ -293,4 +293,4 @@ void CanvasGTK::write(const string &text, int x, int y) {
 }
 
 
-#endif
+#endif  // HAVE_GTK

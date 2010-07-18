@@ -1,12 +1,12 @@
 /*
- * CanvasGTK.cxx
+ * CanvasGLUT.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Toolkit.hpp"
-#include "CanvasFactory.hpp"
 #include "WindowFactory.hpp"
+#include "CanvasFactory.hpp"
 
 
 /* Fake canvas listener. */
@@ -120,7 +120,7 @@ void createAndShowGUI() {
 	FakeCanvasListener *listener;
 	
 	// Create window and canvas
-	window = WindowFactory::create();
+	window = WindowFactory::getWindow();
 	canvas = CanvasFactory::create();
 	
 	// Create the listener
@@ -130,10 +130,10 @@ void createAndShowGUI() {
 	canvas->addListener(listener, CanvasEvent::DISPLAY);
 	canvas->addListener(listener, CanvasEvent::DRAG);
 	canvas->addListener(listener, CanvasEvent::KEY);
-	canvas->setAutomaticallyRefresh(true);
+	//canvas->setAutomaticallyRefresh(true);
 	
 	// Pack window
-	window->setTitle("CanvasGTK");
+	window->setTitle("CanvasGLUT");
 	window->add(canvas);
 	window->show();
 	

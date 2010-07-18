@@ -17,13 +17,13 @@
 #define CANVAS_DOWN 1
 #define CANVAS_UP 0
 #define CANVAS_NONE -1
+#ifdef HAVE_GTK
+#include <gdk/gdkkeysyms.h>
 #define CANVAS_LEFT_BUTTON 1
 #define CANVAS_MIDDLE_BUTTON 2
 #define CANVAS_RIGHT_BUTTON 3
 #define CANVAS_WHEEL_DOWN 4
 #define CANVAS_WHEEL_UP 5
-#ifdef HAVE_GTK
-#include <gdk/gdkkeysyms.h>
 #define CANVAS_KEY_UP GDK_Up
 #define CANVAS_KEY_DOWN GDK_Down
 #define CANVAS_KEY_LEFT GDK_Left
@@ -35,6 +35,26 @@
 #define CANVAS_MOD_CONTROL GDK_Control_L
 #define CANVAS_MOD_ALT GDK_Alt_L
 #define CANVAS_MOD_SHIFT GDK_Shift_L
+#define CANVAS_MOD_NONE 0
+#endif
+#ifdef HAVE_GLUT
+#include <GL/glut.h>
+#define CANVAS_LEFT_BUTTON 0
+#define CANVAS_MIDDLE_BUTTON 1
+#define CANVAS_RIGHT_BUTTON 2
+#define CANVAS_WHEEL_UP 3
+#define CANVAS_WHEEL_DOWN 4
+#define CANVAS_KEY_UP 128
+#define CANVAS_KEY_DOWN 129
+#define CANVAS_KEY_LEFT 130
+#define CANVAS_KEY_RIGHT 131
+#define CANVAS_MINUS '-'
+#define CANVAS_PLUS '+'
+#define CANVAS_EQUALS '='
+#define CANVAS_ESCAPE 27
+#define CANVAS_MOD_CONTROL GLUT_ACTIVE_CTRL
+#define CANVAS_MOD_ALT GLUT_ACTIVE_ALT
+#define CANVAS_MOD_SHIFT GLUT_ACTIVE_SHIFT
 #define CANVAS_MOD_NONE 0
 #endif
 using namespace std;

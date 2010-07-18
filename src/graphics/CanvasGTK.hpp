@@ -7,7 +7,7 @@
 #ifndef CANVASGTK_HPP
 #define CANVASGTK_HPP
 #include "common.h"
-#include <GL/glu.h>
+#ifdef HAVE_GTK
 #include <glibmm/refptr.h>
 #include <gdkmm/window.h>
 #include <gtkmm/main.h>
@@ -75,5 +75,5 @@ inline void CanvasGTK::primeStart() {begin();}
 /** Allows the client to declare its setup is finished. */
 inline void CanvasGTK::primeFinish() {end();}
 
-
+#endif  // HAVE_GTK
 #endif
