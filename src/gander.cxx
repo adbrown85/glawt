@@ -16,7 +16,7 @@ Gander::Gander(int argc, char *argv[]) {
 	this->delegate = NULL;
 	this->scene = NULL;
 	this->canvas = NULL;
-	this->menu = NULL;
+	this->window = NULL;
 }
 
 
@@ -30,8 +30,8 @@ Gander::~Gander() {
 		delete scene;
 	if (canvas != NULL)
 		delete canvas;
-	if (menu != NULL)
-		delete menu;
+	if (window != NULL)
+		delete window;
 }
 
 
@@ -47,17 +47,20 @@ void Gander::banner() {
 
 void Gander::onCompile() {
 	
-	Gtk::Window window;
+	// Initialize
+	Toolkit kit(argc, argv);
+	
+	// Create window and canvas
+	window = WindowFactory::create();
+	canvas = CanvasFactory::create();
 	
 	// Create widgets
-	Gtk::GL::init(argc, argv);
-	canvas = new CanvasGTK();
 	scene = new Scene();
 	delegate = new Delegate(scene, canvas);
 	
 	// Pack
-	window.add(*((CanvasGTK*)canvas));
-	window.show_all();
+	window->add(canvas);
+	window->show();
 	
 	// Do setup
 	canvas->primeStart();
@@ -84,45 +87,74 @@ void Gander::onConvert() {
  */
 void Gander::onDisplay() {
 	
-	Gtk::Window window;
-	Gtk::HBox hBox;
-	Gtk::VBox mainBox, vBox;
-	Inspector inspector;
-	LogBook logBook;
+	// Create window and canvas
+	window = WindowFactory::create();
+	canvas = CanvasFactory::create();
 	
 	// Create widgets
-	Gtk::GL::init(argc, argv);
-	canvas = new CanvasGTK();
 	scene = new Scene();
 	delegate = new Delegate(scene, canvas);
 	controls.push_back(new Mouse(delegate));
 	controls.push_back(new Keyboard(delegate));
-	menu = new Menu(delegate, &window, controls);
-	window.set_title(title);
 	
 	// Pack
-	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
-	vBox.pack_start(logBook);
-	hBox.pack_start(inspector);
-	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
-	mainBox.pack_start(*(menu->getMenuBar()), Gtk::PACK_SHRINK);
-	mainBox.pack_start(hBox);
-	window.add(mainBox);
-	window.set_icon_from_file(Resources::getSquareIconFilename());
-	window.show_all();
+	window->setTitle(title);
+	onDisplayPack();
+	window->show();
 	
 	// Prime the canvas
 	canvas->primeStart();
 	prime();
 	canvas->primeFinish();
 	
-	// Finalize widgets
-	inspector.setScene(scene);
-	inspector.setCanvas(canvas);
-	inspector.update();
+	// Finalize
+	onDisplayFinalize();
 	
 	// Run
-	Gtk::Main::run(window);
+	window->run();
+}
+
+
+void Gander::onDisplayPack() {
+	
+	onDisplayPackGTK();
+	onDisplayPackGLUT();
+}
+
+
+void Gander::onDisplayPackGTK() {
+#ifdef HAVE_GTK
+	
+	// Create additional widgets
+	Gtk::HBox hBox;
+	Gtk::VBox mainBox, vBox;
+	Inspector inspector;
+	LogBook logBook;
+	//Menu menu(delegate, &window, controls);
+	
+	// Pack
+	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
+	vBox.pack_start(logBook);
+	hBox.pack_start(inspector);
+	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
+	//mainBox.pack_start(*(menu.getMenuBar()), Gtk::PACK_SHRINK);
+	mainBox.pack_start(hBox);
+	window->add(mainBox);
+	//window.set_icon_from_file(Resources::getSquareIconFilename());
+	
+	// Finalize
+	inspector.setScene(scene);
+	inspector.setCanvas(canvas);
+	//inspector.update();
+#endif
+}
+
+
+void Gander::onDisplayPackGLUT() {
+#ifdef HAVE_GLUT
+	
+	window->add(canvas);
+#endif
 }
 
 
@@ -180,22 +212,23 @@ void Gander::onSlices() {
 	dataset.load();
 	dataset.print();
 	
-	// Initialize window
-	Gtk::GL::init(argc, argv);
-	Gtk::Window window;
-	CanvasGTK canvas(dataset.getWidth(), dataset.getHeight());
+	// Create window and canvas
+	window = WindowFactory::create();
+	canvas = CanvasFactory::create(dataset.getWidth(), dataset.getHeight());
 	
 	// Create the viewer
 	DatasetViewer viewer;
-	viewer.setCanvas(&canvas);
+	viewer.setCanvas(canvas);
 	viewer.setDataset(&dataset);
 	viewer.load();
 	
-	// Pack and run window
-	window.set_title(dataset.getFilename());
-	window.add(canvas);
-	window.show_all_children();
-	Gtk::Main::run(window);
+	// Pack window
+	window->setTitle(dataset.getFilename());
+	window->add(canvas);
+	window->show();
+	
+	// Run
+	window->run();
 }
 
 
@@ -224,17 +257,10 @@ void Gander::parse() {
 }
 
 
-/** Loads GLEW, opens the scene, and creates the display. */
+/** Opens the scene and creates the display. */
 void Gander::prime() {
 	
-	GLenum err;
 	list<Control*>::iterator it;
-	
-	// Load GLEW
-	err = glewInit();
-	if (err != GLEW_OK) {
-		throw Exception("[Gander] Could not initialize GLEW");
-	}
 	
 	// Open scene
 	delegate->run(Command::OPEN, inFilename);
@@ -297,7 +323,7 @@ void Gander::usage() {
 
 int main(int argc, char *argv[]) {
 	
-	Gtk::Main kit(argc, argv);
+	Toolkit kit(argc, argv);
 	Gander gander(argc, argv);
 	
 	try {

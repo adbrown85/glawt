@@ -19,6 +19,9 @@
 #include "Preprocessor.hpp"
 #include "CanvasGTK.hpp"
 #include "Menu.hpp"
+#include "Toolkit.hpp"
+#include "WindowFactory.hpp"
+#include "CanvasFactory.hpp"
 using namespace std;
 
 
@@ -60,6 +63,9 @@ protected:
 	void onCompile();
 	void onConvert();
 	void onDisplay();
+	void onDisplayPack();
+	void onDisplayPackGLUT();
+	void onDisplayPackGTK();
 	void onHeader();
 	void onHistogram();
 	void onPreprocess();
@@ -76,7 +82,7 @@ private:
 	Delegate *delegate;
 	Canvas *canvas;
 	Scene *scene;
-	Menu *menu;
+	Window *window;
 	string inFilename, option, outFilename, parameter, title;
 };
 
