@@ -7,6 +7,7 @@
 #ifndef ATTRIBUTETREE_HPP
 #define ATTRIBUTETREE_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <stack>
 #include <gtkmm.h>
 #include "Text.hpp"
@@ -45,4 +46,5 @@ private:
 };
 
 
+#endif // HAVE_GTK
 #endif

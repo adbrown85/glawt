@@ -5,6 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 #include "NodeTree.hpp"
+#ifdef HAVE_GTK
 NodeTreeColumns NodeTree::columns;
 
 
@@ -121,4 +122,7 @@ Gtk::TreeModel::iterator NodeTree::search(Node *node,
 	}
 	return pEnd;
 }
+
+
+#endif // HAVE_GTK
 

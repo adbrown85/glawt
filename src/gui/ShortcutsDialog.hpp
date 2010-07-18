@@ -7,6 +7,7 @@
 #ifndef SHORTCUTSDIALOG_HPP
 #define SHORTCUTSDIALOG_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/window.h>
@@ -31,4 +32,5 @@ private:
 };
 
 
+#endif // HAVE_GTK
 #endif

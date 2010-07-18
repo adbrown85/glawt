@@ -7,6 +7,7 @@
 #ifndef MENU_HPP
 #define MENU_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <gtkmm/menubar.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/uimanager.h>
@@ -52,4 +53,5 @@ private:
 };
 
 
+#endif // HAVE_GTK
 #endif

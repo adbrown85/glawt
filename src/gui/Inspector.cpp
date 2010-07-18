@@ -5,6 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 #include "Inspector.hpp"
+#ifdef HAVE_GTK
 
 
 /** Sets up the view inside a scrolled window. */
@@ -286,4 +287,7 @@ void Inspector::update() {
 	// Listen to scene selection changes
 	scene->getSelection().addListener(this);
 }
+
+
+#endif // HAVE_GTK
 

@@ -7,6 +7,7 @@
 #ifndef ABOUT_HPP
 #define ABOUT_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <gtkmm/aboutdialog.h>
 #include "Resources.hpp"
 using namespace std;
@@ -21,4 +22,5 @@ public:
 };
 
 
+#endif // HAVE_GTK
 #endif

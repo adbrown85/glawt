@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Menu.hpp"
+#ifdef HAVE_GTK
 
 
 /** Initializes the ActionGroup and UIManager. */
@@ -302,4 +303,7 @@ void Menu::onActionHelpShortcuts() {
 	shortcutsDialog->run();
 	shortcutsDialog->hide();
 }
+
+
+#endif // HAVE_GTK
 

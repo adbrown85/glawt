@@ -5,6 +5,7 @@
  *     Andrew Brown <andrew@andrewdbrown.com>
  */
 #include "AttributeTree.hpp"
+#ifdef HAVE_GTK
 AttributeTreeColumns AttributeTree::columns;
 
 
@@ -75,3 +76,6 @@ void AttributeTree::push() {
 	parents.push(current);
 }
 
+
+
+#endif // HAVE_GTK

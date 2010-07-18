@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "ShortcutsDialog.hpp"
+#ifdef HAVE_GTK
 
 
 ShortcutsDialog::ShortcutsDialog(Gtk::Window *window,
@@ -53,4 +54,7 @@ void ShortcutsDialog::buildFromControl(Control *control) {
 		tree.append(couple.first, Text::trim(couple.second, "\'"));
 	}
 }
+
+
+#endif // HAVE_GTK
 

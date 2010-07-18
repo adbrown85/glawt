@@ -7,6 +7,7 @@
 #ifndef NODETREE_HPP
 #define NODETREE_HPP
 #include "common.h"
+#ifdef HAVE_GTK
 #include <stack>
 #include <gtkmm.h>
 #include "Node.hpp"
@@ -50,4 +51,5 @@ private:
 inline RefPtr<Gtk::TreeStore> NodeTree::getModel() const {return model;}
 
 
+#endif // HAVE_GTK
 #endif

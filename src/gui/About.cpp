@@ -5,6 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "About.hpp"
+#ifdef HAVE_GTK
 
 
 /** Shows an %About dialog parented to @e window. */
@@ -31,4 +32,7 @@ void About::show(Gtk::Window *parent) {
 	}
 	dialog.run();
 }
+
+
+#endif // HAVE_GTK
 
