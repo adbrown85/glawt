@@ -75,8 +75,6 @@ void Tester::onCanvasEventKey(const CanvasEvent &event) {
 /** Creates a window, opens the scene, and prepares it. */
 void Tester::open(const string &filename) {
 	
-	GLenum err;
-	
 	// Print
 	cout << endl;
 	cout << "****************************************" << endl;
@@ -100,12 +98,6 @@ void Tester::open(const string &filename) {
 		
 		// Start setup
 		canvas->primeStart();
-		
-		// Load GLEW
-		err = glewInit();
-		if (err != GLEW_OK) {
-			throw Exception("[Tester] Could not initialize GLEW");
-		}
 		
 		// Open and prepare scene
 		scene = new Scene();

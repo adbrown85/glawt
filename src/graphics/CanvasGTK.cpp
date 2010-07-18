@@ -53,6 +53,9 @@ void CanvasGTK::on_realize() {
 	getCamera()->load(getWidth(), getHeight());
 	typeface.load("monospace 8");
 	
+	// Load extensions
+	loadExtensions();
+	
 	// Finish
 	end();
 }

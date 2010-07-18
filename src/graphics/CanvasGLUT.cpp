@@ -116,6 +116,9 @@ void CanvasGLUT::onRealize() {
 	glutKeyboardFunc(&keyboard);
 	glutSpecialFunc(&special);
 	glutMotionFunc(&motion);
+	
+	// Load extensions
+	loadExtensions();
 }
 
 

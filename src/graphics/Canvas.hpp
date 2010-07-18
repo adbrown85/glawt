@@ -106,6 +106,7 @@ protected:
 	bool automaticallyRefresh, started;
 	bool isMouseButtonPressed;
 	CanvasState state;
+	void loadExtensions();
 private:
 	int height, width;
 	Camera camera;
