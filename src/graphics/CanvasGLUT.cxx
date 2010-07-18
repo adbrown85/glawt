@@ -120,7 +120,7 @@ void createAndShowGUI() {
 	FakeCanvasListener *listener;
 	
 	// Create window and canvas
-	window = WindowFactory::getWindow();
+	window = WindowFactory::create();
 	canvas = CanvasFactory::create();
 	
 	// Create the listener
