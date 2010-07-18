@@ -8,7 +8,8 @@
 
 /* Uniforms */
 uniform sampler2D Target;
-uniform int Size;
+uniform int Size=512;
+uniform float Opacity=1.0;
 
 /* Outputs */
 out vec4 FragColor;
@@ -18,5 +19,9 @@ out vec4 FragColor;
 void main() {
 	
 	FragColor = texture(Target, gl_FragCoord.xy/Size);
+	if (FragColor.a == 0) {
+		discard;
+	}
+	FragColor.a *= Opacity;
 }
 

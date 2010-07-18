@@ -10,6 +10,7 @@
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
 	<depth mode="greater">
+		<clear depth="0.0" />
 		<translate x="+3.0">
 			<box />
 		</translate>

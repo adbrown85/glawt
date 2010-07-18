@@ -5,88 +5,74 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Fullscreen.hpp"
-bool Fullscreen::loaded = false;
-GLfloat Fullscreen::coordinates[4][3];
-GLubyte Fullscreen::indices[4];
-GLfloat Fullscreen::points[4][3];
 
 
-/** Creates a new %Fullscreen from an XML tag. */
-Fullscreen::Fullscreen(const Tag &tag) : SimpleDrawable(tag) {
+/** Add uniform matrix child. */
+Fullscreen::Fullscreen(const Tag &tag) : Shape(tag,getTraits()) {
 	
-	// Initialize
-	if (!loaded) {
-		initCoordinates();
-		initIndices();
-		initPoints();
-		loaded = true;
-	}
+	Node *node;
+	string text;
+	
+	text = "uniform type='mat4' name='MVPMatrix' as='identity'";
+	node = Factory::create(text);
+	addChild(node);
 }
 
 
-/** Draws the %Fullscreen. */
-void Fullscreen::draw() const {
+ShapeTraits Fullscreen::getTraits() {
 	
-	// Load identity matrices
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
+	ShapeTraits traits;
 	
-	// Draw
-	glVertexPointer(3, GL_FLOAT, 0, points);
-	glTexCoordPointer(3, GL_FLOAT, 0, coordinates);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, indices);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	// Restore matrices
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
+	traits.count = 4;
+	traits.mode = GL_QUADS;
+	traits.usage = GL_STATIC_DRAW;
+	traits.attributes.push_back("MCVertex");
+	traits.attributes.push_back("MCNormal");
+	traits.attributes.push_back("TexCoord0");
+	return traits;
 }
 
 
-/** Initializes the static coordinates array of the class. */
-void Fullscreen::initCoordinates() {
+void Fullscreen::updateBuffer() {
 	
-	GLfloat coordinates[4][3] = {{1.0, 1.0, 0.0},
-	                             {0.0, 1.0, 0.0},
-	                             {0.0, 0.0, 0.0},
-	                             {1.0, 0.0, 0.0}};
-	
-	// Copy to class
-	for (int i=0; i<4; ++i)
-		for (int j=0; j<4; ++j)
-			this->coordinates[i][j] = coordinates[i][j];
-}
-
-
-/** Initializes the static indices array of the class. */
-void Fullscreen::initIndices() {
-	
-	// Copy to class
-	for (int i=0; i<4; i++)
-		this->indices[i] = i;
+	updateBufferCoords();
+	updateBufferNormals();
+	updateBufferPoints();
 }
 
 
 /** Initializes the static points array of the class. */
-void Fullscreen::initPoints() {
+void Fullscreen::updateBufferPoints() {
 	
 	GLfloat points[4][3] = {{+1.0, +1.0, -1.0},
 	                        {-1.0, +1.0, -1.0},
 	                        {-1.0, -1.0, -1.0},
 	                        {+1.0, -1.0, -1.0}};
 	
-	// Copy to class
-	for (int i=0; i<4; i++)
-		for (int j=0; j<3; j++)
-			this->points[i][j] = points[i][j];
+	setBufferData("MCVertex", points);
+}
+
+
+/** Initializes the static indices array of the class. */
+void Fullscreen::updateBufferNormals() {
+	
+	GLfloat normals[4][3] = {{0.0, 0.0, +1.0},
+	                         {0.0, 0.0, +1.0},
+	                         {0.0, 0.0, +1.0},
+	                         {0.0, 0.0, +1.0}};
+	
+	setBufferData("MCNormal", normals);
+}
+
+
+/** Initializes the static coordinates array of the class. */
+void Fullscreen::updateBufferCoords() {
+	
+	GLfloat coords[4][3] = {{1.0, 1.0, 0.0},
+	                        {0.0, 1.0, 0.0},
+	                        {0.0, 0.0, 0.0},
+	                        {1.0, 0.0, 0.0}};
+	
+	setBufferData("TexCoord0", coords);
 }
 

@@ -36,8 +36,6 @@ using namespace std;
  * 
  * <b>OpenGL Functions</b>
  *   - glDepthFunc
- *   - glClearDepth
- *   - glClear
  * 
  * <b>Example</b>
  * <pre>
@@ -56,7 +54,6 @@ public:
 	virtual string toString() const;
 private:
 	GLenum mode;
-	float clear;
 };
 
 

@@ -11,6 +11,7 @@ out vec4 FragColor;
 
 void main() {
 	
+	gl_FragDepth = gl_FragCoord.z - 0.0001;
 	FragColor = Color;
 }
 

@@ -14,7 +14,8 @@ uniform float SampleRate=0.01;
 uniform float Brightness=1.0;
 uniform vec3[5] Colors=vec3[5](BLUE,GREEN,YELLOW,ORANGE,RED);
 uniform float[5] Transfer=float[5](0.2, 0.3, 0.4, 0.6, 0.8);
-uniform float Opacity=2.0;
+uniform float Opacity=1.0;
+uniform sampler2D Results;
 uniform sampler2D EndCoords0;
 //uniform sampler2D EndCoords1;
 uniform sampler3D Volume0;
@@ -43,7 +44,7 @@ vec3 transfer(float value) {
 }
 
 
-/** Samples the volumes from front face to back face. */
+/** Samples the volumes from back face to front face. */
 void main() {
 	
 	float t, tExit;
@@ -57,29 +58,20 @@ void main() {
 	tExit = min(times.x, min(times.y, times.z));
 	
 	// Sample until out of volume
-	FragColor = vec4(0,0,0,0);
+	FragColor = texture(Results, gl_FragCoord.xy/CanvasSize);
 	t = 0.0;
 	while (t < tExit) {
-		sample = texture(Volume0, Origin0+(d*t));
-		sample.a = sample.x;
-		sample.xyz = transfer(sample.a) * Brightness;
+		sample.a = texture(Volume0, Origin0+(d*t)).x;
+		sample.xyz = transfer(sample.a);
 		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
 		}
-		sample = texture(Volume1, Origin1+(d*t));
-		sample.a = sample.x;
-		sample.xyz = transfer(sample.a) * Brightness;
+		sample.a = texture(Volume1, Origin1+(d*t)).x;
+		sample.xyz = transfer(sample.a);
 		if (sample.a > 0.1) {
 			FragColor = mix(FragColor, sample, sample.a);
 		}
 		t += SampleRate;
-	}
-	
-	// Fix opacity
-	if (FragColor.a > 0.1) {
-		FragColor.a = 1.0;
-	} else {
-		FragColor.a = 0.0;
 	}
 }
 

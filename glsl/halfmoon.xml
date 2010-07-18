@@ -10,17 +10,19 @@
 	<shader file="halfmoon.vert" />
 	<shader file="halfmoon.frag" />
 	<blend>
-		<sort>
-			<translate x="+3.0">
-				<scale>
-					<box />
-				</scale>
-			</translate>
-			<translate x="-3.0">
-				<scale>
-					<box />
-				</scale>
-			</translate>
-		</sort>
+		<depth mode="always">
+			<sort>
+				<translate x="+3.0">
+					<scale>
+						<box />
+					</scale>
+				</translate>
+				<translate x="-3.0">
+					<scale>
+						<box />
+					</scale>
+				</translate>
+			</sort>
+		</depth>
 	</blend>
 </program>
