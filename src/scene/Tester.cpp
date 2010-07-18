@@ -29,7 +29,7 @@ void Tester::onCanvasEventDisplay(const CanvasEvent &event) {
 	// Draw
 	camera->apply();
 	traverser->start();
-	//canvas->write(scene.getFilename());
+	canvas->write(scene->getFilename());
 	
 	// Finish
 	canvas->flush();
@@ -85,7 +85,7 @@ void Tester::open(const string &filename) {
 	cout << endl;
 	
 	// Create the canvas and get camera
-	canvas = new CanvasGTK();
+	canvas = CanvasFactory::create();
 	canvas->addListener(this, CanvasEvent::DISPLAY);
 	canvas->addListener(this, CanvasEvent::KEY);
 	camera = canvas->getCamera();
@@ -93,10 +93,10 @@ void Tester::open(const string &filename) {
 	try {
 		
 		// Pack window
-		window = new Gtk::Window();
-		window->set_title("Tester");
-		window->add(*canvas);
-		window->show_all();
+		window = WindowFactory::create();
+		window->setTitle("Tester");
+		window->add(canvas);
+		window->show();
 		
 		// Start setup
 		canvas->primeStart();
@@ -128,7 +128,7 @@ void Tester::open(const string &filename) {
 void Tester::start() {
 	
 	try {
-		Gtk::Main::run(*window);
+		window->run();
 	} catch (Exception &e) {
 		cerr << e << endl;
 		exit(1);

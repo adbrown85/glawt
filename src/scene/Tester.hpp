@@ -7,13 +7,13 @@
 #ifndef TESTER_HPP
 #define TESTER_HPP
 #include "common.h"
-#include <gtkmm/main.h>
-#include <gtkmm/window.h>
+#include "Toolkit.hpp"
+#include "WindowFactory.hpp"
+#include "CanvasFactory.hpp"
 #include "Node.hpp"
 #include "Path.hpp"
 #include "Scene.hpp"
 #include "Traverser.hpp"
-#include "CanvasGTK.hpp"
 using namespace std;
 
 
@@ -32,9 +32,9 @@ public:
 private:
 	Traverser *traverser;
 	Scene *scene;
-	CanvasGTK *canvas;
+	Canvas *canvas;
 	Camera *camera;
-	Gtk::Window *window;
+	Window *window;
 };
 
 inline Scene* Tester::getScene() {return scene;}

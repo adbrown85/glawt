@@ -19,8 +19,7 @@ int main(int argc,
 	Tester tester;
 	
 	// Initialize
-	Gtk::Main kit(argc, argv);
-	Gtk::GL::init(argc, argv);
+	Toolkit kit(argc, argv);
 	
 	// Install tags
 	Factory::install("program", &createNode);
