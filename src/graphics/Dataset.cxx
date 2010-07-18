@@ -5,11 +5,10 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include <cstring>
-#include "Dataset.hpp"
 #include "DatasetViewer.hpp"
-#include "CanvasGTK.hpp"
-#include <gtkmm/main.h>
-#include <gtkmm/window.h>
+#include "Toolkit.hpp"
+#include "CanvasFactory.hpp"
+#include "WindowFactory.hpp"
 
 
 int main(int argc, char *argv[]) {
@@ -33,6 +32,9 @@ int main(int argc, char *argv[]) {
 	cout << "****************************************" << endl;
 	cout << endl;
 	
+	Window *window;
+	Canvas *canvas;
+	
 	try {
 		
 		// Set up the dataset
@@ -40,23 +42,28 @@ int main(int argc, char *argv[]) {
 		dataset.load();
 		dataset.print();
 		
-		// Initialize window
-		Gtk::Main kit(argc, argv);
-		Gtk::GL::init(argc, argv);
-		Gtk::Window window;
-		CanvasGTK canvas(dataset.getWidth(), dataset.getHeight());
+		// Initialize
+		Toolkit kit(argc, argv);
+		
+		// Window and canvas
+		window = WindowFactory::create();
+		canvas = CanvasFactory::create(dataset.getWidth(), dataset.getHeight());
 		
 		// Create the viewer
 		DatasetViewer viewer;
-		viewer.setCanvas(&canvas);
+		viewer.setCanvas(canvas);
 		viewer.setDataset(&dataset);
 		viewer.load();
 		
-		// Pack and run window
-		window.set_title(dataset.getFilename());
-		window.add(canvas);
-		window.show_all_children();
-		Gtk::Main::run(window);
+		// Pack window
+		window->setTitle(dataset.getFilename());
+		window->add(canvas);
+		window->show();
+		
+		// Run
+		window->run();
+		delete window;
+		delete canvas;
 	}
 	catch (Exception &e) {
 		cerr << e << endl;

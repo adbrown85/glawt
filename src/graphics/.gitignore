@@ -5,6 +5,7 @@ Configuration
 Dataset
 DatasetAnalyzer
 DatasetHeader
+DatasetViewer
 DatasetWriter
 Image
 OctreeBuilder
