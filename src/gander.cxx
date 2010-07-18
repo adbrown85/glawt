@@ -107,9 +107,6 @@ void Gander::onDisplay() {
 	prime();
 	canvas->primeFinish();
 	
-	// Finalize
-	onDisplayFinalize();
-	
 	// Run
 	window->run();
 }
