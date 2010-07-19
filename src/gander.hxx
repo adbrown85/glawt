@@ -22,6 +22,7 @@
 #include "Toolkit.hpp"
 #include "WindowFactory.hpp"
 #include "CanvasFactory.hpp"
+#include "Resources.hpp"
 using namespace std;
 
 
