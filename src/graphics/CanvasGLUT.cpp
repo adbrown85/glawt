@@ -31,9 +31,16 @@ void CanvasGLUT::mouse(int button, int state, int x, int y) {
 	instance->state.x = x;
 	instance->state.y = y;
 	instance->state.combo.trigger = button;
-	instance->state.combo.action = CANVAS_DOWN;
+	switch (state) {
+	case GLUT_DOWN:
+		instance->state.combo.action = CANVAS_DOWN;
+		instance->isMouseButtonPressed = true;
+		break;
+	case GLUT_UP:
+		instance->state.combo.action = CANVAS_UP;
+		instance->isMouseButtonPressed = false;
+	}
 	instance->updateModifier();
-	instance->isMouseButtonPressed = true;
 	
 	// Fire event
 	instance->fireEvent(CanvasEvent::BUTTON);
