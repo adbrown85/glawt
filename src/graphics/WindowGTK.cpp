@@ -11,7 +11,7 @@
 /** Create a GTK window. */
 WindowGTK::WindowGTK() {
 	
-	window = new Gdk::Window();
+	window = new Gtk::Window();
 }
 
 

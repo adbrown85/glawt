@@ -8,18 +8,23 @@
 #define WINDOWGTK_HPP
 #include "common.h"
 #ifdef HAVE_GTK
-#include <gdkmm/window.h>
+#include <gtkmm/window.h>
+#include <gtkmm/widget.h>
 #include "Window.hpp"
+#include "CanvasGTK.hpp"
 using namespace std;
 
 
+/** @brief Window implementation for GTK toolkit.
+ * @ingroup graphics
+ */
 class WindowGTK : public Window {
 public:
 	WindowGTK();
 	virtual ~WindowGTK();
 	virtual void add(Gtk::Widget &widget);
 	virtual void add(Canvas *canvas);
-	virtual run();
+	virtual void run();
 	virtual void show();
 private:
 	Gtk::Window *window;
