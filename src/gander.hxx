@@ -63,9 +63,6 @@ protected:
 	void onCompile();
 	void onConvert();
 	void onDisplay();
-	void onDisplayPack();
-	void onDisplayPackGLUT();
-	void onDisplayPackGTK();
 	void onHeader();
 	void onHistogram();
 	void onPreprocess();

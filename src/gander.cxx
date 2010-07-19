@@ -15,8 +15,6 @@ Gander::Gander(int argc, char *argv[]) {
 	this->display = NULL;
 	this->delegate = NULL;
 	this->scene = NULL;
-	this->canvas = NULL;
-	this->window = NULL;
 }
 
 
@@ -28,10 +26,6 @@ Gander::~Gander() {
 		delete delegate;
 	if (scene != NULL)
 		delete scene;
-	if (canvas != NULL)
-		delete canvas;
-	if (window != NULL)
-		delete window;
 }
 
 
@@ -66,6 +60,10 @@ void Gander::onCompile() {
 	canvas->primeStart();
 	prime();
 	canvas->primeFinish();
+	
+	// Cleanup
+	delete window;
+	delete canvas;
 }
 
 
@@ -87,6 +85,9 @@ void Gander::onConvert() {
  */
 void Gander::onDisplay() {
 	
+	// Initialize
+	Toolkit kit(argc, argv);
+	
 	// Create window and canvas
 	window = WindowFactory::create();
 	canvas = CanvasFactory::create();
@@ -97,9 +98,31 @@ void Gander::onDisplay() {
 	controls.push_back(new Mouse(delegate));
 	controls.push_back(new Keyboard(delegate));
 	
+	// Create additional widgets
+#ifdef HAVE_GTK
+	Gtk::HBox hBox;
+	Gtk::VBox mainBox, vBox;
+	LogBook logBook;
+	Inspector inspector;
+	Menu menu(delegate, dynamic_cast<WindowGTK*>(window)->getWindow(), controls);
+#endif
+	
 	// Pack
+#ifdef HAVE_GTK
+	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
+	vBox.pack_start(logBook);
+	hBox.pack_start(inspector);
+	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
+	mainBox.pack_start(*(menu.getMenuBar()), Gtk::PACK_SHRINK);
+	mainBox.pack_start(hBox);
+	((WindowGTK*)window)->add(mainBox);
+#else
+	window->add(canvas);
+#endif
+	
+	// Show
+	window->setIcon(Resources::getSquareIconFilename());
 	window->setTitle(title);
-	onDisplayPack();
 	window->show();
 	
 	// Prime the canvas
@@ -107,51 +130,19 @@ void Gander::onDisplay() {
 	prime();
 	canvas->primeFinish();
 	
-	// Run
-	window->run();
-}
-
-
-void Gander::onDisplayPack() {
-	
-	onDisplayPackGTK();
-	onDisplayPackGLUT();
-}
-
-
-void Gander::onDisplayPackGTK() {
-#ifdef HAVE_GTK
-	
-	// Create additional widgets
-	Gtk::HBox hBox;
-	Gtk::VBox mainBox, vBox;
-	Inspector inspector;
-	LogBook logBook;
-	//Menu menu(delegate, &window, controls);
-	
-	// Pack
-	vBox.pack_start(*((CanvasGTK*)canvas), Gtk::PACK_SHRINK);
-	vBox.pack_start(logBook);
-	hBox.pack_start(inspector);
-	hBox.pack_start(vBox, Gtk::PACK_SHRINK);
-	//mainBox.pack_start(*(menu.getMenuBar()), Gtk::PACK_SHRINK);
-	mainBox.pack_start(hBox);
-	window->add(mainBox);
-	//window.set_icon_from_file(Resources::getSquareIconFilename());
-	
 	// Finalize
+#ifdef HAVE_GTK
 	inspector.setScene(scene);
 	inspector.setCanvas(canvas);
-	//inspector.update();
+	inspector.update();
 #endif
-}
-
-
-void Gander::onDisplayPackGLUT() {
-#ifdef HAVE_GLUT
 	
-	window->add(canvas);
-#endif
+	// Run
+	window->run();
+	
+	// Cleanup
+	delete window;
+	delete canvas;
 }
 
 
@@ -204,6 +195,9 @@ void Gander::onRange() {
 
 void Gander::onSlices() {
 	
+	// Initialize
+	Toolkit kit(argc, argv);
+	
 	// Load the dataset
 	Dataset dataset(inFilename);
 	dataset.load();
@@ -226,6 +220,10 @@ void Gander::onSlices() {
 	
 	// Run
 	window->run();
+	
+	// Clean up
+	delete window;
+	delete canvas;
 }
 
 
@@ -294,9 +292,7 @@ void Gander::start() {
 	} else if (option == "--histogram") {
 		onHistogram();
 	} else {
-		banner();
 		onDisplay();
-		banner();
 	}
 }
 
@@ -320,7 +316,6 @@ void Gander::usage() {
 
 int main(int argc, char *argv[]) {
 	
-	Toolkit kit(argc, argv);
 	Gander gander(argc, argv);
 	
 	try {
