@@ -22,7 +22,7 @@ class WindowGTK : public Window {
 public:
 	WindowGTK();
 	virtual ~WindowGTK();
-	virtual Gtk::Window* getWindow();
+	virtual void* getNativeWindow();
 	virtual void add(Gtk::Widget &widget);
 	virtual void add(Canvas *canvas);
 	virtual void run();
@@ -31,8 +31,6 @@ public:
 private:
 	Gtk::Window *window;
 };
-
-inline Gtk::Window* WindowGTK::getWindow() {return window;}
 
 
 #endif // HAVE_GTK

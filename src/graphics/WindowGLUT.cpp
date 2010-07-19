@@ -16,6 +16,12 @@ void WindowGLUT::add(Canvas *canvas) {
 }
 
 
+void* WindowGLUT::getNativeWindow() {
+	
+	return NULL;
+}
+
+
 /** Starts processing the window. */
 void WindowGLUT::run() {
 	

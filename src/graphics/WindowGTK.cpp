@@ -36,6 +36,12 @@ void WindowGTK::add(Canvas *canvas) {
 }
 
 
+void* WindowGTK::getNativeWindow() {
+	
+	return (void*)window;
+}
+
+
 /** Starts processing the window. */
 void WindowGTK::run() {
 	

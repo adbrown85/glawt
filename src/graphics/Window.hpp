@@ -19,6 +19,7 @@ public:
 	Window() {}
 	virtual ~Window() {}
 	virtual void add(Canvas *canvas) = 0;
+	virtual void* getNativeWindow() = 0;
 	virtual string getTitle();
 	virtual void run() = 0;
 	virtual void setIcon(string filename) = 0;
