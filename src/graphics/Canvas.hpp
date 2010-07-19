@@ -12,6 +12,7 @@
 #include "Log.hpp"
 #include "Camera.hpp"
 #include "Combo.hpp"
+#include "Extensions.hpp"
 #define CANVAS_WIDTH 512
 #define CANVAS_HEIGHT 512
 #define CANVAS_DOWN 1
@@ -106,7 +107,6 @@ protected:
 	bool automaticallyRefresh, started;
 	bool isMouseButtonPressed;
 	CanvasState state;
-	void loadExtensions();
 private:
 	int height, width;
 	Camera camera;

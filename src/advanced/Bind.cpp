@@ -53,7 +53,7 @@ void Bind::associate() {
 		e << "[Bind] Cound not find program.";
 		throw e;
 	}
-	glBindFragDataLocation(program->getHandle(), index, name.c_str());
+	glBindFragDataLocationGAN(program->getHandle(), index, name.c_str());
 }
 
 
@@ -66,7 +66,7 @@ void Bind::finalize() {
 	GLint location;
 	
 	location = 0;
-	location = glGetFragDataLocation(program->getHandle(), name.c_str());
+	location = glGetFragDataLocationGAN(program->getHandle(), name.c_str());
 	if (location != index) {
 		NodeException e(tag);
 		e << "[Bind] Variable was not bound correctly.";

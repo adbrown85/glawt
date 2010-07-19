@@ -60,16 +60,3 @@ void Canvas::fireEvent(int type) {
 	}
 }
 
-
-void Canvas::loadExtensions() {
-	
-	GLenum err;
-	
-#ifdef HAVE_GLEW
-	err = glewInit();
-	if (err != GLEW_OK) {
-		throw Exception("[Gander] Could not initialize GLEW");
-	}
-#endif
-}
-

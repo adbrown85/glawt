@@ -54,7 +54,7 @@ void CanvasGTK::on_realize() {
 	typeface.load("monospace 8");
 	
 	// Load extensions
-	loadExtensions();
+	Extensions::load();
 	
 	// Finish
 	end();

@@ -118,7 +118,7 @@ void CanvasGLUT::onRealize() {
 	glutMotionFunc(&motion);
 	
 	// Load extensions
-	loadExtensions();
+	Extensions::load();
 }
 
 
