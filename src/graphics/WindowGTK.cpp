@@ -43,6 +43,13 @@ void WindowGTK::run() {
 }
 
 
+/** Sets the icon used for the window. */
+void WindowGTK::setIcon(string filename) {
+	
+	window->set_icon_from_file(filename);
+}
+
+
 /** Makes the window visible on screen. */
 void WindowGTK::show() {
 	

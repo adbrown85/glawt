@@ -26,6 +26,7 @@ public:
 	virtual void add(Gtk::Widget &widget);
 	virtual void add(Canvas *canvas);
 	virtual void run();
+	virtual void setIcon(string filename);
 	virtual void show();
 private:
 	Gtk::Window *window;
