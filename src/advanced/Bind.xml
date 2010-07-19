@@ -17,7 +17,7 @@
 			<outputs>
 				<bind name="FragColor" to="back_coords" />
 			</outputs>
-			<clear r="0.8" g="0.8" b="0.8" />
+			<clear color="0.8 0.8 0.8 1.0" />
 			<cull faces="front">
 				<cube />
 			</cull>
@@ -28,7 +28,7 @@
 			<outputs>
 				<bind name="FragColor" to="front_coords" />
 			</outputs>
-			<clear r="0.4" g="0.4" b="0.4" />
+			<clear color="0.4 0.4 0.4 1.0" />
 			<cull faces="back">
 				<cube />
 			</cull>
