@@ -84,7 +84,7 @@ if test "x$with_glut" = 'xyes'; then
 	echo " You chose to use GLUT instead of GTKGLextmm.          "
 	echo " Some features requiring GTK will not be available:    "
 	echo "   - Side panel for examining scene                    "
-	echo "   - Bottom panel showing status messages              "
+	echo "   - Bottom panel showing log messages                 "
 	echo "-------------------------------------------------------"
 fi
 
@@ -98,19 +98,15 @@ error_no_glew() {
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-if test "x$with_glew" != 'xno'; then
+if test "x$with_glew" = 'xyes'; then
+	$use_glew = 'yes';
+elif test "$build_os" = 'mingw32' -a "x$with_glew" != 'xno'; then
+	$use_glew = 'yes';
+fi
+if test "x$use_glew" = 'xyes'; then
 	AC_SEARCH_LIBS([glewInit], [GLEW], , [error_no_glew])
 	AC_CHECK_HEADER([GL/glew.h], , [error_no_glew])
 	AC_DEFINE([HAVE_GLEW], [1], [Define to 1 if GLEW is available.])
-else
-	echo "-------------------------------------------------------"
-	echo " You chose to disable GLEW.                            "
-	echo " Some OpenGL features may not be available.            "
-	echo " Note disabling GLEW is not recommended on Windows or  "
-	echo " if you are using GTKGLextmm.  However, users          "
-	echo " targeting Linux machines with older video cards may   "
-	echo " have better results using just GLUT without GLEW.     "
-	echo "-------------------------------------------------------"
 fi
 
 # Check for images
