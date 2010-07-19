@@ -27,11 +27,7 @@
 #endif
 
 // OpenGL
-#include <GL/gl.h>
-
-// GLUT
-#ifdef HAVE_GLUT
 #define GL_GLEXT_PROTOTYPES
-#endif
+#include <GL/gl.h>
 
 #endif
