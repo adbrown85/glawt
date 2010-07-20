@@ -9,7 +9,6 @@
 #include "common.h"
 #include <iomanip>
 #include <vector>
-#include <glibmm/timer.h>
 #include "Exception.hpp"
 #include "Command.hpp"             // Open the scene
 #include "Control.hpp"             // Install controls before starting
@@ -44,7 +43,7 @@ private:
 	vector<Control*> controls;
 	double footprint;
 	Canvas *canvas;
-	Glib::Timer timer;
+	GLuint timeMarker;
 };
 
 inline Delegate* Display::getDelegate() {return delegate;}

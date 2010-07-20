@@ -96,6 +96,7 @@ public:
 	void fireEvent(int type);
 	virtual void flush() = 0;
 	Camera* getCamera();
+	virtual GLuint getElapsedTime() = 0;
 	int getHeight();
 	int getWidth();
 	virtual void refresh() = 0;

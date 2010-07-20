@@ -25,8 +25,8 @@ Display::Display(Delegate *delegate) {
 	delegate->addListener(this, Command::INFORMATION);
 	canvas->addListener(this, CanvasEvent::DISPLAY);
 	
-	// Start timer
-	timer.start();
+	// Get time
+	timeMarker = canvas->getElapsedTime();
 }
 
 
@@ -95,16 +95,16 @@ void Display::onCommandEvent(int command) {
 /** Draws the overlay on the display. */
 void Display::overlay() {
 	
-	double seconds;
+	GLuint time;
 	ostringstream stream;
 	
 	// Update
 	++frames;
-	seconds = timer.elapsed();
-	if (seconds > 1) {
+	time = canvas->getElapsedTime();
+	if (time - timeMarker > 1000) {
 		framesPerSecond = frames;
 		frames = 0;
-		timer.reset();
+		timeMarker = time;
 	}
 	
 	// Draw text

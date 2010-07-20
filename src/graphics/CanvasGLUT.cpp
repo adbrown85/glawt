@@ -19,6 +19,12 @@ CanvasGLUT::CanvasGLUT(int width, int height) : Canvas(width,height) {
 }
 
 
+GLuint CanvasGLUT::getElapsedTime() {
+	
+	return glutGet(GLUT_ELAPSED_TIME);
+}
+
+
 void CanvasGLUT::display(void) {
 	
 	instance->fireEvent(CanvasEvent::DISPLAY);

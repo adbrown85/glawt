@@ -9,6 +9,7 @@
 #include "common.h"
 #ifdef HAVE_GTK
 #include <glibmm/refptr.h>
+#include <glibmm/timer.h>
 #include <gdkmm/window.h>
 #include <gtkmm/main.h>
 #include <gtkmm/gl/init.h>
@@ -26,6 +27,7 @@ class CanvasGTK : public Canvas,
 public:
 	CanvasGTK(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
 	virtual void flush();
+	virtual GLuint getElapsedTime();
 	virtual bool on_expose_event(GdkEventExpose *event);
 	virtual void on_realize();
 	virtual bool on_button_press_event(GdkEventButton *event);
@@ -55,6 +57,7 @@ private:
 	Glib::RefPtr<Gdk::Window> window;
 	Typeface typeface;
 	sigc::connection idle;
+	Glib::Timer timer;
 };
 
 /** Signal start of OpenGL commands. */

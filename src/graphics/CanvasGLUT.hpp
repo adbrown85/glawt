@@ -17,6 +17,7 @@ class CanvasGLUT : public Canvas {
 public:
 	CanvasGLUT(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
 	virtual void flush();
+	virtual GLuint getElapsedTime();
 	virtual void refresh();
 	virtual void primeStart() {};
 	virtual void primeFinish() {};

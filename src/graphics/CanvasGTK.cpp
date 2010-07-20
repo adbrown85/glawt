@@ -31,6 +31,12 @@ CanvasGTK::CanvasGTK(int width, int height) : Canvas(width,height) {
 }
 
 
+GLuint CanvasGTK::getElapsedTime() {
+	
+	return (GLuint)(timer.elapsed() * 1000);
+}
+
+
 /** Initializes OpenGL. */
 void CanvasGTK::on_realize() {
 	
@@ -55,6 +61,9 @@ void CanvasGTK::on_realize() {
 	
 	// Load extensions
 	Extensions::load();
+	
+	// Start timer
+	timer.start();
 	
 	// Finish
 	end();
