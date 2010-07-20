@@ -54,44 +54,44 @@ inline void Mouse::addBindings() {
 	Combo combo;
 	
 	// Mouse wheel up
-	combo.trigger = CANVAS_WHEEL_UP;
-	combo.modifier = CANVAS_MOD_NONE;
-	combo.action = CANVAS_UP;
+	combo.trigger = TOOLKIT_WHEEL_UP;
+	combo.modifier = TOOLKIT_MOD_NONE;
+	combo.action = TOOLKIT_UP;
 	add(Binding(combo, Command::ZOOM_IN, 0.5f));
 	
 	// Mouse wheel down
-	combo.trigger = CANVAS_WHEEL_DOWN;
-	combo.modifier = CANVAS_MOD_NONE;
-	combo.action = CANVAS_UP;
+	combo.trigger = TOOLKIT_WHEEL_DOWN;
+	combo.modifier = TOOLKIT_MOD_NONE;
+	combo.action = TOOLKIT_UP;
 	add(Binding(combo, Command::ZOOM_OUT, 0.5f));
 	
 	// Ctrl + Left button
-	combo.trigger = CANVAS_LEFT_BUTTON;
-	combo.modifier = CANVAS_MOD_CONTROL;
-	combo.action = CANVAS_DOWN;
+	combo.trigger = TOOLKIT_LEFT_BUTTON;
+	combo.modifier = TOOLKIT_MOD_CONTROL;
+	combo.action = TOOLKIT_DOWN;
 	add(Binding(combo, Command::GRAB, &itemID));
 	
 	// Left button drag in x
-	combo.trigger = CANVAS_LEFT_BUTTON;
-	combo.modifier = CANVAS_MOD_NONE;
+	combo.trigger = TOOLKIT_LEFT_BUTTON;
+	combo.modifier = TOOLKIT_MOD_NONE;
 	combo.action = 'x';
 	add(Binding(combo, Command::CIRCLE_Y, -1.5f));
 	
 	// Left button drag in y
-	combo.trigger = CANVAS_LEFT_BUTTON;
-	combo.modifier = CANVAS_MOD_NONE;
+	combo.trigger = TOOLKIT_LEFT_BUTTON;
+	combo.modifier = TOOLKIT_MOD_NONE;
 	combo.action = 'y';
 	add(Binding(combo, Command::CIRCLE_X, -1.5f));
 	
 	// Middle button drag in x
-	combo.trigger = CANVAS_MIDDLE_BUTTON;
-	combo.modifier = CANVAS_MOD_NONE;
+	combo.trigger = TOOLKIT_MIDDLE_BUTTON;
+	combo.modifier = TOOLKIT_MOD_NONE;
 	combo.action = 'x';
 	add(Binding(combo, Command::TRACK, -0.8f));
 	
 	// Middle button drag in y
-	combo.trigger = CANVAS_MIDDLE_BUTTON;
-	combo.modifier = CANVAS_MOD_NONE;
+	combo.trigger = TOOLKIT_MIDDLE_BUTTON;
+	combo.modifier = TOOLKIT_MOD_NONE;
 	combo.action = 'y';
 	add(Binding(combo, Command::BOOM, 0.8f));
 }

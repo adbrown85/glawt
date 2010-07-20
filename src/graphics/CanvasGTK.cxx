@@ -47,19 +47,19 @@ void FakeCanvasListener::onCanvasEvent(const CanvasEvent &event) {
 void FakeCanvasListener::onButtonEvent(const CanvasEvent &event) {
 	
 	switch (event.state.combo.trigger) {
-	case CANVAS_LEFT_BUTTON:
+	case TOOLKIT_LEFT_BUTTON:
 		cout << "Left button!" << endl;
 		break;
-	case CANVAS_MIDDLE_BUTTON:
+	case TOOLKIT_MIDDLE_BUTTON:
 		cout << "Middle button!" << endl;
 		break;
-	case CANVAS_RIGHT_BUTTON:
+	case TOOLKIT_RIGHT_BUTTON:
 		cout << "Right button!" << endl;
 		break;
-	case CANVAS_WHEEL_UP:
+	case TOOLKIT_WHEEL_UP:
 		cout << "Wheel up!" << endl;
 		break;
-	case CANVAS_WHEEL_DOWN:
+	case TOOLKIT_WHEEL_DOWN:
 		cout << "Wheel down!" << endl;
 		break;
 	}
@@ -93,15 +93,15 @@ void FakeCanvasListener::onDragEvent(const CanvasEvent &event) {
 void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
 	
 	switch (event.state.combo.trigger) {
-	case CANVAS_MOD_ALT:
-	case CANVAS_MOD_CONTROL:
-	case CANVAS_MOD_SHIFT:
+	case TOOLKIT_MOD_ALT:
+	case TOOLKIT_MOD_CONTROL:
+	case TOOLKIT_MOD_SHIFT:
 		cout << "Modifier key!" << endl;
 		break;
-	case CANVAS_KEY_DOWN:
-	case CANVAS_KEY_LEFT:
-	case CANVAS_KEY_RIGHT:
-	case CANVAS_KEY_UP:
+	case TOOLKIT_KEY_DOWN:
+	case TOOLKIT_KEY_LEFT:
+	case TOOLKIT_KEY_RIGHT:
+	case TOOLKIT_KEY_UP:
 		cout << "Arrow key!" << endl;
 		break;
 	default:

@@ -66,9 +66,9 @@ string Binding::toString() const {
 	
 	// Modifier
 	switch (combo.modifier) {
-	case CANVAS_MOD_CONTROL : stream << "Ctrl+"; break;
-	case CANVAS_MOD_ALT     : stream << "Alt+"; break;
-	case CANVAS_MOD_SHIFT   : stream << "Shift+"; break;
+	case TOOLKIT_MOD_CONTROL : stream << "Ctrl+"; break;
+	case TOOLKIT_MOD_ALT     : stream << "Alt+"; break;
+	case TOOLKIT_MOD_SHIFT   : stream << "Shift+"; break;
 	}
 	
 	// Trigger

@@ -96,7 +96,7 @@ bool CanvasGTK::on_button_press_event(GdkEventButton *event) {
 	state.x = event->x;
 	state.y = event->y;
 	state.combo.trigger = event->button;
-	state.combo.action = CANVAS_DOWN;
+	state.combo.action = TOOLKIT_DOWN;
 	updateModifer(event->state);
 	isMouseButtonPressed = true;
 	
@@ -117,7 +117,7 @@ bool CanvasGTK::on_button_release_event(GdkEventButton *event) {
 	state.x = event->x;
 	state.y = event->y;
 	state.combo.trigger = event->button;
-	state.combo.action = CANVAS_UP;
+	state.combo.action = TOOLKIT_UP;
 	updateModifer(event->state);
 	isMouseButtonPressed = false;
 	
@@ -138,7 +138,7 @@ bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 	
 	// Update
 	state.combo.trigger = event->keyval;
-	state.combo.action = CANVAS_DOWN;
+	state.combo.action = TOOLKIT_DOWN;
 	updateModifer(event->state);
 	
 	// Fire event
@@ -238,9 +238,9 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 	
 	// Update
 	if (event->direction == GDK_SCROLL_UP) {
-		state.combo.trigger = CANVAS_WHEEL_UP;
+		state.combo.trigger = TOOLKIT_WHEEL_UP;
 	} else {
-		state.combo.trigger = CANVAS_WHEEL_DOWN;
+		state.combo.trigger = TOOLKIT_WHEEL_DOWN;
 	}
 	updateModifer(event->state);
 	
@@ -255,13 +255,13 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 void CanvasGTK::updateModifer(guint state) {
 	
 	if (state & GDK_CONTROL_MASK) {
-		this->state.combo.modifier = CANVAS_MOD_CONTROL;
+		this->state.combo.modifier = TOOLKIT_MOD_CONTROL;
 	} else if (state & GDK_SHIFT_MASK) {
-		this->state.combo.modifier = CANVAS_MOD_SHIFT;
+		this->state.combo.modifier = TOOLKIT_MOD_SHIFT;
 	} else if (state & GDK_MOD1_MASK) {
-		this->state.combo.modifier = CANVAS_MOD_ALT;
+		this->state.combo.modifier = TOOLKIT_MOD_ALT;
 	} else {
-		this->state.combo.modifier = CANVAS_MOD_NONE;
+		this->state.combo.modifier = TOOLKIT_MOD_NONE;
 	}
 }
 

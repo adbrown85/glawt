@@ -51,11 +51,11 @@ void CanvasGLUT::mouse(int button, int state, int x, int y) {
 	instance->state.combo.trigger = button;
 	switch (state) {
 	case GLUT_DOWN:
-		instance->state.combo.action = CANVAS_DOWN;
+		instance->state.combo.action = TOOLKIT_DOWN;
 		instance->isMouseButtonPressed = true;
 		break;
 	case GLUT_UP:
-		instance->state.combo.action = CANVAS_UP;
+		instance->state.combo.action = TOOLKIT_UP;
 		instance->isMouseButtonPressed = false;
 	}
 	instance->updateModifier();
@@ -71,7 +71,7 @@ void CanvasGLUT::keyboard(unsigned char key, int x, int y) {
 	instance->state.x = x;
 	instance->state.y = y;
 	instance->state.combo.trigger = key;
-	instance->state.combo.action = CANVAS_DOWN;
+	instance->state.combo.action = TOOLKIT_DOWN;
 	instance->updateModifier();
 	
 	// Fire event
@@ -101,10 +101,10 @@ void CanvasGLUT::special(int key, int x, int y) {
 	
 	// Filter
 	switch (key) {
-	case GLUT_KEY_UP: key = CANVAS_KEY_UP; break;
-	case GLUT_KEY_RIGHT: key = CANVAS_KEY_RIGHT; break;
-	case GLUT_KEY_DOWN: key = CANVAS_KEY_DOWN; break;
-	case GLUT_KEY_LEFT: key = CANVAS_KEY_LEFT; break;
+	case GLUT_KEY_UP: key = TOOLKIT_KEY_UP; break;
+	case GLUT_KEY_RIGHT: key = TOOLKIT_KEY_RIGHT; break;
+	case GLUT_KEY_DOWN: key = TOOLKIT_KEY_DOWN; break;
+	case GLUT_KEY_LEFT: key = TOOLKIT_KEY_LEFT; break;
 	default: break;
 	}
 	
@@ -112,7 +112,7 @@ void CanvasGLUT::special(int key, int x, int y) {
 	instance->state.x = x;
 	instance->state.y = y;
 	instance->state.combo.trigger = key;
-	instance->state.combo.action = CANVAS_DOWN;
+	instance->state.combo.action = TOOLKIT_DOWN;
 	instance->updateModifier();
 	
 	// Fire event
@@ -126,13 +126,13 @@ void CanvasGLUT::updateModifier() {
 	
 	// Adjust and store modifier
 	if (modifier & GLUT_ACTIVE_CTRL) {
-		this->state.combo.modifier = CANVAS_MOD_CONTROL;
+		this->state.combo.modifier = TOOLKIT_MOD_CONTROL;
 	} else if (modifier & GLUT_ACTIVE_ALT) {
-		this->state.combo.modifier = CANVAS_MOD_ALT;
+		this->state.combo.modifier = TOOLKIT_MOD_ALT;
 	} else if (modifier & GLUT_ACTIVE_SHIFT) {
-		this->state.combo.modifier = CANVAS_MOD_SHIFT;
+		this->state.combo.modifier = TOOLKIT_MOD_SHIFT;
 	} else {
-		this->state.combo.modifier = CANVAS_MOD_NONE;
+		this->state.combo.modifier = TOOLKIT_MOD_NONE;
 	}
 }
 

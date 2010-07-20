@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Dataset.hpp"
 #include "Canvas.hpp"
+#include "Toolkit.hpp"
 using namespace std;
 
 

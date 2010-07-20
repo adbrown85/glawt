@@ -183,8 +183,8 @@ void Mouse::onCanvasEventButton(const CanvasEvent &event) {
 	direction.set(0.0, 0.0);
 	
 	// Pick item for normal clicks
-	if (state.combo.trigger != CANVAS_WHEEL_DOWN
-	      && state.combo.trigger != CANVAS_WHEEL_UP) {
+	if (state.combo.trigger != TOOLKIT_WHEEL_DOWN
+	      && state.combo.trigger != TOOLKIT_WHEEL_UP) {
 		pickItem();
 	}
 	

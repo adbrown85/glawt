@@ -30,15 +30,15 @@ void BindingTest::setUp() {
 	cout << "Setting up..." << endl;
 	
 	// Left arrow
-	combo.trigger = CANVAS_KEY_LEFT;
-	combo.modifier = CANVAS_MOD_CONTROL;
-	combo.action = CANVAS_DOWN;
+	combo.trigger = TOOLKIT_KEY_LEFT;
+	combo.modifier = TOOLKIT_MOD_CONTROL;
+	combo.action = TOOLKIT_DOWN;
 	bindings.push_back(Binding(combo, Command::CIRCLE_LEFT));
 	
 	// Right arrow
-	combo.trigger = CANVAS_ESCAPE;
-	combo.modifier = CANVAS_MOD_NONE;
-	combo.action = CANVAS_DOWN;
+	combo.trigger = TOOLKIT_ESCAPE;
+	combo.modifier = TOOLKIT_MOD_NONE;
+	combo.action = TOOLKIT_DOWN;
 	bindings.push_back(Binding(combo, Command::EXIT));
 }
 
@@ -66,8 +66,8 @@ void BindingTest::testArgument() {
 	
 	// Make binding
 	combo.trigger = 'Q';
-	combo.modifier = CANVAS_MOD_NONE;
-	combo.action = CANVAS_DOWN;
+	combo.modifier = TOOLKIT_MOD_NONE;
+	combo.action = TOOLKIT_DOWN;
 	binding = new Binding(combo, Command::COPY, &number);
 	
 	// Get the argument

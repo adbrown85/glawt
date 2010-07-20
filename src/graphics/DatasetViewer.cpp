@@ -48,12 +48,12 @@ void DatasetViewer::onCanvasEvent(const CanvasEvent &event) {
 void DatasetViewer::onCanvasEventButton(const CanvasEvent &event) {
 	
 	// Ignore down state
-	if (event.state.combo.action == CANVAS_DOWN) {
+	if (event.state.combo.action == TOOLKIT_DOWN) {
 		return;
 	}
 	
 	// Standard buttons
-	if (event.state.combo.trigger == CANVAS_LEFT_BUTTON) {
+	if (event.state.combo.trigger == TOOLKIT_LEFT_BUTTON) {
 		Index index((height-(event.state.y)), (event.state.x), slice);
 		switch (type) {
 		case GL_UNSIGNED_BYTE:
@@ -72,9 +72,9 @@ void DatasetViewer::onCanvasEventButton(const CanvasEvent &event) {
 	}
 	
 	// Wheel
-	else if (event.state.combo.trigger == CANVAS_WHEEL_UP) {
+	else if (event.state.combo.trigger == TOOLKIT_WHEEL_UP) {
 		goToNext();
-	} else if (event.state.combo.trigger == CANVAS_WHEEL_DOWN) {
+	} else if (event.state.combo.trigger == TOOLKIT_WHEEL_DOWN) {
 		goToPrevious();
 	}
 }
@@ -119,12 +119,12 @@ void DatasetViewer::onCanvasEventDisplay(const CanvasEvent &event) {
 void DatasetViewer::onCanvasEventKey(const CanvasEvent &event) {
 	
 	switch(event.state.combo.trigger) {
-	case CANVAS_KEY_UP:
-	case CANVAS_KEY_RIGHT:
+	case TOOLKIT_KEY_UP:
+	case TOOLKIT_KEY_RIGHT:
 		goToNext();
 		break;
-	case CANVAS_KEY_DOWN:
-	case CANVAS_KEY_LEFT:
+	case TOOLKIT_KEY_DOWN:
+	case TOOLKIT_KEY_LEFT:
 		goToPrevious();
 		break;
 	}

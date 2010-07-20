@@ -10,6 +10,7 @@
 #ifdef HAVE_GLUT
 #include <GL/glut.h>
 #include "Canvas.hpp"
+#include "Toolkit.hpp"
 using namespace std;
 
 

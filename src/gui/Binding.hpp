@@ -10,6 +10,7 @@
 #include <iomanip>
 #include "Command.hpp"
 #include "Canvas.hpp"
+#include "Toolkit.hpp"
 using namespace std;
 
 
@@ -45,19 +46,19 @@ inline bool Binding::hasArgument() const {return hasArg;}
 /** Initializes the formatted names of triggers. */
 inline void Binding::load() {
 	
-	names[CANVAS_MINUS] = "-";
-	names[CANVAS_PLUS] = "+";
-	names[CANVAS_EQUALS] = "=";
-	names[CANVAS_ESCAPE] = "Esc";
-	names[CANVAS_KEY_LEFT] = "Left";
-	names[CANVAS_KEY_RIGHT] = "Right";
-	names[CANVAS_KEY_UP] = "Up";
-	names[CANVAS_KEY_DOWN] = "Down";
-	names[CANVAS_LEFT_BUTTON] = "LMB";
-	names[CANVAS_MIDDLE_BUTTON] = "MMB";
-	names[CANVAS_RIGHT_BUTTON] = "RMB";
-	names[CANVAS_WHEEL_UP] = "MWU";
-	names[CANVAS_WHEEL_DOWN] = "MWD";
+	names[TOOLKIT_MINUS] = "-";
+	names[TOOLKIT_PLUS] = "+";
+	names[TOOLKIT_EQUALS] = "=";
+	names[TOOLKIT_ESCAPE] = "Esc";
+	names[TOOLKIT_KEY_LEFT] = "Left";
+	names[TOOLKIT_KEY_RIGHT] = "Right";
+	names[TOOLKIT_KEY_UP] = "Up";
+	names[TOOLKIT_KEY_DOWN] = "Down";
+	names[TOOLKIT_LEFT_BUTTON] = "LMB";
+	names[TOOLKIT_MIDDLE_BUTTON] = "MMB";
+	names[TOOLKIT_RIGHT_BUTTON] = "RMB";
+	names[TOOLKIT_WHEEL_UP] = "MWU";
+	names[TOOLKIT_WHEEL_DOWN] = "MWD";
 }
 
 

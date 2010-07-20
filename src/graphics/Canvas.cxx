@@ -72,18 +72,18 @@ void CanvasTest::testEvent() {
 	// Fire event
 	state.x = 100;
 	state.y = 200;
-	state.combo.action = CANVAS_DOWN;
-	state.combo.modifier = CANVAS_MOD_ALT;
-	state.combo.trigger = CANVAS_LEFT_BUTTON;
+	state.combo.action = TOOLKIT_DOWN;
+	state.combo.modifier = TOOLKIT_MOD_ALT;
+	state.combo.trigger = TOOLKIT_LEFT_BUTTON;
 	((FakeCanvas*)canvas)->updateState(state);
 	canvas->fireEvent(CanvasEvent::BUTTON);
 	
 	// Fire event
 	state.x = 50;
 	state.y = 4000;
-	state.combo.action = CANVAS_UP;
-	state.combo.modifier = CANVAS_MOD_CONTROL;
-	state.combo.trigger = CANVAS_RIGHT_BUTTON;
+	state.combo.action = TOOLKIT_UP;
+	state.combo.modifier = TOOLKIT_MOD_CONTROL;
+	state.combo.trigger = TOOLKIT_RIGHT_BUTTON;
 	((FakeCanvas*)canvas)->updateState(state);
 	canvas->fireEvent(CanvasEvent::KEY);
 }

@@ -16,6 +16,7 @@
 #include <gtkmm/gl/drawingarea.h>
 #include "Canvas.hpp"
 #include "Typeface.hpp"
+#include "Toolkit.hpp"
 using namespace std;
 
 
