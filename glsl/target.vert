@@ -1,5 +1,5 @@
 /*
- * texture.vert
+ * target.vert
  * 
  * Author
  *     Andrew Brown
