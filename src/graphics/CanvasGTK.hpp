@@ -40,7 +40,6 @@ public:
 	virtual void primeStart();
 	virtual void primeFinish();
 	virtual void refresh();
-	virtual void setAutomaticallyRefresh(bool automaticallyRefresh);
 	virtual void write(const string &text, int x=15, int y=30);
 protected:
 	void begin();

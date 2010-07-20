@@ -22,10 +22,12 @@ public:
 	virtual void primeStart() {};
 	virtual void primeFinish() {};
 	virtual void onRealize();
-	virtual void setAutomaticallyRefresh(bool automaticRefresh) {};
 	virtual void write(const string &text, int x=15, int y=30);
 protected:
+	virtual void connectIdle();
+	virtual void disconnectIdle();
 	static void display(void);
+	static void idle();
 	static void keyboard(unsigned char key, int x, int y);
 	static void mouse(int button, int state, int x, int y);
 	static void special(int key, int x, int y);

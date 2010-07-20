@@ -60,3 +60,15 @@ void Canvas::fireEvent(int type) {
 	}
 }
 
+
+/** Determines if events should be continuously sent to display listeners. */
+void Canvas::setAutomaticallyRefresh(bool automaticallyRefresh) {
+	
+	this->automaticallyRefresh = automaticallyRefresh;
+	if (started && automaticallyRefresh) {
+		connectIdle();
+	} else {
+		disconnectIdle();
+	}
+}
+

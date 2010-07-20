@@ -19,6 +19,18 @@ CanvasGLUT::CanvasGLUT(int width, int height) : Canvas(width,height) {
 }
 
 
+void CanvasGLUT::connectIdle() {
+	
+	glutIdleFunc(&CanvasGLUT::idle);
+}
+
+
+void CanvasGLUT::disconnectIdle() {
+	
+	glutIdleFunc(NULL);
+}
+
+
 GLuint CanvasGLUT::getElapsedTime() {
 	
 	return glutGet(GLUT_ELAPSED_TIME);
@@ -78,6 +90,13 @@ void CanvasGLUT::motion(int x, int y) {
 }
 
 
+void CanvasGLUT::idle() {
+	
+	//instance->fireEvent(CanvasEvent::DISPLAY);
+	instance->refresh();
+}
+
+
 void CanvasGLUT::special(int key, int x, int y) {
 	
 	// Filter
@@ -132,6 +151,9 @@ void CanvasGLUT::onRealize() {
 	
 	// Load extensions
 	Extensions::load();
+	
+	// Start
+	setStarted(true);
 }
 
 

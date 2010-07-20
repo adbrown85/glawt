@@ -150,7 +150,7 @@ bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 
 bool CanvasGTK::on_idle() {
 	
-	fireEvent(CanvasEvent::DISPLAY);
+	//fireEvent(CanvasEvent::DISPLAY);
 	refresh();
 	window->process_updates(false);
 }
@@ -158,8 +158,8 @@ bool CanvasGTK::on_idle() {
 
 bool CanvasGTK::on_map_event(GdkEventAny *event) {
 	
-	started = true;
-	if (automaticallyRefresh) {
+	setStarted(true);
+	if (isAutomaticallyRefresh()) {
 		connectIdle();
 	}
 	return true;
@@ -248,18 +248,6 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 	grab_focus();
 	fireEvent(CanvasEvent::BUTTON);
 	return false;
-}
-
-
-/** Determines if events should be continuously sent to display listeners. */
-void CanvasGTK::setAutomaticallyRefresh(bool automaticallyRefresh) {
-	
-	this->automaticallyRefresh = automaticallyRefresh;
-	if (started && automaticallyRefresh) {
-		connectIdle();
-	} else {
-		disconnectIdle();
-	}
 }
 
 

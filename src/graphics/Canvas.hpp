@@ -102,13 +102,17 @@ public:
 	virtual void refresh() = 0;
 	virtual void primeStart() = 0;
 	virtual void primeFinish() = 0;
-	virtual void setAutomaticallyRefresh(bool automaticRefresh) = 0;
+	virtual void setAutomaticallyRefresh(bool automaticRefresh);
 	virtual void write(const string &text, int x=15, int y=30) = 0;
 protected:
-	bool automaticallyRefresh, started;
+	bool isAutomaticallyRefresh();
+	virtual void connectIdle() = 0;
+	virtual void disconnectIdle() = 0;
 	bool isMouseButtonPressed;
+	void setStarted(bool started);
 	CanvasState state;
 private:
+	bool automaticallyRefresh, started;
 	int height, width;
 	Camera camera;
 	list<CanvasListener*> listeners[CANVAS_EVENT_TYPE_SIZE];
@@ -125,6 +129,10 @@ inline int Canvas::getHeight() {return height;}
 
 /** @return Width of the canvas. */
 inline int Canvas::getWidth() {return width;}
+
+inline bool Canvas::isAutomaticallyRefresh() {return automaticallyRefresh;}
+
+inline void Canvas::setStarted(bool started) {this->started = started;}
 
 
 #endif
