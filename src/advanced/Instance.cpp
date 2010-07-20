@@ -7,10 +7,13 @@
 #include "Instance.hpp"
 
 
-/** Initializes the @e and @e suppress attributes. */
+/** Initializes the @e of and @e suppress attributes. */
 Instance::Instance(const Tag &tag) : Node(tag) {
 	
+	// Name of group
 	tag.get("of", of);
+	
+	// Suppress errors
 	if (!tag.get("suppress", suppress, false)) {
 		suppress = true;
 	}
@@ -42,7 +45,7 @@ void Instance::assignParents() {
 }
 
 
-/** Finds the group, its children, and all the uniforms in it. */
+/** Finds the group, its children, and all the shapes and uniforms in it. */
 void Instance::associate() {
 	
 	findGroup();
