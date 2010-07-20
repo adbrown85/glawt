@@ -39,7 +39,7 @@ void Camera::load(int width, int height) {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(30.0, static_cast<float>(width)/height, 0.1, 50.0);
+	gluPerspective(30.0, static_cast<float>(width)/height, 0.8, 15.0);
 }
 
 
