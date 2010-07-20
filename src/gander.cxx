@@ -97,6 +97,9 @@ void Gander::onDisplay() {
 	delegate = new Delegate(scene, canvas);
 	controls.push_back(new Mouse(delegate));
 	controls.push_back(new Keyboard(delegate));
+#ifdef HAVE_GLUT
+	controls.push_back(new MenuGLUT(delegate));
+#endif
 	
 	// Create additional widgets
 #ifdef HAVE_GTK
