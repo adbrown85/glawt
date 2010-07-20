@@ -25,7 +25,6 @@ public:
 	virtual int getSize() const;
 	virtual string toString() const;
 private:
-	Image *image;
 	GLenum format;
 	int size;
 };
