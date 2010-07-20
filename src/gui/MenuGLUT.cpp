@@ -99,8 +99,6 @@ void MenuGLUT::onClick(GLint option) {
 	
 	switch (option) {
 	case Command::ZOOM_IN:
-		instance->delegate->run(option, 1.0);
-		break;
 	case Command::ZOOM_OUT:
 		instance->delegate->run(option, 1.0);
 		break;
