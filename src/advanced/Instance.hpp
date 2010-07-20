@@ -43,14 +43,16 @@ public:
 	virtual void associateAfter();
 	virtual void finalize();
 	virtual void finalizeAfter();
-	virtual void remove() {}
+	virtual void remove();
 	virtual string toString() const;
 protected:
 	void assignParents();
 	void findChildren();
+	void findExclusions();
 	void findGroup();
 	void findShapes();
 	void findUniforms();
+	void restoreExclusions();
 	void restoreShapes();
 	void restoreUniforms();
 	void storeShapes();
@@ -59,7 +61,8 @@ private:
 	bool suppress;
 	Suppressor suppressor;
 	Group *group;
-	string of;
+	string of, exclude;
+	map<string,Shape*> exclusions;
 	map<Shape*,ShapeSnapshot> shapes;
 	map<Uniform*,UniformSnapshot> uniforms;
 };

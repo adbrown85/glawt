@@ -15,6 +15,9 @@ Instance::Instance(const Tag &tag) : Node(tag) {
 		suppress = true;
 	}
 	suppressor.setEnabled(suppress);
+	
+	// Nodes to exclude
+	tag.get("exclude", exclude, false);
 }
 
 
@@ -23,6 +26,7 @@ void Instance::apply() {
 	
 	restoreShapes();
 	restoreUniforms();
+	restoreExclusions();
 }
 
 
@@ -44,6 +48,7 @@ void Instance::associate() {
 	findGroup();
 	findChildren();
 	findShapes();
+	findExclusions();
 	findUniforms();
 }
 
@@ -85,6 +90,35 @@ void Instance::findChildren() {
 	// Get children from group
 	for (it=group->begin(); it!=group->end(); ++it) {
 		addChild(*it);
+	}
+}
+
+
+/** Looks for excluded shapes. */
+void Instance::findExclusions() {
+	
+	Shape *shape;
+	map<Shape*,ShapeSnapshot>::iterator si;
+	map<string,Shape*>::iterator ei;
+	istringstream stream;
+	string name;
+	
+	// Build list of excluded names
+	stream.str(exclude);
+	stream >> name;
+	while (stream) {
+		exclusions[name] = NULL;
+		stream >> name;
+	}
+	
+	// Find the shapes
+	for (si=shapes.begin(); si!=shapes.end(); ++si) {
+		shape = si->first;
+		name = shape->getName();
+		ei = exclusions.find(name);
+		if (ei != exclusions.end()) {
+			exclusions[name] = shape;
+		}
 	}
 }
 
@@ -175,6 +209,38 @@ void Instance::restoreUniforms() {
 }
 
 
+/** Resets shapes set to be excluded. */
+void Instance::restoreExclusions() {
+	
+	map<string,Shape*>::iterator it;
+	Shape* shape;
+	
+	// Reset exclusions
+	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
+		shape = it->second;
+		if (shape != NULL) {
+			shape->setExcluded(true);
+		}
+	}
+}
+
+
+/** Reverses setting shapes to be excluded. */
+void Instance::remove() {
+	
+	map<string,Shape*>::iterator it;
+	Shape* shape;
+	
+	// Reverse exclusions
+	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
+		shape = it->second;
+		if (shape != NULL) {
+			shape->setExcluded(false);
+		}
+	}
+}
+
+
 /** Saves snapshots of the shapes. */
 void Instance::storeShapes() {
 	
@@ -206,7 +272,8 @@ string Instance::toString() const {
 	
 	stream << Node::toString();
 	stream << " of='" << of << "'"
-	       << " suppress='" << (suppress?'T':'F') << "'";
+	       << " suppress='" << (suppress?'T':'F') << "'"
+	       << " exclude='" << exclude << "'";
 	return stream.str();
 }
 

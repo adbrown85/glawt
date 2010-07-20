@@ -130,9 +130,11 @@ public:
 class Drawable : public Identifiable {
 public:
 	virtual void draw() const = 0;
+	virtual bool isExcluded() const = 0;
 	virtual bool isSelectable() const = 0;
 	virtual bool isSelected() const = 0;
 	virtual bool isVisible() const = 0;
+	virtual void setExcluded(bool excluded) = 0;
 	virtual void setSelected(bool selected) = 0;
 	virtual void setVisible(bool visible) = 0;
 	virtual void toggleSelected() = 0;

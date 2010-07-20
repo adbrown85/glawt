@@ -13,6 +13,7 @@ SimpleDrawable::SimpleDrawable(const Tag &tag) : SimpleTransformable(tag) {
 	// Initialize attributes
 	this->selected = false;
 	this->visible = true;
+	this->excluded = false;
 	if (!tag.get("selectable", selectable, false))
 		selectable = true;
 }
@@ -28,7 +29,8 @@ string SimpleDrawable::toString() const {
 	stream << " " << Identifiable::toString();
 	stream << " visible='" << (visible?'T':'F') << "'"
 	       << " selected='" << (selected?'T':'F') << "'"
-	       << " selectable='" << (selectable?'T':'F') << "'";
+	       << " selectable='" << (selectable?'T':'F') << "'"
+	       << " excluded='" << (excluded?'T':'F') << "'";
 	return stream.str();
 }
 

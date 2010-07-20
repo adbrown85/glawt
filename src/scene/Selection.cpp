@@ -18,8 +18,10 @@ void Selection::add(Node *node) {
 		return;
 	}
 	
-	// Make sure selectable and visible
-	if (!drawable->isSelectable() || !drawable->isVisible())
+	// Make sure selectable, visible, and not excluded
+	if (!drawable->isSelectable() 
+	      || !drawable->isVisible()
+	      ||  drawable->isExcluded())
 		return;
 	
 	// Select it

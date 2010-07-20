@@ -47,6 +47,11 @@ void Traverser::onApplicable(Node *node, Applicable *applicable) {
 
 void Traverser::onDrawable(Node *node, Drawable *drawable) {
 	
+	// Check if excluded
+	if (drawable->isExcluded()) {
+		return;
+	}
+	
 	// Do children then draw it
 	traverseChildren(node);
 	if (drawable->isVisible())
@@ -96,7 +101,7 @@ void Traverser::traverseChildren(Node *node) {
  * Automatically takes care of performing different actions depending on what 
  * type of interfaces the node supports.
  * 
- * @param node Pointer to the Node to paint.
+ * @param node Pointer to the Node to traverse.
  */
 void Traverser::traverseNode(Node *node) {
 	
