@@ -6,10 +6,10 @@
  */
 #version 130
 #include "Colors.glsl"
+#include "Target.glsl"
 
 /* Uniforms */
 uniform sampler2D Target;
-uniform int CanvasSize=512;
 
 /* Outputs */
 out vec4 FragColor;
@@ -20,14 +20,8 @@ void main() {
 	
 	float alpha;
 	
-	alpha = texture(Target, gl_FragCoord.xy/CanvasSize).a;
-	if (alpha < 0.98) {
-		FragColor = GREEN;
-	} else if (alpha < 0.99) {
-		FragColor = RED;
-	} else {
-		FragColor = BLUE;
-	}
+	alpha = Target_getValue(Target).a;
+	FragColor.rgb = vec3(alpha);
 	FragColor.a = 1.0;
 }
 
