@@ -8,33 +8,51 @@
 #define RAY_GLSL
 
 
-/**
- * Ray with origin and direction.
- */
+/** Ray with origin and direction. */
 struct Ray {
-	vec4 o;
-	vec4 d;
+	vec3 o;
+	vec3 d;
+	float tMax;
 };
 
 
-/**
- * Ray constructor.
+/** Ray constructor.
  * 
  * @param [in,out] ray Ray instance.
  * @param [in] origin Origin of the ray.
  * @param [in] end End of the ray.
  */
 void Ray_(inout Ray ray,
-          in vec4 origin,
-          in vec4 end) {
+          in vec3 origin,
+          in vec3 end) {
 	
 	ray.o = origin;
 	ray.d = normalize(end - origin);
 }
 
 
-/**
- * Determines if part of the direction is parallel to an axis.
+Ray Ray_construct(in vec3 origin, in vec3 exit) {
+	
+	Ray ray;
+	vec3 span, times;
+	
+	// Span
+	span = exit - origin;
+	
+	// Origin and direction
+	ray.o = origin;
+	ray.d = normalize(span);
+	
+	// tMax
+	times = (span) / ray.d;
+	ray.tMax = min(times.x, min(times.y, times.z));
+	
+	// Finish
+	return ray;
+}
+
+
+/** Determines if part of the direction is parallel to an axis.
  * 
  * @param [in] component x=0, y=1, z=2
  */
@@ -46,8 +64,7 @@ bool Ray_isDirectionZero(int component) {
 */
 
 
-/**
- * @return point along the ray at the time.
+/** @return point along the ray at the time.
  * 
  * @param [in] ray Ray instance.
  * @param [in] t Time at the point.
@@ -61,8 +78,7 @@ vec4 Ray_getPointAt(in Ray ray,
 */
 
 
-/**
- * @return time along the ray at a value along one axis.
+/** @return time along the ray at a value along one axis.
  * 
  * @param [in] ray Ray instance.
  * @param [in] i Axis where x=0, y=1, z=2
@@ -94,15 +110,11 @@ bool Ray_isNegative(in Ray ray) {
 }
 
 
-/**
- * @return value at a time along one axis.
+/** @return value at a time along one axis.
  * 
- * @param [in] ray
- *     Ray instance.
- * @param [in] axis
- *     x=0, y=1, z=2
- * @param [in] t
- *     Time along the ray.
+ * @param [in] ray Ray instance.
+ * @param [in] axis x=0, y=1, z=2
+ * @param [in] t Time along the ray.
  */
 /*
 float Ray_getValueAt(in Ray ray,
