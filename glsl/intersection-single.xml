@@ -10,20 +10,20 @@
 <!-- Group of cubes -->
 <group name="cubes">
 	<sort>
-		<translate x="-1">
+		<translate x="-0.5" y="-0.25" z="+0.25">
 			<cube name="left">
 				<uniform type="mat4" name="MVPMatrix" />
+				<uniform type="mat4" name="MVMatrix" />
 				<uniform type="int" name="Which" value="0" />
 				<uniform type="vec4" name="Color" value="1 0 1 0.5" />
-				<uniform type="sampler3D" name="Volume" link="bunny" />
 			</cube>
 		</translate>
-		<translate x="+1">
+		<translate x="+0.5">
 			<cube name="right">
 				<uniform type="mat4" name="MVPMatrix" />
+				<uniform type="mat4" name="MVMatrix" />
 				<uniform type="int" name="Which" value="1" />
 				<uniform type="vec4" name="Color" value="0 1 1 0.5" />
-				<uniform type="sampler3D" name="Volume" link="head" />
 			</cube>
 		</translate>
 	</sort>
@@ -117,13 +117,26 @@
 	<shader file="intersection-single.vert" />
 	<shader file="intersection-single.frag" />
 	<cull faces="back">
-		<uniform type="sampler2D" name="Back[0]" link="back0" />
-		<uniform type="sampler2D" name="Back[1]" link="back1" />
-		<uniform type="sampler2D" name="Front[0]" link="front0" />
-		<uniform type="sampler2D" name="Front[1]" link="front1" />
+		<uniform type="sampler2D" name="Back0" link="back0" />
+		<uniform type="sampler2D" name="Back1" link="back1" />
+		<uniform type="sampler2D" name="Front0" link="front0" />
+		<uniform type="sampler2D" name="Front1" link="front1" />
+		<uniform type="sampler3D" name="Volume0" link="bunny" />
+		<uniform type="sampler3D" name="Volume1" link="head" />
 		<instance of="cubes" />
 	</cull>
 </program>
+
+
+<!-- Show values -->
+<!--
+<program>
+	<shader file="target-alpha.vert" />
+	<shader file="target-alpha.frag" />
+	<uniform type="sampler2D" name="Target" link="front0" />
+	<fullscreen />
+</program>
+-->
 
 
 <!-- Outlines -->
