@@ -8,9 +8,26 @@
 
 /* Uniforms */
 uniform float SampleRate=0.02;
+uniform vec3[5] Colors=vec3[5](BLUE,GREEN,YELLOW,ORANGE,RED);
+uniform float[5] Transfer=float[5](0.2, 0.3, 0.4, 0.6, 0.8);
 
 /* Outputs */
 out vec4 FragColor;
+
+
+vec3 Volume_transfer(float value) {
+	
+	if (value < Transfer[0]) {
+		return Colors[0];
+	}
+	for (int i=1; i<4; ++i) {
+		if (value < Transfer[i]) {
+			value = smoothstep(Transfer[i-1], Transfer[i], value);
+			return mix(Colors[i-1], Colors[i], value);
+		}
+	}
+	return Colors[4];
+}
 
 
 /** Take a sample from the volume and mix it into the output color. */
@@ -19,7 +36,7 @@ void Volume_sample(sampler3D volume, Ray ray, float t) {
 	vec4 value;
 	
 	value.a = texture(volume, ray.o+(ray.d*t)).x;
-	value.rgb = vec3(value.a);
+	value.rgb = Volume_transfer(value.a);
 	if (value.a > 0.1) {
 		FragColor = mix(FragColor, value, value.a);
 	}
