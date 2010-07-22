@@ -8,22 +8,20 @@
 
 <!-- Cubes driving boolean operations -->
 <group name="cubes">
-	<sort>
-		<translate x="-1">
-			<cube name="left">
-				<uniform type="mat4" name="MVPMatrix" />
-				<uniform type="vec4" name="Color" value="1 0 1 0.5" />
-				<uniform type="sampler3D" name="Volume" link="bunny" />
-			</cube>
-		</translate>
-		<translate x="+1" y="+0.5" z="-0.5">
-			<cube name="right">
-				<uniform type="mat4" name="MVPMatrix" />
-				<uniform type="vec4" name="Color" value="0 1 1 0.5" />
-				<uniform type="sampler3D" name="Volume" link="head" />
-			</cube>
-		</translate>
-	</sort>
+	<translate x="-1">
+		<cube name="left">
+			<uniform type="mat4" name="MVPMatrix" />
+			<uniform type="vec4" name="Color" value="1 0 1 0.5" />
+			<uniform type="sampler3D" name="Volume" link="bunny" />
+		</cube>
+	</translate>
+	<translate x="+1" y="+0.5" z="-0.5">
+		<cube name="right">
+			<uniform type="mat4" name="MVPMatrix" />
+			<uniform type="vec4" name="Color" value="0 1 1 0.5" />
+			<uniform type="sampler3D" name="Volume" link="head" />
+		</cube>
+	</translate>
 </group>
 
 
