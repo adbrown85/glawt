@@ -68,14 +68,11 @@ void Volume_render(sampler3D volume, Ray ray,
 
 
 /** Render two volumes, alternating between both. */
-void Volume_render_two(sampler3D volumeA, Ray rayA,
-                       sampler3D volumeB, Ray rayB,
-                       float startA, float stopA,
-                       float startB, float stopB) {
+void Volume_render_two(sampler3D volumeA, Ray rayA, float startA, float stopA,
+                       sampler3D volumeB, Ray rayB, float startB, float stopB) {
 	
-	
-	float tA, tB;
-	float tStopA, tStopB;
+	float tA, tStopA;
+	float tB, tStopB;
 	
 	// Initialize direction and times
 	tStopA = rayA.tMax * stopA;
