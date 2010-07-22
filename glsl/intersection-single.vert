@@ -12,6 +12,9 @@ uniform mat4 MVPMatrix;
 /* Inputs */
 in vec4 MCVertex;
 
+/* Outputs */
+invariant out vec4 gl_Position;
+
 
 /** Sets the position. */
 void main() {

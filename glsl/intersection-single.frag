@@ -78,10 +78,10 @@ void render_both_volumes(float startA, float stopA,
                          float startB, float stopB) {
 	
 	switch (Which) {
-	case 0: Volume_render_two(Volume0, ray0, Volume1, ray1,
-	                          startA, stopA, startB, stopB);
-	case 1: Volume_render_two(Volume1, ray1, Volume0, ray0,
-	                          startA, stopA, startB, stopB);
+	case 0: Volume_render_two(Volume0, ray0, startA, stopA,
+	                          Volume1, ray1, startB, stopB); break;
+	case 1: Volume_render_two(Volume1, ray1, startA, stopA,
+	                          Volume0, ray0, startB, stopB); break;
 	}
 }
 
@@ -116,7 +116,7 @@ bool is_completely_behind() {
 bool is_in_front() {
 	
 	switch (Which) {
-	case 0: return fDepth0 < fDepth1;
+	case 0: return fDepth0 <= fDepth1;
 	case 1: return fDepth1 < fDepth0;
 	}
 }
@@ -148,20 +148,82 @@ float find_percent_to_overlap() {
 }
 
 
+bool is_this_volume_back() {
+	
+	switch (Which) {
+	case 0: return (bDepth0 > bDepth1);
+	case 1: return (bDepth1 > bDepth0);
+	}
+}
+
+
+void render_all_with_this_behind() {
+	
+	float pBefore=0, pAfter=0;
+	float length;
+	
+	// Calculate percentages
+	switch (Which) {
+	case 0:
+		length = bDepth0 - fDepth0;
+		pBefore = (bDepth0 - bDepth1) / length;
+		pAfter  = (bDepth0 - fDepth1) / length;
+		break;
+	case 1:
+		length = bDepth1 - fDepth1;
+		pBefore = (bDepth1 - bDepth0) / length;
+		pAfter  = (bDepth1 - fDepth0) / length;
+		break;
+	}
+	
+	// Render sections
+	render_this_volume(0.0, pBefore);
+	render_both_volumes(pBefore, pAfter, 0.0, 1.0);
+	//render_this_volume(pBefore, pAfter);
+	//render_other_volume(0.0, 1.0);
+	render_this_volume(pAfter, 1.0);
+}
+
+
+void render_all_with_other_behind() {
+	
+	float pBefore=0, pAfter=0;
+	float length0, length1;
+	
+	// Calculate percentages
+	length0 = bDepth0 - fDepth0;
+	length1 = bDepth1 - fDepth1;
+	switch (Which) {
+	case 0:
+		pBefore = (bDepth1 - bDepth0) / length1;
+		pAfter  = (bDepth0 - fDepth1) / length0;
+		break;
+	case 1:
+		pBefore = (bDepth0 - bDepth1) / length0;
+		pAfter  = (bDepth1 - fDepth0) / length1;
+		break;
+	}
+	
+	// Render sections
+	render_other_volume(0.0, pBefore);
+	render_both_volumes(0.0, pAfter, pBefore, 1.0);
+	//render_this_volume(0.0, pAfter);
+	//render_other_volume(pBefore, 1.0);
+	render_this_volume(pAfter, 1.0);
+}
+
+
 void render_all() {
 	
-	float pPastOverlap, pToOverlap;
+	// Ray through this, both, than this again
+	if (is_this_volume_back()) {
+		render_all_with_this_behind();
+	}
 	
-	// Find percents
-	pToOverlap = find_percent_to_overlap();
-	pPastOverlap = find_percent_past_overlap();
-	
-	// Render
-	render_other_volume(0.0, pToOverlap);
-	//render_this_volume(0.0, pPastOverlap);
-	//render_other_volume(pToOverlap, 1.0);
-	render_both_volumes(0.0, pPastOverlap, pToOverlap, 1.0);
-	render_this_volume(pPastOverlap, 1.0);
+	// Ray through this, both, than other
+	else {
+		render_all_with_other_behind();
+	}
 }
 
 

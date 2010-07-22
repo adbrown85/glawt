@@ -17,6 +17,7 @@ in vec3 TexCoord0;
 /* Outputs */
 out vec3 Coord0;
 out vec3 MVPosition;
+invariant out vec4 gl_Position;
 
 
 /** Pass texture coordinates and position to next stage. */
