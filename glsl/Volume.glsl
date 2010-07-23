@@ -37,9 +37,9 @@ void Volume_sample(sampler3D volume, Ray ray, float t) {
 	
 	value.a = texture(volume, ray.o+(ray.d*t)).x;
 	value.rgb = Volume_transfer(value.a);
-	if (value.a > 0.1) {
+	//if (value.a > 0.1) {
 		FragColor = mix(FragColor, value, value.a);
-	}
+	//}
 }
 
 
