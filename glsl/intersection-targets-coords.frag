@@ -1,5 +1,5 @@
 /*
- * intersection-single-coords.frag
+ * intersection-targets-coords.frag
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>

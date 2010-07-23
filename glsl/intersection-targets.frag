@@ -1,5 +1,5 @@
 /*
- * intersection-single.frag
+ * intersection-targets.frag
  * 
  * Author
  *     Andrew Brown

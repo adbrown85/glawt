@@ -1,5 +1,5 @@
 <!--
- * intersection.xml
+ * intersection-pieces.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -79,8 +79,8 @@
 <clear depth="1.0" />
 <boolean operation="AND" of="cubes" />
 <program>
-	<shader file="intersection.vert" />
-	<shader file="intersection.frag" />
+	<shader file="intersection-pieces.vert" />
+	<shader file="intersection-pieces.frag" />
 	<outputs>
 		<bind name="FragColor" to="results" />
 	</outputs>

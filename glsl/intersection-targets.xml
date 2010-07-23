@@ -1,5 +1,5 @@
 <!--
- * intersection-single.xml
+ * intersection-targets.xml
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -53,8 +53,8 @@
 
 <!-- Store back-face coordinates of left box -->
 <program>
-	<shader file="intersection-single-coords.vert" />
-	<shader file="intersection-single-coords.frag" />
+	<shader file="intersection-targets-coords.vert" />
+	<shader file="intersection-targets-coords.frag" />
 	<outputs>
 		<bind name="Target0" to="back0" />
 	</outputs>
@@ -67,8 +67,8 @@
 
 <!-- Store back face coordinates of right box -->
 <program>
-	<shader file="intersection-single-coords.vert" />
-	<shader file="intersection-single-coords.frag" />
+	<shader file="intersection-targets-coords.vert" />
+	<shader file="intersection-targets-coords.frag" />
 	<outputs>
 		<bind name="Target1" to="back1" />
 	</outputs>
@@ -81,8 +81,8 @@
 
 <!-- Store front-face coordinates of left box -->
 <program>
-	<shader file="intersection-single-coords.vert" />
-	<shader file="intersection-single-coords.frag" />
+	<shader file="intersection-targets-coords.vert" />
+	<shader file="intersection-targets-coords.frag" />
 	<outputs>
 		<bind name="Target0" to="front0" />
 	</outputs>
@@ -95,8 +95,8 @@
 
 <!-- Store front-face coordinates of right box -->
 <program>
-	<shader file="intersection-single-coords.vert" />
-	<shader file="intersection-single-coords.frag" />
+	<shader file="intersection-targets-coords.vert" />
+	<shader file="intersection-targets-coords.frag" />
 	<outputs>
 		<bind name="Target1" to="front1" />
 	</outputs>
@@ -114,8 +114,8 @@
 
 <!-- Render the volumes -->
 <program>
-	<shader file="intersection-single.vert" />
-	<shader file="intersection-single.frag" />
+	<shader file="intersection-targets.vert" />
+	<shader file="intersection-targets.frag" />
 	<cull faces="back">
 		<uniform type="sampler2D" name="Back0" link="back0" />
 		<uniform type="sampler2D" name="Back1" link="back1" />

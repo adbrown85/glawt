@@ -1,5 +1,5 @@
 /*
- * intersection.frag
+ * intersection-pieces.frag
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
