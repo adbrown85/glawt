@@ -78,6 +78,7 @@ void Texture2D::finalize() {
 	
 	void *pixels;
 	Image *image;
+	GLenum pixelFormat;
 	
 	// Load the image or specify defaults
 	if (!filename.empty()) {
@@ -92,6 +93,12 @@ void Texture2D::finalize() {
 		pixels = NULL;
 	}
 	
+	// Specify pixel format
+	switch (format) {
+	case GL_RGB: pixelFormat = GL_RGB; break;
+	default: pixelFormat = GL_RGBA; break;
+	}
+	
 	// Create the texture
 	glBindTexture(GL_TEXTURE_2D, handle);
 	glTexImage2D(GL_TEXTURE_2D,                   // target
@@ -100,7 +107,7 @@ void Texture2D::finalize() {
 	             size,                            // width
 	             size,                            // height
 	             0,                               // border
-	             format,                          // format
+	             pixelFormat,                     // format
 	             GL_UNSIGNED_BYTE,                // type
 	             pixels);                         // pixels
 	

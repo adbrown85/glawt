@@ -7,7 +7,7 @@
 
 
 <!-- Begin texture -->
-<texture name="coordinates" size="512">
+<texture name="coordinates" size="512" format="float">
 
 
 <!-- Store coordinates -->

@@ -20,7 +20,7 @@ void main() {
 	vec4 MVPosition;
 	
 	MVPosition = Target_getValue(MVPositionTarget);
-	if (MVPosition.z < 1.0) {
+	if (MVPosition.z < -7.9) {
 		FragColor = GREEN;
 	} else {
 		FragColor = RED;
