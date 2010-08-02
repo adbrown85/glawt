@@ -8,7 +8,7 @@
 #define TEXTURE2D_HPP
 #include "common.h"
 #include "Texture.hpp"
-#include "Image.hpp"
+#include "ImageFactory.hpp"
 using namespace std;
 
 

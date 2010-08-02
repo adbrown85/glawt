@@ -7,36 +7,31 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 #include "common.h"
-#ifdef HAVE_PIXBUFS
-#include <gdkmm/pixbuf.h>
 #include "Exception.hpp"
 using namespace std;
-using Glib::RefPtr;
 
 
-/** @brief Loads pixel data from a file.
- * 
- * Currently uses a Gdk::Pixbuf to load the file.  Therefore PNG, JPG, and 
- * GIF, as well as a number of other images are supported.
+/** @brief Abstract class representing an image loaded from a file.
  * 
  * @ingroup graphics
  */
 class Image {
 public:
 	Image(const string &filename);
+	virtual ~Image() {}
 	string getFilename() const;
-	GLchar* getData() const;
+	virtual GLchar* getData() const = 0;
 	GLenum getFormat() const;
 	int getWidth() const;
 	int getHeight() const;
 protected:
-	void unpack();
+	void setFormat(GLenum format);
+	void setHeight(int height);
+	void setWidth(int width);
 private:
-	string filename;
 	GLenum format;
 	int width, height;
-	RefPtr<Gdk::Pixbuf> pixbuf;
-	GLchar *data;
+	string filename;
 };
 
 /** @return Name of the file the image was loaded from. */
@@ -45,15 +40,17 @@ inline string Image::getFilename() const {return filename;}
 /** @return GL_RGB or GL_RGBA. */
 inline GLenum Image::getFormat() const {return format;}
 
-/** @return Pointer to the raw, unpacked pixel data. */
-inline GLchar* Image::getData() const {return data;}
-
 /** @return Size of the image in the X direction. */
 inline int Image::getWidth() const {return width;}
 
 /** @return Size of the image in the Y direction. */
 inline int Image::getHeight() const {return height;}
 
+inline void Image::setFormat(GLenum format) {this->format = format;}
 
-#endif // HAVE_PIXBUFS
+inline void Image::setHeight(int height) {this->height = height;}
+
+inline void Image::setWidth(int width) {this->width = width;}
+
+
 #endif

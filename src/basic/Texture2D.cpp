@@ -58,23 +58,16 @@ Texture2D* Texture2D::find(Node *node, const string &name) {
 void Texture2D::finalize() {
 	
 	void *pixels;
-#ifdef HAVE_PIXBUFS
-	Image *image=NULL;
-#endif
+	Image *image;
 	
 	// Load the image or specify defaults
 	if (!filename.empty()) {
-#ifdef HAVE_PIXBUFS
-		image = new Image(filename);
+		image = ImageFactory::create(filename);
 		format = image->getFormat();
 		size = image->getWidth();
 		pixels = image->getData();
-#else
-		NodeException e(tag);
-		e << "Gander was compiled without support for images.";
-		throw e;
-#endif
 	} else {
+		image = NULL;
 		format = GL_RGBA;
 		size = this->size;
 		pixels = NULL;
@@ -99,10 +92,8 @@ void Texture2D::finalize() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	
 	// Cleanup
-#ifdef HAVE_PIXBUFS
 	if (image != NULL)
 		delete image;
-#endif
 }
 
 
