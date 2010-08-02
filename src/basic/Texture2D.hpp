@@ -27,6 +27,7 @@ public:
 private:
 	GLenum format;
 	int size;
+	string formatText;
 };
 
 /** @return width of the texture. */

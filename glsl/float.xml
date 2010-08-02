@@ -1,0 +1,37 @@
+<!--
+ * float.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<!-- Begin texture -->
+<texture name="coordinates" size="512">
+
+
+<!-- Store coordinates -->
+<framebuffer>
+	<target link="coordinates" />
+	<program>
+		<shader file="float.vert" />
+		<shader file="float.frag" />
+		<outputs>
+			<bind name="FragColor" to="coordinates" />
+		</outputs>
+		<cube />
+	</program>
+</framebuffer>
+
+
+<!-- Show results -->
+<program>
+	<shader file="float.vert" />
+	<shader file="float-results.frag" />
+	<uniform type="sampler2D" name="MVPositionTarget" link="coordinates" />
+	<cube />
+</program>
+
+
+<!-- End texture -->
+</texture>

@@ -10,8 +10,27 @@
 /** Initializes @e image and @e size. */
 Texture2D::Texture2D(const Tag &tag) : Texture(GL_TEXTURE_2D,tag) {
 	
-	// Initialize
+	string text;
+	
+	// Size
 	tag.get("size", size, false);
+	
+	// Format
+	if (tag.get("format", text, false, true)) {
+		if (text == "float") {
+			format = GL_RGBA16F;
+		} else if (text == "rgba") {
+			format = GL_RGBA;
+		} else if (text == "rgb") {
+			format = GL_RGB;
+		} else {
+			NodeException e(tag);
+			e << "[Texture2D] Unrecognized format.";
+			throw e;
+		}
+	} else {
+		format = GL_RGBA;
+	}
 }
 
 
@@ -68,7 +87,7 @@ void Texture2D::finalize() {
 		pixels = image->getData();
 	} else {
 		image = NULL;
-		format = GL_RGBA;
+		format = this->format;
 		size = this->size;
 		pixels = NULL;
 	}
@@ -105,6 +124,8 @@ GLint Texture2D::getRawFootprint() const {
 		return size * size * 4;
 	case GL_RGBA:
 		return size * size * 3;
+	case GL_RGBA16F:
+		return size * size * 4 * 2;
 	}
 }
 
@@ -117,6 +138,13 @@ string Texture2D::toString() const {
 	// Build string
 	stream << Texture::toString();
 	stream << " size='" << size << "'";
+	stream << " format='";
+	switch (format) {
+	case GL_RGB:     stream << "rgb";   break;
+	case GL_RGBA:    stream << "rgba";  break;
+	case GL_RGBA16F: stream << "float"; break;
+	}
+	stream << "'";
 	return stream.str();
 }
 
