@@ -13,6 +13,23 @@ Group::Group(const Tag &tag) : Node(tag) {
 }
 
 
+/** Finds a group above the node. */
+Group* Group::find(Node *node) {
+	
+	Group *group;
+	Node::iterator it;
+	
+	while (node != NULL) {
+		group = dynamic_cast<Group*>(node);
+		if (group != NULL) {
+			return group;
+		}
+		node = node->getParent();
+	}
+	return NULL;
+}
+
+
 Group* Group::find(Node *node,
                    const string &name) {
 	
