@@ -1,0 +1,11 @@
+<!--
+ * Placeholder.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<group name="something">
+	<placeholder name="filler" />
+</group>
