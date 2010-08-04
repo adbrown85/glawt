@@ -7,8 +7,7 @@
 #ifndef INSTANCE_HPP
 #define INSTANCE_HPP
 #include "common.h"
-#include "Node.hpp"
-#include "Group.hpp"
+#include "Duplicate.hpp"
 #include "Uniform.hpp"
 #include "Shape.hpp"
 #include "Suppressor.hpp"
@@ -27,7 +26,7 @@ struct UniformSnapshot {
 	int location;
 };
 
-/** @brief Redraws all the nodes of a group with different characteristics.
+/** @brief Smart copy of a group that handles shapes and uniforms.
  * 
  * @warning Default uniforms on shapes in an instance may not work correctly.
  * 
@@ -37,38 +36,29 @@ class Instance : public Node, public Applicable {
 public:
 	Instance(const Tag &tag);
 	virtual void apply();
-	virtual bool areChildrenDestroyable() const;
-	virtual bool areChildrenPrintable() const;
-	virtual void associate();
 	virtual void associateAfter();
 	virtual void finalize();
 	virtual void finalizeAfter();
 	virtual void remove();
 	virtual string toString() const;
 protected:
-	void assignParents();
-	void findChildren();
 	void findExclusions();
-	void findGroup();
 	void findShapes();
 	void findUniforms();
 	void restoreExclusions();
 	void restoreShapes();
 	void restoreUniforms();
-	void storeShapes();
-	void storeUniforms();
+	void saveShapes();
+	void saveUniforms();
 private:
+	Duplicate *duplicate;
 	bool suppress;
 	Suppressor suppressor;
-	Group *group;
 	string of, exclude;
 	map<string,Shape*> exclusions;
 	map<Shape*,ShapeSnapshot> shapes;
 	map<Uniform*,UniformSnapshot> uniforms;
 };
-
-inline bool Instance::areChildrenDestroyable() const {return false;}
-inline bool Instance::areChildrenPrintable() const {return false;}
 
 
 #endif

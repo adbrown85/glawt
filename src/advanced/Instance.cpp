@@ -10,6 +10,8 @@
 /** Initializes the @e of and @e suppress attributes. */
 Instance::Instance(const Tag &tag) : Node(tag) {
 	
+	ostringstream stream;
+	
 	// Name of group
 	tag.get("of", of);
 	
@@ -21,55 +23,45 @@ Instance::Instance(const Tag &tag) : Node(tag) {
 	
 	// Nodes to exclude
 	tag.get("exclude", exclude, false);
+	
+	// Duplicate
+	stream << "duplicate of='" << of << "'";
+	children.insert(begin(), Factory::create(stream.str()));
 }
 
 
-/** Resets all the uniforms to be under this instance. */
+/** Resets all the shapes and uniforms to be under this instance. */
 void Instance::apply() {
 	
+	// Restore
 	restoreShapes();
 	restoreUniforms();
 	restoreExclusions();
 }
 
 
-/** Makes sure the instance's children point to it. */
-void Instance::assignParents() {
-	
-	Node::iterator ni;
-	
-	// Make sure children's parents point to this instance
-	for (ni=begin(); ni!=end(); ++ni) {
-		(*ni)->setParent(this);
-	}
-}
-
-
-/** Finds the group, its children, and all the shapes and uniforms in it. */
-void Instance::associate() {
-	
-	findGroup();
-	findChildren();
-	findShapes();
-	findExclusions();
-	findUniforms();
-}
-
-
-/** Stores the programs of the uniforms so they can be reset later. */
+/** Finds all shapes and uniforms and saves their state for this instance. */
 void Instance::associateAfter() {
 	
-	storeShapes();
-	storeUniforms();
+	// Find
+	findShapes();
+	findUniforms();
+	findExclusions();
+	
+	// Save
+	saveShapes();
+	saveUniforms();
 }
 
 
-/** Resets all the uniforms to be under this instance. */
+/** Resets all the shapes and uniforms to be under this instance. */
 void Instance::finalize() {
 	
-	assignParents();
+	// Restore
 	restoreShapes();
 	restoreUniforms();
+	
+	// Suppression
 	suppressor.start();
 }
 
@@ -77,22 +69,13 @@ void Instance::finalize() {
 /** Stores the locations of the uniforms so they can be reset later. */
 void Instance::finalizeAfter() {
 	
-	storeShapes();
-	storeUniforms();
+	// Save
+	saveShapes();
+	saveUniforms();
+	
+	// Suppression
 	if (suppressor.check() > 0) {
 		suppressor.print(getTag());
-	}
-}
-
-
-/** Adds the group's children to the instance's children. */
-void Instance::findChildren() {
-	
-	Node::iterator it;
-	
-	// Get children from group
-	for (it=group->begin(); it!=group->end(); ++it) {
-		addChild(*it);
 	}
 }
 
@@ -122,22 +105,6 @@ void Instance::findExclusions() {
 		if (ei != exclusions.end()) {
 			exclusions[name] = shape;
 		}
-	}
-}
-
-
-/** Finds the group named by <i>of</i>.
- * 
- * @throws NodeException if the group cannot be found.
- */
-void Instance::findGroup() {
-	
-	// Find the group
-	group = Group::find(this, of);
-	if (group == NULL) {
-		NodeException e(tag);
-		e << "[Instance] Could not find group with name '" << of << "'";
-		throw e;
 	}
 }
 
@@ -245,7 +212,7 @@ void Instance::remove() {
 
 
 /** Saves snapshots of the shapes. */
-void Instance::storeShapes() {
+void Instance::saveShapes() {
 	
 	map<Shape*,ShapeSnapshot>::iterator it;
 	
@@ -257,7 +224,7 @@ void Instance::storeShapes() {
 
 
 /** Saves snapshots of the uniforms. */
-void Instance::storeUniforms() {
+void Instance::saveUniforms() {
 	
 	map<Uniform*,UniformSnapshot>::iterator it;
 	

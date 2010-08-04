@@ -17,6 +17,7 @@
 #include "Clear.hpp"
 #include "Cull.hpp"
 #include "Depth.hpp"
+#include "Duplicate.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
 #include "Instance.hpp"
@@ -42,6 +43,7 @@ public:
 	static Node* createClear(const Tag &tag);
 	static Node* createCull(const Tag &tag);
 	static Node* createDepth(const Tag &tag);
+	static Node* createDuplicate(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
 	static Node* createInstance(const Tag &tag);

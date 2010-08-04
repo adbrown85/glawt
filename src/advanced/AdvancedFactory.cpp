@@ -23,6 +23,7 @@ void AdvancedFactory::install() {
 	Factory::install("clear", &createClear);
 	Factory::install("cull", &createCull);
 	Factory::install("depth", &createDepth);
+	Factory::install("duplicate", &createDuplicate);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
 	Factory::install("instance", &createInstance);
@@ -64,6 +65,8 @@ Node* AdvancedFactory::createCull(const Tag &t) {return new Cull(t);}
 Node* AdvancedFactory::createClear(const Tag &t) {return new Clear(t);}
 
 Node* AdvancedFactory::createDepth(const Tag &t) {return new Depth(t);}
+
+Node* AdvancedFactory::createDuplicate(const Tag &t) {return new Duplicate(t);}
 
 Node* AdvancedFactory::createFramebuffer(const Tag &t) {return new Framebuffer(t);}
 
