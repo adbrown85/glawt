@@ -49,7 +49,7 @@ public:
 	Canvas(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
 	void addListener(CanvasListener *listener, int type);
 	void clear();
-	void check();
+	static void check();
 	void fireEvent(int type);
 	virtual void flush() = 0;
 	Camera* getCamera();
