@@ -17,7 +17,6 @@ Group::Group(const Tag &tag) : Node(tag) {
 Group* Group::find(Node *node) {
 	
 	Group *group;
-	Node::iterator it;
 	
 	while (node != NULL) {
 		group = dynamic_cast<Group*>(node);
