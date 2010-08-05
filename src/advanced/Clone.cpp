@@ -1,52 +1,45 @@
 /*
- * Instance.cpp
+ * Clone.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Instance.hpp"
+#include "Clone.hpp"
 
 
-/** Initializes the @e of and @e suppress attributes. */
-Instance::Instance(const Tag &tag) : Node(tag) {
-	
-	ostringstream stream;
-	
-	// Name of group
-	tag.get("of", of);
+/** Initializes attributes. */
+Clone::Clone(const Tag &tag) : Instance(tag) {
 	
 	// Suppress errors
 	if (!tag.get("suppress", suppress, false)) {
 		suppress = true;
 	}
 	suppressor.setEnabled(suppress);
-	
-	// Nodes to exclude
-	tag.get("exclude", exclude, false);
-	
-	// Duplicate
-	stream << "duplicate of='" << of << "'";
-	children.insert(begin(), Factory::create(stream.str()));
 }
 
 
 /** Resets all the shapes and uniforms to be under this instance. */
-void Instance::apply() {
+void Clone::apply() {
 	
 	// Restore
 	restoreShapes();
 	restoreUniforms();
-	restoreExclusions();
 }
 
 
-/** Finds all shapes and uniforms and saves their state for this instance. */
-void Instance::associateAfter() {
+/** Finds all shapes and uniforms. */
+void Clone::associate() {
+	
+	Instance::associate();
 	
 	// Find
 	findShapes();
 	findUniforms();
-	findExclusions();
+}
+
+
+/**  Saves the states of the shapes and uniforms. */
+void Clone::associateAfter() {
 	
 	// Save
 	saveShapes();
@@ -55,7 +48,9 @@ void Instance::associateAfter() {
 
 
 /** Resets all the shapes and uniforms to be under this instance. */
-void Instance::finalize() {
+void Clone::finalize() {
+	
+	Instance::finalize();
 	
 	// Restore
 	restoreShapes();
@@ -67,7 +62,7 @@ void Instance::finalize() {
 
 
 /** Stores the locations of the uniforms so they can be reset later. */
-void Instance::finalizeAfter() {
+void Clone::finalizeAfter() {
 	
 	// Save
 	saveShapes();
@@ -80,37 +75,8 @@ void Instance::finalizeAfter() {
 }
 
 
-/** Looks for excluded shapes. */
-void Instance::findExclusions() {
-	
-	Shape *shape;
-	map<Shape*,ShapeSnapshot>::iterator si;
-	map<string,Shape*>::iterator ei;
-	istringstream stream;
-	string name;
-	
-	// Build list of excluded names
-	stream.str(exclude);
-	stream >> name;
-	while (stream) {
-		exclusions[name] = NULL;
-		stream >> name;
-	}
-	
-	// Find the shapes
-	for (si=shapes.begin(); si!=shapes.end(); ++si) {
-		shape = si->first;
-		name = shape->getName();
-		ei = exclusions.find(name);
-		if (ei != exclusions.end()) {
-			exclusions[name] = shape;
-		}
-	}
-}
-
-
 /** Finds all the shapes in the group. */
-void Instance::findShapes() {
+void Clone::findShapes() {
 	
 	Node::iterator it;
 	Node *node;
@@ -118,7 +84,7 @@ void Instance::findShapes() {
 	Shape *shape;
 	
 	// Search subtree for uniforms
-	q.push(this);
+	q.push(getLink());
 	while (!q.empty()) {
 		node = q.front();
 		shape = dynamic_cast<Shape*>(node);
@@ -132,7 +98,7 @@ void Instance::findShapes() {
 
 
 /** Finds all the uniforms in the group. */
-void Instance::findUniforms() {
+void Clone::findUniforms() {
 	
 	Node::iterator it;
 	Node *node;
@@ -140,7 +106,7 @@ void Instance::findUniforms() {
 	Uniform *uniform;
 	
 	// Search subtree for uniforms
-	q.push(this);
+	q.push(getLink());
 	while (!q.empty()) {
 		node = q.front();
 		uniform = dynamic_cast<Uniform*>(node);
@@ -156,7 +122,7 @@ void Instance::findUniforms() {
 
 
 /** Resets the shapes to their stored snapshots. */
-void Instance::restoreShapes() {
+void Clone::restoreShapes() {
 	
 	map<Shape*,ShapeSnapshot>::iterator it;
 	
@@ -168,7 +134,7 @@ void Instance::restoreShapes() {
 
 
 /** Resets the uniforms to their stored snapshots. */
-void Instance::restoreUniforms() {
+void Clone::restoreUniforms() {
 	
 	map<Uniform*,UniformSnapshot>::iterator it;
 	
@@ -179,40 +145,8 @@ void Instance::restoreUniforms() {
 }
 
 
-/** Resets shapes set to be excluded. */
-void Instance::restoreExclusions() {
-	
-	map<string,Shape*>::iterator it;
-	Shape* shape;
-	
-	// Reset exclusions
-	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
-		shape = it->second;
-		if (shape != NULL) {
-			shape->setExcluded(true);
-		}
-	}
-}
-
-
-/** Reverses setting shapes to be excluded. */
-void Instance::remove() {
-	
-	map<string,Shape*>::iterator it;
-	Shape* shape;
-	
-	// Reverse exclusions
-	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
-		shape = it->second;
-		if (shape != NULL) {
-			shape->setExcluded(false);
-		}
-	}
-}
-
-
 /** Saves snapshots of the shapes. */
-void Instance::saveShapes() {
+void Clone::saveShapes() {
 	
 	map<Shape*,ShapeSnapshot>::iterator it;
 	
@@ -224,26 +158,28 @@ void Instance::saveShapes() {
 
 
 /** Saves snapshots of the uniforms. */
-void Instance::saveUniforms() {
+void Clone::saveUniforms() {
 	
+	GLint location;
 	map<Uniform*,UniformSnapshot>::iterator it;
 	
 	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
 		(it->second).program = (it->first)->getProgram();
-		(it->second).location = (it->first)->getLocation();
+		location = (it->first)->getLocation();
+		(it->second).location = location;
 	}
 }
 
 
-/** @return Adds @e of and @e suppress attributes to description. */
-string Instance::toString() const {
+/** @return Adds @e suppress attribute to description. */
+string Clone::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Node::toString();
-	stream << " of='" << of << "'"
-	       << " suppress='" << (suppress?'T':'F') << "'"
-	       << " exclude='" << exclude << "'";
+	stream << Instance::toString();
+	stream << " suppress='" << (suppress?'T':'F') << "'"
+	       << " shapes='" << shapes.size() << "'"
+	       << " uniforms='" << uniforms.size() << "'";
 	return stream.str();
 }
 

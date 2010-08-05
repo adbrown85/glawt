@@ -1,13 +1,13 @@
 /*
- * Instance.hpp
+ * Clone.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef INSTANCE_HPP
-#define INSTANCE_HPP
+#ifndef CLONE_HPP
+#define CLONE_HPP
 #include "common.h"
-#include "Duplicate.hpp"
+#include "Instance.hpp"
 #include "Uniform.hpp"
 #include "Shape.hpp"
 #include "Suppressor.hpp"
@@ -26,39 +26,42 @@ struct UniformSnapshot {
 	int location;
 };
 
-/** @brief Smart copy of a group that handles shapes and uniforms.
+/** @brief Smart instance of a group that can handle different programs.
  * 
- * @warning Default uniforms on shapes in an instance may not work correctly.
+ * @warning Default uniforms on shapes in a clone may not work correctly.
+ * 
+ * @see Instance
+ * @see Replica
  * 
  * @ingroup advanced
  */
-class Instance : public Node, public Applicable {
+class Clone : public Instance, public Applicable {
 public:
-	Instance(const Tag &tag);
+	Clone(const Tag &tag);
 	virtual void apply();
+	virtual void associate();
 	virtual void associateAfter();
 	virtual void finalize();
 	virtual void finalizeAfter();
-	virtual void remove();
+	virtual void remove() {}
 	virtual string toString() const;
 protected:
-	void findExclusions();
 	void findShapes();
 	void findUniforms();
-	void restoreExclusions();
 	void restoreShapes();
 	void restoreUniforms();
 	void saveShapes();
 	void saveUniforms();
-private:
-	Duplicate *duplicate;
-	bool suppress;
-	Suppressor suppressor;
-	string of, exclude;
-	map<string,Shape*> exclusions;
+protected:
 	map<Shape*,ShapeSnapshot> shapes;
 	map<Uniform*,UniformSnapshot> uniforms;
+private:
+	bool suppress;
+	Suppressor suppressor;
 };
+
+
+
 
 
 #endif

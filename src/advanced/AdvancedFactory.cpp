@@ -21,16 +21,16 @@ void AdvancedFactory::install() {
 	Factory::install("blend", &createBlend);
 	Factory::install("bind", &createBind);
 	Factory::install("clear", &createClear);
+	Factory::install("clone", &createClone);
 	Factory::install("cull", &createCull);
 	Factory::install("depth", &createDepth);
-	Factory::install("duplicate", &createDuplicate);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
-	Factory::install("instance", &createInstance);
 	Factory::install("octree", &createOctree);
 	Factory::install("outputs", &createOutputs);
 	Factory::install("placeholder", &createPlaceholder);
 	Factory::install("renderbuffer", &createRenderbuffer);
+	Factory::install("replica", &createReplica);
 	Factory::install("screen", &createScreen);
 	Factory::install("sort", &createSort);
 	Factory::install("target", &createTarget);
@@ -64,15 +64,13 @@ Node* AdvancedFactory::createCull(const Tag &t) {return new Cull(t);}
 
 Node* AdvancedFactory::createClear(const Tag &t) {return new Clear(t);}
 
-Node* AdvancedFactory::createDepth(const Tag &t) {return new Depth(t);}
+Node* AdvancedFactory::createClone(const Tag &tag) {return new Clone(tag);}
 
-Node* AdvancedFactory::createDuplicate(const Tag &t) {return new Duplicate(t);}
+Node* AdvancedFactory::createDepth(const Tag &t) {return new Depth(t);}
 
 Node* AdvancedFactory::createFramebuffer(const Tag &t) {return new Framebuffer(t);}
 
 Node* AdvancedFactory::createFullscreen(const Tag &t) {return new Fullscreen(t);}
-
-Node* AdvancedFactory::createInstance(const Tag &t) {return new Instance(t);}
 
 Node* AdvancedFactory::createOctree(const Tag &t) {return new Octree(t);}
 
@@ -81,6 +79,8 @@ Node* AdvancedFactory::createOutputs(const Tag &t) {return new Outputs(t);}
 Node* AdvancedFactory::createPlaceholder(const Tag &t) {return new Placeholder(t);}
 
 Node* AdvancedFactory::createRenderbuffer(const Tag &t) {return new Renderbuffer(t);}
+
+Node* AdvancedFactory::createReplica(const Tag &t) {return new Replica(t);}
 
 Node* AdvancedFactory::createScreen(const Tag &t) {return new Screen(t);}
 

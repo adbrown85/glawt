@@ -27,17 +27,15 @@
 
 
 <program>
-	<shader file="../../glsl/coordinates.vert" />
-	<shader file="../../glsl/coordinates.frag" />
+	<shader file="../../glsl/basic.vert" />
+	<shader file="../../glsl/basic.frag" />
 	<translate y="+2.0">
 		<instance of="cubes" />
 	</translate>
-</program>
-
-<program>
-	<shader file="../../glsl/basic.vert" />
-	<shader file="../../glsl/basic.frag" />
+<!--
 	<translate y="-2.0">
 		<instance of="cubes" />
 	</translate>
+-->
 </program>
+

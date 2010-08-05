@@ -15,16 +15,16 @@
 #include "Boolean.hpp"
 #include "BooleanXor.hpp"
 #include "Clear.hpp"
+#include "Clone.hpp"
 #include "Cull.hpp"
 #include "Depth.hpp"
-#include "Duplicate.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
-#include "Instance.hpp"
 #include "Octree.hpp"
 #include "Outputs.hpp"
 #include "Placeholder.hpp"
 #include "Renderbuffer.hpp"
+#include "Replica.hpp"
 #include "Screen.hpp"
 #include "Sort.hpp"
 #include "Target.hpp"
@@ -41,16 +41,16 @@ public:
 	static Node* createBind(const Tag &tag);
 	static Node* createBlend(const Tag &tag);
 	static Node* createClear(const Tag &tag);
+	static Node* createClone(const Tag &tag);
 	static Node* createCull(const Tag &tag);
 	static Node* createDepth(const Tag &tag);
-	static Node* createDuplicate(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
-	static Node* createInstance(const Tag &tag);
 	static Node* createOctree(const Tag &tag);
 	static Node* createOutputs(const Tag &tag);
 	static Node* createPlaceholder(const Tag &tag);
 	static Node* createRenderbuffer(const Tag &tag);
+	static Node* createReplica(const Tag &tag);
 	static Node* createScreen(const Tag &tag);
 	static Node* createSort(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
