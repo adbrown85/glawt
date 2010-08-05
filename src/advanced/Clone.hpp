@@ -51,10 +51,9 @@ protected:
 	void restoreUniforms();
 	void saveShapes();
 	void saveUniforms();
-protected:
+private:
 	map<Shape*,ShapeSnapshot> shapes;
 	map<Uniform*,UniformSnapshot> uniforms;
-private:
 	bool suppress;
 	Suppressor suppressor;
 };
