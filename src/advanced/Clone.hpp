@@ -43,7 +43,6 @@ public:
 	virtual void associateAfter();
 	virtual void finalize();
 	virtual void finalizeAfter();
-	virtual void remove() {}
 	virtual string toString() const;
 protected:
 	void findShapes();

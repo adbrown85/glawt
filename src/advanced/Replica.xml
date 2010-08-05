@@ -26,7 +26,7 @@
 	<shader file="../../glsl/color.vert" />
 	<shader file="../../glsl/color.frag" />
 	<translate y="-2.0">
-		<replica of="cubes" exclude="left"/>
+		<replica of="cubes" only="left"/>
 	</translate>
 </program>
 
@@ -35,7 +35,7 @@
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
 	<translate y="+2.0">
-		<replica of="cubes" />
+		<replica of="cubes"/>
 	</translate>
 </program>
 

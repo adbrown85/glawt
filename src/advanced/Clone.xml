@@ -8,13 +8,13 @@
 
 <group name="cubes">
 	<translate x="-2.0">
-		<cube>
+		<cube name="left">
 			<uniform type="mat4" name="MVPMatrix" />
 			<uniform type="vec4" name="Color" value="1 0 1 1" />
 		</cube>
 	</translate>
 	<translate x="+2.0">
-		<cube>
+		<cube name="right">
 			<uniform type="mat4" name="MVPMatrix" />
 			<uniform type="vec4" name="Color" value="0 1 1 1" />
 		</cube>
@@ -35,7 +35,7 @@
 	<shader file="../../glsl/coordinates.vert" />
 	<shader file="../../glsl/coordinates.frag" />
 	<translate y="+2.0">
-		<clone of="cubes" />
+		<clone of="cubes" only="right"/>
 	</translate>
 </program>
 
