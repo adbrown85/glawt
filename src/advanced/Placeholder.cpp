@@ -15,6 +15,17 @@ Placeholder::Placeholder(const Tag &tag) : Node(tag) {
 }
 
 
+/** @throws NodeException if the placeholder has children.*/
+void Placeholder::check() {
+	
+	if (!children.empty()) {
+		NodeException e(tag);
+		e << "[Placeholder] Placeholder should not have children.";
+		throw e;
+	}
+}
+
+
 /** Copies the children of another node. */
 void Placeholder::mimic(Node *node) {
 	

@@ -96,6 +96,7 @@ void Replica::findReplacements() {
 		node = Q.front();
 		placeholder = dynamic_cast<Placeholder*>(node);
 		if (placeholder != NULL) {
+			placeholder->check();
 			ri = catalog.find(placeholder->getName());
 			if (ri != catalog.end()) {
 				replacements[placeholder] = ri->second;

@@ -19,6 +19,7 @@ class Placeholder : public Node {
 public:
 	Placeholder(const Tag &tag);
 	virtual bool areChildrenDestroyable() const;
+	virtual void check();
 	virtual void clear();
 	virtual string getName() const;
 	virtual void mimic(Node *node);
