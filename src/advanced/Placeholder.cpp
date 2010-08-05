@@ -8,10 +8,13 @@
 
 
 /** Initializes attributes. */
-Placeholder::Placeholder(const Tag &tag) : Node(tag) {
+Placeholder::Placeholder(const Tag &tag) : Node(tag), Nameable(tag) {
 	
-	// Name
-	tag.get("name", name, true, false);
+	if (!hasName()) {
+		NodeException e(tag);
+		e << "[Placeholder] Placeholder must have name.";
+		throw e;
+	}
 }
 
 
@@ -37,12 +40,13 @@ void Placeholder::mimic(Node *node) {
 }
 
 
+/** @return String made of the node's attributes. */
 string Placeholder::toString() const {
 	
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << name << "'";
+	stream << " name='" << getName() << "'";
 	return stream.str();
 }
 
