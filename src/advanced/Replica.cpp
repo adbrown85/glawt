@@ -7,11 +7,13 @@
 #include "Replica.hpp"
 
 
+/** Initialize attributes. */
 Replica::Replica(const Tag &tag) : Clone(tag) {
 	
 }
 
 
+/** Substitute placeholders with replacements. */
 void Replica::apply() {
 	
 	Clone::apply();
@@ -20,29 +22,28 @@ void Replica::apply() {
 }
 
 
+/** Substitute placeholders with replacements. */
 void Replica::applyReplacements() {
 	
 	map<Placeholder*,Replacement*>::iterator it;
 	
-	for (it=placeholders.begin(); it!=placeholders.end(); ++it) {
+	for (it=replacements.begin(); it!=replacements.end(); ++it) {
 		(it->first)->mimic((it->second));
 	}
 }
 
 
+/** Find and apply replacements before children associate. */
 void Replica::associate() {
 	
 	Clone::associate();
 	
-	// Find
 	findReplacements();
-	findPlaceholders();
-	
-	// Apply
 	applyReplacements();
 }
 
 
+/** Remove replacements after children associate. */
 void Replica::associateAfter() {
 	
 	Clone::associateAfter();
@@ -51,6 +52,7 @@ void Replica::associateAfter() {
 }
 
 
+/** Apply replacements before children have been finalized. */
 void Replica::finalize() {
 	
 	Clone::finalize();
@@ -59,6 +61,7 @@ void Replica::finalize() {
 }
 
 
+/** Remove replacements after children have been finalized. */
 void Replica::finalizeAfter() {
 	
 	Clone::finalizeAfter();
@@ -67,41 +70,35 @@ void Replica::finalizeAfter() {
 }
 
 
-/** Look for Replacement nodes. */
+/** Look for replacements. */
 void Replica::findReplacements() {
-	
-	Node::iterator it;
-	Node *node;
-	Replacement *replacement;
-	
-	// Check each child
-	for (it=begin(); it!=end(); ++it) {
-		node = (*it);
-		replacement = dynamic_cast<Replacement*>(node);
-		if (replacement != NULL) {
-			replacements[replacement->getOf()] = replacement;
-		}
-	}
-}
-
-
-/** Look for Placeholder nodes. */
-void Replica::findPlaceholders() {
 	
 	Node *node;
 	Node::iterator ni;
-	queue<Node*> Q;
-	Placeholder *placeholder;
+	map<string,Replacement*> catalog;
 	map<string,Replacement*>::iterator ri;
+	Placeholder *placeholder;
+	queue<Node*> Q;
+	Replacement *replacement;
 	
+	// Index replacement nodes by name
+	for (ni=begin(); ni!=end(); ++ni) {
+		node = (*ni);
+		replacement = dynamic_cast<Replacement*>(node);
+		if (replacement != NULL) {
+			catalog[replacement->getOf()] = replacement;
+		}
+	}
+	
+	// Search for placeholders and store with replacement
 	Q.push(getLink());
 	while (!Q.empty()) {
 		node = Q.front();
 		placeholder = dynamic_cast<Placeholder*>(node);
 		if (placeholder != NULL) {
-			ri = replacements.find(placeholder->getName());
-			if (ri != replacements.end()) {
-				placeholders[placeholder] = ri->second;
+			ri = catalog.find(placeholder->getName());
+			if (ri != catalog.end()) {
+				replacements[placeholder] = ri->second;
 			}
 		}
 		for (ni=node->begin(); ni!=node->end(); ++ni) {
@@ -126,7 +123,7 @@ void Replica::removeReplacements() {
 	
 	map<Placeholder*,Replacement*>::iterator it;
 	
-	for (it=placeholders.begin(); it!=placeholders.end(); ++it) {
+	for (it=replacements.begin(); it!=replacements.end(); ++it) {
 		(it->first)->clear();
 	}
 }
@@ -138,8 +135,7 @@ string Replica::toString() const {
 	ostringstream stream;
 	
 	stream << Clone::toString();
-	stream << " replacements='" << replacements.size() << "'"
-	       << " placeholders='" << placeholders.size() << "'";
+	stream << " replacements='" << replacements.size() << "'";
 	return stream.str();
 }
 

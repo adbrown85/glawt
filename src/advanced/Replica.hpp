@@ -13,7 +13,7 @@
 using namespace std;
 
 
-/** @brief Smart instance of a group capable of making some changes.
+/** @brief Smart instance of a group capable of making replacements.
  * @ingroup advanced
  */
 class Replica : public Clone {
@@ -30,10 +30,8 @@ protected:
 	void findReplacements();
 	void applyReplacements();
 	void removeReplacements();
-	void findPlaceholders();
 private:
-	map<string,Replacement*> replacements;
-	map<Placeholder*,Replacement*> placeholders;
+	map<Placeholder*,Replacement*> replacements;
 };
 
 
