@@ -99,6 +99,12 @@ string Node::toString() const {
 }
 
 
+Nameable::Nameable(const Tag &tag) {
+	
+	tag.get("name", name, false, false);
+}
+
+
 Node* Nameable::search(Node *node, const string &name) {
 	
 	Nameable *nameable;

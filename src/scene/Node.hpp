@@ -184,6 +184,8 @@ inline void Suppressable::setSuppress(bool s) {suppress = true;}
  */
 class Nameable {
 public:
+	Nameable() {}
+	Nameable(const Tag &tag);
 	virtual string getName() const;
 	virtual bool hasName() const;
 	virtual void setName(const string &name);
