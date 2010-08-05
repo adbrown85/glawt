@@ -18,15 +18,20 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	list<string>::iterator it;
 	VertexAttribute va;
 	
-	// Copy
+	// Copy traits
 	this->count = traits.count;
 	this->limit = traits.count;
 	this->mode = traits.mode;
 	this->usage = traits.usage;
+	
+	// Retrieve from tag
 	tag.get("name", name, false, false);
 	if (!tag.get("defaults", defaults, false)) {
 		defaults = true;
 	}
+	
+	// Other attributes
+	this->generated = false;
 	
 	// Store vertex attributes
 	block = count * 3 * sizeof(GLfloat);
@@ -130,24 +135,11 @@ void Shape::finalize() {
 	
 	list<VertexAttribute>::iterator it;
 	
-	// Initialize buffer for dynamic shapes or first run of static shapes
-	if (usage == GL_DYNAMIC_DRAW || !isBufferStored(getClassName())) {
-		glGenBuffers(1, &buffer);
-		glBindBuffer(GL_ARRAY_BUFFER, buffer);
-		glBufferData(GL_ARRAY_BUFFER,                       // target
-		             block * attributes.size(),             // size
-		             NULL,                                  // data
-		             usage);                                // usage
-		updateBuffer();
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		if (usage == GL_STATIC_DRAW) {
-			buffers[getClassName()] = buffer;
-		}
-	}
-	
-	// Set buffer for static shapes
-	if (usage == GL_STATIC_DRAW) {
+	// Initialize buffer
+	if (usage == GL_STATIC_DRAW && isBufferStored(getClassName())) {
 		buffer = buffers.find(getClassName())->second;
+	} else {
+		generate();
 	}
 	
 	// Get locations of attributes in program
@@ -164,6 +156,37 @@ void Shape::finalize() {
 	if (defaults) {
 		checkForDefaultUniforms();
 	}
+}
+
+
+/** Generates the vertex buffer for the shape. */
+void Shape::generate() {
+	
+	// Check if already generated
+	if (generated)
+		return;
+	
+	// Create and bind
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	
+	// Allocate and fill
+	glBufferData(GL_ARRAY_BUFFER,                       // target
+	             block * attributes.size(),             // size
+	             NULL,                                  // data
+	             usage);                                // usage
+	updateBuffer();
+	
+	// Store for static shapes
+	if (usage == GL_STATIC_DRAW) {
+		buffers[getClassName()] = buffer;
+	}
+	
+	// Unbind
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	// Finish
+	generated = true;
 }
 
 

@@ -12,6 +12,7 @@ Program *Program::current=NULL;
 Program::Program(const Tag& tag) : Node(tag) {
 	
 	handle = 0;
+	linked = 0;
 }
 
 
@@ -40,6 +41,9 @@ void Program::apply() {
 /** Creates the program and finds the previous program. */
 void Program::associate() {
 	
+	if (handle != 0)
+		return;
+	
 	handle = glCreateProgram();
 	previous = find(getParent());
 }
@@ -51,7 +55,8 @@ void Program::associate() {
  */
 void Program::finalize() {
 	
-	GLint linked=0;
+	if (linked != 0)
+		return;
 	
 	// Notify
 	notifier.fireEvent(NodeEvent(this, NodeEvent::FINALIZE));

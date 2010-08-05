@@ -63,11 +63,13 @@ void Shader::associate() {
 	// Attach and compile shader if found
 	program = Program::find(parent);
 	if (program != NULL) {
-		create();
-		load();
+		if (handle == 0) {
+			create();
+			load();
+			compile();
+		}
 		glAttachShader(program->getHandle(), handle);
 		program->addCode(handle, &preprocessor);
-		compile();
 	}
 }
 
@@ -97,10 +99,6 @@ void Shader::compile() {
  * @throws NodeException if <i>type</i> is not supported.
  */
 void Shader::create() {
-	
-	// Check if already created
-	if (handle != 0)
-		return;
 	
 	// Create shader of correct type
 	if (type == "fragment")

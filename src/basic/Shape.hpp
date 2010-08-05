@@ -73,6 +73,7 @@ public:
 	virtual string toString() const;
 protected:
 	void checkForDefaultUniforms();
+	void generate();
 	virtual GLuint getOffset(const string &name) const;
 	static bool isBufferStored(const string &className);
 	void setBufferData(const string &name, GLfloat data[][3]);
@@ -80,7 +81,7 @@ protected:
 	virtual void setLimit(GLuint limit);
 	virtual void updateBuffer() = 0;
 private:
-	bool defaults;
+	bool defaults, generated;
 	list<VertexAttribute> attributes;
 	GLenum mode, usage;
 	GLuint block, buffer, count, limit;

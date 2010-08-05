@@ -34,6 +34,7 @@ public:
 	virtual void remove();
 	virtual string toString() const;
 private:
+	GLint linked;
 	GLuint handle;
 	map<int,const Preprocessor*> code;
 	static Program* current;
