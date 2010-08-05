@@ -24,7 +24,6 @@ public:
 	virtual string getName() const;
 	virtual void mimic(Node *node);
 	virtual string toString() const;
-	virtual void setChild(Node *node);
 private:
 	string name;
 };

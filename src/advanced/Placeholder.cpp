@@ -37,21 +37,6 @@ void Placeholder::mimic(Node *node) {
 }
 
 
-/** Sets the %Placeholder's child.
- * 
- * Use NULL to clear.
- */
-void Placeholder::setChild(Node *node) {
-	
-	// Store child or clear
-	if (node != NULL) {
-		children[0] = node;
-	} else {
-		children.clear();
-	}
-}
-
-
 string Placeholder::toString() const {
 	
 	ostringstream stream;
