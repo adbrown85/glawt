@@ -8,6 +8,8 @@
 #define REPLICA_HPP
 #include "common.h"
 #include "Clone.hpp"
+#include "Replacement.hpp"
+#include "Placeholder.hpp"
 using namespace std;
 
 
@@ -19,15 +21,24 @@ public:
 	Replica(const Tag &tag);
 	virtual void apply();
 	virtual void associate();
+	virtual void associateAfter();
+	virtual void finalize();
+	virtual void finalizeAfter();
 	virtual void remove();
 	virtual string toString() const;
 protected:
-	void applyExclusions();
 	void findExclusions();
+	void applyExclusions();
 	void removeExclusions();
+	void findReplacements();
+	void applyReplacements();
+	void removeReplacements();
+	void findPlaceholders();
 private:
 	string exclude;
 	map<string,Shape*> exclusions;
+	map<string,Replacement*> replacements;
+	map<Placeholder*,Replacement*> placeholders;
 };
 
 

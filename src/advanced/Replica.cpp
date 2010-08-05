@@ -19,6 +19,7 @@ void Replica::apply() {
 	Clone::apply();
 	
 	applyExclusions();
+	applyReplacements();
 }
 
 
@@ -38,23 +39,49 @@ void Replica::applyExclusions() {
 }
 
 
+void Replica::applyReplacements() {
+	
+	map<Placeholder*,Replacement*>::iterator it;
+	
+	for (it=placeholders.begin(); it!=placeholders.end(); ++it) {
+		(it->first)->mimic((it->second));
+	}
+}
+
+
 void Replica::associate() {
 	
 	Clone::associate();
 	
 	findExclusions();
+	findReplacements();
+	findPlaceholders();
 	
-	// Make replacements
-	//   - Search for replacements in children and store them
-	//   - Search group for placeholders
-	//   - For each placeholder,
-	//       - Check if I have a replacement for it
-	//       - If so, make a node with replacement's children and store it
-	//       - On apply, set that node as the placeholder's child
-	//       - On remove, clear the placeholder's child
+	applyReplacements();
+}
+
+
+void Replica::associateAfter() {
 	
-	// Will need a list of replacements
-	// Will need a map of placeholders map<Placeholder*,Node*>
+	Clone::associateAfter();
+	
+	removeReplacements();
+}
+
+
+void Replica::finalize() {
+	
+	Clone::finalize();
+	
+	applyReplacements();
+}
+
+
+void Replica::finalizeAfter() {
+	
+	Clone::finalizeAfter();
+	
+	removeReplacements();
 }
 
 
@@ -87,9 +114,54 @@ void Replica::findExclusions() {
 }
 
 
+/** Look for Replacement nodes. */
+void Replica::findReplacements() {
+	
+	Node::iterator it;
+	Node *node;
+	Replacement *replacement;
+	
+	// Check each child
+	for (it=begin(); it!=end(); ++it) {
+		node = (*it);
+		replacement = dynamic_cast<Replacement*>(node);
+		if (replacement != NULL) {
+			replacements[replacement->getOf()] = replacement;
+		}
+	}
+}
+
+
+void Replica::findPlaceholders() {
+	
+	Node *node;
+	Node::iterator ni;
+	queue<Node*> Q;
+	Placeholder *placeholder;
+	map<string,Replacement*>::iterator ri;
+	
+	Q.push(getLink());
+	while (!Q.empty()) {
+		node = Q.front();
+		placeholder = dynamic_cast<Placeholder*>(node);
+		if (placeholder != NULL) {
+			ri = replacements.find(placeholder->getName());
+			if (ri != replacements.end()) {
+				placeholders[placeholder] = ri->second;
+			}
+		}
+		for (ni=node->begin(); ni!=node->end(); ++ni) {
+			Q.push((*ni));
+		}
+		Q.pop();
+	}
+}
+
+
 void Replica::remove() {
 	
 	removeExclusions();
+	removeReplacements();
 }
 
 
@@ -109,13 +181,26 @@ void Replica::removeExclusions() {
 }
 
 
+void Replica::removeReplacements() {
+	
+	map<Placeholder*,Replacement*>::iterator it;
+	
+	for (it=placeholders.begin(); it!=placeholders.end(); ++it) {
+		(it->first)->clear();
+	}
+}
+
+
 /** @return Adds @e exclude attribute to description. */
 string Replica::toString() const {
 	
 	ostringstream stream;
 	
 	stream << Clone::toString();
-	stream << " exclude='" << exclude << "'";
+	if (!exclude.empty())
+		stream << " exclude='" << exclude << "'";
+	stream << " replacements='" << replacements.size() << "'"
+	       << " placeholders='" << placeholders.size() << "'";
 	return stream.str();
 }
 

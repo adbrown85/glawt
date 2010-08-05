@@ -18,16 +18,23 @@ using namespace std;
 class Placeholder : public Node {
 public:
 	Placeholder(const Tag &tag);
-	virtual void associate();
+	virtual bool areChildrenDestroyable() const;
+	virtual void clear();
 	virtual string getName() const;
+	virtual void mimic(Node *node);
 	virtual string toString() const;
 	virtual void setChild(Node *node);
 private:
 	string name;
 };
 
+/** Makes sure any leftover children aren't destoyed twice. */
+inline bool Placeholder::areChildrenDestroyable() const {return false;}
+
+/** Clears the placeholder's children. */
+inline void Placeholder::clear() {children.clear();}
+
 /** @return Name given to the placeholder */
 inline string Placeholder::getName() const {return name;}
-
 
 #endif

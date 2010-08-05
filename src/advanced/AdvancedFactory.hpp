@@ -24,6 +24,7 @@
 #include "Outputs.hpp"
 #include "Placeholder.hpp"
 #include "Renderbuffer.hpp"
+#include "Replacement.hpp"
 #include "Replica.hpp"
 #include "Screen.hpp"
 #include "Sort.hpp"
@@ -51,6 +52,7 @@ public:
 	static Node* createPlaceholder(const Tag &tag);
 	static Node* createRenderbuffer(const Tag &tag);
 	static Node* createReplica(const Tag &tag);
+	static Node* createReplacement(const Tag &tag);
 	static Node* createScreen(const Tag &tag);
 	static Node* createSort(const Tag &tag);
 	static Node* createTarget(const Tag &tag);

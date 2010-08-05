@@ -15,17 +15,13 @@ Placeholder::Placeholder(const Tag &tag) : Node(tag) {
 }
 
 
-/** Makes sure the placeholder is in a group. */
-void Placeholder::associate() {
+/** Copies the children of another node. */
+void Placeholder::mimic(Node *node) {
 	
-	Group *group;
+	Node::iterator it;
 	
-	// Look for group
-	group = Group::find(this);
-	if (group == NULL) {
-		NodeException e(tag);
-		e << "[Placeholder] Placeholder needs to be in group.";
-		throw e;
+	for (it=node->begin(); it!=node->end(); ++it) {
+		addChild(*it);
 	}
 }
 

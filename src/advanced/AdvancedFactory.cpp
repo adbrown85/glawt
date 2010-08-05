@@ -30,6 +30,7 @@ void AdvancedFactory::install() {
 	Factory::install("outputs", &createOutputs);
 	Factory::install("placeholder", &createPlaceholder);
 	Factory::install("renderbuffer", &createRenderbuffer);
+	Factory::install("replacement", &createReplacement);
 	Factory::install("replica", &createReplica);
 	Factory::install("screen", &createScreen);
 	Factory::install("sort", &createSort);
@@ -79,6 +80,8 @@ Node* AdvancedFactory::createOutputs(const Tag &t) {return new Outputs(t);}
 Node* AdvancedFactory::createPlaceholder(const Tag &t) {return new Placeholder(t);}
 
 Node* AdvancedFactory::createRenderbuffer(const Tag &t) {return new Renderbuffer(t);}
+
+Node* AdvancedFactory::createReplacement(const Tag &t) {return new Replacement(t);}
 
 Node* AdvancedFactory::createReplica(const Tag &t) {return new Replica(t);}
 
