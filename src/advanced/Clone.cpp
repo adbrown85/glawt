@@ -21,6 +21,8 @@ Clone::Clone(const Tag &tag) : Instance(tag) {
 /** Resets all the shapes and uniforms to be under this instance. */
 void Clone::apply() {
 	
+	Instance::apply();
+	
 	// Restore
 	restoreShapes();
 	restoreUniforms();
@@ -40,6 +42,8 @@ void Clone::associate() {
 
 /**  Saves the states of the shapes and uniforms. */
 void Clone::associateAfter() {
+	
+	Instance::associateAfter();
 	
 	// Save
 	saveShapes();
@@ -63,6 +67,8 @@ void Clone::finalize() {
 
 /** Stores the locations of the uniforms so they can be reset later. */
 void Clone::finalizeAfter() {
+	
+	Instance::finalizeAfter();
 	
 	// Save
 	saveShapes();

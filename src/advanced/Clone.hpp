@@ -35,7 +35,7 @@ struct UniformSnapshot {
  * 
  * @ingroup advanced
  */
-class Clone : public Instance, public Applicable {
+class Clone : public Instance {
 public:
 	Clone(const Tag &tag);
 	virtual void apply();

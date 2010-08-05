@@ -9,8 +9,6 @@
 
 Replica::Replica(const Tag &tag) : Clone(tag) {
 	
-	// Nodes to exclude
-	tag.get("exclude", exclude, false);
 }
 
 
@@ -18,24 +16,7 @@ void Replica::apply() {
 	
 	Clone::apply();
 	
-	applyExclusions();
 	applyReplacements();
-}
-
-
-/** Excludes certain shapes. */
-void Replica::applyExclusions() {
-	
-	map<string,Shape*>::iterator it;
-	Shape* shape;
-	
-	// Reset exclusions
-	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
-		shape = it->second;
-		if (shape != NULL) {
-			shape->setExcluded(true);
-		}
-	}
 }
 
 
@@ -53,10 +34,11 @@ void Replica::associate() {
 	
 	Clone::associate();
 	
-	findExclusions();
+	// Find
 	findReplacements();
 	findPlaceholders();
 	
+	// Apply
 	applyReplacements();
 }
 
@@ -85,35 +67,6 @@ void Replica::finalizeAfter() {
 }
 
 
-/** Looks for excluded shapes. */
-void Replica::findExclusions() {
-	
-	Shape *shape;
-	map<Shape*,ShapeSnapshot>::iterator si;
-	map<string,Shape*>::iterator ei;
-	istringstream stream;
-	string name;
-	
-	// Build list of excluded names
-	stream.str(exclude);
-	stream >> name;
-	while (stream) {
-		exclusions[name] = NULL;
-		stream >> name;
-	}
-	
-	// Find the shapes
-	for (si=shapes.begin(); si!=shapes.end(); ++si) {
-		shape = si->first;
-		name = shape->getName();
-		ei = exclusions.find(name);
-		if (ei != exclusions.end()) {
-			exclusions[name] = shape;
-		}
-	}
-}
-
-
 /** Look for Replacement nodes. */
 void Replica::findReplacements() {
 	
@@ -132,6 +85,7 @@ void Replica::findReplacements() {
 }
 
 
+/** Look for Placeholder nodes. */
 void Replica::findPlaceholders() {
 	
 	Node *node;
@@ -158,29 +112,16 @@ void Replica::findPlaceholders() {
 }
 
 
+/** Reset all the placeholders. */
 void Replica::remove() {
 	
-	removeExclusions();
+	Clone::remove();
+	
 	removeReplacements();
 }
 
 
-/** Removes exclusions from the shapes. */
-void Replica::removeExclusions() {
-	
-	map<string,Shape*>::iterator it;
-	Shape* shape;
-	
-	// Reverse exclusions
-	for (it=exclusions.begin(); it!=exclusions.end(); ++it) {
-		shape = it->second;
-		if (shape != NULL) {
-			shape->setExcluded(false);
-		}
-	}
-}
-
-
+/** Reset all the placeholders. */
 void Replica::removeReplacements() {
 	
 	map<Placeholder*,Replacement*>::iterator it;
@@ -191,14 +132,12 @@ void Replica::removeReplacements() {
 }
 
 
-/** @return Adds @e exclude attribute to description. */
+/** @return String made from the node's attributes. */
 string Replica::toString() const {
 	
 	ostringstream stream;
 	
 	stream << Clone::toString();
-	if (!exclude.empty())
-		stream << " exclude='" << exclude << "'";
 	stream << " replacements='" << replacements.size() << "'"
 	       << " placeholders='" << placeholders.size() << "'";
 	return stream.str();

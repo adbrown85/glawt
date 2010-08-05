@@ -27,16 +27,11 @@ public:
 	virtual void remove();
 	virtual string toString() const;
 protected:
-	void findExclusions();
-	void applyExclusions();
-	void removeExclusions();
 	void findReplacements();
 	void applyReplacements();
 	void removeReplacements();
 	void findPlaceholders();
 private:
-	string exclude;
-	map<string,Shape*> exclusions;
 	map<string,Replacement*> replacements;
 	map<Placeholder*,Replacement*> placeholders;
 };

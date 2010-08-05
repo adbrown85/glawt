@@ -8,6 +8,7 @@
 #define INSTANCE_HPP
 #include "common.h"
 #include "Link.hpp"
+#include "Shape.hpp"
 using namespace std;
 
 
@@ -22,16 +23,21 @@ using namespace std;
  * 
  * @ingroup basic
  */
-class Instance : public Node {
+class Instance : public Node, public Applicable {
 public:
 	Instance(const Tag &tag);
+	virtual void apply();
 	virtual bool areChildrenSelectable() const;
 	virtual void associate();
 	virtual void finalize();
+	virtual void remove();
 	virtual string toString() const;
 protected:
+	void findExclusions();
 	Link* getLink();
 private:
+	string only;
+	list<Shape*> exclusions;
 	bool selectable;
 	Link *link;
 	string of;
