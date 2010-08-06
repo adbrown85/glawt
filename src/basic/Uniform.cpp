@@ -51,32 +51,33 @@ void Uniform::finalize() {
 
 
 /** @return Names and types of all the active uniforms in @e program. */
-map<string,GLenum> Uniform::getUniformsFor(Program *program) {
+map<string,UniformInfo> Uniform::getUniformsFor(Program *program) {
 	
 	char *buffer;
-	GLint count, length, size;
-	map<string,GLenum> info;
+	GLint count, size;
+	map<string,UniformInfo> catalog;
 	GLenum type;
+	UniformInfo info;
 	
 	// Get count and size
 	glGetProgramiv(program->getHandle(), GL_ACTIVE_UNIFORMS, &count);
-	glGetProgramiv(program->getHandle(), GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
+	glGetProgramiv(program->getHandle(), GL_ACTIVE_UNIFORM_MAX_LENGTH, &size);
 	
 	// Make buffer
-	buffer = new char[length+1];
+	buffer = new char[size+1];
 	
 	// Get info
 	for (int i=0; i<count; ++i) {
 		glGetActiveUniform(program->getHandle(),                 // program
 		                   i,                                    // index
-		                   length,                               // bufSize
+		                   size,                                 // bufSize
 		                   NULL,                                 // length
-		                   &size,                                // elements
-		                   &type,                                // type
+		                   &(info.count),                        // elements
+		                   &(info.type),                         // type
 		                   buffer);                              // name
-		info[buffer] = type;
+		catalog[buffer] = info;
 	}
-	return info;
+	return catalog;
 }
 
 

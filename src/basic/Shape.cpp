@@ -66,8 +66,8 @@ void Shape::associate() {
 void Shape::checkForDefaultUniforms() {
 	
 	int tally;
-	map<string,GLenum> uniforms;
-	map<string,GLenum>::iterator it;
+	map<string,UniformInfo> uniforms;
+	map<string,UniformInfo>::iterator it;
 	ostringstream stream;
 	Node *node;
 	
@@ -75,7 +75,7 @@ void Shape::checkForDefaultUniforms() {
 	tally = 0;
 	uniforms = Uniform::getUniformsFor(program);
 	for (it=uniforms.begin(); it!=uniforms.end(); ++it) {
-		if (UniformMatrix::isDefault(it->first, it->second)) {
+		if (UniformMatrix::isDefault(it->first, it->second.type)) {
 			if (!UniformMatrix::hasChild(this, it->first)) {
 				stream.str("");
 				stream << "uniform type='mat4' name='" << it->first << "'";
