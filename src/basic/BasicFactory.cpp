@@ -38,6 +38,7 @@ void BasicFactory::install() {
 	// Map uniform types back to kinds
 	kinds["int"] = INT;
 	kinds["float"] = FLOAT;
+	kinds["float[]"] = FLOAT_ARRAY;
 	kinds["mat3"] = MATRIX;
 	kinds["mat4"] = MATRIX;
 	kinds["sampler1d"] = SAMPLER;
@@ -118,6 +119,8 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 		return new UniformInt(tag);
 	case FLOAT:
 		return new UniformFloat(tag);
+	case FLOAT_ARRAY:
+		return new UniformFloatArray(tag);
 	case MATRIX:
 		return new UniformMatrix(tag);
 	case SAMPLER:
