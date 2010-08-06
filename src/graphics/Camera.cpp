@@ -25,6 +25,21 @@ void Camera::apply() {
 }
 
 
+Matrix Camera::getTranslationMatrix() const {
+	
+	return Matrix(1.0, 0.0, 0.0, position.x,
+	              0.0, 1.0, 0.0, position.y,
+	              0.0, 0.0, 1.0, position.z,
+	              0.0, 0.0, 0.0, 1.0);
+}
+
+
+Matrix Camera::getViewMatrix() const {
+	
+	return getTranslationMatrix() * getRotationMatrix();
+}
+
+
 /** Initializes OpenGL. */
 void Camera::load(int width, int height) {
 	

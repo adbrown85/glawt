@@ -24,6 +24,9 @@ public:
 	void apply();
 	Vector getPosition() const;
 	Matrix getRotation() const;
+	Matrix getRotationMatrix() const;
+	Matrix getTranslationMatrix() const;
+	Matrix getViewMatrix() const;
 	void load(int width, int height);
 	void move(const Vector &amount);
 	void reset();
@@ -38,6 +41,9 @@ inline Vector Camera::getPosition() const {return position;}
 
 /** @return Rotation of the camera. */
 inline Matrix Camera::getRotation() const {return rotation.getMatrix();}
+
+/** @return Rotation of the camera as a matrix. */
+inline Matrix Camera::getRotationMatrix() const {return rotation.getMatrix();}
 
 
 
