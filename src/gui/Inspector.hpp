@@ -14,6 +14,7 @@
 #include "Scene.hpp"
 #include "NodeEvent.hpp"
 #include "Transformation.hpp"
+#include "UniformFloatArray.hpp"
 using namespace std;
 
 

@@ -236,10 +236,13 @@ void Inspector::onEditValue(const string& path, const string& text) {
 
 void Inspector::onNodeEvent(NodeEvent &event) {
 	
-	if (event.getSource() == nodeView.getNode()) {
+	Node *source;
+	
+	source = event.getSource();
+	if (source == nodeView.getNode()) {
 		nodeView.update();
-	} else {
-		sceneView.setNode(event.getSource());
+	} else if (dynamic_cast<Transformation*>(source)) {
+		sceneView.setNode(source);
 	}
 }
 
@@ -266,6 +269,8 @@ void Inspector::onNodeSelectionChange() {
 void Inspector::update() {
 	
 	list<Transformation*>::iterator it;
+	set<UniformFloatArray*> uniforms;
+	set<UniformFloatArray*>::iterator ui;
 	
 	// Validate
 	if (scene == NULL) {
@@ -286,6 +291,12 @@ void Inspector::update() {
 	
 	// Listen to scene selection changes
 	scene->getSelection().addListener(this);
+	
+	// Listen to uniform changes
+	uniforms = UniformFloatArray::search(scene->getRoot());
+	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
+		(*ui)->addListener(this, NodeEvent::MODIFY);
+	}
 }
 
 
