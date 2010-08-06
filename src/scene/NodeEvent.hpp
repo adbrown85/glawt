@@ -24,6 +24,9 @@ private:
 	Node *source;
 	int type;
 };
+inline NodeEvent::NodeEvent(Node *s, int t) : source(s), type(t) {}
+inline Node* NodeEvent::getSource() const {return source;}
+inline int NodeEvent::getType() const {return type;}
 
 
 /** @brief Object that is notified by a node.
@@ -49,10 +52,5 @@ private:
 	map<int, list<NodeListener*> > listeners;
 };
 
-inline NodeEvent::NodeEvent(Node *s, int t) : source(s), type(t) {}
-
-inline Node* NodeEvent::getSource() const {return source;}
-
-inline int NodeEvent::getType() const {return type;}
 
 #endif
