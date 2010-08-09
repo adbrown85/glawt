@@ -10,7 +10,7 @@
 #include <cfloat>
 #include "Node.hpp"
 #include "NodeEvent.hpp"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 using namespace std;
 
 
@@ -30,7 +30,7 @@ protected:
 	void updatePositionExtent();
 private:
 	bool valid;
-	list<Transformation*> transforms;
+	list<Transform*> transforms;
 	Extent extent;
 	Vector position;
 };

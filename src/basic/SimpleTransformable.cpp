@@ -17,7 +17,7 @@ SimpleTransformable::SimpleTransformable(const Tag &tag) : Node(tag) {
 
 void SimpleTransformable::associate() {
 	
-	list<Transformation*>::iterator it;
+	list<Transform*>::iterator it;
 	
 	// Find transforms and update position
 	Transformation::findAll(getParent(), transforms);
@@ -65,8 +65,8 @@ Extent SimpleTransformable::getExtent() {
 /** Updates the position and extent, then validates the position. */
 void SimpleTransformable::updatePositionExtent() {
 	
-	list<Transformation*>::iterator it;
 	Matrix matrix;
+	list<Transform*>::iterator it;
 	Vector point;
 	float v[2]={-0.5,+0.5};
 	
