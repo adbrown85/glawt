@@ -15,8 +15,10 @@ void AdvancedFactory::install() {
 		return;
 	installed = true;
 	
-	// Tags
+	// Make sure basic factory is already installed
 	BasicFactory::install();
+	
+	// Tags
 	Factory::install("boolean", &createBoolean);
 	Factory::install("blend", &createBlend);
 	Factory::install("bind", &createBind);
@@ -36,6 +38,7 @@ void AdvancedFactory::install() {
 	Factory::install("shadow", &createShadow);
 	Factory::install("sort", &createSort);
 	Factory::install("target", &createTarget);
+	Factory::install("uniform", &createUniform);
 }
 
 
@@ -93,4 +96,19 @@ Node* AdvancedFactory::createShadow(const Tag &t) {return new Shadow(t);}
 Node* AdvancedFactory::createSort(const Tag &t) {return new Sort(t);}
 
 Node* AdvancedFactory::createTarget(const Tag &t) {return new Target(t);}
+
+Node* AdvancedFactory::createUniform(const Tag &tag) {
+	
+	string type;
+	
+	// Get type
+	tag.get("type", type);
+	
+	// Create based on type
+	if (type == "float[]") {
+		return new UniformFloatArray(tag);
+	} else {
+		return BasicFactory::createUniform(tag);
+	}
+}
 

@@ -27,7 +27,6 @@
 #include "Translate.hpp"
 #include "UniformInt.hpp"
 #include "UniformFloat.hpp"
-#include "UniformFloatArray.hpp"
 #include "UniformMatrix.hpp"
 #include "UniformSampler.hpp"
 #include "UniformVector.hpp"
@@ -60,7 +59,7 @@ public:
 	static Node* createUniform(const Tag &tag);
 	static Node* createWireframe(const Tag &tag);
 private:
-	enum kind_t {INT, FLOAT, FLOAT_ARRAY, MATRIX, SAMPLER, VECTOR};
+	enum kind_t {INT, FLOAT, MATRIX, SAMPLER, VECTOR};
 	static bool installed;
 	static map<string,kind_t> kinds;
 };

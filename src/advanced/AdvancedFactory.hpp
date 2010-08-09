@@ -30,6 +30,7 @@
 #include "Shadow.hpp"
 #include "Sort.hpp"
 #include "Target.hpp"
+#include "UniformFloatArray.hpp"
 using namespace std;
 
 
@@ -58,6 +59,7 @@ public:
 	static Node* createShadow(const Tag &tag);
 	static Node* createSort(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
+	static Node* createUniform(const Tag &tag);
 private:
 	static bool installed;
 };
