@@ -177,6 +177,27 @@ void Clone::saveUniforms() {
 }
 
 
+/** Finds the first clone under @e node. */
+Clone* Clone::search(Node *node) {
+	
+	Node::iterator it;
+	queue<Node*> Q;
+	Clone *clone;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		clone = dynamic_cast<Clone*>(node);
+		if (clone != NULL)
+			return clone;
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push((*it));
+		Q.pop();
+	}
+	return NULL;
+}
+
+
 /** @return Adds @e suppress attribute to description. */
 string Clone::toString() const {
 	

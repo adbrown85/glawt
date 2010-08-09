@@ -44,6 +44,8 @@ public:
 	virtual void finalize();
 	virtual void finalizeAfter();
 	virtual string toString() const;
+public:
+	static Clone* search(Node *node);
 protected:
 	void findShapes();
 	void findUniforms();
@@ -57,9 +59,6 @@ private:
 	bool suppress;
 	Suppressor suppressor;
 };
-
-
-
 
 
 #endif
