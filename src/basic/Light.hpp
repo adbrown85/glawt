@@ -26,6 +26,7 @@ public:
 	Light(const Tag &tag);
 	virtual ~Light();
 	virtual void draw() const;
+	virtual Vector getPosition();
 	virtual string toString() const;
 private:
 	float ambient, diffuse, specular;

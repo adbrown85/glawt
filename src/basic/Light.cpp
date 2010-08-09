@@ -59,6 +59,22 @@ void Light::draw() const {
 }
 
 
+/** @return Position of the light in view space coordinates. */
+Vector Light::getPosition() {
+	
+	Vector pos;
+	
+	if (getCanvas() == NULL) {
+		NodeException e(getTag());
+		e << "[Light] Canvas is NULL!";
+		throw e;
+	}
+	
+	pos = SimpleDrawable::getPosition();
+	return getCanvas()->getCamera()->getViewMatrix() * pos;
+}
+
+
 string Light::toString() const {
 	
 	ostringstream stream;
