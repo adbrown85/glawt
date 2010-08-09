@@ -21,6 +21,7 @@ public:
 	virtual bool areChildrenPrintable() const;
 	virtual void establish();
 	virtual void relink();
+	virtual void setTo(const string &to);
 	virtual string toString() const;
 private:
 	Group *group;
@@ -29,6 +30,7 @@ private:
 
 inline bool Link::areChildrenDestroyable() const {return false;}
 inline bool Link::areChildrenPrintable() const {return false;}
+inline void Link::setTo(const string &to) {this->to = to;}
 
 
 #endif

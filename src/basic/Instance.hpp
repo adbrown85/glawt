@@ -32,6 +32,9 @@ public:
 	virtual void finalize();
 	virtual void remove();
 	virtual string toString() const;
+public:  // Accessors and mutators
+	virtual string getOf() const;
+	virtual void setOf(const string &of);
 protected:
 	void findExclusions();
 	Link* getLink();
@@ -44,6 +47,8 @@ private:
 
 inline bool Instance::areChildrenSelectable() const {return selectable;}
 inline Link* Instance::getLink() {return link;}
+inline string Instance::getOf() const {return of;}
+inline void Instance::setOf(const string &of) {this->of = of; link->setTo(of);}
 
 
 #endif
