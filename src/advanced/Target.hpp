@@ -64,7 +64,9 @@ class Target : public Attachment {
 public:
 	Target(const Tag &tag);
 	virtual void attach();
+	virtual string getLink() const;
 	virtual int getSize() const;
+	virtual void setLink(const string &link);
 	virtual string toString() const;
 public:
 	static Target* search(Node *node);
@@ -77,6 +79,12 @@ private:
 
 /** @return Width of the texture backing the render target. */
 inline int Target::getSize() const {return texture->getSize();}
+
+/** @return Name of the texture to render to. */
+inline string Target::getLink() const {return link;}
+
+/** Sets the name of the texture to render to. */
+inline void Target::setLink(const string &link) {this->link = link;}
 
 
 #endif
