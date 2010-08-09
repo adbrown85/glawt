@@ -1,0 +1,16 @@
+<!--
+ * shadow-cast.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<framebuffer>
+	<target link="shadow_name" />
+	<program>
+		<shader file="shadow-cast.vert" />
+		<shader file="shadow-cast.frag" />
+		<clone of="group_name" />
+	</program>
+</framebuffer>

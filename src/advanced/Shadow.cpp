@@ -7,21 +7,75 @@
 #include "Shadow.hpp"
 
 
-/** Initializes attributes. */
-Shadow::Shadow(const Tag &tag) : Node(tag) {
+/** Initializes attributes.
+ * 
+ * @throws NodeException if cannot open subscene.
+ */
+Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 	
 	// Retrieve from tag
 	tag.get("of", of, true, false);
 	tag.get("from", from, true, false);
+	
+	// Set name
+	name = from;
+	
+	// Subscene
+	subscene = NULL;
+	traverser = NULL;
+	try {
+		openSubscene();
+	} catch (Exception &ex) {
+		glog << ex.getMessage();
+		NodeException e(getTag());
+		e << "[Shadow] Could not open subscene.";
+		throw e;
+	}
 }
 
 
-/** Finds the group and light. */
+/** Destroys the subscene opened by the shadow. */
+Shadow::~Shadow() {
+	
+	if (subscene != NULL) {
+		delete subscene;
+		subscene = NULL;
+	}
+	if (traverser != NULL) {
+		delete traverser;
+		traverser = NULL;
+	}
+}
+
+
+/** Finds the group, light, and transforms. */
 void Shadow::associate() {
+	
+	Texture2D::associate();
 	
 	findGroup();
 	findLight();
 	findTransforms();
+}
+
+
+/** Prepares the subscene and performs an initial render. */
+void Shadow::finalize() {
+	
+	Texture2D::finalize();
+	
+	// Subscene
+	try {
+		prepareSubscene();
+	} catch (Exception &ex) {
+		glog << ex.getMessage() << endl;
+		NodeException e(getTag());
+		e << "[Shadow] Could not prepare subscene.";
+		throw e;
+	}
+	
+	// Render
+	render();
 }
 
 
@@ -83,9 +137,53 @@ void Shadow::findTransforms() {
 }
 
 
-/** Renders the scene from the light's point of view into the shadow map. */
-void Shadow::onNodeEvent(NodeEvent &event) {
+/** Opens the subscene required by shadow. */
+void Shadow::openSubscene() {
 	
+	Target *target;
+	Clone *clone;
+	
+	// Open
+	subscene = new Scene();
+	subscene->open(Resources::get("ui/shadow-cast.xml"));
+	
+	// Replace attributes of some nodes
+	target = Target::search(subscene->getRoot());
+	target->setLink(from);
+	clone = Clone::search(subscene->getRoot());
+	clone->setOf(of);
+}
+
+
+/** Prepares the subscene required by shadow. */
+void Shadow::prepareSubscene() {
+	
+	// Prepare
+	addChild(subscene->getRoot());
+	subscene->prepare();
+	removeChild(subscene->getRoot());
+	
+	// Create traverser
+	traverser = new Traverser(subscene);
+}
+
+
+/** Renders the group into the shadow map. */
+void Shadow::render() {
+	
+	Matrix matrix;
+	
+	// Set up view from light
+	matrix = light->getTransformationInverse();
+	State::setModeAsModelView();
+	State::push();
+	State::apply(matrix);
+	
+	// Run the scene
+	traverser->start();
+	
+	// Remove view from light
+	State::pop();
 }
 
 
@@ -94,7 +192,7 @@ string Shadow::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Node::toString();
+	stream << Texture2D::toString();
 	stream << " of='" << of << "'"
 	       << " from='" << from << "'";
 	return stream.str();

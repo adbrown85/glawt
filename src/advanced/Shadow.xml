@@ -7,8 +7,10 @@
 
 
 <!-- Lights -->
-<translate y="+10">
-	<light name="spot" amb="0.2" dif="0.4" spe="0.8" />
+<translate y="+3">
+	<rotate axis="1 0 0" angle="-90">
+		<light name="spot" amb="0.2" dif="0.4" spe="0.8" />
+	</rotate>
 </translate>
 
 
@@ -27,6 +29,13 @@
 	<program>
 		<shader file="../../glsl/color.vert" />
 		<shader file="../../glsl/color.frag" />
-		<clone of="objects" />
+		<clone of="objects" selectable="true" />
 	</program>
+<!--
+	<program>
+		<shader file="../../glsl/target.vert" />
+		<shader file="../../glsl/target.frag" />
+		<fullscreen />
+	</program>
+-->
 </shadow>
