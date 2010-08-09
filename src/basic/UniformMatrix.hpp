@@ -8,11 +8,13 @@
 #define UNIFORMMATRIX_HPP
 #include "Uniform.hpp"
 #include "State.hpp"
+#define DEFAULT_MODEL_MATRIX_NAME "MMatrix"
 #define DEFAULT_MODELVIEW_MATRIX_NAME "MVMatrix"
 #define DEFAULT_PROJECTION_MATRIX_NAME "PMatrix"
 #define DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME "MVPMatrix"
 #define DEFAULT_NORMAL_MATRIX_NAME "NormalMatrix"
 #define DEFAULT_IDENTITY_MATRIX_NAME "IdentityMatrix"
+#define DEFAULT_LIGHT_MATRIX_NAME "MCtoLightMatrix"
 using namespace std;
 
 

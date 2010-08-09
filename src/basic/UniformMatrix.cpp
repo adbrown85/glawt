@@ -65,8 +65,12 @@ void UniformMatrix::setTypeFromAs() {
 		matrixType = MODELVIEW_PROJECTION;
 	} else if (as == "normal") {
 		matrixType = NORMAL;
+	} else if (as == "model") {
+		matrixType = MODEL;
 	} else if (as == "identity") {
 		matrixType = IDENTITY;
+	} else if (as == "light") {
+		matrixType = LIGHT;
 	} else {
 		NodeException e(tag);
 		e << "[UniformMatrix] Matrix '" << as << "' not supported.";
@@ -87,12 +91,18 @@ void UniformMatrix::setTypeFromName() {
 	} else if (name == DEFAULT_NORMAL_MATRIX_NAME) {
 		matrixType = NORMAL;
 		as = "normal";
+	} else if (name == DEFAULT_MODEL_MATRIX_NAME) {
+		matrixType = MODEL;
+		as = "model";
 	} else if (name == DEFAULT_PROJECTION_MATRIX_NAME) {
 		matrixType = PROJECTION;
 		as = "projection";
 	} else if (name == DEFAULT_IDENTITY_MATRIX_NAME) {
 		matrixType = IDENTITY;
 		as = "identity";
+	} else if (name == DEFAULT_LIGHT_MATRIX_NAME) {
+		matrixType = LIGHT;
+		as = "light";
 	} else {
 		NodeException e(tag);
 		e << "[UniformMatrix] Unrecognized default name and no 'as' attribute.";
@@ -107,6 +117,12 @@ void UniformMatrix::apply() {
 		return;
 	
 	switch (matrixType) {
+/*
+	case MODEL:
+		State::getModelMatrix(value);
+		glUniformMatrix4fv(location, 1, false, value);
+		break;
+*/
 	case MODELVIEW:
 		glGetFloatv(GL_MODELVIEW_MATRIX, value);
 		glUniformMatrix4fv(location, 1, false, value);
@@ -127,6 +143,16 @@ void UniformMatrix::apply() {
 		State::getIdentityMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
+/*
+	case LIGHT:
+		light->getLightMatrix(value);
+		glUniformMatrix4fv(location, 1, false, value);
+		break;
+*/
+	default:
+		NodeException e(getTag());
+		e << "[UniformMatrix] Matrix type not supported.";
+		throw e;
 	}
 }
 
