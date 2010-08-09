@@ -20,7 +20,8 @@ void SimpleTransformable::associate() {
 	list<Transform*>::iterator it;
 	
 	// Find transforms and update position
-	Transformation::findAll(getParent(), transforms);
+	transforms.clear();
+	Transform::findAll(getParent(), transforms);
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
 		(*it)->addListener(this);
 	}
