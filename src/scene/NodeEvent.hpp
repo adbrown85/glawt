@@ -46,6 +46,7 @@ class NodeNotifier {
 public:
 	void addListener(NodeListener *listener, int type);
 	void fireEvent(NodeEvent event);
+	static set<NodeNotifier*> search(Node *node);
 protected:
 	list<NodeListener*>* getListenersFor(int type);
 private:

@@ -50,3 +50,24 @@ void NodeNotifier::fireEvent(NodeEvent event) {
 	}
 }
 
+
+set<NodeNotifier*> NodeNotifier::search(Node *node) {
+	
+	Node::iterator it;
+	NodeNotifier* notifier;
+	queue<Node*> Q;
+	set<NodeNotifier*> notifiers;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		notifier = dynamic_cast<NodeNotifier*>(node);
+		if (notifier != NULL)
+			notifiers.insert(notifier);
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push((*it));
+		Q.pop();
+	}
+	return notifiers;
+}
+
