@@ -1,17 +1,17 @@
 /*
- * Menu.cpp
+ * MenuGTK.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Menu.hpp"
+#include "MenuGTK.hpp"
 #ifdef HAVE_GTK
 
 
 /** Initializes the ActionGroup and UIManager. */
-Menu::Menu(Delegate *delegate,
-           Gtk::Window *window,
-           list<Control*> controls) {
+MenuGTK::MenuGTK(Delegate *delegate,
+                 Gtk::Window *window,
+                 list<Control*> controls) {
 	
 	// Commands
 	this->delegate = delegate;
@@ -27,7 +27,7 @@ Menu::Menu(Delegate *delegate,
 
 
 /** Creates the ActionGroup and defines all the actions in it. */
-void Menu::initActionGroup() {
+void MenuGTK::initActionGroup() {
 	
 	// Create
 	actionGroup = Gtk::ActionGroup::create();
@@ -40,7 +40,7 @@ void Menu::initActionGroup() {
 }
 
 
-void Menu::initActionGroupFile() {
+void MenuGTK::initActionGroupFile() {
 	
 	// File menu
 	actionGroup->add(Gtk::Action::create("MenuFile", "_File"));
@@ -51,12 +51,12 @@ void Menu::initActionGroupFile() {
 			"FileQuit", Gtk::Stock::QUIT, "_Quit",
 			"Quit the application"
 		),
-		sigc::mem_fun(*this, &Menu::onActionFileQuit)
+		sigc::mem_fun(*this, &MenuGTK::onActionFileQuit)
 	);
 }
 
 
-void Menu::initActionGroupEdit() {
+void MenuGTK::initActionGroupEdit() {
 	
 	// Edit menu
 	actionGroup->add(Gtk::Action::create("MenuEdit", "_Edit"));
@@ -67,28 +67,28 @@ void Menu::initActionGroupEdit() {
 			"EditSelectAll", Gtk::Stock::SELECT_ALL, "Select _All",
 			"Select all objects"
 		),
-		sigc::mem_fun(*this, &Menu::onActionEditSelectAll)
+		sigc::mem_fun(*this, &MenuGTK::onActionEditSelectAll)
 	);
 	
 	// Deselect
 	actionGroup->add(
 		Gtk::Action::create("EditDeselect", "Deselect", "Deselect objects"),
-		sigc::mem_fun(*this, &Menu::onActionEditDeselect)
+		sigc::mem_fun(*this, &MenuGTK::onActionEditDeselect)
 	);
 	
 	// Hide
 	actionGroup->add(
 		Gtk::Action::create("EditHide", "_Hide", "Hide an object"),
-		sigc::mem_fun(*this, &Menu::onActionEditHide)
+		sigc::mem_fun(*this, &MenuGTK::onActionEditHide)
 	);
 	actionGroup->add(
 		Gtk::Action::create("EditShowAll", "_Show All", "Show all objects"),
-		sigc::mem_fun(*this, &Menu::onActionEditShowAll)
+		sigc::mem_fun(*this, &MenuGTK::onActionEditShowAll)
 	);
 }
 
 
-void Menu::initActionGroupView() {
+void MenuGTK::initActionGroupView() {
 	
 	// View menu
 	actionGroup->add(Gtk::Action::create("MenuView", "_View"));
@@ -99,7 +99,7 @@ void Menu::initActionGroupView() {
 			"ViewZoomIn", Gtk::Stock::ZOOM_IN, "Zoom _In",
 			"Zoom in on the scene"
 		),
-		sigc::mem_fun(*this, &Menu::onActionViewZoomIn)
+		sigc::mem_fun(*this, &MenuGTK::onActionViewZoomIn)
 	);
 	
 	// Zoom out
@@ -108,7 +108,7 @@ void Menu::initActionGroupView() {
 			"ViewZoomOut", Gtk::Stock::ZOOM_OUT, "Zoom _Out",
 			"Zoom out of the scene"
 		),
-		sigc::mem_fun(*this, &Menu::onActionViewZoomOut)
+		sigc::mem_fun(*this, &MenuGTK::onActionViewZoomOut)
 	);
 	
 	// Reset
@@ -117,7 +117,7 @@ void Menu::initActionGroupView() {
 			"ViewResetCamera", "_Reset",
 			"Reset camera to original position and rotation."
 		),
-		sigc::mem_fun(*this, &Menu::onActionViewReset)
+		sigc::mem_fun(*this, &MenuGTK::onActionViewReset)
 	);
 	
 	// Information
@@ -126,12 +126,12 @@ void Menu::initActionGroupView() {
 			"ViewInformation", "_Information",
 			"Draw overlay with frames per second and memory footprint."
 		),
-		sigc::mem_fun(*this, &Menu::onActionViewInformation)
+		sigc::mem_fun(*this, &MenuGTK::onActionViewInformation)
 	);
 }
 
 
-void Menu::initActionGroupHelp() {
+void MenuGTK::initActionGroupHelp() {
 	
 	// Help menu
 	actionGroup->add(Gtk::Action::create("MenuHelp", "_Help"));
@@ -142,7 +142,7 @@ void Menu::initActionGroupHelp() {
 			"HelpAbout", "_About",
 			"Information about the program."
 		),
-		sigc::mem_fun(*this, &Menu::onActionHelpAbout)
+		sigc::mem_fun(*this, &MenuGTK::onActionHelpAbout)
 	);
 	
 	// Shortcuts
@@ -151,13 +151,13 @@ void Menu::initActionGroupHelp() {
 			"HelpShortcuts", "_Shortcuts",
 			"Mouse and keyboard controls"
 		),
-		sigc::mem_fun(*this, &Menu::onActionHelpShortcuts)
+		sigc::mem_fun(*this, &MenuGTK::onActionHelpShortcuts)
 	);
 }
 
 
 /** Creates the UIManager, adds the action group, and adds the UI. */
-void Menu::initUIManager() {
+void MenuGTK::initUIManager() {
 	
 	// Create
 	uiManager = Gtk::UIManager::create();
@@ -200,14 +200,14 @@ void Menu::initUIManager() {
 
 
 /** @return Pointer to a MenuBar widget. */
-Gtk::Widget* Menu::getMenuBar() const {
+Gtk::Widget* MenuGTK::getMenuBar() const {
 	
 	return uiManager->get_widget("/MenuBar");
 }
 
 
 /** Quits the application. */
-void Menu::onActionFileQuit() {
+void MenuGTK::onActionFileQuit() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::EXIT);
@@ -216,7 +216,7 @@ void Menu::onActionFileQuit() {
 
 
 /** Selects all the shapes. */
-void Menu::onActionEditSelectAll() {
+void MenuGTK::onActionEditSelectAll() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::SELECT_ALL);
@@ -225,7 +225,7 @@ void Menu::onActionEditSelectAll() {
 }
 
 
-void Menu::onActionEditHide() {
+void MenuGTK::onActionEditHide() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::HIDE);
@@ -234,7 +234,7 @@ void Menu::onActionEditHide() {
 }
 
 
-void Menu::onActionEditShowAll() {
+void MenuGTK::onActionEditShowAll() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::SHOW_ALL);
@@ -244,7 +244,7 @@ void Menu::onActionEditShowAll() {
 
 
 /** Deselects all the shapes. */
-void Menu::onActionEditDeselect() {
+void MenuGTK::onActionEditDeselect() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::DESELECT);
@@ -254,7 +254,7 @@ void Menu::onActionEditDeselect() {
 
 
 /** Zooms in on the scene. */
-void Menu::onActionViewZoomIn() {
+void MenuGTK::onActionViewZoomIn() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::ZOOM_IN, 2.0f);
@@ -264,7 +264,7 @@ void Menu::onActionViewZoomIn() {
 
 
 /** Zooms out on the scene. */
-void Menu::onActionViewZoomOut() {
+void MenuGTK::onActionViewZoomOut() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::ZOOM_OUT, 2.0f);
@@ -274,7 +274,7 @@ void Menu::onActionViewZoomOut() {
 
 
 /** Resets camera to original position and rotation. */
-void Menu::onActionViewReset() {
+void MenuGTK::onActionViewReset() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::RESET);
@@ -283,7 +283,7 @@ void Menu::onActionViewReset() {
 }
 
 
-void Menu::onActionViewInformation() {
+void MenuGTK::onActionViewInformation() {
 	
 	if (delegate != NULL) {
 		delegate->run(Command::INFORMATION);
@@ -292,13 +292,13 @@ void Menu::onActionViewInformation() {
 }
 
 
-void Menu::onActionHelpAbout() {
+void MenuGTK::onActionHelpAbout() {
 	
 	About::show(window);
 }
 
 
-void Menu::onActionHelpShortcuts() {
+void MenuGTK::onActionHelpShortcuts() {
 	
 	shortcutsDialog->run();
 	shortcutsDialog->hide();

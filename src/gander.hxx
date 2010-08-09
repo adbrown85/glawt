@@ -18,7 +18,7 @@
 #include "DatasetWriter.hpp"
 #include "Preprocessor.hpp"
 #include "CanvasGTK.hpp"
-#include "Menu.hpp"
+#include "MenuGTK.hpp"
 #include "MenuGLUT.hpp"
 #include "Toolkit.hpp"
 #include "WindowFactory.hpp"

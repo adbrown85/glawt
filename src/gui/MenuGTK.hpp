@@ -1,11 +1,11 @@
 /*
- * Menu.hpp
+ * MenuGTK.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef MENU_HPP
-#define MENU_HPP
+#ifndef MENUGTK_HPP
+#define MENUGTK_HPP
 #include "common.h"
 #ifdef HAVE_GTK
 #include <gtkmm/menubar.h>
@@ -21,9 +21,9 @@ using Glib::RefPtr;
 /** @brief Main menu.
  * @ingroup gui
  */
-class Menu {
+class MenuGTK {
 public:
-	Menu(Delegate *delegate, Gtk::Window *window, list<Control*> controls);
+	MenuGTK(Delegate *delegate, Gtk::Window *window, list<Control*> controls);
 	Gtk::Widget* getMenuBar() const;
 	void onActionFileQuit();
 	void onActionEditHide();

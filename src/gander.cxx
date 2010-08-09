@@ -107,7 +107,7 @@ void Gander::onDisplay() {
 	Gtk::VBox mainBox, vBox;
 	LogBook logBook;
 	Inspector inspector;
-	Menu menu(delegate, (Gtk::Window*)window->getNativeWindow(), controls);
+	MenuGTK menu(delegate, (Gtk::Window*)window->getNativeWindow(), controls);
 #endif
 	
 	// Pack

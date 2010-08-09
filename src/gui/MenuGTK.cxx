@@ -1,10 +1,10 @@
 /*
- * Menu.cxx
+ * MenuGTK.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Menu.hpp"
+#include "MenuGTK.hpp"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
@@ -14,19 +14,19 @@ int main(int argc,
 	
 	Gtk::Main kit(argc, argv);
 	Gtk::Window window;
-	Menu *menu;
+	MenuGTK *menu;
 	list<Control*> controls;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Menu" << endl;
+	cout << "MenuGTK" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
 	// Test
-	menu = new Menu(NULL, &window, controls);
-	window.set_title("Menu Test");
+	menu = new MenuGTK(NULL, &window, controls);
+	window.set_title("MenuGTK Test");
 	window.add(*(menu->getMenuBar()));
 	window.show_all();
 	Gtk::Main::run(window);
@@ -34,7 +34,7 @@ int main(int argc,
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "Menu" << endl;
+	cout << "MenuGTK" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;
