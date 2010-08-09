@@ -24,7 +24,7 @@ public:
 	virtual void apply() = 0;
 	virtual void applyTo(Matrix &matrix) = 0;
 	virtual void remove() = 0;
-	static list<Transformation*> search(Node *node);
+	static void search(Node *node, list<Transformation*> &L);
 };
 
 

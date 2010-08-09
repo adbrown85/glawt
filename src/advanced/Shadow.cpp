@@ -73,7 +73,7 @@ void Shadow::findTransforms() {
 	list<Transformation*>::iterator it;
 	
 	// Get all the transforms
-	transforms = Transformation::search(group);
+	Transformation::search(group, transforms);
 	Transformation::findAll(light, transforms);
 	
 	// Add listeners

@@ -13,7 +13,6 @@ void Transformation::findAll(Node *node, list<Transformation*> &L) {
 	Transformation* transform;
 	
 	// Find all the transforms above the node
-	L.clear();
 	while (node != NULL) {
 		transform = dynamic_cast<Transformation*>(node);
 		if (transform != NULL) {
@@ -24,11 +23,11 @@ void Transformation::findAll(Node *node, list<Transformation*> &L) {
 }
 
 
-list<Transformation*> Transformation::search(Node *node) {
+/** Finds all the transforms under a node. */
+void Transformation::search(Node *node, list<Transformation*> &L) {
 	
 	queue<Node*> Q;
 	Node::iterator it;
-	list<Transformation*> L;
 	Transformation *transform;
 	
 	Q.push(node);
@@ -41,6 +40,5 @@ list<Transformation*> Transformation::search(Node *node) {
 			Q.push(*it);
 		Q.pop();
 	}
-	return L;
 }
 
