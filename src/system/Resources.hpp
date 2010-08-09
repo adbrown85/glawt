@@ -15,6 +15,7 @@ using namespace std;
  */
 class Resources {
 public:
+	static string get(const string &filename);
 	static string getIconFilename();
 	static string getSquareIconFilename();
 };

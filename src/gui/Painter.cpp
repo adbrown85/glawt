@@ -11,22 +11,21 @@ bool Painter::tried=false;
 
 Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 	
-	string filename(GANDER_DATA_DIR);
-	
+	// Basics
 	this->mode = GL_RENDER;
 	setCanvas(canvas);
 	
+	// Widgets
 	if (!tried) {
 		try {
 			//BasicFactory::install();
 			outline = new Scene();
-			filename += "/ui/outline.xml";
-			outline->open(filename);
+			outline->open(Resources::get("ui/outline.xml"));
 			outline->prepare();
 		} catch (Exception e) {
 			delete outline;
 			outline = NULL;
-			glog << "[Painter] Problem opening '" << filename << "'." << endl;
+			glog << "[Painter] Problem opening outline widget." << endl;
 			glog << "[Painter] Selected shapes will not be outlined." << endl;
 			glog << "[Painter] Try installing Gander again." << endl;
 		}

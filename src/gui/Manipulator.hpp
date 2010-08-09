@@ -11,6 +11,7 @@
 #include "Vector.hpp"                   // For axis
 #include "Transform.hpp"                // Projection matrix
 #include "Traverser.hpp"
+#include "Resources.hpp"
 using namespace std;
 
 

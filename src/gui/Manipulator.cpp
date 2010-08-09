@@ -41,8 +41,7 @@ Manipulator::Manipulator(char axis,
 	// Initialize widget
 	try {
 		widget = new Scene();
-		filename = string(GANDER_DATA_DIR) + '/' + filename;
-		widget->open(filename);
+		widget->open(Resources::get(filename));
 		widget->prepare();
 		traverser = new Traverser(widget);
 	} catch (Exception e) {
@@ -59,12 +58,10 @@ Manipulator::Manipulator(char axis,
 /** Cleans up the widget. */
 Manipulator::~Manipulator() {
 	
-	if (widget != NULL) {
+	if (widget != NULL)
 		delete widget;
-	}
-	if (traverser != NULL) {
+	if (traverser != NULL)
 		delete traverser;
-	}
 }
 
 
