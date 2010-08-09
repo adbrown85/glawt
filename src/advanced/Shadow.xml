@@ -38,4 +38,13 @@
 		<fullscreen />
 	</program>
 -->
+<!--
+	<program>
+		<shader file="../../glsl/shadow.vert" />
+		<shader file="../../glsl/shadow.frag" />
+		<uniform type="mat4" name="MCtoLightMatrix" of="spot" />
+		<uniform type="sampler2DShadow" name="Shadow" link="spot" />
+		<instance of="objects" />
+	</program>
+-->
 </shadow>
