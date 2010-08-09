@@ -27,6 +27,7 @@ public:
 	virtual ~Light();
 	virtual void draw() const;
 	virtual Vector getPosition();
+	//virtual void getLightMatrix(GLfloat *value, Node *node);
 	virtual string toString() const;
 private:
 	float ambient, diffuse, specular;

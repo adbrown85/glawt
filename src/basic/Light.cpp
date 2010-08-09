@@ -68,6 +68,23 @@ void Light::draw() const {
 }
 
 
+/*
+void Light::getLightMatrix(GLfloat *value, Node *node) {
+	
+	Matrix mMatrix, pMatrix, vMatrix;
+	Matrix sMatrix(0.5, 0.0, 0.0, 0.5,
+	               0.0, 0.5, 0.0, 0.5,
+	               0.0, 0.0, 0.5, 0.5,
+	               0.0, 0.0, 0.0, 1.0);
+	
+	mMatrix = getModelMatrixOf(node);
+	vMatrix = getTransformationInverse();
+	pMatrix = State::getProjectionMatrix();
+	return sMatrix * mMatrix * vMatrix * pMatrix;
+}
+*/
+
+
 /** @return Position of the light in view space coordinates. */
 Vector Light::getPosition() {
 	
