@@ -78,7 +78,7 @@ void Shadow::findTransforms() {
 	
 	// Add listeners
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->addListener(this);
+		(*it)->addListener(this, NodeEvent::MODIFY);
 	}
 }
 

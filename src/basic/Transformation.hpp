@@ -16,18 +16,15 @@
  * @interface Transformation
  * @ingroup basic
  */
-class Transformation : public Node, public Applicable {
+class Transformation : public Node,
+                       public Applicable, public NodeNotifier {
 public:
 	Transformation(const Tag &tag) : Node(tag) {}
-	virtual void addListener(NodeListener *listener);
 	static void findAll(Node *node, list<Transformation*> &L);
-	virtual void fireEvent();
 	virtual void apply() = 0;
 	virtual void applyTo(Matrix &matrix) = 0;
 	virtual void remove() = 0;
 	static list<Transformation*> search(Node *node);
-private:
-	NodeNotifier notifier;
 };
 
 

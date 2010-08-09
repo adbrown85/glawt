@@ -7,13 +7,6 @@
 #include "Transformation.hpp"
 
 
-/** Adds a modify listener to this node. */
-void Transformation::addListener(NodeListener *listener) {
-	
-	notifier.addListener(listener, NodeEvent::MODIFY);
-}
-
-
 /** Finds all the transforms above a node. */
 void Transformation::findAll(Node *node, list<Transformation*> &L) {
 	
@@ -28,13 +21,6 @@ void Transformation::findAll(Node *node, list<Transformation*> &L) {
 		}
 		node = node->getParent();
 	}
-}
-
-
-/** Fires a modify event. */
-void Transformation::fireEvent() {
-	
-	notifier.fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 
 

@@ -288,7 +288,7 @@ void Boolean::findTransforms() {
 		node = q.front();
 		transform = dynamic_cast<Transformation*>(node);
 		if (transform != NULL)
-			transform->addListener(this);
+			transform->addListener(this, NodeEvent::MODIFY);
 		for (it=node->begin(); it!=node->end(); ++it)
 			q.push(*it);
 		q.pop();

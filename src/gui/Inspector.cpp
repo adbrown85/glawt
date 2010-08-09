@@ -241,8 +241,6 @@ void Inspector::onNodeEvent(NodeEvent &event) {
 	source = event.getSource();
 	if (source == nodeView.getNode()) {
 		nodeView.update();
-	} else if (dynamic_cast<Transformation*>(source)) {
-		sceneView.setNode(source);
 	}
 }
 
@@ -268,7 +266,6 @@ void Inspector::onNodeSelectionChange() {
 
 void Inspector::update() {
 	
-	list<Transformation*>::iterator it;
 	set<NodeNotifier*> notifiers;
 	set<NodeNotifier*>::iterator ni;
 	
@@ -282,12 +279,6 @@ void Inspector::update() {
 	// Update scene view
 	sceneView.setScene(scene);
 	sceneView.update();
-	
-	// Listen to transform changes
-	transforms = Transformation::search(scene->getRoot());
-	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->addListener(this);
-	}
 	
 	// Listen to scene selection changes
 	scene->getSelection().addListener(this);

@@ -28,7 +28,7 @@ void Translate::add(const Vector &B) {
 	value.x += B.x;
 	value.y += B.y;
 	value.z += B.z;
-	fireEvent();
+	fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 
 
@@ -95,7 +95,7 @@ bool Translate::setAttribute(pair<string,string> attribute) {
 	}
 	
 	if (changed) {
-		fireEvent();
+		fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 		return true;
 	} else {
 		return false;

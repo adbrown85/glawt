@@ -36,7 +36,7 @@ void Scale::add(const Vector &B) {
 	x += B.x;
 	y += B.y;
 	z += B.z;
-	fireEvent();
+	fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 
 
@@ -100,7 +100,7 @@ bool Scale::setAttribute(pair<string,string> attribute) {
 	}
 	
 	if (changed) {
-		fireEvent();
+		fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 		return true;
 	} else {
 		return false;
