@@ -33,6 +33,9 @@ UniformVector::UniformVector(const Tag &tag) : Uniform(tag) {
 			throw e;
 		}
 	}
+	
+	// Other
+	transformable = NULL;
 }
 
 
@@ -41,7 +44,6 @@ void UniformVector::associate() {
 	Uniform::associate();
 	
 	Node *node;
-	Transformable *transformable;
 	
 	// Doesn't have link
 	if (link.empty())
@@ -62,9 +64,6 @@ void UniformVector::associate() {
 		e << "[UniformVector] Node '" << link << "' is not transformable.";
 		throw e;
 	}
-	
-	// Set value from position
-	transformable->getPosition().toArray(value);
 }
 
 
@@ -74,6 +73,13 @@ void UniformVector::apply() {
 	if (location == -1)
 		return;
 	
+	// Update values
+	if (transformable != NULL) {
+		transformable->getPosition().toArray(value);
+		fireEvent(NodeEvent(this, NodeEvent::MODIFY));
+	}
+	
+	// Set values
 	switch (size) {
 	case 3: glUniform3fv(location, 1, value); break;
 	case 4: glUniform4fv(location, 1, value); break;

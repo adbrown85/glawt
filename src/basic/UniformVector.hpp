@@ -13,7 +13,8 @@ using namespace std;
 /** @brief Container for GLSL vector uniform variables.
  * @ingroup basic
  */
-class UniformVector : public Uniform {
+class UniformVector : public Uniform,
+                      public NodeNotifier {
 public:
 	UniformVector(const Tag &tag);
 	virtual void associate();
@@ -22,6 +23,7 @@ public:
 private:
 	GLfloat value[4];
 	GLint size;
+	Transformable *transformable;
 };
 
 
