@@ -28,6 +28,7 @@ using namespace std;
 class Painter : public Traverser {
 public:
 	Painter(Canvas *canvas, Scene *scene);
+	virtual ~Painter();
 	void addManipulator(Manipulator *manipulator);
 	virtual void start();
 	void setMode(GLenum mode);

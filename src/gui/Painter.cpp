@@ -34,6 +34,15 @@ Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 }
 
 
+Painter::~Painter() {
+	
+	if (outline != NULL) {
+		delete outline;
+		outline = NULL;
+	}
+}
+
+
 void Painter::onApplicable(Node *node, Applicable *applicable) {
 	
 	// Only continue if not a framebuffer node
