@@ -8,6 +8,7 @@
 #define SIMPLEDRAWABLE_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "SimpleTransformable.hpp"
 using namespace std;
 

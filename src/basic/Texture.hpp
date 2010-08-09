@@ -8,6 +8,7 @@
 #define TEXTURE_HPP
 #include "common.h"
 #include "Node.hpp"                     // Base class
+#include "NodeInterfaces.hpp"
 using namespace std;
 
 

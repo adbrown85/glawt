@@ -8,6 +8,7 @@
 #define TRANSFORMATION_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "NodeEvent.hpp"
 #include "Matrix.hpp"
 

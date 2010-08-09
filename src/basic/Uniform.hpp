@@ -11,6 +11,7 @@
 #include <set>
 #include "Matrix.hpp"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "Program.hpp"
 #include "Tag.hpp"
 #include "Text.hpp"

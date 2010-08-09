@@ -8,6 +8,7 @@
 #define ATTACHMENT_HPP
 #include "common.h"
 #include "Node.hpp"                     // Base class
+#include "NodeInterfaces.hpp"           // Interfaces
 #include "Framebuffer.hpp"              // Attach to framebuffer
 using namespace std;
 

@@ -8,6 +8,7 @@
 #define DEPTH_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 using namespace std;
 
 

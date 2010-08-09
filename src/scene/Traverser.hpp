@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Exception.hpp"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "Scene.hpp"
 using namespace std;
 

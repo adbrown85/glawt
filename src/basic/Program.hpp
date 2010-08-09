@@ -10,6 +10,7 @@
 #include <cstring>
 #include <vector>
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "Error.hpp"
 #include "Preprocessor.hpp"
 #include "NodeEvent.hpp"

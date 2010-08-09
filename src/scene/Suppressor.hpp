@@ -8,6 +8,7 @@
 #define SUPPRESSOR_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "Log.hpp"
 using namespace std;
 

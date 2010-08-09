@@ -10,6 +10,7 @@
 #include <set>
 #include "Identifiable.hpp"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "NodeEvent.hpp"
 using namespace std;
 
