@@ -91,7 +91,7 @@ protected:
 private:
 	GLfloat value[16];
 	MatrixType matrixType;
-	string as;
+	string as, of;
 };
 
 

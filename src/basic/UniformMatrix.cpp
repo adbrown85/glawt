@@ -16,6 +16,9 @@ UniformMatrix::UniformMatrix(const Tag &tag) : Uniform(tag) {
 	} else {
 		setTypeFromName();
 	}
+	
+	// Of for light
+	tag.get("of", of, false, false);
 }
 
 
@@ -134,6 +137,8 @@ string UniformMatrix::toString() const {
 	
 	stream << Uniform::toString();
 	stream << " as='" << as << "'";
+	if (!of.empty())
+		stream << " of='" << of << "'";
 	return stream.str();
 }
 
