@@ -36,11 +36,10 @@ protected:
 	void findExclusions();
 	Link* getLink();
 private:
-	string only;
+	string of, only;
 	list<Shape*> exclusions;
 	bool selectable;
 	Link *link;
-	string of;
 };
 
 inline bool Instance::areChildrenSelectable() const {return selectable;}
