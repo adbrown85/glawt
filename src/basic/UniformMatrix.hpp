@@ -16,6 +16,15 @@
 using namespace std;
 
 
+/* Enumeration of matrix types. */
+enum MatrixType{MODEL,
+                MODELVIEW,
+                PROJECTION,
+                MODELVIEW_PROJECTION,
+                NORMAL,
+                IDENTITY,
+                LIGHT};
+
 /** @brief Container for GLSL matrix uniform variables.
  * 
  * <b>XML Name</b>
@@ -81,8 +90,6 @@ protected:
 	void setTypeFromName();
 private:
 	GLfloat value[16];
-	enum MatrixType{MODELVIEW, PROJECTION, MODELVIEW_PROJECTION,
-	                NORMAL, IDENTITY};
 	MatrixType matrixType;
 	string as;
 };
