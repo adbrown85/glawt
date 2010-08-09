@@ -33,6 +33,7 @@ void AdvancedFactory::install() {
 	Factory::install("replacement", &createReplacement);
 	Factory::install("replica", &createReplica);
 	Factory::install("screen", &createScreen);
+	Factory::install("shadow", &createShadow);
 	Factory::install("sort", &createSort);
 	Factory::install("target", &createTarget);
 }
@@ -86,6 +87,8 @@ Node* AdvancedFactory::createReplacement(const Tag &t) {return new Replacement(t
 Node* AdvancedFactory::createReplica(const Tag &t) {return new Replica(t);}
 
 Node* AdvancedFactory::createScreen(const Tag &t) {return new Screen(t);}
+
+Node* AdvancedFactory::createShadow(const Tag &t) {return new Shadow(t);}
 
 Node* AdvancedFactory::createSort(const Tag &t) {return new Sort(t);}
 

@@ -27,6 +27,7 @@
 #include "Replacement.hpp"
 #include "Replica.hpp"
 #include "Screen.hpp"
+#include "Shadow.hpp"
 #include "Sort.hpp"
 #include "Target.hpp"
 using namespace std;
@@ -54,6 +55,7 @@ public:
 	static Node* createReplica(const Tag &tag);
 	static Node* createReplacement(const Tag &tag);
 	static Node* createScreen(const Tag &tag);
+	static Node* createShadow(const Tag &tag);
 	static Node* createSort(const Tag &tag);
 	static Node* createTarget(const Tag &tag);
 private:
