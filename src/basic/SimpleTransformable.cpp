@@ -23,7 +23,7 @@ void SimpleTransformable::associate() {
 	transforms.clear();
 	Transform::findAll(getParent(), transforms);
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->addListener(this);
+		(*it)->addListener(this, NodeEvent::MODIFY);
 	}
 	updatePositionExtent();
 }
