@@ -18,7 +18,6 @@ Painter::Painter(Canvas *canvas, Scene *scene) : Traverser(scene) {
 	// Widgets
 	if (!tried) {
 		try {
-			//BasicFactory::install();
 			outline = new Scene();
 			outline->open(Resources::get("ui/outline.xml"));
 			outline->prepare();
