@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Texture.hpp"
 #include "ImageFactory.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 

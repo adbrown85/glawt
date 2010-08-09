@@ -13,7 +13,9 @@ Texture2D::Texture2D(const Tag &tag) : Texture(GL_TEXTURE_2D,tag) {
 	string text;
 	
 	// Size
-	tag.get("size", size, false);
+	if (!tag.get("size", size, false)) {
+		size = CANVAS_WIDTH;
+	}
 	
 	// Format
 	if (tag.get("format", text, false, true)) {
