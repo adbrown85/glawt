@@ -269,8 +269,8 @@ void Inspector::onNodeSelectionChange() {
 void Inspector::update() {
 	
 	list<Transformation*>::iterator it;
-	set<UniformFloatArray*> uniforms;
-	set<UniformFloatArray*>::iterator ui;
+	set<NodeNotifier*> notifiers;
+	set<NodeNotifier*>::iterator ni;
 	
 	// Validate
 	if (scene == NULL) {
@@ -292,10 +292,10 @@ void Inspector::update() {
 	// Listen to scene selection changes
 	scene->getSelection().addListener(this);
 	
-	// Listen to uniform changes
-	uniforms = UniformFloatArray::search(scene->getRoot());
-	for (ui=uniforms.begin(); ui!=uniforms.end(); ++ui) {
-		(*ui)->addListener(this, NodeEvent::MODIFY);
+	// Listen to notifiers
+	notifiers = NodeNotifier::search(scene->getRoot());
+	for (ni=notifiers.begin(); ni!=notifiers.end(); ++ni) {
+		(*ni)->addListener(this, NodeEvent::MODIFY);
 	}
 }
 
