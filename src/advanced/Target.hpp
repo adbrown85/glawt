@@ -65,7 +65,7 @@ public:
 	Target(const Tag &tag);
 	virtual void attach();
 	virtual int getSize() const;
-	string toString() const;
+	virtual string toString() const;
 protected:
 	void associate();
 private:
