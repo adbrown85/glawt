@@ -11,7 +11,7 @@
  * 
  * @param tag XML tag with "x", "y", and "z" values.
  */
-Scale::Scale(const Tag &tag) : Transformation(tag) {
+Scale::Scale(const Tag &tag) : Transform(tag) {
 	
 	// Values
 	if (tag.get("value", value, false)) {

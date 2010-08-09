@@ -69,12 +69,12 @@ void Shadow::findLight() {
 /** Finds the transforms above the light and group and adds listeners. */
 void Shadow::findTransforms() {
 	
-	list<Transformation*> transforms;
-	list<Transformation*>::iterator it;
+	list<Transform*> transforms;
+	list<Transform*>::iterator it;
 	
 	// Get all the transforms
-	Transformation::search(group, transforms);
-	Transformation::findAll(light, transforms);
+	Transform::search(group, transforms);
+	Transform::findAll(light, transforms);
 	
 	// Add listeners
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {

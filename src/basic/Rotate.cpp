@@ -11,7 +11,7 @@
  * 
  * @param tag XML tag with "angle" and "axis" values.
  */
-Rotate::Rotate(const Tag &tag) : Transformation(tag) {
+Rotate::Rotate(const Tag &tag) : Transform(tag) {
 	
 	tag.get("angle", angle, true);
 	tag.get("axis", axis, true);

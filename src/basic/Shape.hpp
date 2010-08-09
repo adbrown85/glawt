@@ -10,7 +10,7 @@
 #include "SimpleDrawable.hpp"
 #include "Matrix.hpp"
 #include "Program.hpp"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "UniformMatrix.hpp"
 #include "Factory.hpp"
 using namespace std;

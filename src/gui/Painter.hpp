@@ -13,7 +13,7 @@
 #include "Node.hpp"                // Traversing the scene graph
 #include "Program.hpp"             // Disable GLSL for outlines
 #include "Texture.hpp"             // Pausing and restarting texturing
-#include "Transformation.hpp"      // Drawing manipulators for selection
+#include "Transform.hpp"           // Drawing manipulators for selection
 #include "Traverser.hpp"
 #include "Scene.hpp"               // Rotating camera and accessing root node
 #include "Vector.hpp"

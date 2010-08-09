@@ -9,7 +9,7 @@
 #include "common.h"
 #include "Matrix.hpp"
 #include "Tag.hpp"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "Vector.hpp"
 using namespace std;
 
@@ -17,7 +17,7 @@ using namespace std;
 /** @brief %Node that moves items in the scene.
  * @ingroup basic
  */
-class Translate : public Transformation {
+class Translate : public Transform {
 public:
 	Translate(const Tag &tag);
 	void add(const Vector &B);

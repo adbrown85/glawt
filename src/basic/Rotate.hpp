@@ -8,7 +8,7 @@
 #define ROTATE_HPP
 #include "common.h"
 #include <iomanip>
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "Vector.hpp"
 #include "Quaternion.hpp"
 using namespace std;
@@ -17,7 +17,7 @@ using namespace std;
 /** @brief %Node that reorients items in the scene.
  * @ingroup basic
  */
-class Rotate : public Transformation {
+class Rotate : public Transform {
 public:
 	Rotate(const Tag &tag);
 	virtual void apply();

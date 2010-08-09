@@ -13,7 +13,7 @@
 #include "AttributeTree.hpp"
 #include "Scene.hpp"
 #include "NodeEvent.hpp"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "UniformFloatArray.hpp"
 using namespace std;
 
@@ -83,7 +83,7 @@ private:
 	NodeView nodeView;
 	SceneView sceneView;
 	Gtk::VPaned pane;
-	list<Transformation*> transforms;
+	list<Transform*> transforms;
 };
 inline void Inspector::setScene(Scene *s) {scene = s;}
 inline void Inspector::setCanvas(Canvas *c) {canvas = c;}

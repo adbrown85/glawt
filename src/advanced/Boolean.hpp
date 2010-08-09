@@ -11,7 +11,7 @@
 #include <vector>                       // Storing shapes and extents
 #include "Group.hpp"
 #include "Shape.hpp"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "Hexahedron.hpp"
 #include "Factory.hpp"
 #include "Uniform.hpp"

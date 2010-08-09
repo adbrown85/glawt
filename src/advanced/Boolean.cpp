@@ -140,11 +140,11 @@ void Boolean::calculateExtents() {
 void Boolean::calculateExtents(Node *node) {
 	
 	Node::iterator it;
-	Transformation *transform;
+	Transform *transform;
 	Shape *shape;
 	
 	// Apply and remove transform nodes
-	if ((transform = dynamic_cast<Transformation*>(node))) {
+	if ((transform = dynamic_cast<Transform*>(node))) {
 		transform->apply();
 		for (it=transform->begin(); it!=transform->end(); ++it)
 			calculateExtents(*it);
@@ -280,13 +280,13 @@ void Boolean::findTransforms() {
 	Node *node;
 	Node::iterator it;
 	queue<Node*> q;
-	Transformation *transform;
+	Transform *transform;
 	
 	// Add listener to each transform
 	q.push(group);
 	while (!q.empty()) {
 		node = q.front();
-		transform = dynamic_cast<Transformation*>(node);
+		transform = dynamic_cast<Transform*>(node);
 		if (transform != NULL)
 			transform->addListener(this, NodeEvent::MODIFY);
 		for (it=node->begin(); it!=node->end(); ++it)
@@ -335,7 +335,7 @@ bool Boolean::isSubstantial(const Extent &extent) {
 }
 
 
-/** Redo the operation when a Transformation has changed. */
+/** Redo the operation when a transform has changed. */
 void Boolean::onNodeEvent(NodeEvent &event) {
 	
 	calculate();

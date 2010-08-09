@@ -1,11 +1,11 @@
 /*
- * Transformation.hpp
+ * Transform.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TRANSFORMATION_HPP
-#define TRANSFORMATION_HPP
+#ifndef TRANSFORM_HPP
+#define TRANSFORM_HPP
 #include "common.h"
 #include "Node.hpp"
 #include "NodeInterfaces.hpp"
@@ -14,18 +14,18 @@
 
 
 /** @brief Operation that changes size, position, or orientation of objects.
- * @interface Transformation
+ * @interface Transform
  * @ingroup basic
  */
-class Transformation : public Node,
-                       public Applicable, public NodeNotifier {
+class Transform : public Node,
+                  public Applicable, public NodeNotifier {
 public:
-	Transformation(const Tag &tag) : Node(tag) {}
-	static void findAll(Node *node, list<Transformation*> &L);
+	Transform(const Tag &tag) : Node(tag) {}
+	static void findAll(Node *node, list<Transform*> &L);
 	virtual void apply() = 0;
 	virtual void applyTo(Matrix &matrix) = 0;
 	virtual void remove() = 0;
-	static void search(Node *node, list<Transformation*> &L);
+	static void search(Node *node, list<Transform*> &L);
 };
 
 

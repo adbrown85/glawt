@@ -7,7 +7,7 @@
 #ifndef SCALE_HPP
 #define SCALE_HPP
 #include "common.h"
-#include "Transformation.hpp"
+#include "Transform.hpp"
 #include "Vector.hpp"
 using namespace std;
 
@@ -15,7 +15,7 @@ using namespace std;
 /** @brief %Node that resizes items in the scene.
  * @ingroup basic
  */
-class Scale : public Transformation,
+class Scale : public Transform,
               public Vector {
 public:
 	Scale(const Tag &tag);

@@ -11,7 +11,7 @@
  * 
  * @param tag XML tag with "value", "x", "y", or "z" attributes.
  */
-Translate::Translate(const Tag &tag) : Transformation(tag) {
+Translate::Translate(const Tag &tag) : Transform(tag) {
 	
 	if (!tag.get("value", value, false)) {
 		tag.get("x", value.x, false);
