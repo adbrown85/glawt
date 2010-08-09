@@ -9,6 +9,7 @@
 #include "common.h"
 #include <cfloat>
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "NodeEvent.hpp"
 #include "Transform.hpp"
 using namespace std;
