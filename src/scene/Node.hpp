@@ -51,6 +51,7 @@ public:
 	Tag getTag() const;
 	bool hasChildren() const;
 	friend ostream& operator<<(ostream &stream, const Node &node);
+	void removeChild(Node *node);
 	virtual bool setAttribute(pair<string,string> attribute);
 	void setDepth(float depth);
 	void setParent(Node *parent);

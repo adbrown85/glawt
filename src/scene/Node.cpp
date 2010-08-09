@@ -89,6 +89,18 @@ ostream& operator<<(ostream &stream, const Node &node) {
 }
 
 
+void Node::removeChild(Node *node) {
+	
+	Node::iterator it;
+	
+	it = find(begin(), end(), node);
+	if (it != end()) {
+		children.erase(it);
+		node->setParent(NULL);
+	}
+}
+
+
 string Node::toString() const {
 	
 	ostringstream stream;
