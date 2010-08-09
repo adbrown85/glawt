@@ -51,6 +51,8 @@ class Transformable {
 public:
 	virtual Extent getExtent() = 0;
 	virtual Vector getPosition() = 0;
+	virtual Matrix getTransformation() = 0;
+	virtual Matrix getTransformationInverse() = 0;
 };
 
 

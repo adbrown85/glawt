@@ -26,6 +26,8 @@ public:
 	virtual void associate();
 	virtual Extent getExtent();
 	virtual Vector getPosition();
+	virtual Matrix getTransformation();
+	virtual Matrix getTransformationInverse();
 	virtual void onNodeEvent(NodeEvent &event);
 protected:
 	void updatePositionExtent();
@@ -34,6 +36,7 @@ private:
 	list<Transform*> transforms;
 	Extent extent;
 	Vector position;
+	Matrix transformation;
 };
 
 /** Invalidates the position when a transform changes. */

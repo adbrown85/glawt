@@ -63,17 +63,34 @@ Extent SimpleTransformable::getExtent() {
 }
 
 
+/** @return %Transformation matrix. */
+Matrix SimpleTransformable::getTransformation() {
+	
+	if (!valid) {
+		updatePositionExtent();
+	}
+	return transformation;
+}
+
+
+/** @return Inverse of transformation matrix. */
+Matrix SimpleTransformable::getTransformationInverse() {
+	
+	return getTransformation().getInverse();
+}
+
+
 /** Updates the position and extent, then validates the position. */
 void SimpleTransformable::updatePositionExtent() {
 	
-	Matrix matrix;
 	list<Transform*>::iterator it;
 	Vector point;
 	float v[2]={-0.5,+0.5};
 	
 	// Concatenate transformations
+	transformation = Matrix();
 	for (it=transforms.begin(); it!=transforms.end(); ++it) {
-		(*it)->applyTo(matrix);
+		(*it)->applyTo(transformation);
 	}
 	
 	// Calculate extent and position
@@ -82,7 +99,7 @@ void SimpleTransformable::updatePositionExtent() {
 	for (int i=0; i<2; ++i) {
 		for (int j=0; j<2; ++j) {
 			for (int k=0; k<2; ++k) {
-				point = matrix * Vector(v[i],v[j],v[k],1);
+				point = transformation * Vector(v[i],v[j],v[k],1);
 				extent.upper = max(extent.upper, point);
 				extent.lower = min(extent.lower, point);
 			}
