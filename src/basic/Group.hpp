@@ -8,29 +8,25 @@
 #define GROUP_HPP
 #include "common.h"
 #include "Node.hpp"
-#include "Tag.hpp"
+#include "NodeInterfaces.hpp"
 using namespace std;
 
 
 /** @brief Collection of nodes.
  * @ingroup basic
  */
-class Group : public Node {
+class Group : public Node, public Nameable {
 public:
 	Group(const Tag &tag);
 	virtual bool areChildrenTraversable() const;
 	virtual bool areChildrenPreparable() const;
 	static Group* find(Node *node);
 	static Group* find(Node *node, const string &name);
-	string getName() const;
 	virtual string toString() const;
-private:
-	string name;
 };
 
 inline bool Group::areChildrenTraversable() const {return false;}
 inline bool Group::areChildrenPreparable() const {return false;}
-inline string Group::getName() const {return name;}
 
 
 #endif

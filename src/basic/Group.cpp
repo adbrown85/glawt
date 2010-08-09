@@ -7,9 +7,17 @@
 #include "Group.hpp"
 
 
-Group::Group(const Tag &tag) : Node(tag) {
+/** Initializes attributes.
+ * 
+ * @throws NodeException if a name is not specified.
+ */
+Group::Group(const Tag &tag) : Node(tag), Nameable(tag) {
 	
-	tag.get("name", name);
+	if (!hasName()) {
+		NodeException e(getTag());
+		e << "[Group] Must have name.";
+		throw e;
+	}
 }
 
 
@@ -54,7 +62,7 @@ string Group::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << name << "'";
+	stream << " name='" << getName() << "'";
 	return stream.str();
 }
 
