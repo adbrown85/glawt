@@ -1,13 +1,13 @@
 /*
- * Transform.cpp
+ * State.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Transform.hpp"
+#include "State.hpp"
 
 
-void Transform::getIdentityMatrix(GLfloat array[16]) {
+void State::getIdentityMatrix(GLfloat array[16]) {
 	
 	Matrix matrix;
 	
@@ -15,7 +15,7 @@ void Transform::getIdentityMatrix(GLfloat array[16]) {
 }
 
 
-Matrix Transform::getModelViewMatrix() {
+Matrix State::getModelViewMatrix() {
 	
 	GLfloat array[16];
 	Matrix matrix;
@@ -26,7 +26,7 @@ Matrix Transform::getModelViewMatrix() {
 }
 
 
-Matrix Transform::getModelViewProjectionMatrix() {
+Matrix State::getModelViewProjectionMatrix() {
 	
 	Matrix mvMatrix, pMatrix;
 	
@@ -36,7 +36,7 @@ Matrix Transform::getModelViewProjectionMatrix() {
 }
 
 
-void Transform::getModelViewProjectionMatrix(GLfloat array[16]) {
+void State::getModelViewProjectionMatrix(GLfloat array[16]) {
 	
 	Matrix mvpMatrix;
 	
@@ -45,13 +45,13 @@ void Transform::getModelViewProjectionMatrix(GLfloat array[16]) {
 }
 
 
-Matrix Transform::getNormalMatrix() {
+Matrix State::getNormalMatrix() {
 	
 	return getModelViewMatrix().getInverse().getTranspose();
 }
 
 
-void Transform::getNormalMatrix(GLfloat array[9]) {
+void State::getNormalMatrix(GLfloat array[9]) {
 	
 	Matrix normalMatrix;
 	
@@ -60,7 +60,7 @@ void Transform::getNormalMatrix(GLfloat array[9]) {
 }
 
 
-Matrix Transform::getProjectionMatrix() {
+Matrix State::getProjectionMatrix() {
 	
 	GLfloat array[16];
 	Matrix matrix;
@@ -69,3 +69,4 @@ Matrix Transform::getProjectionMatrix() {
 	matrix.set(array);
 	return matrix;
 }
+

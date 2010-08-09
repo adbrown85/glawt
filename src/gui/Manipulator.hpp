@@ -9,7 +9,7 @@
 #include "common.h"
 #include "Delegate.hpp"                 // For sending commands to scene
 #include "Vector.hpp"                   // For axis
-#include "Transform.hpp"                // Projection matrix
+#include "State.hpp"                    // Projection matrix
 #include "Traverser.hpp"
 #include "Resources.hpp"
 using namespace std;

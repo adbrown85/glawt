@@ -12,11 +12,11 @@
 #include "Group.hpp"
 #include "Shape.hpp"
 #include "Transformation.hpp"
-#include "Transform.hpp"
 #include "Hexahedron.hpp"
 #include "Factory.hpp"
 #include "Uniform.hpp"
 #include "Suppressor.hpp"
+#include "State.hpp"
 using namespace std;
 
 

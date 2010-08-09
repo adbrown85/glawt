@@ -16,7 +16,6 @@
 #include "Tag.hpp"
 #include "Text.hpp"
 #include "Texture.hpp"
-#include "Transform.hpp"
 using namespace std;
 
 /* Information about a uniform. */

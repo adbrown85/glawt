@@ -1,11 +1,11 @@
 /*
- * Transform.hpp
+ * State.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TRANSFORM_HPP
-#define TRANSFORM_HPP
+#ifndef STATE_HPP
+#define STATE_HPP
 #include "common.h"
 #include "Matrix.hpp"
 using namespace std;
@@ -14,7 +14,7 @@ using namespace std;
 /** @brief Utility for manipulating the transformation stack.
  * @ingroup scene
  */
-class Transform {
+class State {
 public:
 	static void getIdentityMatrix(GLfloat array[16]);
 	static Matrix getModelViewMatrix();

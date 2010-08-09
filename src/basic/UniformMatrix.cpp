@@ -113,15 +113,15 @@ void UniformMatrix::apply() {
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	case MODELVIEW_PROJECTION:
-		Transform::getModelViewProjectionMatrix(value);
+		State::getModelViewProjectionMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	case NORMAL:
-		Transform::getNormalMatrix(value);
+		State::getNormalMatrix(value);
 		glUniformMatrix3fv(location, 1, false, value);
 		break;
 	case IDENTITY:
-		Transform::getIdentityMatrix(value);
+		State::getIdentityMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	}

@@ -81,7 +81,7 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 	depth = node->getDepth() + canvas->getCamera()->getPosition().z;
 	
 	// Transform unit vector at that depth to clip space
-	proj = Transform::getProjectionMatrix() * Vector(1,0,depth,1);
+	proj = State::getProjectionMatrix() * Vector(1,0,depth,1);
 	clip = proj / proj.w;
 	
 	// Calculate how many pixels that represents on screen

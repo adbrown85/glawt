@@ -154,7 +154,7 @@ void Boolean::calculateExtents(Node *node) {
 	// Store extents of shapes
 	else if ((shape = dynamic_cast<Shape*>(node))) {
 		Extent extent;
-		mvm = Transform::getModelViewMatrix();
+		mvm = State::getModelViewMatrix();
 		extent.upper = mvm * Vector(+0.5,+0.5,+0.5,1.0);
 		extent.lower = mvm * Vector(-0.5,-0.5,-0.5,1.0);
 		extent.diagonal = extent.upper - extent.lower;

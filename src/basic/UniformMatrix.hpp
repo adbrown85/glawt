@@ -7,6 +7,7 @@
 #ifndef UNIFORMMATRIX_HPP
 #define UNIFORMMATRIX_HPP
 #include "Uniform.hpp"
+#include "State.hpp"
 #define DEFAULT_MODELVIEW_MATRIX_NAME "MVMatrix"
 #define DEFAULT_PROJECTION_MATRIX_NAME "PMatrix"
 #define DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME "MVPMatrix"
