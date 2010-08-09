@@ -31,7 +31,8 @@ public:
 private:
 	float ambient, diffuse, specular;
 	Traverser *traverser;
-	Scene *widget;
+	static Scene *widget;
+	static bool tried;
 };
 
 
