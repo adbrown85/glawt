@@ -66,6 +66,8 @@ public:
 	virtual void attach();
 	virtual int getSize() const;
 	virtual string toString() const;
+public:
+	static Target* search(Node *node);
 protected:
 	void associate();
 private:

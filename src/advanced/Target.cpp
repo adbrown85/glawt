@@ -50,6 +50,27 @@ void Target::attach() {
 }
 
 
+/** Finds the first target under @e node. */
+Target* Target::search(Node *node) {
+	
+	Node::iterator it;
+	queue<Node*> Q;
+	Target *target;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		target = dynamic_cast<Target*>(node);
+		if (target != NULL)
+			return target;
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push((*it));
+		Q.pop();
+	}
+	return NULL;
+}
+
+
 /** @return String comprised of the object's name and attributes. */
 string Target::toString() const {
 	
