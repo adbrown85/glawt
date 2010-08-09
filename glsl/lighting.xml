@@ -7,8 +7,12 @@
 
 
 <!-- Lights -->
-<translate value="15 15 15">
-	<light name="spot" ambient="0.4" />
+<translate value="2 2 2">
+	<rotate axis="1 0 0" angle="-45">
+		<rotate axis="0 1 0" angle="+45">
+			<light name="spot" ambient="0.4" />
+		</rotate>
+	</rotate>
 </translate>
 
 <!-- Cube -->
@@ -17,5 +21,7 @@
 	<shader file="lighting.frag" />
 	<uniform type="vec3" name="LightPosition" link="spot" />
 	<uniform type="float" name="Ambient" link="spot.ambient" />
-	<cube />
+	<translate>
+		<cube />
+	</translate>
 </program>
