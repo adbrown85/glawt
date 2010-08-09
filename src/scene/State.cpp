@@ -7,6 +7,15 @@
 #include "State.hpp"
 
 
+void State::apply(Matrix &matrix) {
+	
+	GLfloat array[16];
+	
+	matrix.toArray(array);
+	glMultMatrixf(array);
+}
+
+
 void State::getIdentityMatrix(GLfloat array[16]) {
 	
 	Matrix matrix;
@@ -69,4 +78,13 @@ Matrix State::getProjectionMatrix() {
 	matrix.set(array);
 	return matrix;
 }
+
+
+void State::pop() {glPopMatrix();}
+
+void State::push() {glPushMatrix();}
+
+void State::setModeAsModelView() {glMatrixMode(GL_MODELVIEW);}
+
+void State::setModeAsProjection() {glMatrixMode(GL_PROJECTION);}
 

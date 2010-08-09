@@ -16,6 +16,7 @@ using namespace std;
  */
 class State {
 public:
+	static void apply(Matrix &matrix);
 	static void getIdentityMatrix(GLfloat array[16]);
 	static Matrix getModelViewMatrix();
 	static Matrix getModelViewProjectionMatrix();
@@ -23,6 +24,10 @@ public:
 	static Matrix getNormalMatrix();
 	static void getNormalMatrix(GLfloat array[9]);
 	static Matrix getProjectionMatrix();
+	static void pop();
+	static void push();
+	static void setModeAsModelView();
+	static void setModeAsProjection();
 };
 
 
