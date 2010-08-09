@@ -7,9 +7,8 @@
 #include "Light.hpp"
 
 
-Light::Light(const Tag &tag) : SimpleTransformable(tag) {
-	
-	string name;
+/** Initializes attributes. */
+Light::Light(const Tag &tag) : SimpleDrawable(tag), Nameable(tag) {
 	
 	// Intensities
 	if (!tag.get("ambient", ambient, false)) {
@@ -20,10 +19,43 @@ Light::Light(const Tag &tag) : SimpleTransformable(tag) {
 		specular = LIGHT_DEFAULT_SPECULAR;
 	}
 	
-	// Name
-	if (tag.get("name", name, false)) {
-		setName(name);
+	// Make sure can't select
+	selectable = false;
+	
+	// Widget
+	try {
+		widget = new Scene();
+		widget->open(Resources::get("ui/light-widget.xml"));
+		widget->prepare();
+		traverser = new Traverser(widget);
+	} catch (Exception e) {
+		delete widget;
+		widget = NULL;
+		traverser = NULL;
+		glog << "[Light] Problem opening light widget." << endl;
+		glog << "[Light] Lights will not be visible." << endl;
+		glog << "[Light] Try reinstalling Gander." << endl;
 	}
+}
+
+
+/** Destroys the widget. */
+Light::~Light() {
+	
+	if (widget != NULL)
+		delete widget;
+	if (traverser != NULL)
+		delete traverser;
+}
+
+
+/** Draws the widget representing the light. */
+void Light::draw() const {
+	
+	if (traverser == NULL || widget == NULL)
+		return;
+	
+	traverser->start();
 }
 
 
@@ -31,7 +63,7 @@ string Light::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Node::toString();
+	stream << SimpleDrawable::toString();
 	if (hasName())
 		stream << " name='" << getName() << "'";
 	stream << " ambient='" << ambient << "'"
