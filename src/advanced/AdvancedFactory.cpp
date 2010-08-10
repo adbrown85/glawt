@@ -22,6 +22,8 @@ void AdvancedFactory::install() {
 	Factory::install("boolean", &createBoolean);
 	Factory::install("blend", &createBlend);
 	Factory::install("bind", &createBind);
+	Factory::install("branch", &createBranch);
+	Factory::install("choose", &createChoose);
 	Factory::install("clear", &createClear);
 	Factory::install("clone", &createClone);
 	Factory::install("cull", &createCull);
@@ -64,8 +66,11 @@ Node* AdvancedFactory::createBoolean(const Tag &tag) {
 	}
 }
 
+Node* AdvancedFactory::createBranch(const Tag &t) {return new Branch(t);}
 
 Node* AdvancedFactory::createCull(const Tag &t) {return new Cull(t);}
+
+Node* AdvancedFactory::createChoose(const Tag &t) {return new Choose(t);}
 
 Node* AdvancedFactory::createClear(const Tag &t) {return new Clear(t);}
 

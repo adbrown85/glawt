@@ -14,6 +14,8 @@
 #include "BooleanAnd.hpp"
 #include "Boolean.hpp"
 #include "BooleanXor.hpp"
+#include "Branch.hpp"
+#include "Choose.hpp"
 #include "Clear.hpp"
 #include "Clone.hpp"
 #include "Cull.hpp"
@@ -43,6 +45,8 @@ public:
 	static Node* createBoolean(const Tag &tag);
 	static Node* createBind(const Tag &tag);
 	static Node* createBlend(const Tag &tag);
+	static Node* createBranch(const Tag &tag);
+	static Node* createChoose(const Tag &tag);
 	static Node* createClear(const Tag &tag);
 	static Node* createClone(const Tag &tag);
 	static Node* createCull(const Tag &tag);
