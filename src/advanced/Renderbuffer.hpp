@@ -64,6 +64,7 @@ public:
 	virtual void associate();
 	virtual void attach();
 	virtual GLuint getHandle() const;
+	virtual Vector read(int x, int y) const;
 	virtual string toString() const;
 protected:
 	void setFormat(GLenum format);

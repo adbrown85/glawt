@@ -76,6 +76,29 @@ void Renderbuffer::attach() {
 }
 
 
+/** Retrieves a value from the renderbuffer at @e x, @e y.*/
+Vector Renderbuffer::read(int x, int y) const {
+	
+	GLfloat pixels[4];
+	Vector result;
+	
+	// Bind
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, getFramebuffer()->getHandle());
+	glBindRenderbuffer(GL_RENDERBUFFER, handle);
+	
+	// Read
+	glReadPixels(x, y, 1, 1, GL_RGBA, GL_FLOAT, pixels);
+	result.set(pixels[0], pixels[1], pixels[2], pixels[3]);
+	
+	// Unbind
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	
+	// Finish
+	return result;
+}
+
+
 /** Adds @e size to the node's description. */
 string Renderbuffer::toString() const {
 	
