@@ -65,6 +65,8 @@ public:
 	virtual void attach();
 	virtual GLuint getHandle() const;
 	virtual string toString() const;
+protected:
+	void setFormat(GLenum format);
 private:
 	GLenum format;
 	GLuint handle;
@@ -73,6 +75,8 @@ private:
 
 /** @return Integer identifying the underlying OpenGL renderbuffer object. */
 inline GLuint Renderbuffer::getHandle() const {return handle;}
+
+inline void Renderbuffer::setFormat(GLenum format) {this->format = format;}
 
 
 #endif

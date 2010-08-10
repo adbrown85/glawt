@@ -13,14 +13,19 @@
  */
 Renderbuffer::Renderbuffer(const Tag &tag) : Attachment(tag,"color") {
 	
-	string type;
+	string type, format;
 	
 	// Type
 	tag.get("type", type);
 	if (type == "color") {
-		format = GL_RGBA;
+		tag.get("format", format, false, true);
+		if (format == "float") {
+			setFormat(GL_RGBA32F);
+		} else {
+			setFormat(GL_RGBA);
+		}
 	} else if (type == "depth") {
-		format = GL_DEPTH_COMPONENT;
+		setFormat(GL_DEPTH_COMPONENT);
 	} else {
 		NodeException e(tag);
 		e << "[Renderbuffer] Type not recognized.";
