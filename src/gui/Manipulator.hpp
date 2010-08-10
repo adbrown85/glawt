@@ -29,6 +29,7 @@ public:
 	virtual void draw(Transformable *transformable, Canvas *canvas) const;
 	static float findPixelFactor(Canvas *canvas, GLuint shapeID);
 	virtual Vector getAxis() const;
+	static Matrix getMatrix(const Vector &value);
 	virtual int getCommand() const;
 	virtual bool isEnabled() const;
 	virtual void setEnabled(bool enabled);

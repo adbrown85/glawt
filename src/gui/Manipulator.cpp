@@ -106,13 +106,21 @@ void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	position = transformable->getPosition() + (extent.diagonal * offset);
 	
 	// Draw at position
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	canvas->getCamera()->apply();
-	glTranslatef(position.x, position.y, position.z);
+	State::setMode(MODEL_MODE);
+	State::push();
+	State::loadIdentity();
+	State::apply(getMatrix(position));
 	traverser->start();
-	glPopMatrix();
+	State::pop();
+}
+
+
+Matrix Manipulator::getMatrix(const Vector &value) {
+	
+	return Matrix(1.0, 0.0, 0.0,  +value.x,
+	              0.0, 1.0, 0.0,  +value.y,
+	              0.0, 0.0, 1.0,  +value.z,
+	              0.0, 0.0, 0.0, 1.0);
 }
 
 

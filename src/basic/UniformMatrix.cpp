@@ -50,7 +50,8 @@ bool UniformMatrix::isDefaultName(const string &name) {
 	        || (name == DEFAULT_PROJECTION_MATRIX_NAME)
 	        || (name == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME)
 	        || (name == DEFAULT_NORMAL_MATRIX_NAME)
-	        || (name == DEFAULT_IDENTITY_MATRIX_NAME));
+	        || (name == DEFAULT_IDENTITY_MATRIX_NAME)
+	        || (name == DEFAULT_LIGHT_MATRIX_NAME));
 }
 
 
@@ -117,18 +118,16 @@ void UniformMatrix::apply() {
 		return;
 	
 	switch (matrixType) {
-/*
 	case MODEL:
 		State::getModelMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
-*/
 	case MODELVIEW:
-		glGetFloatv(GL_MODELVIEW_MATRIX, value);
+		State::getModelViewMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	case PROJECTION:
-		glGetFloatv(GL_PROJECTION_MATRIX, value);
+		State::getProjectionMatrix(value);
 		glUniformMatrix4fv(location, 1, false, value);
 		break;
 	case MODELVIEW_PROJECTION:

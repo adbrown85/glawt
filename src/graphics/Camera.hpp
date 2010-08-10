@@ -11,6 +11,7 @@
 #include "Matrix.hpp"
 #include "Quaternion.hpp"
 #include "Vector.hpp"
+#include "State.hpp"
 #define CAMERA_DEFAULT_ZOOM -10.0
 #define CAMERA_ROTATE_AMOUNT 5.0
 using namespace std;

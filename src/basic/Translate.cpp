@@ -35,8 +35,8 @@ void Translate::add(const Vector &B) {
 /** Performs the translation. */
 void Translate::apply() {
 	
-	glPushMatrix();
-	glTranslatef(value.x, value.y, value.z);
+	State::push();
+	State::apply(getMatrix());
 }
 
 
@@ -73,7 +73,7 @@ void Translate::applyTo(Matrix &matrix) {
 /** Restores transformation that was in effect before translate was applied. */
 void Translate::remove() {
 	
-	glPopMatrix();
+	State::pop();
 }
 
 

@@ -112,6 +112,8 @@ void Painter::onDrawable(Node *node, Drawable *drawable) {
 void Painter::start() {
 	
 	getCanvas()->getCamera()->apply();
+	State::setMode(MODEL_MODE);
+	State::loadIdentity();
 	Traverser::start();
 }
 

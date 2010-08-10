@@ -11,6 +11,7 @@
 #include "NodeInterfaces.hpp"
 #include "NodeEvent.hpp"
 #include "Matrix.hpp"
+#include "State.hpp"
 
 
 /** @brief Operation that changes size, position, or orientation of objects.

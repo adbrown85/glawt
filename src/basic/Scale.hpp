@@ -26,9 +26,18 @@ public:
 	virtual void remove();
 	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
+protected:
+	Matrix getMatrix() const;
 private:
 	float value;
 };
+
+inline Matrix Scale::getMatrix() const {
+	return Matrix( x , 0.0, 0.0, 0.0,
+	              0.0,  y , 0.0, 0.0,
+	              0.0, 0.0,  z , 0.0,
+	              0.0, 0.0, 0.0, 1.0);
+}
 
 
 #endif

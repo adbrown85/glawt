@@ -43,8 +43,8 @@ void Scale::add(const Vector &B) {
 /** Performs the transformation. */
 void Scale::apply() {
 	
-	glPushMatrix();
-	glScalef(x, y, z);
+	State::push();
+	State::apply(getMatrix());
 }
 
 
@@ -78,7 +78,7 @@ Scale* Scale::find(Node *node) {
 /** Restores state before transformation was applied. */
 void Scale::remove() {
 	
-	glPopMatrix();
+	State::pop();
 }
 
 

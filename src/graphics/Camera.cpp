@@ -10,18 +10,9 @@
 /** Applies the camera position and rotation to the OpenGL modelview matrix. */
 void Camera::apply() {
 	
-	float rotationArray[16];
-	
-	// Reset
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	
-	// Position
-	glTranslatef(position.x, position.y, position.z);
-	
-	// Rotation
-	rotation.getMatrix().toArray(rotationArray);
-	glMultMatrixf(rotationArray);
+	State::setMode(VIEW_MODE);
+	State::loadIdentity();
+	State::apply(getViewMatrix());
 }
 
 
@@ -43,6 +34,9 @@ Matrix Camera::getViewMatrix() const {
 /** Initializes OpenGL. */
 void Camera::load(int width, int height) {
 	
+	GLfloat array[16];
+	Matrix matrix;
+	
 	// Set defaults
 	reset();
 	
@@ -55,6 +49,13 @@ void Camera::load(int width, int height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(30.0, static_cast<float>(width)/height, 0.8, 15.0);
+	
+	// Shortcut for generating projection matrix
+	glGetFloatv(GL_PROJECTION_MATRIX, array);
+	matrix.set(array);
+	State::setMode(PROJECTION_MODE);
+	State::loadIdentity();
+	State::apply(matrix);
 }
 
 

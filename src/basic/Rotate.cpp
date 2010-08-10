@@ -23,8 +23,8 @@ Rotate::Rotate(const Tag &tag) : Transform(tag) {
 /** Performs the transformation. */
 void Rotate::apply() {
 	
-	glPushMatrix();
-	glRotatef(angle, axis.x, axis.y, axis.z);
+	State::push();
+	State::apply(quaternion.getMatrix());
 }
 
 
@@ -37,7 +37,7 @@ void Rotate::applyTo(Matrix &matrix) {
 /** Restores state before transformation was applied. */
 void Rotate::remove() {
 	
-	glPopMatrix();
+	State::pop();
 }
 
 

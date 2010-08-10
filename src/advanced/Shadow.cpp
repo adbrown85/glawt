@@ -175,7 +175,7 @@ void Shadow::render() {
 	
 	// Set up view from light
 	matrix = light->getTransformationInverse();
-	State::setModeAsModelView();
+	State::setMode(MODEL_MODE);
 	State::push();
 	State::apply(matrix);
 	
