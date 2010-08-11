@@ -118,6 +118,10 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
 	Vector result;
 	
+	// Check if couldn't load file
+	if (traverser == NULL)
+		return pair<GLuint,GLuint>(0,0);
+	
 	// Clear buffer
 	choose->setChoice("clear");
 	traverser->start();
