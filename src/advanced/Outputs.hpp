@@ -22,9 +22,10 @@ public:
 	virtual ~Outputs();
 	virtual GLint addAttachment(Attachment *attachment);
 	virtual void apply();
-	static Outputs* find(Node *node);
 	virtual void remove() {}
 	virtual string toString() const;
+public: // Utilities
+	static Outputs* find(Node *node);
 protected:
 	virtual void associate();
 	virtual void finalize();
