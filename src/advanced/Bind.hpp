@@ -77,6 +77,10 @@ public:
 	virtual string toString() const;
 public: // Accessors and mutators
 	virtual GLint getIndex() const;
+protected:
+	void findAttachment();
+	void findOutputs();
+	void findProgram();
 private:
 	string name, to;
 	GLint index;

@@ -17,28 +17,16 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 
 /** Adds attachment to outputs and sets its index in outputs to program value.
  * 
- * @throws NodeException if Attachment with name could not be found.
- * @throws NodeException if could not find Outputs list.
  * @throws NodeException if maximum number of outputs exceeded.
- * @throws NodeException if could not find Program.
  */
 void Bind::associate() {
 	
-	// Find attachment
-	attachment = Attachment::find(this, to);
-	if (attachment == NULL) {
-		NodeException e(tag);
-		e << "[Bind] Could not find attachment with name '" << to << "'.";
-		throw e;
-	}
+	// Find required nodes
+	findAttachment();
+	findOutputs();
+	findProgram();
 	
-	// Find outputs and add attachment
-	outputs = Outputs::find(this);
-	if (outputs == NULL) {
-		NodeException e(tag);
-		e << "[Bind] Could not find outputs.";
-		throw e;
-	}
+	// Add attachment
 	index = outputs->addAttachment(attachment);
 	if (index == -1) {
 		NodeException e(tag);
@@ -46,13 +34,7 @@ void Bind::associate() {
 		throw e;
 	}
 	
-	// Find program
-	program = Program::find(this);
-	if (program == NULL) {
-		NodeException e(tag);
-		e << "[Bind] Could not find program.";
-		throw e;
-	}
+	// Set location
 	glBindFragDataLocationGAN(program->getHandle(), index, name.c_str());
 }
 
@@ -69,6 +51,42 @@ void Bind::finalize() {
 	if (location != index) {
 		NodeException e(tag);
 		e << "[Bind] Variable was not bound correctly.";
+		throw e;
+	}
+}
+
+
+/** @throws NodeException if Attachment named @e to could not be found. */
+void Bind::findAttachment() {
+	
+	attachment = Attachment::find(this, to);
+	if (attachment == NULL) {
+		NodeException e(tag);
+		e << "[Bind] Could not find attachment with name '" << to << "'.";
+		throw e;
+	}
+}
+
+
+/** @throws NodeException if could not find Outputs list. */
+void Bind::findOutputs() {
+	
+	outputs = Outputs::find(this);
+	if (outputs == NULL) {
+		NodeException e(tag);
+		e << "[Bind] Could not find outputs.";
+		throw e;
+	}
+}
+
+
+/** @throws NodeException if could not find Program. */
+void Bind::findProgram() {
+	
+	program = Program::find(this);
+	if (program == NULL) {
+		NodeException e(tag);
+		e << "[Bind] Could not find program.";
 		throw e;
 	}
 }
