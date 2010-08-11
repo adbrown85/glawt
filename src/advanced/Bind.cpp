@@ -50,7 +50,7 @@ void Bind::associate() {
 	program = Program::find(this);
 	if (program == NULL) {
 		NodeException e(tag);
-		e << "[Bind] Cound not find program.";
+		e << "[Bind] Could not find program.";
 		throw e;
 	}
 	glBindFragDataLocationGAN(program->getHandle(), index, name.c_str());
