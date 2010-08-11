@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Node.hpp"
 #include "Texture2D.hpp"
+#include "Configuration.hpp"
 
 
 /* Group of similar framebuffer attachments. */
@@ -69,7 +70,6 @@ public:
 	virtual void enqueue(const string &type, Attachable *item);
 	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
-	static GLint getMaxColorAttachments();
 	virtual void remove();
 	virtual string toString() const;
 protected:
@@ -78,7 +78,7 @@ protected:
 	virtual void finalize();
 	virtual Chain* getChain(const string &name);
 private:
-	GLuint handle;
+	GLuint handle, capacity;
 	map<string,Chain> chains;
 };
 

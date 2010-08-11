@@ -12,12 +12,13 @@ Framebuffer::Framebuffer(const Tag &tag) : Node(tag) {
 	
 	Chain chain;
 	
-	// Handle
+	// Basics
 	this->handle = 0;
+	this->capacity = Configuration::getMaxColorAttachments();
 	
 	// Chains
 	chain.base = GL_COLOR_ATTACHMENT0;
-	chain.max = getMaxColorAttachments();
+	chain.max = capacity;
 	chains["color"] = chain;
 	chain.base = GL_DEPTH_ATTACHMENT;
 	chain.max = 1;
@@ -154,16 +155,6 @@ Chain* Framebuffer::getChain(const string &name) {
 }
 
 
-/** @return Maximum number of color attachments on this system. */
-GLint Framebuffer::getMaxColorAttachments() {
-	
-	GLint value;
-	
-	glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, &value);
-	return value;
-}
-
-
 /** Unbinds the %Framebuffer. */
 void Framebuffer::remove() {
 	
@@ -178,7 +169,8 @@ string Framebuffer::toString() const {
 	
 	// Insert attributes
 	stream << Node::toString()
-	       << " handle='" << handle << "'";
+	       << " handle='" << handle << "'"
+	       << " capacity='" << capacity << "'";
 	return stream.str();
 }
 
