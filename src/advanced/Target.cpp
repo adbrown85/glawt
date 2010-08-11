@@ -13,7 +13,7 @@ Target::Target(const Tag &tag) : Attachment(tag) {
 	tag.get("link", link, true, false);
 	
 	// Check name
-	if (getName().empty())
+	if (!hasName())
 		setName(link);
 	
 	// Check type

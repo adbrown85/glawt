@@ -11,10 +11,9 @@
  * 
  * @throws NodeException if @e type is not "color" or "depth".
  */
-Attachment::Attachment(const Tag &tag) : Attachable(tag) {
+Attachment::Attachment(const Tag &tag) : Attachable(tag), Nameable(tag) {
 	
 	// From tag
-	tag.get("name", name, false, false);
 	if (!tag.get("type", type, false, true))
 		type = "color";
 	
@@ -79,9 +78,8 @@ string Attachment::toString() const {
 	
 	stream << Node::toString();
 	stream << " framebuffer='" << framebuffer->getHandle() << "'";
-	if (!name.empty()) {
-		stream << " name='" << name << "'";
-	}
+	if (hasName())
+		stream << " name='" << getName() << "'";
 	stream << " index='" << index << "'"
 	       << " type='" << type << "'";
 	return stream.str();
