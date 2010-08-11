@@ -72,11 +72,11 @@ using namespace std;
 class Bind : public Node {
 public:
 	Bind(const Tag &tag);
-	virtual GLint getIndex() const;
-	virtual string toString() const;
-protected:
 	virtual void associate();
 	virtual void finalize();
+	virtual string toString() const;
+public: // Accessors and mutators
+	virtual GLint getIndex() const;
 private:
 	string name, to;
 	GLint index;
