@@ -17,10 +17,13 @@ class UniformInt : public Uniform {
 public:
 	UniformInt(const Tag &tag);
 	virtual void apply();
+	virtual void setValue(GLint value);
 	virtual string toString() const;
 private:
 	GLint value;
 };
+
+inline void UniformInt::setValue(GLint value) {this->value = value;}
 
 
 #endif
