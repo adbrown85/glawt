@@ -12,7 +12,12 @@ vector<Identifiable*> Identifiable::ids;
 /** Increments counter and stores it as this object's unique ID number. */
 Identifiable::Identifiable() {
 	
-	id = count++;
+	// Make sure zero position is NULL
+	if (count == 0)
+		ids.push_back(NULL);
+	
+	// Store IDs
+	id = ++count;
 	ids.push_back(this);
 }
 
@@ -24,7 +29,7 @@ Identifiable::Identifiable() {
 Identifiable* Identifiable::findByID(unsigned int id) {
 	
 	// Find
-	if (id < ids.size())
+	if (id <= count)
 		return ids[id];
 	else
 		return NULL;
