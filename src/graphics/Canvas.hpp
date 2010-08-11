@@ -75,9 +75,6 @@ private:
 	list<CanvasListener*> listeners[CANVAS_EVENT_TYPE_SIZE];
 };
 
-/** Wipes the canvas clean. */
-inline void Canvas::clear() {glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);}
-
 /** @return Pointer to the canvas's camera. */
 inline Camera* Canvas::getCamera() {return &camera;}
 
