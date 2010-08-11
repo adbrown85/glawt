@@ -7,11 +7,14 @@
 
 
 <framebuffer>
-	<renderbuffer type="color" size="512" format="float" />
+	<renderbuffer name="pick_buffer" type="color" size="512" format="float" />
 	<renderbuffer type="depth" size="512" />
 	<program>
 		<shader file="pick.vert" />
 		<shader file="pick.frag" />
+		<outputs>
+			<bind name="FragColor" to="pick_buffer" />
+		</outputs>
 		<uniform type="int" name="ItemID" value="0" />
 		<uniform type="int" name="SourceID" value="0" />
 		<choose>
