@@ -31,13 +31,6 @@ Identifiable* Identifiable::findByID(unsigned int id) {
 }
 
 
-/** Returns a unique identifier to the object. */
-unsigned int Identifiable::getID() const {
-	
-	return id;
-}
-
-
 /** Forms a string from the object's attributes. */
 string Identifiable::toString() const {
 	

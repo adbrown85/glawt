@@ -36,6 +36,10 @@ private:
 };
 
 
+/** Returns a unique identifier to the object. */
+inline unsigned int Identifiable::getID() const {return id;}
+
+
 inline bool Identifiable::Comparator::operator()(const Identifiable &a,
                                                  const Identifiable &b) {
 	
