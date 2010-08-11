@@ -18,7 +18,7 @@ using namespace std;
 class Outputs : public Node, public Applicable {
 public:
 	Outputs(const Tag &tag);
-	~Outputs();
+	virtual ~Outputs();
 	virtual GLint addAttachment(Attachment *attachment);
 	virtual void apply();
 	static Outputs* find(Node *node);
