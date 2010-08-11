@@ -65,7 +65,6 @@ void Bind::finalize() {
 	
 	GLint location;
 	
-	location = 0;
 	location = glGetFragDataLocationGAN(program->getHandle(), name.c_str());
 	if (location != index) {
 		NodeException e(tag);
