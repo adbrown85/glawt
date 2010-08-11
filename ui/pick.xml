@@ -12,8 +12,8 @@
 	<program>
 		<shader file="pick.vert" />
 		<shader file="pick.frag" />
-		<uniform type="int" name="DrawableID" value="0" />
-		<uniform type="int" name="ParentID" value="0" />
+		<uniform type="int" name="ItemID" value="0" />
+		<uniform type="int" name="SourceID" value="0" />
 		<choose>
 			<branch name="clear">
 				<clear color="0 0 0 0" depth="1.0" />

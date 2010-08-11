@@ -77,7 +77,8 @@ void Picker::onDrawable(Node *node, Drawable *drawable) {
 	traverseChildren(node);
 	
 	// Then draw it
-	uniform->setValue(drawable->getID());
+	itemIDUniform->setValue(drawable->getID());
+	sourceIDUniform->setValue(drawable->getID());
 	traverser->start();
 	
 	// Draw manipulators
@@ -104,6 +105,7 @@ void Picker::renderHotspots(Node *node) {
 	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
 		State::loadIdentity();
 		State::apply((*it)->getHotspotMatrix(transformable));
+		itemIDUniform->setValue((*it)->getID());
 		traverser->start();
 	}
 	
@@ -135,7 +137,7 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
 	// Read
 	result = buffer->read(x, getCanvas()->getHeight()-y);
-	return pair<GLuint,GLuint>(result.x,result.x);
+	return pair<GLuint,GLuint>(result[0],result[1]);
 }
 
 
@@ -175,12 +177,17 @@ void Picker::prepareSubscene() {
 		throw Exception("[Picker] Could not find Choose node.");
 	}
 	
-	// Find uniform node
-	node = Scout::search(subscene->getRoot(), "UniformInt");
-	uniform = dynamic_cast<UniformInt*>(node);
-	if (uniform == NULL) {
-		throw Exception("[Picker] Could not find UniformInt node.");
-	}
+	// Find ItemID uniform
+	node = Nameable::search(subscene->getRoot(), "ItemID");
+	itemIDUniform = dynamic_cast<UniformInt*>(node);
+	if (itemIDUniform == NULL)
+		throw Exception("[Picker] Could not find 'ItemID' uniform.");
+	
+	// Find SourceID uniform
+	node = Nameable::search(subscene->getRoot(), "SourceID");
+	sourceIDUniform = dynamic_cast<UniformInt*>(node);
+	if (sourceIDUniform == NULL)
+		throw Exception("[Picker] Could not find 'SourceID' uniform.");
 }
 
 

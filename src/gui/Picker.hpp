@@ -38,7 +38,7 @@ private:
 	Scene *subscene;
 	Traverser *traverser;
 	Choose *choose;
-	UniformInt *uniform;
+	UniformInt *itemIDUniform, *sourceIDUniform;
 	Renderbuffer *buffer;
 };
 

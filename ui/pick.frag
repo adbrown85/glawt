@@ -7,8 +7,8 @@
 #version 130
 
 /* Uniforms */
-uniform int DrawableID;
-uniform int ParentID;
+uniform int ItemID;
+uniform int SourceID;
 
 /* Outputs */
 out vec4 FragColor;
@@ -17,6 +17,6 @@ out vec4 FragColor;
 /** Compute fragment color. */
 void main() {
 	
-	FragColor = vec4(DrawableID, ParentID, 0, 1);
+	FragColor = vec4(ItemID, SourceID, 0, 1);
 }
 
