@@ -83,25 +83,25 @@ void UniformMatrix::setTypeFromAs() {
 /** @throws NodeException if default name not supported. */
 void UniformMatrix::setTypeFromName() {
 	
-	if (name == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME) {
+	if (getName() == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME) {
 		matrixType = MODELVIEW_PROJECTION;
 		as = "modelviewprojection";
-	} else if (name == DEFAULT_MODELVIEW_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_MODELVIEW_MATRIX_NAME) {
 		matrixType = MODELVIEW;
 		as = "modelview";
-	} else if (name == DEFAULT_NORMAL_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_NORMAL_MATRIX_NAME) {
 		matrixType = NORMAL;
 		as = "normal";
-	} else if (name == DEFAULT_MODEL_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_MODEL_MATRIX_NAME) {
 		matrixType = MODEL;
 		as = "model";
-	} else if (name == DEFAULT_PROJECTION_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_PROJECTION_MATRIX_NAME) {
 		matrixType = PROJECTION;
 		as = "projection";
-	} else if (name == DEFAULT_IDENTITY_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_IDENTITY_MATRIX_NAME) {
 		matrixType = IDENTITY;
 		as = "identity";
-	} else if (name == DEFAULT_LIGHT_MATRIX_NAME) {
+	} else if (getName() == DEFAULT_LIGHT_MATRIX_NAME) {
 		matrixType = LIGHT;
 		as = "light";
 	} else {

@@ -7,14 +7,26 @@
 #include "Uniform.hpp"
 
 
-/** Initializes "program", "type", "name", "link", and "suppress" attributes. */
-Uniform::Uniform(const Tag &tag) : Node(tag) {
+/** Initialize attributes.
+ * 
+ * @throws NodeException if name not specified.
+ */
+Uniform::Uniform(const Tag &tag) : Node(tag), Nameable(tag) {
 	
-	// Initialize
-	program = NULL;
+	// From tag
 	tag.get("type", type);
-	tag.get("name", name, true, false);
 	tag.get("link", link, false, false);
+	
+	// Other
+	program = NULL;
+	location = 0;
+	
+	// Check
+	if (!hasName()) {
+		NodeException e(getTag());
+		e << "[Uniform] Must have name.";
+		throw e;
+	}
 }
 
 
@@ -28,7 +40,7 @@ void Uniform::associate() {
 	program = Program::find(parent);
 	if (program == NULL) {
 		NodeException e(tag);
-		e << "Program for uniform named '" << name << "' cannot be found.";
+		e << "[Uniform] Program for '" << getName() << "' cannot be found.";
 		throw e;
 	}
 }
@@ -41,10 +53,10 @@ void Uniform::associate() {
 void Uniform::finalize() {
 	
 	// Look up location
-	location = glGetUniformLocation(program->getHandle(), name.c_str());
+	location = glGetUniformLocation(program->getHandle(), getName().c_str());
 	if (location == -1 && !isSuppressed()) {
 		NodeException e(tag);
-		e << "[Uniform] Location for uniform '" << name << "' cannot be found.";
+		e << "[Uniform] Location for '" << getName() << "' cannot be found.";
 		throw e;
 	}
 }
@@ -131,7 +143,7 @@ string Uniform::toString() const {
 	
 	// Build string
 	stream << Node::toString();
-	stream << " name='" << name << "'"
+	stream << " name='" << getName() << "'"
 	       << " location='" << location << "'";
 	if (!link.empty()) {
 		stream << " link='" << link << "'";

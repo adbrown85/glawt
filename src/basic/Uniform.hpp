@@ -28,7 +28,7 @@ struct UniformInfo {
  * @ingroup basic
  */
 class Uniform : public Node,
-                public Applicable, public Suppressable {
+                public Applicable, public Suppressable, public Nameable {
 public: // Core
 	Uniform(const Tag &tag);
 	virtual void associate();
@@ -39,10 +39,8 @@ public: // Core
 	virtual bool wasSuppressed() const;
 public: // Accessors and mutators
 	GLint getLocation() const;
-	string getName() const;
 	Program* getProgram() const;
 	void setLocation(GLint location);
-	void setName(const string &name);
 	void setProgram(Program *program);
 public: // Utilities
 	static map<string,UniformInfo> getUniformsFor(Program *program);
@@ -51,15 +49,13 @@ public: // Utilities
 protected:
 	GLint location;
 	Program *program;
-	string link, name, type;
+	string link, type;
 };
 
 
 inline GLint Uniform::getLocation() const {return location;}
-inline string Uniform::getName() const {return name;}
 inline Program* Uniform::getProgram() const {return program;}
 inline void Uniform::setLocation(GLint location) {this->location = location;}
-inline void Uniform::setName(const string &n) {name = n;}
 inline void Uniform::setProgram(Program *program) {this->program = program;}
 
 
