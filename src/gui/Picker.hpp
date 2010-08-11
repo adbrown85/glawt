@@ -7,36 +7,48 @@
 #ifndef PICKER_HPP
 #define PICKER_HPP
 #include "common.h"
-#include <cfloat>
-#include <climits>
-#include <typeinfo>
 #include "Manipulator.hpp"         // Pass to Painter, check if picked
-#include "Node.hpp"                // Checking depth
-#include "Painter.hpp"             // Paints items into pick buffers
-#define PICK_BUFFER_SIZE 32
+#include "Traverser.hpp"           // Traversing the subscene
+#include "Scout.hpp"               // Finding nodes in the subscene
+#include "Renderbuffer.hpp"
+#include "Choose.hpp"
+#include "UniformInt.hpp"
+#define PICKER_SUBSCENE "ui/pick.xml"
 using namespace std;
 
 
 /** @brief Determines which item is under the mouse cursor.
  * @ingroup gui
  */
-class Picker {
+class Picker : public Traverser {
 public:
 	Picker(Scene *scene, Canvas *canvas);
+	virtual ~Picker();
 	void addManipulators(list<Manipulator*> manipulators);
 	pair<GLuint,GLuint> pick(int x, int y);
+protected:
+	virtual void onApplicable(Node *node, Applicable *applicable);
+	virtual void onDrawable(Node *node, Drawable *drawable);
+	void renderHotspots(Node *node);
+	void openSubscene();
+	void prepareSubscene();
+	void destroySubscene();
+private:
+	list<Manipulator*> manipulators;
+	Scene *subscene;
+	Traverser *traverser;
+	Choose *choose;
+	UniformInt *uniform;
+	Renderbuffer *buffer;
+};
+
+
+/*
 protected:
 	pair<GLuint,GLuint> chooseItem();
 	void finish();
 	void initialize(int x, int y);
 	void storeIDsOfItems();
-private:
-	GLuint buf[PICK_BUFFER_SIZE];
-	map<GLuint,GLuint> ids;
-	Painter *painter;
-	Canvas *canvas;
-	Scene *scene;
-};
-
+*/
 
 #endif

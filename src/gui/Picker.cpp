@@ -7,13 +7,27 @@
 #include "Picker.hpp"
 
 
-Picker::Picker(Scene *scene, Canvas *canvas) {
+Picker::Picker(Scene *scene, Canvas *canvas) : Traverser(scene) {
 	
 	// Initialize fields
-	this->scene = scene;
-	this->canvas = canvas;
-	this->painter = new Painter(canvas, scene);
-	this->painter->setMode(GL_SELECT);
+	setCanvas(canvas);
+	
+	// Subscene
+	try {
+		openSubscene();
+		prepareSubscene();
+	} catch (Exception &ex) {
+		destroySubscene();
+		glog << "[Picker] Unable to open '" << PICKER_SUBSCENE << "'" << endl;
+		glog << "[Picker] Picking items with the mouse will not work." << endl;
+		glog << "[Picker] Try reinstalling Gander." << endl;
+	}
+}
+
+
+Picker::~Picker() {
+	
+	destroySubscene();
 }
 
 
@@ -22,156 +36,159 @@ void Picker::addManipulators(list<Manipulator*> manips) {
 	list<Manipulator*>::iterator it;
 	
 	for (it=manips.begin(); it!=manips.end(); ++it) {
-		painter->addManipulator(*it);
+		manipulators.push_back(*it);
 	}
 }
 
 
-/** Choose the item to return.
- * 
- * Manipulators are returned before shapes, and if more than one shape is 
- * picked, the closest one to the camera is chosen.
- */
-pair<GLuint,GLuint> Picker::chooseItem() {
+void Picker::onApplicable(Node *node, Applicable *applicable) {
 	
-	float depth, closestDepth;
-	Identifiable *identifiable;
-	Matrix rotation;
-	Shape *shape;
-	map<GLuint,GLuint>::iterator pi;
-	pair<GLuint,GLuint> closestPair;
+	Transform *transform;
 	
-	// Check for manipulator
-	for (pi=ids.begin(); pi!=ids.end(); ++pi) {
-		identifiable = Identifiable::findByID(pi->first);
-		if (dynamic_cast<Manipulator*>(identifiable))
-			return *pi;
+	// Ignore if nothing selectable
+	if (!node->areChildrenSelectable())
+		return;
+	
+	// Only apply transforms
+	transform = dynamic_cast<Transform*>(node);
+	if (transform != NULL) {
+		Traverser::onApplicable(node, applicable);
+	} else {
+		traverseChildren(node);
+	}
+}
+
+
+void Picker::onDrawable(Node *node, Drawable *drawable) {
+	
+	// Check if not visible
+	if (!drawable->isVisible())
+		return;
+	
+	// Check if not selectable
+	if (!drawable->isSelectable())
+		return;
+	
+	// Check if excluded
+	if (drawable->isExcluded())
+		return;
+	
+	// Do children first
+	traverseChildren(node);
+	
+	// Then draw it
+	uniform->setValue(drawable->getID());
+	traverser->start();
+	
+	// Draw manipulators
+	if (drawable->isSelected()) {
+		renderHotspots(node);
+	}
+}
+
+
+void Picker::renderHotspots(Node *node) {
+	
+	Transformable *transformable;
+	list<Manipulator*>::iterator it;
+	
+	// Convert to transformable
+	transformable = dynamic_cast<Transformable*>(node);
+	
+	// Set up
+	State::setMode(MODEL_MODE);
+	State::push();
+	choose->setChoice("hotspot");
+	
+	// Draw a cube at each hotspot
+	for (it=manipulators.begin(); it!=manipulators.end(); ++it) {
+		State::loadIdentity();
+		State::apply((*it)->getHotspotMatrix(transformable));
+		traverser->start();
 	}
 	
-	// Otherwise find closest to screen
-	closestDepth = FLT_MIN;
-	rotation = canvas->getCamera()->getRotation();
-	for (pi=ids.begin(); pi!=ids.end(); ++pi) {
-		identifiable = Identifiable::findByID(pi->first);
-		shape = dynamic_cast<Shape*>(identifiable);
-		if (shape == NULL)
-			break;
-		depth = (rotation * shape->getPosition()).z;
-		if (depth > closestDepth) {
-			closestDepth = depth;
-			closestPair = *pi;
-		}
-	}
-	return closestPair;
+	// Reset
+	choose->setChoice("cube");
+	State::pop();
 }
 
 
-/** Restores the original projection matrix. */
-void Picker::finish() {
-	
-	// Restore
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-}
-
-
-/** Initializes the viewport, pick buffer, and projection matrix. */
-void Picker::initialize(int x, int y) {
-	
-	GLint height, width, viewport[4];
-	
-	// Get size of render viewport
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	width = viewport[2];
-	height = viewport[3];
-	
-	// Create storage
-	glSelectBuffer(PICK_BUFFER_SIZE, buf);
-	glRenderMode(GL_SELECT);
-	glInitNames();
-	glPushName(0);
-	ids.clear();
-	
-	// Save render projection matrix
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	
-	// Setup the viewport for the pick buffer
-	gluPickMatrix((GLdouble)x, (GLdouble)height-y, 5.0, 5.0, viewport);
-	gluPerspective(30.0, (float)width/height, 0.1, 1000.0);
-}
-
-
-/** @return ID of item picked and shape it belongs to (UINT_MAX if nothing). */
+/** @return ID of item picked and shape it belongs to (0 if nothing). */
 pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	
-	// Pick an item
-	initialize(x, y);
-	painter->start();
-	finish();
-	storeIDsOfItems();
+	Vector result;
 	
-	// Return
-	if (ids.empty())
-		return pair<GLuint,GLuint>(UINT_MAX, UINT_MAX);
-	else if (ids.size() == 1)
-		return *(ids.begin());
-	else
-		return chooseItem();
+	// Clear buffer
+	choose->setChoice("clear");
+	traverser->start();
+	choose->setChoice("cube");
+	
+	// Traverse
+	getCanvas()->getCamera()->apply();
+	State::setMode(MODEL_MODE);
+	State::loadIdentity();
+	Traverser::start();
+	
+	// Read
+	result = buffer->read(x, getCanvas()->getHeight()-y);
+	return pair<GLuint,GLuint>(result.x,result.x);
 }
 
 
-/** Stores the IDs of the items picked.
- * 
- * A hit record is made up of at least four unsigned integers in the 
- * selection buffer, as shown below.  There will be one hit record for each 
- * item under the mouse cursor.  The exact number is returned by glRenderMode 
- * when switching back to GL_RENDER.
- * 
- * The first integer in a hit record is the number of IDs that were on the name 
- * stack when the item was drawn, which should always be one.  The second and 
- * third values are the minimum and maximum depth values at the time.  Finally, 
- * the IDs that were present on the name stack when the item was drawn are 
- * listed from bottom to top.  In other words, the item under the cursor will 
- * be the nth item in the list, where n is equal to the number of IDs.
- *   -------------
- *   | numOfIDs  |
- *   | minDepth  |
- *   | maxDepth  |
- *   | ids       |
- *   |    ...    |
- *   -------------
- * 
- * @throws Exception if a hit record with 0 item IDs was detected.
- */
-void Picker::storeIDsOfItems() {
+void Picker::openSubscene() {
 	
-	GLuint id, numOfIDs, *ptr, shapeID;
-	GLint numOfHitRecords;
+	// Initialize
+	subscene = NULL;
+	traverser = NULL;
 	
-	// Get number of items picked
-	numOfHitRecords = glRenderMode(GL_RENDER);
+	// Open
+	subscene = new Scene();
+	subscene->open(Resources::get(PICKER_SUBSCENE));
 	
-	// For each hit record
-	ptr = buf;
-	for (int i=0; i<numOfHitRecords; ++i) {
-		
-		// Get number of IDs in name stack
-		numOfIDs = *ptr;
-		if (numOfIDs == 0)
-			throw Exception("[Picker] Hit record with 0 item IDs detected!");
-		
-		// Find ID of shape that was drawn
-		ptr += 3;
-		shapeID = *ptr;
-		
-		// Record item picked with shape it was attached to
-		for (size_t j=0; j<numOfIDs; ++j) {
-			id = *ptr;
-			ptr++;
-		}
-		ids.insert(pair<GLuint,GLuint>(id, shapeID));
+	// Make traverser
+	traverser = new Traverser(subscene);
+}
+
+
+void Picker::prepareSubscene() {
+	
+	Node *node;
+	
+	// Prepare
+	subscene->prepare();
+	
+	// Find buffer node
+	node = Scout::search(subscene->getRoot(), "Renderbuffer");
+	buffer = dynamic_cast<Renderbuffer*>(node);
+	if (buffer == NULL) {
+		throw Exception("[Picker] Could not find Renderbuffer node.");
+	}
+	
+	// Find choose node
+	node = Scout::search(subscene->getRoot(), "Choose");
+	choose = dynamic_cast<Choose*>(node);
+	if (choose == NULL) {
+		throw Exception("[Picker] Could not find Choose node.");
+	}
+	
+	// Find uniform node
+	node = Scout::search(subscene->getRoot(), "UniformInt");
+	uniform = dynamic_cast<UniformInt*>(node);
+	if (uniform == NULL) {
+		throw Exception("[Picker] Could not find UniformInt node.");
+	}
+}
+
+
+void Picker::destroySubscene() {
+	
+	if (subscene != NULL) {
+		delete subscene;
+		subscene = NULL;
+	}
+	if (traverser != NULL) {
+		delete traverser;
+		traverser = NULL;
 	}
 }
 

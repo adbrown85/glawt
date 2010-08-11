@@ -1,0 +1,35 @@
+<!--
+ * pick.xml
+ * 
+ * Author
+ *     Andrew Brown <adb1413@rit.edu>
+-->
+
+
+<framebuffer>
+	<renderbuffer type="color" size="512" format="float" />
+	<renderbuffer type="depth" size="512" />
+	<program>
+		<shader file="pick.vert" />
+		<shader file="pick.frag" />
+		<uniform type="int" name="DrawableID" value="0" />
+		<uniform type="int" name="ParentID" value="0" />
+		<choose>
+			<branch name="clear">
+				<clear color="0 0 0 0" depth="1.0" />
+			</branch>
+			<branch name="cube">
+				<cube>
+					<uniform type="mat4" name="MVPMatrix" />
+				</cube>
+			</branch>
+			<branch name="hotspot">
+				<scale value="0.15">
+					<cube>
+						<uniform type="mat4" name="MVPMatrix" />
+					</cube>
+				</scale>
+			</branch>
+		</choose>
+	</program>
+</framebuffer>
