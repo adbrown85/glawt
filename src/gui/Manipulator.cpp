@@ -94,32 +94,57 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 /** Draws the manipulator around @e transformable in @e canvas. */
 void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	
-	Vector position;
-	Extent extent;
-	
 	// Make sure widget was loaded correctly
 	if (traverser == NULL)
 		return;
-	
-	// Compute position
-	extent = transformable->getExtent();
-	position = transformable->getPosition() + (extent.diagonal * offset);
 	
 	// Draw at position
 	State::setMode(MODEL_MODE);
 	State::push();
 	State::loadIdentity();
-	State::apply(getMatrix(position));
+	State::apply(getBaseMatrix(transformable));
 	traverser->start();
 	State::pop();
 }
 
 
-Matrix Manipulator::getMatrix(const Vector &value) {
+Vector Manipulator::getBase(Transformable *transformable) const {
 	
-	return Matrix(1.0, 0.0, 0.0,  +value.x,
-	              0.0, 1.0, 0.0,  +value.y,
-	              0.0, 0.0, 1.0,  +value.z,
+	Vector diagonal;
+	
+	// Compute base
+	diagonal = transformable->getExtent().diagonal;
+	return transformable->getPosition() + (diagonal * offset);
+}
+
+
+Matrix Manipulator::getBaseMatrix(Transformable *transformable) const {
+	
+	Vector base;
+	
+	// Compute and return as translation matrix
+	base = getBase(transformable);
+	return Matrix(1.0, 0.0, 0.0, base.x,
+	              0.0, 1.0, 0.0, base.y,
+	              0.0, 0.0, 1.0, base.z,
+	              0.0, 0.0, 0.0, 1.0);
+}
+
+
+Vector Manipulator::getHotspot(Transformable *transformable) const {
+	
+	return getBase(transformable) + offset;
+}
+
+
+Matrix Manipulator::getHotspotMatrix(Transformable *transformable) const {
+	
+	Vector hotspot;
+	
+	hotspot = getHotspot(transformable);
+	return Matrix(1.0, 0.0, 0.0, hotspot.x,
+	              0.0, 1.0, 0.0, hotspot.y,
+	              0.0, 0.0, 1.0, hotspot.z,
 	              0.0, 0.0, 0.0, 1.0);
 }
 

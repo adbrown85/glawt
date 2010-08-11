@@ -29,8 +29,11 @@ public:
 	virtual void draw(Transformable *transformable, Canvas *canvas) const;
 	static float findPixelFactor(Canvas *canvas, GLuint shapeID);
 	virtual Vector getAxis() const;
-	static Matrix getMatrix(const Vector &value);
+	virtual Vector getBase(Transformable *transformable) const;
+	virtual Matrix getBaseMatrix(Transformable *transformable) const;
 	virtual int getCommand() const;
+	virtual Vector getHotspot(Transformable *transformable) const;
+	virtual Matrix getHotspotMatrix(Transformable *transformable) const;
 	virtual bool isEnabled() const;
 	virtual void setEnabled(bool enabled);
 	virtual void setDelegate(Delegate *delegate);
