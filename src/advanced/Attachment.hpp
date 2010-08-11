@@ -57,7 +57,7 @@ inline void Attachment::setLocation(GLuint loc) {this->location = loc;}
 /** Sets the user-defined name of the attachment. */
 inline void Attachment::setIndex(GLint index) {this->index = index;}
 
-/** Sets the user-defined name of the attachment. */
+/** Sets the whether the attachment is "color" or "depth". */
 inline void Attachment::setType(const string &t) {type = t;}
 
 
