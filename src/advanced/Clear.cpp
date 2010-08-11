@@ -10,15 +10,15 @@
 /** Initialize the three color components. */
 Clear::Clear(const Tag &tag) : Node(tag) {
 	
-	bool hasColor=true, hasDepth=true;
-	
 	// Color
+	hasColor = true;
 	if (!tag.get("color", color, false)) {
 		hasColor = false;
 		color = Vector(0.0, 0.0, 0.0, 0.0);
 	}
 	
 	// Depth
+	hasDepth = true;
 	if (!tag.get("depth", depth, false)) {
 		hasDepth = false;
 		depth = 1.0;
@@ -38,8 +38,10 @@ Clear::Clear(const Tag &tag) : Node(tag) {
 /** Clears the current framebuffer with the node's color. */
 void Clear::apply() {
 	
-	glClearColor(color.x, color.y, color.z, color.w);
-	glClearDepth(depth);
+	if (hasColor)
+		glClearColor(color.x, color.y, color.z, color.w);
+	if (hasDepth)
+		glClearDepth(depth);
 	glClear(mask);
 }
 

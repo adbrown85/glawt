@@ -34,6 +34,7 @@ public:
 	virtual string toString() const;
 private:
 	GLbitfield mask;
+	bool hasColor, hasDepth;
 	float depth;
 	Vector color;
 };
