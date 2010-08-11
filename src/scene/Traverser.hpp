@@ -20,6 +20,7 @@ using namespace std;
 class Traverser {
 public:
 	Traverser(Scene *scene);
+	virtual ~Traverser() {}
 	virtual void start();
 protected:
 	void findDependents();
