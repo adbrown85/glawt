@@ -29,23 +29,25 @@ struct UniformInfo {
  */
 class Uniform : public Node,
                 public Applicable, public Suppressable {
-public:
+public: // Core
 	Uniform(const Tag &tag);
 	virtual void associate();
 	virtual void apply() = 0;
 	virtual void finalize();
+	virtual void remove() {};
+	virtual string toString() const;
+	virtual bool wasSuppressed() const;
+public: // Accessors and mutators
 	GLint getLocation() const;
 	string getName() const;
 	Program* getProgram() const;
-	static map<string,UniformInfo> getUniformsFor(Program *program);
-	static string getTypeNameFor(GLenum type);
-	static bool isMatrixType(GLenum type);
-	virtual void remove() {};
 	void setLocation(GLint location);
 	void setName(const string &name);
 	void setProgram(Program *program);
-	virtual string toString() const;
-	virtual bool wasSuppressed() const;
+public: // Utilities
+	static map<string,UniformInfo> getUniformsFor(Program *program);
+	static string getTypeNameFor(GLenum type);
+	static bool isMatrixType(GLenum type);
 protected:
 	GLint location;
 	Program *program;
