@@ -19,19 +19,20 @@ using namespace std;
 class Attachment : public Attachable {
 public:
 	Attachment(const Tag &tag, const string &type);
+	virtual void associate();
 	virtual void attach() = 0;
-	static Attachment* find(Node *node, const string &name);
+	virtual string toString() const;
+public: // Accessors and mutators
 	Framebuffer* getFramebuffer() const;
 	GLint getIndex() const;
 	GLuint getLocation() const;
 	virtual string getName() const;
 	virtual void setIndex(GLint index);
 	virtual void setLocation(GLuint location);
-	virtual string toString() const;
-protected:
-	virtual void associate();
 	virtual void setName(const string &name);
 	virtual void setType(const string &type);
+public: // Utilities
+	static Attachment* find(Node *node, const string &name);
 private:
 	Framebuffer *framebuffer;
 	GLint index;
