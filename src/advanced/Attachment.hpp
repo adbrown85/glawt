@@ -27,6 +27,7 @@ public: // Accessors and mutators
 	GLint getIndex() const;
 	GLuint getLocation() const;
 	virtual string getName() const;
+	virtual string getType() const;
 	virtual void setIndex(GLint index);
 	virtual void setLocation(GLuint location);
 	virtual void setName(const string &name);
@@ -51,6 +52,9 @@ inline GLuint Attachment::getLocation() const {return location;}
 
 /** @return User-defined name identify the attachment. */
 inline string Attachment::getName() const {return name;}
+
+/** @return Either @e color or @e depth. */
+inline string Attachment::getType() const {return type;}
 
 /** Sets the location the attachment should be attached to. */
 inline void Attachment::setLocation(GLuint loc) {this->location = loc;}
