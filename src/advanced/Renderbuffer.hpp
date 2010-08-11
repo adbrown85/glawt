@@ -8,6 +8,7 @@
 #define RENDERBUFFER_HPP
 #include "common.h"
 #include "Attachment.hpp"
+#include "Canvas.hpp"
 using namespace std;
 
 

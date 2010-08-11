@@ -28,7 +28,9 @@ Renderbuffer::Renderbuffer(const Tag &tag) : Attachment(tag) {
 	}
 	
 	// Size
-	tag.get("size", size);
+	if (!tag.get("size", size, false)) {
+		size = CANVAS_WIDTH;
+	}
 }
 
 
