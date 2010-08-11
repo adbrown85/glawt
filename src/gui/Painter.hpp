@@ -31,22 +31,16 @@ public:
 	virtual ~Painter();
 	void addManipulator(Manipulator *manipulator);
 	virtual void start();
-	void setMode(GLenum mode);
 protected:
-	virtual void onApplicable(Node *node, Applicable *applicable);
 	virtual void onDrawable(Node *node, Drawable *drawable);
 private:
 	static bool tried;
-	GLenum mode;
 	static Scene *outline;
 	vector<Manipulator*> manipulators;
 };
 
 /** Stores a manipulator to paint for selected items. */
 inline void Painter::addManipulator(Manipulator *m) {manipulators.push_back(m);}
-
-/** Sets the rendering mode. */
-inline void Painter::setMode(GLenum mode) {this->mode = mode;}
 
 
 #endif
