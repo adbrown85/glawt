@@ -11,27 +11,21 @@
  * 
  * @throws NodeException if @e type not recognized.
  */
-Renderbuffer::Renderbuffer(const Tag &tag) : Attachment(tag,"color") {
+Renderbuffer::Renderbuffer(const Tag &tag) : Attachment(tag) {
 	
-	string type, format;
+	string format;
 	
 	// Type
-	tag.get("type", type);
-	if (type == "color") {
+	if (getType() == "color") {
 		tag.get("format", format, false, true);
 		if (format == "float") {
 			setFormat(GL_RGBA32F);
 		} else {
 			setFormat(GL_RGBA);
 		}
-	} else if (type == "depth") {
-		setFormat(GL_DEPTH_COMPONENT);
 	} else {
-		NodeException e(tag);
-		e << "[Renderbuffer] Type not recognized.";
-		throw e;
+		setFormat(GL_DEPTH_COMPONENT);
 	}
-	setType(type);
 	
 	// Size
 	tag.get("size", size);

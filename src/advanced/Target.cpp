@@ -8,11 +8,20 @@
 
 
 /** Initializes the @e link and @e name attributes. */
-Target::Target(const Tag &tag) : Attachment(tag,"color") {
+Target::Target(const Tag &tag) : Attachment(tag) {
 	
 	tag.get("link", link, true, false);
+	
+	// Check name
 	if (getName().empty())
 		setName(link);
+	
+	// Check type
+	if (getType() != "color") {
+		NodeException e(getTag());
+		e << "[Target] Type must be color.";
+		throw e;
+	}
 }
 
 

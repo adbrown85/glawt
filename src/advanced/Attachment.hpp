@@ -18,7 +18,7 @@ using namespace std;
  */
 class Attachment : public Attachable {
 public:
-	Attachment(const Tag &tag, const string &type);
+	Attachment(const Tag &tag);
 	virtual void associate();
 	virtual void attach() = 0;
 	virtual string toString() const;

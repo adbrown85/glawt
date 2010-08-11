@@ -7,19 +7,27 @@
 #include "Attachment.hpp"
 
 
-/** Initializes the name of the attachment.
+/** Initialize attributes.
  * 
- * @param tag XML tag with optional @e name attribute.
- * @param type Either "color" or "depth"
+ * @throws NodeException if @e type is not "color" or "depth".
  */
-Attachment::Attachment(const Tag &tag,
-                       const string &type) : Attachable(tag) {
+Attachment::Attachment(const Tag &tag) : Attachable(tag) {
 	
-	// Initialize
+	// From tag
 	tag.get("name", name, false, false);
+	if (!tag.get("type", type, false, true))
+		type = "color";
+	
+	// Others
 	location = -1;
 	framebuffer = NULL;
-	this->type = type;
+	
+	// Check
+	if (type != "color" && type != "depth") {
+		NodeException e(getTag());
+		e << "[Attachment] Type must be color or depth.";
+		throw e;
+	}
 }
 
 
