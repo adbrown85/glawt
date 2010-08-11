@@ -39,7 +39,7 @@ GLint Outputs::addAttachment(Attachment *attachment) {
 	}
 	
 	// Otherwise try to add it
-	if (attachments.size() == getMaxDrawBuffers()) {
+	if (attachments.size() == Configuration::getMaxDrawBuffers()) {
 		return -1;
 	} else {
 		attachments.push_back(attachment);
@@ -85,7 +85,7 @@ void Outputs::finalize() {
 	}
 	
 	// Initialize array
-	n = getMaxDrawBuffers();
+	n = Configuration::getMaxDrawBuffers();
 	locations = new GLenum[n];
 	for (int i=0; i<n; ++i) {
 		locations[i] = GL_NONE;
@@ -113,16 +113,6 @@ Outputs* Outputs::find(Node *node) {
 		node = node->getParent();
 	}
 	return NULL;
-}
-
-
-/** Returns the maximum amount of items in the outputs list. */
-GLuint Outputs::getMaxDrawBuffers() {
-	
-	GLint value;
-	
-	glGetIntegerv(GL_MAX_DRAW_BUFFERS, &value);
-	return static_cast<GLuint>(value);
 }
 
 

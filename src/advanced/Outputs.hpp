@@ -9,6 +9,7 @@
 #include "common.h"
 #include <algorithm>                    // Finding attachments
 #include "Attachment.hpp"
+#include "Configuration.hpp"            // Max draw buffers
 using namespace std;
 
 
@@ -22,7 +23,6 @@ public:
 	virtual GLint addAttachment(Attachment *attachment);
 	virtual void apply();
 	static Outputs* find(Node *node);
-	static GLuint getMaxDrawBuffers();
 	virtual void remove() {}
 	virtual string toString() const;
 protected:
