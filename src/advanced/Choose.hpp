@@ -24,7 +24,7 @@ public:
 	virtual void finalize();
 	virtual bool setAttribute(pair<string,string> attribute);
 	virtual string toString() const;
-public:
+public: // Accessors and mutators
 	virtual string getChoice() const;
 	virtual bool hasChoice() const;
 	virtual void setChoice(const string &choice);
