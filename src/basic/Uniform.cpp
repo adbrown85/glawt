@@ -145,7 +145,7 @@ string Uniform::toString() const {
 	stream << Node::toString();
 	stream << " name='" << getName() << "'"
 	       << " location='" << location << "'";
-	if (!link.empty()) {
+	if (hasLink()) {
 		stream << " link='" << link << "'";
 	}
 	return stream.str();
