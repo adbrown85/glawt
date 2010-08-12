@@ -8,6 +8,7 @@
 
 <framebuffer>
 	<target link="shadow_name" />
+	<clear />
 	<program>
 		<shader file="shadow-cast.vert" />
 		<shader file="shadow-cast.frag" />
