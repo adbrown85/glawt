@@ -30,6 +30,8 @@ public:
 	virtual Matrix getLightMatrix();
 	virtual void getLightMatrix(GLfloat array[16]);
 	virtual string toString() const;
+public:    // Utilities
+	static Light* search(Node *node, const string &name);
 private:
 	float ambient, diffuse, specular;
 	Traverser *traverser;

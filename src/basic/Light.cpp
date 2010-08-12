@@ -117,3 +117,23 @@ string Light::toString() const {
 	return stream.str();
 }
 
+
+Light* Light::search(Node *node, const string &name) {
+	
+	Light *light;
+	Node::iterator it;
+	queue<Node*> Q;
+	
+	Q.push(node);
+	while (!Q.empty()) {
+		node = Q.front();
+		light = dynamic_cast<Light*>(node);
+		if ((light != NULL) && (light->getName() == name))
+			return light;
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push((*it));
+		Q.pop();
+	}
+	return NULL;
+}
+
