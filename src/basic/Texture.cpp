@@ -22,12 +22,11 @@ Texture::Texture(GLenum type, const Tag &tag) : Node(tag), Nameable(tag) {
 }
 
 
-/** Applies the texture. */
+/** Binds the texture. */
 void Texture::apply() {
 	
-	// Enable texturing on unit
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(type, handle);
+	activate();
+	bind();
 }
 
 
@@ -42,7 +41,6 @@ void Texture::associate() {
 		unit = texture->getUnit() + 1;
 	
 	// Generate
-	glActiveTexture(GL_TEXTURE0 + unit);
 	glGenTextures(1, &handle);
 }
 
@@ -53,7 +51,7 @@ GLint Texture::getFootprint() const {
 	GLint fp;
 	
 	if (isCompressed()) {
-		glActiveTexture(GL_TEXTURE0 + unit);
+		activate();
 		glGetTexLevelParameteriv(type,0,GL_TEXTURE_COMPRESSED_IMAGE_SIZE,&fp);
 	} else {
 		fp = getRawFootprint();
@@ -67,7 +65,7 @@ bool Texture::isCompressed() const {
 	
 	GLint compressed;
 	
-	glActiveTexture(GL_TEXTURE0 + unit);
+	activate();
 	glGetTexLevelParameteriv(type, 0, GL_TEXTURE_COMPRESSED, &compressed);
 	return compressed;
 }

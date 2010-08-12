@@ -31,8 +31,8 @@ void Texture3D::finalize() {
 	dataset->load();
 	
 	// Bind the texture to the right unit
-	glActiveTexture(GL_TEXTURE0 + getUnit());
-	glBindTexture(GL_TEXTURE_3D, getHandle());
+	activate();
+	bind();
 	
 	// Pass the texture to OpenGL
 	tellStartingCompression();

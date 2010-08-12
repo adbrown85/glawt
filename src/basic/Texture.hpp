@@ -45,11 +45,20 @@ public:    // Accessors
 public:    // Utilities
 	static Texture* find(Node *node);
 	static list<Texture*> search(Node *node);
+protected: // Helpers
+	void activate() const;
+	void bind() const;
 private:
 	GLenum type;
 	GLuint handle, unit;
 	string filename;
 };
+
+/** Activates the correct texture unit. */
+inline void Texture::activate() const {glActiveTexture(GL_TEXTURE0 + unit);}
+
+/** Binds the texture to the active texture unit. */
+inline void Texture::bind() const {glBindTexture(type, handle);}
 
 /** @return Path to the file this texture was loaded from. */
 inline string Texture::getFilename() const {return filename;}
