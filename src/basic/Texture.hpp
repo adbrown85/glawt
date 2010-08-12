@@ -33,7 +33,7 @@ public:
 	virtual void associate();
 	virtual void remove() {}
 	virtual string toString() const;
-public: // Accessors
+public:    // Accessors
 	virtual string getFilename() const;
 	virtual GLint getFootprint() const;
 	virtual GLuint getHandle() const;
@@ -42,7 +42,7 @@ public: // Accessors
 	virtual GLuint getUnit() const;
 	virtual bool hasFilename() const;
 	virtual bool isCompressed() const;
-public: // Utilities
+public:    // Utilities
 	static Texture* find(Node *node);
 	static list<Texture*> search(Node *node);
 private:
