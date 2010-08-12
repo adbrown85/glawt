@@ -82,6 +82,22 @@ bool Texture::isCompressed() const {
 }
 
 
+/** Forms a string using the Texture's attributes. */
+string Texture::toString() const {
+	
+	ostringstream stream;
+	
+	stream << Node::toString();
+	if (hasName())
+		stream << " name='" << getName() << "'";
+	stream << " unit='" << unit << "'"
+	       << " handle='" << handle << "'";
+	if (!filename.empty())
+		stream << " file='" << filename << "'";
+	return stream.str();
+}
+
+
 /** Discover all texture nodes under a node. */
 list<Texture*> Texture::search(Node *node) {
 	
@@ -103,21 +119,5 @@ list<Texture*> Texture::search(Node *node) {
 		Q.pop();
 	}
 	return T;
-}
-
-
-/** Forms a string using the Texture's attributes. */
-string Texture::toString() const {
-	
-	ostringstream stream;
-	
-	stream << Node::toString();
-	if (hasName())
-		stream << " name='" << getName() << "'";
-	stream << " unit='" << unit << "'"
-	       << " handle='" << handle << "'";
-	if (!filename.empty())
-		stream << " file='" << filename << "'";
-	return stream.str();
 }
 

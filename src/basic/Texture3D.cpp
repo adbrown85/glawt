@@ -58,23 +58,6 @@ void Texture3D::finalize() {
 }
 
 
-/** Finds a 3D texture above a node. */
-Texture3D* Texture3D::find(Node *node, const string &name) {
-	
-	Texture3D *texture3d;
-	
-	while (node != NULL) {
-		texture3d = dynamic_cast<Texture3D*>(node);
-		if (texture3d != NULL && texture3d->getName()==name) {
-			return texture3d;
-		} else {
-			node = node->getParent();
-		}
-	}
-	return NULL;
-}
-
-
 /** How much memory the texture uses if uncompressed. */
 GLint Texture3D::getRawFootprint() const {
 	
@@ -131,5 +114,22 @@ string Texture3D::toString() const {
 	stream << Texture::toString();
 	stream << " compress=" << compress?'T':'F';
 	return stream.str();
+}
+
+
+/** Finds a 3D texture above a node. */
+Texture3D* Texture3D::find(Node *node, const string &name) {
+	
+	Texture3D *texture3d;
+	
+	while (node != NULL) {
+		texture3d = dynamic_cast<Texture3D*>(node);
+		if (texture3d != NULL && texture3d->getName()==name) {
+			return texture3d;
+		} else {
+			node = node->getParent();
+		}
+	}
+	return NULL;
 }
 
