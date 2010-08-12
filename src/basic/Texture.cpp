@@ -5,7 +5,6 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Texture.hpp"
-vector<GLenum> Texture::active_units;
 
 
 /** Creates a new texture from an XML tag.
@@ -30,7 +29,6 @@ void Texture::apply() {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glEnable(type);
 	glBindTexture(type, handle);
-	active_units.push_back(type);
 }
 
 
@@ -81,41 +79,12 @@ bool Texture::isCompressed() const {
 }
 
 
-/** Temporarily disables texturing on all active units. */
-void Texture::pause() {
-	
-	int count;
-	
-	// Disable each unit
-	count = active_units.size();
-	for (int i=0; i<count; ++i) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glDisable(active_units[i]);
-	}
-}
-
-
 /** Removes the texture. */
 void Texture::remove() {
 	
 	// Disable texturing on unit
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glDisable(type);
-	active_units.pop_back();
-}
-
-
-/** Renables texturing on all active units. */
-void Texture::restart() {
-	
-	int count;
-	
-	// Enable each unit
-	count = active_units.size();
-	for (int i=0; i<count; ++i) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glEnable(active_units[i]);
-	}
 }
 
 

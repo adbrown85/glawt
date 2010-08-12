@@ -42,17 +42,12 @@ public: // Accessors
 	virtual int getUnit() const;
 	virtual bool isCompressed() const;
 public: // Utilities
-	static void pause();
-	static void restart();
-	static int getNumberOfActiveUnits();
 	static list<Texture*> search(Node *node);
 protected:
 	GLenum type;
 	GLuint handle;
 	int unit;
 	string filename;
-private:
-	static vector<GLenum> active_units;
 };
 
 /** @return Path to the file this texture was loaded from. */
@@ -60,9 +55,6 @@ inline string Texture::getFilename() const {return filename;}
 
 /** @return OpenGL's unique identifier for this texture. */
 inline GLuint Texture::getHandle() const {return handle;}
-
-/** @return Number of texture units being used. */
-inline int Texture::getNumberOfActiveUnits() {return active_units.size();}
 
 /** @return GL_TEXTURE_1D, GL_TEXTURE_2D, or GL_TEXTURE_3D. */
 inline GLenum Texture::getType() const {return type;}
