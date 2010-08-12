@@ -18,7 +18,7 @@ Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 	tag.get("from", from, true, false);
 	
 	// Set name
-	name = from;
+	setName(from);
 	
 	// Subscene
 	subscene = NULL;

@@ -25,7 +25,8 @@ using namespace std;
  * @see Texture2D
  * @see Texture3D
  */
-class Texture : public Node, public Applicable {
+class Texture : public Node,
+                public Applicable, public Nameable {
 public:
 	Texture(GLenum type, const Tag &tag);
 	virtual void apply();
@@ -37,7 +38,6 @@ public: // Accessors
 	virtual GLint getFootprint() const;
 	virtual GLuint getHandle() const;
 	virtual GLint getRawFootprint() const = 0;
-	virtual string getName() const;
 	virtual GLenum getType() const;
 	virtual int getUnit() const;
 	virtual bool isCompressed() const;
@@ -50,7 +50,7 @@ protected:
 	GLenum type;
 	GLuint handle;
 	int unit;
-	string filename, name;
+	string filename;
 private:
 	static vector<GLenum> active_units;
 };
@@ -60,9 +60,6 @@ inline string Texture::getFilename() const {return filename;}
 
 /** @return OpenGL's unique identifier for this texture. */
 inline GLuint Texture::getHandle() const {return handle;}
-
-/** @return User's unique identifier for this texture. */
-inline string Texture::getName() const {return name;}
 
 /** @return Number of texture units being used. */
 inline int Texture::getNumberOfActiveUnits() {return active_units.size();}

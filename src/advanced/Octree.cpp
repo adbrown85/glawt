@@ -129,7 +129,7 @@ string Octree::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << name << "'"
+	stream << " name='" << getName() << "'"
 	       << " unit='" << unit << "'"
 	       << " handle='" << handle << "'"
 	       << " link='" << link << "'"

@@ -13,14 +13,13 @@ vector<GLenum> Texture::active_units;
  * @param [in] type 1D, 2D, or 3D.
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
-Texture::Texture(GLenum type, const Tag &tag) : Node(tag) {
+Texture::Texture(GLenum type, const Tag &tag) : Node(tag), Nameable(tag) {
 	
 	// Initialize
 	this->unit = 0;
 	this->handle = 0;
 	this->type = type;
 	tag.get("file", filename, false, false);
-	tag.get("name", name, false, false);
 }
 
 
@@ -150,8 +149,8 @@ string Texture::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	if (!name.empty())
-		stream << " name='" << name << "'";
+	if (hasName())
+		stream << " name='" << getName() << "'";
 	stream << " unit='" << unit << "'"
 	       << " handle='" << handle << "'";
 	if (!filename.empty())
