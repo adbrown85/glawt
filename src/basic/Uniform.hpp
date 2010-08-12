@@ -42,6 +42,7 @@ public: // Accessors and mutators
 	GLint getLocation() const;
 	Program* getProgram() const;
 	bool hasLink() const;
+	bool hasLocation() const;
 	void setLocation(GLint location);
 	void setProgram(Program *program);
 public: // Utilities
@@ -58,6 +59,7 @@ inline string Uniform::getLink() const {return link;}
 inline GLint Uniform::getLocation() const {return location;}
 inline Program* Uniform::getProgram() const {return program;}
 inline bool Uniform::hasLink() const {return !link.empty();}
+inline bool Uniform::hasLocation() const {return location != -1;}
 inline void Uniform::setLocation(GLint location) {this->location = location;}
 inline void Uniform::setProgram(Program *program) {this->program = program;}
 
