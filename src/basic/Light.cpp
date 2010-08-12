@@ -76,9 +76,9 @@ Matrix Light::getLightMatrix() {
 	                  0.0, 0.0, 0.0, 1.0);
 	
 	return biasMatrix
-	         * State::getProjectionMatrix()
+	         * State::getModelMatrix()
 	         * getTransformationInverse()
-	         * State::getModelMatrix();
+	         * State::getProjectionMatrix();
 }
 
 
