@@ -7,8 +7,12 @@
 
 
 <!-- Lights -->
-<translate value="0 0.5 15">
-	<light name="spot" ambient="0.4" diffuse="0.6" specular="1.0" />
+<translate value="0 2 2">
+	<rotate axis="0 1 0" angle="-45">
+		<rotate axis="1 0 0" angle="-45">
+			<light name="spot" ambient="0.4" diffuse="0.6" specular="1.0" />
+		</rotate>
+	</rotate>
 </translate>
 
 <!-- Objects -->
