@@ -8,6 +8,7 @@
 #define UNIFORMMATRIX_HPP
 #include "Uniform.hpp"
 #include "State.hpp"
+#include "Light.hpp"
 #define DEFAULT_MODEL_MATRIX_NAME "MMatrix"
 #define DEFAULT_MODELVIEW_MATRIX_NAME "MVMatrix"
 #define DEFAULT_PROJECTION_MATRIX_NAME "PMatrix"
@@ -83,17 +84,20 @@ class UniformMatrix : public Uniform {
 public:
 	UniformMatrix(const Tag &tag);
 	virtual void apply();
+	virtual void associate();
 	static bool hasChild(Node *node, const string &name);
 	static bool isDefault(const string &name, GLenum type);
 	static bool isDefaultName(const string &name);
 	virtual string toString() const;
 protected:
+	void findLight();
 	void setTypeFromAs();
 	void setTypeFromName();
 private:
 	GLfloat value[16];
 	MatrixType matrixType;
 	string as, of;
+	Light *light;
 };
 
 

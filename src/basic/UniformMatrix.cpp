@@ -17,8 +17,32 @@ UniformMatrix::UniformMatrix(const Tag &tag) : Uniform(tag) {
 		setTypeFromName();
 	}
 	
-	// Of for light
+	// Light
+	light = NULL;
 	tag.get("of", of, false, false);
+}
+
+
+/** Finds the light. */
+void UniformMatrix::associate() {
+	
+	Uniform::associate();
+	
+	if (!of.empty()) {
+		findLight();
+	}
+}
+
+
+/** @throws NodeException if light named @e of cannot be found. */
+void UniformMatrix::findLight() {
+	
+	light = Light::search(Node::findRoot(this), of);
+	if (light == NULL) {
+		NodeException e(getTag());
+		e << "[UniformMatrix] Light '" << of << "' could not be found.";
+		throw e;
+	}
 }
 
 
@@ -142,12 +166,12 @@ void UniformMatrix::apply() {
 		State::getIdentityMatrix(value);
 		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
-/*
 	case LIGHT:
-		light->getLightMatrix(value);
-		glUniformMatrix4fv(getLocation(), 1, false, value);
+		if (light != NULL) {
+			light->getLightMatrix(value);
+			glUniformMatrix4fv(getLocation(), 1, false, value);
+		}
 		break;
-*/
 	default:
 		NodeException e(getTag());
 		e << "[UniformMatrix] Matrix type not supported.";
