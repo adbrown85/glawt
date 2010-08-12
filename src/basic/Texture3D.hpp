@@ -32,8 +32,13 @@ public:    // Accessors
 	virtual int getDepth() const;
 public:    // Utilities
 	static Texture3D* find(Node *node, const string &name);
+protected: // Helpers
+	void tellFootprint();
+	void tellStartingCompression();
+	void tellStoppingCompression();
 private:
 	bool compress;
+	clock_t ticks;
 	Dataset *dataset;
 };
 

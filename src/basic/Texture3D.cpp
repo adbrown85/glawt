@@ -27,8 +27,6 @@ Texture3D::~Texture3D() {
 /** Loads the dataset into texture memory. */
 void Texture3D::finalize() {
 	
-	clock_t ticks;
-	
 	// Load the dataset
 	dataset->load();
 	
@@ -37,10 +35,7 @@ void Texture3D::finalize() {
 	glBindTexture(GL_TEXTURE_3D, getHandle());
 	
 	// Pass the texture to OpenGL
-	if (compress) {
-		ticks = clock();
-		glog << "[Texture3D] Compressing texture... ";
-	}
+	tellStartingCompression();
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
 	             getInternalFormat(),     // Internal format
@@ -51,16 +46,8 @@ void Texture3D::finalize() {
 	             GL_LUMINANCE,            // Format
 	             dataset->getType(),      // Type
 	             dataset->getData());     // Data
-	if (compress) {
-		glog << ((double)(clock()-ticks))/CLOCKS_PER_SEC << "s" << endl;
-		if (isCompressed()) {
-			glog << "[Texture3D] Successfully compressed texture." << endl;
-		} else {
-			glog << "[Texture3D] Did not compress texture." << endl;
-		}
-	}
-	glog << "[Texture3D] Footprint = " 
-	     << ((double)getFootprint() / 1048576) << " MB" << endl;
+	tellStoppingCompression();
+	tellFootprint();
 	
 	// Set parameters
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -99,6 +86,40 @@ GLint Texture3D::getRawFootprint() const {
 GLenum Texture3D::getInternalFormat() const {
 	
 	return compress ? GL_COMPRESSED_RGB : GL_LUMINANCE;
+}
+
+
+/** Inform user we're starting to compress the texture. */
+void Texture3D::tellStartingCompression() {
+	
+	if (compress) {
+		ticks = clock();
+		glog << "[Texture3D] Compressing texture... ";
+	}
+}
+
+
+/** Inform user we finished compressing the texture and show the time. */
+void Texture3D::tellStoppingCompression() {
+	
+	if (compress) {
+		glog << ((double)(clock()-ticks))/CLOCKS_PER_SEC << "s" << endl;
+		if (isCompressed()) {
+			glog << "[Texture3D] Successfully compressed texture." << endl;
+		} else {
+			glog << "[Texture3D] Did not compress texture." << endl;
+		}
+	}
+}
+
+
+/** Inform user of the footprint in megabytes. */
+void Texture3D::tellFootprint() {
+	
+	double footprintInMB;
+	
+	footprintInMB = (double)getFootprint() / 1048576;
+	glog << "[Texture3D] Footprint = " << footprintInMB << " MB" << endl;
 }
 
 
