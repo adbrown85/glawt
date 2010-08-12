@@ -31,20 +31,13 @@ void UniformSampler::apply() {
 
 void UniformSampler::associate() {
 	
-	Node *current;
 	Texture *texture;
 	
 	// Program
 	Uniform::associate();
 	
 	// Get unit of linked texture
-	current = parent;
-	while (current != NULL) {
-		texture = dynamic_cast<Texture*>(current);
-		if (texture != NULL && texture->getName().compare(link) == 0)
-			break;
-		current = current->getParent();
-	}
+	texture = Texture::find(this, getLink());
 	if (texture == NULL) {
 		NodeException e(tag);
 		e << "[UniformSampler] Could not find texture with '" << link
