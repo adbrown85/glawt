@@ -22,11 +22,10 @@ Texture::Texture(GLenum type, const Tag &tag) : Node(tag), Nameable(tag) {
 }
 
 
-/** Binds the texture. */
+/** Enables the texture. */
 void Texture::apply() {
 	
-	activate();
-	bind();
+	enable();
 }
 
 

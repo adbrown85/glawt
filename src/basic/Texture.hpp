@@ -48,6 +48,7 @@ public:    // Utilities
 protected: // Helpers
 	void activate() const;
 	void bind() const;
+	void enable() const;
 private:
 	GLenum type;
 	GLuint handle, unit;
@@ -59,6 +60,9 @@ inline void Texture::activate() const {glActiveTexture(GL_TEXTURE0 + unit);}
 
 /** Binds the texture to the active texture unit. */
 inline void Texture::bind() const {glBindTexture(type, handle);}
+
+/** Enables the texture by activating and binding it. */
+inline void Texture::enable() const {activate(); bind();}
 
 /** @return Path to the file this texture was loaded from. */
 inline string Texture::getFilename() const {return filename;}

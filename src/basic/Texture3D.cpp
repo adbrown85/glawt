@@ -30,11 +30,8 @@ void Texture3D::finalize() {
 	// Load the dataset
 	dataset->load();
 	
-	// Bind the texture to the right unit
-	activate();
-	bind();
-	
-	// Pass the texture to OpenGL
+	// Pass it to OpenGL
+	enable();
 	tellStartingCompression();
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
