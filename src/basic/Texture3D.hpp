@@ -22,14 +22,16 @@ public:
 	Texture3D(const Tag &tag);
 	virtual ~Texture3D();
 	virtual void finalize();
-	static Texture3D* find(Node *node, const string &name);
+	virtual string toString() const;
+public:    // Accessors
 	virtual Dataset* getDataset();
 	virtual GLenum getInternalFormat() const;
 	virtual GLint getRawFootprint() const;
 	virtual int getWidth() const;
 	virtual int getHeight() const;
 	virtual int getDepth() const;
-	virtual string toString() const;
+public:    // Utilities
+	static Texture3D* find(Node *node, const string &name);
 private:
 	bool compress;
 	Dataset *dataset;

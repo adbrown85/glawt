@@ -20,14 +20,15 @@ class Texture2D : public Texture {
 public:
 	Texture2D(const Tag &tag);
 	virtual void finalize();
-	static Texture2D* find(Node *node, const string &name);
+	virtual string toString() const;
+public:    // Accessors
 	virtual GLint getRawFootprint() const;
 	virtual int getSize() const;
-	virtual string toString() const;
+public:    // Utilities
+	static Texture2D* find(Node *node, const string &name);
 private:
 	GLenum format;
 	int size;
-	string formatText;
 };
 
 /** @return width of the texture. */
