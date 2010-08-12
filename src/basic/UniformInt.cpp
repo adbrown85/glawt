@@ -7,8 +7,7 @@
 #include "UniformInt.hpp"
 
 
-UniformInt::UniformInt(const Tag &tag) :
-                       Uniform(tag) {
+UniformInt::UniformInt(const Tag &tag) : Uniform(tag) {
 	
 	tag.get("value", value, false);
 }
