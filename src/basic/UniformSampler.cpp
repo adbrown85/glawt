@@ -8,10 +8,9 @@
 
 
 /** @throws NodeException if @e link attribute is not specified. */
-UniformSampler::UniformSampler(const Tag &tag) :
-                               Uniform(tag) {
+UniformSampler::UniformSampler(const Tag &tag) : Uniform(tag) {
 	
-	tag.get("value", value, false);
+	// Check link
 	if (!hasLink()) {
 		NodeException e(tag);
 		e << "[UniformSampler] Sampler types require link to texture.";
@@ -20,6 +19,7 @@ UniformSampler::UniformSampler(const Tag &tag) :
 }
 
 
+/** Sets the value in the program. */
 void UniformSampler::apply() {
 	
 	if (location == -1)
@@ -29,6 +29,7 @@ void UniformSampler::apply() {
 }
 
 
+/** Finds the correct texture and then sets @e value to its unit. */
 void UniformSampler::associate() {
 	
 	Texture *texture;
@@ -47,6 +48,7 @@ void UniformSampler::associate() {
 }
 
 
+/** @return String comprised of the node's attributes. */
 string UniformSampler::toString() const {
 	
 	ostringstream stream;
