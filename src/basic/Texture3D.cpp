@@ -34,7 +34,6 @@ void Texture3D::finalize() {
 	
 	// Bind the texture to the right unit
 	glActiveTexture(GL_TEXTURE0 + getUnit());
-	glEnable(GL_TEXTURE_3D);
 	glBindTexture(GL_TEXTURE_3D, getHandle());
 	
 	// Pass the texture to OpenGL

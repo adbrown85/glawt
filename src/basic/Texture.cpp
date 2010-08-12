@@ -27,7 +27,6 @@ void Texture::apply() {
 	
 	// Enable texturing on unit
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glEnable(type);
 	glBindTexture(type, handle);
 }
 
@@ -53,7 +52,6 @@ void Texture::associate() {
 	
 	// Generate
 	glActiveTexture(GL_TEXTURE0 + unit);
-	glEnable(type);
 	glGenTextures(1, &handle);
 }
 
@@ -81,15 +79,6 @@ bool Texture::isCompressed() const {
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glGetTexLevelParameteriv(type, 0, GL_TEXTURE_COMPRESSED, &compressed);
 	return compressed;
-}
-
-
-/** Removes the texture. */
-void Texture::remove() {
-	
-	// Disable texturing on unit
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glDisable(type);
 }
 
 

@@ -31,7 +31,7 @@ public:
 	Texture(GLenum type, const Tag &tag);
 	virtual void apply();
 	virtual void associate();
-	virtual void remove();
+	virtual void remove() {}
 	virtual string toString() const;
 public: // Accessors
 	virtual string getFilename() const;
