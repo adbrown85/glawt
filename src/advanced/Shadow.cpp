@@ -17,8 +17,12 @@ Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 	tag.get("of", of, true, false);
 	tag.get("from", from, true, false);
 	
-	// Set name
-	setName(from);
+	// Check name
+	if (!hasName()) {
+		NodeException e(getTag());
+		e << "[Shadow] Must have name.";
+		throw e;
+	}
 	
 	// Subscene
 	subscene = NULL;
@@ -100,21 +104,11 @@ void Shadow::findGroup() {
  */
 void Shadow::findLight() {
 	
-	Node *node;
-	
 	// Find the node
-	node = Nameable::search(Node::findRoot(this), from);
-	if (node == NULL) {
-		NodeException e(tag);
-		e << "[Shadow] Light named '" << from << "' not found.";
-		throw e;
-	}
-	
-	// Make sure it's a light
-	light = dynamic_cast<Light*>(node);
+	light = Light::search(Node::findRoot(this), from);
 	if (light == NULL) {
 		NodeException e(tag);
-		e << "[Shadow] Node named '" << from << "' is not a light.";
+		e << "[Shadow] Light named '" << from << "' not found.";
 		throw e;
 	}
 }
@@ -149,7 +143,7 @@ void Shadow::openSubscene() {
 	
 	// Replace attributes of some nodes
 	target = Target::search(subscene->getRoot());
-	target->setLink(from);
+	target->setLink(getName());
 	clone = Clone::search(subscene->getRoot());
 	clone->setOf(of);
 }
