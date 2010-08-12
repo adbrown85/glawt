@@ -40,7 +40,7 @@ void UniformFloat::associate() {
 	node = Nameable::search(findRoot(this), linkNameKey.first);
 	if (node == NULL) {
 		NodeException e(tag);
-		e << "[UniformVector] Could not find node named '" << link << "'.";
+		e << "[UniformVector] Could not find '" << linkNameKey.first << "'.";
 		throw e;
 	}
 	
