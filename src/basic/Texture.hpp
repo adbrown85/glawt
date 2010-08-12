@@ -39,14 +39,13 @@ public: // Accessors
 	virtual GLuint getHandle() const;
 	virtual GLint getRawFootprint() const = 0;
 	virtual GLenum getType() const;
-	virtual int getUnit() const;
+	virtual GLuint getUnit() const;
 	virtual bool isCompressed() const;
 public: // Utilities
 	static list<Texture*> search(Node *node);
 protected:
 	GLenum type;
-	GLuint handle;
-	int unit;
+	GLuint handle, unit;
 	string filename;
 };
 
@@ -60,7 +59,7 @@ inline GLuint Texture::getHandle() const {return handle;}
 inline GLenum Texture::getType() const {return type;}
 
 /** @return %Texture unit holding the data. */
-inline int Texture::getUnit() const {return unit;}
+inline GLuint Texture::getUnit() const {return unit;}
 
 
 #endif
