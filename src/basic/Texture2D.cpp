@@ -36,23 +36,6 @@ Texture2D::Texture2D(const Tag &tag) : Texture(GL_TEXTURE_2D,tag) {
 }
 
 
-/** Generates the texture.
- * 
- * Is done here rather than @c finalize() because other nodes might need to get 
- * the texture's handle.
- */
-void Texture2D::associate() {
-	
-	// Find unit
-	Texture::associate();
-	
-	// Generate
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glEnable(GL_TEXTURE_2D);
-	glGenTextures(1, &handle);
-}
-
-
 /** Finds a %Texture2D with a specific name.
  * 
  * @param node Node to start looking.
@@ -83,8 +66,8 @@ void Texture2D::finalize() {
 	GLenum pixelFormat;
 	
 	// Load the image or specify defaults
-	if (!filename.empty()) {
-		image = ImageFactory::create(filename);
+	if (hasFilename()) {
+		image = ImageFactory::create(getFilename());
 		format = image->getFormat();
 		size = image->getWidth();
 		pixels = image->getData();

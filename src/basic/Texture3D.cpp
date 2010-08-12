@@ -10,7 +10,7 @@
 /** Creates the texture and underlying dataset. */
 Texture3D::Texture3D(const Tag &tag) : Texture(GL_TEXTURE_3D, tag) {
 	
-	dataset = new Dataset(filename);
+	dataset = new Dataset(getFilename());
 	if (!tag.get("compress", compress, false)) {
 		compress = false;
 	}
@@ -33,10 +33,9 @@ void Texture3D::finalize() {
 	dataset->load();
 	
 	// Bind the texture to the right unit
-	glActiveTexture(GL_TEXTURE0 + unit);
+	glActiveTexture(GL_TEXTURE0 + getUnit());
 	glEnable(GL_TEXTURE_3D);
-	glGenTextures(1, &handle);
-	glBindTexture(GL_TEXTURE_3D, handle);
+	glBindTexture(GL_TEXTURE_3D, getHandle());
 	
 	// Pass the texture to OpenGL
 	if (compress) {

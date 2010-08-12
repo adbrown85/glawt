@@ -32,7 +32,7 @@ void Texture::apply() {
 }
 
 
-/** Finds out which texture unit to use by looking for texture ancestors. */
+/** Finds out which texture unit to use and generates the texture object. */
 void Texture::associate() {
 	
 	Node *current;
@@ -50,6 +50,11 @@ void Texture::associate() {
 	// Change unit
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
+	
+	// Generate
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glEnable(type);
+	glGenTextures(1, &handle);
 }
 
 

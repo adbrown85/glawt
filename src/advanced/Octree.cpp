@@ -82,10 +82,9 @@ void Octree::load() {
 	store(root, 0, 0);
 	
 	// Create the texture
-	glGenTextures(1, &handle);
-	glActiveTexture(GL_TEXTURE0 + unit);
+	glActiveTexture(GL_TEXTURE0 + getUnit());
 	glEnable(GL_TEXTURE_1D);
-	glBindTexture(GL_TEXTURE_1D, handle);
+	glBindTexture(GL_TEXTURE_1D, getHandle());
 	glTexImage1D(GL_TEXTURE_1D,          // target
 	             0,                      // level
 	             GL_R8UI,                // internal format
@@ -129,10 +128,8 @@ string Octree::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << getName() << "'"
-	       << " unit='" << unit << "'"
-	       << " handle='" << handle << "'"
-	       << " link='" << link << "'"
+	stream << Texture::toString();
+	stream << " link='" << link << "'"
 	       << " threshold='" << threshold << "'"
 	       << " size='" << size << "'"
 	       << " height='" << height << "'";

@@ -40,10 +40,11 @@ public: // Accessors
 	virtual GLint getRawFootprint() const = 0;
 	virtual GLenum getType() const;
 	virtual GLuint getUnit() const;
+	virtual bool hasFilename() const;
 	virtual bool isCompressed() const;
 public: // Utilities
 	static list<Texture*> search(Node *node);
-protected:
+private:
 	GLenum type;
 	GLuint handle, unit;
 	string filename;
@@ -60,6 +61,9 @@ inline GLenum Texture::getType() const {return type;}
 
 /** @return %Texture unit holding the data. */
 inline GLuint Texture::getUnit() const {return unit;}
+
+/** @return True if the texture was given a filename. */
+inline bool Texture::hasFilename() const {return !filename.empty();}
 
 
 #endif

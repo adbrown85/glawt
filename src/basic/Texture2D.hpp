@@ -19,7 +19,6 @@ using namespace std;
 class Texture2D : public Texture {
 public:
 	Texture2D(const Tag &tag);
-	virtual void associate();
 	virtual void finalize();
 	static Texture2D* find(Node *node, const string &name);
 	virtual GLint getRawFootprint() const;
