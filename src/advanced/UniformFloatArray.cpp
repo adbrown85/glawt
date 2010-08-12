@@ -46,13 +46,13 @@ UniformFloatArray::~UniformFloatArray() {
 void UniformFloatArray::apply() {
 	
 	// Check if not in program
-	if (location == -1)
+	if (!hasLocation())
 		return;
 	
 	// Set values in program
 	calculator->setCanvas(getCanvas());
 	calculator->run(calculation, count, values);
-	glUniform1fv(location, count, values);
+	glUniform1fv(getLocation(), count, values);
 	fireEvent(NodeEvent(this, NodeEvent::MODIFY));
 }
 
@@ -127,7 +127,7 @@ void UniformFloatArray::finalize() {
 		return;
 	
 	// Find out how big the array is
-	catalog = Uniform::getUniformsFor(program);
+	catalog = Uniform::getUniformsFor(getProgram());
 	it = catalog.find(getName());
 	if (it != catalog.end()) {
 		count = it->second.count;

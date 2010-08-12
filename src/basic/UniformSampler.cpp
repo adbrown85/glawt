@@ -22,10 +22,8 @@ UniformSampler::UniformSampler(const Tag &tag) : Uniform(tag) {
 /** Sets the value in the program. */
 void UniformSampler::apply() {
 	
-	if (location == -1)
-		return;
-	
-	glUniform1i(location, value);
+	if (hasLocation())
+		glUniform1i(getLocation(), value);
 }
 
 

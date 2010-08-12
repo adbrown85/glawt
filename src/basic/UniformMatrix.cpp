@@ -114,38 +114,38 @@ void UniformMatrix::setTypeFromName() {
 
 void UniformMatrix::apply() {
 	
-	if (location == -1)
+	if (!hasLocation())
 		return;
 	
 	switch (matrixType) {
 	case MODEL:
 		State::getModelMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 	case MODELVIEW:
 		State::getModelViewMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 	case PROJECTION:
 		State::getProjectionMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 	case MODELVIEW_PROJECTION:
 		State::getModelViewProjectionMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 	case NORMAL:
 		State::getNormalMatrix(value);
-		glUniformMatrix3fv(location, 1, false, value);
+		glUniformMatrix3fv(getLocation(), 1, false, value);
 		break;
 	case IDENTITY:
 		State::getIdentityMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 /*
 	case LIGHT:
 		light->getLightMatrix(value);
-		glUniformMatrix4fv(location, 1, false, value);
+		glUniformMatrix4fv(getLocation(), 1, false, value);
 		break;
 */
 	default:

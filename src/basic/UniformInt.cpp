@@ -16,8 +16,8 @@ UniformInt::UniformInt(const Tag &tag) :
 
 void UniformInt::apply() {
 	
-	if (location != -1)
-		glUniform1i(location, value);
+	if (hasLocation())
+		glUniform1i(getLocation(), value);
 }
 
 

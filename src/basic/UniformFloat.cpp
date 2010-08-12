@@ -16,8 +16,8 @@ UniformFloat::UniformFloat(const Tag &tag) :
 
 void UniformFloat::apply() {
 	
-	if (location != -1)
-		glUniform1f(location, value);
+	if (hasLocation())
+		glUniform1f(getLocation(), value);
 }
 
 
@@ -30,11 +30,11 @@ void UniformFloat::associate() {
 	string linkValue;
 	
 	// Doesn't have link
-	if (link.empty())
+	if (!hasLink())
 		return;
 	
 	// Split up the link
-	linkNameKey = Text::split(link, '.');
+	linkNameKey = Text::split(getLink(), '.');
 	
 	// Find the link
 	node = Nameable::search(findRoot(this), linkNameKey.first);
@@ -48,7 +48,7 @@ void UniformFloat::associate() {
 	linkValue = node->getAttribute(linkNameKey.second);
 	if (linkValue.empty()) {
 		NodeException e(tag);
-		e << "[UniformVector] Value for '" << link << "' is empty.";
+		e << "[UniformVector] Value for '" << getLink() << "' is empty.";
 		throw e;
 	}
 	

@@ -41,6 +41,7 @@ public: // Accessors and mutators
 	string getLink() const;
 	GLint getLocation() const;
 	Program* getProgram() const;
+	string getType() const;
 	bool hasLink() const;
 	bool hasLocation() const;
 	void setLocation(GLint location);
@@ -49,7 +50,7 @@ public: // Utilities
 	static map<string,UniformInfo> getUniformsFor(Program *program);
 	static string getTypeNameFor(GLenum type);
 	static bool isMatrixType(GLenum type);
-protected:
+private:
 	GLint location;
 	Program *program;
 	string link, type;
@@ -58,6 +59,7 @@ protected:
 inline string Uniform::getLink() const {return link;}
 inline GLint Uniform::getLocation() const {return location;}
 inline Program* Uniform::getProgram() const {return program;}
+inline string Uniform::getType() const {return type;}
 inline bool Uniform::hasLink() const {return !link.empty();}
 inline bool Uniform::hasLocation() const {return location != -1;}
 inline void Uniform::setLocation(GLint location) {this->location = location;}
