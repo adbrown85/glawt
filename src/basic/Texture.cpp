@@ -130,3 +130,24 @@ Texture* Texture::find(Node *node) {
 	return NULL;
 }
 
+
+/** Finds the first texture above @e node with @e name. */
+Texture* Texture::find(Node *node, const string &name) {
+	
+	Texture *texture;
+	
+	// Check input
+	if (node == NULL)
+		return NULL;
+	
+	// Look for texture above node
+	node = node->getParent();
+	while (node != NULL) {
+		texture = dynamic_cast<Texture*>(node);
+		if ((texture != NULL) && (texture->getName() == name))
+			return texture;
+		node = node->getParent();
+	}
+	return NULL;
+}
+
