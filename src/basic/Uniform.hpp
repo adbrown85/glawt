@@ -38,6 +38,7 @@ public: // Core
 	virtual string toString() const;
 	virtual bool wasSuppressed() const;
 public: // Accessors and mutators
+	string getLink() const;
 	GLint getLocation() const;
 	Program* getProgram() const;
 	void setLocation(GLint location);
@@ -52,7 +53,7 @@ protected:
 	string link, type;
 };
 
-
+inline string Uniform::getLink() const {return link;}
 inline GLint Uniform::getLocation() const {return location;}
 inline Program* Uniform::getProgram() const {return program;}
 inline void Uniform::setLocation(GLint location) {this->location = location;}
