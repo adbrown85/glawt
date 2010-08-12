@@ -6,9 +6,7 @@
  */
 #include "State.hpp"
 GLuint State::mode=MODEL_MODE;
-stack<Matrix> State::mStack;
-stack<Matrix> State::vStack;
-stack<Matrix> State::pStack;
+MatrixStack State::mStack, State::vStack, State::pStack;
 
 
 void State::apply(const Matrix &matrix) {
@@ -31,22 +29,13 @@ void State::loadIdentity() {
 	
 	switch (mode) {
 	case MODEL_MODE:
-		if (mStack.empty())
-			mStack.push(Matrix());
-		else
-			mStack.top() = Matrix();
+		mStack.top() = Matrix();
 		break;
 	case VIEW_MODE:
-		if (vStack.empty())
-			vStack.push(Matrix());
-		else
-			vStack.top() = Matrix();
+		vStack.top() = Matrix();
 		break;
 	case PROJECTION_MODE:
-		if (pStack.empty())
-			pStack.push(Matrix());
-		else
-			pStack.top() = Matrix();
+		pStack.top() = Matrix();
 		break;
 	}
 }
@@ -56,13 +45,13 @@ void State::push() {
 	
 	switch (mode) {
 	case MODEL_MODE:
-		mStack.push(mStack.top());
+		mStack.push();
 		break;
 	case VIEW_MODE:
-		vStack.push(vStack.top());
+		vStack.push();
 		break;
 	case PROJECTION_MODE:
-		pStack.push(pStack.top());
+		pStack.push();
 		break;
 	}
 }

@@ -7,8 +7,7 @@
 #ifndef STATE_HPP
 #define STATE_HPP
 #include "common.h"
-#include <stack>
-#include "Matrix.hpp"
+#include "MatrixStack.hpp"
 using namespace std;
 
 
@@ -42,9 +41,7 @@ public: // Accessors
 	static void getViewMatrix(GLfloat array[16]);
 private:
 	static GLuint mode;
-	static stack<Matrix> mStack;
-	static stack<Matrix> vStack;
-	static stack<Matrix> pStack;
+	static MatrixStack mStack, vStack, pStack;
 };
 
 
