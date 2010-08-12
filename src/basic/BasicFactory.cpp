@@ -46,6 +46,7 @@ void BasicFactory::install() {
 	kinds["usampler1d"] = SAMPLER;
 	kinds["usampler2d"] = SAMPLER;
 	kinds["usampler3d"] = SAMPLER;
+	kinds["sampler2dshadow"] = SAMPLER;
 	kinds["vec3"] = VECTOR;
 	kinds["vec4"] = VECTOR;
 }
