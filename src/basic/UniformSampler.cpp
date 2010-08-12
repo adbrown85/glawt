@@ -12,7 +12,7 @@ UniformSampler::UniformSampler(const Tag &tag) :
                                Uniform(tag) {
 	
 	tag.get("value", value, false);
-	if (link.empty()) {
+	if (!hasLink()) {
 		NodeException e(tag);
 		e << "[UniformSampler] Sampler types require link to texture.";
 		throw e;
@@ -40,8 +40,7 @@ void UniformSampler::associate() {
 	texture = Texture::find(this, getLink());
 	if (texture == NULL) {
 		NodeException e(tag);
-		e << "[UniformSampler] Could not find texture with '" << link
-		  << "' as name.";
+		e << "[UniformSampler] Could not find texture '" << getLink() << "'";
 		throw e;
 	}
 	value = texture->getUnit();
