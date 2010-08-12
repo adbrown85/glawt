@@ -30,20 +30,22 @@ public:
 	Texture(GLenum type, const Tag &tag);
 	virtual void apply();
 	virtual void associate();
+	virtual void remove();
+	virtual string toString() const;
+public: // Accessors
 	virtual string getFilename() const;
 	virtual GLint getFootprint() const;
 	virtual GLuint getHandle() const;
 	virtual GLint getRawFootprint() const = 0;
 	virtual string getName() const;
-	static int getNumberOfActiveUnits();
 	virtual GLenum getType() const;
 	virtual int getUnit() const;
 	virtual bool isCompressed() const;
+public: // Utilities
 	static void pause();
-	virtual void remove();
 	static void restart();
+	static int getNumberOfActiveUnits();
 	static list<Texture*> search(Node *node);
-	virtual string toString() const;
 protected:
 	GLenum type;
 	GLuint handle;
