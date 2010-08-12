@@ -85,7 +85,8 @@ void Texture2D::finalize() {
 	}
 	
 	// Create the texture
-	glBindTexture(GL_TEXTURE_2D, handle);
+	glActiveTexture(GL_TEXTURE0 + getUnit());
+	glBindTexture(GL_TEXTURE_2D, getHandle());
 	glTexImage2D(GL_TEXTURE_2D,                   // target
 	             0,                               // level
 	             format,                          // internalFormat
