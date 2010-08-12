@@ -19,8 +19,6 @@ in vec3 MCNormal;
 
 /* Outputs */
 out float LightIntensity;
-out vec3 TexCoord;
-out vec3 Normal;
 
 
 void main() {
