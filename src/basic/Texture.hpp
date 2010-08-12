@@ -43,6 +43,7 @@ public: // Accessors
 	virtual bool hasFilename() const;
 	virtual bool isCompressed() const;
 public: // Utilities
+	static Texture* find(Node *node);
 	static list<Texture*> search(Node *node);
 private:
 	GLenum type;

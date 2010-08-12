@@ -34,19 +34,10 @@ void Texture::apply() {
 /** Finds out which texture unit to use and generates the texture object. */
 void Texture::associate() {
 	
-	Node *current;
-	Texture *texture=NULL;
+	Texture *texture;
 	
-	// Find the closest Texture ancestor
-	current = this->parent;
-	while (current != NULL) {
-		texture = dynamic_cast<Texture*>(current);
-		if (texture != NULL)
-			break;
-		current = current->getParent();
-	}
-	
-	// Change unit
+	// Find the right unit
+	texture = Texture::find(this);
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
 	
@@ -119,5 +110,26 @@ list<Texture*> Texture::search(Node *node) {
 		Q.pop();
 	}
 	return T;
+}
+
+
+/** Finds the first texture above node. */
+Texture* Texture::find(Node *node) {
+	
+	Texture *texture;
+	
+	// Check input
+	if (node == NULL)
+		return NULL;
+	
+	// Look for texture above node
+	node = node->getParent();
+	while (node != NULL) {
+		texture = dynamic_cast<Texture*>(node);
+		if (texture != NULL)
+			return texture;
+		node = node->getParent();
+	}
+	return NULL;
 }
 
