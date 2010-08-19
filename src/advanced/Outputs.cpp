@@ -33,7 +33,7 @@ GLint Outputs::addAttachment(Attachment *attachment) {
 	list<Attachment*>::iterator it;
 	
 	// First check if it's already there
-	it = std::find(attachments.begin(), attachments.end(), attachment);
+	it = find(attachments.begin(), attachments.end(), attachment);
 	if (it != attachments.end()) {
 		return distance(attachments.begin(), it);
 	}
