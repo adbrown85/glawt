@@ -141,13 +141,13 @@ void Picker::searchSubscene() {
 	Node *node;
 	
 	// Find buffer node
-	node = Scout::search(getSubsceneRoot(), "Renderbuffer");
+	node = Scout<Renderbuffer>::search(getSubsceneRoot());
 	buffer = dynamic_cast<Renderbuffer*>(node);
 	if (buffer == NULL)
 		throw Exception("[Picker] Could not find Renderbuffer node.");
 	
 	// Find choose node
-	node = Scout::search(getSubsceneRoot(), "Choose");
+	node = Scout<Choose>::search(getSubsceneRoot());
 	choose = dynamic_cast<Choose*>(node);
 	if (choose == NULL)
 		throw Exception("[Picker] Could not find Choose node.");
