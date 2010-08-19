@@ -44,8 +44,6 @@ public:    // Accessors
 	virtual bool hasFilename() const;
 	virtual bool isCompressed() const;
 public:    // Utilities
-	static Texture* find(Node *node);
-	static Texture* find(Node *node, const string &name);
 	static list<Texture*> search(Node *node);
 protected: // Helpers
 	void activate() const;

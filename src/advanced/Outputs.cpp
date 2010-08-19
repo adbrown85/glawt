@@ -99,23 +99,6 @@ void Outputs::finalize() {
 }
 
 
-/** Finds an %Outputs node above another node. */
-Outputs* Outputs::find(Node *node) {
-	
-	Outputs *outputs;
-	
-	node = node->getParent();
-	while (node != NULL) {
-		outputs = dynamic_cast<Outputs*>(node);
-		if (outputs != NULL) {
-			return outputs;
-		}
-		node = node->getParent();
-	}
-	return NULL;
-}
-
-
 /** @return String comprised of the object's attributes. */
 string Outputs::toString() const {
 	

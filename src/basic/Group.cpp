@@ -21,41 +21,6 @@ Group::Group(const Tag &tag) : Node(tag), Nameable(tag) {
 }
 
 
-/** Finds any group above @e node. */
-Group* Group::find(Node *node) {
-	
-	Group *group;
-	
-	while (node != NULL) {
-		group = dynamic_cast<Group*>(node);
-		if (group != NULL)
-			return group;
-		node = node->getParent();
-	}
-	return NULL;
-}
-
-
-/** Finds a group in the same scene as @e node with @e name. */
-Group* Group::find(Node *node, const string &name) {
-	
-	Group *group;
-	Node *root;
-	Node::iterator it;
-	
-	// Look through
-	root = Node::findRoot(node);
-	for (it=root->begin(); it!=root->end(); ++it) {
-		group = dynamic_cast<Group*>(*it);
-		if (group == NULL)
-			continue;
-		if (group->getName() == name)
-			return group;
-	}
-	return NULL;
-}
-
-
 /** @return String comprised of the node's attributes. */
 string Group::toString() const {
 	

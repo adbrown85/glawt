@@ -68,7 +68,6 @@ public:
 	virtual bool areChildrenSelectable() const;
 	virtual void apply();
 	virtual void enqueue(const string &type, Attachable *item);
-	static Framebuffer* find(Node *node);
 	virtual GLuint getHandle() const;
 	virtual void remove();
 	virtual string toString() const;

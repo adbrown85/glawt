@@ -77,23 +77,6 @@ void Program::finalize() {
 }
 
 
-/** Finds a program by looking upwards starting at <i>node</i>. */
-Program* Program::find(Node* node) {
-	
-	Program *program;
-	
-	// Look for a Program ancestor
-	while (node != NULL) {
-		program = dynamic_cast<Program*>(node);
-		if (program != NULL) {
-			return program;
-		}
-		node = node->getParent();
-	}
-	return NULL;
-}
-
-
 /** Prints the log for this program. */
 void Program::log() const {
 	

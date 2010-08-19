@@ -24,8 +24,6 @@ public:
 	virtual void apply();
 	virtual void remove() {}
 	virtual string toString() const;
-public: // Utilities
-	static Outputs* find(Node *node);
 protected:
 	virtual void associate();
 	virtual void finalize();

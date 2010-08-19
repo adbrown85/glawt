@@ -24,8 +24,6 @@ public:
 public:    // Accessors
 	virtual GLint getRawFootprint() const;
 	virtual int getSize() const;
-public:    // Utilities
-	static Texture2D* find(Node *node, const string &name);
 private:
 	GLenum format;
 	int size;

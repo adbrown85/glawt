@@ -59,22 +59,6 @@ void Scale::applyTo(Matrix &matrix) {
 }
 
 
-Scale* Scale::find(Node *node) {
-	
-	Scale *scale;
-	
-	node = node->getParent();
-	while (node != NULL) {
-		scale = dynamic_cast<Scale*>(node);
-		if (scale != NULL) {
-			return scale;
-		}
-		node = node->getParent();
-	}
-	return NULL;
-}
-
-
 /** Restores state before transformation was applied. */
 void Scale::remove() {
 	

@@ -29,7 +29,6 @@ public:
 	virtual void apply();
 	virtual void associate();
 	virtual void finalize();
-	static Program* find(Node* node);
 	static Program* getCurrent();
 	virtual GLuint getHandle() const;
 	virtual void log() const;

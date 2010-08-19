@@ -23,7 +23,6 @@ public:
 	void add(const Vector &B);
 	virtual void apply();
 	virtual void applyTo(Matrix &matrix);
-	static Translate* find(Node *node);
 	virtual Vector getValue() const;
 	virtual void remove();
 	virtual bool setAttribute(pair<string,string> attribute);

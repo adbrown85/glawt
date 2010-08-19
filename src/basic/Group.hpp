@@ -20,8 +20,6 @@ public:
 	Group(const Tag &tag);
 	virtual bool areChildrenTraversable() const;
 	virtual bool areChildrenPreparable() const;
-	static Group* find(Node *node);
-	static Group* find(Node *node, const string &name);
 	virtual string toString() const;
 };
 

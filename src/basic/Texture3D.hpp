@@ -30,8 +30,6 @@ public:    // Accessors
 	virtual int getWidth() const;
 	virtual int getHeight() const;
 	virtual int getDepth() const;
-public:    // Utilities
-	static Texture3D* find(Node *node, const string &name);
 protected: // Helpers
 	void tellFootprint();
 	void tellStartingCompression();

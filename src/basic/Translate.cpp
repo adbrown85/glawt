@@ -40,23 +40,6 @@ void Translate::apply() {
 }
 
 
-/** Finds a translate node above another. */
-Translate* Translate::find(Node *node) {
-	
-	Node *curr;
-	Translate *translate;
-	
-	curr = node->getParent();
-	while (curr != NULL) {
-		translate = dynamic_cast<Translate*>(curr);
-		if (translate != NULL)
-			return translate;
-		curr = curr->getParent();
-	}
-	return NULL;
-}
-
-
 /** Add the translate to the matrix before sorting. */
 void Translate::applyTo(Matrix &matrix) {
 	

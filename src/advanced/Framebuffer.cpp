@@ -115,27 +115,6 @@ void Framebuffer::finalize() {
 }
 
 
-/** Finds a %Framebuffer above a node.
- * 
- * @param node Node to start looking.
- * @return pointer Pointer to the %Framebuffer.
- */
-Framebuffer* Framebuffer::find(Node *node) {
-	
-	Framebuffer *ptr;
-	
-	// Search
-	node = node->getParent();
-	while (node != NULL) {
-		ptr = dynamic_cast<Framebuffer*>(node);
-		if (ptr != NULL)
-			return ptr;
-		node = node->getParent();
-	}
-	return NULL;
-}
-
-
 /** @return Structure holding state for one type of attachment. 
  * 
  * @throws NodeException if type not supported.

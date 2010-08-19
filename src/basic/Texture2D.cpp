@@ -118,25 +118,3 @@ string Texture2D::toString() const {
 	return stream.str();
 }
 
-
-/** Finds a %Texture2D with a specific name.
- * 
- * @param node Node to start looking.
- * @param name Name of the node as specified by the user.
- */
-Texture2D* Texture2D::find(Node *node, const string &name) {
-	
-	Texture2D *texture2D;
-	
-	// Search
-	node = node->getParent();
-	while (node != NULL) {
-		texture2D = dynamic_cast<Texture2D*>(node);
-		if ((texture2D != NULL) && (texture2D->getName() == name)) {
-			return texture2D;
-		}
-		node = node->getParent();
-	}
-	return NULL;
-}
-

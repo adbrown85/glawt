@@ -68,8 +68,6 @@ public:
 	virtual int getSize() const;
 	virtual void setLink(const string &link);
 	virtual string toString() const;
-public:
-	static Target* search(Node *node);
 protected:
 	void associate();
 private:
