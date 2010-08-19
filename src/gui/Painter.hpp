@@ -9,14 +9,14 @@
 #include "common.h"
 #include <vector>
 #include "Manipulator.hpp"         // Drawing manipulators for selection
-#include "Matrix.hpp"              // Rotating camera
 #include "Node.hpp"                // Traversing the scene graph
 #include "Program.hpp"             // Disable GLSL for outlines
 #include "Texture.hpp"             // Pausing and restarting texturing
 #include "Transform.hpp"           // Drawing manipulators for selection
-#include "Traverser.hpp"
 #include "Scene.hpp"               // Rotating camera and accessing root node
 #include "Vector.hpp"
+#include "SubsceneUser.hpp"
+#define PAINTER_SUBSCENE "ui/outline.xml"
 using namespace std;
 
 
@@ -25,17 +25,14 @@ using namespace std;
  * 
  * @warning Does not flush to the buffer.
  */
-class Painter : public Traverser {
+class Painter : public Traverser, public SubsceneUser {
 public:
 	Painter(Canvas *canvas, Scene *scene);
-	virtual ~Painter();
 	void addManipulator(Manipulator *manipulator);
 	virtual void start();
 protected:
 	virtual void onDrawable(Node *node, Drawable *drawable);
 private:
-	static bool tried;
-	static Scene *outline;
 	vector<Manipulator*> manipulators;
 };
 

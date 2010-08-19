@@ -25,8 +25,6 @@ Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 	}
 	
 	// Subscene
-	subscene = NULL;
-	traverser = NULL;
 	try {
 		openSubscene();
 	} catch (Exception &ex) {
@@ -34,20 +32,6 @@ Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 		NodeException e(getTag());
 		e << "[Shadow] Could not open subscene.";
 		throw e;
-	}
-}
-
-
-/** Destroys the subscene opened by the shadow. */
-Shadow::~Shadow() {
-	
-	if (subscene != NULL) {
-		delete subscene;
-		subscene = NULL;
-	}
-	if (traverser != NULL) {
-		delete traverser;
-		traverser = NULL;
 	}
 }
 
@@ -138,13 +122,12 @@ void Shadow::openSubscene() {
 	Clone *clone;
 	
 	// Open
-	subscene = new Scene();
-	subscene->open(Resources::get("ui/shadow-cast.xml"));
+	SubsceneUser::openSubscene(SHADOW_SUBSCENE);
 	
 	// Replace attributes of some nodes
-	target = Target::search(subscene->getRoot());
+	target = Target::search(getSubsceneRoot());
 	target->setLink(getName());
-	clone = Clone::search(subscene->getRoot());
+	clone = Clone::search(getSubsceneRoot());
 	clone->setOf(of);
 }
 
@@ -153,12 +136,9 @@ void Shadow::openSubscene() {
 void Shadow::prepareSubscene() {
 	
 	// Prepare
-	addChild(subscene->getRoot());
-	subscene->prepare();
-	removeChild(subscene->getRoot());
-	
-	// Create traverser
-	traverser = new Traverser(subscene);
+	addChild(getSubsceneRoot());
+	SubsceneUser::prepareSubscene();
+	removeChild(getSubsceneRoot());
 }
 
 
@@ -167,6 +147,10 @@ void Shadow::render() {
 	
 	Matrix matrix;
 	
+	// Check subscene
+	if (!isSubsceneOpened())
+		return;
+	
 	// Set up view from light
 	matrix = light->getTransformationInverse();
 	State::setMode(MODEL_MODE);
@@ -174,7 +158,7 @@ void Shadow::render() {
 	State::apply(matrix);
 	
 	// Run the scene
-	traverser->start();
+	traverseSubscene();
 	
 	// Remove view from light
 	State::pop();

@@ -14,20 +14,14 @@ Picker::Picker(Scene *scene, Canvas *canvas) : Traverser(scene) {
 	
 	// Subscene
 	try {
-		openSubscene();
+		openSubscene(PICKER_SUBSCENE);
 		prepareSubscene();
+		searchSubscene();
 	} catch (Exception &ex) {
-		destroySubscene();
 		glog << "[Picker] Unable to open '" << PICKER_SUBSCENE << "'" << endl;
 		glog << "[Picker] Picking items with the mouse will not work." << endl;
 		glog << "[Picker] Try reinstalling Gander." << endl;
 	}
-}
-
-
-Picker::~Picker() {
-	
-	destroySubscene();
 }
 
 
@@ -79,7 +73,7 @@ void Picker::onDrawable(Node *node, Drawable *drawable) {
 	// Then draw it
 	itemIDUniform->setValue(drawable->getID());
 	sourceIDUniform->setValue(drawable->getID());
-	traverser->start();
+	traverseSubscene();
 	
 	// Draw manipulators
 	if (drawable->isSelected()) {
@@ -106,7 +100,7 @@ void Picker::renderHotspots(Node *node) {
 		State::loadIdentity();
 		State::apply((*it)->getHotspotMatrix(transformable));
 		itemIDUniform->setValue((*it)->getID());
-		traverser->start();
+		traverseSubscene();
 	}
 	
 	// Reset
@@ -121,12 +115,12 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 	Vector result;
 	
 	// Check if couldn't load file
-	if (traverser == NULL)
+	if (!isSubsceneOpened())
 		return pair<GLuint,GLuint>(0,0);
 	
 	// Clear buffer
 	choose->setChoice("clear");
-	traverser->start();
+	traverseSubscene();
 	choose->setChoice("cube");
 	
 	// Traverse
@@ -141,65 +135,33 @@ pair<GLuint,GLuint> Picker::pick(int x, int y) {
 }
 
 
-void Picker::openSubscene() {
-	
-	// Initialize
-	subscene = NULL;
-	traverser = NULL;
-	
-	// Open
-	subscene = new Scene();
-	subscene->open(Resources::get(PICKER_SUBSCENE));
-	
-	// Make traverser
-	traverser = new Traverser(subscene);
-}
-
-
-void Picker::prepareSubscene() {
+/** Finds all the required nodes from the subscene. */
+void Picker::searchSubscene() {
 	
 	Node *node;
 	
-	// Prepare
-	subscene->prepare();
-	
 	// Find buffer node
-	node = Scout::search(subscene->getRoot(), "Renderbuffer");
+	node = Scout::search(getSubsceneRoot(), "Renderbuffer");
 	buffer = dynamic_cast<Renderbuffer*>(node);
-	if (buffer == NULL) {
+	if (buffer == NULL)
 		throw Exception("[Picker] Could not find Renderbuffer node.");
-	}
 	
 	// Find choose node
-	node = Scout::search(subscene->getRoot(), "Choose");
+	node = Scout::search(getSubsceneRoot(), "Choose");
 	choose = dynamic_cast<Choose*>(node);
-	if (choose == NULL) {
+	if (choose == NULL)
 		throw Exception("[Picker] Could not find Choose node.");
-	}
 	
 	// Find ItemID uniform
-	node = Nameable::search(subscene->getRoot(), "ItemID");
+	node = Nameable::search(getSubsceneRoot(), "ItemID");
 	itemIDUniform = dynamic_cast<UniformInt*>(node);
 	if (itemIDUniform == NULL)
 		throw Exception("[Picker] Could not find 'ItemID' uniform.");
 	
 	// Find SourceID uniform
-	node = Nameable::search(subscene->getRoot(), "SourceID");
+	node = Nameable::search(getSubsceneRoot(), "SourceID");
 	sourceIDUniform = dynamic_cast<UniformInt*>(node);
 	if (sourceIDUniform == NULL)
 		throw Exception("[Picker] Could not find 'SourceID' uniform.");
-}
-
-
-void Picker::destroySubscene() {
-	
-	if (subscene != NULL) {
-		delete subscene;
-		subscene = NULL;
-	}
-	if (traverser != NULL) {
-		delete traverser;
-		traverser = NULL;
-	}
 }
 

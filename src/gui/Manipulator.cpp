@@ -40,28 +40,13 @@ Manipulator::Manipulator(char axis,
 	
 	// Initialize widget
 	try {
-		widget = new Scene();
-		widget->open(Resources::get(filename));
-		widget->prepare();
-		traverser = new Traverser(widget);
+		openSubscene(filename);
+		prepareSubscene();
 	} catch (Exception e) {
-		delete widget;
-		widget = NULL;
-		traverser = NULL;
 		glog << "[Manipulator] Problem opening '" << filename << "'." << endl;
 		glog << "[Manipulator] " << warning << endl;
 		glog << "[Manipulator] Try installing Gander again." << endl;
 	}
-}
-
-
-/** Cleans up the widget. */
-Manipulator::~Manipulator() {
-	
-	if (widget != NULL)
-		delete widget;
-	if (traverser != NULL)
-		delete traverser;
 }
 
 
@@ -94,8 +79,8 @@ float Manipulator::findPixelFactor(Canvas *canvas, GLuint shapeID) {
 /** Draws the manipulator around @e transformable in @e canvas. */
 void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	
-	// Make sure widget was loaded correctly
-	if (traverser == NULL)
+	// Make sure subscene was loaded correctly
+	if (!isSubsceneOpened())
 		return;
 	
 	// Draw at position
@@ -103,7 +88,7 @@ void Manipulator::draw(Transformable *transformable, Canvas *canvas) const {
 	State::push();
 	State::loadIdentity();
 	State::apply(getBaseMatrix(transformable));
-	traverser->start();
+	traverseSubscene();
 	State::pop();
 }
 

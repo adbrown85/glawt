@@ -10,22 +10,21 @@
 #include "Delegate.hpp"                 // For sending commands to scene
 #include "Vector.hpp"                   // For axis
 #include "State.hpp"                    // Projection matrix
-#include "Traverser.hpp"
 #include "Resources.hpp"
+#include "SubsceneUser.hpp"
 using namespace std;
 
 
 /** @brief Abstract base class for an item that manipulates other items.
  * @ingroup gui
  */
-class Manipulator : public Identifiable {
+class Manipulator : public Identifiable, public SubsceneUser {
 public:
 	Manipulator(char axis,
 	            int command,
 	            string filename,
 	            float bias=1.0,
 	            const string &warning="May not be able to use manipulator.");
-	virtual ~Manipulator();
 	virtual void draw(Transformable *transformable, Canvas *canvas) const;
 	static float findPixelFactor(Canvas *canvas, GLuint shapeID);
 	virtual Vector getAxis() const;
@@ -43,8 +42,6 @@ protected:
 	float bias;
 	int command;
 	Delegate *delegate;
-	Scene *widget;
-	Traverser *traverser;
 	Vector axis, offset;
 	Canvas *canvas;
 };
