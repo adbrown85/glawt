@@ -10,6 +10,7 @@
 #include "Worker.hpp"                   // Base class
 #include "Scale.hpp"
 #include "Translate.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

@@ -16,6 +16,7 @@
 #include "Tag.hpp"
 #include "Text.hpp"
 #include "Texture.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 /* Information about a uniform. */

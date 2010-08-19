@@ -54,7 +54,7 @@ void Shape::associate() {
 	SimpleDrawable::associate();
 	
 	// Find program
-	program = Program::find(parent);
+	program = Scout<Program>::locate(parent);
 	if (program == NULL) {
 		NodeException e(tag);
 		e << "[Shape] No shader program found to bind attributes to.";

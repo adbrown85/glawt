@@ -36,7 +36,7 @@ void UniformSampler::associate() {
 	Uniform::associate();
 	
 	// Get unit of linked texture
-	texture = Texture::find(this, getLink());
+	texture = Scout<Texture>::locate(getParent(), getLink());
 	if (texture == NULL) {
 		NodeException e(tag);
 		e << "[UniformSampler] Could not find texture '" << getLink() << "'";

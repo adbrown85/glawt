@@ -71,7 +71,7 @@ void Bind::findAttachment() {
 /** @throws NodeException if could not find Outputs list. */
 void Bind::findOutputs() {
 	
-	outputs = Outputs::find(this);
+	outputs = Scout<Outputs>::locate(getParent());
 	if (outputs == NULL) {
 		NodeException e(tag);
 		e << "[Bind] Could not find outputs.";
@@ -83,7 +83,7 @@ void Bind::findOutputs() {
 /** @throws NodeException if could not find Program. */
 void Bind::findProgram() {
 	
-	program = Program::find(this);
+	program = Scout<Program>::locate(getParent());
 	if (program == NULL) {
 		NodeException e(tag);
 		e << "[Bind] Could not find program.";

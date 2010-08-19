@@ -33,7 +33,7 @@ Target::Target(const Tag &tag) : Attachment(tag) {
 void Target::associate() {
 	
 	// Find the texture
-	texture = Texture2D::find(this, link);
+	texture = Scout<Texture2D>::locate(getParent(), link);
 	if (texture == NULL) {
 		NodeException e(tag);
 		e << "[Target] Could not find texture with name '" << link << "'.";

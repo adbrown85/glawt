@@ -235,7 +235,7 @@ void Boolean::finalizeUniforms() {
  */
 void Boolean::findGroup() {
 	
-	group = Group::find(this, of);
+	group = Scout<Group>::search(findRoot(this), of);
 	if (group == NULL) {
 		NodeException e(tag);
 		e << "[Boolean] Could not find group named '" << of << "'.";

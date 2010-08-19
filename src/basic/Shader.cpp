@@ -61,7 +61,7 @@ void Shader::associate() {
 	Program *program;
 	
 	// Attach and compile shader if found
-	program = Program::find(parent);
+	program = Scout<Program>::locate(parent);
 	if (program != NULL) {
 		if (handle == 0) {
 			create();

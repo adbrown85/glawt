@@ -69,7 +69,7 @@ void BooleanXorTest::move(const Vector &movement) {
 		return;
 	
 	// Alter translate
-	translate = Translate::find(shape);
+	translate = Scout<Translate>::locate(shape);
 	if (translate != NULL) {
 		translate->add(movement);
 	}

@@ -42,7 +42,7 @@ void Octree::associate() {
 	Texture::associate();
 	
 	// Find texture3d
-	texture3d = Texture3D::find(this, link);
+	texture3d = Scout<Texture3D>::locate(getParent(), link);
 	if (texture3d == NULL) {
 		NodeException e(tag);
 		e << "[Octree] Could not find " << link << " texture.";

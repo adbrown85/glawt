@@ -41,7 +41,7 @@ void Grip::scale(int command, float argument) {
 	for (it=selection.begin(); it!=selection.end(); ++it) {
 		node = dynamic_cast<Node*>(*it);
 		if (node != NULL) {
-			scale = Scale::find(node);
+			scale = Scout<Scale>::locate(node);
 			if (scale != NULL) {
 				scale->add(change);
 			}
@@ -77,7 +77,7 @@ void Grip::translate(int command, float argument) {
 	for (it=selection.begin(); it!=selection.end(); ++it) {
 		node = dynamic_cast<Node*>(*it);
 		if (node != NULL) {
-			translation = Translate::find(node);
+			translation = Scout<Translate>::locate(node);
 			if (translation != NULL)
 				translation->add(change);
 		}

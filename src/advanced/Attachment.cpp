@@ -37,7 +37,7 @@ Attachment::Attachment(const Tag &tag) : Attachable(tag), Nameable(tag) {
 void Attachment::associate() {
 	
 	// Find the framebuffer and enqueue it to be attached
-	framebuffer = Framebuffer::find(this);
+	framebuffer = Scout<Framebuffer>::locate(getParent());
 	if (framebuffer == NULL) {
 		NodeException e(tag);
 		e << "[Attachment] Could not find framebuffer.";
@@ -55,7 +55,7 @@ Attachment* Attachment::find(Node *node, const string &name) {
 	Node::iterator it;
 	
 	// First find framebuffer
-	framebuffer = Framebuffer::find(node);
+	framebuffer = Scout<Framebuffer>::locate(node);
 	if (framebuffer == NULL) {
 		return NULL;
 	}

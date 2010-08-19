@@ -15,6 +15,7 @@
 #include "Program.hpp"
 #include "Preprocessor.hpp"
 #include "Tag.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

@@ -45,7 +45,7 @@ void Program::associate() {
 		return;
 	
 	handle = glCreateProgram();
-	previous = find(getParent());
+	previous = Scout<Program>::locate(getParent());
 }
 
 

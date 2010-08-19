@@ -62,7 +62,7 @@ void Outputs::apply() {
 void Outputs::associate() {
 	
 	// Find framebuffer
-	framebuffer = Framebuffer::find(this);
+	framebuffer = Scout<Framebuffer>::locate(getParent());
 	if (framebuffer == NULL) {
 		NodeException e(tag);
 		e << "[Outputs] Could not find Framebuffer.";

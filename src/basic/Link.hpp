@@ -8,6 +8,7 @@
 #define LINK_HPP
 #include "common.h"
 #include "Group.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

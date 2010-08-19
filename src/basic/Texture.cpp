@@ -35,7 +35,7 @@ void Texture::associate() {
 	Texture *texture;
 	
 	// Find the right unit
-	texture = Texture::find(this);
+	texture = Scout<Texture>::locate(getParent());
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
 	

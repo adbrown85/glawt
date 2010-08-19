@@ -13,6 +13,7 @@
 #include "Transform.hpp"
 #include "UniformMatrix.hpp"
 #include "Factory.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

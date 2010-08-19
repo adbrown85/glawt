@@ -20,7 +20,7 @@ Screen::Screen(const Tag &tag) : Node(tag) {
  */
 void Screen::associate() {
 	
-	framebuffer = Framebuffer::find(this);
+	framebuffer = Scout<Framebuffer>::locate(getParent());
 	if (framebuffer == NULL) {
 		NodeException e(tag);
 		e << "[Framebuffer] Could not find framebuffer ancestor.";

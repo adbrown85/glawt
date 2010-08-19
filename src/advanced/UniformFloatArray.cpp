@@ -80,7 +80,7 @@ void UniformFloatArray::associate() {
 void UniformFloatArray::findGroup() {
 	
 	// Find group
-	group = Group::find(this, of);
+	group = Scout<Group>::search(findRoot(this), of);
 	if (group == NULL) {
 		NodeException e(tag);
 		e << "[UniformFloatArray] Could not find group.";

@@ -23,7 +23,7 @@ void Link::establish() {
 	Node::iterator it;
 	
 	// Find the group
-	group = Group::find(this, to);
+	group = Scout<Group>::search(findRoot(this), to);
 	if (group == NULL) {
 		NodeException e(tag);
 		e << "[Link] Could not find group with name '" << to << "'";

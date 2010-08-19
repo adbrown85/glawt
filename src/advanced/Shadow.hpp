@@ -15,6 +15,7 @@
 #include "Target.hpp"
 #include "Clone.hpp"
 #include "State.hpp"
+#include "Scout.hpp"
 #define SHADOW_SUBSCENE "ui/shadow-cast.xml"
 using namespace std;
 

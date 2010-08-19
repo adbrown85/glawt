@@ -73,7 +73,7 @@ void Shadow::finalize() {
  */
 void Shadow::findGroup() {
 	
-	group = Group::find(this, of);
+	group = Scout<Group>::search(findRoot(this), of);
 	if (group == NULL) {
 		NodeException e(tag);
 		e << "[Shadow] Could not find group named '" << of << "'.";
@@ -125,9 +125,9 @@ void Shadow::openSubscene() {
 	SubsceneUser::openSubscene(SHADOW_SUBSCENE);
 	
 	// Replace attributes of some nodes
-	target = Target::search(getSubsceneRoot());
+	target = Scout<Target>::search(getSubsceneRoot());
 	target->setLink(getName());
-	clone = Clone::search(getSubsceneRoot());
+	clone = Scout<Clone>::search(getSubsceneRoot());
 	clone->setOf(of);
 }
 

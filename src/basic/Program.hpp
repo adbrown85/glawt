@@ -14,6 +14,7 @@
 #include "Error.hpp"
 #include "Preprocessor.hpp"
 #include "NodeEvent.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

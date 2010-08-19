@@ -9,6 +9,7 @@
 #include "common.h"
 #include "Node.hpp"                     // Base class
 #include "NodeInterfaces.hpp"
+#include "Scout.hpp"
 using namespace std;
 
 

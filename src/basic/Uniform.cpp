@@ -37,7 +37,7 @@ Uniform::Uniform(const Tag &tag) : Node(tag), Nameable(tag) {
 void Uniform::associate() {
 	
 	// Look for a Program ancestor
-	program = Program::find(parent);
+	program = Scout<Program>::locate(parent);
 	if (program == NULL) {
 		NodeException e(tag);
 		e << "[Uniform] Program for '" << getName() << "' cannot be found.";
