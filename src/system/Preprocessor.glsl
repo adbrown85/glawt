@@ -6,8 +6,8 @@
  *     Andy Brown <andybrown85@gmail.com>
  */
 #define COOL_MACRO
-#include "../../input/Ray.glsl"
-#include "../../input/Ray.glsl"
+#include "../../glsl/Ray.glsl"
+#include "../../glsl/Ray.glsl"
 #define SOME_CONSTANT 3.14
 
 
