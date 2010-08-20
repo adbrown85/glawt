@@ -12,7 +12,7 @@
 #include "Node.hpp"
 #include "NodeInterfaces.hpp"
 #include "Error.hpp"
-#include "Preprocessor.hpp"
+#include "Code.hpp"
 #include "NodeEvent.hpp"
 #include "Scout.hpp"
 using namespace std;
@@ -24,7 +24,6 @@ using namespace std;
 class Program : public Node, public Applicable {
 public:
 	Program(const Tag& tag);
-	virtual void addCode(int handle, const Preprocessor *preprocessor);
 	virtual void addListener(NodeListener *listener, int type);
 	virtual void apply();
 	virtual void associate();
@@ -37,7 +36,6 @@ public:
 private:
 	GLint linked;
 	GLuint handle;
-	map<int,const Preprocessor*> code;
 	static Program* current;
 	NodeNotifier notifier;
 	Program *previous;

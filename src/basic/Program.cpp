@@ -16,13 +16,6 @@ Program::Program(const Tag& tag) : Node(tag) {
 }
 
 
-/** Adds link to shader code so linkage errors can be parsed. */
-void Program::addCode(int handle, const Preprocessor* preprocessor) {
-	
-	code[0] = preprocessor;
-}
-
-
 /** Adds a listener to the program. */
 void Program::addListener(NodeListener *listener, int type) {
 	
