@@ -17,6 +17,8 @@ public:
 	void testFirstNotWordCharacter();
 	void testReplacements();
 	void testTrim();
+	void testStripLeadingSpaces();
+	void testStripTrailingSpaces();
 	void testSplit();
 protected:
 	void testFirstWordWith(const string &text, int first, int length);
@@ -130,6 +132,28 @@ void TextTest::testSplit() {
 }
 
 
+void TextTest::testStripLeadingSpaces() {
+	
+	string result;
+	
+	cout << "\nStrip Leading Spaces" << endl;
+	result = Text::stripLeadingSpaces("\t // This is a comment");
+	cout << "  " << result << endl;
+	assert(result == "// This is a comment");
+}
+
+
+void TextTest::testStripTrailingSpaces() {
+	
+	string result;
+	
+	cout << "\nStrip Trailing Spaces" << endl;
+	result = Text::stripTrailingSpaces("// This is a comment    ");
+	cout << "  " << result << endl;
+	assert(result == "// This is a comment");
+}
+
+
 
 int main(int argc, char *argv[]) {
 	
@@ -155,6 +179,8 @@ int main(int argc, char *argv[]) {
 	test.testReplacements();
 	test.testTrim();
 	test.testSplit();
+	test.testStripLeadingSpaces();
+	test.testStripTrailingSpaces();
 	
 	// End
 	cout << endl;

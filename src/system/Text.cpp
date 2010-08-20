@@ -139,6 +139,35 @@ pair<string,string> Text::split(const string &text, char at) {
 }
 
 
+/** @return Copy of @e text without any spaces at the beginning. */
+string Text::stripLeadingSpaces(const string &text) {
+	
+	size_t pos;
+	
+	pos = text.find_first_not_of(" \t");
+	if (pos > text.length()) {
+		return "";
+	} else {
+		return text.substr(pos);
+	}
+}
+
+
+/** @return Copy of @e text without any spaces at the end. */
+string Text::stripTrailingSpaces(const string &text) {
+	
+	int i, last;
+	
+	last = text.length() - 1;
+	for (i=last; i>=0; --i) {
+		if (!isspace(text[i])) {
+			break;
+		}
+	}
+	return text.substr(0, i+1);
+}
+
+
 /** @return String with each character in @e text converted to lowercase. */
 string Text::toLower(string text) {
 	

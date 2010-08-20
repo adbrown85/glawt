@@ -23,6 +23,8 @@ public:
 	static string indent(int times);
 	static string replace(const string &text, map<string,string> &dictionary);
 	static pair<string,string> split(const string &text, char at);
+	static string stripLeadingSpaces(const string &text);
+	static string stripTrailingSpaces(const string &text);
 	static string toLower(string txt);
 	static string trim(const string &text, const string &characters=" ");
 };
