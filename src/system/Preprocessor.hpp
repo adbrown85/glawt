@@ -1,5 +1,5 @@
 /*
- * CodeLoader.hpp
+ * Preprocessor.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
@@ -18,18 +18,17 @@ using namespace std;
 
 /** @brief Utility for preprocessing C-like code.
  * 
- * Basically, %CodeLoader simply looks through C-like code and performs a few 
+ * Basically, %Preprocessor simply looks through C-like code and performs a few 
  * simple operations.  First, if it finds an @e include directive, it replaces 
- * that line with the lines from the appropriate file.  Define directives can 
- * be used to make sure this only happens once.  Lastly, it strips both 
+ * that line with the lines from the appropriate file.  Lastly, it strips both 
  * multiline and single line comments, as well as trailing spaces.
  * 
  * @ingroup system
  */
-class CodeLoader {
+class Preprocessor {
 public:
 	void parse(const string &filename);
-public:    // Mutators
+public:    // Accessors
 	Code getCode() const;
 protected: // Helpers
 	bool isInclude(const string &line);
@@ -44,7 +43,7 @@ private:
 };
 
 /** @return the lines of the file that are actual code. */
-inline Code CodeLoader::getCode() const {return code;}
+inline Code Preprocessor::getCode() const {return code;}
 
 
 #endif

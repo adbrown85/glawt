@@ -47,13 +47,13 @@ void ShaderBuilder::create() {
 void ShaderBuilder::load() {
 	
 	Code::iterator it;
-	CodeLoader loader;
+	Preprocessor preprocessor;
 	const char **source;
 	int i, length;
 	
 	// Load file
-	loader.parse(filename);
-	code = loader.getCode();
+	preprocessor.parse(filename);
+	code = preprocessor.getCode();
 	
 	// Copy to source array
 	length = code.size();

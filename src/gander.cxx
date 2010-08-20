@@ -174,12 +174,14 @@ void Gander::onHistogram() {
 
 void Gander::onPreprocess() {
 	
-	CodeLoader pp;
+	Preprocessor preprocessor;
+	Code code;
+	Code::iterator it;
 	
-/*
-	pp.parse(inFilename);
-	pp.printLines();
-*/
+	preprocessor.parse(inFilename);
+	code = preprocessor.getCode();
+	for (it=code.begin(); it!=code.end(); ++it)
+		cout << it->text;
 }
 
 

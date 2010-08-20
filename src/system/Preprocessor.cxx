@@ -1,33 +1,33 @@
 /*
- * CodeLoader.cxx
+ * Preprocessor.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "CodeLoader.hpp"
+#include "Preprocessor.hpp"
 
 
-class CodeLoaderTest {
+class PreprocessorTest {
 public:
 	void setUp();
 	void testLines();
 private:
-	CodeLoader loader;
+	Preprocessor pp;
 };
 
 
-void CodeLoaderTest::setUp() {
+void PreprocessorTest::setUp() {
 	
-	loader.parse("Preprocessor.glsl");
+	pp.parse("Preprocessor.glsl");
 }
 
 
-void CodeLoaderTest::testLines() {
+void PreprocessorTest::testLines() {
 	
 	Code code;
 	Code::iterator it;
 	
-	code = loader.getCode();
+	code = pp.getCode();
 	for (it=code.begin(); it!=code.end(); ++it)
 		cout << it->filename << " " << it->number << " " << it->text;
 }
@@ -35,12 +35,12 @@ void CodeLoaderTest::testLines() {
 
 int main(int argc, char *argv[]) {
 	
-	CodeLoaderTest test;
+	PreprocessorTest test;
 	
 	// Start
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "CodeLoader" << endl;
+	cout << "Preprocessor" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 	// Finish
 	cout << endl;
 	cout << "****************************************" << endl;
-	cout << "CodeLoader" << endl;
+	cout << "Preprocessor" << endl;
 	cout << "****************************************" << endl;
 	cout << endl;
 	return 0;

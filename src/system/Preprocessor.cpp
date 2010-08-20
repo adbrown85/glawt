@@ -1,14 +1,14 @@
 /*
- * CodeLoader.cpp
+ * Preprocessor.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "CodeLoader.hpp"
+#include "Preprocessor.hpp"
 
 
 /** @return True if the line is an include pragma. */
-bool CodeLoader::isInclude(const string &line) {
+bool Preprocessor::isInclude(const string &line) {
 	
 	return line.substr(0,8) == "#include";
 }
@@ -18,7 +18,7 @@ bool CodeLoader::isInclude(const string &line) {
  * 
  * @throws Exception if the file cannot be opened.
  */
-void CodeLoader::load(const string &filename) {
+void Preprocessor::load(const string &filename) {
 	
 	bool inComment;
 	ifstream file;
@@ -29,7 +29,7 @@ void CodeLoader::load(const string &filename) {
 	file.open(filename.c_str());
 	if (!file) {
 		Exception e;
-		e << "[CodeLoader] Could not open '" << filename << "'.";
+		e << "[Preprocessor] Could not open '" << filename << "'.";
 		throw e;
 	}
 	
@@ -44,7 +44,7 @@ void CodeLoader::load(const string &filename) {
 
 
 /** Loads an included file if it wasn't already. */
-void CodeLoader::onInclude(const string &line) {
+void Preprocessor::onInclude(const string &line) {
 	
 	string argument, filename;
 	set<string>::iterator it;
@@ -68,10 +68,10 @@ void CodeLoader::onInclude(const string &line) {
 
 
 /** Adds a line after filtering it. */
-void CodeLoader::onLine(const string &filename,
-                        int number,
-                        string &text,
-                        bool &inComment) {
+void Preprocessor::onLine(const string &filename,
+                          int number,
+                          string &text,
+                          bool &inComment) {
 	
 	// Strip comments and trailing space
 	text = stripComments(text, inComment);
@@ -94,7 +94,7 @@ void CodeLoader::onLine(const string &filename,
 
 
 /** Loads the file. */
-void CodeLoader::parse(const string &filename) {
+void Preprocessor::parse(const string &filename) {
 	
 	this->filename = filename;
 	code.clear();
@@ -103,7 +103,7 @@ void CodeLoader::parse(const string &filename) {
 }
 
 
-string CodeLoader::stripComments(const string &line, bool &inComment) {
+string Preprocessor::stripComments(const string &line, bool &inComment) {
 	
 	int length;
 	ostringstream buffer;

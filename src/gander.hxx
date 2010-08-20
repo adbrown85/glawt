@@ -16,7 +16,7 @@
 #include "DatasetHeader.hpp"
 #include "DatasetViewer.hpp"
 #include "DatasetWriter.hpp"
-#include "CodeLoader.hpp"
+#include "Preprocessor.hpp"
 #include "CanvasGTK.hpp"
 #include "MenuGTK.hpp"
 #include "MenuGLUT.hpp"

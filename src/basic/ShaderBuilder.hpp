@@ -7,7 +7,7 @@
 #ifndef SHADERBUILDER_HPP
 #define SHADERBUILDER_HPP
 #include "common.h"
-#include "CodeLoader.hpp"
+#include "Preprocessor.hpp"
 #include "Error.hpp"
 using namespace std;
 
