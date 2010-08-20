@@ -90,7 +90,7 @@ void Program::log() const {
 	log = new GLchar[count+1];
 	glGetProgramInfoLog(handle, count, &returned, log);
 	log[returned] = '\0';
-	Error::print(log, code);
+	//Error::print(log, code);
 	
 	// Finish
 	delete[] log;

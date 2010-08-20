@@ -8,8 +8,9 @@
 #define ERROR_HPP
 #include "common.h"
 #include "Exception.hpp"
-#include "Preprocessor.hpp"
+#include "Code.hpp"
 #include "Log.hpp"
+#include "Text.hpp"
 using namespace std;
 
 
@@ -18,18 +19,12 @@ using namespace std;
  */
 class Error {
 public:
-	static void print(GLchar *log,
-	                  int handle,
-	                  const Preprocessor &preprocessor);
-	static void print(GLchar *log,
-	                  const map<int,const Preprocessor*> &code);
-protected:
-	static int findHandle(const string &line);
+	static void print(GLchar *log, Code &code);
+protected: // Helpers
 	static int findLine(const string &line);
-	static bool fitsPattern(const string &line);
 	static string findMessage(const string &line);
-	static void printLine(const string &line,
-	                      const map<int,const Preprocessor*> &code);
+	static bool fitsPattern(const string &line);
+	static void printLine(const string &line, Code &code);
 };
 
 

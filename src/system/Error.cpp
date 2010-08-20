@@ -7,12 +7,7 @@
 #include "Error.hpp"
 
 
-int Error::findHandle(const string &line) {
-	
-	return line[0] - 48;
-}
-
-
+/** @return Line number listed between parentheses. */
 int Error::findLine(const string &line) {
 	
 	int beg, end;
@@ -25,6 +20,7 @@ int Error::findLine(const string &line) {
 }
 
 
+/** @return Text after second colon. */
 string Error::findMessage(const string &line) {
 	
 	int beg;
@@ -35,25 +31,14 @@ string Error::findMessage(const string &line) {
 }
 
 
+/** @return True if there are two colons in the line. */
 bool Error::fitsPattern(const string &line) {
 	
 	return Text::count(line,':') == 2;
 }
 
 
-void Error::print(GLchar *log,
-                  int handle,
-                  const Preprocessor &preprocessor) {
-	
-	map<int,const Preprocessor*> code;
-	
-	code[0] = &preprocessor;
-	print(log, code);
-}
-
-
-void Error::print(GLchar *log,
-                  const map<int,const Preprocessor*> &code) {
+void Error::print(GLchar *log, Code &code) {
 	
 	string line;
 	stringstream stream(log);
@@ -67,38 +52,25 @@ void Error::print(GLchar *log,
 }
 
 
-void Error::printLine(const string &line,
-                      const map<int,const Preprocessor*> &code) {
+void Error::printLine(const string &line, Code &code) {
 	
-	int handle, lineNum;
+	int number;
 	ostringstream stream;
-	const Preprocessor *preprocessor;
-	map<int,const Preprocessor*>::const_iterator it;
 	
 	// Get line number
-	lineNum = findLine(line);
+	number = findLine(line);
 	
 	// Check for bad lines
-	if (line.empty())
+	if (line.empty()) {
 		return;
-	if (!fitsPattern(line) || lineNum == 0) {
-		clog << line << endl;
+	} else if (!fitsPattern(line) || number == 0) {
+		glog << line << endl;
 		return;
 	}
-	
-	// Find preprocessor
-	handle = findHandle(line);
-	it = code.find(0);
-	if (it == code.end()) {
-		Exception e;
-		e << "[Error] Could not find code of handle '" << handle << "'.";
-		throw e;
-	}
-	preprocessor = it->second;
 	
 	// Print line substituting file and line number
-	clog << preprocessor->getFileForLine(lineNum) << ":" 
-	     << preprocessor->getRealLineNumber(lineNum) << ":"
+	glog << code.getLine(number).filename << ":" 
+	     << code.getLine(number).number << ":"
 	     << findMessage(line)
 	     << endl;
 }
