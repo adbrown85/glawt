@@ -10,49 +10,45 @@
 #include "Node.hpp"                     // Base class
 #include "NodeInterfaces.hpp"
 #include "Scout.hpp"
+#include "TextureFactory.hpp"
 using namespace std;
 
 
 /** @brief OpenGL texture node.
  * 
- * Abstract base class for textures of various dimensions.  Provides some
- * basic texture capability, including finding an open texture unit and binding
- * the texture to that unit.  There are also two static methods, pause() and
- * restart() that disable and reenable all active texture units.
- * 
- * @note Add @e unit to @c GL_TEXTURE0 when passing directly to OpenGL.
+ * Provides basic texture capability, including finding an open texture unit 
+ * and binding the texture to that unit.
  * 
  * @ingroup basic
- * @see Texture2D
- * @see Texture3D
  */
 class Texture : public Node,
                 public Applicable, public Nameable {
 public:
-	Texture(GLenum type, const Tag &tag);
-	virtual void apply();
+	Texture(const Tag &tag);
+	virtual void check();
 	virtual void associate();
+	virtual void finalize();
+	virtual void apply();
 	virtual void remove() {}
 	virtual string toString() const;
 public:    // Accessors
 	virtual string getFilename() const;
-	virtual GLint getFootprint() const;
 	virtual GLuint getHandle() const;
-	virtual GLint getRawFootprint() const = 0;
+	virtual GLint getSize() const;
 	virtual GLenum getType() const;
 	virtual GLuint getUnit() const;
 	virtual bool hasFilename() const;
-	virtual bool isCompressed() const;
-public:    // Utilities
+public:    // Utilities;
 	static list<Texture*> search(Node *node);
 protected: // Helpers
 	void activate() const;
 	void bind() const;
-	void enable() const;
+	TextureOrder makeOrder() const;
 private:
 	GLenum type;
 	GLuint handle, unit;
-	string filename;
+	string filename, format;
+	int size;
 };
 
 /** Activates the correct texture unit. */
@@ -61,14 +57,13 @@ inline void Texture::activate() const {glActiveTexture(GL_TEXTURE0 + unit);}
 /** Binds the texture to the active texture unit. */
 inline void Texture::bind() const {glBindTexture(type, handle);}
 
-/** Enables the texture by activating and binding it. */
-inline void Texture::enable() const {activate(); bind();}
-
 /** @return Path to the file this texture was loaded from. */
 inline string Texture::getFilename() const {return filename;}
 
 /** @return OpenGL's unique identifier for this texture. */
 inline GLuint Texture::getHandle() const {return handle;}
+
+inline GLint Texture::getSize() const {return size;}
 
 /** @return GL_TEXTURE_1D, GL_TEXTURE_2D, or GL_TEXTURE_3D. */
 inline GLenum Texture::getType() const {return type;}

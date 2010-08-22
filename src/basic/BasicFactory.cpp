@@ -78,7 +78,10 @@ Node* BasicFactory::createShader(const Tag &tag) {return new Shader(tag);}
 
 Node* BasicFactory::createSquare(const Tag &tag) {return new Square(tag);}
 
+Node* BasicFactory::createTexture(const Tag &tag) {return new Texture(tag);}
 
+
+/*
 Node* BasicFactory::createTexture(const Tag &tag) {
 	
 	string extension, filename;
@@ -92,6 +95,7 @@ Node* BasicFactory::createTexture(const Tag &tag) {
 		return new Texture2D(tag);
 	}
 }
+*/
 
 
 Node* BasicFactory::createTranslate(const Tag &t) {return new Translate(t);}

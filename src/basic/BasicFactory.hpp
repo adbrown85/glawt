@@ -22,8 +22,6 @@
 #include "Scale.hpp"
 #include "Shader.hpp"
 #include "Square.hpp"
-#include "Texture2D.hpp"
-#include "Texture3D.hpp"
 #include "Translate.hpp"
 #include "UniformInt.hpp"
 #include "UniformFloat.hpp"

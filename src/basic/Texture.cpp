@@ -9,23 +9,43 @@
 
 /** Creates a new texture from an XML tag.
  * 
- * @param [in] type 1D, 2D, or 3D.
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
-Texture::Texture(GLenum type, const Tag &tag) : Node(tag), Nameable(tag) {
+Texture::Texture(const Tag &tag) : Node(tag), Nameable(tag) {
 	
-	// Initialize
+	// Retrieve from tag
+	tag.get("file", filename, false, false);
+	tag.get("size", size, false);
+	tag.get("format", format, false, true);
+	
+	// Defaults
 	this->unit = 0;
 	this->handle = 0;
-	this->type = type;
-	tag.get("file", filename, false, false);
+	this->type = GL_TEXTURE_2D;
+	
+	// Check
+	check();
 }
 
 
 /** Enables the texture. */
 void Texture::apply() {
 	
-	enable();
+	activate();
+	bind();
+}
+
+
+/** Checks the size and format. */
+void Texture::check() {
+	
+	// Size
+	if (size == 0)
+		size = CANVAS_WIDTH;
+	
+	// Format
+	if (format.empty())
+		format = "rgba";
 }
 
 
@@ -38,35 +58,42 @@ void Texture::associate() {
 	texture = Scout<Texture>::locate(getParent());
 	if (texture != NULL)
 		unit = texture->getUnit() + 1;
-	
-	// Generate
-	glGenTextures(1, &handle);
 }
 
 
-/** @return How much memory the texture uses. */
-GLint Texture::getFootprint() const {
+/** Requests a texture from the factory. */
+void Texture::finalize() {
 	
-	GLint fp;
+	TextureInvoice invoice;
 	
-	if (isCompressed()) {
-		activate();
-		glGetTexLevelParameteriv(type,0,GL_TEXTURE_COMPRESSED_IMAGE_SIZE,&fp);
+	// Get texture from factory
+	if (hasFilename()) {
+		invoice = TextureFactory::create(filename);
 	} else {
-		fp = getRawFootprint();
+		invoice = TextureFactory::create(makeOrder());
 	}
-	return fp;
+	
+	// Copy details
+	type   = invoice.type;
+	format = invoice.format;
+	handle = invoice.handle;
 }
 
 
-/** Checks if the texture was successfully compressed. */
-bool Texture::isCompressed() const {
+/** Creates an order for the texture factory. */
+TextureOrder Texture::makeOrder() const {
 	
-	GLint compressed;
+	TextureOrder order;
 	
-	activate();
-	glGetTexLevelParameteriv(type, 0, GL_TEXTURE_COMPRESSED, &compressed);
-	return compressed;
+	// Fill out
+	order.type   = type;
+	order.format = format;
+	order.width  = size;
+	order.height = size;
+	order.depth  = size;
+	
+	// Finish
+	return order;
 }
 
 
@@ -79,8 +106,9 @@ string Texture::toString() const {
 	if (hasName())
 		stream << " name='" << getName() << "'";
 	stream << " unit='" << unit << "'"
-	       << " handle='" << handle << "'";
-	if (!filename.empty())
+	       << " handle='" << handle << "'"
+	       << " format='" << format << "'";
+	if (hasFilename())
 		stream << " file='" << filename << "'";
 	return stream.str();
 }
