@@ -22,7 +22,6 @@
 #include "Depth.hpp"
 #include "Framebuffer.hpp"
 #include "Fullscreen.hpp"
-#include "Octree.hpp"
 #include "Outputs.hpp"
 #include "Placeholder.hpp"
 #include "Renderbuffer.hpp"
@@ -53,7 +52,6 @@ public:
 	static Node* createDepth(const Tag &tag);
 	static Node* createFramebuffer(const Tag &tag);
 	static Node* createFullscreen(const Tag &tag);
-	static Node* createOctree(const Tag &tag);
 	static Node* createOutputs(const Tag &tag);
 	static Node* createPlaceholder(const Tag &tag);
 	static Node* createRenderbuffer(const Tag &tag);

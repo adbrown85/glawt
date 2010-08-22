@@ -30,7 +30,7 @@ void AdvancedFactory::install() {
 	Factory::install("depth", &createDepth);
 	Factory::install("framebuffer", &createFramebuffer);
 	Factory::install("fullscreen", &createFullscreen);
-	Factory::install("octree", &createOctree);
+	//Factory::install("octree", &createOctree);
 	Factory::install("outputs", &createOutputs);
 	Factory::install("placeholder", &createPlaceholder);
 	Factory::install("renderbuffer", &createRenderbuffer);
@@ -82,7 +82,9 @@ Node* AdvancedFactory::createFramebuffer(const Tag &t) {return new Framebuffer(t
 
 Node* AdvancedFactory::createFullscreen(const Tag &t) {return new Fullscreen(t);}
 
+/*
 Node* AdvancedFactory::createOctree(const Tag &t) {return new Octree(t);}
+*/
 
 Node* AdvancedFactory::createOutputs(const Tag &t) {return new Outputs(t);}
 
