@@ -8,7 +8,7 @@
 #define TARGET_HPP
 #include "common.h"
 #include "Attachment.hpp"               // Base class
-#include "Texture2D.hpp"                // Backer
+#include "Texture.hpp"                // Backer
 using namespace std;
 
 
@@ -71,7 +71,7 @@ public:
 protected:
 	void associate();
 private:
-	Texture2D *texture;
+	Texture *texture;
 	string link;
 };
 

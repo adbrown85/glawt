@@ -7,7 +7,7 @@
 #ifndef SHADOW_HPP
 #define SHADOW_HPP
 #include "common.h"
-#include "Texture2D.hpp"
+#include "Texture.hpp"
 #include "SubsceneUser.hpp"
 #include "Group.hpp"
 #include "Light.hpp"
@@ -23,7 +23,7 @@ using namespace std;
 /** @brief Shadow map generated from a light and a group.
  * @ingroup advanced
  */
-class Shadow : public Texture2D, public SubsceneUser,
+class Shadow : public Texture, public SubsceneUser,
                public NodeListener {
 public:
 	Shadow(const Tag &tag);

@@ -11,7 +11,7 @@
  * 
  * @throws NodeException if cannot open subscene.
  */
-Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
+Shadow::Shadow(const Tag &tag) : Texture(tag) {
 	
 	// Retrieve from tag
 	tag.get("of", of, true, false);
@@ -39,7 +39,7 @@ Shadow::Shadow(const Tag &tag) : Texture2D(tag) {
 /** Finds the group, light, and transforms. */
 void Shadow::associate() {
 	
-	Texture2D::associate();
+	Texture::associate();
 	
 	findGroup();
 	findLight();
@@ -50,7 +50,7 @@ void Shadow::associate() {
 /** Prepares the subscene and performs an initial render. */
 void Shadow::finalize() {
 	
-	Texture2D::finalize();
+	Texture::finalize();
 	
 	// Subscene
 	try {
@@ -170,7 +170,7 @@ string Shadow::toString() const {
 	
 	ostringstream stream;
 	
-	stream << Texture2D::toString();
+	stream << Texture::toString();
 	stream << " of='" << of << "'"
 	       << " from='" << from << "'";
 	return stream.str();

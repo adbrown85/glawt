@@ -8,7 +8,7 @@
 #define FRAMEBUFFER_HPP
 #include "common.h"
 #include "Node.hpp"
-#include "Texture2D.hpp"
+#include "Texture.hpp"
 #include "Configuration.hpp"
 
 
