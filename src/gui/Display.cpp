@@ -60,7 +60,8 @@ void Display::computeFootprint() {
 	// Accumulate
 	footprint = 0;
 	for (it=textures.begin(); it!=textures.end(); ++it) {
-		footprint += (double)(*it)->getFootprint() / 1048576;
+		footprint += 0.00;
+		//footprint += (double)(*it)->getFootprint() / 1048576;
 	}
 }
 
