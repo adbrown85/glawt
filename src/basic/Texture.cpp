@@ -74,9 +74,12 @@ void Texture::finalize() {
 	}
 	
 	// Copy details
-	type   = invoice.type;
-	format = invoice.format;
-	handle = invoice.handle;
+	type      = invoice.type;
+	format    = invoice.format;
+	handle    = invoice.handle;
+	footprint = invoice.footprint;
+	precision = invoice.precision;
+	size      = invoice.width;
 }
 
 
@@ -107,7 +110,10 @@ string Texture::toString() const {
 		stream << " name='" << getName() << "'";
 	stream << " unit='" << unit << "'"
 	       << " handle='" << handle << "'"
-	       << " format='" << format << "'";
+	       << " format='" << format << "'"
+	       << " footprint='" << footprint << "'"
+	       << " precision='" << precision << "'"
+	       << " size='" << size << "'";
 	if (hasFilename())
 		stream << " file='" << filename << "'";
 	return stream.str();

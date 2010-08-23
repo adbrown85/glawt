@@ -33,6 +33,7 @@ public:
 	virtual string toString() const;
 public:    // Accessors
 	virtual string getFilename() const;
+	virtual GLuint getFootprint() const;
 	virtual GLuint getHandle() const;
 	virtual GLint getSize() const;
 	virtual GLenum getType() const;
@@ -46,7 +47,7 @@ protected: // Helpers
 	TextureOrder makeOrder() const;
 private:
 	GLenum type;
-	GLuint handle, unit;
+	GLuint handle, unit, footprint, precision;
 	string filename, format;
 	int size;
 };
@@ -63,7 +64,11 @@ inline string Texture::getFilename() const {return filename;}
 /** @return OpenGL's unique identifier for this texture. */
 inline GLuint Texture::getHandle() const {return handle;}
 
+/** @return Width of the texture. */
 inline GLint Texture::getSize() const {return size;}
+
+/** @return Number of bytes used to store the texture. */
+inline GLuint Texture::getFootprint() const {return footprint;}
 
 /** @return GL_TEXTURE_1D, GL_TEXTURE_2D, or GL_TEXTURE_3D. */
 inline GLenum Texture::getType() const {return type;}
