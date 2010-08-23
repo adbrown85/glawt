@@ -8,6 +8,7 @@
 #define TEXTUREBUILDER_HPP
 #include "common.h"
 #include "PixelFormat.hpp"
+#include "TextureAnalyzer.hpp"
 using namespace std;
 
 
@@ -24,6 +25,7 @@ struct TextureInvoice {
 	string format;
 	GLint width, height, depth;
 	GLuint handle;
+	GLint footprint, precision;
 };
 
 /** @brief Base class for a builder that makes textures.
@@ -41,7 +43,6 @@ protected: // Helpers
 	virtual void assemble(const TextureOrder &order) = 0;
 	virtual void complete() = 0;
 	virtual void package();
-	void findParameter(GLenum name, GLint *value);
 private:   // Data
 	TextureInvoice invoice;
 };

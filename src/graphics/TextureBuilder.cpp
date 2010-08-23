@@ -32,33 +32,26 @@ TextureInvoice TextureBuilder::build(const TextureOrder &order) {
 /** Generates and binds a new texture. */
 void TextureBuilder::prepare() {
 	
+	invoice.type = getType();
 	glGenTextures(1, &invoice.handle);
-	glBindTexture(getType(), invoice.handle);
+	glBindTexture(invoice.type, invoice.handle);
 }
 
 
 /** Records details in the invoice. */
 void TextureBuilder::package() {
 	
-	GLenum format;
+	TextureAnalyzer analyzer;
 	
-	// Type
-	invoice.type = getType();
+	// Setup
+	analyzer.setTexture(invoice.type, invoice.handle);
 	
-	// Dimensions
-	findParameter(GL_TEXTURE_WIDTH, &invoice.width);
-	findParameter(GL_TEXTURE_HEIGHT, &invoice.height);
-	findParameter(GL_TEXTURE_DEPTH, &invoice.depth);
-	
-	// Format
-	findParameter(GL_TEXTURE_INTERNAL_FORMAT, (GLint*)(&format));
-	invoice.format = PixelFormat::getFormat(format);
-}
-
-
-/** Finds a texture parameter. */
-void TextureBuilder::findParameter(GLenum name, GLint *value) {
-	
-	glGetTexLevelParameteriv(getType(), 0, name, value);
+	// Record
+	invoice.width     = analyzer.getWidth();
+	invoice.height    = analyzer.getHeight();
+	invoice.depth     = analyzer.getDepth();
+	invoice.format    = PixelFormat::getFormat(analyzer.getFormat());
+	invoice.footprint = analyzer.getFootprint();
+	invoice.precision = analyzer.getBitsPerPixel();
 }
 
