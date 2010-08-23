@@ -17,6 +17,7 @@
 #include "Scene.hpp"               // Pass root node to Painter
 #include "Painter.hpp"             // Paints the screen with scene
 #include "Canvas.hpp"
+#define BYTES_PER_MEGABYTE 1048576
 using namespace std;
 
 
