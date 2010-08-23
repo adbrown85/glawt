@@ -25,6 +25,24 @@ string Nameable::toString() const {
 }
 
 
+/** Gets the filename from the tag. */
+Fileable::Fileable(const Tag &tag) {
+	
+	tag.get("file", filename, false, false);
+}
+
+
+/** @return String with the object's filename if it has one. */
+string Fileable::toString() const {
+	
+	ostringstream stream;
+	
+	if (hasFilename())
+		stream << " file='" << filename << "'";
+	return stream.str();
+}
+
+
 /** Find a named node. */
 Node* Nameable::search(Node *node, const string &name) {
 	

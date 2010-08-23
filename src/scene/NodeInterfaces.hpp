@@ -132,4 +132,24 @@ inline bool Nameable::hasName() const {return !name.empty();}
 inline void Nameable::setName(const string &n) {name = n;}
 
 
+/** @brief %Node loaded from a file.
+ * @interface Fileable
+ * @ingroup scene
+ */
+class Fileable {
+public:
+	Fileable() {}
+	Fileable(const Tag &tag);
+	virtual string getFilename() const;
+	virtual bool hasFilename() const;
+	virtual void setFilename(const string &name);
+	virtual string toString() const;
+private:
+	string filename;
+};
+inline string Fileable::getFilename() const {return filename;}
+inline bool Fileable::hasFilename() const {return !filename.empty();}
+inline void Fileable::setFilename(const string &f) {filename = f;}
+
+
 #endif
