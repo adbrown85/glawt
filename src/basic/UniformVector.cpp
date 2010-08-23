@@ -43,31 +43,21 @@ void UniformVector::associate() {
 	
 	Uniform::associate();
 	
-	Node *node;
-	
 	// Doesn't have link
 	if (!hasLink())
 		return;
 	
 	// Find the link
-	node = Nameable::search(findRoot(this), getLink());
-	if (node == NULL) {
-		NodeException e(tag);
-		e << "[UniformVector] Could not find node '" << getLink() << "'.";
-		throw e;
-	}
-	
-	// Make it transformable
-	transformable = dynamic_cast<Transformable*>(node);
+	transformable = Scout<Transformable>::search(findRoot(this), getLink());
 	if (transformable == NULL) {
 		NodeException e(tag);
-		e << "[UniformVector] Node '" << getLink() << "' not transformable.";
+		e << "[UniformVector] Could not find node '" << getLink() << "'.";
 		throw e;
 	}
 }
 
 
-/** @throws NodeException if unexpeted size is encountered. */
+/** @throws NodeException if unexpected size is encountered. */
 void UniformVector::apply() {
 	
 	if (!hasLocation())

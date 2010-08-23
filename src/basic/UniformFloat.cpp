@@ -7,8 +7,7 @@
 #include "UniformFloat.hpp"
 
 
-UniformFloat::UniformFloat(const Tag &tag) :
-                           Uniform(tag) {
+UniformFloat::UniformFloat(const Tag &tag) : Uniform(tag) {
 	
 	tag.get("value", value, false);
 }
@@ -37,7 +36,7 @@ void UniformFloat::associate() {
 	linkNameKey = Text::split(getLink(), '.');
 	
 	// Find the link
-	node = Nameable::search(findRoot(this), linkNameKey.first);
+	node = Scout<Node>::search(findRoot(this), linkNameKey.first);
 	if (node == NULL) {
 		NodeException e(tag);
 		e << "[UniformVector] Could not find '" << linkNameKey.first << "'.";

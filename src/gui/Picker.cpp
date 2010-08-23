@@ -153,13 +153,15 @@ void Picker::searchSubscene() {
 		throw Exception("[Picker] Could not find Choose node.");
 	
 	// Find ItemID uniform
-	node = Nameable::search(getSubsceneRoot(), "ItemID");
+	/* node = Nameable::search(getSubsceneRoot(), "ItemID"); */
+	node = Scout<UniformInt>::search(getSubsceneRoot(), "ItemID");
 	itemIDUniform = dynamic_cast<UniformInt*>(node);
 	if (itemIDUniform == NULL)
 		throw Exception("[Picker] Could not find 'ItemID' uniform.");
 	
 	// Find SourceID uniform
-	node = Nameable::search(getSubsceneRoot(), "SourceID");
+	/* node = Nameable::search(getSubsceneRoot(), "SourceID"); */
+	node = Scout<UniformInt>::search(getSubsceneRoot(), "SourceID");
 	sourceIDUniform = dynamic_cast<UniformInt*>(node);
 	if (sourceIDUniform == NULL)
 		throw Exception("[Picker] Could not find 'SourceID' uniform.");
