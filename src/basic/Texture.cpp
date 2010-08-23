@@ -11,10 +11,9 @@
  * 
  * @param [in] tag XML tag with "type", "name", and "filename" attributes.
  */
-Texture::Texture(const Tag &tag) : Node(tag), Nameable(tag) {
+Texture::Texture(const Tag &tag) : Node(tag), Nameable(tag), Fileable(tag) {
 	
 	// Retrieve from tag
-	tag.get("file", filename, false, false);
 	tag.get("size", size, false);
 	tag.get("format", format, false, true);
 	
@@ -68,7 +67,7 @@ void Texture::finalize() {
 	
 	// Get texture from factory
 	if (hasFilename()) {
-		invoice = TextureFactory::create(filename);
+		invoice = TextureFactory::create(getFilename());
 	} else {
 		invoice = TextureFactory::create(makeOrder());
 	}
@@ -107,14 +106,13 @@ string Texture::toString() const {
 	
 	stream << Node::toString();
 	stream << Nameable::toString();
+	stream << Fileable::toString();
 	stream << " unit='" << unit << "'"
 	       << " handle='" << handle << "'"
 	       << " format='" << format << "'"
 	       << " footprint='" << footprint << "'"
 	       << " precision='" << precision << "'"
 	       << " size='" << size << "'";
-	if (hasFilename())
-		stream << " file='" << filename << "'";
 	return stream.str();
 }
 

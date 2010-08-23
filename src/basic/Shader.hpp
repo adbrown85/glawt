@@ -8,6 +8,7 @@
 #define SHADER_HPP
 #include "common.h"
 #include "Node.hpp"
+#include "NodeInterfaces.hpp"
 #include "Program.hpp"
 #include "Scout.hpp"
 #include "ShaderFactory.hpp"
@@ -41,24 +42,20 @@ using namespace std;
  * 
  * @ingroup basic
  */
-class Shader : public Node {
+class Shader : public Node, public Fileable {
 public:
 	Shader(const Tag &tag);
 	virtual void associate();
 	virtual string toString() const;
 public:    // Accessors
-	string getFilename() const;
 	GLuint getHandle() const;
 	string getType() const;
 protected: // Helpers
 	void guessType();
 private:
 	GLuint handle;
-	string filename, type;
+	string type;
 };
-
-/** @return Path to the file the shader was loaded from. */
-inline string Shader::getFilename() const {return filename;}
 
 /** @return Internal OpenGL identifier for the shader. */
 inline GLuint Shader::getHandle() const {return handle;}

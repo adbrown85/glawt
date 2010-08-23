@@ -22,7 +22,7 @@ using namespace std;
  * @ingroup basic
  */
 class Texture : public Node,
-                public Applicable, public Nameable {
+                public Applicable, public Nameable, public Fileable {
 public:
 	Texture(const Tag &tag);
 	virtual void check();
@@ -32,13 +32,11 @@ public:
 	virtual void remove() {}
 	virtual string toString() const;
 public:    // Accessors
-	virtual string getFilename() const;
 	virtual GLuint getFootprint() const;
 	virtual GLuint getHandle() const;
 	virtual GLint getSize() const;
 	virtual GLenum getType() const;
 	virtual GLuint getUnit() const;
-	virtual bool hasFilename() const;
 protected: // Helpers
 	void activate() const;
 	void bind() const;
@@ -46,7 +44,7 @@ protected: // Helpers
 private:
 	GLenum type;
 	GLuint handle, unit, footprint, precision;
-	string filename, format;
+	string format;
 	int size;
 };
 
@@ -55,9 +53,6 @@ inline void Texture::activate() const {glActiveTexture(GL_TEXTURE0 + unit);}
 
 /** Binds the texture to the active texture unit. */
 inline void Texture::bind() const {glBindTexture(type, handle);}
-
-/** @return Path to the file this texture was loaded from. */
-inline string Texture::getFilename() const {return filename;}
 
 /** @return OpenGL's unique identifier for this texture. */
 inline GLuint Texture::getHandle() const {return handle;}
@@ -73,9 +68,6 @@ inline GLenum Texture::getType() const {return type;}
 
 /** @return %Texture unit holding the data. */
 inline GLuint Texture::getUnit() const {return unit;}
-
-/** @return True if the texture was given a filename. */
-inline bool Texture::hasFilename() const {return !filename.empty();}
 
 
 #endif

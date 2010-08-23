@@ -11,12 +11,18 @@
  * 
  * @param tag XML tag with "type" and "file" attributes.
  */
-Shader::Shader(const Tag &tag) : Node(tag) {
+Shader::Shader(const Tag &tag) : Node(tag), Fileable(tag) {
 	
 	// Initialize attributes
 	handle = 0;
-	tag.get("file", filename, true, false);
 	tag.get("type", type, false);
+	
+	// Check filename
+	if (!hasFilename()) {
+		NodeException e(getTag());
+		e << "[Shader] Must have file attribute.";
+		throw e;
+	}
 	
 	// Check type or try to guess
 	if (!type.empty()) {
@@ -45,7 +51,7 @@ void Shader::associate() {
 	}
 	
 	// Load and attach
-	handle = ShaderFactory::create(type, filename);
+	handle = ShaderFactory::create(type, getFilename());
 	glAttachShader(program->getHandle(), handle);
 }
 
@@ -58,7 +64,7 @@ void Shader::guessType() {
 	
 	string extension;
 	
-	extension = Text::toLower(Path::getExtension(filename));
+	extension = Text::toLower(Path::getExtension(getFilename()));
 	if (extension == "frag") {
 		type = "fragment";
 	} else if (extension == "vert") {
@@ -78,8 +84,8 @@ string Shader::toString() const {
 	
 	// Build string
 	stream << Node::toString();
+	stream << Fileable::toString();
 	stream << " type='" << type << "'"
-	       << " file='" << filename << "'"
 	       << " handle='" << handle << "'";
 	return stream.str();
 }
