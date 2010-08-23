@@ -21,6 +21,22 @@ Scene::~Scene() {
 }
 
 
+/** Verify all the nodes in the scene. */
+void Scene::verify(Node *node) {
+	
+	Node::iterator it;
+	
+	// Check if sealed
+	if (!node->areChildrenPreparable())
+		return;
+	
+	// Finalize nodes in correct order
+	node->verify();
+	for (it=node->begin(); it!=node->end(); ++it)
+		verify(*it);
+}
+
+
 /** Associate all the nodes in the scene. */
 void Scene::associate(Node *node) {
 	
@@ -114,6 +130,7 @@ void Scene::open(string filename) {
 /** Allows nodes in graph to associate and finalize themselves. */
 void Scene::prepare() {
 	
+	verify(root);
 	associate(root);
 	finalize(root);
 }

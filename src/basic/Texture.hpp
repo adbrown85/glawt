@@ -25,7 +25,7 @@ class Texture : public Node,
                 public Applicable, public Nameable, public Fileable {
 public:
 	Texture(const Tag &tag);
-	virtual void check();
+	virtual void verify();
 	virtual void associate();
 	virtual void finalize();
 	virtual void apply();

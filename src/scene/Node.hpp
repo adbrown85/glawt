@@ -33,6 +33,7 @@ public:
 	virtual bool areChildrenPrintable() const;
 	virtual bool areChildrenSelectable() const;
 	virtual bool areChildrenTraversable() const;
+	virtual void verify() {}
 	virtual void associate() {}
 	virtual void associateAfter() {}
 	iterator begin();

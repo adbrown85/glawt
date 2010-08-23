@@ -40,6 +40,7 @@ public:
 	void print();
 	void setRoot(Node *node);
 protected:
+	void verify(Node *node);
 	void associate(Node *node);
 	void finalize(Node *node);
 private:

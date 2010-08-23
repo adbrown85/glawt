@@ -21,9 +21,6 @@ Texture::Texture(const Tag &tag) : Node(tag), Nameable(tag), Fileable(tag) {
 	this->unit = 0;
 	this->handle = 0;
 	this->type = GL_TEXTURE_2D;
-	
-	// Check
-	check();
 }
 
 
@@ -36,7 +33,7 @@ void Texture::apply() {
 
 
 /** Checks the size and format. */
-void Texture::check() {
+void Texture::verify() {
 	
 	// Size
 	if (size == 0)
