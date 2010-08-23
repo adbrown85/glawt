@@ -119,27 +119,3 @@ string Texture::toString() const {
 	return stream.str();
 }
 
-
-/** Discover all texture nodes under a node. */
-list<Texture*> Texture::search(Node *node) {
-	
-	Node::iterator it;
-	list<Texture*> T;
-	Texture* t;
-	queue<Node*> Q;
-	
-	Q.push(node);
-	while (!Q.empty()) {
-		node = Q.front();
-		t = dynamic_cast<Texture*>(node);
-		if (t != NULL) {
-			T.push_back(t);
-		}
-		for (it=node->begin(); it!=node->end(); ++it) {
-			Q.push(*it);
-		}
-		Q.pop();
-	}
-	return T;
-}
-

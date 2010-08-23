@@ -49,13 +49,11 @@ void Display::add(Control *control) {
 /** Adds up the footprints of all the textures in the scene. */
 void Display::computeFootprint() {
 	
-	Scene *scene;
 	list<Texture*> textures;
 	list<Texture*>::iterator it;
 	
-	// Initialize
-	scene = delegate->getScene();
-	textures = Texture::search(scene->getRoot());
+	// Find all the textures
+	Scout<Texture>::search(delegate->getScene()->getRoot(), textures);
 	
 	// Accumulate
 	footprint = 0;

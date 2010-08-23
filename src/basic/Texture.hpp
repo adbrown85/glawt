@@ -39,8 +39,6 @@ public:    // Accessors
 	virtual GLenum getType() const;
 	virtual GLuint getUnit() const;
 	virtual bool hasFilename() const;
-public:    // Utilities;
-	static list<Texture*> search(Node *node);
 protected: // Helpers
 	void activate() const;
 	void bind() const;
