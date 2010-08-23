@@ -106,8 +106,7 @@ string Texture::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	if (hasName())
-		stream << " name='" << getName() << "'";
+	stream << Nameable::toString();
 	stream << " unit='" << unit << "'"
 	       << " handle='" << handle << "'"
 	       << " format='" << format << "'"

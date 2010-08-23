@@ -122,6 +122,7 @@ public:
 	virtual string getName() const;
 	virtual bool hasName() const;
 	virtual void setName(const string &name);
+	virtual string toString() const;
 	static Node* search(Node *node, const string &name);
 private:
 	string name;

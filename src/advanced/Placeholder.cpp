@@ -46,7 +46,7 @@ string Placeholder::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << getName() << "'";
+	stream << Nameable::toString();
 	return stream.str();
 }
 

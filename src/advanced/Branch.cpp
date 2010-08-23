@@ -31,8 +31,8 @@ string Branch::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
-	stream << " name='" << getName() << "'"
-	       << " follow='" << (follow?'T':'F') << "'";
+	stream << Nameable::toString();
+	stream << " follow='" << (follow?'T':'F') << "'";
 	return stream.str();
 }
 

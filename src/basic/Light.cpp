@@ -109,8 +109,7 @@ string Light::toString() const {
 	ostringstream stream;
 	
 	stream << SimpleDrawable::toString();
-	if (hasName())
-		stream << " name='" << getName() << "'";
+	stream << Nameable::toString();
 	stream << " ambient='" << ambient << "'"
 	       << " diffuse='" << diffuse << "'"
 	       << " specular='" << specular << "'";

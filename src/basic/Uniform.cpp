@@ -143,8 +143,8 @@ string Uniform::toString() const {
 	
 	// Build string
 	stream << Node::toString();
-	stream << " name='" << getName() << "'"
-	       << " location='" << location << "'";
+	stream << Nameable::toString();
+	stream << " location='" << location << "'";
 	if (hasLink()) {
 		stream << " link='" << link << "'";
 	}

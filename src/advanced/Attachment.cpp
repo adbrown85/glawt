@@ -77,9 +77,8 @@ string Attachment::toString() const {
 	ostringstream stream;
 	
 	stream << Node::toString();
+	stream << Nameable::toString();
 	stream << " framebuffer='" << framebuffer->getHandle() << "'";
-	if (hasName())
-		stream << " name='" << getName() << "'";
 	stream << " index='" << index << "'"
 	       << " type='" << type << "'";
 	return stream.str();

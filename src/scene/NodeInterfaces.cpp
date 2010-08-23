@@ -14,6 +14,17 @@ Nameable::Nameable(const Tag &tag) {
 }
 
 
+/** @return String with the object's name if it has one. */
+string Nameable::toString() const {
+	
+	ostringstream stream;
+	
+	if (hasName())
+		stream << " name='" << name << "'";
+	return stream.str();
+}
+
+
 /** Find a named node. */
 Node* Nameable::search(Node *node, const string &name) {
 	
