@@ -22,6 +22,7 @@ public:
 	static T* locate(Node *node, const string &name);
 	static T* search(Node *root);
 	static T* search(Node *node, const string &name);
+	static void search(Node *root, list<T*> &items);
 };
 
 
@@ -112,6 +113,28 @@ T* Scout<T>::search(Node *root, const string &name) {
 		Q.pop();
 	}
 	return NULL;
+}
+
+
+/** Finds all the nodes under @e root of a certain type. */
+template <typename T>
+void Scout<T>::search(Node *root, list<T*> &items) {
+	
+	Node::iterator it;
+	Node *node;
+	queue<Node*> Q;
+	T *t;
+	
+	Q.push(root);
+	while (!Q.empty()) {
+		node = Q.front();
+		t = dynamic_cast<T*>(node);
+		if (t != NULL)
+			items.push_back(t);
+		for (it=node->begin(); it!=node->end(); ++it)
+			Q.push(*it);
+		Q.pop();
+	}
 }
 
 
