@@ -7,6 +7,7 @@
 #ifndef TYPEFACE_HPP
 #define TYPEFACE_HPP
 #include "common.h"
+#include "ErrorChecker.hpp"
 #ifdef HAVE_GTK
 #include <gdkmm/gl/font.h>
 using namespace std;

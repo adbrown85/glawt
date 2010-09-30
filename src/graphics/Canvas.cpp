@@ -31,18 +31,6 @@ void Canvas::addListener(CanvasListener *listener, int type) {
 }
 
 
-/** Checks if there were any errors. */
-void Canvas::check() {
-	
-	GLenum error;
-	
-	error = glGetError();
-	if (error != GL_NO_ERROR) {
-		cerr << gluErrorString(error) << endl;
-	}
-}
-
-
 /** Wipes the canvas clean. */
 void Canvas::clear() {
 	

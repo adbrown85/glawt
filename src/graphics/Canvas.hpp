@@ -8,7 +8,6 @@
 #define CANVAS_HPP
 #include "common.h"
 #include <algorithm>                    // For find
-#include <GL/glu.h>
 #include "Log.hpp"
 #include "Camera.hpp"
 #include "Combo.hpp"

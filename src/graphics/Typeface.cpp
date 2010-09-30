@@ -24,6 +24,7 @@ bool Typeface::load(const string &descriptor) {
 	// Load display lists from font
 	description = Pango::FontDescription(descriptor);
 	font = Gdk::GL::Font::use_pango_font(description, 0, 128, base);
+	ErrorChecker::clear();
 	if (!font) {
 		return false;
 	}
