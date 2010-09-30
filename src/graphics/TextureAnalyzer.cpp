@@ -13,10 +13,19 @@ GLint TextureAnalyzer::getBitsPerPixel() {
 	// Calculate by format
 	switch (getFormat()) {
 	case GL_RGB:
+	case GL_RGB8:
+	case GL_COMPRESSED_RGB:
+	case GL_COMPRESSED_SRGB:
+	case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
 		return getRGBSize();
+	case GL_RGBA:
+	case GL_RGBA8:
 	case GL_RGBA16F:
 	case GL_RGBA32F:
-	case GL_RGBA:
+	case GL_COMPRESSED_RGBA:
+	case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:
+	case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:
+	case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
 		return getRGBASize();
 	case GL_LUMINANCE:
 		return getLuminanceSize();
