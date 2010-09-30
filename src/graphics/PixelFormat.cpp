@@ -5,41 +5,55 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "PixelFormat.hpp"
-map<string,GLenum> PixelFormat::formats;
+map<string,GLenum> PixelFormat::namesToCodes;
+map<GLenum,string> PixelFormat::codesToNames;
 bool PixelFormat::loaded=false;
 
 
+/** Adds a format to the store. */
+void PixelFormat::addFormat(const string &name, GLenum code) {
+	
+	namesToCodes[name] = code;
+	codesToNames[code] = name;
+}
+
+
 /** @return OpenGL enumeration for a format. */
-GLenum PixelFormat::getFormat(const string &format) {
+GLenum PixelFormat::getFormat(const string &name) {
 	
 	map<string,GLenum>::iterator it;
 	
 	// Make sure loaded
 	load();
 	
-	// Find value by key
-	it = formats.find(format);
-	if (it != formats.end()) {
+	// Find code for name
+	it = namesToCodes.find(name);
+	if (it != namesToCodes.end()) {
 		return it->second;
 	} else {
-		throw Exception("[PixelFormat] Format not loaded.");
+		Exception e;
+		e << "[PixelFormat] Format '" << name << "' not loaded.";
+		throw e;
 	}
 }
 
 
 /** @return Human-readable string for a format. */
-string PixelFormat::getFormat(GLenum format) {
+string PixelFormat::getFormat(GLenum code) {
 	
-	map<string,GLenum>::iterator it;
+	map<GLenum,string>::iterator it;
 	
 	// Make sure loaded
 	load();
 	
-	// Find key by value
-	for (it=formats.begin(); it!=formats.end(); ++it) {
-		if (it->second == format) {
-			return it->first;
-		}
+	// Find name for code
+	it = codesToNames.find(code);
+	if (it != codesToNames.end()) {
+		return it->second;
+	} else {
+		Exception e;
+		e << "[PixelFormat] Format '" << code << "' not loaded.";
+		throw e;
 	}
 	
 	// Not loaded
@@ -47,42 +61,48 @@ string PixelFormat::getFormat(GLenum format) {
 }
 
 
-/** Loads the formats. */
+/** Loads the formats once. */
 void PixelFormat::load() {
 	
 	// Check
 	if (loaded) return;
 	
 	// Formats
-	loadFormats();
+	loadNameConversions();
 	
 	// Finish
 	loaded = true;
 }
 
 
-void PixelFormat::loadFormats() {
+/** Load entries for converting to and from names. */
+void PixelFormat::loadNameConversions() {
 	
 	// RGB
-	formats["rgb"] = GL_RGB;
-	formats["rgb8"] = GL_RGB8;
-	formats["compressed_rgb"] = GL_COMPRESSED_RGB;
+	addFormat("rgb", GL_RGB);
+	addFormat("rgb8", GL_RGB8);
+	addFormat("compressed_rgb", GL_COMPRESSED_RGB);
+	addFormat("compressed_srgb", GL_COMPRESSED_SRGB);
+	addFormat("compressed_rgb_s3tc_dxt1", GL_COMPRESSED_RGB_S3TC_DXT1_EXT);
 	
 	// RGBA
-	formats["rgba"] = GL_RGBA;
-	formats["rgba8"] = GL_RGBA8;
-	formats["compressed_rgba"] = GL_COMPRESSED_RGBA;
+	addFormat("rgba", GL_RGBA);
+	addFormat("rgba8", GL_RGBA8);
+	addFormat("compressed_rgba", GL_COMPRESSED_RGBA);
+	addFormat("compressed_rgba_s3tc_dxt1", GL_COMPRESSED_RGBA_S3TC_DXT1_EXT);
+	addFormat("compressed_rgba_s3tc_dxt3", GL_COMPRESSED_RGBA_S3TC_DXT3_EXT);
+	addFormat("compressed_rgba_s3tc_dxt5", GL_COMPRESSED_RGBA_S3TC_DXT5_EXT);
 	
 	// Individuals
-	formats["red"] = GL_RED;
-	formats["compressed_red"] = GL_COMPRESSED_RED;
-	formats["luminance"] = GL_LUMINANCE;
+	addFormat("red", GL_RED);
+	addFormat("compressed_red", GL_COMPRESSED_RED);
+	addFormat("luminance", GL_LUMINANCE);
 	
 	// Pairs
-	formats["rg"] = GL_RG;
-	formats["compressed_rg"] = GL_COMPRESSED_RG;
+	addFormat("rg", GL_RG);
+	addFormat("compressed_rg", GL_COMPRESSED_RG);
 	
 	// Other types
-	formats["rgba16f"] = GL_RGBA16F;
+	addFormat("rgba16f", GL_RGBA16F);
 }
 

@@ -16,14 +16,16 @@ using namespace std;
  */
 class PixelFormat {
 public:
-	static GLenum getFormat(const string &format);
-	static string getFormat(GLenum format);
-protected:
+	static GLenum getFormat(const string &name);
+	static string getFormat(GLenum code);
+protected: // Helpers
+	static void addFormat(const string &name, GLenum code);
 	static void load();
-	static void loadFormats();
-private:
+	static void loadNameConversions();
+private:   // Data
 	static bool loaded;
-	static map<string,GLenum> formats;
+	static map<string,GLenum> namesToCodes;
+	static map<GLenum,string> codesToNames;
 };
 
 
