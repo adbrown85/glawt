@@ -8,18 +8,26 @@
 
 
 /** Fills the texture with data from a dataset. */
-void TextureBuilder3D::assemble(const string &filename) {
+void TextureBuilder3D::assemble(const string &filename, bool compress) {
 	
 	Dataset *dataset;
+	GLenum format;
 	
-	// Get the dataset
+	// Load the dataset
 	dataset = new Dataset(filename);
 	dataset->load();
+	
+	// Determine format
+	if (compress) {
+		format = PixelFormat::getCompressedFormat(GL_LUMINANCE);
+	} else {
+		format = GL_LUMINANCE;
+	}
 	
 	// Upload to texture
 	glTexImage3D(GL_TEXTURE_3D,           // Target
 	             0,                       // Mipmap level
-	             GL_LUMINANCE,            // Internal format
+	             format,                  // Internal format
 	             dataset->getWidth(),     // Width
 	             dataset->getHeight(),    // Height
 	             dataset->getDepth(),     // Depth

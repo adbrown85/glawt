@@ -26,6 +26,7 @@ struct TextureInvoice {
 	GLint width, height, depth;
 	GLuint handle;
 	GLint footprint, precision;
+	bool compressed;
 };
 
 /** @brief Base class for a builder that makes textures.
@@ -39,7 +40,7 @@ public:    // Accessors
 	virtual GLenum getType() const = 0;
 protected: // Helpers
 	virtual void prepare();
-	virtual void assemble(const string &filename) = 0;
+	virtual void assemble(const string &filename, bool compress) = 0;
 	virtual void assemble(const TextureOrder &order) = 0;
 	virtual void complete() = 0;
 	virtual void package();

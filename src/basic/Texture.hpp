@@ -46,6 +46,7 @@ private:
 	GLuint handle, unit, footprint, precision;
 	string format;
 	int size;
+	bool compress;
 };
 
 /** Activates the correct texture unit. */

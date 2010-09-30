@@ -26,9 +26,9 @@ TextureInvoice TextureFactory::create(const string& filename, bool compress) {
 	// Otherwise build correct type
 	extension = Path::getExtension(filename);
 	if (Text::toLower(extension) == "vlb") {
-		invoice = builder3D.build(filename);
+		invoice = builder3D.build(filename, compress);
 	} else {
-		invoice = builder2D.build(filename);
+		invoice = builder2D.build(filename, compress);
 	}
 	
 	// Store and finish

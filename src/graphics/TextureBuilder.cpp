@@ -11,7 +11,7 @@
 TextureInvoice TextureBuilder::build(const string &filename, bool compress) {
 	
 	prepare();
-	assemble(filename);
+	assemble(filename, compress);
 	complete();
 	package();
 	return invoice;
@@ -47,11 +47,12 @@ void TextureBuilder::package() {
 	analyzer.setTexture(invoice.type, invoice.handle);
 	
 	// Record
-	invoice.width     = analyzer.getWidth();
-	invoice.height    = analyzer.getHeight();
-	invoice.depth     = analyzer.getDepth();
-	invoice.format    = PixelFormat::getFormat(analyzer.getFormat());
-	invoice.footprint = analyzer.getFootprint();
-	invoice.precision = analyzer.getBitsPerPixel();
+	invoice.width      = analyzer.getWidth();
+	invoice.height     = analyzer.getHeight();
+	invoice.depth      = analyzer.getDepth();
+	invoice.format     = PixelFormat::getFormat(analyzer.getFormat());
+	invoice.footprint  = analyzer.getFootprint();
+	invoice.precision  = analyzer.getBitsPerPixel();
+	invoice.compressed = analyzer.isCompressed();
 }
 

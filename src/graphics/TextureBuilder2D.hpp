@@ -19,7 +19,7 @@ class TextureBuilder2D : public TextureBuilder {
 public:    // Accessors
 	virtual GLenum getType() const;
 protected: // Helpers
-	virtual void assemble(const string &filename);
+	virtual void assemble(const string &filename, bool compress);
 	virtual void assemble(const TextureOrder &order);
 	virtual void complete();
 };

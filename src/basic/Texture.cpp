@@ -16,6 +16,7 @@ Texture::Texture(const Tag &tag) : Node(tag), Nameable(tag), Fileable(tag) {
 	// Retrieve from tag
 	tag.get("size", size, false);
 	tag.get("format", format, false, true);
+	tag.get("compress", compress, false);
 	
 	// Defaults
 	this->unit = 0;
@@ -64,7 +65,7 @@ void Texture::finalize() {
 	
 	// Get texture from factory
 	if (hasFilename()) {
-		invoice = TextureFactory::create(getFilename());
+		invoice = TextureFactory::create(getFilename(), compress);
 	} else {
 		invoice = TextureFactory::create(makeOrder());
 	}
@@ -76,6 +77,7 @@ void Texture::finalize() {
 	footprint = invoice.footprint;
 	precision = invoice.precision;
 	size      = invoice.width;
+	compress  = invoice.compressed;
 }
 
 
@@ -109,7 +111,8 @@ string Texture::toString() const {
 	       << " format='" << format << "'"
 	       << " footprint='" << footprint << "'"
 	       << " precision='" << precision << "'"
-	       << " size='" << size << "'";
+	       << " size='" << size << "'"
+	       << " compress='" << compress << "'";
 	return stream.str();
 }
 

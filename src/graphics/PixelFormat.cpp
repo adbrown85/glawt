@@ -129,9 +129,10 @@ void PixelFormat::loadNameConversions() {
 /** Load entries for converting to compressed codes. */
 void PixelFormat::loadCompressConversions() {
 	
-	codesToCompressCodes[GL_RGB]  = GL_COMPRESSED_RGB;
-	codesToCompressCodes[GL_RGBA] = GL_COMPRESSED_RGBA;
-	codesToCompressCodes[GL_RED]  = GL_COMPRESSED_RED;
-	codesToCompressCodes[GL_RG]   = GL_COMPRESSED_RG;
+	codesToCompressCodes[GL_RGB]       = GL_COMPRESSED_RGB;
+	codesToCompressCodes[GL_RGBA]      = GL_COMPRESSED_RGBA;
+	codesToCompressCodes[GL_RED]       = GL_COMPRESSED_RED;
+	codesToCompressCodes[GL_RG]        = GL_COMPRESSED_RG;
+	codesToCompressCodes[GL_LUMINANCE] = GL_COMPRESSED_RGB;
 }
 

@@ -8,17 +8,23 @@
 
 
 /** Fills the texture with data from an image. */
-void TextureBuilder2D::assemble(const string &filename) {
+void TextureBuilder2D::assemble(const string &filename, bool compress) {
 	
 	Image *image;
+	GLenum format;
 	
-	// Get the image
+	// Get the image and its format
 	image = ImageFactory::create(filename);
+	if (compress) {
+		format = PixelFormat::getCompressedFormat(image->getFormat());
+	} else {
+		format = image->getFormat();
+	}
 	
 	// Upload data
 	glTexImage2D(GL_TEXTURE_2D,                   // target
 	             0,                               // level
-	             image->getFormat(),              // internalFormat
+	             format,                          // internalFormat
 	             image->getWidth(),               // width
 	             image->getHeight(),              // height
 	             0,                               // border
