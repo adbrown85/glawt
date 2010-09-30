@@ -7,6 +7,7 @@
 #include "PixelFormat.hpp"
 map<string,GLenum> PixelFormat::namesToCodes;
 map<GLenum,string> PixelFormat::codesToNames;
+map<GLenum,GLenum> PixelFormat::codesToCompressCodes;
 bool PixelFormat::loaded=false;
 
 
@@ -55,9 +56,26 @@ string PixelFormat::getFormat(GLenum code) {
 		e << "[PixelFormat] Format '" << code << "' not loaded.";
 		throw e;
 	}
+}
+
+
+/** @return Equivalent compressed format for a regular format. */
+GLenum PixelFormat::getCompressedFormat(GLenum code) {
 	
-	// Not loaded
-	throw Exception("[PixelFormat] Format not loaded.");
+	map<GLenum,GLenum>::iterator it;
+	
+	// Make sure loaded
+	load();
+	
+	// Find compressed code for regular code
+	it = codesToCompressCodes.find(code);
+	if (it != codesToCompressCodes.end()) {
+		return it->second;
+	} else {
+		Exception e;
+		e << "[PixelFormat] Equivalent compressed format not loaded.";
+		throw e;
+	}
 }
 
 
@@ -69,6 +87,7 @@ void PixelFormat::load() {
 	
 	// Formats
 	loadNameConversions();
+	loadCompressConversions();
 	
 	// Finish
 	loaded = true;
@@ -104,5 +123,15 @@ void PixelFormat::loadNameConversions() {
 	
 	// Other types
 	addFormat("rgba16f", GL_RGBA16F);
+}
+
+
+/** Load entries for converting to compressed codes. */
+void PixelFormat::loadCompressConversions() {
+	
+	codesToCompressCodes[GL_RGB]  = GL_COMPRESSED_RGB;
+	codesToCompressCodes[GL_RGBA] = GL_COMPRESSED_RGBA;
+	codesToCompressCodes[GL_RED]  = GL_COMPRESSED_RED;
+	codesToCompressCodes[GL_RG]   = GL_COMPRESSED_RG;
 }
 
