@@ -64,10 +64,16 @@ void Texture::finalize() {
 	TextureInvoice invoice;
 	
 	// Get texture from factory
-	if (hasFilename()) {
-		invoice = TextureFactory::create(getFilename(), compress);
-	} else {
-		invoice = TextureFactory::create(makeOrder());
+	try {
+		if (hasFilename()) {
+			invoice = TextureFactory::create(getFilename(), compress);
+		} else {
+			invoice = TextureFactory::create(makeOrder());
+		}
+	} catch (Exception &ex) {
+		NodeException e(getTag());
+		e << ex.getMessage();
+		throw e;
 	}
 	
 	// Copy details
