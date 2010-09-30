@@ -23,7 +23,7 @@
 	</framebuffer>
 	
 	<!-- Sample volume -->
-	<texture file="../textures/head128.vlb" name="volume">
+	<texture file="../textures/head128.vlb" name="volume" compress="true">
 		<program>
 			<shader file="volume.vert" />
 			<shader file="volume.frag" />

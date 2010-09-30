@@ -7,7 +7,7 @@
 
 
 
-<texture file="../textures/crate.jpg" name="crate">
+<texture file="../textures/crate.jpg" name="crate" compress="true">
 <texture file="../textures/stone.jpg" name="stone">
 	<program>
 		<shader file="multitexture.vert" />
