@@ -10,6 +10,7 @@
 /** Builds a texture from a file. */
 TextureInvoice TextureBuilder::build(const string &filename, bool compress) {
 	
+	check(filename);
 	prepare();
 	assemble(filename, compress);
 	complete();
@@ -26,6 +27,23 @@ TextureInvoice TextureBuilder::build(const TextureOrder &order) {
 	complete();
 	package();
 	return invoice;
+}
+
+
+/** Checks that the file exists. */
+void TextureBuilder::check(const string &filename) {
+	
+	ifstream file;
+	bool opened;
+	
+	file.open(filename.c_str());
+	opened = file;
+	file.close();
+	if (!opened) {
+		Exception e;
+		e << "[TextureBuilder] Could not open '" << filename << "'.";
+		throw e;
+	}
 }
 
 

@@ -7,6 +7,7 @@
 #ifndef TEXTUREBUILDER_HPP
 #define TEXTUREBUILDER_HPP
 #include "common.h"
+#include <fstream>
 #include "PixelFormat.hpp"
 #include "TextureAnalyzer.hpp"
 using namespace std;
@@ -39,6 +40,7 @@ public:
 public:    // Accessors
 	virtual GLenum getType() const = 0;
 protected: // Helpers
+	virtual void check(const string &filename);
 	virtual void prepare();
 	virtual void assemble(const string &filename, bool compress) = 0;
 	virtual void assemble(const TextureOrder &order) = 0;
