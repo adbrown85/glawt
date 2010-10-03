@@ -51,7 +51,6 @@ void BasicFactory::install() {
 	kinds["vec4"] = VECTOR;
 }
 
-
 Node* BasicFactory::createBox(const Tag &tag) {return new Box(tag);}
 
 Node* BasicFactory::createCone(const Tag &tag) {return new Cone(tag);}
@@ -81,7 +80,6 @@ Node* BasicFactory::createSquare(const Tag &tag) {return new Square(tag);}
 Node* BasicFactory::createTexture(const Tag &tag) {return new Texture(tag);}
 
 Node* BasicFactory::createTranslate(const Tag &t) {return new Translate(t);}
-
 
 Node* BasicFactory::createUniform(const Tag &tag) {
 	
@@ -117,7 +115,6 @@ Node* BasicFactory::createUniform(const Tag &tag) {
 		throw e;
 	}
 }
-
 
 Node* BasicFactory::createWireframe(const Tag &tag) {
 	

@@ -32,9 +32,9 @@
 using namespace std;
 
 
-/**
+/** @brief %Factory for creating nodes used by most files.
+ * 
  * @ingroup basic
- * @brief %Factory for creating nodes used by most files.
  */
 class BasicFactory {
 public:
