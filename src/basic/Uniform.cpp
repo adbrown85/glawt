@@ -20,6 +20,11 @@ Uniform::Uniform(const Tag &tag) : Node(tag), Nameable(tag) {
 	// Other
 	program = NULL;
 	location = 0;
+}
+
+
+/** Validates the node was created correctly. */
+void Uniform::verify() {
 	
 	// Check
 	if (!hasName()) {

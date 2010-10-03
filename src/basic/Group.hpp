@@ -18,6 +18,7 @@ using namespace std;
 class Group : public Node, public Nameable {
 public:
 	Group(const Tag &tag);
+	virtual void verify();
 	virtual bool areChildrenTraversable() const;
 	virtual bool areChildrenPreparable() const;
 	virtual string toString() const;

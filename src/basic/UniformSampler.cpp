@@ -7,15 +7,9 @@
 #include "UniformSampler.hpp"
 
 
-/** @throw NodeException if @e link attribute is not specified. */
+/** Creates a new uniform sampler. */
 UniformSampler::UniformSampler(const Tag &tag) : Uniform(tag) {
-	
-	// Check link
-	if (!hasLink()) {
-		NodeException e(tag);
-		e << "[UniformSampler] Sampler types require link to texture.";
-		throw e;
-	}
+
 }
 
 
@@ -56,3 +50,15 @@ string UniformSampler::toString() const {
 	return stream.str();
 }
 
+
+/** @throw NodeException if @e link attribute is not specified. */
+void UniformSampler::verify() {
+	
+	Uniform::verify();
+	
+	if (!hasLink()) {
+		NodeException e(getTag());
+		e << "[UniformSampler] Sampler types require link to texture.";
+		throw e;
+	}
+}

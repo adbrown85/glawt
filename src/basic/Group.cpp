@@ -13,6 +13,12 @@
  */
 Group::Group(const Tag &tag) : Node(tag), Nameable(tag) {
 	
+}
+
+
+/** Validates the node was created correctly. */
+void Group::verify() {
+	
 	if (!hasName()) {
 		NodeException e(getTag());
 		e << "[Group] Must have name.";

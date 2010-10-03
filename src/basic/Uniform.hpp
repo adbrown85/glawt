@@ -37,6 +37,7 @@ public: // Core
 	virtual void finalize();
 	virtual void remove() {};
 	virtual string toString() const;
+	virtual void verify();
 	virtual bool wasSuppressed() const;
 public: // Accessors and mutators
 	string getLink() const;

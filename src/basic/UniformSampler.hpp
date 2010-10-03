@@ -19,6 +19,7 @@ public:
 	virtual void associate();
 	virtual void apply();
 	virtual string toString() const;
+	virtual void verify();
 public:    // Accessors
 	virtual GLint getValue() const;
 private:   // Data
