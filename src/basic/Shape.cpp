@@ -47,7 +47,7 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 
 /** Finds a program to bind the shape's vertex attributes to.
  * 
- * @throws NodeException if a program cannot be found.
+ * @throw NodeException if a program cannot be found.
  */
 void Shape::associate() {
 	

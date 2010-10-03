@@ -9,7 +9,7 @@
 
 /** Initializes @e mode and @e clear. 
  * 
- * @throws NodeException if value for @e mode unrecognized.
+ * @throw NodeException if value for @e mode unrecognized.
  */
 Depth::Depth(const Tag &tag) : Node(tag) {
 	

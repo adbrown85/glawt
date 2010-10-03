@@ -9,8 +9,8 @@
 
 /** Initializes the type and value (or link).
  * 
- * @throws NodeException if @e type is not supported.
- * @throws NodeException if @e value or @e link not specified.
+ * @throw NodeException if @e type is not supported.
+ * @throw NodeException if @e value or @e link not specified.
  */
 UniformVector::UniformVector(const Tag &tag) : Uniform(tag) {
 	
@@ -57,7 +57,7 @@ void UniformVector::associate() {
 }
 
 
-/** @throws NodeException if unexpected size is encountered. */
+/** @throw NodeException if unexpected size is encountered. */
 void UniformVector::apply() {
 	
 	if (!hasLocation())

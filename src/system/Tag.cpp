@@ -34,7 +34,7 @@ void Tag::clear() {
 }
 
 
-/** @throws Exception if tag doesn't have an attribute named @e key. */
+/** @throw Exception if tag doesn't have an attribute named @e key. */
 void Tag::error(string key) const {
 	
 	Exception e;
@@ -48,7 +48,7 @@ void Tag::error(string key) const {
 }
 
 
-/** @throws Exception if attribute @e key can't be converted to a @e type. */
+/** @throw Exception if attribute @e key can't be converted to a @e type. */
 void Tag::error(string key, string type) const {
 	
 	Exception e;

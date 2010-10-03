@@ -15,7 +15,7 @@ Calculator::Calculator(set<Shape*> shapes) {
 }
 
 
-/** @throws Exception if canvas has not been set. */
+/** @throw Exception if canvas has not been set. */
 void Calculator::checkCanvas() {
 	
 	if (canvas == NULL) {
@@ -36,7 +36,7 @@ GLint Calculator::getCalculationFor(const string &name) {
 
 /** Performs a calculation based on an enumeration.
  * 
- * @throws Exception if calculation not supported.
+ * @throw Exception if calculation not supported.
  */
 void Calculator::run(GLint calculation, GLsizei count, float *values) {
 	
@@ -52,7 +52,7 @@ void Calculator::run(GLint calculation, GLsizei count, float *values) {
 
 /** Calculates series of steps from the minimum to maximum depth in the scene.
  * 
- * @throws Exception from checkCanvas()
+ * @throw Exception from checkCanvas()
  */
 void Calculator::runDistributionZ(GLsizei count, float *values) {
 	

@@ -67,8 +67,8 @@ void Framebuffer::attach(Chain &chain) {
  * 
  * @param type Either @e color or @e depth.
  * @param item Item to be attached.
- * @throws NodeException if type not supported.
- * @throws NodeException if maximum attachments for a slot will be exceeded.
+ * @throw NodeException if type not supported.
+ * @throw NodeException if maximum attachments for a slot will be exceeded.
  */
 void Framebuffer::enqueue(const string &type, Attachable *item) {
 	
@@ -89,7 +89,7 @@ void Framebuffer::enqueue(const string &type, Attachable *item) {
 
 /** Attaches all the attachments and checks if the framebuffer is complete.
  * 
- * @throws NodeException if framebuffer is not complete.
+ * @throw NodeException if framebuffer is not complete.
  */
 void Framebuffer::finalize() {
 	
@@ -117,7 +117,7 @@ void Framebuffer::finalize() {
 
 /** @return Structure holding state for one type of attachment. 
  * 
- * @throws NodeException if type not supported.
+ * @throw NodeException if type not supported.
  */
 Chain* Framebuffer::getChain(const string &name) {
 	

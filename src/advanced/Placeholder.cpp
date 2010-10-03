@@ -18,7 +18,7 @@ Placeholder::Placeholder(const Tag &tag) : Node(tag), Nameable(tag) {
 }
 
 
-/** @throws NodeException if the placeholder has children.*/
+/** @throw NodeException if the placeholder has children.*/
 void Placeholder::check() {
 	
 	if (!children.empty()) {

@@ -7,7 +7,7 @@
 #include "UniformMatrix.hpp"
 
 
-/** @throws NodeException if matrix type not supported. */
+/** @throw NodeException if matrix type not supported. */
 UniformMatrix::UniformMatrix(const Tag &tag) : Uniform(tag) {
 	
 	// Find matrix type
@@ -34,7 +34,7 @@ void UniformMatrix::associate() {
 }
 
 
-/** @throws NodeException if light named @e of cannot be found. */
+/** @throw NodeException if light named @e of cannot be found. */
 void UniformMatrix::findLight() {
 	
 	light = Light::search(Node::findRoot(this), of);
@@ -79,7 +79,7 @@ bool UniformMatrix::isDefaultName(const string &name) {
 }
 
 
-/** @throws NodeException if @e as not supported. */
+/** @throw NodeException if @e as not supported. */
 void UniformMatrix::setTypeFromAs() {
 	
 	if (as == "modelview") {
@@ -104,7 +104,7 @@ void UniformMatrix::setTypeFromAs() {
 }
 
 
-/** @throws NodeException if default name not supported. */
+/** @throw NodeException if default name not supported. */
 void UniformMatrix::setTypeFromName() {
 	
 	if (getName() == DEFAULT_MODELVIEW_PROJECTION_MATRIX_NAME) {

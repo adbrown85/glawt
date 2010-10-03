@@ -88,7 +88,7 @@ string Path::getInternals(const string& path) {
  * 
  * @param primary Path used as the base.
  * @param secondary Relative path to modify primary.
- * @throws Exception if either of the paths are empty.
+ * @throw Exception if either of the paths are empty.
  */
 string Path::getRelativePath(const string &primary,
                              const string &secondary) {
@@ -176,7 +176,7 @@ bool Path::isSeparator(char character) {
  * @param root Top-most directory
  * @param path Base path
  * @param change Relative path 
- * @throws Exception if the relative path goes above root.
+ * @throw Exception if the relative path goes above root.
  */
 string Path::mergePaths(const string &root,
                         vector<string> &path,

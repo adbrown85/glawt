@@ -114,7 +114,7 @@ void Parser::findKeyValue(const string &attribute,
 
 /** Returns the key in an attribute key/value pair.
  * 
- * @throws Exception if attribute does not have an equals sign.
+ * @throw Exception if attribute does not have an equals sign.
  */
 string Parser::findKeyIn(const string &text) {
 	
@@ -131,7 +131,7 @@ string Parser::findKeyIn(const string &text) {
 
 /** Returns the value in an attribute key/value pair.
  * 
- * @throws Exception if there is no text between the quotes.
+ * @throw Exception if there is no text between the quotes.
  */
 string Parser::findValueIn(const string &text) {
 	
@@ -175,7 +175,7 @@ bool Parser::match(const string &text) {
 /** Opens a file and starts parsing it.
  * 
  * @param filename Path of the file to open.
- * @throws const_char* if file cannot be opened.
+ * @throw const_char* if file cannot be opened.
  */
 void Parser::open(string filename) {
 	

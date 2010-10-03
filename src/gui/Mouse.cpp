@@ -124,7 +124,7 @@ float Mouse::findDragAmount(int i) {
 
 /** Installs the control into the current context.
  * 
- * @throws Exception if load() was not called first.
+ * @throw Exception if load() was not called first.
  */
 void Mouse::install() {
 	

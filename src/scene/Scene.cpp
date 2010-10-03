@@ -166,8 +166,8 @@ void Scene::print() {
 
 /** Replaces the root of the scene with a new node.
  * 
- * @throws Exception if the root has children already
- * @throws Exception if node is NULL
+ * @throw Exception if the root has children already
+ * @throw Exception if node is NULL
  */
 void Scene::setRoot(Node *node) {
 	

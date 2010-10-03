@@ -10,9 +10,9 @@ float Boolean::FLT_INF;
 
 /** Creates a new %Boolean node.
  * 
- * @throws Exception if @e of attribute not present
- * @throws Exception if @e operation attribute not present
- * @throws NodeException if float is not signed
+ * @throw Exception if @e of attribute not present
+ * @throw Exception if @e operation attribute not present
+ * @throw NodeException if float is not signed
  */
 Boolean::Boolean(const Tag &tag, ShapeTraits traits) : Hexahedron(tag,traits) {
 	
@@ -78,7 +78,7 @@ void Boolean::applyUniforms(int i) const {
 
 /** Finds the group, shapes, transforms, and uniforms needed by the operation.
  * 
- * @throws NodeException from Shape::associate()
+ * @throw NodeException from Shape::associate()
  */
 void Boolean::associate() {
 	
@@ -231,7 +231,7 @@ void Boolean::finalizeUniforms() {
 
 /** Finds the group the Boolean should look for shapes in. 
  * 
- * @throws NodeException if the group named by @e of cannot be found.
+ * @throw NodeException if the group named by @e of cannot be found.
  */
 void Boolean::findGroup() {
 	
@@ -244,7 +244,7 @@ void Boolean::findGroup() {
 }
 
 
-/** @throws NodeException if no shapes are in group. */
+/** @throw NodeException if no shapes are in group. */
 void Boolean::findShapes() {
 	
 	Node *node;

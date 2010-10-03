@@ -9,7 +9,7 @@
 
 /** Initializes the @e type, @e format, and @e size of the renderbuffer.
  * 
- * @throws NodeException if @e type not recognized.
+ * @throw NodeException if @e type not recognized.
  */
 Renderbuffer::Renderbuffer(const Tag &tag) : Attachment(tag) {
 	

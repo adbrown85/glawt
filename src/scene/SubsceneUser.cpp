@@ -27,7 +27,7 @@ SubsceneUser::~SubsceneUser() {
 
 /** Opens the subscene using @e filename from resources directory.
  * 
- * @throws Exception if already opened.
+ * @throw Exception if already opened.
  */
 void SubsceneUser::openSubscene(const string &filename) {
 	

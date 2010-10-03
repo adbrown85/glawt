@@ -34,7 +34,7 @@ void Producer::cut(int command) {
 
 /** Opens a scene from an XML file.
  * 
- * @throws Exception if scene is NULL.
+ * @throw Exception if scene is NULL.
  */
 void Producer::open(int command, const string &filename) {
 	

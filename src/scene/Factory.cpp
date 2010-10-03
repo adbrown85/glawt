@@ -58,7 +58,7 @@ Node* Factory::create(const string &text, const string &xmlFilename) {
 }
 
 
-/** @throws NodeException if Factory could not find a creator function. */
+/** @throw NodeException if Factory could not find a creator function. */
 void Factory::error(const Tag &tag) {
 	
 	NodeException e(tag);

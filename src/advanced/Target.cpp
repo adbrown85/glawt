@@ -27,8 +27,8 @@ Target::Target(const Tag &tag) : Attachment(tag) {
 
 /** Finds the framebuffer and texture to use.
  * 
- * @throws NodeException if cannot find texture with correct name.
- * @throws NodeException from Attachment::associate().
+ * @throw NodeException if cannot find texture with correct name.
+ * @throw NodeException from Attachment::associate().
  */
 void Target::associate() {
 	

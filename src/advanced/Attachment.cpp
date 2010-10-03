@@ -9,7 +9,7 @@
 
 /** Initialize attributes.
  * 
- * @throws NodeException if @e type is not "color" or "depth".
+ * @throw NodeException if @e type is not "color" or "depth".
  */
 Attachment::Attachment(const Tag &tag) : Attachable(tag), Nameable(tag) {
 	
@@ -32,7 +32,7 @@ Attachment::Attachment(const Tag &tag) : Attachable(tag), Nameable(tag) {
 
 /** Finds the first framebuffer above this node and enqueue it.
  * 
- * @throws NodeException if framebuffer cannot be found.
+ * @throw NodeException if framebuffer cannot be found.
  */
 void Attachment::associate() {
 	

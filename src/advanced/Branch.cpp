@@ -9,7 +9,7 @@
 
 /** Initializes attributes.
  * 
- * @throws NodeException if not given a name.
+ * @throw NodeException if not given a name.
  */
 Branch::Branch(const Tag &tag) : Node(tag), Nameable(tag) {
 	

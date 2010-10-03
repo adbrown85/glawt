@@ -29,7 +29,7 @@ Dataset::~Dataset() {
 /** Makes sure that an index is in bounds.
  * 
  * @param [in] index Integer coordinates specifying the location in dataset.
- * @throws Exception if index is out of bounds
+ * @throw Exception if index is out of bounds
  */
 void Dataset::checkIndex(const Index &index) const {
 	
@@ -72,7 +72,7 @@ void Dataset::get(const Index &index,
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws Exception if the dataset's type is not GL_UNSIGNED_BYTE.
+ * @throw Exception if the dataset's type is not GL_UNSIGNED_BYTE.
  * @return Copy of the value as an unsigned byte.
  * @note Remember if you want to print the value, cast it to an @c int first.
  */
@@ -94,7 +94,7 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws Exception if the dataset's type is not GL_FLOAT.
+ * @throw Exception if the dataset's type is not GL_FLOAT.
  * @return Copy of the value as a float.
  */
 float Dataset::getAsFloat(const Index &I) const {
@@ -115,7 +115,7 @@ float Dataset::getAsFloat(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws Exception if the dataset's type is not GL_SHORT.
+ * @throw Exception if the dataset's type is not GL_SHORT.
  * @return Copy of the value as a short.
  */
 short Dataset::getAsShort(const Index &I) const {
@@ -136,7 +136,7 @@ short Dataset::getAsShort(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throws Exception if the dataset's type is not GL_SHORT.
+ * @throw Exception if the dataset's type is not GL_SHORT.
  * @return Copy of the value as a short.
  */
 unsigned short Dataset::getAsUnsignedShort(const Index &I) const {
@@ -327,7 +327,7 @@ void Dataset::readData() {
  * @param [in] index Index specifying the location of the sample.
  * @param [in] value Pointer to the value that the sample will be set to.
  * @param [in] type Type of the value to set.
- * @throws const_char* if the type passed does not match.
+ * @throw const_char* if the type passed does not match.
  * @see getType()
  */
 void Dataset::set(const Index &index,

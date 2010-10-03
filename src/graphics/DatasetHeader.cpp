@@ -10,7 +10,7 @@
 /** Reads a header from a dataset file.
  * 
  * @param [in] filename Path to the file.
- * @throws const_char* from check()
+ * @throw const_char* from check()
  */
 DatasetHeader::DatasetHeader(string filename) {
 	
@@ -26,7 +26,7 @@ DatasetHeader::DatasetHeader(string filename) {
 /** Reads a dataset header directly from an input stream.
  * 
  * @param [in] stream Input stream to read from.
- * @throws const_char* from check()
+ * @throw const_char* from check()
  */
 DatasetHeader::DatasetHeader(istream &stream) {
 	
@@ -37,7 +37,7 @@ DatasetHeader::DatasetHeader(istream &stream) {
 
 /** Checks if the file exists, then calls check(istream&).
  * 
- * @throws const_char* if the file could not be opened.
+ * @throw const_char* if the file could not be opened.
  */
 void DatasetHeader::check() {
 	
@@ -70,7 +70,7 @@ void DatasetHeader::check() {
  * in the stream's header.  In other words, the next line after that will be 
  * the first line containing metadata.
  * 
- * @throws const_char* if the stream does not have an appropriate header.
+ * @throw const_char* if the stream does not have an appropriate header.
  */
 void DatasetHeader::check(istream &stream) {
 	

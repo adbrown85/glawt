@@ -9,7 +9,7 @@
 
 /** Initializes attributes.
  * 
- * @throws NodeException if cannot open subscene.
+ * @throw NodeException if cannot open subscene.
  */
 Shadow::Shadow(const Tag &tag) : Texture(tag) {
 	
@@ -69,7 +69,7 @@ void Shadow::finalize() {
 
 /** Finds the group named by @e of. 
  * 
- * @throws NodeException if group not found.
+ * @throw NodeException if group not found.
  */
 void Shadow::findGroup() {
 	
@@ -84,7 +84,7 @@ void Shadow::findGroup() {
 
 /** Finds the light named by @e from.
  * 
- * @throws NodeException if light not found.
+ * @throw NodeException if light not found.
  */
 void Shadow::findLight() {
 	

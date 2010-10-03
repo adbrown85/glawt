@@ -17,7 +17,7 @@ Bind::Bind(const Tag &tag) : Node(tag) {
 
 /** Adds attachment to outputs and sets its index in outputs to program value.
  * 
- * @throws NodeException if maximum number of outputs exceeded.
+ * @throw NodeException if maximum number of outputs exceeded.
  */
 void Bind::associate() {
 	
@@ -41,7 +41,7 @@ void Bind::associate() {
 
 /** Checks that the variable's value was set successfully.
  * 
- * @throws NodeException if the value in the program does not match.
+ * @throw NodeException if the value in the program does not match.
  */
 void Bind::finalize() {
 	
@@ -56,7 +56,7 @@ void Bind::finalize() {
 }
 
 
-/** @throws NodeException if Attachment named @e to could not be found. */
+/** @throw NodeException if Attachment named @e to could not be found. */
 void Bind::findAttachment() {
 	
 	attachment = Attachment::find(this, to);
@@ -68,7 +68,7 @@ void Bind::findAttachment() {
 }
 
 
-/** @throws NodeException if could not find Outputs list. */
+/** @throw NodeException if could not find Outputs list. */
 void Bind::findOutputs() {
 	
 	outputs = Scout<Outputs>::locate(getParent());
@@ -80,7 +80,7 @@ void Bind::findOutputs() {
 }
 
 
-/** @throws NodeException if could not find Program. */
+/** @throw NodeException if could not find Program. */
 void Bind::findProgram() {
 	
 	program = Scout<Program>::locate(getParent());

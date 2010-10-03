@@ -16,8 +16,8 @@ Choose::Choose(const Tag &tag) : Node(tag) {
 
 /** Finds and stores all the branches.
  * 
- * @throws NodeException if any children are not branches.
- * @throws NodeException if two branches with the same name are found.
+ * @throw NodeException if any children are not branches.
+ * @throw NodeException if two branches with the same name are found.
  */
 void Choose::associate() {
 	
@@ -74,7 +74,7 @@ bool Choose::setAttribute(pair<string,string> attribute) {
 
 /** Follow the branch with the name equal to @e choice.
  *
- * @throws NodeException if choice is not the name of a branch.
+ * @throw NodeException if choice is not the name of a branch.
  */
 void Choose::setChoice(const string &choice) {
 	

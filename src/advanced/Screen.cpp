@@ -16,7 +16,7 @@ Screen::Screen(const Tag &tag) : Node(tag) {
 
 /** Finds a Framebuffer ancestor.
  * 
- * @throws NodeException if no Framebuffer ancestor found.
+ * @throw NodeException if no Framebuffer ancestor found.
  */
 void Screen::associate() {
 	

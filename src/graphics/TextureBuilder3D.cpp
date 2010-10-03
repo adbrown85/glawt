@@ -41,7 +41,7 @@ void TextureBuilder3D::assemble(const string &filename, bool compress) {
 }
 
 
-/** @throws Exception because not currently supported. */
+/** @throw Exception because not currently supported. */
 void TextureBuilder3D::assemble(const TextureOrder &order) {
 	
 	throw Exception("[TextureBuilder3D] Cannot build blank 3D texture.");

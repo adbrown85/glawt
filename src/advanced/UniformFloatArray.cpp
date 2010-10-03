@@ -9,7 +9,7 @@
 
 /** Initialize attributes.
  * 
- * @throws NodeException if value for @e as attribute not recognized.
+ * @throw NodeException if value for @e as attribute not recognized.
  */
 UniformFloatArray::UniformFloatArray(const Tag &tag) : Uniform(tag) {
 	
@@ -75,7 +75,7 @@ void UniformFloatArray::associate() {
 
 /** Finds the group named by @e of.
  * 
- * @throws NodeException if group cannot be found.
+ * @throw NodeException if group cannot be found.
  */
 void UniformFloatArray::findGroup() {
 	
@@ -113,7 +113,7 @@ void UniformFloatArray::findShapes() {
 
 /** Allocates the values array.
  * 
- * @throws NodeException if the size of the array cannot be determined.
+ * @throw NodeException if the size of the array cannot be determined.
  */
 void UniformFloatArray::finalize() {
 	

@@ -16,7 +16,7 @@ Link::Link(const Tag &tag) : Node(tag) {
 
 /** Finds the group and adds its children. 
  * 
- * @throws NodeException if the group cannot be found.
+ * @throw NodeException if the group cannot be found.
  */
 void Link::establish() {
 	

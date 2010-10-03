@@ -10,8 +10,8 @@
 /** Creates a new %Cull object from a tag.
  * 
  * @param tag XML tag containing "faces" attribute.
- * @throws Exception if @e faces attribute not supported.
- * @throws NodeException if value for @e faces attribute not supported.
+ * @throw Exception if @e faces attribute not supported.
+ * @throw NodeException if value for @e faces attribute not supported.
  */
 Cull::Cull(const Tag &tag) : Node(tag) {
 	

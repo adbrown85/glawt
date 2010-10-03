@@ -294,7 +294,7 @@ ostream& operator<<(ostream &out, const Vector &A) {
 }
 
 
-/** @throws Exception if the index is out of bounds. */
+/** @throw Exception if the index is out of bounds. */
 float& Vector::operator[](int i) {
 	
 	// Return correct component
@@ -309,7 +309,7 @@ float& Vector::operator[](int i) {
 }
 
 
-/** @throws Exception if the index is out of bounds. */
+/** @throw Exception if the index is out of bounds. */
 float Vector::operator[](int i) const {
 	
 	// Return correct component
@@ -349,7 +349,7 @@ float dot(const Vector &A, const Vector &B) {
 }
 
 
-/** @throws Exception if index out of bounds. */
+/** @throw Exception if index out of bounds. */
 float Vector::get(int i) const {
 	
 	// Return correct component

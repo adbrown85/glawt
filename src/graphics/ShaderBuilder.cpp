@@ -23,7 +23,7 @@ void ShaderBuilder::build(const string &type, const string &filename) {
 
 /** Requests a handle to a new GLSL shader of the correct type.
  * 
- * @throws Exception if <i>type</i> is not supported.
+ * @throw Exception if <i>type</i> is not supported.
  */
 void ShaderBuilder::create() {
 	
@@ -42,7 +42,7 @@ void ShaderBuilder::create() {
 
 /** Loads a file into the Shader's source array and passes it to OpenGL.
  * 
- * @throws Exception from CodeLoader.
+ * @throw Exception from CodeLoader.
  */
 void ShaderBuilder::load() {
 	
@@ -70,7 +70,7 @@ void ShaderBuilder::load() {
 
 /** Compiles the shader and prints the log.
  * 
- * @throws Exception if the shader doesn't compile.
+ * @throw Exception if the shader doesn't compile.
  */
 void ShaderBuilder::compile() {
 	

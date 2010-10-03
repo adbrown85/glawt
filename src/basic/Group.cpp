@@ -9,7 +9,7 @@
 
 /** Initializes attributes.
  * 
- * @throws NodeException if a name is not specified.
+ * @throw NodeException if a name is not specified.
  */
 Group::Group(const Tag &tag) : Node(tag), Nameable(tag) {
 	

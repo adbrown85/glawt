@@ -38,7 +38,7 @@ ImagePixbuf::~ImagePixbuf() {
 
 /** Copy the pixels from the pixbuf without padding.
  * 
- * @throws Exception if image does not have 8 bits per sample.
+ * @throw Exception if image does not have 8 bits per sample.
  */
 void ImagePixbuf::unpack() {
 	

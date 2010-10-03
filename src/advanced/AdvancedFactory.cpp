@@ -49,7 +49,7 @@ Node* AdvancedFactory::createBind(const Tag &t) {return new Bind(t);}
 Node* AdvancedFactory::createBlend(const Tag &t) {return new Blend(t);}
 
 
-/** @throws NodeException if boolean operation not supported. */
+/** @throw NodeException if boolean operation not supported. */
 Node* AdvancedFactory::createBoolean(const Tag &tag) {
 	
 	string operation;

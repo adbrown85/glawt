@@ -57,7 +57,7 @@ void Outputs::apply() {
 
 /** Makes sure there's a framebuffer.
  * 
- * @throws NodeException if no Bind children were found.
+ * @throw NodeException if no Bind children were found.
  */
 void Outputs::associate() {
 	

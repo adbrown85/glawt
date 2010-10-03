@@ -35,8 +35,8 @@ Shader::Shader(const Tag &tag) : Node(tag), Fileable(tag) {
 
 /** Loads the shader and attaches it to the program.
  * 
- * @throws NodeException if program cannot be found.
- * @throws NodeException from ShaderFactory::create().
+ * @throw NodeException if program cannot be found.
+ * @throw NodeException from ShaderFactory::create().
  */
 void Shader::associate() {
 	
@@ -58,7 +58,7 @@ void Shader::associate() {
 
 /** Guesses the shader's type by the file's extension.
  * 
- * @throws NodeException if extension not recognized as a type.
+ * @throw NodeException if extension not recognized as a type.
  */
 void Shader::guessType() {
 	

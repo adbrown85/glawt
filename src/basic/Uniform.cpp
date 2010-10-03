@@ -9,7 +9,7 @@
 
 /** Initialize attributes.
  * 
- * @throws NodeException if name not specified.
+ * @throw NodeException if name not specified.
  */
 Uniform::Uniform(const Tag &tag) : Node(tag), Nameable(tag) {
 	
@@ -32,7 +32,7 @@ Uniform::Uniform(const Tag &tag) : Node(tag), Nameable(tag) {
 
 /** Finds a Program node that is an ancestor of this node.
  * 
- * @throws NodeException if program cannot be found.
+ * @throw NodeException if program cannot be found.
  */
 void Uniform::associate() {
 	
@@ -48,7 +48,7 @@ void Uniform::associate() {
 
 /** Finds the variable's location in the program.
  * 
- * @throws NodeException if location for uniform cannot be found
+ * @throw NodeException if location for uniform cannot be found
  */
 void Uniform::finalize() {
 	
