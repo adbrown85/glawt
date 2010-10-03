@@ -10,3 +10,6 @@ gander-*.zip
 config.h
 config.in~
 
+.cproject
+.project
+.settings
