@@ -9,7 +9,7 @@
 
 UniformFloat::UniformFloat(const Tag &tag) : Uniform(tag) {
 	
-	tag.get("value", value, false);
+	tag.get("value", value, true);
 }
 
 
