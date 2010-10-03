@@ -80,24 +80,6 @@ Node* BasicFactory::createSquare(const Tag &tag) {return new Square(tag);}
 
 Node* BasicFactory::createTexture(const Tag &tag) {return new Texture(tag);}
 
-
-/*
-Node* BasicFactory::createTexture(const Tag &tag) {
-	
-	string extension, filename;
-	
-	// Create based on file extension
-	tag.get("file", filename, false, false);
-	extension = Path::getExtension(filename);
-	if (Text::toLower(extension) == "vlb") {
-		return new Texture3D(tag);
-	} else {
-		return new Texture2D(tag);
-	}
-}
-*/
-
-
 Node* BasicFactory::createTranslate(const Tag &t) {return new Translate(t);}
 
 
