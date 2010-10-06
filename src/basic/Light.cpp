@@ -12,6 +12,8 @@ bool Light::tried=false;
 /** Initializes attributes. */
 Light::Light(const Tag &tag) : SimpleDrawable(tag), Nameable(tag) {
 	
+	// FIXME: This should be a SubsceneUser
+
 	// Intensities
 	if (!tag.get("ambient", ambient, false)) {
 		ambient = LIGHT_DEFAULT_AMBIENT;
