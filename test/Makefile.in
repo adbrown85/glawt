@@ -1,0 +1,69 @@
+# @configure_input@
+
+# Package
+package     := @PACKAGE_NAME@
+version     := @PACKAGE_VERSION@
+tarname     := @PACKAGE_TARNAME@
+
+# Directories
+prefix      := @prefix@
+exec_prefix := @exec_prefix@
+bindir      := @bindir@
+srcdir      := ../src
+datarootdir := @datarootdir@
+datadir     := @datadir@
+docdir      := @docdir@
+htmldir     := @htmldir@
+modules     := @modules@
+
+# Tools
+CXX         := @CXX@
+INCLUDES    := -I../ -I$(srcdir)/ ${foreach i,$(modules),-I$(srcdir)/$(i)/}
+DEFS        := @DEFS@
+DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)"'
+DEPS_CFLAGS := @DEPS_CFLAGS@
+CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
+LIBS        := @LIBS@
+LIBS_EXTRA  := 
+DEPS_LIBS   := @DEPS_LIBS@
+LDFLAGS     := @LDFLAGS@ $(LIBS) $(LIBS_EXTRA) $(DEPS_LIBS)
+ARFLAGS     := -cr
+INSTALL     := @INSTALL@
+
+# Files
+archive     := $(srcdir)/lib$(tarname).a
+mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
+tests       := ${subst .cxx,,$(mains)}
+objects     := ${subst .cxx,.o,$(mains)}
+VPATH       := @modules@ $(srcdir) ${addprefix $(srcdir),$(modules)}
+
+# General phony targets
+.PHONY: all clean mostlyclean tests check
+.DEFAULT: all
+all: tests
+clean: mostlyclean
+mostlyclean:
+	@echo "  Removing tests..."
+	@$(RM) $(tests)
+check:
+	@echo "  MAINS   = $(mains)"
+	@echo "  OBJECTS = $(objects)"
+	@echo "  TESTS   = $(tests)"
+
+# Modules
+.PHONY: $(modules)
+define module
+$(1): $${filter $(1)/%,$(tests)}
+endef
+${foreach i,$(modules),${eval ${call module,$(i)}}}
+
+# Tests
+%: %.cxx %.o
+	@echo "  $<"
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
+tests: ${notdir $(tests)}
+${notdir $(tests)}:
+
+# Objects
+%.o:
+	$(MAKE) -C $(srcdir) ${notdir $@}
