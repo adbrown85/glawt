@@ -17,20 +17,12 @@
 using namespace std;
 
 
-/* Vertex attribute. */
-struct VertexAttribute {
-	string name;
-	GLint location, number;
-	GLuint offset;
-};
-
 /* Shape parameters. */
 struct ShapeTraits {
 	GLuint count;
 	list<string> attributes;
 	GLenum mode, usage;
 };
-
 
 /** @brief Base class for a 3D object in the scene.
  * 
