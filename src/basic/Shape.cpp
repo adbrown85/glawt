@@ -36,11 +36,11 @@ Shape::Shape(const Tag &tag, ShapeTraits traits) : SimpleDrawable(tag) {
 	// Store vertex attributes
 	block = count * 3 * sizeof(GLfloat);
 	for (it=traits.attributes.begin(); it!=traits.attributes.end(); ++it) {
-		va.name = *it;
-		va.number = distance(traits.attributes.begin(), it);
-		va.offset = va.number * block;
+		va.setName(*it);
+		va.setNumber(distance(traits.attributes.begin(), it));
+		va.setOffset(va.getNumber() * block);
 		attributes.push_back(va);
-		offsets[va.name] = va.offset;
+		offsets[va.getName()] = va.getOffset();
 	}
 }
 
@@ -110,13 +110,13 @@ void Shape::draw(int first, int number) const {
 	// Enable buffer and attributes
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		glEnableVertexAttribArray(it->location);
-		glVertexAttribPointer(it->location,                 // index
+		glEnableVertexAttribArray(it->getLocation());
+		glVertexAttribPointer(it->getLocation(),            // index
 		                      3,                            // size
 		                      GL_FLOAT,                     // type
 		                      false,                        // normalized
 		                      0,                            // stride
-		                      (void*)it->offset);           // pointer
+		                      (void*)it->getOffset());      // pointer
 	}
 	
 	// Draw
@@ -124,7 +124,7 @@ void Shape::draw(int first, int number) const {
 	
 	// Disable buffer and attributes
 	for (it=attributes.begin(); it!=attributes.end(); ++it) {
-		glDisableVertexAttribArray(it->location);
+		glDisableVertexAttribArray(it->getLocation());
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -144,9 +144,9 @@ void Shape::finalize() {
 	
 	// Get locations of attributes in program
 	for (it=attributes.begin(); it!=attributes.end(); ) {
-		it->location = glGetAttribLocation(program->getHandle(),
-		                                   it->name.c_str());
-		if (it->location == -1)
+		it->setLocation(glGetAttribLocation(program->getHandle(),
+		                                    it->getName().c_str()));
+		if (it->getLocation() == -1)
 			it = attributes.erase(it);
 		else
 			++it;

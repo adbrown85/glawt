@@ -14,6 +14,7 @@
 #include "UniformMatrix.hpp"
 #include "Factory.hpp"
 #include "Scout.hpp"
+#include "VertexAttribute.hpp"
 using namespace std;
 
 

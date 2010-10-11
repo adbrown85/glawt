@@ -21,15 +21,21 @@ public:
 	virtual ~VertexAttribute();
 public:
 	GLuint getComponents() const;
-	GLint getLocation() const;
-	string getName() const;
 	void setComponents(GLuint components);
-	void setName(string name);
+	GLint getLocation() const;
 	void setLocation(GLint location);
+	string getName() const;
+	void setName(string name);
+	GLint getNumber() const;
+	void setNumber(GLint number);
+	GLuint getOffset() const;
+	void setOffset(GLuint offset);
 private:
 	string name;
 	GLint location;
 	GLuint components;
+	GLint number; // SHOULD REMOVE THIS
+	GLuint offset; // SHOULD REMOVE THIS
 };
 
 /** @return Number of components in the attribute. */
@@ -43,5 +49,13 @@ inline void VertexAttribute::setLocation(GLint l) {this->location = l;}
 /** @return Name of the attribute. */
 inline string VertexAttribute::getName() const {return name;}
 inline void VertexAttribute::setName(string name) {this->name = name;}
+
+/** @return Number of the attribute. */
+inline GLint VertexAttribute::getNumber() const {return number;}
+inline void VertexAttribute::setNumber(GLint number) {this->number = number;}
+
+/** @return Location of the attribute. */
+inline GLuint VertexAttribute::getOffset() const {return offset;}
+inline void VertexAttribute::setOffset(GLuint offset) {this->offset = offset;}
 
 #endif
