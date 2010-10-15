@@ -139,9 +139,6 @@ void CanvasGLUT::updateModifier() {
 
 void CanvasGLUT::onRealize() {
 	
-	// Camera
-	getCamera()->load(getWidth(), getHeight());
-	
 	// Register callbacks
 	glutDisplayFunc(&display);
 	glutMouseFunc(&mouse);
@@ -151,6 +148,10 @@ void CanvasGLUT::onRealize() {
 	
 	// Load extensions
 	Extensions::load();
+	
+	// Set up view
+	glEnable(GL_DEPTH_TEST);
+	glViewport(0, 0, getWidth(), getHeight());
 	
 	// Start
 	setStarted(true);

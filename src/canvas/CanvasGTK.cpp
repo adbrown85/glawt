@@ -55,8 +55,11 @@ void CanvasGTK::on_realize() {
 	// Start
 	begin();
 	
-	// Camera and type
-	getCamera()->load(getWidth(), getHeight());
+	// View
+	glEnable(GL_DEPTH_TEST);
+	glViewport(0, 0, getWidth(), getHeight());
+	
+	// Typeface
 	typeface.load("monospace 8");
 	
 	// Load extensions
