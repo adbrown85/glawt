@@ -15,7 +15,6 @@
 #include <iomanip>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
-#include "Tag.hpp"
 #include "Log.hpp"
 using namespace std;
 
