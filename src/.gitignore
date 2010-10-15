@@ -1,5 +1,3 @@
-gander
 Makefile
-depend
-libgander.a
+libgloop.a
 
