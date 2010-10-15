@@ -1,8 +1,0 @@
-<texture type="2D" name="texture1">
-	<framebuffer>
-		<target link="texture1"/>
-			<transform x="1.0" y="0.0" z="0.0">
-				<shape type="box" size="1.0"/>
-			</transform>
-	</framebuffer>
-</texture>
