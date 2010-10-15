@@ -1,7 +1,7 @@
 # Initialize
 AC_PREREQ([2.65])
-AC_INIT([Gander], [0.95], [adb1413@rit.edu], , [http://gander.sourceforge.net])
-AC_CONFIG_SRCDIR([src/gander.cxx])
+AC_INIT([GLoop], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
+AC_CONFIG_SRCDIR([src/common.h])
 AC_CONFIG_HEADERS([config.h:config.in])
 
 # Check system
@@ -13,7 +13,7 @@ AC_PROG_INSTALL
 AC_PROG_SED
 if test -z $SED; then
 	echo "--------------------------------------------------"
-	echo " Sed is required to build Gander.                 "
+	echo " Sed is required to build GLoop.                  "
 	echo "--------------------------------------------------"
 fi
 PKG_PROG_PKG_CONFIG
@@ -30,7 +30,7 @@ done
 if test -z $make_command; then
 	echo " no"
 	echo "-------------------------------------------------------"
-	echo " GNU Make is required to build Gander.                 "
+	echo " GNU Make is required to build GLoop.                  "
 	echo " Please visit http://www.gnu.org/software/make/        "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
@@ -140,7 +140,7 @@ AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
 # Manual variables
-modules='system graphics scene basic advanced command gui'
+modules='base geometry image math shader text texture transform volume window'
 AC_SUBST([modules])
 
 # OS-specific compiler switches

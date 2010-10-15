@@ -14,15 +14,14 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := @modules@
+modules     := ${wildcard */}
 
 # Tools
 CXX         := @CXX@
 INCLUDES    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir) -I$(srcdir)/..
 DEFS        := @DEFS@
-DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)"'
 DEPS_CFLAGS := @DEPS_CFLAGS@
-CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
+CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS        := @LIBS@
 LIBS_EXTRA  := 
 DEPS_LIBS   := @DEPS_LIBS@
@@ -34,17 +33,14 @@ INSTALL     := @INSTALL@
 sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
 objects     := ${subst .cpp,.o,$(sources)}
 headers     := ${subst .cpp,.hpp,$(sources)}
-mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
-tests       := ${subst .cxx,,$(mains)}
-application := $(tarname)
 archive     := lib$(tarname).a
-VPATH       := @modules@
+VPATH       := $(modules)
 depends     := ${subst .cpp,.d,$(sources)}
 
 # General phony targets
-.PHONY: all clean mostlyclean tests install uninstall
+.PHONY: all clean mostlyclean install uninstall check
 .DEFAULT: all
-all: $(application)
+all: $(archive)
 clean: mostlyclean
 	@echo "  Removing dependencies..."
 	@$(RM) $(depends)
@@ -53,10 +49,8 @@ mostlyclean:
 	@$(RM) $(objects)
 	@echo "  Removing archive..."
 	@$(RM) $(archive)
-	@echo "  Removing tests..."
-	@$(RM) $(tests)
-	@echo "  Removing application..."
-	@$(RM) $(application)
+check:
+	@echo "  $(modules)"
 
 # Modules
 .PHONY: $(modules)
@@ -72,27 +66,10 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 	@$(AR) $(ARFLAGS) $(archive) ${dir $<}${notdir $@}
 $(archive): ${notdir $(objects)}
 
-# Tests
-%: %.cxx %.o
-	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
-tests: ${notdir $(tests)}
-${notdir $(tests)}:
-
-# Application
-$(application): gander.cxx gander.hxx ${notdir $(objects)}
-	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) -o $@ $< $(archive) $(LDFLAGS)
-
 # Dependencies (recompile based on objects b/c of inheritance)
 %.d: %.hpp
 	@echo "  Generating dependencies for $<..."
 	@$(CXX) $(CXXFLAGS) -MM ${subst .hpp,.cpp,$<} > $@
-	@if test -f ${subst .hpp,.cxx,$<}; then \
-		$(CXX) $(CXXFLAGS) \
-		-MM ${subst .hpp,.cxx,$<} \
-		-MT ${notdir ${subst .hpp,,$<}} | sed 's/.hpp/.o/g' >> $@; \
-	fi
 ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
   -include $(depends)
 endif
