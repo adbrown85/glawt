@@ -14,13 +14,13 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := @modules@
+modules     := ${wildcard */}
 
 # Tools
 CXX         := @CXX@
-INCLUDES    := -I../ -I$(srcdir)/ ${foreach i,$(modules),-I$(srcdir)/$(i)/}
+INCLUDES    := -I../ -I$(srcdir)/ ${foreach m,$(modules),-I$(srcdir)/$(m)}
 DEFS        := @DEFS@
-DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)"'
+DEFS_EXTRA  := 
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS        := @LIBS@
