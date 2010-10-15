@@ -1,6 +1,6 @@
 # Initialize
 AC_PREREQ([2.65])
-AC_INIT([GLoop], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
+AC_INIT([GLawt], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
 AC_CONFIG_SRCDIR([src/common.h])
 AC_CONFIG_HEADERS([config.h:config.in])
 
@@ -13,7 +13,7 @@ AC_PROG_INSTALL
 AC_PROG_SED
 if test -z $SED; then
 	echo "--------------------------------------------------"
-	echo " Sed is required to build GLoop.                  "
+	echo " Sed is required to build GLawt.                  "
 	echo "--------------------------------------------------"
 fi
 PKG_PROG_PKG_CONFIG
@@ -30,7 +30,7 @@ done
 if test -z $make_command; then
 	echo " no"
 	echo "-------------------------------------------------------"
-	echo " GNU Make is required to build GLoop.                  "
+	echo " GNU Make is required to build GLawt.                  "
 	echo " Please visit http://www.gnu.org/software/make/        "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
@@ -139,10 +139,6 @@ AC_FUNC_MALLOC
 AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
-# Manual variables
-modules='base geometry image math shader text texture transform volume window'
-AC_SUBST([modules])
-
 # OS-specific compiler switches
 if test $build_os = "mingw32"; then
 	extra_ldflags="-Wl,--enable-auto-import"
@@ -184,7 +180,6 @@ echo \
  LDFLAGS     ${LDFLAGS}
  LIBS        ${LIBS}
  DEFS        ${DEFS}
- modules     ${modules}
  
  Now type 'make' then 'sudo make install'
 --------------------------------------------------------------"
