@@ -9,7 +9,6 @@
 #include "common.h"
 #include <algorithm>                    // For find
 #include "Log.hpp"
-#include "Camera.hpp"
 #include "Combo.hpp"
 #include "Extensions.hpp"
 #define CANVAS_WIDTH 512
@@ -51,7 +50,6 @@ public:
 	static void check();
 	void fireEvent(int type);
 	virtual void flush() = 0;
-	Camera* getCamera();
 	virtual GLuint getElapsedTime() = 0;
 	int getHeight();
 	int getWidth();
@@ -70,12 +68,8 @@ protected:
 private:
 	bool automaticallyRefresh, started;
 	int height, width;
-	Camera camera;
 	list<CanvasListener*> listeners[CANVAS_EVENT_TYPE_SIZE];
 };
-
-/** @return Pointer to the canvas's camera. */
-inline Camera* Canvas::getCamera() {return &camera;}
 
 /** @return Height of the canvas. */
 inline int Canvas::getHeight() {return height;}
