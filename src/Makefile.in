@@ -18,7 +18,7 @@ modules     := ${wildcard */}
 
 # Tools
 CXX         := @CXX@
-INCLUDES    := ${foreach i,$(modules),-I$(i)/} -I$(srcdir) -I$(srcdir)/..
+INCLUDES    := -I$(srcdir)/.. -I$(srcdir) ${foreach i,$(modules),-I$(i)} 
 DEFS        := @DEFS@
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEPS_CFLAGS) $(INCLUDES)
@@ -30,7 +30,7 @@ ARFLAGS     := -cr
 INSTALL     := @INSTALL@
 
 # Files
-sources     := ${foreach i,$(modules),${wildcard $(i)/*.cpp}}
+sources     := ${foreach m,$(modules),${wildcard $(m)*.cpp}}
 objects     := ${subst .cpp,.o,$(sources)}
 headers     := ${subst .cpp,.hpp,$(sources)}
 archive     := lib$(tarname).a
@@ -38,7 +38,7 @@ VPATH       := $(modules)
 depends     := ${subst .cpp,.d,$(sources)}
 
 # General phony targets
-.PHONY: all clean mostlyclean install uninstall check
+.PHONY: all clean mostlyclean install uninstall
 .DEFAULT: all
 all: $(archive)
 clean: mostlyclean
@@ -49,8 +49,6 @@ mostlyclean:
 	@$(RM) $(objects)
 	@echo "  Removing archive..."
 	@$(RM) $(archive)
-check:
-	@echo "  $(modules)"
 
 # Modules
 .PHONY: $(modules)
@@ -66,10 +64,10 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 	@$(AR) $(ARFLAGS) $(archive) ${dir $<}${notdir $@}
 $(archive): ${notdir $(objects)}
 
-# Dependencies (recompile based on objects b/c of inheritance)
-%.d: %.hpp
+# Dependencies
+%.d: %.cpp %.hpp
 	@echo "  Generating dependencies for $<..."
-	@$(CXX) $(CXXFLAGS) -MM ${subst .hpp,.cpp,$<} > $@
+	@$(CXX) $(CXXFLAGS) -MM $< > $@
 ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
   -include $(depends)
 endif
