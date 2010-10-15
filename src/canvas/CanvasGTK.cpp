@@ -251,7 +251,7 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 }
 
 
-/** Assigns the modifer according to the state of a GDK event. */
+/** Assigns the modifier according to the state of a GDK event. */
 void CanvasGTK::updateModifer(guint state) {
 	
 	if (state & GDK_CONTROL_MASK) {
