@@ -14,11 +14,11 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := ${wildcard */}
+modules     := ${subst /,,${wildcard */}}
 
 # Tools
 CXX         := @CXX@
-INCLUDES    := -I../ -I$(srcdir)/ ${foreach m,$(modules),-I$(srcdir)/$(m)}
+INCLUDES    := -I.. -I$(srcdir) ${addprefix -I$(srcdir)/,$(modules)}
 DEFS        := @DEFS@
 DEFS_EXTRA  := 
 DEPS_CFLAGS := @DEPS_CFLAGS@
@@ -32,7 +32,7 @@ INSTALL     := @INSTALL@
 
 # Files
 archive     := $(srcdir)/lib$(tarname).a
-mains       := ${foreach m,$(modules),${wildcard $(m)*.cxx}}
+mains       := ${foreach m,$(modules),${wildcard $(m)/*.cxx}}
 tests       := ${subst .cxx,,$(mains)}
 objects     := ${subst .cxx,.o,$(mains)}
 VPATH       := ${modules} $(srcdir) ${addprefix $(srcdir),$(modules)}
@@ -49,13 +49,14 @@ check:
 	@echo "  MAINS   = $(mains)"
 	@echo "  OBJECTS = $(objects)"
 	@echo "  TESTS   = $(tests)"
+	@echo "  MODULES = $(modules)"
 
 # Modules
 .PHONY: $(modules)
 define module
 $(1): $${filter $(1)/%,$(tests)}
 endef
-${foreach i,$(modules),${eval ${call module,$(i)}}}
+${foreach m,$(modules),${eval ${call module,$(m)}}}
 
 # Tests
 %: %.cxx %.o
