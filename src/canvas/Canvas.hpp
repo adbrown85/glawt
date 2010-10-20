@@ -11,6 +11,7 @@
 #include "Log.hpp"
 #include "Combo.hpp"
 #include "Extensions.hpp"
+#include "Toolkit.hpp"
 #define CANVAS_WIDTH 512
 #define CANVAS_HEIGHT 512
 using namespace std;
