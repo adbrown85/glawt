@@ -14,7 +14,8 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := ${subst /,,${wildcard */}}
+moduledirs  := ${filter %/,${wildcard $(srcdir)/*/}}
+modules     := ${patsubst $(srcdir)/%/,%,$(moduledirs)}
 
 # Tools
 CXX         := @CXX@
