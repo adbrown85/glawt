@@ -1,74 +1,63 @@
 # @configure_input@
 
 # Package
-package     := @PACKAGE_NAME@
-version     := @PACKAGE_VERSION@
-tarname     := @PACKAGE_TARNAME@
+package      := @PACKAGE_NAME@
+version      := @PACKAGE_VERSION@
+tarname      := @PACKAGE_TARNAME@
 
 # Directories
-prefix      := @prefix@
-exec_prefix := @exec_prefix@
-bindir      := @bindir@
-srcdir      := @srcdir@
-datarootdir := @datarootdir@
-datadir     := @datadir@
-docdir      := @docdir@
-htmldir     := @htmldir@
+prefix       := @prefix@
+exec_prefix  := @exec_prefix@
+bindir       := @bindir@
+srcdir       := @srcdir@
+libdir       := @libdir@
+datarootdir  := @datarootdir@
+datadir      := @datadir@
+docdir       := @docdir@
+htmldir      := @htmldir@
 
 # Tools
-INSTALL     := @INSTALL@
+INSTALL      := @INSTALL@
 
 # Files
-modules     := @modules@
-distdir     := $(tarname)-$(version)
-tarball     := $(tarname)-$(version)-src.tar.gz
-zipfile     := $(tarname)-$(version)-src.zip
-application := src/$(tarname)
-winbuild    := $(tarname)-win-build.zip
-winbuilddir := win
+moduledirs   := ${filter %/,${wildcard src/*/}}
+modules      := ${patsubst src/%/,%,$(moduledirs)} 
+distdir      := $(tarname)-$(version)
+tarball      := $(tarname)-$(version)-src.tar.gz
+zipfile      := $(tarname)-$(version)-src.zip
+winbuild     := $(tarname)-win-build.zip
+winbuilddir  := win
+archive      := lib$(tarname).a
 
 # Targets to pass down
-src_targets := all clean mostlyclean tests gander $(modules) 
-doc_targets := html install-html
-.PHONY: $(src_targets) $(doc_targets)
+src_targets  := all $(modules) 
+doc_targets  := html install-html
+test_targets := tests
+st_targets   := clean mostlyclean
+.PHONY: $(src_targets) $(doc_targets) $(test_targets) check
 .DEFAULT: all
 $(src_targets):
 	@$(MAKE) -C src $@
 $(doc_targets):
 	@$(MAKE) -C doc $@
+$(test_targets):
+	@$(MAKE) -C test $@
+$(st_targets):
+	@$(MAKE) -C src $@
+	@$(MAKE) -C test $@
+check:
+	@echo "  MODULES  = $(modules)"
+	@echo "  LIBDIR   = $(libdir)"
 
 # Installation
-.PHONY: install-bin install-data uninstall-bin uninstall-data
-install: install-bin install-data
-install-bin:
-	@echo "  Installing application in $(bindir)..."
-	@$(INSTALL) -d $(bindir)
-	@$(INSTALL) -m 0755 $(application) $(bindir)
-install-data:
-	@echo "  Installing data to $(datadir)..."
-	@$(INSTALL) -d $(datadir)
-	@echo "    glsl"
-	@$(INSTALL) -d $(datadir)/glsl
-	@$(INSTALL) -m 0644 glsl/* $(datadir)/glsl
-	@echo "    textures"
-	@$(INSTALL) -d $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/chunk.vlb $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/empty.vlb $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/bunny128.vlb $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/brain128.vlb $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/head128.vlb $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/crate.jpg $(datadir)/textures
-	@$(INSTALL) -m 0644 textures/stone.jpg $(datadir)/textures
-	@echo "    ui"
-	@$(INSTALL) -d $(datadir)/ui
-	@$(INSTALL) -m 0644 ui/* $(datadir)/ui
-uninstall: uninstall-bin uninstall-data
-uninstall-bin:
-	@echo "  Uninstalling application from $(bindir)..."
-	@$(RM) $(bindir)/$(application)
-uninstall-data:
-	@echo "  Uninstalling data from $(datadir)/..."
-	@$(RM) -r $(datadir)
+.PHONY: install uninstall
+install:
+	@echo "  Installing archive in $(libdir)..."
+	@$(INSTALL) -d $(libdir)
+	@$(INSTALL) $(archive) $(libdir)
+uninstall:
+	@echo "  Uninstalling archive from $(libdir)..."
+	@$(RM) $(libdir)/$(archive)
 
 # Distribution
 .PHONY: FORCE dist distcheck
@@ -88,54 +77,29 @@ $(zipfile):
 	@zip -r $(zipfile) $(distdir) > /dev/null
 $(distdir):
 	@echo "  Copying files..."
-	@echo "    src"
 	@mkdir $(distdir)
-	@mkdir $(distdir)/src
-	@cp Makefile.in $(distdir)
-	@cp configure $(distdir)
-	@cp config.in $(distdir)
-	@cp install-sh $(distdir)
 	@cp config.guess $(distdir)
+	@cp config.in $(distdir)
 	@cp config.sub $(distdir)
+	@cp configure $(distdir)
+	@cp install-sh $(distdir)
+	@cp Makefile.in $(distdir)
+	@echo "    src"
+	@mkdir $(distdir)/src
 	@cp src/Makefile.in $(distdir)/src
-	@cp src/gander.*xx $(distdir)/src
 	@cp src/common.h $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \
         cp src/$${i}/*.cpp $(distdir)/src/$${i}; \
         cp src/$${i}/*.hpp $(distdir)/src/$${i}; \
-        cp src/$${i}/*.cxx $(distdir)/src/$${i}; \
         cp src/$${i}/*.d $(distdir)/src/$${i}; \
     done
-	@for i in advanced basic command gui scene system; do \
-        cp src/$${i}/*.xml $(distdir)/src/$${i}; \
-    done
-	@cp src/advanced/*.frag $(distdir)/src/advanced
-	@cp src/advanced/*.vert $(distdir)/src/advanced
-	@cp src/basic/*.glsl $(distdir)/src/basic
-	@cp src/system/*.glsl $(distdir)/src/system
 	@echo "    doc"
 	@mkdir $(distdir)/doc
 	@cp doc/Makefile.in $(distdir)/doc
 	@cp doc/doxyfile $(distdir)/doc
 	@cp doc/doxygen.css $(distdir)/doc
-	@cp doc/gander.png $(distdir)/doc
-	@echo "    glsl"
-	@mkdir $(distdir)/glsl
-	@cp glsl/* $(distdir)/glsl
-	@echo "    textures"
-	@mkdir $(distdir)/textures
-	@cp textures/chunk.vlb $(distdir)/textures
-	@cp textures/empty.vlb $(distdir)/textures
-	@cp textures/bunny128.vlb $(distdir)/textures
-	@cp textures/brain128.vlb $(distdir)/textures
-	@cp textures/head128.vlb $(distdir)/textures
-	@cp textures/crate.jpg $(distdir)/textures
-	@cp textures/stone.jpg $(distdir)/textures
-	@echo "    ui"
-	@mkdir $(distdir)/ui
-	@cp ui/* $(distdir)/ui
 $(winbuild):
 	@echo "  Zipping Windows build environment..."
 	@cd $(winbuilddir) && zip -r ../$(winbuild) * > /dev/null

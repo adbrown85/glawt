@@ -14,11 +14,12 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := ${wildcard */}
+moduledirs  := ${filter %/,${wildcard */}}
+modules     := ${patsubst %/,%,$(moduledirs)}
 
 # Tools
 CXX         := @CXX@
-INCLUDES    := -I$(srcdir)/.. -I$(srcdir) ${foreach i,$(modules),-I$(i)} 
+INCLUDES    := -I.. -I. ${foreach i,$(modules),-I$(i)} 
 DEFS        := @DEFS@
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEPS_CFLAGS) $(INCLUDES)
@@ -30,7 +31,7 @@ ARFLAGS     := -cr
 INSTALL     := @INSTALL@
 
 # Files
-sources     := ${foreach m,$(modules),${wildcard $(m)*.cpp}}
+sources     := ${foreach m,$(modules),${wildcard $(m)/*.cpp}}
 objects     := ${subst .cpp,.o,$(sources)}
 headers     := ${subst .cpp,.hpp,$(sources)}
 archive     := lib$(tarname).a
