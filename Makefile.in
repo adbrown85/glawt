@@ -56,7 +56,7 @@ check:
 install:
 	@echo "  Installing archive in $(libdir)..."
 	@$(INSTALL) -d $(libdir)
-	@$(INSTALL) $(archive) $(libdir)
+	@$(INSTALL) -m 0644 $(archive) $(libdir)
 	@echo "  Installing headers in $(includedir)..."
 	@$(INSTALL) -d $(includedir)
 	@$(INSTALL) -d $(includedir)/$(tarname)
