@@ -38,7 +38,7 @@ VPATH       := $(modules)
 depends     := ${subst .cpp,.d,$(sources)}
 
 # General phony targets
-.PHONY: all clean mostlyclean install uninstall
+.PHONY: all clean check mostlyclean install uninstall
 .DEFAULT: all
 all: $(archive)
 clean: mostlyclean
@@ -49,6 +49,8 @@ mostlyclean:
 	@$(RM) $(objects)
 	@echo "  Removing archive..."
 	@$(RM) $(archive)
+check:
+	@echo "  MODULES  = $(modules)"
 
 # Modules
 .PHONY: $(modules)
