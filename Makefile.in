@@ -11,6 +11,7 @@ exec_prefix  := @exec_prefix@
 bindir       := @bindir@
 srcdir       := @srcdir@
 libdir       := @libdir@
+includedir   := @includedir@
 datarootdir  := @datarootdir@
 datadir      := @datadir@
 docdir       := @docdir@
@@ -27,7 +28,7 @@ tarball      := $(tarname)-$(version)-src.tar.gz
 zipfile      := $(tarname)-$(version)-src.zip
 winbuild     := $(tarname)-win-build.zip
 winbuilddir  := win
-archive      := lib$(tarname).a
+archive      := src/lib$(tarname).a
 
 # Targets to pass down
 src_targets  := all $(modules) 
@@ -48,6 +49,7 @@ $(st_targets):
 check:
 	@echo "  MODULES  = $(modules)"
 	@echo "  LIBDIR   = $(libdir)"
+	@echo "  INCDIR   = $(includedir)"
 
 # Installation
 .PHONY: install uninstall
@@ -55,9 +57,15 @@ install:
 	@echo "  Installing archive in $(libdir)..."
 	@$(INSTALL) -d $(libdir)
 	@$(INSTALL) $(archive) $(libdir)
+	@echo "  Installing headers in $(includedir)..."
+	@$(INSTALL) -d $(includedir)
+	@$(INSTALL) -d $(includedir)/$(tarname)
+	@$(INSTALL) src/*/*.hpp $(includedir)/$(tarname)
 uninstall:
 	@echo "  Uninstalling archive from $(libdir)..."
 	@$(RM) $(libdir)/$(archive)
+	@echo "  Uninstalling headers from $(includedir)..."
+	@$(RM) -r $(includedir)/$(tarname)
 
 # Distribution
 .PHONY: FORCE dist distcheck
