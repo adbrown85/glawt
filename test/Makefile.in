@@ -32,10 +32,10 @@ INSTALL     := @INSTALL@
 
 # Files
 archive     := $(srcdir)/lib$(tarname).a
-mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
+mains       := ${foreach m,$(modules),${wildcard $(m)*.cxx}}
 tests       := ${subst .cxx,,$(mains)}
 objects     := ${subst .cxx,.o,$(mains)}
-VPATH       := @modules@ $(srcdir) ${addprefix $(srcdir),$(modules)}
+VPATH       := ${modules} $(srcdir) ${addprefix $(srcdir),$(modules)}
 
 # General phony targets
 .PHONY: all clean mostlyclean tests check
