@@ -12,12 +12,14 @@ class FakeCanvas : public Canvas {
 public:
 	FakeCanvas(int width, int height) : Canvas(width,height) {}
 	virtual void flush() {}
+	virtual GLuint getElapsedTime() {return 37;}
 	virtual void refresh() {}
 	void updateState(CanvasState state) {this->state = state;}
 	virtual void primeStart() {}
 	virtual void primeFinish() {}
-	virtual void setAutomaticallyRefresh(bool automaticRefresh) {}
-	virtual void write(const string &text, int x=15, int y=30) {}
+	virtual void connectIdle() {}
+	virtual void disconnectIdle() {}
+	virtual void write(const string& text, int x, int y) {}
 };
 
 /* Fake canvas listener. */

@@ -11,6 +11,13 @@
 #include <gtkmm/window.h>
 
 
+/* Fake image for testing. */
+class FakeImage : public Image {
+public:
+	FakeImage(const string &filename) : Image(filename) {}
+	virtual GLchar* getData() const {return NULL;}
+};
+
 /* Test for Image. */
 class ImageTest : public CanvasListener {
 public:
@@ -32,7 +39,7 @@ void ImageTest::setUp() {
 	cout << "Setting up..." << endl;
 	
 	// Create image
-	image = new Image("../../textures/crate.jpg");
+	image = new FakeImage("../../textures/crate.jpg");
 }
 
 
