@@ -60,6 +60,7 @@ install:
 	@echo "  Installing headers in $(includedir)..."
 	@$(INSTALL) -d $(includedir)
 	@$(INSTALL) -d $(includedir)/$(tarname)
+	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/common.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/*/*.hpp $(includedir)/$(tarname)
 uninstall:
