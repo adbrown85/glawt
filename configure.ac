@@ -50,8 +50,6 @@ glut_help='Use GLUT instead of GTKGL.'
 AC_ARG_WITH(glut, AS_HELP_STRING([--with-glut], [$glut_help]))
 glew_help='Do not try to load new OpenGL features.'
 AC_ARG_WITH(glew, AS_HELP_STRING([--without-glew], [$glew_help]))
-images_help='No support for loading 2D images as textures.'
-AC_ARG_ENABLE(images, AS_HELP_STRING([--disable-images], [$images_help]))
 
 # Check for GTKGLmm
 error_no_gtkglmm() {
@@ -111,27 +109,6 @@ if test "x$use_glew" = 'xyes'; then
 	AC_SEARCH_LIBS([glewInit], [GLEW], , [error_no_glew])
 	AC_CHECK_HEADER([GL/glew.h], , [error_no_glew])
 	AC_DEFINE([HAVE_GLEW], [1], [Define to 1 if GLEW is available.])
-fi
-
-# Check for images
-error_no_pixbufs() {
-	echo "-------------------------------------------------------"
-	echo " GDK Pixbufs are needed to load images for textures.   "
-	echo " Try 'sudo apt-get install libgtkmm-2.4-dev'           "
-	echo " Or visit 'http://www.gtkmm.org/'                      "
-	echo " Alternatively, add '--disable-images' to ignore.      "
-	echo "-------------------------------------------------------"
-	(exit 1); exit 1;
-}
-if test "x$enable_images" != 'xno'; then
-	echo -n "checking for gdkmm-2.4... "
-	PKG_CHECK_EXISTS([gdkmm-2.4], [echo "yes"], [error_no_pixbufs])
-	AC_DEFINE([HAVE_PIXBUFS], [1], [Define to 1 if GDK Pixbufs are available.])
-else
-	echo "-------------------------------------------------------"
-	echo " You chose to disable images.                          "
-	echo " Loading images for textures will not be available.    "
-	echo "-------------------------------------------------------"
 fi
 
 # OS-specific compiler switches
