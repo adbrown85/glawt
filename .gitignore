@@ -9,6 +9,7 @@ gander-*.*.tar.gz
 gander-*.zip
 config.h
 config.in~
+aclocal.m4
 
 .cproject
 .project
