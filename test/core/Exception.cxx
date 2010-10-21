@@ -7,33 +7,39 @@
 #include "Exception.hpp"
 
 
-int main(int argc,
-         char *argv[]) {
+/* Test for exception. */
+class ExceptionTest {
+public:
+	void testThrowCatch();
+};
+
+/* Throw and catch the exception. */
+void ExceptionTest::testThrowCatch() {
 	
+	bool caught;
 	int line=45;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Exception" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
+	caught = false;
 	try {
 		Exception e;
-		e << "[Gander] This is an exception from " << line << ".";
+		e << "[GLawt] This is an exception from " << line << ".";
 		throw e;
 	} catch (Exception &e) {
 		cout << e << endl;
+		caught = true;
 	}
 	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Exception" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
+	if (!caught) {
+		cerr << "Exception was not caught!" << endl;
+		exit(1);
+	}
+}
+
+/* Run the test. */
+int main(int argc, char *argv[]) {
+	
+	ExceptionTest test;
+	
+	test.testThrowCatch();
 }
 
