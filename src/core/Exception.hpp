@@ -11,7 +11,8 @@
 using namespace std;
 
 
-/** @brief %Exception backed by a stringstream for easy message building.
+/** @brief Exception backed by a stringstream for easy message building.
+ * 
  * @ingroup system
  */
 class Exception : public exception {
