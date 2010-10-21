@@ -22,43 +22,38 @@ INSTALL      := @INSTALL@
 
 # Files
 moduledirs   := ${filter %/,${wildcard src/*/}}
-modules      := ${patsubst src/%/,%,$(moduledirs)} 
+modules      := ${patsubst src/%/,%,$(moduledirs)}
 distdir      := $(tarname)-$(version)
 tarball      := $(tarname)-$(version)-src.tar.gz
 zipfile      := $(tarname)-$(version)-src.zip
+archive      := lib$(tarname).a
 winbuild     := $(tarname)-win-build.zip
 winbuilddir  := win
-archive      := src/lib$(tarname).a
 
 # Targets to pass down
 src_targets  := all $(modules) 
-doc_targets  := html install-html
 test_targets := tests
-st_targets   := clean mostlyclean
-.PHONY: $(src_targets) $(doc_targets) $(test_targets) check
+both_targets := clean mostlyclean
+doc_targets  := html install-html
+.PHONY: $(src_targets) $(test_targets) $(both_targets) $(doc_targets)
 .DEFAULT: all
 $(src_targets):
 	@$(MAKE) -C src $@
-$(doc_targets):
-	@$(MAKE) -C doc $@
 $(test_targets):
 	@$(MAKE) -C test $@
-$(st_targets):
+$(both_targets):
 	@$(MAKE) -C src $@
 	@$(MAKE) -C test $@
-check:
-	@echo "  MODULES  = $(modules)"
-	@echo "  LIBDIR   = $(libdir)"
-	@echo "  INCDIR   = $(includedir)"
+$(doc_targets):
+	@$(MAKE) -C doc $@
 
 # Installation
 .PHONY: install uninstall
 install:
 	@echo "  Installing archive in $(libdir)..."
 	@$(INSTALL) -d $(libdir)
-	@$(INSTALL) -m 0644 $(archive) $(libdir)
-	@echo "  Installing headers in $(includedir)..."
-	@$(INSTALL) -d $(includedir)
+	@$(INSTALL) -m 0644 src/$(archive) $(libdir)
+	@echo "  Installing headers in $(includedir)/$(tarname)..."
 	@$(INSTALL) -d $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/common.h $(includedir)/$(tarname)
@@ -66,7 +61,7 @@ install:
 uninstall:
 	@echo "  Uninstalling archive from $(libdir)..."
 	@$(RM) $(libdir)/$(archive)
-	@echo "  Uninstalling headers from $(includedir)..."
+	@echo "  Uninstalling headers from $(includedir)/$(tarname)..."
 	@$(RM) -r $(includedir)/$(tarname)
 
 # Distribution
