@@ -3,12 +3,9 @@ AC_PREREQ([2.65])
 AC_INIT([GLawt], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
 AC_CONFIG_SRCDIR([src/common.h])
 AC_CONFIG_HEADERS([config.h:config.in])
-
-# Check system
 AC_CANONICAL_SYSTEM
-
-# Checks for programs
 AC_PROG_CXX
+AC_LANG([C++])
 AC_PROG_INSTALL
 AC_PROG_SED
 if test -z $SED; then
@@ -40,6 +37,13 @@ fi
 
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
+AC_CHECK_FUNCS([pow])
+AC_CHECK_FUNCS([sqrt])
+AC_C_INLINE
+AC_FUNC_ERROR_AT_LINE
+AC_FUNC_MALLOC
+AC_HEADER_STDBOOL
+AC_TYPE_SIZE_T
 
 # Check for options
 glut_help='Use GLUT instead of GTKGL.'
@@ -129,15 +133,6 @@ else
 	echo " Loading images for textures will not be available.    "
 	echo "-------------------------------------------------------"
 fi
-
-# Checks for library functions
-AC_CHECK_FUNCS([pow])
-AC_CHECK_FUNCS([sqrt])
-AC_C_INLINE
-AC_FUNC_ERROR_AT_LINE
-AC_FUNC_MALLOC
-AC_HEADER_STDBOOL
-AC_TYPE_SIZE_T
 
 # OS-specific compiler switches
 if test $build_os = "mingw32"; then
