@@ -172,7 +172,6 @@ bool CanvasGTK::on_map_event(GdkEventAny *event) {
 void CanvasGTK::connectIdle() {
 	
 	if (!idle.connected()) {
-		glog << "[CanvasGTK] Connecting idle function." << endl;
 		idle = Glib::signal_idle().connect(
 			sigc::mem_fun(*this, &CanvasGTK::on_idle), GDK_PRIORITY_REDRAW
 		);
@@ -183,7 +182,6 @@ void CanvasGTK::connectIdle() {
 void CanvasGTK::disconnectIdle() {
 	
 	if (idle.connected()) {
-		glog << "[CanvasGTK] Disconnecting idle function." << endl;
 		idle.disconnect();
 	}
 }

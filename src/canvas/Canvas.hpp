@@ -8,7 +8,6 @@
 #define CANVAS_HPP
 #include "common.h"
 #include <algorithm>                    // For find
-#include "Log.hpp"
 #include "Combo.hpp"
 #include "Extensions.hpp"
 #include "Toolkit.hpp"

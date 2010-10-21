@@ -17,7 +17,6 @@ Canvas::Canvas(int width, int height) {
 	this->started = false;
 }
 
-
 /** Registers an object to receive updates from the canvas. */
 void Canvas::addListener(CanvasListener *listener, int type) {
 	
@@ -30,7 +29,6 @@ void Canvas::addListener(CanvasListener *listener, int type) {
 	listeners[type].push_back(listener);
 }
 
-
 /** Wipes the canvas clean. */
 void Canvas::clear() {
 	
@@ -38,7 +36,6 @@ void Canvas::clear() {
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
-
 
 /** Sends an event of the appropriate type. */
 void Canvas::fireEvent(int type) {
@@ -56,7 +53,6 @@ void Canvas::fireEvent(int type) {
 		(*it)->onCanvasEvent(event);
 	}
 }
-
 
 /** Determines if events should be continuously sent to display listeners. */
 void Canvas::setAutomaticallyRefresh(bool automaticallyRefresh) {

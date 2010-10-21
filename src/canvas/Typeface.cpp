@@ -14,7 +14,6 @@ Typeface::Typeface() {
 	base = glGenLists(128);
 }
 
-
 /** Load the font and create the display lists for each character. */
 bool Typeface::load(const string &descriptor) {
 	
@@ -24,7 +23,9 @@ bool Typeface::load(const string &descriptor) {
 	// Load display lists from font
 	description = Pango::FontDescription(descriptor);
 	font = Gdk::GL::Font::use_pango_font(description, 0, 128, base);
-	ErrorChecker::clear();
+	
+	// Handle errors
+	while (glGetError() != GL_NO_ERROR) {}
 	if (!font) {
 		return false;
 	}
@@ -36,7 +37,6 @@ bool Typeface::load(const string &descriptor) {
 	// Finish
 	return true;
 }
-
 
 /** Write some text by calling the display lists. */
 void Typeface::write(const string &text) {
