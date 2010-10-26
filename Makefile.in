@@ -9,50 +9,122 @@ tarname      := @PACKAGE_TARNAME@
 prefix       := @prefix@
 exec_prefix  := @exec_prefix@
 bindir       := @bindir@
-srcdir       := @srcdir@
+srcdir       := src
+testdir      := test
 libdir       := @libdir@
 includedir   := @includedir@
 datarootdir  := @datarootdir@
 datadir      := @datadir@
 docdir       := @docdir@
 htmldir      := @htmldir@
+smoduledirs  := ${filter %/,${wildcard $(srcdir)/*/}}
+tmoduledirs  := ${filter %/,${wildcard $(testdir)/*/}}
+modules      := ${patsubst $(srcdir)/%/,%,$(smoduledirs)}
 
 # Tools
+CXX          := @CXX@
+INCLUDES     := -I./ -I$(srcdir)/ ${addprefix -I,$(smoduledirs)}
+DEFS         := @DEFS@
+DEFS_EXTRA   := 
+DEPS_CFLAGS  := @DEPS_CFLAGS@
+CXXFLAGS     := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
+LIBS         := @LIBS@
+LIBS_EXTRA   := -lglawt
+DEPS_LIBS    := @DEPS_LIBS@
+LDFLAGS      := @LDFLAGS@ $(LIBS) $(LIBS_EXTRA) $(DEPS_LIBS)
+ARFLAGS      := -cr
 INSTALL      := @INSTALL@
 
 # Files
-moduledirs   := ${filter %/,${wildcard src/*/}}
-modules      := ${patsubst src/%/,%,$(moduledirs)}
-distdir      := $(tarname)-$(version)
+sources      := ${foreach m,$(smoduledirs),${wildcard $(m)*.cpp}}
+objects      := ${subst .cpp,.o,$(sources)}
+headers      := ${subst .cpp,.hpp,$(sources)}
+mains        := ${foreach m,$(tmoduledirs),${wildcard $(m)*.cxx}}
+archive      := lib$(tarname).a
+tests        := ${subst .cxx,,$(mains)}
 tarball      := $(tarname)-$(version)-src.tar.gz
 zipfile      := $(tarname)-$(version)-src.zip
-archive      := lib$(tarname).a
-winbuild     := $(tarname)-win-build.zip
-winbuilddir  := win
+distdir      := $(tarname)-$(version)
+VPATH        := $(srcdir) $(smoduledirs) $(tmoduledirs)
+depends      := ${subst .cpp,.d,$(sources)}
+tdepends     := ${subst .cxx,.t,$(mains)}
 
-# Targets to pass down
-src_targets  := all $(modules) 
-test_targets := tests
-both_targets := clean mostlyclean
+# VPATH
+#~ vpath %.cpp %.hpp %.o %.d $(smoduledirs)
+#~ vpath %.cxx %.t $(tmoduledirs)
+#~ VPATH        := $(tmoduledirs)
+
+# Phony targets
 doc_targets  := html install-html
-.PHONY: $(src_targets) $(test_targets) $(both_targets) $(doc_targets)
+.PHONY: all $(modules) clean mostlyclean tests $(doctargets) dump
 .DEFAULT: all
-$(src_targets):
-	@$(MAKE) -C src $@
-$(test_targets):
-	@$(MAKE) -C test $@
-$(both_targets):
-	@$(MAKE) -C src $@
-	@$(MAKE) -C test $@
+all: $(archive)
+clean: mostlyclean
+	@echo "  Removing dependencies..."
+	@$(RM) $(depends)
+	@$(RM) $(tdepends)
+mostlyclean:
+	@echo "  Removing objects..."
+	@$(RM) $(objects)
+	@echo "  Removing archive..."
+	@$(RM) $(archive)
+	@echo "  Removing tests..."
+	@$(RM) $(tests)
+check:
+	@echo "  MODULES  = $(modules)"
 $(doc_targets):
 	@$(MAKE) -C doc $@
+dump:
+	@echo "  modules = $(modules)"
+	@echo "  sources = $(sources)"
+	@echo "  objects = $(objects)"
+	@echo "  mains   = $(mains)"
+	@echo "  tests   = $(tests)"
+	@echo "  VPATH   = $(VPATH)"
+	@echo "  notdir  = ${notdir $(tests)}"
+
+# Modules
+.PHONY: $(modules)
+define module
+$(1): $${filter $(srcdir)/$(1)/%.o,$(objects)}
+endef
+${foreach m,$(modules),${eval ${call module,$(m)}}}
+
+# Objects and archive
+%.o: %.cpp %.hpp
+	@echo "  $<"
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} -c $<
+	@$(AR) $(ARFLAGS) $(archive) ${dir $<}${notdir $@}
+$(archive): ${notdir $(objects)}
+
+# Tests
+%: %.cxx %.o
+	@echo "  $<"
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
+tests: ${notdir $(tests)}
+${notdir $(tests)}:
+
+# Dependencies
+%.d: %.hpp
+	@echo "  Generating dependencies for $<..."
+	@$(CXX) $(CXXFLAGS) -MM $< > $@
+ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
+  -include $(depends)
+endif
+%.t: %.cxx
+	@echo "  Generating dependencies for $<..."
+	@$(CXX) $(CXXFLAGS) -MM $< -MT ${notdir ${subst .cxx,,$<}} \
+        | sed 's/.hpp/.o/g' >> $@;
+ifeq ($(findstring tests,$(MAKECMDGOALS)),tests)
+  -include $(tdepends)
+endif
 
 # Installation
 .PHONY: install uninstall
 install:
 	@echo "  Installing archive in $(libdir)..."
 	@$(INSTALL) -d $(libdir)
-	@$(INSTALL) -m 0644 src/$(archive) $(libdir)
+	@$(INSTALL) -m 0644 $(archive) $(libdir)
 	@echo "  Installing headers in $(includedir)/$(tarname)..."
 	@$(INSTALL) -d $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
@@ -66,12 +138,11 @@ uninstall:
 
 # Distribution
 .PHONY: FORCE dist distcheck
-dist: FORCE $(distdir) $(tarball) $(zipfile) $(winbuild) CLEANUP
+dist: FORCE $(distdir) $(tarball) $(zipfile) CLEANUP
 FORCE:
 	@-$(RM) $(tarball) &> /dev/null
 	@-$(RM) $(zipfile) &> /dev/null
 	@-$(RM) -r $(distdir) &> /dev/null
-	@-$(RM) $(winbuild) &> /dev/null
 CLEANUP:
 	@$(RM) -r $(distdir)
 $(tarball): 
@@ -105,9 +176,6 @@ $(distdir):
 	@cp doc/Makefile.in $(distdir)/doc
 	@cp doc/doxyfile $(distdir)/doc
 	@cp doc/doxygen.css $(distdir)/doc
-$(winbuild):
-	@echo "  Zipping Windows build environment..."
-	@cd $(winbuilddir) && zip -r ../$(winbuild) * > /dev/null
 distcheck: $(tarball)
 	@echo "  Unpacking and checking tarball."
 	@tar -zxf $(tarball) $(distdir)
@@ -126,4 +194,3 @@ distclean: clean
 	@$(RM) config.h
 	@$(RM) config.in~
 	@$(RM) $(tarball)
-	@$(RM) $(winbuild)

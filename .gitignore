@@ -10,6 +10,7 @@ gander-*.zip
 config.h
 config.in~
 aclocal.m4
+libglawt.a
 
 .cproject
 .project

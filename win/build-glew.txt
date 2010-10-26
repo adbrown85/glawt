@@ -1,9 +1,0 @@
-GLEW
-
- 1 Change "config/Makefile.mingw"
-    - NAME = GLEW
-    - LIB.SHARED = lib$(NAME).dll
- 
- 2 Run make as
-    make GLEW_DEST=/mingw
-    make GLEW_DEST=/mingw install
