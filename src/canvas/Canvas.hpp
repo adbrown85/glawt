@@ -37,22 +37,19 @@ struct CanvasState {
 };
 
 /* Change in the state of the canvas and what caused it. */
-class Canvas;
 struct CanvasEvent {
 	enum {INIT,DISPLAY,KEY,BUTTON,DRAG};
-	int type;
-	Canvas *source;
-	CanvasState state;
 };
 
 /* Object that wants to be informed of changes in the canvas. */
+class Canvas;
 class CanvasListener {
 public:
-	virtual void onCanvasInitEvent(const CanvasEvent &event) = 0;
-	virtual void onCanvasDisplayEvent(const CanvasEvent &event) = 0;
-	virtual void onCanvasKeyEvent(const CanvasEvent &event) = 0;
-	virtual void onCanvasButtonEvent(const CanvasEvent &event) = 0;
-	virtual void onCanvasDragEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasInitEvent(Canvas &canvas) = 0;
+	virtual void onCanvasDisplayEvent(Canvas &canvas) = 0;
+	virtual void onCanvasKeyEvent(Canvas &canvas) = 0;
+	virtual void onCanvasButtonEvent(Canvas &canvas) = 0;
+	virtual void onCanvasDragEvent(Canvas &canvas) = 0;
 }; 
 
 /** @brief Area in a window that can be drawn to.
@@ -69,6 +66,7 @@ public:
 	virtual GLuint getElapsedTime() = 0;
 	int getHeight();
 	int getWidth();
+	CanvasState getState() const;
 	virtual void refresh() = 0;
 	virtual void primeStart() = 0;
 	virtual void primeFinish() = 0;
@@ -92,6 +90,9 @@ inline int Canvas::getHeight() {return height;}
 
 /** @return Width of the canvas. */
 inline int Canvas::getWidth() {return width;}
+
+/** @return Current state of the canvas. */
+inline CanvasState Canvas::getState() const {return state;}
 
 inline bool Canvas::isAutomaticallyRefresh() {return automaticallyRefresh;}
 

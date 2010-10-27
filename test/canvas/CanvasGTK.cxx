@@ -12,40 +12,40 @@
 class FakeCanvasListener : public CanvasListener {
 public:
 	FakeCanvasListener() {frames = 0;}
-	virtual void onCanvasInitEvent(const CanvasEvent &event);
-	virtual void onCanvasDisplayEvent(const CanvasEvent &event);
-	virtual void onCanvasButtonEvent(const CanvasEvent &event);
-	virtual void onCanvasKeyEvent(const CanvasEvent &event);
-	virtual void onCanvasDragEvent(const CanvasEvent &event);
+	virtual void onCanvasInitEvent(Canvas &canvas);
+	virtual void onCanvasDisplayEvent(Canvas &canvas);
+	virtual void onCanvasButtonEvent(Canvas &canvas);
+	virtual void onCanvasKeyEvent(Canvas &canvas);
+	virtual void onCanvasDragEvent(Canvas &canvas);
 private:
 	GLuint frames;
 };
 
-void FakeCanvasListener::onCanvasInitEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasInitEvent(Canvas &canvas) {
 
 	cout << "FakeCanvasListener::onCanvasInitEvent" << endl;
 }
 
-void FakeCanvasListener::onCanvasDisplayEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	cout << "FakeCanvasListener::onCanvasDisplayEvent" << endl;
 	
 	// Update frames
 	++frames;
 	if (frames > 30) {
-		event.source->setAutomaticallyRefresh(false);
+		canvas.setAutomaticallyRefresh(false);
 	}
 	
 	// Draw
 	glClearColor(0.0, 1.0, 0.0, 1.0);
-	event.source->clear();
-	event.source->write("This is some text!");
-	event.source->flush();
+	canvas.clear();
+	canvas.write("This is some text!");
+	canvas.flush();
 }
 
-void FakeCanvasListener::onCanvasKeyEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasKeyEvent(Canvas &canvas) {
 	
-	switch (event.state.combo.trigger) {
+	switch (canvas.getState().combo.trigger) {
 	case TOOLKIT_ESCAPE:
 		exit(0);
 		break;
@@ -61,16 +61,16 @@ void FakeCanvasListener::onCanvasKeyEvent(const CanvasEvent &event) {
 		cout << "Arrow key!" << endl;
 		break;
 	default:
-		if (isprint((char)event.state.combo.trigger))
-			cout << (char)event.state.combo.trigger << endl;
+		if (isprint((char)canvas.getState().combo.trigger))
+			cout << (char)canvas.getState().combo.trigger << endl;
 		else
 			cout << "Non-printable character." << endl;
 	}
 }
 
-void FakeCanvasListener::onCanvasButtonEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasButtonEvent(Canvas &canvas) {
 	
-	switch (event.state.combo.trigger) {
+	switch (canvas.getState().combo.trigger) {
 	case TOOLKIT_LEFT_BUTTON:
 		cout << "Left button!" << endl;
 		break;
@@ -89,9 +89,9 @@ void FakeCanvasListener::onCanvasButtonEvent(const CanvasEvent &event) {
 	}
 }
 
-void FakeCanvasListener::onCanvasDragEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasDragEvent(Canvas &canvas) {
 	
-	cout << event.state.x << " " << event.state.y << endl;
+	cout << canvas.getState().x << " " << canvas.getState().y << endl;
 }
 
 void createAndShowGUI() {

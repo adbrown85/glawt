@@ -31,34 +31,28 @@ void Canvas::clear() {
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
-/** Sends an event of the appropriate type. */
+/** Notifies listeners of events. */
 void Canvas::fireEvent(int type) {
 	
-	CanvasEvent event;
 	list<CanvasListener*>::iterator it;
 	
-	// Make event
-	event.type = type;
-	event.source = this;
-	event.state = state;
-	
-	// Send to listeners
+	// Notify listeners
 	for (it=listeners.begin(); it!=listeners.end(); ++it) {
 		switch (type) {
 		case CanvasEvent::INIT:
-			(*it)->onCanvasInitEvent(event);
+			(*it)->onCanvasInitEvent(*this);
 			break;
 		case CanvasEvent::DISPLAY:
-			(*it)->onCanvasDisplayEvent(event);
+			(*it)->onCanvasDisplayEvent(*this);
 			break;
 		case CanvasEvent::KEY:
-			(*it)->onCanvasKeyEvent(event);
+			(*it)->onCanvasKeyEvent(*this);
 			break;
 		case CanvasEvent::BUTTON:
-			(*it)->onCanvasButtonEvent(event);
+			(*it)->onCanvasButtonEvent(*this);
 			break;
 		case CanvasEvent::DRAG:
-			(*it)->onCanvasDragEvent(event);
+			(*it)->onCanvasDragEvent(*this);
 			break;
 		}
 	}
