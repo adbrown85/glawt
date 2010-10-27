@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef WINDOWGTK_HPP
-#define WINDOWGTK_HPP
+#ifndef GLAWT_WINDOWGTK_HPP
+#define GLAWT_WINDOWGTK_HPP
 #include "common.h"
 #ifdef HAVE_GTK
 #include <gtkmm/window.h>

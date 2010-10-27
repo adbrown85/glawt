@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef EXTENSIONS_HPP
-#define EXTENSIONS_HPP
+#ifndef GLAWT_EXTENSIONS_HPP
+#define GLAWT_EXTENSIONS_HPP
 #include "common.h"
 #ifdef HAVE_GLUT
 #include <GL/glut.h>

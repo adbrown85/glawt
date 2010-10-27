@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TYPEFACE_HPP
-#define TYPEFACE_HPP
+#ifndef GLAWT_TYPEFACE_HPP
+#define GLAWT_TYPEFACE_HPP
 #include "common.h"
 #ifdef HAVE_GTK
 #include <gdkmm/gl/font.h>

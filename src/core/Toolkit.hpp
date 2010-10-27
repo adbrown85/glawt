@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TOOLKIT_HPP
-#define TOOLKIT_HPP
+#ifndef GLAWT_TOOLKIT_HPP
+#define GLAWT_TOOLKIT_HPP
 #include "common.h"
 #ifdef HAVE_GTK
 #include <gtkmm/main.h>

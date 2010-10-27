@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CANVASGTK_HPP
-#define CANVASGTK_HPP
+#ifndef GLAWT_CANVASGTK_HPP
+#define GLAWT_CANVASGTK_HPP
 #include "common.h"
 #ifdef HAVE_GTK
 #include <glibmm/refptr.h>

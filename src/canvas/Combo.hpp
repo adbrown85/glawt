@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef COMBO_HPP
-#define COMBO_HPP
+#ifndef GLAWT_COMBO_HPP
+#define GLAWT_COMBO_HPP
 #include "common.h"
 using namespace std;
 

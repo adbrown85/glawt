@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CANVASGLUT_HPP
-#define CANVASGLUT_HPP
+#ifndef GLAWT_CANVASGLUT_HPP
+#define GLAWT_CANVASGLUT_HPP
 #include "common.h"
 #ifdef HAVE_GLUT
 #include <GL/glut.h>

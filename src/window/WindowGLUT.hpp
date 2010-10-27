@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef WINDOWGLUT_HPP
-#define WINDOWGLUT_HPP
+#ifndef GLAWT_WINDOWGLUT_HPP
+#define GLAWT_WINDOWGLUT_HPP
 #include "common.h"
 #ifdef HAVE_GLUT
 #include <GL/glut.h>

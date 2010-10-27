@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CANVAS_HPP
-#define CANVAS_HPP
+#ifndef GLAWT_CANVAS_HPP
+#define GLAWT_CANVAS_HPP
 #include "common.h"
 #include <algorithm>                    // For find
 #include <exception>

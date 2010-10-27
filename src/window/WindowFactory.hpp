@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef WINDOWFACTORY_HPP
-#define WINDOWFACTORY_HPP
+#ifndef GLAWT_WINDOWFACTORY_HPP
+#define GLAWT_WINDOWFACTORY_HPP
 #include "WindowGTK.hpp"
 #include "WindowGLUT.hpp"
 using namespace std;

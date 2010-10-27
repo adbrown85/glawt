@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef GLAWT_WINDOW_HPP
+#define GLAWT_WINDOW_HPP
 #include "common.h"
 #include "Canvas.hpp"
 using namespace std;

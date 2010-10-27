@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CANVASFACTORY_HPP
-#define CANVASFACTORY_HPP
+#ifndef GLAWT_CANVASFACTORY_HPP
+#define GLAWT_CANVASFACTORY_HPP
 #include "common.h"
 #include "Canvas.hpp"
 #include "CanvasGTK.hpp"
