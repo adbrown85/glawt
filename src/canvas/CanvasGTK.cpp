@@ -70,6 +70,7 @@ bool CanvasGTK::on_expose_event(GdkEventExpose *event) {
 	
 	begin();
 	fireEvent(CanvasEvent::DISPLAY);
+	flush();
 	end();
 	return true;
 }

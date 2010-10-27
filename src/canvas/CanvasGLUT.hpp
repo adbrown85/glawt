@@ -17,7 +17,6 @@ using namespace std;
 class CanvasGLUT : public Canvas {
 public:
 	CanvasGLUT(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
-	virtual void flush();
 	virtual GLuint getElapsedTime();
 	virtual void refresh();
 	virtual void primeStart() {};
@@ -28,6 +27,7 @@ protected:
 	virtual void connectIdle();
 	virtual void disconnectIdle();
 	static void display(void);
+	virtual void flush();
 	static void idle();
 	static void keyboard(unsigned char key, int x, int y);
 	static void mouse(int button, int state, int x, int y);

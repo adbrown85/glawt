@@ -36,6 +36,7 @@ GLuint CanvasGLUT::getElapsedTime() {
 void CanvasGLUT::display(void) {
 	
 	instance->fireEvent(CanvasEvent::DISPLAY);
+	flush();
 }
 
 void CanvasGLUT::mouse(int button, int state, int x, int y) {

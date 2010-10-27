@@ -27,7 +27,6 @@ class CanvasGTK : public Canvas,
                   public Gtk::GL::DrawingArea {
 public:
 	CanvasGTK(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
-	virtual void flush();
 	virtual GLuint getElapsedTime();
 	virtual bool on_expose_event(GdkEventExpose *event);
 	virtual void on_realize();
@@ -43,6 +42,7 @@ public:
 	virtual void refresh();
 	virtual void write(const string &text, int x=15, int y=30);
 protected:
+	virtual void flush();
 	void begin();
 	void end();
 	void connectIdle();

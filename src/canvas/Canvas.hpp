@@ -61,7 +61,6 @@ public:
 	void addListener(CanvasListener *listener);
 	static void check();
 	void fireEvent(int type);
-	virtual void flush() = 0;
 	virtual GLuint getElapsedTime() = 0;
 	int getHeight();
 	int getWidth();
@@ -75,6 +74,7 @@ protected:
 	bool isAutomaticallyRefresh();
 	virtual void connectIdle() = 0;
 	virtual void disconnectIdle() = 0;
+	virtual void flush() = 0;
 	bool isMouseButtonPressed;
 	void setStarted(bool started);
 	CanvasState state;
