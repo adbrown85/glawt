@@ -30,12 +30,10 @@ CanvasGTK::CanvasGTK(int width, int height) : Canvas(width,height) {
 	set_gl_capability(glConfig);
 }
 
-
 GLuint CanvasGTK::getElapsedTime() {
 	
 	return (GLuint)(timer.elapsed() * 1000);
 }
-
 
 /** Initializes OpenGL. */
 void CanvasGTK::on_realize() {
@@ -72,7 +70,6 @@ void CanvasGTK::on_realize() {
 	end();
 }
 
-
 /** Widget needs to be redrawn. */
 bool CanvasGTK::on_expose_event(GdkEventExpose *event) {
 	
@@ -81,7 +78,6 @@ bool CanvasGTK::on_expose_event(GdkEventExpose *event) {
 	end();
 	return true;
 }
-
 
 /** When a mouse button is pressed.
  * 
@@ -109,7 +105,6 @@ bool CanvasGTK::on_button_press_event(GdkEventButton *event) {
 	return true;
 }
 
-
 /** When a mouse button is released.
  * 
  * @see on_button_press_event
@@ -130,7 +125,6 @@ bool CanvasGTK::on_button_release_event(GdkEventButton *event) {
 	return true;
 }
 
-
 /** When a key is pressed.
  * 
  * @note This should usually return true so the event is consumed. That way if 
@@ -150,14 +144,12 @@ bool CanvasGTK::on_key_press_event(GdkEventKey *event) {
 	return true;
 }
 
-
 bool CanvasGTK::on_idle() {
 	
 	//fireEvent(CanvasEvent::DISPLAY);
 	refresh();
 	window->process_updates(false);
 }
-
 
 bool CanvasGTK::on_map_event(GdkEventAny *event) {
 	
@@ -168,7 +160,6 @@ bool CanvasGTK::on_map_event(GdkEventAny *event) {
 	return true;
 }
 
-
 void CanvasGTK::connectIdle() {
 	
 	if (!idle.connected()) {
@@ -178,14 +169,12 @@ void CanvasGTK::connectIdle() {
 	}
 }
 
-
 void CanvasGTK::disconnectIdle() {
 	
 	if (idle.connected()) {
 		idle.disconnect();
 	}
 }
-
 
 /** When the mouse moves in the widget.
  * 
@@ -228,7 +217,6 @@ bool CanvasGTK::on_motion_notify_event(GdkEventMotion *event) {
 	return false;
 }
 
-
 /** When the user scrolls the mouse wheel in the widget.
  * 
  * Important parts of GdkEventScroll are:
@@ -251,7 +239,6 @@ bool CanvasGTK::on_scroll_event(GdkEventScroll *event) {
 	return false;
 }
 
-
 /** Assigns the modifier according to the state of a GDK event. */
 void CanvasGTK::updateModifer(guint state) {
 	
@@ -265,7 +252,6 @@ void CanvasGTK::updateModifer(guint state) {
 		this->state.combo.modifier = TOOLKIT_MOD_NONE;
 	}
 }
-
 
 void CanvasGTK::write(const string &text, int x, int y) {
 	

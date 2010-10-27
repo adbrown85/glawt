@@ -18,30 +18,25 @@ CanvasGLUT::CanvasGLUT(int width, int height) : Canvas(width,height) {
 	instance = this;
 }
 
-
 void CanvasGLUT::connectIdle() {
 	
 	glutIdleFunc(&CanvasGLUT::idle);
 }
-
 
 void CanvasGLUT::disconnectIdle() {
 	
 	glutIdleFunc(NULL);
 }
 
-
 GLuint CanvasGLUT::getElapsedTime() {
 	
 	return glutGet(GLUT_ELAPSED_TIME);
 }
 
-
 void CanvasGLUT::display(void) {
 	
 	instance->fireEvent(CanvasEvent::DISPLAY);
 }
-
 
 void CanvasGLUT::mouse(int button, int state, int x, int y) {
 	
@@ -64,7 +59,6 @@ void CanvasGLUT::mouse(int button, int state, int x, int y) {
 	instance->fireEvent(CanvasEvent::BUTTON);
 }
 
-
 void CanvasGLUT::keyboard(unsigned char key, int x, int y) {
 	
 	// Update
@@ -78,7 +72,6 @@ void CanvasGLUT::keyboard(unsigned char key, int x, int y) {
 	instance->fireEvent(CanvasEvent::KEY);
 }
 
-
 void CanvasGLUT::motion(int x, int y) {
 	
 	// Update
@@ -89,13 +82,11 @@ void CanvasGLUT::motion(int x, int y) {
 	instance->fireEvent(CanvasEvent::DRAG);
 }
 
-
 void CanvasGLUT::idle() {
 	
 	//instance->fireEvent(CanvasEvent::DISPLAY);
 	instance->refresh();
 }
-
 
 void CanvasGLUT::special(int key, int x, int y) {
 	
@@ -119,7 +110,6 @@ void CanvasGLUT::special(int key, int x, int y) {
 	instance->fireEvent(CanvasEvent::KEY);
 }
 
-
 void CanvasGLUT::updateModifier() {
 	
 	int modifier=glutGetModifiers();
@@ -135,7 +125,6 @@ void CanvasGLUT::updateModifier() {
 		this->state.combo.modifier = TOOLKIT_MOD_NONE;
 	}
 }
-
 
 void CanvasGLUT::onRealize() {
 	
@@ -156,7 +145,6 @@ void CanvasGLUT::onRealize() {
 	// Start
 	setStarted(true);
 }
-
 
 void CanvasGLUT::write(const string &text, int x, int y) {
 	
@@ -184,7 +172,6 @@ void CanvasGLUT::write(const string &text, int x, int y) {
 	for (size_t i=0; i<text.length(); ++i)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, text[i]);
 }
-
 
 
 #endif // HAVE_GLUT

@@ -52,7 +52,6 @@ public:
 	virtual void onCanvasEvent(const CanvasEvent &event) = 0;
 }; 
 
-
 /** @brief Area in a window that can be drawn to.
  * @ingroup graphics
  */
