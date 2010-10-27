@@ -87,6 +87,9 @@ void FakeCanvasListener::onDragEvent(const CanvasEvent &event) {
 void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
 	
 	switch (event.state.combo.trigger) {
+	case TOOLKIT_ESCAPE:
+		exit(0);
+		break;
 	case TOOLKIT_MOD_ALT:
 	case TOOLKIT_MOD_CONTROL:
 	case TOOLKIT_MOD_SHIFT:
