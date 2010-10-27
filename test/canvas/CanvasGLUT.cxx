@@ -5,8 +5,7 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Toolkit.hpp"
-#include "WindowFactory.hpp"
-#include "CanvasFactory.hpp"
+#include "GLAWTFactory.hpp"
 
 
 /* Fake canvas listener. */
@@ -120,8 +119,8 @@ void createAndShowGUI() {
 	FakeCanvasListener *listener;
 	
 	// Create window and canvas
-	window = WindowFactory::create();
-	canvas = CanvasFactory::create();
+	window = GLAWTFactory::createWindow();
+	canvas = GLAWTFactory::createCanvas();
 	
 	// Create the listener
 	listener = new FakeCanvasListener();
