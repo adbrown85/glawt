@@ -23,14 +23,6 @@ void Canvas::addListener(CanvasListener *listener) {
 	listeners.push_back(listener);
 }
 
-/** Wipes the canvas clean. */
-void Canvas::clear() {
-	
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-}
-
 /** Notifies listeners of events. */
 void Canvas::fireEvent(int type) {
 	

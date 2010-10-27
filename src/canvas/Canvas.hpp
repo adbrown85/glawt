@@ -59,7 +59,6 @@ class Canvas {
 public:
 	Canvas(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
 	void addListener(CanvasListener *listener);
-	void clear();
 	static void check();
 	void fireEvent(int type);
 	virtual void flush() = 0;
