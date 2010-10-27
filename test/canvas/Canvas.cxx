@@ -25,18 +25,53 @@ public:
 /* Fake canvas listener. */
 class FakeCanvasListener : public CanvasListener {
 public:
-	FakeCanvasListener(const string &name) {this->name = name;}
-	virtual void onCanvasEvent(const CanvasEvent &event) {
-		cout << name << " received event..." << endl;
-		cout << "  " << event.type << endl;
-		cout << "  " << event.state.x << " " << event.state.y << endl;
-		cout << "  " << event.state.combo.trigger << " "
-		             << event.state.combo.modifier << " "
-		             << event.state.combo.action << endl;
-	}
-private:
-	string name;
+	virtual void onCanvasInitEvent(const CanvasEvent &event);
+	virtual void onCanvasDisplayEvent(const CanvasEvent &event);
+	virtual void onCanvasKeyEvent(const CanvasEvent &event);
+	virtual void onCanvasButtonEvent(const CanvasEvent &event);
+	virtual void onCanvasDragEvent(const CanvasEvent &event);
+protected:
+	void printEvent(const CanvasEvent &event);
 };
+
+/* Prints an event to standard out. */
+void FakeCanvasListener::printEvent(const CanvasEvent &event) {
+	cout << "  " << event.type << endl;
+	cout << "  " << event.state.x << " " << event.state.y << endl;
+	cout << "  " << event.state.combo.trigger << " "
+	             << event.state.combo.modifier << " "
+	             << event.state.combo.action << endl;
+}
+
+/* Handles an init event from the canvas. */
+void FakeCanvasListener::onCanvasInitEvent(const CanvasEvent &event) {
+	cout << "Received INIT event..." << endl;
+	printEvent(event);
+}
+
+/* Handles a display event from the canvas. */
+void FakeCanvasListener::onCanvasDisplayEvent(const CanvasEvent &event) {
+	cout << "Received DISPLAY event..." << endl;
+	printEvent(event);
+}
+
+/* Handles a key event from the canvas. */
+void FakeCanvasListener::onCanvasKeyEvent(const CanvasEvent &event) {
+	cout << "Received KEY event..." << endl;
+	printEvent(event);
+}
+
+/* Handles a button event from the canvas. */
+void FakeCanvasListener::onCanvasButtonEvent(const CanvasEvent &event) {
+	cout << "Received BUTTON event..." << endl;
+	printEvent(event);
+}
+
+/* Handles a drag event from the canvas. */
+void FakeCanvasListener::onCanvasDragEvent(const CanvasEvent &event) {
+	cout << "Received DRAG event..." << endl;
+	printEvent(event);
+}
 
 /* Test for canvas using fakes. */
 class CanvasTest {
@@ -66,10 +101,7 @@ void CanvasTest::testEvent() {
 	CanvasState state;
 	
 	// Add listeners
-	canvas->addListener(new FakeCanvasListener("mous"), CanvasEvent::BUTTON);
-	canvas->addListener(new FakeCanvasListener("keyb"), CanvasEvent::KEY);
-	canvas->addListener(new FakeCanvasListener("pain"), CanvasEvent::DISPLAY);
-	canvas->addListener(new FakeCanvasListener("main"), CanvasEvent::SETUP);
+	canvas->addListener(new FakeCanvasListener());
 	
 	// Fire event
 	state.x = 100;
@@ -94,14 +126,6 @@ int main(int argc, char *argv[]) {
 	
 	CanvasTest test;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Canvas" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
 	try {
 		test.setUp();
 		test.testEvent();
@@ -110,13 +134,6 @@ int main(int argc, char *argv[]) {
 		cerr << e.what() << endl;
 		exit(1);
 	}
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Canvas" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
 	return 0;
 }
 

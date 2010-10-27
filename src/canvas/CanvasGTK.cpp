@@ -53,18 +53,13 @@ void CanvasGTK::on_realize() {
 	// Start
 	begin();
 	
-	// View
+	// Setup
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, getWidth(), getHeight());
-	
-	// Typeface
 	typeface.load("monospace 8");
-	
-	// Load extensions
 	Extensions::load();
-	
-	// Start timer
 	timer.start();
+	fireEvent(CanvasEvent::INIT);
 	
 	// Finish
 	end();

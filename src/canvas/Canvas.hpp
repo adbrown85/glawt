@@ -37,10 +37,9 @@ struct CanvasState {
 };
 
 /* Change in the state of the canvas and what caused it. */
-#define CANVAS_EVENT_TYPE_SIZE 5
 class Canvas;
 struct CanvasEvent {
-	enum {SETUP,DISPLAY,KEY,BUTTON,DRAG};
+	enum {INIT,DISPLAY,KEY,BUTTON,DRAG};
 	int type;
 	Canvas *source;
 	CanvasState state;
@@ -49,7 +48,11 @@ struct CanvasEvent {
 /* Object that wants to be informed of changes in the canvas. */
 class CanvasListener {
 public:
-	virtual void onCanvasEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasInitEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasDisplayEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasKeyEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasButtonEvent(const CanvasEvent &event) = 0;
+	virtual void onCanvasDragEvent(const CanvasEvent &event) = 0;
 }; 
 
 /** @brief Area in a window that can be drawn to.
@@ -58,7 +61,7 @@ public:
 class Canvas {
 public:
 	Canvas(int width=CANVAS_WIDTH, int height=CANVAS_HEIGHT);
-	void addListener(CanvasListener *listener, int type);
+	void addListener(CanvasListener *listener);
 	void clear();
 	static void check();
 	void fireEvent(int type);
@@ -81,7 +84,7 @@ protected:
 private:
 	bool automaticallyRefresh, started;
 	int height, width;
-	list<CanvasListener*> listeners[CANVAS_EVENT_TYPE_SIZE];
+	list<CanvasListener*> listeners;
 };
 
 /** @return Height of the canvas. */

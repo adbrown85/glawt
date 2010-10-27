@@ -18,15 +18,9 @@ Canvas::Canvas(int width, int height) {
 }
 
 /** Registers an object to receive updates from the canvas. */
-void Canvas::addListener(CanvasListener *listener, int type) {
+void Canvas::addListener(CanvasListener *listener) {
 	
-	// Check type
-	if (type >= CANVAS_EVENT_TYPE_SIZE) {
-		throw CanvasException("[Canvas] Illegal listener type specified.");
-	}
-	
-	// Add it
-	listeners[type].push_back(listener);
+	listeners.push_back(listener);
 }
 
 /** Wipes the canvas clean. */
@@ -49,8 +43,24 @@ void Canvas::fireEvent(int type) {
 	event.state = state;
 	
 	// Send to listeners
-	for (it=listeners[type].begin(); it!=listeners[type].end(); ++it) {
-		(*it)->onCanvasEvent(event);
+	for (it=listeners.begin(); it!=listeners.end(); ++it) {
+		switch (type) {
+		case CanvasEvent::INIT:
+			(*it)->onCanvasInitEvent(event);
+			break;
+		case CanvasEvent::DISPLAY:
+			(*it)->onCanvasDisplayEvent(event);
+			break;
+		case CanvasEvent::KEY:
+			(*it)->onCanvasKeyEvent(event);
+			break;
+		case CanvasEvent::BUTTON:
+			(*it)->onCanvasButtonEvent(event);
+			break;
+		case CanvasEvent::DRAG:
+			(*it)->onCanvasDragEvent(event);
+			break;
+		}
 	}
 }
 

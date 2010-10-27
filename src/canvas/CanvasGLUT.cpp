@@ -138,9 +138,10 @@ void CanvasGLUT::onRealize() {
 	// Load extensions
 	Extensions::load();
 	
-	// Set up view
+	// Set up
 	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, getWidth(), getHeight());
+	fireEvent(CanvasEvent::INIT);
 	
 	// Start
 	setStarted(true);

@@ -12,79 +12,38 @@
 class FakeCanvasListener : public CanvasListener {
 public:
 	FakeCanvasListener() {frames = 0;}
-	virtual void onCanvasEvent(const CanvasEvent &event);
-	void onDisplayEvent(const CanvasEvent &event);
-	void onButtonEvent(const CanvasEvent &event);
-	void onKeyEvent(const CanvasEvent &event);
-	void onDragEvent(const CanvasEvent &event);
-	void setCanvas(Canvas *canvas) {this->canvas = canvas;}
+	virtual void onCanvasInitEvent(const CanvasEvent &event);
+	virtual void onCanvasDisplayEvent(const CanvasEvent &event);
+	virtual void onCanvasKeyEvent(const CanvasEvent &event);
+	virtual void onCanvasButtonEvent(const CanvasEvent &event);
+	virtual void onCanvasDragEvent(const CanvasEvent &event);
 private:
-	Canvas *canvas;
 	GLuint frames;
 };
 
-void FakeCanvasListener::onCanvasEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasInitEvent(const CanvasEvent &event) {
 	
-	switch (event.type) {
-	case CanvasEvent::BUTTON :
-		onButtonEvent(event);
-		break;
-	case CanvasEvent::DISPLAY :
-		onDisplayEvent(event);
-		break;
-	case CanvasEvent::DRAG :
-		onDragEvent(event);
-		break;
-	case CanvasEvent::KEY :
-		onKeyEvent(event);
-		break;
-	}
+	cout << "Initialize!" << endl;
 }
 
-void FakeCanvasListener::onButtonEvent(const CanvasEvent &event) {
-	
-	switch (event.state.combo.trigger) {
-	case TOOLKIT_LEFT_BUTTON:
-		cout << "Left button!" << endl;
-		break;
-	case TOOLKIT_MIDDLE_BUTTON:
-		cout << "Middle button!" << endl;
-		break;
-	case TOOLKIT_RIGHT_BUTTON:
-		cout << "Right button!" << endl;
-		break;
-	case TOOLKIT_WHEEL_UP:
-		cout << "Wheel up!" << endl;
-		break;
-	case TOOLKIT_WHEEL_DOWN:
-		cout << "Wheel down!" << endl;
-		break;
-	}
-}
-
-void FakeCanvasListener::onDisplayEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasDisplayEvent(const CanvasEvent &event) {
 	
 	cout << "FakeCanvasListener::onDisplayEvent" << endl;
 	
 	// Update frames
 	++frames;
 	if (frames > 30) {
-		canvas->setAutomaticallyRefresh(false);
+		event.source->setAutomaticallyRefresh(false);
 	}
 	
 	// Draw
 	glClearColor(0.0, 1.0, 0.0, 1.0);
-	canvas->clear();
-	canvas->write("This is some text!");
-	canvas->flush();
+	event.source->clear();
+	event.source->write("This is some text!");
+	event.source->flush();
 }
 
-void FakeCanvasListener::onDragEvent(const CanvasEvent &event) {
-	
-	cout << event.state.x << " " << event.state.y << endl;
-}
-
-void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
+void FakeCanvasListener::onCanvasKeyEvent(const CanvasEvent &event) {
 	
 	switch (event.state.combo.trigger) {
 	case TOOLKIT_ESCAPE:
@@ -109,6 +68,32 @@ void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
 	}
 }
 
+void FakeCanvasListener::onCanvasButtonEvent(const CanvasEvent &event) {
+	
+	switch (event.state.combo.trigger) {
+	case TOOLKIT_LEFT_BUTTON:
+		cout << "Left button!" << endl;
+		break;
+	case TOOLKIT_MIDDLE_BUTTON:
+		cout << "Middle button!" << endl;
+		break;
+	case TOOLKIT_RIGHT_BUTTON:
+		cout << "Right button!" << endl;
+		break;
+	case TOOLKIT_WHEEL_UP:
+		cout << "Wheel up!" << endl;
+		break;
+	case TOOLKIT_WHEEL_DOWN:
+		cout << "Wheel down!" << endl;
+		break;
+	}
+}
+
+void FakeCanvasListener::onCanvasDragEvent(const CanvasEvent &event) {
+	
+	cout << event.state.x << " " << event.state.y << endl;
+}
+
 void createAndShowGUI() {
 	
 	Window *window;
@@ -121,11 +106,7 @@ void createAndShowGUI() {
 	
 	// Create the listener
 	listener = new FakeCanvasListener();
-	listener->setCanvas(canvas);
-	canvas->addListener(listener, CanvasEvent::BUTTON);
-	canvas->addListener(listener, CanvasEvent::DISPLAY);
-	canvas->addListener(listener, CanvasEvent::DRAG);
-	canvas->addListener(listener, CanvasEvent::KEY);
+	canvas->addListener(listener);
 	//canvas->setAutomaticallyRefresh(true);
 	
 	// Pack window
