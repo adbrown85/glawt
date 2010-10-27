@@ -90,7 +90,6 @@ void CanvasTest::testEvent() {
 	canvas->fireEvent(CanvasEvent::KEY);
 }
 
-
 int main(int argc, char *argv[]) {
 	
 	CanvasTest test;

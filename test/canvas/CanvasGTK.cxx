@@ -23,7 +23,6 @@ private:
 	GLuint frames;
 };
 
-
 void FakeCanvasListener::onCanvasEvent(const CanvasEvent &event) {
 	
 	switch (event.type) {
@@ -41,7 +40,6 @@ void FakeCanvasListener::onCanvasEvent(const CanvasEvent &event) {
 		break;
 	}
 }
-
 
 void FakeCanvasListener::onButtonEvent(const CanvasEvent &event) {
 	
@@ -64,7 +62,6 @@ void FakeCanvasListener::onButtonEvent(const CanvasEvent &event) {
 	}
 }
 
-
 void FakeCanvasListener::onDisplayEvent(const CanvasEvent &event) {
 	
 	cout << "FakeCanvasListener::onDisplayEvent" << endl;
@@ -82,12 +79,10 @@ void FakeCanvasListener::onDisplayEvent(const CanvasEvent &event) {
 	canvas->flush();
 }
 
-
 void FakeCanvasListener::onDragEvent(const CanvasEvent &event) {
 	
 	cout << event.state.x << " " << event.state.y << endl;
 }
-
 
 void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
 	
@@ -110,7 +105,6 @@ void FakeCanvasListener::onKeyEvent(const CanvasEvent &event) {
 			cout << "Non-printable character." << endl;
 	}
 }
-
 
 void createAndShowGUI() {
 	
@@ -141,7 +135,6 @@ void createAndShowGUI() {
 	delete window;
 	delete canvas;
 }
-
 
 int main(int argc, char *argv[]) {
 	
