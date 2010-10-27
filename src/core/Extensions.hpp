@@ -14,7 +14,6 @@
 #ifdef HAVE_GTK
 #include <gdkmm/gl/query.h>
 #endif
-#include "Exception.hpp"
 using namespace std;
 
 
@@ -24,9 +23,21 @@ typedef GLint (*PFNGLGETFRAGDATALOCATIONGANPROC)(GLuint,const char*);
 extern PFNGLBINDFRAGDATALOCATIONGANPROC glBindFragDataLocationGAN;
 extern PFNGLGETFRAGDATALOCATIONGANPROC glGetFragDataLocationGAN;
 
+/** @brief Exception thrown while loading an extension. */
+class ExtensionException : public exception {
+public:
+	ExtensionException() {};
+	ExtensionException(const ExtensionException &e) : message(e.getMessage()) {}
+	ExtensionException(const string &message) : message(message) {}
+	~ExtensionException() throw() {}
+	string getMessage() const {return message;}
+	const char* what() const throw() {return message.c_str();}
+private:
+	string message;
+};
 
 /** @brief Utility for loading OpenGL extensions.
- * @ingroup graphics
+ * @ingroup core
  */
 class Extensions {
 public:

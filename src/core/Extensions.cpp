@@ -24,7 +24,7 @@ void Extensions::loadGLEW() {
 	
 	err = glewInit();
 	if (err != GLEW_OK) {
-		throw Exception("[Gander] Could not initialize GLEW");
+		throw ExtensionException("[Extensions] Could not initialize GLEW.");
 	}
 #endif
 }

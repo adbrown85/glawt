@@ -107,8 +107,8 @@ int main(int argc, char *argv[]) {
 		test.setUp();
 		test.testEvent();
 		test.tearDown();
-	} catch (Exception &e) {
-		cerr << e << endl;
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 		exit(1);
 	}
 	

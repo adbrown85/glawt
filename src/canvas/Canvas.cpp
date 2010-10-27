@@ -22,7 +22,7 @@ void Canvas::addListener(CanvasListener *listener, int type) {
 	
 	// Check type
 	if (type >= CANVAS_EVENT_TYPE_SIZE) {
-		throw Exception("[Canvas] Illegal listener type specified.");
+		throw CanvasException("[Canvas] Illegal listener type specified.");
 	}
 	
 	// Add it
