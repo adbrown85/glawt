@@ -121,6 +121,7 @@ void CanvasTest::testEvent() {
 	canvas->fireEvent(CanvasEvent::KEY);
 }
 
+/* Runs the test. */
 int main(int argc, char *argv[]) {
 	
 	CanvasTest test;
