@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef GLAWT_COMMON_H
+#define GLAWT_COMMON_H
 
 // Configuration file
 #ifdef HAVE_CONFIG_H
