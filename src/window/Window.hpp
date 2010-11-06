@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_WINDOW_HPP
 #define GLAWT_WINDOW_HPP
-#include "common.h"
+#include "glawt_common.h"
 #include "Canvas.hpp"
 using namespace std;
 

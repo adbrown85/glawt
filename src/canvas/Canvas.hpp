@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_CANVAS_HPP
 #define GLAWT_CANVAS_HPP
-#include "common.h"
+#include "glawt_common.h"
 #include <algorithm>                    // For find
 #include <exception>
 #include "Combo.hpp"

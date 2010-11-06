@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_TOOLKIT_HPP
 #define GLAWT_TOOLKIT_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GTK
 #include <gtkmm/main.h>
 #include <gtkmm/gl/init.h>

@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_COMBO_HPP
 #define GLAWT_COMBO_HPP
-#include "common.h"
+#include "glawt_common.h"
 using namespace std;
 
 

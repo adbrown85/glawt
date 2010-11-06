@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_WINDOWGLUT_HPP
 #define GLAWT_WINDOWGLUT_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GLUT
 #include <GL/glut.h>
 #include "Window.hpp"

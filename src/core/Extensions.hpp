@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_EXTENSIONS_HPP
 #define GLAWT_EXTENSIONS_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GLUT
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>

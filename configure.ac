@@ -1,7 +1,7 @@
 # Initialize
 AC_PREREQ([2.65])
 AC_INIT([GLawt], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
-AC_CONFIG_SRCDIR([src/common.h])
+AC_CONFIG_SRCDIR([src/glawt_common.h])
 AC_CONFIG_HEADERS([config.h:config.in])
 AC_CANONICAL_SYSTEM
 AC_PROG_CXX

@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_GLAWTFACTORY_HPP_
 #define GLAWT_GLAWTFACTORY_HPP_
-#include "common.h"
+#include "glawt_common.h"
 #include "CanvasGLUT.hpp"
 #include "CanvasGTK.hpp"
 #include "WindowGLUT.hpp"

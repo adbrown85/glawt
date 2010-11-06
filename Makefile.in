@@ -128,7 +128,7 @@ install:
 	@echo "  Installing headers in $(includedir)/$(tarname)..."
 	@$(INSTALL) -d $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
-	@$(INSTALL) -m 0644 src/common.h $(includedir)/$(tarname)
+	@$(INSTALL) -m 0644 src/glawt_common.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/*/*.hpp $(includedir)/$(tarname)
 uninstall:
 	@echo "  Uninstalling archive from $(libdir)..."
@@ -163,7 +163,7 @@ $(distdir):
 	@echo "    src"
 	@mkdir $(distdir)/src
 	@cp src/Makefile.in $(distdir)/src
-	@cp src/common.h $(distdir)/src
+	@cp src/glawt_common.h $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \

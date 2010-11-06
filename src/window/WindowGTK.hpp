@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_WINDOWGTK_HPP
 #define GLAWT_WINDOWGTK_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GTK
 #include <gtkmm/window.h>
 #include <gtkmm/widget.h>

@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_TYPEFACE_HPP
 #define GLAWT_TYPEFACE_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GTK
 #include <gdkmm/gl/font.h>
 using namespace std;

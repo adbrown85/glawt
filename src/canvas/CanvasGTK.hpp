@@ -6,7 +6,7 @@
  */
 #ifndef GLAWT_CANVASGTK_HPP
 #define GLAWT_CANVASGTK_HPP
-#include "common.h"
+#include "glawt_common.h"
 #ifdef HAVE_GTK
 #include <glibmm/refptr.h>
 #include <glibmm/timer.h>
