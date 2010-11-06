@@ -21,6 +21,11 @@ void* WindowGLUT::getNativeWindow() {
 	return NULL;
 }
 
+/** Hides the window. */
+void WindowGLUT::hide() {
+	
+	exit(0);
+}
 
 /** Starts processing the window. */
 void WindowGLUT::run() {

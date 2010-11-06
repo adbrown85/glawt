@@ -41,6 +41,12 @@ void* WindowGTK::getNativeWindow() {
 	return (void*)window;
 }
 
+/** Hides the window. */
+void WindowGTK::hide() {
+	
+	window->hide();
+}
+
 
 /** Starts processing the window. */
 void WindowGTK::run() {

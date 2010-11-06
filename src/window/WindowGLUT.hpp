@@ -20,6 +20,7 @@ public:
 	virtual ~WindowGLUT() {}
 	virtual void add(Canvas *canvas);
 	virtual void* getNativeWindow();
+	virtual void hide();
 	virtual void run();
 	virtual void setIcon(string filename) {}
 	virtual void show();

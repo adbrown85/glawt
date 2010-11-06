@@ -25,6 +25,7 @@ public:
 	virtual void* getNativeWindow();
 	virtual void add(Gtk::Widget &widget);
 	virtual void add(Canvas *canvas);
+	virtual void hide();
 	virtual void run();
 	virtual void setIcon(string filename);
 	virtual void show();

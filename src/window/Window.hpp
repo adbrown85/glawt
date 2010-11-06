@@ -24,6 +24,7 @@ public:
 	virtual void run() = 0;
 	virtual void setIcon(string filename) = 0;
 	virtual void setTitle(string title);
+	virtual void hide() = 0;
 	virtual void show() = 0;
 private:
 	string title;
