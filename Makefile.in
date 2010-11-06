@@ -17,6 +17,7 @@ datarootdir  := @datarootdir@
 datadir      := @datadir@
 docdir       := @docdir@
 htmldir      := @htmldir@
+pkgcfgdir    := $(libdir)/pkgconfig
 smoduledirs  := ${filter %/,${wildcard $(srcdir)/*/}}
 tmoduledirs  := ${filter %/,${wildcard $(testdir)/*/}}
 modules      := ${patsubst $(srcdir)/%/,%,$(smoduledirs)}
@@ -41,6 +42,7 @@ objects      := ${subst .cpp,.o,$(sources)}
 headers      := ${subst .cpp,.hpp,$(sources)}
 mains        := ${foreach m,$(tmoduledirs),${wildcard $(m)*.cxx}}
 archive      := lib$(tarname).a
+pkgcfgfile   := $(tarname).pc
 tests        := ${subst .cxx,,$(mains)}
 tarball      := $(tarname)-$(version)-src.tar.gz
 zipfile      := $(tarname)-$(version)-src.zip
@@ -130,11 +132,15 @@ install:
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/glawt_common.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/*/*.hpp $(includedir)/$(tarname)
+	@echo "  Installing pkg-config file in $(pkgcfgdir)..."
+	@$(INSTALL) -m 0644 $(pkgcfgfile) $(pkgcfgdir)
 uninstall:
 	@echo "  Uninstalling archive from $(libdir)..."
 	@$(RM) $(libdir)/$(archive)
 	@echo "  Uninstalling headers from $(includedir)/$(tarname)..."
 	@$(RM) -r $(includedir)/$(tarname)
+	@echo "  Uninstalling pkg-config file from $(pkgcfgdir)..."
+	@$(RM) $(pkgcfgdir)/$(pkgcfgfile)
 
 # Distribution
 .PHONY: FORCE dist distcheck
@@ -160,6 +166,7 @@ $(distdir):
 	@cp configure $(distdir)
 	@cp install-sh $(distdir)
 	@cp Makefile.in $(distdir)
+	@cp $(pkgcfgfile) $(distdir)
 	@echo "    src"
 	@mkdir $(distdir)/src
 	@cp src/Makefile.in $(distdir)/src

@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libglawt
+Description: OpenGL Abstract Windowing Toolkit
+Version: @PACKAGE_VERSION@
+Requires: gtkmm-2.4 gtkglextmm-1.2
+Libs: -L${libdir} -lglawt
+Cflags: -I${includedir}
+
