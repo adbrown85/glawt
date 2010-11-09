@@ -53,11 +53,6 @@ VPATH        := $(srcdir) $(smoduledirs) $(tmoduledirs)
 depends      := ${subst .cpp,.d,$(sources)}
 tdepends     := ${subst .cxx,.t,$(mains)}
 
-# VPATH
-#~ vpath %.cpp %.hpp %.o %.d $(smoduledirs)
-#~ vpath %.cxx %.t $(tmoduledirs)
-#~ VPATH        := $(tmoduledirs)
-
 # Phony targets
 doc_targets  := html install-html
 .PHONY: all $(modules) clean mostlyclean tests $(doctargets) dump
@@ -74,8 +69,6 @@ mostlyclean:
 	@$(RM) $(library)
 	@echo "  Removing tests..."
 	@$(RM) $(tests)
-check:
-	@echo "  MODULES  = $(modules)"
 $(doc_targets):
 	@$(MAKE) -C doc $@
 dump:
@@ -85,7 +78,6 @@ dump:
 	@echo "  mains   = $(mains)"
 	@echo "  tests   = $(tests)"
 	@echo "  VPATH   = $(VPATH)"
-	@echo "  notdir  = ${notdir $(tests)}"
 
 # Modules
 .PHONY: $(modules)
