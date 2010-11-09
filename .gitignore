@@ -11,6 +11,7 @@ config.in~
 glawt.pc
 aclocal.m4
 libglawt.a
+libglawt.so.*
 
 .cproject
 .project
