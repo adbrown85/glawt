@@ -108,14 +108,12 @@ ${notdir $(tests)}:
 %.d: %.hpp
 	@echo "  Generating dependencies for $<..."
 	@$(CXX) $(CXXFLAGS) -MM $< > $@
-ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
-  -include $(depends)
-endif
 %.t: %.cxx
 	@echo "  Generating dependencies for $<..."
 	@$(CXX) $(CXXFLAGS) -MM $< -MT ${notdir ${subst .cxx,,$<}} \
         | sed 's/.hpp/.o/g' >> $@;
-ifeq ($(findstring tests,$(MAKECMDGOALS)),tests)
+ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
+  -include $(depends)
   -include $(tdepends)
 endif
 
